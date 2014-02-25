@@ -20,8 +20,8 @@ $cfg['blowfish_secret'] = 'a8b7c6d'; /* YOU MUST FILL IN THIS FOR COOKIE AUTH! *
  * Servers configuration
  */
 $i = 0;
-$mysqlPort = 3308;
-$mariadbPort = 3309;
+$mysqlPort = 3307;
+$mariadbPort = 3308;
 
 /**
  * MySQL server
