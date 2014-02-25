@@ -40,11 +40,11 @@ Neard is [available on SourceForge](https://sourceforge.net/projects/neard/).
 
 #### Latest releases
 
-* [Neard 1.0.0](https://sourceforge.net/projects/neard/files/Releases/1.0.0/neard-1.0.0-32bits.zip/download)
+* [Neard 1.0.0](https://sourceforge.net/projects/neard/files/Releases/1.0.0/neard-1.0.0.zip/download)
 
 #### Testing releases
 
-* [Neard Testing 201402251352](https://sourceforge.net/projects/neard/files/Testing/neard-testing-201402251352.zip/download)
+[Testing releases](https://sourceforge.net/projects/neard/files/Testing/) are available on SourceForge.
 
 #### Archives
 
