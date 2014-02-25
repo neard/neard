@@ -54,26 +54,6 @@ Neard is [available on SourceForge](https://sourceforge.net/projects/neard/).
 
 [Addons](https://sourceforge.net/projects/neard/files/Addons/) are available on SourceForge.
 
-#### Apache
-
-* [Apache 2.4.4](https://sourceforge.net/projects/neard/files/Addons/apache/2.4.4/neard-apache-2.4.4.zip/download)
-
-#### PHP
-
-* [PHP 5.4.16](https://sourceforge.net/projects/neard/files/Addons/php/5.4.16/neard-php-5.4.16.zip/download)
-
-#### MySQL
-
-* [MySQL 5.6.12](https://sourceforge.net/projects/neard/files/Addons/mysql/5.6.12/neard-mysql-5.6.12.zip/download)
-
-#### MariaDB
-
-* [MariaDB 10.0.6](https://sourceforge.net/projects/neard/files/Addons/mariadb/10.0.6/neard-mariadb-10.0.6.zip/download)
-
-#### Node.js
-
-* [Node.js 0.11.9](https://sourceforge.net/projects/neard/files/Addons/nodejs/0.11.9/neard-nodejs-0.11.9.zip/download)
-
 ### Configuration
 
 * Just extract the ZIP file where you want.
@@ -96,6 +76,13 @@ Before [reporting an issue](https://github.com/crazy-max/neard/issues), please :
 * Tell me your Neard version (eg. 1.0.0).
 * Change this variable in the ``neard.conf`` file ``appLogsVerbose = 2``.
 * Zip the ``logs`` folder and a screenshot of your issue and attached the archive file to the issue.
+
+## Donate
+
+I have put in a lot of time to this project and appreciate donations.
+If you prefer to donate via paypal you can use the [donate link](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=4H86AJZ6M865A&item_name=Neard&no_note=0&cn=Message%20%3a&no_shipping=1&rm=1&return=https%3A%2F%2Fgithub.com%2Fcrazy-max%2Fneard&cancel_return=https%3A%2F%2Fgithub.com%2Fcrazy-max%2Fneard&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted).
+Or with bitcoin you can send your donations to [1BdhK62JY2xQKXjmvLLA8Dpbit1uJ5JkrC](bitcoin:1BdhK62JY2xQKXjmvLLA8Dpbit1uJ5JkrC?label=Neard%20Donations&message=Contribution%20to%20Neard).<br /><br />
+Thank you to everyone who has donated, it is much appreciated.
 
 ## License
 
