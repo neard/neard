@@ -1,0 +1,30 @@
+# Eclipse
+.settings
+.settings/*
+.buildpath
+.project
+.jsdtscope
+
+# Neard
+!alias
+alias/*
+!alias/gitlist.conf
+!alias/phpmyadmin.conf
+!alias/svn.conf
+!alias/webgrind.conf
+!alias/websvn.conf
+!logs
+logs/*
+!logs/placeholder
+!svnrepos
+svnrepos/*
+!svnrepos/placeholder
+!tmp
+tmp/*
+!tmp/placeholder
+!tmp/cachegrind
+tmp/cachegrind/*
+!tmp/cachegrind/placeholder
+!vhosts
+vhosts/*
+!vhosts/example.conf

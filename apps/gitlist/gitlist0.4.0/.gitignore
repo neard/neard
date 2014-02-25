@@ -1,0 +1,12 @@
+*
+!.gitignore
+
+# Neard
+!config.ini
+!src
+src/*
+!src/GitList
+src/GitList/*
+!src/GitList/Git
+src/GitList/Git/*
+!src/GitList/Git/Client.php

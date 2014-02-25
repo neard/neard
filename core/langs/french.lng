@@ -1,0 +1,203 @@
+; General
+allRunningHint = "Tous les services sont lancés"
+someRunningHint = "%n service(s) sur %t est lancé"
+noneRunningHint = "Les %t services sont éteints"
+
+; Single
+about = "À propos..."
+aliases = "Alias"
+apps = "Applications"
+bins = "Binaires"
+bitcoin = "Bitcoin"
+donate = "Faire un don"
+donateBitcoin = "Faire un don de bitcoins à :"
+donateVia = "Faire un don via %s"
+error = "Erreur"
+executable = "Exécutable"
+extensions = "Extensions"
+github = "Github"
+help = "Aide"
+hosts = "Hosts"
+lang = "Langue"
+modules = "Modules"
+paypal = "Paypal"
+quit = "Quitter"
+reload = "Recharger"
+repos = "Dépôts"
+restart = "Redémarrer"
+service = "Service"
+settings = "Paramètres"
+startup = "Démarrage"
+status = "Statut"
+tools = "Outils"
+version = "Version"
+versions = "Versions"
+virtualHosts = "Virtual Hosts"
+
+; Menu
+menuAbout = "À propos..."
+menuAccessLogs = "Logs d'accès"
+menuAddAlias = "Ajouter un alias"
+menuChangePort = "Changer de port"
+menuCheckPort = "Vérifier le port %s"
+menuEditAlias = "Modifier %s"
+menuErrorLogs = "Logs d'erreur"
+menuInstallService = "Install le service"
+menuLocalhost = "Localhost"
+menuPutOffline = "Mettre hors ligne"
+menuPutOnline = "Mettre en ligne"
+menuRefreshRepos = "Rafraîchir les dépôts"
+menuRemoveService = "Supprimer le service"
+menuRestartService = "Redémarrer le service"
+menuRestartServices = "Redémarrer tous les services"
+menuStartService = "Démarrer le service"
+menuStartServices = "Démarrer tous les services"
+menuStopService = "Arrêter le service"
+menuStopServices = "Arrêter tous les services"
+menuWwwDirectory = "Répertoire www"
+
+; Bins
+apache = "Apache"
+php = "PHP"
+pear = "PEAR"
+mysql = "MySQL"
+mariadb = "MariaDB"
+nodejs = "Node.js"
+
+; Apps
+gitlist = "GitList"
+phpmyadmin = "phpMyAdmin"
+webgrind = "Webgrind"
+websvn = "WebSVN"
+
+; Tools
+console = "Console"
+git = "Git"
+imagick = "Imagick"
+svn = "SVN"
+tccle = "TCC/LE"
+xdc = "XDebugClient"
+
+; Init
+binNotFound = "%s non trouvé dans %s"
+binConfNotFound = "Fichier de configuration %s non trouvé dans %s"
+binExeNotFound = "Exécutable %s non trouvé dans %s"
+
+; Action Switch version
+switchVersionTitle = "Changer la version de %s vers %s"
+switchVersionReloadConfig = "Recharger la configuration"
+switchVersionReloadBins = "Recharger les binaires"
+switchVersionRegistry = "Réinitialiser la clé de registre %s"
+switchVersionResetServices = "Réinitialiser tous les services"
+switchVersionSameError = "Vous êtes déjà sur %s %s."
+switchVersionOk = "Version de %s changée avec succès vers %s"
+switchVersionOkRestart = "Version de %s changée avec succès vers %s@nl@%s va maintenant redémarrer ..."
+apacheIncpt = "Apache %s ne semble pas être compatible avec PHP %s."
+phpIncpt = "PHP %s ne semble pas être compatible avec Apache %s."
+neardConfNotFoundError = "Fichiers de configuration de Neard non trouvés pour %s."
+neardConfMalformedError = "Fichiers de configuration de Neard illisibles pour %s."
+
+; Action Check port
+checkPortTitle = "Vérification du port %s %s"
+portUsedBy = "Le port %s est utilisé par %s."
+portNotUsed = "Le port %s n'est pas utilisé."
+portNotUsedBy = "Le port %s est utilisé par une autre application."
+portUsedByAnotherDbms = "Le port %s est utilisé par un autre SGBD."
+portChanged = "Port de %s changé avec succès vers %s"
+
+; Action Install service
+installServiceTitle = "Installer le service %s"
+serviceAlreadyInstalled = "Le service %s est déjà installé."
+serviceInstalled = "Le service %s a été installé avec succès.@nl@Nom: %s@nl@Port: %s"
+serviceInstallError = "Erreur durant l'installation du service %s."
+
+; Action Remove service
+removeServiceTitle = "Supprimer le service %s"
+serviceNotExist = "Le service %s n'existe pas."
+serviceRemoved = "Le service %s a été supprimée avec succès."
+serviceRemoveError = "Erreur durant la désinstallation du service %s."
+
+; Action Delete alias
+deleteAliasTitle = "Supprimer un alias"
+deleteAlias = "Êtes-vous sûr de vouloir supprimer l'alias '%s' ?"
+aliasRemoved = "Alias '%s' supprimé avec succès."
+aliasRemoveError = "Impossible de supprimer le fichier de configuration de l'alias dans:@nl@%s"
+
+; Action Add/Edit alias
+addAliasTitle = "Ajout un alias"
+aliasNameLabel = "Nom"
+aliasDestLabel = "Destination"
+aliasExpLabel = "L'alias se trouvera http://localhost%s/%s/@nl@and et pointera vers %s"
+aliasDestPath = "Sélectionner le répoertoire de destination pour votre alias :"
+aliasAlreadyExists = "L'alias '%s' existe déjà."
+aliasCreated = "Alias '%s' créé avec succès.@nl@@nl@Url: http://localhost%s/%s/@nl@Chemin: %s"
+aliasCreatedError = "Impossible de créer le fichier de configuration de l'alias."
+editAliasTitle = "Modifier l'alias %s"
+
+: Action Change port
+changePortTitle = "Modifier le port de %s"
+changePortCurrentLabel = "Port actuellement utilisé par %s : %s"
+changePortNewLabel = "Nouveau port"
+changePortSameError = "Ce port est celui actuellement utilisé."
+
+; Action Startup
+startupStartingText = "Démarrage de %s. Veuillez patienter"
+startupCheckBrowserText = "Vérification du navigateur"
+startupClearTmpFoldersText = "Nettoyage des répertoires temportaires"
+startupPurgeLogsText = "Purge des logs"
+startupRefreshAliasHomepageText = "Rafraîchissement de l'alias de la page d'accueil"
+startupCheckPathText = "Vérification du chemin courant"
+startupScanFoldersText = "Balayage des répertoires"
+startupChangeOldPathsText = "Changement des vieux chemins avec %s"
+startupRegistryText = "Vérification de la clé de registre %s"
+startupRegistryErrorText = "Erreur durant la mise à jour de la clé de registre %s :"
+startupInstallServiceText = "Installation du service %s"
+startupStartServiceText = "Démarrage du service %s"
+startupPrepareRestartText = "Préparation du redémarrage de %s"
+startupRestartingText = "Redémarrage de %s. Veuillez patienter ..."
+startupErrorTitle = "Erreur lors du démarrage"
+startupServiceError = "Le service %s ne peut être installé :"
+startupPortError = "- Port non valide : %s"
+startupServiceCreateError = "- Impossible de créer le service : Erreur %s"
+startupServiceStartError = "- Impossible de démarrer le service : Erreur %s"
+startupServicePortError = "- Le port %s est utilisé par une autre application."
+startupRefreshGitReposText = "Rafraîchissement des dépôts Git"
+startupRefreshSvnReposText = "Rafraîchissement des dépôts SVN"
+
+; Action Quit
+exitLeavingText = "Quitter %s"
+exitRemoveServiceText = "Suppression du service %s"
+
+; Action Change browser
+changeBrowserTitle = "Changer de navigateur"
+changeBrowserExpLabel = "Sélectionner un navigateur :"
+changeBrowserOtherLabel = "Autre :"
+changeBrowserOk = "Navigateur changé avec succès:@nl@%s"
+
+; Action About
+aboutTitle = "À propos..."
+aboutText = "%s@nl@Copyright(C) 2014 %s <%s>@nl@@nl@Neard est un logiciel gratuit; vous pouvez le redistribuer et/ou le modifier@nl@sous les termes de la GNU LESSER GENERAL PUBLIC LICENSE.@nl@Pour plus d'information, visitez le site web :"
+
+; Action others...
+registrySetErrorText = "Valeur de clé de registre incorrecte : %s"
+
+; Windows forms
+buttonOk = "OK"
+buttonDelete = "Supprimer"
+buttonSave = "Enregistrer"
+buttonFinish = "Fin"
+buttonCancel = "Annuler"
+buttonNext = "Suivant >"
+buttonBack = "< Précédent"
+buttonBrowse = "Parcourir..."
+loading = "Chargement..."
+
+; Homepage
+homepageOfficialWebsite = "Site web Officiel"
+homepageServiceStarted = "démarré sur le port %s"
+homepageServiceStopped = "arrêté"
+homepageAboutText = "Neard est un logiciel gratuit; vous pouvez le redistribuer et/ou le modifier sous les termes de la GNU Lesser General Public License as published par la Free Software Foundation, à partir de la version 3 de la Licence, ou (à votre choix) toute version ultérieure."
+homepageQuestionsTitle = "Questions ?"
+homepageQuestionsText = "Si vous rencontrez des problèmes ou si vous avez des idées pour faire évoluer Nead, postez un ticket sur GitHub!"
+homepagePostIssue = "Poster un ticket"
+homepageDonateText = "J'ai passé beaucoup de temps sur ce projet et j'apprécie les dons.<br />Vous avez deux moyens de faire un don. Via <strong>Paypal</strong> ou <strong>Bitcoin</strong> :"

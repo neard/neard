@@ -1,0 +1,55 @@
+********************************************************************************
+
+ Database Wrapper
+
+ Copyright © Hypervisual - see LICENSE.TXT for details
+ Authors: Rubem Pechansky, Hans Rebel
+
+ Changelog
+
+********************************************************************************
+
+------------------------------------------------------------------------------
+Version 2b
+Date: Mar 7, 2005
+------------------------------------------------------------------------------
+
+Changes in library:
+
+- Extended test_db.phpw
+- The code for db_edit_record() and db_create_record() was not handling null for fieldnames and/or values according to the manual. Fixed.
+- db_get_wrap_version() replaced by db_get_info(), which returns the wrapper and database version signatures
+- Created raw_get_db_version() in SQLite and MySQL
+- Constants WB_DATABASE, WB_DB_WRAP, WB_MYSQL_WRAP and WB_SQLITE_WRAP renamed to DB_DATABASE, DB_WRAPVERSION, DB_MYSQL_WRAP and DB_SQLITE_WRAP respectively
+
+------------------------------------------------------------------------------
+Version 2a
+Date: February 17, 2005
+------------------------------------------------------------------------------
+
+Changes in library:
+
+- new feature: checks on same version within the db_xx.inc.php
+- db_get_wrap_version() gives the version signature
+- completed in-code documentation
+- checked and corrected return values for all functions
+- there are no void functions anymore
+- small changes in db_test.phpw
+- sorted the functions into same sequence as the documentation
+- Many changes and corrections in help pages
+
+------------------------------------------------------------------------------
+Version 2
+Date: February 14, 2005
+------------------------------------------------------------------------------
+
+Some enhancements:
+
+- APPPREFIX is handled now consistant
+- Return values added ( TRUE, FALSE and NULL ) where missing and documented
+- Tables can be listed, without having records
+- Tables can be created without any further fields than "id"
+- Fieldnames can be listed/edited in tables without records
+- New feature: Fieldattributes can be listed/edited in tables
+- Sample Test program: in \Code\Samples\db you find db_test.phpw with instructions.
+- Documentation is ready to go into Winbinder Help

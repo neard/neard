@@ -1,0 +1,11 @@
+*
+!.gitignore
+
+# Neard
+!launch.bat
+!neard.conf
+!node_modules
+node_modules/*
+!node_modules/npm
+node_modules/npm/*
+!node_modules/npm/npmrc

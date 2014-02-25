@@ -1,0 +1,11 @@
+*
+!.gitignore
+
+# Neard
+!neard.conf
+!bin
+bin/*
+!bin/php.ini
+!conf
+conf/*
+!conf/httpd.conf
