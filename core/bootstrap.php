@@ -10,12 +10,12 @@ define('APP_AUTHOR_EMAIL', 'webmaster@crazyws.fr');
 
 define('HOSTS_FILE', 'C:\Windows\System32\drivers\etc\hosts');
 
-define('CURRENT_APACHE_PORT', 81);
+define('CURRENT_APACHE_PORT', 80);
 define('CURRENT_APACHE_VERSION', '2.2.22');
 define('CURRENT_PHP_VERSION', '5.3.13');
-define('CURRENT_MYSQL_PORT', 3308);
+define('CURRENT_MYSQL_PORT', 3307);
 define('CURRENT_MYSQL_VERSION', '5.5.24');
-define('CURRENT_MARIADB_PORT', 3309);
+define('CURRENT_MARIADB_PORT', 3308);
 define('CURRENT_MARIADB_VERSION', '5.5.34');
 define('CURRENT_NODEJS_VERSION', '0.10.22');
 

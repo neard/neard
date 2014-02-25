@@ -59,6 +59,7 @@ class ActionChangePort
     public function processWindow($window, $id, $ctrl, $param1, $param2)
     {
         global $neardBins, $neardLang, $neardWinbinder;
+        $boxTitle = sprintf($neardLang->getValue(Lang::CHANGE_PORT_TITLE), $this->bin);
         $port = $neardWinbinder->getText($this->wbInputPort[WinBinder::CTRL_OBJ]);
     
         switch($id) {
@@ -68,19 +69,19 @@ class ActionChangePort
             case $this->wbBtnFinish[WinBinder::CTRL_ID]:
                 $neardWinbinder->incrProgressBar($this->wbProgressBar);
                 if ($port == $this->currentPort) {
-                    $neardWinbinder->messageBoxWarning($neardLang->getValue(Lang::CHANGE_PORT_SAME_ERROR), $neardLang->getValue(Lang::CHANGE_PORT));
+                    $neardWinbinder->messageBoxWarning($neardLang->getValue(Lang::CHANGE_PORT_SAME_ERROR), $boxTitle);
                     $neardWinbinder->resetProgressBar($this->wbProgressBar);
                     break;
                 }
                 if ($this->bin->changePort($port, true, $this->wbProgressBar)) {
                     $neardWinbinder->messageBoxInfo(
                         sprintf($neardLang->getValue(Lang::PORT_CHANGED), $this->bin, $port),
-                        $neardLang->getValue(Lang::CHANGE_PORT));
+                        $boxTitle);
                     $neardWinbinder->destroyWindow($window);
                 } else {
                     $neardWinbinder->messageBoxError(
                         sprintf($neardLang->getValue(Lang::PORT_NOT_USED_BY), $port),
-                        $neardLang->getValue(Lang::CHANGE_PORT));
+                        $boxTitle);
                     $neardWinbinder->resetProgressBar($this->wbProgressBar);
                 }
                 break;
