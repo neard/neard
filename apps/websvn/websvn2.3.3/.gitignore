@@ -1,0 +1,7 @@
+*
+!.gitignore
+
+# Neard
+!include
+include/*
+!include/config.php

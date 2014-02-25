@@ -1,0 +1,15 @@
+# Eclipse
+.settings
+.settings/*
+.buildpath
+.project
+.jsdtscope
+
+# Neard
+dev
+dev/*
+!tmp
+tmp/*
+!tmp/placeholder
+!resources
+!resources/paths.dat

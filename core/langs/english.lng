@@ -1,0 +1,203 @@
+; General
+allRunningHint = "All services running"
+someRunningHint = "%n of %t services running"
+noneRunningHint = "None of %t services running"
+
+; Single
+about = "About"
+aliases = "Aliases"
+apps = "Applications"
+bins = "Binaries"
+bitcoin = "Bitcoin"
+donate = "Donate"
+donateBitcoin = "Donate bitcoins to :"
+donateVia = "Donate via %s"
+error = "Error"
+executable = "Executable"
+extensions = "Extensions"
+github = "Github"
+help = "Help"
+hosts = "Hosts"
+lang = "Language"
+modules = "Modules"
+paypal = "Paypal"
+quit = "Exit"
+reload = "Reload"
+repos = "Repositories"
+restart = "Restart"
+service = "Service"
+settings = "Settings"
+startup = "Startup"
+status = "Status"
+tools = "Tools"
+version = "Version"
+versions = "Versions"
+virtualHosts = "Virtual Hosts"
+
+; Menu
+menuAbout = "About..."
+menuAccessLogs = "Access logs"
+menuAddAlias = "Add an alias"
+menuChangePort = "Change port"
+menuCheckPort = "Check port %s"
+menuEditAlias = "Edit %s"
+menuErrorLogs = "Error logs"
+menuInstallService = "Install Service"
+menuLocalhost = "Localhost"
+menuPutOffline = "Put Offline"
+menuPutOnline = "Put Online"
+menuRefreshRepos = "Refresh repositories"
+menuRemoveService = "Remove Service"
+menuRestartService = "Restart service"
+menuRestartServices = "Restart all services"
+menuStartService = "Start service"
+menuStartServices = "Start all services"
+menuStopService = "Stop service"
+menuStopServices = "Stop all services"
+menuWwwDirectory = "www directory"
+
+; Bins
+apache = "Apache"
+php = "PHP"
+pear = "PEAR"
+mysql = "MySQL"
+mariadb = "MariaDB"
+nodejs = "Node.js"
+
+; Apps
+gitlist = "GitList"
+phpmyadmin = "phpMyAdmin"
+webgrind = "Webgrind"
+websvn = "WebSVN"
+
+; Tools
+console = "Console"
+git = "Git"
+imagick = "Imagick"
+svn = "SVN"
+tccle = "TCC/LE"
+xdc = "XDebugClient"
+
+; Init
+binNotFound = "%s not found in %s"
+binConfNotFound = "%s configuration file not found in %s"
+binExeNotFound = "%s executable file not found in %s"
+
+; Action Switch version
+switchVersionTitle = "Switch %s version %s"
+switchVersionReloadConfig = "Reload config"
+switchVersionReloadBins = "Reload bins"
+switchVersionRegistry = "Reset %s registry key"
+switchVersionResetServices = "Reset all services"
+switchVersionSameError = "You are already on %s %s."
+switchVersionOk = "%s version switched successfully to %s"
+switchVersionOkRestart = "%s version switched successfully to %s@nl@%s will now restart ..."
+apacheIncpt = "Apache %s does not seem to be compatible with PHP %s."
+phpIncpt = "PHP %s does not seem to be compatible with Apache %s."
+neardConfNotFoundError = "Neard config files not found for %s."
+neardConfMalformedError = "Neard config file malformed for %s."
+
+; Action Check port
+checkPortTitle = "Check %s port %s"
+portUsedBy = "Port %s is used by %s."
+portNotUsed = "Port %s is not used."
+portNotUsedBy = "Port %s is used by an other application."
+portUsedByAnotherDbms = "Port %s is used by another DBMS."
+portChanged = "%s port changed successfully to %s"
+
+; Action Install service
+installServiceTitle = "Install %s service"
+serviceAlreadyInstalled = "%s service already installed."
+serviceInstalled = "%s service successfully installed.@nl@Name: %s@nl@Port: %s"
+serviceInstallError = "Error during the installation of %s service."
+
+; Action Remove service
+removeServiceTitle = "Remove %s service"
+serviceNotExist = "%s service does not exist."
+serviceRemoved = "%s service successfully removed."
+serviceRemoveError = "Error during the uninstallation of %s service."
+
+; Action Delete alias
+deleteAliasTitle = "Delete alias"
+deleteAlias = "Do you really want to delete the alias '%s' ?"
+aliasRemoved = "Alias '%s' successfully deleted."
+aliasRemoveError = "Unable to delete alias configuration file in:@nl@%s"
+
+; Action Add/Edit alias
+addAliasTitle = "Add alias"
+aliasNameLabel = "Name"
+aliasDestLabel = "Destination"
+aliasExpLabel = "Alias would be at http://localhost%s/%s/@nl@and would point to %s"
+aliasDestPath = "Select destination folder for your alias :"
+aliasAlreadyExists = "Alias '%s' already exists."
+aliasCreated = "Alias '%s' successfully created.@nl@@nl@Url: http://localhost%s/%s/@nl@Path: %s"
+aliasCreatedError = "Unable to create alias configuration file."
+editAliasTitle = "Edit alias %s"
+
+: Action Change port
+changePortTitle = "Change %s port"
+changePortCurrentLabel = "Port actually used by %s : %s"
+changePortNewLabel = "New port"
+changePortSameError = "This is the same port actually used."
+
+; Action Startup
+startupStartingText = "Starting %s. Please wait"
+startupCheckBrowserText = "Check browser"
+startupClearTmpFoldersText = "Clear temp folders"
+startupPurgeLogsText = "Purge logs"
+startupRefreshAliasHomepageText = "Refresh alias homepage"
+startupCheckPathText = "Check current path"
+startupScanFoldersText = "Scan folders"
+startupChangeOldPathsText = "Change old paths with %s"
+startupRegistryText = "Check %s registry key"
+startupRegistryErrorText = "Error setting %s registry key :"
+startupInstallServiceText = "Install %s service"
+startupStartServiceText = "Start %s service"
+startupPrepareRestartText = "Prepare restart %s"
+startupRestartingText = "Restarting %s. Please wait ..."
+startupErrorTitle = "Startup error"
+startupServiceError = "%s service cannot be installed :"
+startupPortError = "- Port is not valid : %s"
+startupServiceCreateError = "- Cannot create the service : Error %s"
+startupServiceStartError = "- Cannot start the service : Error %s"
+startupServicePortError = "- Port %s is used by an other application."
+startupRefreshGitReposText = "Refresh Git repositories"
+startupRefreshSvnReposText = "Refresh SVN repositories"
+
+; Action Quit
+exitLeavingText = "Leaving %s"
+exitRemoveServiceText = "Remove %s service"
+
+; Action Change browser
+changeBrowserTitle = "Change browser"
+changeBrowserExpLabel = "Select a browser :"
+changeBrowserOtherLabel = "Other :"
+changeBrowserOk = "Browser changed successfully to:@nl@%s"
+
+; Action About
+aboutTitle = "About..."
+aboutText = "%s@nl@Copyright(C) 2014 %s <%s>@nl@@nl@Neard is free software; you can redistribute it and/or modify it@nl@under the terms of the GNU LESSER GENERAL PUBLIC LICENSE.@nl@For more information, visit the website :"
+
+; Action others...
+registrySetErrorText = "Registry value incorrect : %s"
+
+; Windows forms
+buttonOk = "OK"
+buttonDelete = "Delete"
+buttonSave = "Save"
+buttonFinish = "Finish"
+buttonCancel = "Cancel"
+buttonNext = "Next >"
+buttonBack = "< Back"
+buttonBrowse = "Browse..."
+loading = "Loading..."
+
+; Homepage
+homepageOfficialWebsite = "Official Website"
+homepageServiceStarted = "started on port %s"
+homepageServiceStopped = "stopped"
+homepageAboutText = "Neard is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version."
+homepageQuestionsTitle = "Questions ?"
+homepageQuestionsText = "If you found some issues or if you have some ideas to evolve Neard, just post an issue on GitHub!"
+homepagePostIssue = "Post an issue"
+homepageDonateText = "I have put in a lot of time to this project and appreciate donations.<br />You have two methods to donate. Via <strong>Paypal</strong> or <strong>Bitcoin</strong> :"
