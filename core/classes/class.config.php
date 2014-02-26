@@ -6,6 +6,7 @@ class Config
     const CFG_DEFAULT_LANG = 'defaultLang';
     const CFG_TIMEZONE = 'timezone';
     const CFG_STATUS = 'status';
+    const CFG_HOSTNAME = 'hostname';
     const CFG_BROWSER = 'browser';
     const CFG_NOTEPAD = 'notepad';
     
@@ -76,6 +77,11 @@ class Config
     public function getBrowser()
     {
         return $this->raw[self::CFG_BROWSER];
+    }
+    
+    public function getHostname()
+    {
+        return $this->raw[self::CFG_HOSTNAME];
     }
 
     public function getNotepad()

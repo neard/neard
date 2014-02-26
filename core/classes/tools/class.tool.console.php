@@ -124,9 +124,9 @@ class ToolConsole
     
     public function getCmdShell()
     {
-        global $neardTools;
+        global $neardConfig, $neardTools;
         // Customize prompt: http://jpsoft.com/help/prompt.htm
-        return '&quot;' . $neardTools->getTccle()->getExe() . '&quot; @&quot;' . $neardTools->getTccle()->getConf() . '&quot; cls &amp; prompt [$e[1;31m$u@' . gethostname() . '$s$e[1;32m$p$e[0m]$s &amp;';
+        return '&quot;' . $neardTools->getTccle()->getExe() . '&quot; @&quot;' . $neardTools->getTccle()->getConf() . '&quot; cls &amp; prompt [$e[1;31m$u@' . $neardConfig->getHostname() . '$s$e[1;32m$p$e[0m]$s &amp;';
     }
     
     public function getPowerShell()

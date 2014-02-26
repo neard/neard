@@ -10,6 +10,7 @@ class Core
     const PHP_CONF = 'php.ini';
     
     const APP_PATHS = 'paths.dat';
+    const EXEC = 'exec';
 
     private $langsPath;
     private $libsPath;
@@ -54,6 +55,16 @@ class Core
     public function getAppPaths($aetrayPath = false)
     {
         return $this->getResourcesPath($aetrayPath) . '/' . self::APP_PATHS;
+    }
+    
+    public function getExec($aetrayPath = false)
+    {
+        return $this->getTmpPath($aetrayPath) . '/' . self::EXEC;
+    }
+    
+    public function setExec($action)
+    {
+        file_put_contents($this->getExec(), $action);
     }
 
     public function getPhpPath($aetrayPath = false)

@@ -30,23 +30,24 @@ And many other features.
 ## Requirements
 
 * [WSH (Windows Script Host)](http://support.microsoft.com/kb/232211) : Open a command prompt and type ``wscript`` to check.
+* [SETX](http://technet.microsoft.com/en-us/library/cc755104.aspx) : Open a command prompt and type ``setx`` to check.
 * Be [Admin user](http://windows.microsoft.com/en-US/windows7/How-do-I-log-on-as-an-administrator).
+* If you are on Windows XP, you need to download the [Support Tools CD](http://www.microsoft.com/en-us/download/details.aspx?id=18546).
 
-## Installation
-
-### Download
+## Download
 
 Neard is [available on SourceForge](https://sourceforge.net/projects/neard/).
 
-#### Latest releases
+### Latest releases
 
-* [Neard 1.0.0](https://sourceforge.net/projects/neard/files/Releases/1.0.0/neard-1.0.0.zip/download)
+* [Neard 1.0.1](https://sourceforge.net/projects/neard/files/Releases/1.0.1/neard-1.0.1.zip/download) (2014/02/26)
+* [Neard 1.0.0](https://sourceforge.net/projects/neard/files/Releases/1.0.0/neard-1.0.0.zip/download) (2014/02/25)
 
-#### Testing releases
+### Testing releases
 
 [Testing releases](https://sourceforge.net/projects/neard/files/Testing/) are available on SourceForge.
 
-#### Archives
+### Archives
 
 [Archives](https://sourceforge.net/projects/neard/files/Releases/) are available on SourceForge.
 
@@ -54,20 +55,24 @@ Neard is [available on SourceForge](https://sourceforge.net/projects/neard/).
 
 [Addons](https://sourceforge.net/projects/neard/files/Addons/) are available on SourceForge.
 
-### Configuration
+## Configuration
 
 * Just extract the ZIP file where you want.
 
 Edit the configuration file ``neard.conf`` :
 * **appLogsVerbose** - Control the debug output (0=simple, 1=report, 2=debug). Default : ``0``
-* **appPurgeLogsOnStartup** - Purge logs from Neard logs folder (0=false, 1= true). Default ``0``;
+* **appPurgeLogsOnStartup** - Purge logs from Neard logs folder (0=false, 1= true). Default ``0``
 * **lang** - Language (see core\langs folder for a complete list). Default : ``english``
 * **timezone** - The default timezone used by all date/time functions. Default : ``"Europe/Paris"``
 * **notepad** - The editor while opening files. Default : ``"notepad.exe"``
 
-### Usage
+## Usage
 
 Launch ``neard.exe``.
+
+## Changelog
+
+See ``CHANGELOG.md``.
 
 ## Reporting an issue
 

@@ -142,6 +142,7 @@ changePortSameError = "Ce port est celui actuellement utilisé."
 
 ; Action Startup
 startupStartingText = "Démarrage de %s. Veuillez patienter"
+startupRefreshHostnameText = "Rafraîchissement du nom d'hôte"
 startupCheckBrowserText = "Vérification du navigateur"
 startupClearTmpFoldersText = "Nettoyage des répertoires temportaires"
 startupPurgeLogsText = "Purge des logs"
@@ -154,7 +155,7 @@ startupRegistryErrorText = "Erreur durant la mise à jour de la clé de registre
 startupInstallServiceText = "Installation du service %s"
 startupStartServiceText = "Démarrage du service %s"
 startupPrepareRestartText = "Préparation du redémarrage de %s"
-startupRestartingText = "Redémarrage de %s. Veuillez patienter ..."
+startupRestartingText = "Redémarrage de %s. Veuillez patienter"
 startupErrorTitle = "Erreur lors du démarrage"
 startupServiceError = "Le service %s ne peut être installé :"
 startupPortError = "- Port non valide : %s"

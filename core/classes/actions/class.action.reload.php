@@ -6,6 +6,9 @@ class ActionReload
     {
         global $neardBs, $neardConfig, $neardBins, $neardTools, $neardApps, $neardHomepage;
         
+        // Refresh hostname
+        $neardConfig->replace(Config::CFG_HOSTNAME, gethostname());
+        
         // Check browser
         $currentBrowser = $neardConfig->getBrowser();
         if (empty($currentBrowser) || !file_exists($currentBrowser)) {

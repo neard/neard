@@ -87,7 +87,8 @@ class TplAppApache
         //TODO: Manage services via Aestan or Win32Service ext ?
         return /*TplService::getActionDelete(BinApache::SERVICE_NAME) . PHP_EOL .
             TplAestan::getActionServicesClose() . PHP_EOL .*/
-            TplApp::getActionRun(Action::SWITCH_VERSION, array($neardBins->getApache()->getName(), $version)) . PHP_EOL;
+            TplApp::getActionRun(Action::SWITCH_VERSION, array($neardBins->getApache()->getName(), $version)) . PHP_EOL .
+            TplApp::getActionExec() . PHP_EOL;
     }
     
     public static function getMenuApacheService()

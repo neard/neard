@@ -52,27 +52,27 @@ class TplApp
             call_user_func_array($call, $args);
     }
     
-    public static function getActionRun($action, $args = array(), $item = array())
+    public static function getActionRun($action, $args = array(), $item = array(), $waitUntilTerminated = true)
     {
         global $neardBs, $neardCore;
         $args = $args == null ? array() : $args;
         
         $argImp = '';
         foreach ($args as $arg) {
-            $argImp .= ' ' . (ENVDEV ? $arg : base64_encode($arg));
+            $argImp .= ' ' . base64_encode($arg);
         }
         
         $result = 'Action: run; ' .
             'FileName: "' . $neardCore->getPhpCliSilentExe(true) . '"; ' .
             'Parameters: "' . Core::BOOTSTRAP_FILE . ' ' . $action . $argImp . '"; ' .
-            'WorkingDir: "' . $neardBs->getCorePath(true) . '"; ';
+            'WorkingDir: "' . $neardBs->getCorePath(true) . '"';
         
         if (!empty($item)) {
             $result = 'Type: item; ' . $result .
-                'Caption: "' . $item[self::ITEM_CAPTION] . '"' .
+                '; Caption: "' . $item[self::ITEM_CAPTION] . '"' .
                 (!empty($item[self::ITEM_GLYPH]) ? '; Glyph: "' . $item[self::ITEM_GLYPH] . '"' : '');
-        } else {
-            $result .= 'Flags: waituntilterminated';
+        } elseif ($waitUntilTerminated) {
+            $result .= '; Flags: waituntilterminated';
         }
         
         return $result;
@@ -88,18 +88,23 @@ class TplApp
         /*if ($disabled) {
             $call = 'Action: run; FileName: "%AeTrayMenuPath%core/libs/php/php-win.exe"; Parameters: "bootstrap.php switchApacheVersion 2.2.22"; WorkingDir: "%AeTrayMenuPath%core"; ';
         } else {*/
-            $call = 'Action: multi; Actions: ' . $sectionName . '; ';
+            $call = 'Action: multi; Actions: ' . $sectionName;
         //}
         
         if (!empty($item)) {
             $call = 'Type: item; ' . $call .
-            'Caption: "' . $item[self::ITEM_CAPTION] . '"' .
+            '; Caption: "' . $item[self::ITEM_CAPTION] . '"' .
             (!empty($item[self::ITEM_GLYPH]) ? '; Glyph: "' . $item[self::ITEM_GLYPH] . '"' : '');
         } else {
             $call .= '; Flags: waituntilterminated';
         }
         
         return array($call, self::getSectionContent($action, $args, $otherClass));
+    }
+    
+    public static function getActionExec()
+    {
+        return self::getActionRun(Action::EXEC, array(), array(), false);
     }
     
     public static function getMenu($caption, $menu, $otherClass = false)
@@ -132,7 +137,8 @@ class TplApp
     
         return '[StartupAction]' . PHP_EOL .
             self::getActionRun(Action::STARTUP) . PHP_EOL .
-            TplAppReload::getActionReload() . PHP_EOL;
+            TplAppReload::getActionReload() . PHP_EOL .
+            self::getActionExec() . PHP_EOL;
     }
     
     private static function getSectionMenuRight()
