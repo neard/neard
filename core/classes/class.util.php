@@ -417,7 +417,7 @@ class Util
         $scriptName = $neardCore->getTmpPath() . '/' . self::random() . '.bat';
         $scriptContent = '@ECHO OFF' . PHP_EOL . PHP_EOL;
         $scriptContent .= 'SETLOCAL EnableDelayedExpansion' . PHP_EOL;
-        $scriptContent .= 'ping 1.1.1.1 -n 1 -w 3000 > nul' . PHP_EOL;
+        $scriptContent .= 'ping 1.1.1.1 -n 1 -w 2000 > nul' . PHP_EOL;
         $scriptContent .= '"' . $neardBs->getExeFilePath() . '" -quit -id={neard}' . PHP_EOL;
         if ($restart) {
             self::logInfo('Restart App');
@@ -448,7 +448,7 @@ class Util
             $value .= $neardBins->getPhp()->getCurrentPath() . ';';
             $value .= $neardBins->getPhp()->getPearPath() . ';';
             $value .= $neardTools->getImagick()->getCurrentPath() . ';';
-            $value .= $neardTools->getSvn()->getCurrentPath() . ';';
+            $value .= $neardTools->getSvn()->getCurrentPath() . '/bin;';
             $value .= $neardTools->getGit()->getCurrentPath() . '/bin;';
             $value = self::formatWindowsPath($value);
             self::logDebug('Generated app reg key: ' . $value);
@@ -481,7 +481,7 @@ class Util
     public static function setAppPathRegKey($value)
     {
         global $neardRegistry;
-        return $neardRegistry->setExpandStringValue(
+        return $neardRegistry->setStringValue(
             Registry::HKEY_LOCAL_MACHINE,
             Registry::APP_PATH_REG_SUBKEY,
             Registry::APP_PATH_REG_ENTRY,
@@ -895,96 +895,17 @@ class Util
         return 'data:image/' . $type . ';base64,' . base64_encode($data);
     }
     
-public static function UTF_to_Unicode($input, $array=False) {
-
-    $value = '';
-    $val   = array();
- 
-    for($i=0; $i< strlen( $input ); $i++){
- 
-        $ints = ord ( $input[$i] );
-     
-        $z     = ord ( $input[$i] );
-        $y     = ord ( $input[$i+1] ) - 128;
-        $x     = ord ( $input[$i+2] ) - 128;
-        $w     = ord ( $input[$i+3] ) - 128;
-        $v     = ord ( $input[$i+4] ) - 128;
-        $u     = ord ( $input[$i+5] ) - 128;
-        
-        /* Encoding 1 bit
-        @@@@@@@@@@@@@@@@@@@@@@@@@@*/
-        if( $ints >= 0 && $ints <= 127 ){
-            // 1 bit
-            $value[] = $z;
-            $value1[]= dechex($z);
-            //$val[]  = $value; 
-        }
-        
-        /* Encoding 2 bit
-        @@@@@@@@@@@@@@@@@@@@@@@@@@*/
-        if( $ints >= 192 && $ints <= 223 ){
-        // 2 bit
-            //$value[] = $temp = ($z-192) * 64 + $y;
-            $value[] = $temp = ($z-192) * 64 + $y;
-            $value1[]= dechex($temp);
-            //$val[]  = $value;
-        }  
-          
-        /* Encoding 3 bit
-        @@@@@@@@@@@@@@@@@@@@@@@@@@*/
-        if( $ints >= 224 && $ints <= 239 ){
-            // 3 bit
-            $value[] = $temp = ($z-224) * 4096 + $y * 64 + $x;
-            $value1[]= dechex($temp);
-            //$val[]  = $value;
-        } 
-        
-        /* Encoding 4 bit
-        @@@@@@@@@@@@@@@@@@@@@@@@@@*/    
-        if( $ints >= 240 && $ints <= 247 ){
-            // 4 bit
-            $value[] = $temp = ($z-240) * 262144 + $y * 4096 + $x * 64 + $w;
-            $value1[]= dechex($temp);
-        } 
-         
-        /* Encoding 5 bit
-        @@@@@@@@@@@@@@@@@@@@@@@@@@*/   
-        if( $ints >= 248 && $ints <= 251 ){
-            // 5 bit
-            $value[] = $temp = ($z-248) * 16777216 + $y * 262144 + $x * 4096 + $w * 64 + $v;
-            $value1[]= dechex($temp);
-        }
-        
-        /* Encoding 6 bit
-        @@@@@@@@@@@@@@@@@@@@@@@@@@*/
-        if( $ints == 252 || $ints == 253 ){
-            // 6 bit
-            $value[] = $temp = ($z-252) * 1073741824 + $y * 16777216 + $x * 262144 + $w * 4096 + $v * 64 + $u;
-            $value1[]= dechex($temp);
-        }
-        
-        /* Wrong Ord!
-        @@@@@@@@@@@@@@@@@@@@@@@@@@*/
-        if( $ints == 254 || $ints == 255 ){
-            echo 'Wrong Result!<br>';
-        }
-     
+    public static function refreshEnvVars()
+    {
+        global $neardBs, $neardCore;
+    
+        $rdmEnvVar = self::random(15, false);
+        $resultFile = self::formatWindowsPath($neardCore->getTmpPath() . '/' . self::random() . '.tmp');
+        $scriptContent = '@ECHO OFF' . PHP_EOL . PHP_EOL;
+        $scriptContent .= 'SETX /M ' . Registry::APP_PATH_REG_ENTRY . ' "' . self::formatWindowsPath($neardBs->getRootPath()) . '"' . PHP_EOL;
+        $scriptContent .= 'ECHO FINISHED! > "' . $resultFile . '"' . PHP_EOL;
+    
+        self::execBatch($resultFile, $scriptContent, 2);
     }
- 
-    if( $array === False ){
-        $unicode = '';
-        foreach($value as $value){
-               $unicode .= '&#'.$value.';';
-        
-        }
-        //return str_replace(array('&#', ';'), '', $unicode);
-        return $unicode;
-        
-    }
-    if($array === True ){
-       return $value;
-    }
- 
-}
     
 }

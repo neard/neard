@@ -5,7 +5,7 @@ class ActionStartup
     private $neardSplash;
     
     const GAUGE_SERVICES = 6;
-    const GAUGE_OTHERS = 12;
+    const GAUGE_OTHERS = 13;
     
     public function __construct($args)
     {
@@ -30,6 +30,11 @@ class ActionStartup
         global $neardBs, $neardCore, $neardConfig, $neardLang, $neardBins, $neardApps, $neardTools, $neardWinbinder, $neardRegistry, $neardHomepage;
         $error = '';
         $restart = false;
+        
+        // Refresh hostname
+        $this->neardSplash->setTextLoading($neardLang->getValue(Lang::STARTUP_REFRESH_HOSTNAME_TEXT));
+        $this->neardSplash->incrProgressBar();
+        $neardConfig->replace(Config::CFG_HOSTNAME, gethostname());
         
         // Check default browser
         $this->neardSplash->setTextLoading($neardLang->getValue(Lang::STARTUP_CHECK_BROWSER_TEXT));
@@ -202,72 +207,76 @@ class ActionStartup
         }
         
         // Services
-        foreach ($neardBins->getServices() as $sName => $service) {
-            $serviceError = '';
-            $serviceRestart = false;
+        if (!$restart) {
+            foreach ($neardBins->getServices() as $sName => $service) {
+                $serviceError = '';
+                $serviceRestart = false;
             
-            if ($sName == BinApache::SERVICE_NAME) {
-                $this->neardSplash->setImage(Splash::IMG_APACHE);
-                $bin = $neardBins->getApache();
-            } elseif ($sName == BinMysql::SERVICE_NAME) {
-                $this->neardSplash->setImage(Splash::IMG_MYSQL);
-                $bin = $neardBins->getMysql();
-            } elseif ($sName == BinMariadb::SERVICE_NAME) {
-                $this->neardSplash->setImage(Splash::IMG_MARIADB);
-                $bin = $neardBins->getMariadb();
-            }
+                if ($sName == BinApache::SERVICE_NAME) {
+                    $this->neardSplash->setImage(Splash::IMG_APACHE);
+                    $bin = $neardBins->getApache();
+                } elseif ($sName == BinMysql::SERVICE_NAME) {
+                    $this->neardSplash->setImage(Splash::IMG_MYSQL);
+                    $bin = $neardBins->getMysql();
+                } elseif ($sName == BinMariadb::SERVICE_NAME) {
+                    $this->neardSplash->setImage(Splash::IMG_MARIADB);
+                    $bin = $neardBins->getMariadb();
+                }
             
-            $name = $bin->getName() . ' ' . $bin->getVersion() . ' (' . $service->getName() . ')';
-            $port = $bin->getPort();
+                $name = $bin->getName() . ' ' . $bin->getVersion() . ' (' . $service->getName() . ')';
+                $port = $bin->getPort();
             
-            $this->neardSplash->incrProgressBar();
-            $this->neardSplash->setTextLoading(sprintf($neardLang->getValue(Lang::STARTUP_INSTALL_SERVICE_TEXT), $name));
+                $this->neardSplash->incrProgressBar();
+                $this->neardSplash->setTextLoading(sprintf($neardLang->getValue(Lang::STARTUP_INSTALL_SERVICE_TEXT), $name));
             
-            $this->neardSplash->incrProgressBar();
-            if (!$service->delete()) {
-                $serviceRestart = true;
-            }
+                $this->neardSplash->incrProgressBar();
+                if (!$service->delete()) {
+                    $serviceRestart = true;
+                }
             
-            $this->neardSplash->incrProgressBar();
-            if (!$bin->changePort($port)) {
-                $serviceError .= sprintf($neardLang->getValue(Lang::STARTUP_PORT_ERROR), $port);
-            }
+                $this->neardSplash->incrProgressBar();
+                if (!$bin->changePort($port)) {
+                    $serviceError .= sprintf($neardLang->getValue(Lang::STARTUP_PORT_ERROR), $port);
+                }
             
-            if (!$serviceRestart) {
-                if (!Util::isPortInUse($port)) {
-                    $this->neardSplash->incrProgressBar();
-                    if (!$service->create()) {
-                        $serviceError .= sprintf($neardLang->getValue(Lang::STARTUP_SERVICE_CREATE_ERROR), $service->getLatestError());
-                    }
-                
-                    $this->neardSplash->incrProgressBar();
-                    $this->neardSplash->setTextLoading(sprintf($neardLang->getValue(Lang::STARTUP_START_SERVICE_TEXT), $name));
-                
-                    if (!$service->start()) {
+                if (!$serviceRestart) {
+                    if (!Util::isPortInUse($port)) {
+                        $this->neardSplash->incrProgressBar();
+                        if (!$service->create()) {
+                            $serviceError .= sprintf($neardLang->getValue(Lang::STARTUP_SERVICE_CREATE_ERROR), $service->getLatestError());
+                        }
+            
+                        $this->neardSplash->incrProgressBar();
+                        $this->neardSplash->setTextLoading(sprintf($neardLang->getValue(Lang::STARTUP_START_SERVICE_TEXT), $name));
+            
+                        if (!$service->start()) {
+                            if (!empty($serviceError)) {
+                                $serviceError .= PHP_EOL;
+                            }
+                            $serviceError .= sprintf($neardLang->getValue(Lang::STARTUP_SERVICE_START_ERROR), $service->getLatestError());
+                        }
+                        $this->neardSplash->incrProgressBar();
+                    } else {
                         if (!empty($serviceError)) {
                             $serviceError .= PHP_EOL;
                         }
-                        $serviceError .= sprintf($neardLang->getValue(Lang::STARTUP_SERVICE_START_ERROR), $service->getLatestError());
+                        $serviceError .= sprintf($neardLang->getValue(Lang::STARTUP_SERVICE_PORT_ERROR), $port);
+                        $this->neardSplash->incrProgressBar(3);
                     }
-                    $this->neardSplash->incrProgressBar();
                 } else {
-                    if (!empty($serviceError)) {
-                        $serviceError .= PHP_EOL;
-                    }
-                    $serviceError .= sprintf($neardLang->getValue(Lang::STARTUP_SERVICE_PORT_ERROR), $port);
+                    $restart = true;
                     $this->neardSplash->incrProgressBar(3);
                 }
-            } else {
-                $restart = true;
-                $this->neardSplash->incrProgressBar(3);
-            }
             
-            if (!empty($serviceError)) {
-                if (!empty($error)) {
-                    $error .= PHP_EOL . PHP_EOL;
+                if (!empty($serviceError)) {
+                    if (!empty($error)) {
+                        $error .= PHP_EOL . PHP_EOL;
+                    }
+                    $error .= sprintf($neardLang->getValue(Lang::STARTUP_SERVICE_ERROR), $name) . PHP_EOL . $serviceError;
                 }
-                $error .= sprintf($neardLang->getValue(Lang::STARTUP_SERVICE_ERROR), $name) . PHP_EOL . $serviceError;
             }
+        } else {
+            $this->neardSplash->incrProgressBar(self::GAUGE_SERVICES * count($neardBins->getServices()));
         }
         
         // Actions if everything OK
@@ -289,9 +298,6 @@ class ActionStartup
             $this->neardSplash->incrProgressBar(2);
         }
         
-        // Display last incr
-        usleep(500000);
-        
         if ($restart) {
             $this->writeLog('Restart App');
             $this->neardSplash->setTextLoading(sprintf(
@@ -302,7 +308,7 @@ class ActionStartup
                 $service->delete();
             }
             $neardWinbinder->destroyWindow($window);
-            Util::exitApp(true);
+            $neardCore->setExec(ActionExec::RESTART);
             exit();
         }
         
@@ -313,7 +319,7 @@ class ActionStartup
             }
             $neardWinbinder->messageBoxError($error, $neardLang->getValue(Lang::STARTUP_ERROR_TITLE));
             $neardWinbinder->destroyWindow($window);
-            Util::exitApp();
+            $neardCore->setExec(ActionExec::QUIT);
             exit();
         }
         

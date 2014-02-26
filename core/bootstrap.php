@@ -1,7 +1,5 @@
 <?php
 
-define('ENVDEV', true);
-
 define('APP_TITLE', 'Neard');
 define('APP_GITHUB_HOME', 'https://github.com/crazy-max/neard');
 define('APP_GITHUB_ISSUES', 'https://github.com/crazy-max/neard/issues');

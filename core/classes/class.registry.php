@@ -172,6 +172,8 @@ class Registry
         $scriptContent .= 'objFile.Close' . PHP_EOL;
     
         $result = $this->execVbs($scriptContent, $resultFile);
+        Util::refreshEnvVars();
+        
         $this->writeLog('SetValue ' . $strKey . '\\' . $subkey . '\\' . $entry);
         $this->writeLog('-> value: ' . $value);
         $this->writeLog('-> result: ' . $result);
@@ -182,7 +184,7 @@ class Registry
             $this->latestError = $neardLang->getValue(Lang::ERROR) . ' ' . str_replace(self::REG_ERROR_ENTRY, '', $result);
             return false;
         }
-    
+        
         return $result == self::REG_NO_ERROR;
     }
     

@@ -76,7 +76,8 @@ class TplAppMariadb
             TplApp::getActionRun(Action::SWITCH_VERSION, array($neardBins->getMariadb()->getName(), $version)) . PHP_EOL .
             TplService::getActionCreate(BinMariadb::SERVICE_NAME) . PHP_EOL .
             TplService::getActionStart(BinMariadb::SERVICE_NAME) . PHP_EOL .
-            TplAppReload::getActionReload() . PHP_EOL;
+            TplAppReload::getActionReload() . PHP_EOL .
+            TplApp::getActionExec() . PHP_EOL;
     }
     
     public static function getMenuMariadbService()

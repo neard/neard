@@ -72,7 +72,7 @@ class ActionSwitchVersion
     
     public function processWindow($window, $id, $ctrl, $param1, $param2)
     {
-        global $neardBs, $neardLang, $neardBins, $neardWinbinder;
+        global $neardBs, $neardCore, $neardLang, $neardBins, $neardWinbinder;
         
         if ($this->version == $this->currentVersion) {
             $neardWinbinder->messageBoxWarning(sprintf($neardLang->getValue(Lang::SWITCH_VERSION_SAME_ERROR), $this->bin->getName(), $this->version), $this->boxTitle);
@@ -127,7 +127,7 @@ class ActionSwitchVersion
                 $neardWinbinder->destroyWindow($window);
                 $neardWinbinder->reset();
         
-                Util::exitApp(true);
+                $neardCore->setExec(ActionExec::RESTART);
                 exit();
             } else {
                 $this->neardSplash->incrProgressBar(self::GAUGE_SERVICES * count($neardBins->getServices()) + 1);

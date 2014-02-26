@@ -6,8 +6,8 @@
 .jsdtscope
 
 # Neard
-dev
-dev/*
+.dev
+.dev/*
 !tmp
 tmp/*
 !tmp/placeholder

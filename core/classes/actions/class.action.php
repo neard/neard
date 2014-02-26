@@ -8,6 +8,7 @@ class Action
     const CHANGE_PORT = 'changePort';
     const CHECK_PORT = 'checkPort';
     const EDIT_ALIAS = 'editAlias';
+    const EXEC = 'exec';
     const QUIT = 'quit';
     const REFRESH_REPOS = 'refreshRepos';
     const RELOAD = 'reload';
@@ -38,7 +39,7 @@ class Action
             $args = array();
             foreach ($_SERVER['argv'] as $key => $arg) {
                 if ($key > 1) {
-                    $args[] = ENVDEV ? $arg : base64_decode($arg);
+                    $args[] = base64_decode($arg);
                 }
             }
             

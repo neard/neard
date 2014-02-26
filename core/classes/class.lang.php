@@ -146,6 +146,7 @@ class Lang
     
     // Action Startup
     const STARTUP_STARTING_TEXT = 'startupStartingText';
+    const STARTUP_REFRESH_HOSTNAME_TEXT = 'startupRefreshHostnameText';
     const STARTUP_CHECK_BROWSER_TEXT = 'startupCheckBrowserText';
     const STARTUP_CLEAR_TMP_FOLDERS_TEXT = 'startupClearTmpFoldersText';
     const STARTUP_PURGE_LOGS_TEXT = 'startupPurgeLogsText';
