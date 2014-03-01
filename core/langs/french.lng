@@ -33,6 +33,7 @@ tools = "Outils"
 version = "Version"
 versions = "Versions"
 virtualHosts = "Virtual Hosts"
+windowsHosts = "Windows Hosts"
 
 ; Menu
 menuAbout = "À propos..."
@@ -142,6 +143,7 @@ changePortSameError = "Ce port est celui actuellement utilisé."
 
 ; Action Startup
 startupStartingText = "Démarrage de %s. Veuillez patienter"
+startupKillPhpProcsText = "Arrêt des anciennes instances PHP"
 startupRefreshHostnameText = "Rafraîchissement du nom d'hôte"
 startupCheckBrowserText = "Vérification du navigateur"
 startupClearTmpFoldersText = "Nettoyage des répertoires temportaires"
@@ -202,3 +204,5 @@ homepageQuestionsTitle = "Questions ?"
 homepageQuestionsText = "Si vous rencontrez des problèmes ou si vous avez des idées pour faire évoluer Nead, postez un ticket sur GitHub!"
 homepagePostIssue = "Poster un ticket"
 homepageDonateText = "J'ai passé beaucoup de temps sur ce projet et j'apprécie les dons.<br />Vous avez deux moyens de faire un don. Via <strong>Paypal</strong> ou <strong>Bitcoin</strong> :"
+homepagePhpinfoText = "Voir phpinfo()"
+homepageBackText = "Revenir sur la page d'accueil"

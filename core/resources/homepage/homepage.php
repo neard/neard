@@ -28,14 +28,7 @@
       </div>
     </nav>
     
-    <div id="page-wrapper">
-      <?php include 'hp.summary.php'; ?>
-      <div class="panel panel-default panel-elts"><?php include 'hp.apache.php'; ?></div>
-      <div class="panel panel-default panel-elts"><?php include 'hp.php.php'; ?></div>
-      <div class="panel panel-default panel-elts"><?php include 'hp.mysql.php'; ?></div>
-      <div class="panel panel-default panel-elts"><?php include 'hp.mariadb.php'; ?></div>
-      <div class="panel panel-default panel-elts"><?php include 'hp.nodejs.php'; ?></div>
-    </div>
+    <div id="page-wrapper"><?php include 'tpls/hp.' . $neardHomepage->getPage() . '.php'; ?></div>
     
     <script type="text/javascript">
     $('.navbar-nav a[title]').tooltip({ html: true, placement: 'bottom' });

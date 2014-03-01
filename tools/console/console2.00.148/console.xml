@@ -91,7 +91,7 @@
 		</mouse>
 		<tabs>
 			<tab title="Console cmd" icon="icons/app.ico" use_default_icon="0">
-				<console shell="&quot;C:\neard\tools\tccle\tccle13.06.77\tcc.exe&quot; @&quot;C:\neard\tools\tccle\tccle13.06.77\tcc.ini&quot; cls &amp; prompt [$e[1;31m$u@$s$e[1;32m$p$e[0m]$s &amp;" init_dir="C:/neard" run_as_user="0" user=""/>
+				<console shell="&quot;C:\neard\tools\tccle\tccle13.06.77\tcc.exe&quot; @&quot;C:\neard\tools\tccle\tccle13.06.77\tcc.ini&quot; cls &amp; prompt [$e[1;31m$u@mycomputer$s$e[1;32m$p$e[0m]$s &amp;" init_dir="C:/neard" run_as_user="0" user=""/>
 				<cursor style="0" r="255" g="255" b="255"/>
 				<background type="0" r="0" g="0" b="0">
 					<image file="" relative="0" extend="0" position="0">
@@ -109,7 +109,7 @@
 				</background>
 			</tab>
 			<tab title="PEAR 1.9.4" icon="icons/pear.ico" use_default_icon="0">
-				<console shell="&quot;C:\neard\tools\tccle\tccle13.06.77\tcc.exe&quot; @&quot;C:\neard\tools\tccle\tccle13.06.77\tcc.ini&quot; cls &amp; prompt [$e[1;31m$u@$s$e[1;32m$p$e[0m]$s &amp; &quot;C:\neard\bin\php\php5.3.13\pear\pear.bat&quot; -V" init_dir="C:/neard/bin/php/php5.3.13/pear" run_as_user="0" user=""/>
+				<console shell="&quot;C:\neard\tools\tccle\tccle13.06.77\tcc.exe&quot; @&quot;C:\neard\tools\tccle\tccle13.06.77\tcc.ini&quot; cls &amp; prompt [$e[1;31m$u@mycomputer$s$e[1;32m$p$e[0m]$s &amp; &quot;C:\neard\bin\php\php5.3.13\pear\pear.bat&quot; -V" init_dir="C:/neard/bin/php/php5.3.13/pear" run_as_user="0" user=""/>
 				<cursor style="0" r="255" g="255" b="255"/>
 				<background type="0" r="0" g="0" b="0">
 					<image file="" relative="0" extend="0" position="0">
@@ -118,7 +118,7 @@
 				</background>
 			</tab>
 			<tab title="MySQL 5.5.24" icon="icons/db.ico" use_default_icon="0">
-				<console shell="&quot;C:\neard\tools\tccle\tccle13.06.77\tcc.exe&quot; @&quot;C:\neard\tools\tccle\tccle13.06.77\tcc.ini&quot; cls &amp; prompt [$e[1;31m$u@$s$e[1;32m$p$e[0m]$s &amp; &quot;C:\neard\bin\mysql\mysql5.5.24\bin\mysql.exe&quot; -uroot" init_dir="C:/neard/bin/mysql/mysql5.5.24" run_as_user="0" user=""/>
+				<console shell="&quot;C:\neard\tools\tccle\tccle13.06.77\tcc.exe&quot; @&quot;C:\neard\tools\tccle\tccle13.06.77\tcc.ini&quot; cls &amp; prompt [$e[1;31m$u@mycomputer$s$e[1;32m$p$e[0m]$s &amp; &quot;C:\neard\bin\mysql\mysql5.5.24\bin\mysql.exe&quot; -uroot" init_dir="C:/neard/bin/mysql/mysql5.5.24" run_as_user="0" user=""/>
 				<cursor style="0" r="255" g="255" b="255"/>
 				<background type="0" r="0" g="0" b="0">
 					<image file="" relative="0" extend="0" position="0">
@@ -127,7 +127,7 @@
 				</background>
 			</tab>
 			<tab title="MariaDB 5.5.34" icon="icons/db.ico" use_default_icon="0">
-				<console shell="&quot;C:\neard\tools\tccle\tccle13.06.77\tcc.exe&quot; @&quot;C:\neard\tools\tccle\tccle13.06.77\tcc.ini&quot; cls &amp; prompt [$e[1;31m$u@$s$e[1;32m$p$e[0m]$s &amp; &quot;C:\neard\bin\mariadb\mariadb5.5.34\bin\mysql.exe&quot; -uroot" init_dir="C:/neard/bin/mariadb/mariadb5.5.34" run_as_user="0" user=""/>
+				<console shell="&quot;C:\neard\tools\tccle\tccle13.06.77\tcc.exe&quot; @&quot;C:\neard\tools\tccle\tccle13.06.77\tcc.ini&quot; cls &amp; prompt [$e[1;31m$u@mycomputer$s$e[1;32m$p$e[0m]$s &amp; &quot;C:\neard\bin\mariadb\mariadb5.5.34\bin\mysql.exe&quot; -uroot" init_dir="C:/neard/bin/mariadb/mariadb5.5.34" run_as_user="0" user=""/>
 				<cursor style="0" r="255" g="255" b="255"/>
 				<background type="0" r="0" g="0" b="0">
 					<image file="" relative="0" extend="0" position="0">
@@ -145,7 +145,7 @@
 				</background>
 			</tab>
 			<tab title="SVN 1.7.14" icon="icons/svn.ico" use_default_icon="0">
-				<console shell="&quot;C:\neard\tools\tccle\tccle13.06.77\tcc.exe&quot; @&quot;C:\neard\tools\tccle\tccle13.06.77\tcc.ini&quot; cls &amp; prompt [$e[1;31m$u@$s$e[1;32m$p$e[0m]$s &amp; echo svn, version 1.7.14 (r1542130) &amp; echo compil‚ Nov 20 2013, 08:33:46" init_dir="C:/neard/www" run_as_user="0" user=""/>
+				<console shell="&quot;C:\neard\tools\tccle\tccle13.06.77\tcc.exe&quot; @&quot;C:\neard\tools\tccle\tccle13.06.77\tcc.ini&quot; cls &amp; prompt [$e[1;31m$u@mycomputer$s$e[1;32m$p$e[0m]$s &amp; echo svn, version 1.7.14 (r1542130) &amp; echo compilâ€š Nov 20 2013, 08:33:46" init_dir="C:/neard/www" run_as_user="0" user=""/>
 				<cursor style="0" r="255" g="255" b="255"/>
 				<background type="0" r="0" g="0" b="0">
 					<image file="" relative="0" extend="0" position="0">
@@ -154,7 +154,7 @@
 				</background>
 			</tab>
 			<tab title="Node.js 0.10.22" icon="icons/nodejs.ico" use_default_icon="0">
-				<console shell="&quot;C:\neard\tools\tccle\tccle13.06.77\tcc.exe&quot; @&quot;C:\neard\tools\tccle\tccle13.06.77\tcc.ini&quot; cls &amp; prompt [$e[1;31m$u@$s$e[1;32m$p$e[0m]$s &amp; &quot;C:\neard\bin\nodejs\nodejs0.10.22\launch.bat&quot;" init_dir="C:/neard/www" run_as_user="0" user=""/>
+				<console shell="&quot;C:\neard\tools\tccle\tccle13.06.77\tcc.exe&quot; @&quot;C:\neard\tools\tccle\tccle13.06.77\tcc.ini&quot; cls &amp; prompt [$e[1;31m$u@mycomputer$s$e[1;32m$p$e[0m]$s &amp; &quot;C:\neard\bin\nodejs\nodejs0.10.22\launch.bat&quot;" init_dir="C:/neard/www" run_as_user="0" user=""/>
 				<cursor style="0" r="255" g="255" b="255"/>
 				<background type="0" r="0" g="0" b="0">
 					<image file="" relative="0" extend="0" position="0">

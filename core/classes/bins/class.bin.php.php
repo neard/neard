@@ -410,7 +410,7 @@ class BinPhp
                 if ($extMatch[1] == ';') {
                     $result[$name] = ActionSwitchPhpExtension::SWITCH_OFF;
                 } else {
-                    $result[$name] = ActionSwitchPhpExtension::SWITCH_ON;;
+                    $result[$name] = ActionSwitchPhpExtension::SWITCH_ON;
                 }
             }
         }

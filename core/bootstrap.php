@@ -27,3 +27,6 @@ $neardBs->register();
 // Process action
 $neardAction = new Action();
 $neardAction->process();
+
+// Stop loading
+Util::stopLoading();

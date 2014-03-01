@@ -7,6 +7,7 @@ class TplAppMariadb
     const MENU_SERVICE = 'mariadbService';
     
     const ACTION_SWITCH_VERSION = 'switchMariadbVersion';
+    const ACTION_CHANGE_PORT = 'changeMariadbPort';
     const ACTION_INSTALL_SERVICE = 'installMariadbService';
     const ACTION_REMOVE_SERVICE = 'removeMariadbService';
     
@@ -84,6 +85,12 @@ class TplAppMariadb
     {
         global $neardLang, $neardBins;
         
+        $tplChangePort = TplApp::getActionMulti(
+            self::ACTION_CHANGE_PORT, null,
+            array($neardLang->getValue(Lang::MENU_CHANGE_PORT), TplAestan::GLYPH_NETWORK),
+            false, get_called_class()
+        );
+        
         //TODO: Manage services via Aestan or Win32Service ext ?
         $result = TplAestan::getItemActionServiceStart($neardBins->getMariadb()->getService()->getName()) . PHP_EOL .
             TplAestan::getItemActionServiceStop($neardBins->getMariadb()->getService()->getName()) . PHP_EOL .
@@ -96,10 +103,7 @@ class TplAppMariadb
                 Action::CHECK_PORT, array($neardBins->getMariadb()->getName(), $neardBins->getMariadb()->getPort()),
                 array(sprintf($neardLang->getValue(Lang::MENU_CHECK_PORT), $neardBins->getMariadb()->getPort()), TplAestan::GLYPH_LIGHT)
             ) . PHP_EOL .
-            TplApp::getActionRun(
-                Action::CHANGE_PORT, array($neardBins->getMariadb()->getName()),
-                array($neardLang->getValue(Lang::MENU_CHANGE_PORT), TplAestan::GLYPH_NETWORK)
-            ) . PHP_EOL;
+            $tplChangePort[TplApp::SECTION_CALL] . PHP_EOL;
             
         $isInstalled = $neardBins->getMariadb()->getService()->isInstalled();
         if (!$isInstalled) {
@@ -121,8 +125,18 @@ class TplAppMariadb
             $result .= $tplRemoveService[TplApp::SECTION_CALL] . PHP_EOL . PHP_EOL .
             $tplRemoveService[TplApp::SECTION_CONTENT] . PHP_EOL;
         }
+        
+        $result .= $tplChangePort[TplApp::SECTION_CONTENT] . PHP_EOL;
     
         return $result;
+    }
+    
+    public static function getActionChangeMariadbPort()
+    {
+        global $neardLang, $neardBins;
+    
+        return TplApp::getActionRun(Action::CHANGE_PORT, array($neardBins->getMariadb()->getName())) . PHP_EOL .
+            TplAppReload::getActionReload();
     }
     
     public static function getActionInstallMariadbService()

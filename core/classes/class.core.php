@@ -11,6 +11,7 @@ class Core
     
     const APP_PATHS = 'paths.dat';
     const EXEC = 'exec';
+    const LOADING_PID = 'loading.pid';
 
     private $langsPath;
     private $libsPath;
@@ -66,15 +67,20 @@ class Core
     {
         file_put_contents($this->getExec(), $action);
     }
+    
+    public function getLoadingPid($aetrayPath = false)
+    {
+        return $this->getResourcesPath($aetrayPath) . '/' . self::LOADING_PID;
+    }
+    
+    public function setLoadingPid($pid)
+    {
+        file_put_contents($this->getLoadingPid(), $pid);
+    }
 
     public function getPhpPath($aetrayPath = false)
     {
         return $this->getLibsPath($aetrayPath) . '/php';
-    }
-
-    public function getPhpCliExe($aetrayPath = false)
-    {
-        return $this->getPhpPath($aetrayPath) . '/' . self::PHP_CLI_EXE;
     }
 
     public function getPhpCliSilentExe($aetrayPath = false)

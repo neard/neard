@@ -22,8 +22,8 @@ REM Force system tmp dir (Neard)
 SET "TMP=%NEARD_PHP_PATH%\pear\tmp"
 
 REM Overwrite pear.ini (Neard)
-ECHO #PEAR_Config 0.9>%NEARD_PHP_PATH%\pear\pear.ini
-ECHO a:12:{s:15:"preferred_state";s:6:"stable";s:8:"temp_dir";s:45:"%NEARD_PHP_PATH%\pear\tmp";s:12:"download_dir";s:45:"%NEARD_PHP_PATH%\pear\tmp";s:7:"bin_dir";s:41:"%NEARD_PHP_PATH%\pear";s:7:"php_dir";s:46:"%NEARD_PHP_PATH%\pear\pear";s:7:"doc_dir";s:46:"%NEARD_PHP_PATH%\pear\docs";s:8:"data_dir";s:46:"%NEARD_PHP_PATH%\pear\data";s:7:"cfg_dir";s:45:"%NEARD_PHP_PATH%\pear\cfg";s:7:"www_dir";s:45:"%NEARD_PHP_PATH%\pear\www";s:8:"test_dir";s:47:"%NEARD_PHP_PATH%\pear\tests";s:7:"php_bin";s:45:"%NEARD_PHP_PATH%\php.exe";s:10:"__channels";a:3:{s:5:"__uri";a:0:{}s:11:"doc.php.net";a:0:{}s:12:"pecl.php.net";a:0:{}}}>>%NEARD_PHP_PATH%\pear\pear.ini
+ECHO #PEAR_Config 0.9>"%NEARD_PHP_PATH%\pear\pear.ini"
+ECHO a:12:{s:15:"preferred_state";s:6:"stable";s:8:"temp_dir";s:45:"%NEARD_PHP_PATH%\pear\tmp";s:12:"download_dir";s:45:"%NEARD_PHP_PATH%\pear\tmp";s:7:"bin_dir";s:41:"%NEARD_PHP_PATH%\pear";s:7:"php_dir";s:46:"%NEARD_PHP_PATH%\pear\pear";s:7:"doc_dir";s:46:"%NEARD_PHP_PATH%\pear\docs";s:8:"data_dir";s:46:"%NEARD_PHP_PATH%\pear\data";s:7:"cfg_dir";s:45:"%NEARD_PHP_PATH%\pear\cfg";s:7:"www_dir";s:45:"%NEARD_PHP_PATH%\pear\www";s:8:"test_dir";s:47:"%NEARD_PHP_PATH%\pear\tests";s:7:"php_bin";s:45:"%NEARD_PHP_PATH%\php.exe";s:10:"__channels";a:3:{s:5:"__uri";a:0:{}s:11:"doc.php.net";a:0:{}s:12:"pecl.php.net";a:0:{}}}>>"%NEARD_PHP_PATH%\pear\pear.ini"
 
 REM Test to see if this is a raw pear.bat (uninstalled version)
 SET TMPTMPTMPTMPT=@includ

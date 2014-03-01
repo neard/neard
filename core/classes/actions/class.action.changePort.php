@@ -78,6 +78,10 @@ class ActionChangePort
                         sprintf($neardLang->getValue(Lang::PORT_CHANGED), $this->bin, $port),
                         $boxTitle);
                     $neardWinbinder->destroyWindow($window);
+                    
+                    Util::startLoading();
+                    $this->bin->getService()->restart();
+                    
                 } else {
                     $neardWinbinder->messageBoxError(
                         sprintf($neardLang->getValue(Lang::PORT_NOT_USED_BY), $port),

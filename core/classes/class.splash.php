@@ -3,7 +3,7 @@
 class Splash
 {
     const IMG_BLANK = 'splash-blank.bmp';
-    const IMG_SETTINGS = 'splash-settings.bmp';
+    const IMG_STARTING = 'splash-starting.bmp';
     const IMG_APACHE = 'splash-apache.bmp';
     const IMG_MYSQL = 'splash-mysql.bmp';
     const IMG_MARIADB = 'splash-mariadb.bmp';
@@ -17,6 +17,7 @@ class Splash
     
     private $wbWindow;
     private $wbImage;
+    private $wbImageVersion;
     private $wbTextFont;
     private $wbTextLoading;
     private $wbProgressBar;
@@ -50,6 +51,23 @@ class Splash
     
         $this->currentImg = $neardCore->getResourcesPath() . '/' . $img;
         $this->wbImage = $neardWinbinder->drawImage($this->wbWindow, $this->currentImg);
+        $this->drawVersion();
+    }
+    
+    private function drawVersion()
+    {
+        global $neardConfig, $neardCore, $neardWinbinder;
+        
+        $img = $neardCore->getResourcesPath() . '/release.bmp';
+        if (Util::startWith('testing', $neardConfig->getAppVersion())) {
+            $img = $neardCore->getResourcesPath() . '/testing.bmp';
+        }
+        
+        $this->wbImageVersion = $neardWinbinder->drawImage(
+            $this->wbWindow, $img,
+            441, 253,
+            191, 26
+        );
     }
     
     public function setTextLoading($caption)
@@ -57,6 +75,7 @@ class Splash
         global $neardWinbinder;
     
         $this->wbImage = $neardWinbinder->drawImage($this->wbWindow, $this->currentImg);
+        $this->drawVersion();
         $neardWinbinder->drawRect($this->wbWindow, 0, 380, self::WINDOW_WIDTH, 65);
         $neardWinbinder->drawLine($this->wbWindow, 0, 380, self::WINDOW_WIDTH, 380, 6316128, 2);
         $this->wbTextLoading = $neardWinbinder->drawText($this->wbWindow, $caption . ' ...', 7, 382, 630, 25, $this->wbTextFont);

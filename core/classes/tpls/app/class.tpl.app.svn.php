@@ -19,6 +19,7 @@ class TplAppSvn
         global $neardLang;
         
         $tplRepos = TplApp::getMenu($neardLang->getValue(Lang::REPOS), self::MENU_REPOS, get_called_class());
+        $emptyRepos = count(explode(PHP_EOL, $tplRepos[TplApp::SECTION_CONTENT])) == 2;
         $tplRefreshRepos = TplApp::getActionMulti(
             self::ACTION_REFRESH_REPOS, null,
             array($neardLang->getValue(Lang::MENU_REFRESH_REPOS), TplAestan::GLYPH_RELOAD),
@@ -28,12 +29,12 @@ class TplAppSvn
         return
         
             // Items
-            $tplRepos[TplApp::SECTION_CALL] . PHP_EOL .
+            (!$emptyRepos ? $tplRepos[TplApp::SECTION_CALL] . PHP_EOL : '') .
             $tplRefreshRepos[TplApp::SECTION_CALL] . PHP_EOL .
             TplAestan::getItemLink($neardLang->getValue(Lang::WEBSVN), 'websvn/', true) . PHP_EOL .
             
             // Actions
-            $tplRepos[TplApp::SECTION_CONTENT] .
+            (!$emptyRepos ? $tplRepos[TplApp::SECTION_CONTENT] . PHP_EOL : '') .
             $tplRefreshRepos[TplApp::SECTION_CONTENT];
     }
     

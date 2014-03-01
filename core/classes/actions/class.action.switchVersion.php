@@ -128,7 +128,6 @@ class ActionSwitchVersion
                 $neardWinbinder->reset();
         
                 $neardCore->setExec(ActionExec::RESTART);
-                exit();
             } else {
                 $this->neardSplash->incrProgressBar(self::GAUGE_SERVICES * count($neardBins->getServices()) + 1);
                 
