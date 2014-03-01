@@ -9,6 +9,7 @@ class TplAppApache
     const MENU_ALIAS = 'apacheAlias';
     
     const ACTION_SWITCH_VERSION = 'switchApacheVersion';
+    const ACTION_CHANGE_PORT = 'changeApachePort';
     const ACTION_INSTALL_SERVICE = 'installApacheService';
     const ACTION_REMOVE_SERVICE = 'removeApacheService';
     const ACTION_SWITCH_MODULE = 'switchApacheModule';
@@ -95,6 +96,12 @@ class TplAppApache
     {
         global $neardLang, $neardBins;
         
+        $tplChangePort = TplApp::getActionMulti(
+            self::ACTION_CHANGE_PORT, null,
+            array($neardLang->getValue(Lang::MENU_CHANGE_PORT), TplAestan::GLYPH_NETWORK),
+            false, get_called_class()
+        );
+        
         //TODO: Manage services via Aestan or Win32Service ext ?
         $result = TplAestan::getItemActionServiceStart($neardBins->getApache()->getService()->getName()) . PHP_EOL .
             TplAestan::getItemActionServiceStop($neardBins->getApache()->getService()->getName()) . PHP_EOL .
@@ -107,10 +114,7 @@ class TplAppApache
                 Action::CHECK_PORT, array($neardBins->getApache()->getName(), $neardBins->getApache()->getPort()),
                 array(sprintf($neardLang->getValue(Lang::MENU_CHECK_PORT), $neardBins->getApache()->getPort()), TplAestan::GLYPH_LIGHT)
             ) . PHP_EOL .
-            TplApp::getActionRun(
-                Action::CHANGE_PORT, array($neardBins->getApache()->getName()),
-                array($neardLang->getValue(Lang::MENU_CHANGE_PORT), TplAestan::GLYPH_NETWORK)
-            ) . PHP_EOL;
+            $tplChangePort[TplApp::SECTION_CALL] . PHP_EOL;
         
         $isInstalled = $neardBins->getApache()->getService()->isInstalled();
         if (!$isInstalled) {
@@ -132,8 +136,18 @@ class TplAppApache
             $result .= $tplRemoveService[TplApp::SECTION_CALL] . PHP_EOL . PHP_EOL .
                 $tplRemoveService[TplApp::SECTION_CONTENT] . PHP_EOL;
         }
-    
+        
+        $result .= $tplChangePort[TplApp::SECTION_CONTENT] . PHP_EOL;
+        
         return $result;
+    }
+    
+    public static function getActionChangeApachePort()
+    {
+        global $neardLang, $neardBins;
+    
+        return TplApp::getActionRun(Action::CHANGE_PORT, array($neardBins->getApache()->getName())) . PHP_EOL .
+            TplAppReload::getActionReload();
     }
     
     public static function getActionInstallApacheService()

@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.0.2 (2014/03/01)
+
+* Fix error in Gitlist if no repositories ([Issue #15](https://github.com/crazy-max/neard/issues/15))
+* Fix console won't launch ([Issue #14](https://github.com/crazy-max/neard/issues/14))
+* Fix wrong version displayed on splash screen ([Issue #13](https://github.com/crazy-max/neard/issues/13))
+* Loading window when reload ([Issue #6](https://github.com/crazy-max/neard/issues/6))
+* Display hosts on homepage ([Issue #5](https://github.com/crazy-max/neard/issues/5))
+* Restart service when change port ([Issue #4](https://github.com/crazy-max/neard/issues/4))
+* Fix Git console error ([Issue #3](https://github.com/crazy-max/neard/issues/3))
+* Fix errors on Windows XP ([Issue #16](https://github.com/crazy-max/neard/issues/16), [Issue #17](https://github.com/crazy-max/neard/issues/17))
+
 ## 1.0.1 (2014/02/26)
 
 * Need SETX command to refresh environment variables ([Issue #12](https://github.com/crazy-max/neard/issues/12))

@@ -9,6 +9,7 @@ class Action
     const CHECK_PORT = 'checkPort';
     const EDIT_ALIAS = 'editAlias';
     const EXEC = 'exec';
+    const LOADING = 'loading';
     const QUIT = 'quit';
     const REFRESH_REPOS = 'refreshRepos';
     const RELOAD = 'reload';

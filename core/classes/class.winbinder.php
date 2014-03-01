@@ -33,6 +33,9 @@ class WinBinder
     const CURSOR_WAIT = 'wait';
     const CURSOR_WAITARROW = 'waitarrow';
     
+    const SYSINFO_SCREENAREA = 'screenarea';
+    const SYSINFO_WORKAREA = 'workarea';
+    
     private $defaultTitle;
     private $countCtrls;
     
@@ -63,7 +66,7 @@ class WinBinder
         return $result;
     }
 
-    private function createWindow($parent, $wclass, $caption, $xPos, $yPos, $width, $height, $style = null, $params = null)
+    public function createWindow($parent, $wclass, $caption, $xPos, $yPos, $width, $height, $style = null, $params = null)
     {
         global $neardCore;
         
@@ -76,7 +79,7 @@ class WinBinder
         return $window;
     }
 
-    private function createControl($parent, $ctlClass, $caption, $xPos, $yPos, $width, $height, $style = null, $params = null)
+    public function createControl($parent, $ctlClass, $caption, $xPos, $yPos, $width, $height, $style = null, $params = null)
     {
         $this->countCtrls++;
         return array(
@@ -112,6 +115,11 @@ class WinBinder
     public function refresh($wbobject)
     {
         return $this->callWinBinder('wb_refresh', array($wbobject, true));
+    }
+    
+    public function getSystemInfo($info)
+    {
+        return $this->callWinBinder('wb_get_system_info', array($info));
     }
     
     public function drawImage($wbobject, $path, $xPos = 0, $yPos = 0, $width = 0, $height = 0)

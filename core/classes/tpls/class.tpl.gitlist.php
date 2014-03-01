@@ -13,6 +13,7 @@ class TplGitlist
         
         $result = '[git]' . PHP_EOL;
         $result .= 'client = \'' . $neardTools->getGit()->getExe() . '\'' . PHP_EOL;
+        $result .= 'repositories[] = \'\'' . PHP_EOL;
         
         // Repositories
         $refactorRepos = array();

@@ -5,7 +5,7 @@ class ActionStartup
     private $neardSplash;
     
     const GAUGE_SERVICES = 6;
-    const GAUGE_OTHERS = 13;
+    const GAUGE_OTHERS = 14;
     
     public function __construct($args)
     {
@@ -17,7 +17,7 @@ class ActionStartup
             $neardLang->getValue(Lang::STARTUP),
             self::GAUGE_SERVICES * count($neardBins->getServices()) + self::GAUGE_OTHERS,
             sprintf($neardLang->getValue(Lang::STARTUP_STARTING_TEXT), APP_TITLE . ' ' . $neardConfig->getAppVersion()),
-            Splash::IMG_SETTINGS
+            Splash::IMG_STARTING
         );
         
         $neardWinbinder->setHandler($this->neardSplash->getWbWindow(), $this, 'processWindow', 1000);
@@ -30,6 +30,17 @@ class ActionStartup
         global $neardBs, $neardCore, $neardConfig, $neardLang, $neardBins, $neardApps, $neardTools, $neardWinbinder, $neardRegistry, $neardHomepage;
         $error = '';
         $restart = false;
+        
+        // Kill old PHP instances
+        $this->neardSplash->setTextLoading($neardLang->getValue(Lang::STARTUP_KILL_PHP_PROCS_TEXT));
+        $this->neardSplash->incrProgressBar();
+        $pids = win32_ps_list_procs();
+        foreach ($pids as $aPid) {
+            $unixExePath = Util::formatUnixPath($aPid['exe']);
+            if ($unixExePath == $neardCore->getPhpCliSilentExe() && $aPid['pid'] != Util::getPid()) {
+                Util::killByPid($aPid['pid']);
+            }
+        }
         
         // Refresh hostname
         $this->neardSplash->setTextLoading($neardLang->getValue(Lang::STARTUP_REFRESH_HOSTNAME_TEXT));
@@ -70,8 +81,9 @@ class ActionStartup
         // Check path
         $this->neardSplash->setTextLoading($neardLang->getValue(Lang::STARTUP_CHECK_PATH_TEXT));
         $this->neardSplash->incrProgressBar();
-        $appPaths = Util::getAppPaths();
-        $this->writeLog('Old app paths: ' . implode(' ; ', $appPaths));
+        $currentPath = $neardBs->getRootPath();
+        $oldPaths = Util::getAppPaths();
+        $this->writeLog('Old app paths: ' . implode(' ; ', $oldPaths));
         
         // Scan folders
         $this->neardSplash->setTextLoading($neardLang->getValue(Lang::STARTUP_SCAN_FOLDERS_TEXT));
@@ -100,17 +112,17 @@ class ActionStartup
         $this->writeLog('Files to scan: ' . count($filesToScan));
         
         // Change old paths
-        $this->neardSplash->setTextLoading(sprintf($neardLang->getValue(Lang::STARTUP_CHANGE_OLD_PATHS_TEXT), $neardBs->getRootPath()));
+        $this->neardSplash->setTextLoading(sprintf($neardLang->getValue(Lang::STARTUP_CHANGE_OLD_PATHS_TEXT), $currentPath));
         $this->neardSplash->incrProgressBar();
-        $unixCurrentPath = Util::formatUnixPath($neardBs->getRootPath());
-        $windowsCurrentPath = Util::formatWindowsPath($neardBs->getRootPath());
+        $unixCurrentPath = Util::formatUnixPath($currentPath);
+        $windowsCurrentPath = Util::formatWindowsPath($currentPath);
         $countChangedOcc = 0;
         $countChangedFiles = 0;
         foreach ($filesToScan as $fileToScan) {
             $tmpCountChangedOcc = 0;
             $fileContentOr = file_get_contents($fileToScan);
             $fileContent = $fileContentOr;
-            foreach ($appPaths as $oldPath) {
+            foreach ($oldPaths as $oldPath) {
                 $unixOldPath = Util::formatUnixPath($oldPath);
                 $windowsOldPath = Util::formatWindowsPath($oldPath);
                 preg_match('#' . $unixOldPath . '#i', $fileContent, $unixMatches);
@@ -134,13 +146,13 @@ class ActionStartup
         $this->writeLog('Nb occurences changed: ' . $countChangedOcc);
         
         // Save current path
-        if (!in_array($neardBs->getRootPath(), $appPaths)) {
-            if (count($appPaths) > 5) {
+        if (!in_array($currentPath, $oldPaths)) {
+            if (count($oldPaths) > 5) {
                 unset($appPaths[0]);
             }
-            $appPaths[] = $neardBs->getRootPath();
-            file_put_contents($neardCore->getAppPaths(), implode(PHP_EOL, $appPaths));
-            $this->writeLog('Save current path: ' . $neardBs->getRootPath());
+            $oldPaths[] = $currentPath;
+            file_put_contents($neardCore->getAppPaths(), implode(PHP_EOL, $oldPaths));
+            $this->writeLog('Save current path: ' . $currentPath);
         }
         
         // Check app path reg key
@@ -307,9 +319,7 @@ class ActionStartup
             foreach ($neardBins->getServices() as $sName => $service) {
                 $service->delete();
             }
-            $neardWinbinder->destroyWindow($window);
             $neardCore->setExec(ActionExec::RESTART);
-            exit();
         }
         
         if (!empty($error)) {
@@ -318,11 +328,10 @@ class ActionStartup
                 $service->delete();
             }
             $neardWinbinder->messageBoxError($error, $neardLang->getValue(Lang::STARTUP_ERROR_TITLE));
-            $neardWinbinder->destroyWindow($window);
             $neardCore->setExec(ActionExec::QUIT);
-            exit();
         }
         
+        Util::startLoading();
         $neardWinbinder->destroyWindow($window);
     }
     

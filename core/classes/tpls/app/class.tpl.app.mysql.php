@@ -7,6 +7,7 @@ class TplAppMysql
     const MENU_SERVICE = 'mysqlService';
     
     const ACTION_SWITCH_VERSION = 'switchMysqlVersion';
+    const ACTION_CHANGE_PORT = 'changeMysqlPort';
     const ACTION_INSTALL_SERVICE = 'installMysqlService';
     const ACTION_REMOVE_SERVICE = 'removeMysqlService';
     
@@ -84,6 +85,12 @@ class TplAppMysql
     {
         global $neardLang, $neardBins;
         
+        $tplChangePort = TplApp::getActionMulti(
+            self::ACTION_CHANGE_PORT, null,
+            array($neardLang->getValue(Lang::MENU_CHANGE_PORT), TplAestan::GLYPH_NETWORK),
+            false, get_called_class()
+        );
+        
         //TODO: Manage services via Aestan or Win32Service ext ?
         $result = TplAestan::getItemActionServiceStart($neardBins->getMysql()->getService()->getName()) . PHP_EOL .
             TplAestan::getItemActionServiceStop($neardBins->getMysql()->getService()->getName()) . PHP_EOL .
@@ -96,10 +103,7 @@ class TplAppMysql
                 Action::CHECK_PORT, array($neardBins->getMysql()->getName(), $neardBins->getMysql()->getPort()),
                 array(sprintf($neardLang->getValue(Lang::MENU_CHECK_PORT), $neardBins->getMysql()->getPort()), TplAestan::GLYPH_LIGHT)
             ) . PHP_EOL .
-            TplApp::getActionRun(
-                Action::CHANGE_PORT, array($neardBins->getMysql()->getName()),
-                array($neardLang->getValue(Lang::MENU_CHANGE_PORT), TplAestan::GLYPH_NETWORK)
-            ) . PHP_EOL;
+            $tplChangePort[TplApp::SECTION_CALL] . PHP_EOL;
         
         $isInstalled = $neardBins->getMysql()->getService()->isInstalled();
         if (!$isInstalled) {
@@ -121,8 +125,18 @@ class TplAppMysql
             $result .= $tplRemoveService[TplApp::SECTION_CALL] . PHP_EOL . PHP_EOL .
             $tplRemoveService[TplApp::SECTION_CONTENT] . PHP_EOL;
         }
+        
+        $result .= $tplChangePort[TplApp::SECTION_CONTENT] . PHP_EOL;
     
         return $result;
+    }
+    
+    public static function getActionChangeMysqlPort()
+    {
+        global $neardLang, $neardBins;
+    
+        return TplApp::getActionRun(Action::CHANGE_PORT, array($neardBins->getMysql()->getName())) . PHP_EOL .
+            TplAppReload::getActionReload();
     }
     
     public static function getActionInstallMysqlService()

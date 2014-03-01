@@ -428,7 +428,7 @@ class Util
         $scriptContent .= 'ENDLOCAL' . PHP_EOL;
         file_put_contents($scriptName, $scriptContent);
         
-        return $neardWinbinder->exec($scriptName, null, true);
+        $neardWinbinder->exec($scriptName, null, true);
     }
     
     public static function getAppBinsRegKey($fromRegistry = true)
@@ -565,7 +565,10 @@ class Util
     
     public static function getPowerShellPath()
     {
-        return self::findFile('C:\Windows\System32\WindowsPowerShell', 'powershell.exe');
+        if (is_dir('C:\Windows\System32\WindowsPowerShell')) {
+            return self::findFile('C:\Windows\System32\WindowsPowerShell', 'powershell.exe');
+        }
+        return false;
     }
     
     public static function getPearVersion()
@@ -595,7 +598,16 @@ class Util
         $scriptContent = '@ECHO OFF' . PHP_EOL . PHP_EOL;
         $scriptContent .= 'cmd /c "' . $neardTools->getSvn()->getExe() . '" --version > "' . $resultFile . '"' . PHP_EOL;
         
-        return self::execBatch($resultFile, $scriptContent, 10);
+        $result = self::execBatch($resultFile, $scriptContent, 10);
+        if (!empty($result) && is_array($result)) {
+            $rebuildResult = array();
+            foreach ($result as $row) {
+                $rebuildResult[] = self::cp1252ToUtf8($row);
+            }
+            $result = $rebuildResult;
+        }
+        
+        return $result;
     }
     
     public static function findRepos($startPath, $findFolder, $checkFileIns = null)
@@ -756,7 +768,7 @@ class Util
         return $result;
     }
     
-    public static function execBatch($resultFile , $content, $timeout, $silent = true)
+    public static function execBatch($resultFile, $content, $timeout, $silent = true)
     {
         global $neardCore, $neardWinbinder;
     
@@ -899,13 +911,67 @@ class Util
     {
         global $neardBs, $neardCore;
     
-        $rdmEnvVar = self::random(15, false);
         $resultFile = self::formatWindowsPath($neardCore->getTmpPath() . '/' . self::random() . '.tmp');
         $scriptContent = '@ECHO OFF' . PHP_EOL . PHP_EOL;
         $scriptContent .= 'SETX /M ' . Registry::APP_PATH_REG_ENTRY . ' "' . self::formatWindowsPath($neardBs->getRootPath()) . '"' . PHP_EOL;
         $scriptContent .= 'ECHO FINISHED! > "' . $resultFile . '"' . PHP_EOL;
     
         self::execBatch($resultFile, $scriptContent, 2);
+    }
+    
+    public static function utf8ToCp1252($data)
+    {
+        return iconv("UTF-8", "WINDOWS-1252", $data);
+    }
+    
+    public static function cp1252ToUtf8($data)
+    {
+        return iconv("WINDOWS-1252", "UTF-8", $data);
+    }
+    
+    public static function killByPid($pid)
+    {
+        global $neardWinbinder;
+        
+        if (!empty($pid) && self::existsPid($pid)) {
+            $neardWinbinder->exec('TASKKILL', '/F /PID ' . $pid, true);
+        }
+    }
+    
+    public static function getPid()
+    {
+        $procInfo = win32_ps_stat_proc();
+        return intval($procInfo['pid']);
+    }
+    
+    public static function existsPid($pid)
+    {
+        $pids = win32_ps_list_procs();
+        foreach ($pids as $aPid) {
+            if ($aPid['pid'] == $pid) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
+    public static function startLoading()
+    {
+        global $neardCore, $neardWinbinder;
+        if (!file_exists($neardCore->getLoadingPid())) {
+            $neardWinbinder->exec($neardCore->getPhpCliSilentExe(), Core::BOOTSTRAP_FILE . ' ' . Action::LOADING);
+        }
+    }
+    
+    public static function stopLoading()
+    {
+        global $neardCore;
+        if (file_exists($neardCore->getLoadingPid())) {
+            $pid = trim(file_get_contents($neardCore->getLoadingPid()));
+            self::unlinkAlt($neardCore->getLoadingPid());
+            self::killByPid($pid);
+        }
     }
     
 }

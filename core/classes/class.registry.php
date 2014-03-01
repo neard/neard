@@ -197,7 +197,7 @@ class Registry
         $this->writeLog('execVbs script: ' . $scriptPath);
         file_put_contents($scriptPath, $scriptContent);
         
-        $maxtime = time() + 2;
+        $maxtime = time() + 10;
         $neardWinbinder->exec('wscript.exe', '"' . $scriptPath . '"');
         
         while ($result === false || empty($result)) {

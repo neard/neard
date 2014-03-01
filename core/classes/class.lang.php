@@ -37,6 +37,7 @@ class Lang
     const VERSION = 'version';
     const VERSIONS = 'versions';
     const VIRTUAL_HOSTS = 'virtualHosts';
+    const WINDOWS_HOSTS = 'windowsHosts';
     
     // Menu
     const MENU_ABOUT = 'menuAbout';
@@ -146,6 +147,7 @@ class Lang
     
     // Action Startup
     const STARTUP_STARTING_TEXT = 'startupStartingText';
+    const STARTUP_KILL_PHP_PROCS_TEXT = 'startupKillPhpProcsText';
     const STARTUP_REFRESH_HOSTNAME_TEXT = 'startupRefreshHostnameText';
     const STARTUP_CHECK_BROWSER_TEXT = 'startupCheckBrowserText';
     const STARTUP_CLEAR_TMP_FOLDERS_TEXT = 'startupClearTmpFoldersText';
@@ -206,6 +208,8 @@ class Lang
     const HOMEPAGE_QUESTIONS_TEXT = 'homepageQuestionsText';
     const HOMEPAGE_POST_ISSUE = 'homepagePostIssue';
     const HOMEPAGE_DONATE_TEXT = 'homepageDonateText';
+    const HOMEPAGE_PHPINFO_TEXT = 'homepagePhpinfoText';
+    const HOMEPAGE_BACK_TEXT = 'homepageBackText';
     
     private $current;
     private $raw;

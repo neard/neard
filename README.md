@@ -30,9 +30,14 @@ And many other features.
 ## Requirements
 
 * [WSH (Windows Script Host)](http://support.microsoft.com/kb/232211) : Open a command prompt and type ``wscript`` to check.
-* [SETX](http://technet.microsoft.com/en-us/library/cc755104.aspx) : Open a command prompt and type ``setx`` to check.
+* [SETX](http://technet.microsoft.com/en-us/library/cc755104.aspx) : Open a command prompt and type ``setx /?`` to check.
 * Be [Admin user](http://windows.microsoft.com/en-US/windows7/How-do-I-log-on-as-an-administrator).
-* If you are on Windows XP, you need to download the [Support Tools CD](http://www.microsoft.com/en-us/download/details.aspx?id=18546).
+
+### Windows XP
+
+* Download and install [Visual C++ 2008 SP1 Redistributable Package (x86)](http://www.microsoft.com/en-us/download/details.aspx?id=5582).
+* Download and install [Visual C++ 2010 Redistributable Package (x86)](https://www.microsoft.com/en-us/download/details.aspx?id=8328).
+* Download and install [Windows Support Tools](http://www.microsoft.com/en-us/download/details.aspx?id=18546).
 
 ## Download
 
@@ -40,6 +45,7 @@ Neard is [available on SourceForge](https://sourceforge.net/projects/neard/).
 
 ### Latest releases
 
+* [Neard 1.0.2](https://sourceforge.net/projects/neard/files/Releases/1.0.2/neard-1.0.2.zip/download) (2014/02/28)
 * [Neard 1.0.1](https://sourceforge.net/projects/neard/files/Releases/1.0.1/neard-1.0.1.zip/download) (2014/02/26)
 * [Neard 1.0.0](https://sourceforge.net/projects/neard/files/Releases/1.0.0/neard-1.0.0.zip/download) (2014/02/25)
 

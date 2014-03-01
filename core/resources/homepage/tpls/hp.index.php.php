@@ -24,6 +24,9 @@
         <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardBins->getPhp()->getPearVersion(true); ?></span>
         <i class="fa fa-puzzle-piece"></i> <?php echo $neardLang->getValue(Lang::PEAR); ?>
       </span>
+      <a class="list-group-item" href="<?php echo $neardHomepage->getPageUrl(Homepage::PAGE_PHPINFO); ?>">
+        <i class="fa fa-info-circle"></i> <?php echo $neardLang->getValue(Lang::HOMEPAGE_PHPINFO_TEXT); ?>
+      </a>
     </div>
   </div>
 </div>

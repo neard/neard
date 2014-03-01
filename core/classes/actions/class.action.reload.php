@@ -6,6 +6,9 @@ class ActionReload
     {
         global $neardBs, $neardConfig, $neardBins, $neardTools, $neardApps, $neardHomepage;
         
+        // Start loading
+        Util::startLoading();
+        
         // Refresh hostname
         $neardConfig->replace(Config::CFG_HOSTNAME, gethostname());
         
@@ -19,7 +22,7 @@ class ActionReload
         Util::refactorHostsFile();
         
         // Process neard.ini
-        file_put_contents($neardBs->getIniFilePath(), iconv("UTF-8", "WINDOWS-1252", TplApp::process()));
+        file_put_contents($neardBs->getIniFilePath(), Util::utf8ToCp1252(TplApp::process()));
         
         // Process Console config 
         file_put_contents($neardTools->getConsole()->getConf(), TplConsole::process());
