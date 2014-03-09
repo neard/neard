@@ -19,7 +19,7 @@ class ActionReload
         }
         
         // Rebuild hosts file
-        Util::refactorHostsFile();
+        Util::refactorWindowsHosts();
         
         // Process neard.ini
         file_put_contents($neardBs->getIniFilePath(), Util::utf8ToCp1252(TplApp::process()));

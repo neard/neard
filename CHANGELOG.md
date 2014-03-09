@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.0.3 (2014/03/06)
+
+* Add debug settings in Apache menu ([Issue #22](https://github.com/crazy-max/neard/issues/22))
+* Create vhosts add and edit item menu ([Issue #21](https://github.com/crazy-max/neard/issues/21))
+* Add menu to change logs verbose ([Issue #19](https://github.com/crazy-max/neard/issues/19))
+* Apache service error more verbose on startup ([Issue #20](https://github.com/crazy-max/neard/issues/20))
+* Fix process status error (299)
+* Fix destroy window error
+* Adding default virtual host for localhost in httpd.conf
+
 ## 1.0.2 (2014/03/01)
 
 * Fix error in Gitlist if no repositories ([Issue #15](https://github.com/crazy-max/neard/issues/15))

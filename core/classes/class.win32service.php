@@ -149,10 +149,23 @@ class Win32Service
 
     public function start()
     {
-        global $neardBs;
+        global $neardBs, $neardBins;
         $start = dechex($this->callWin32Service('win32_start_service', $this->getName(), true));
         $this->writeLog('Start service ' . $this->getName() . ': ' . $start . ' (status: ' . $this->status() . ')');
-        return $this->isRunning();
+        if (!$this->isRunning()) {
+            if ($this->getName() == BinApache::SERVICE_NAME) {
+                $cmdOutput = $neardBins->getApache()->getCmdLineOutput(BinApache::CMD_SYNTAX_CHECK);
+                if (!$cmdOutput['syntaxOk']) {
+                    file_put_contents(
+                        $neardBins->getApache()->getErrorLog(),
+                        '[' . date('Y-m-d H:i:s', time()) . '] [error] ' . $cmdOutput['content'] . PHP_EOL,
+                        FILE_APPEND
+                    );
+                }
+            }
+            return false;
+        }
+        return true;
     }
 
     public function stop()

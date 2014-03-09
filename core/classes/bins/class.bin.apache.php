@@ -10,6 +10,14 @@ class BinApache
     const CFG_CONF = 'apacheConf';
     const CFG_PORT = 'apachePort';
     
+    const CMD_VERSION_NUMBER = '-v';
+    const CMD_COMPILE_SETTINGS = '-V';
+    const CMD_COMPILED_MODULES = '-l';
+    const CMD_CONFIG_DIRECTIVES = '-L';
+    const CMD_VHOSTS_SETTINGS = '-S';
+    const CMD_LOADED_MODULES = '-M';
+    const CMD_SYNTAX_CHECK = '-t';
+    
     private $name;
     private $version;
     private $service;
@@ -93,15 +101,18 @@ class BinApache
             // httpd.conf
             Util::replaceInFile($this->getConf(), array(
                 '/^Listen\s(\d+)/' => 'Listen ' . $port,
-                '/^ServerName\s+([a-zA-Z0-9.]+):(\d+)/' => 'ServerName {{1}}:' . $port
+                '/^ServerName\s+([a-zA-Z0-9.]+):(\d+)/' => 'ServerName {{1}}:' . $port,
+                '/^NameVirtualHost\s+([a-zA-Z0-9.*]+):(\d+)/' => 'NameVirtualHost {{1}}:' . $port,
+                '/^<VirtualHost\s+([a-zA-Z0-9.*]+):(\d+)>/' => '<VirtualHost {{1}}:' . $port . '>'
             ));
             $neardWinbinder->incrProgressBar($wbProgressBar);
             
             // vhosts
             foreach ($this->getVhosts() as $vhost) {
                 Util::replaceInFile($neardBs->getVhostsPath() . '/' . $vhost . '.conf', array(
-                    '/^<VirtualHost\s+([a-zA-Z0-9.*]+):(\d+)>/' => '<VirtualHost {{1}}:' . $port . '>',
-                    '/ServerName\s+([a-zA-Z0-9.]+):(\d+)/' => 'ServerName {{1}}:' . $port
+                    '/ServerName\s+([a-zA-Z0-9.]+):(\d+)/' => 'ServerName {{1}}:' . $port,
+                    '/^NameVirtualHost\s+([a-zA-Z0-9.*]+):(\d+)/' => 'NameVirtualHost {{1}}:' . $port,
+                    '/^<VirtualHost\s+([a-zA-Z0-9.*]+):(\d+)>/' => '<VirtualHost {{1}}:' . $port . '>'
                 ));
             }
             $neardWinbinder->incrProgressBar($wbProgressBar);
@@ -335,6 +346,32 @@ class BinApache
                         }
                     }
                 }
+            }
+        }
+        
+        return $result;
+    }
+    
+    public function getCmdLineOutput($cmd)
+    {
+        global $neardCore, $neardBins;
+        $result = array(
+            'syntaxOk' => false,
+            'content'  => null,
+        );
+        
+        if (file_exists($this->getExe())) {
+            $resultFile = Util::formatWindowsPath($neardCore->getTmpPath() . '/' . Util::random() . '.tmp');
+            $scriptContent = '@ECHO OFF' . PHP_EOL . PHP_EOL;
+            $scriptContent .= '"' . $this->getExe() . '" ' . $cmd . ' > "' . $resultFile . '" 2>&1' . PHP_EOL;
+            
+            $tmpResult = Util::execBatch($resultFile, $scriptContent, 10);
+            if ($tmpResult !== false && is_array($tmpResult)) {
+                $result['syntaxOk'] = trim($tmpResult[count($tmpResult) - 1]) == 'Syntax OK';
+                if ($result['syntaxOk']) {
+                    unset($tmpResult[count($tmpResult) - 1]);
+                }
+                $result['content'] = implode(PHP_EOL, $tmpResult);
             }
         }
         

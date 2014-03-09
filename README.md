@@ -36,7 +36,7 @@ And many other features.
 ### Windows XP
 
 * Download and install [Visual C++ 2008 SP1 Redistributable Package (x86)](http://www.microsoft.com/en-us/download/details.aspx?id=5582).
-* Download and install [Visual C++ 2010 Redistributable Package (x86)](https://www.microsoft.com/en-us/download/details.aspx?id=8328).
+* Download and install [Visual C++ 2010 SP1 Redistributable Package (x86)](https://www.microsoft.com/en-us/download/details.aspx?id=8328).
 * Download and install [Windows Support Tools](http://www.microsoft.com/en-us/download/details.aspx?id=18546).
 
 ## Download
@@ -47,6 +47,11 @@ Neard is [available on SourceForge](https://sourceforge.net/projects/neard/) :
 * [Archives](https://sourceforge.net/projects/neard/files/Releases/).
 * [Testing](https://sourceforge.net/projects/neard/files/Testing/).
 * [Addons](https://sourceforge.net/projects/neard/files/Addons/).
+
+### RSS feed
+
+Stay up-to-date with the latest releases of Neard.<br />
+You can subscribe to [this feed](https://sourceforge.net/api/file/index/project-id/2115941/path/Releases/mtime/desc/rss) that will deliver latest updates. 
 
 ## Configuration
 

@@ -91,7 +91,7 @@
 </div>
 <div class="row">
   <div class="col-lg-12">
-  <?php foreach(Util::getHosts() as $host) {
+  <?php foreach(Util::getWindowsHosts() as $host) {
     if ($host['ip'] == '127.0.0.1') {
       if ($host['enabled']) {
         ?><div style="float:left;padding:3px;"><a class="btn btn-default" target="_blank" href="<?php echo 'http://' . $host['domain']; ?>"><span class="fa fa-check-square-o"></span> <?php echo $host['domain']; ?></a></div><?php

@@ -1,0 +1,14 @@
+<?php
+
+class ActionSwitchLogsVerbose
+{
+    public function __construct($args)
+    {
+        global $neardConfig;
+        
+        if (isset($args[0]) && is_numeric($args[0]) && $args[0] >= 0 && $args[0] <= 2) {
+            $neardConfig->replace(Config::CFG_APP_LOGS_VERBOSE, $args[0]);
+        }
+    }
+
+}

@@ -19,7 +19,7 @@ class TplAppHosts
         $items = '';
         $actions = '';
         
-        foreach (Util::getHosts() as $host) {
+        foreach (Util::getWindowsHosts() as $host) {
             $tplSwitchHost = TplApp::getActionMulti(
                 self::ACTION_SWITCH_HOST, array($host['ip'], $host['domain'], $host['enabled']),
                 array($host['domain'] . ' (' . $host['ip'] . ')', ($host['enabled'] ? TplAestan::GLYPH_CHECK : '')),
