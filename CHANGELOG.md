@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.0.3 (2014/03/06)
+## 1.0.3 (2014/03/10)
 
 * Add debug settings in Apache menu ([Issue #22](https://github.com/crazy-max/neard/issues/22))
 * Create vhosts add and edit item menu ([Issue #21](https://github.com/crazy-max/neard/issues/21))
