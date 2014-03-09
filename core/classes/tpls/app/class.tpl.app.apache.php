@@ -5,8 +5,10 @@ class TplAppApache
     const MENU = 'apache';
     const MENU_VERSIONS = 'apacheVersions';
     const MENU_SERVICE = 'apacheService';
+    const MENU_DEBUG = 'apacheDebug';
     const MENU_MODULES = 'apacheModules';
     const MENU_ALIAS = 'apacheAlias';
+    const MENU_VHOSTS = 'apacheVhosts';
     
     const ACTION_SWITCH_VERSION = 'switchApacheVersion';
     const ACTION_CHANGE_PORT = 'changeApachePort';
@@ -15,6 +17,8 @@ class TplAppApache
     const ACTION_SWITCH_MODULE = 'switchApacheModule';
     const ACTION_ADD_ALIAS = 'addAlias';
     const ACTION_EDIT_ALIAS = 'editAlias';
+    const ACTION_ADD_VHOST = 'addVhost';
+    const ACTION_EDIT_VHOST = 'editVhost';
     
     public static function process()
     {
@@ -29,16 +33,20 @@ class TplAppApache
         
         $tplVersions = TplApp::getMenu($neardLang->getValue(Lang::VERSIONS), self::MENU_VERSIONS, get_called_class());
         $tplService = TplApp::getMenu($neardLang->getValue(Lang::SERVICE), self::MENU_SERVICE, get_called_class());
+        $tplDebug = TplApp::getMenu($neardLang->getValue(Lang::DEBUG), self::MENU_DEBUG, get_called_class());
         $tplModules = TplApp::getMenu($neardLang->getValue(Lang::MODULES), self::MENU_MODULES, get_called_class());
         $tplAlias = TplApp::getMenu($neardLang->getValue(Lang::ALIASES), self::MENU_ALIAS, get_called_class());
+        $tplVhosts = TplApp::getMenu($neardLang->getValue(Lang::VIRTUAL_HOSTS), self::MENU_VHOSTS, get_called_class());
         
         return
         
             // Items
             $tplVersions[TplApp::SECTION_CALL] . PHP_EOL .
             $tplService[TplApp::SECTION_CALL] . PHP_EOL .
+            $tplDebug[TplApp::SECTION_CALL] . PHP_EOL .
             $tplModules[TplApp::SECTION_CALL] . PHP_EOL .
             $tplAlias[TplApp::SECTION_CALL] . PHP_EOL .
+            $tplVhosts[TplApp::SECTION_CALL] . PHP_EOL .
             TplAestan::getItemNotepad(basename($neardBins->getApache()->getConf()), $neardBins->getApache()->getConf()) . PHP_EOL .
             TplAestan::getItemNotepad($neardLang->getValue(Lang::MENU_ACCESS_LOGS), $neardBins->getApache()->getAccessLog()) . PHP_EOL .
             TplAestan::getItemNotepad($neardLang->getValue(Lang::MENU_ERROR_LOGS), $neardBins->getApache()->getErrorLog()) . PHP_EOL . PHP_EOL .
@@ -46,8 +54,10 @@ class TplAppApache
             // Actions
             $tplVersions[TplApp::SECTION_CONTENT] . PHP_EOL .
             $tplService[TplApp::SECTION_CONTENT] . PHP_EOL .
+            $tplDebug[TplApp::SECTION_CONTENT] . PHP_EOL .
             $tplModules[TplApp::SECTION_CONTENT] . PHP_EOL .
-            $tplAlias[TplApp::SECTION_CONTENT] . PHP_EOL;
+            $tplAlias[TplApp::SECTION_CONTENT] . PHP_EOL .
+            $tplVhosts[TplApp::SECTION_CONTENT] . PHP_EOL;
     }
     
     public static function getMenuApacheVersions()
@@ -162,6 +172,40 @@ class TplAppApache
             TplAppReload::getActionReload();
     }
     
+    public static function getMenuApacheDebug()
+    {
+        global $neardLang;
+        
+        return TplApp::getActionRun(
+            Action::DEBUG_APACHE, array(BinApache::CMD_VERSION_NUMBER),
+            array($neardLang->getValue(Lang::DEBUG_APACHE_VERSION_NUMBER), TplAestan::GLYPH_DEBUG)
+        ) . PHP_EOL .
+        TplApp::getActionRun(
+            Action::DEBUG_APACHE, array(BinApache::CMD_COMPILE_SETTINGS),
+            array($neardLang->getValue(Lang::DEBUG_APACHE_COMPILE_SETTINGS), TplAestan::GLYPH_DEBUG)
+        ) . PHP_EOL .
+        TplApp::getActionRun(
+            Action::DEBUG_APACHE, array(BinApache::CMD_COMPILED_MODULES),
+            array($neardLang->getValue(Lang::DEBUG_APACHE_COMPILED_MODULES), TplAestan::GLYPH_DEBUG)
+        ) . PHP_EOL .
+        TplApp::getActionRun(
+            Action::DEBUG_APACHE, array(BinApache::CMD_CONFIG_DIRECTIVES),
+            array($neardLang->getValue(Lang::DEBUG_APACHE_CONFIG_DIRECTIVES), TplAestan::GLYPH_DEBUG)
+        ) . PHP_EOL .
+        TplApp::getActionRun(
+            Action::DEBUG_APACHE, array(BinApache::CMD_VHOSTS_SETTINGS),
+            array($neardLang->getValue(Lang::DEBUG_APACHE_VHOSTS_SETTINGS), TplAestan::GLYPH_DEBUG)
+        ) . PHP_EOL .
+        TplApp::getActionRun(
+            Action::DEBUG_APACHE, array(BinApache::CMD_LOADED_MODULES),
+            array($neardLang->getValue(Lang::DEBUG_APACHE_LOADED_MODULES), TplAestan::GLYPH_DEBUG)
+        ) . PHP_EOL .
+        TplApp::getActionRun(
+            Action::DEBUG_APACHE, array(BinApache::CMD_SYNTAX_CHECK),
+            array($neardLang->getValue(Lang::DEBUG_APACHE_SYNTAX_CHECK), TplAestan::GLYPH_DEBUG)
+        ) . PHP_EOL;
+    }
+    
     public static function getMenuApacheModules()
     {
         global $neardBins;
@@ -239,5 +283,51 @@ class TplAppApache
     {
         return TplApp::getActionRun(Action::EDIT_ALIAS, array($alias)) . PHP_EOL .
             TplAppReload::getActionReload();
+    }
+    
+    public static function getMenuApacheVhosts()
+    {
+        global $neardLang, $neardBins;
+    
+        $tplAddVhost = TplApp::getActionMulti(
+            self::ACTION_ADD_VHOST, null,
+            array($neardLang->getValue(Lang::MENU_ADD_VHOST), TplAestan::GLYPH_ADD),
+            false, get_called_class()
+        );
+    
+        // Items
+        $items = $tplAddVhost[TplApp::SECTION_CALL] . PHP_EOL .
+        TplAestan::getItemSeparator() . PHP_EOL;
+    
+        // Actions
+        $actions = PHP_EOL . $tplAddVhost[TplApp::SECTION_CONTENT];
+    
+        foreach ($neardBins->getApache()->getVhosts() as $vhost) {
+            $tplEditVhost = TplApp::getActionMulti(
+                self::ACTION_EDIT_VHOST, array($vhost),
+                array(sprintf($neardLang->getValue(Lang::MENU_EDIT_VHOST), $vhost), TplAestan::GLYPH_FILE),
+                false, get_called_class()
+            );
+    
+            // Items
+            $items .= $tplEditVhost[TplApp::SECTION_CALL] . PHP_EOL;
+    
+            // Actions
+            $actions .= PHP_EOL . PHP_EOL . $tplEditVhost[TplApp::SECTION_CONTENT];
+        }
+    
+        return $items . $actions;
+    }
+    
+    public static function getActionAddVhost()
+    {
+        return TplApp::getActionRun(Action::ADD_VHOST) . PHP_EOL .
+        TplAppReload::getActionReload();
+    }
+    
+    public static function getActionEditVhost($vhost)
+    {
+        return TplApp::getActionRun(Action::EDIT_VHOST, array($vhost)) . PHP_EOL .
+        TplAppReload::getActionReload();
     }
 }

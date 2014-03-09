@@ -17,6 +17,10 @@ class Config
     const STATUS_ONLINE = 'online';
     const STATUS_OFFLINE = 'offline';
     
+    const VERBOSE_SIMPLE = 0;
+    const VERBOSE_REPORT = 1;
+    const VERBOSE_DEBUG = 2;
+    
     private $raw;
     
     public function __construct()

@@ -34,11 +34,15 @@ class ActionStartup
         // Kill old PHP instances
         $this->neardSplash->setTextLoading($neardLang->getValue(Lang::STARTUP_KILL_PHP_PROCS_TEXT));
         $this->neardSplash->incrProgressBar();
-        $pids = win32_ps_list_procs();
-        foreach ($pids as $aPid) {
-            $unixExePath = Util::formatUnixPath($aPid['exe']);
-            if ($unixExePath == $neardCore->getPhpCliSilentExe() && $aPid['pid'] != Util::getPid()) {
-                Util::killByPid($aPid['pid']);
+        $pids = Util::psListProcs();
+        if ($pids !== false) {
+            foreach ($pids as $aPid) {
+                if (isset($aPid['pid']) && isset($aPid['exe'])) {
+                    $unixExePath = Util::formatUnixPath($aPid['exe']);
+                    if ($unixExePath == $neardCore->getPhpCliSilentExe() && $aPid['pid'] != Util::getPid()) {
+                        Util::killByPid($aPid['pid']);
+                    }
+                }
             }
         }
         
@@ -266,6 +270,12 @@ class ActionStartup
                                 $serviceError .= PHP_EOL;
                             }
                             $serviceError .= sprintf($neardLang->getValue(Lang::STARTUP_SERVICE_START_ERROR), $service->getLatestError());
+                            if ($sName == BinApache::SERVICE_NAME) {
+                                $cmdSyntaxCheck = $bin->getCmdLineOutput(BinApache::CMD_SYNTAX_CHECK);
+                                if (!$cmdSyntaxCheck['syntaxOk']) {
+                                    $serviceError .= PHP_EOL . sprintf($neardLang->getValue(Lang::STARTUP_SERVICE_APACHE_ERROR), $cmdSyntaxCheck['content']);
+                                }
+                            }
                         }
                         $this->neardSplash->incrProgressBar();
                     } else {

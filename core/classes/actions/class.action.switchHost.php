@@ -7,7 +7,7 @@ class ActionSwitchHost
     
     public function __construct($args)
     {
-        Util::refactorHostsFile();
+        Util::refactorWindowsHosts();
         $ip = isset($args[0]) && Util::isValidIp($args[0]) ? $args[0] : null;
         $domain = isset($args[1]) && !empty($args[1]) ? $args[1] : null;
         $switch = isset($args[2]) && !empty($args[2]) ? $args[2] : null;
@@ -24,7 +24,7 @@ class ActionSwitchHost
             }
             
             file_put_contents(HOSTS_FILE, $hostsContent);
-            Util::refactorHostsFile();
+            Util::refactorWindowsHosts();
         }
     }
 

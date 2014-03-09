@@ -148,6 +148,7 @@ class TplApp
         $tplReload = TplAppReload::process();
         $tplBrowser = TplAppBrowser::process();
         $tplLang = TplAppLang::process();
+        $tplLogsVerbose = TplAppLogsVerbose::process();
         $tplExit = TplAppExit::process();
         
         return
@@ -163,12 +164,14 @@ class TplApp
             
             TplAestan::getItemSeparator() . PHP_EOL .
             $tplLang[self::SECTION_CALL] . PHP_EOL .
+            $tplLogsVerbose[self::SECTION_CALL] . PHP_EOL .
             $tplExit[self::SECTION_CALL] . PHP_EOL .
         
             // Actions
             PHP_EOL . $tplReload[self::SECTION_CONTENT] . PHP_EOL .
             PHP_EOL . $tplBrowser[self::SECTION_CONTENT] . PHP_EOL .
             PHP_EOL . $tplLang[self::SECTION_CONTENT] .
+            PHP_EOL . $tplLogsVerbose[self::SECTION_CONTENT] .
             PHP_EOL . $tplExit[self::SECTION_CONTENT] . PHP_EOL;
     }
     

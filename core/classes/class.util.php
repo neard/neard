@@ -185,7 +185,7 @@ class Util
                 }
             } elseif (is_file($startPath . '/' . $file)) {
                 foreach ($findFiles as $findFile) {
-                    if (self::endWith($file, $findFile) || empty($findFile)) {
+                    if (self::endWith($file, $findFile) || $file == $findFile || empty($findFile)) {
                         $result[] = self::formatUnixPath($startPath . '/' . $file);
                     }
                 }
@@ -207,7 +207,7 @@ class Util
         return is_numeric($port) && ($port > 0 || $port <= 65535);
     }
     
-    public static function getHosts()
+    public static function getWindowsHosts()
     {
         $result = array();
         
@@ -235,7 +235,7 @@ class Util
         return $result;
     }
     
-    public static function refactorHostsFile()
+    public static function refactorWindowsHosts()
     {
         $header = '# Copyright (c) 1993-2006 Microsoft Corp.' . PHP_EOL;
         $header .= '#' . PHP_EOL;
@@ -249,7 +249,7 @@ class Util
         $header .= '# Additionally, comments (such as these) may be inserted on individual' . PHP_EOL;
         $header .= '# lines or following the machine name denoted by a \'#\' symbol.' . PHP_EOL . PHP_EOL;
         
-        $hosts = self::getHosts();
+        $hosts = self::getWindowsHosts();
         if (!empty($hosts)) {
             $enabledHosts = '## Enabled' . PHP_EOL;
             $disabledHosts = '## Disabled' . PHP_EOL;
@@ -261,6 +261,26 @@ class Util
                 }
             }
             file_put_contents(HOSTS_FILE, $header . $enabledHosts . PHP_EOL . $disabledHosts);
+        }
+    }
+    
+    public static function addWindowsHost($ip, $domain)
+    {
+        $alreadyExists = false;
+        $hosts = self::getWindowsHosts();
+        if (!empty($hosts)) {
+            foreach($hosts as $host) {
+                if ($host['ip'] == $ip && $host['domain'] == $domain) {
+                    if (!$host['enabled']) {
+                        new ActionSwitchHost(array($ip, $domain, ActionSwitchHost::SWITCH_ON));
+                    }
+                    $alreadyExists = true;
+                    break;
+                }
+            }
+        }
+        if (!$alreadyExists && file_put_contents(HOSTS_FILE, PHP_EOL . $ip . ' ' . $domain, FILE_APPEND)) {
+            self::refactorWindowsHosts();
         }
     }
     
@@ -327,8 +347,38 @@ class Util
         return $result;
     }
     
+    public static function psListProcs()
+    {
+        global $neardBs;
+        
+        $neardBs->removeErrorHandling();
+        $result = call_user_func('win32_ps_list_procs');
+        $neardBs->initErrorHandling();
+        
+        return $result;
+    }
+    
+    public static function psStatProc()
+    {
+        global $neardBs;
+    
+        $neardBs->removeErrorHandling();
+        $result = call_user_func('win32_ps_stat_proc');
+        $neardBs->initErrorHandling();
+    
+        return $result;
+    }
+    
     public static function isPortInUse($port)
     {
+        /*global $neardCore, $neardBins;
+        
+        $resultFile = self::formatWindowsPath($neardCore->getTmpPath() . '/' . self::random() . '.tmp');
+        $scriptContent = '@ECHO OFF' . PHP_EOL . PHP_EOL;
+        $scriptContent .= 'netstat -an | find ":' . $port . '" | find "LISTENING" > "' . $resultFile . '"' . PHP_EOL;
+        
+        $result = self::execBatch($resultFile, $scriptContent, 10);
+        return isset($result[0]) && !empty($result[0]);*/
         return self::fsockopenAlt('127.0.0.1', intval($port), 1) !== false;
     }
     
@@ -359,7 +409,7 @@ class Util
     {
         $dest = self::formatUnixPath($dest);
         return 'Alias /' . $name . ' "' . $dest . '"' . PHP_EOL . PHP_EOL .
-        '# to give access to gitlist from outside' . PHP_EOL .
+        '# to give access to ' . $name . ' from outside' . PHP_EOL .
         '# replace the lines' . PHP_EOL .
         '#' . PHP_EOL .
         '#    Order Deny,Allow' . PHP_EOL .
@@ -375,6 +425,22 @@ class Util
         '    Deny from all' . PHP_EOL .
         '    Allow from ::1 127.0.0.1 localhost' . PHP_EOL .
         '</Directory>' . PHP_EOL;
+    }
+    
+    public static function getVhostContent($serverName, $documentRoot)
+    {
+        global $neardBs, $neardBins;
+        
+        $documentRoot = self::formatUnixPath($documentRoot);
+        return '<VirtualHost *:' . $neardBins->getApache()->getPort() . '>' . PHP_EOL .
+            '    ServerAdmin webmaster@' . $serverName . PHP_EOL .
+            '    DocumentRoot "' . $documentRoot . '"' . PHP_EOL .
+            '    ServerName ' . $serverName . PHP_EOL .
+            '    ErrorLog "' . $neardBs->getLogsPath() . '/' . $serverName . '_error.log"' . PHP_EOL .
+            '    CustomLog "' . $neardBs->getLogsPath() . '/' . $serverName . '_access.log" combined' . PHP_EOL .
+            '    RewriteLog "' . $neardBs->getLogsPath() . '/' . $serverName . '_access.log"' . PHP_EOL .
+            '    RewriteLogLevel 3' . PHP_EOL .
+            '</VirtualHost>' . PHP_EOL;
     }
     
     public static function getMicrotime()
@@ -516,16 +582,16 @@ class Util
         $file = $file == null ? $neardBs->getLogFilePath() : $file;
         
         $verbose = array();
-        $verbose[0] = $type == self::LOG_ERROR || $type == self::LOG_WARNING;
-        $verbose[1] = $verbose[0] || $type == self::LOG_INFO;
-        $verbose[2] = $verbose[1] || $type == self::LOG_DEBUG;
+        $verbose[Config::VERBOSE_SIMPLE] = $type == self::LOG_ERROR || $type == self::LOG_WARNING;
+        $verbose[Config::VERBOSE_REPORT] = $verbose[Config::VERBOSE_SIMPLE] || $type == self::LOG_INFO;
+        $verbose[Config::VERBOSE_DEBUG] = $verbose[Config::VERBOSE_REPORT] || $type == self::LOG_DEBUG;
         
         $writeLog = false;
-        if ($neardConfig->getAppLogsVerbose() == 0 && $verbose[0]) {
+        if ($neardConfig->getAppLogsVerbose() == Config::VERBOSE_SIMPLE && $verbose[Config::VERBOSE_SIMPLE]) {
             $writeLog = true;
-        } elseif ($neardConfig->getAppLogsVerbose() == 1 && $verbose[1]) {
+        } elseif ($neardConfig->getAppLogsVerbose() == Config::VERBOSE_REPORT && $verbose[Config::VERBOSE_REPORT]) {
             $writeLog = true;
-        } elseif ($neardConfig->getAppLogsVerbose() == 2 && $verbose[2]) {
+        } elseif ($neardConfig->getAppLogsVerbose() == Config::VERBOSE_DEBUG && $verbose[Config::VERBOSE_DEBUG]) {
             $writeLog = true;
         }
         
@@ -940,16 +1006,18 @@ class Util
     
     public static function getPid()
     {
-        $procInfo = win32_ps_stat_proc();
-        return intval($procInfo['pid']);
+        $procInfo = self::psStatProc();
+        return isset($procInfo['pid']) ? intval($procInfo['pid']) : 0;
     }
     
     public static function existsPid($pid)
     {
-        $pids = win32_ps_list_procs();
-        foreach ($pids as $aPid) {
-            if ($aPid['pid'] == $pid) {
-                return true;
+        $pids = self::psListProcs();
+        if ($pids !== false) {
+            foreach ($pids as $aPid) {
+                if (isset($aPid['pid']) && $aPid['pid'] == $pid) {
+                    return true;
+                }
             }
         }
         

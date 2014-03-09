@@ -104,7 +104,13 @@ class WinBinder
     
     public function destroyWindow($window)
     {
-        return $this->callWinBinder('wb_destroy_window', array($window));
+        global $neardBs;
+        
+        $neardBs->removeErrorHandling();
+        $result = $this->callWinBinder('wb_destroy_window', array($window));
+        $neardBs->initErrorHandling();
+        
+        return $result;
     }
     
     public function mainLoop()
@@ -303,6 +309,15 @@ class WinBinder
             $this->setMaxLength($inputText[self::CTRL_OBJ], $maxLength);
         }
         return $inputText;
+    }
+    
+    public function createEditBox($parent, $value, $xPos, $yPos, $width = null, $height = null, $style = null, $params = null)
+    {
+        $value = str_replace(self::NEW_LINE, PHP_EOL, $value);
+        $width = $width == null ? 540 : $width;
+        $height = $height == null ? 340 : $height;
+        $editBox = $this->createControl($parent, RTFEditBox, (string) $value, $xPos, $yPos, $width, $height, $style, $params);
+        return $editBox;
     }
     
     public function createHyperLink($parent, $caption, $xPos, $yPos, $width = null, $height = null, $style = null, $params = null)

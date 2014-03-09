@@ -13,6 +13,7 @@ class Lang
     const APPS = 'apps';
     const BINS = 'bins';
     const BITCOIN = 'bitcoin';
+    const DEBUG = 'debug';
     const DONATE = 'donate';
     const DONATE_BITCOIN = 'donateBitcoin';
     const DONATE_VIA = 'donateVia';
@@ -23,6 +24,7 @@ class Lang
     const HELP = 'help';
     const HOSTS = 'hosts';
     const LANG = 'lang';
+    const LOGS_VERBOSE = 'logsVerbose';
     const MODULES = 'modules';
     const PAYPAL = 'paypal';
     const QUIT = 'quit';
@@ -34,6 +36,9 @@ class Lang
     const STARTUP = 'startup';
     const STATUS = 'status';
     const TOOLS = 'tools';
+    const VERBOSE_DEBUG = 'verboseDebug';
+    const VERBOSE_REPORT = 'verboseReport';
+    const VERBOSE_SIMPLE = 'verboseSimple';
     const VERSION = 'version';
     const VERSIONS = 'versions';
     const VIRTUAL_HOSTS = 'virtualHosts';
@@ -43,9 +48,11 @@ class Lang
     const MENU_ABOUT = 'menuAbout';
     const MENU_ACCESS_LOGS = 'menuAccessLogs';
     const MENU_ADD_ALIAS = 'menuAddAlias';
+    const MENU_ADD_VHOST = 'menuAddVhost';
     const MENU_CHANGE_PORT = 'menuChangePort';
     const MENU_CHECK_PORT = 'menuCheckPort';
     const MENU_EDIT_ALIAS = 'menuEditAlias';
+    const MENU_EDIT_VHOST = 'menuEditVhost';
     const MENU_ERROR_LOGS = 'menuErrorLogs';
     const MENU_INSTALL_SERVICE = 'menuInstallService';
     const MENU_LOCALHOST = 'menuLocalhost';
@@ -139,6 +146,23 @@ class Lang
     const ALIAS_CREATED_ERROR = 'aliasCreatedError';
     const EDIT_ALIAS_TITLE = 'editAliasTitle';
     
+    // Action Delete vhost
+    const DELETE_VHOST_TITLE =  'deleteVhostTitle';
+    const DELETE_VHOST = 'deleteVhost';
+    const VHOST_REMOVED = 'vhostRemoved';
+    const VHOST_REMOVE_ERROR = 'vhostRemoveError';
+    
+    // Action Add/Edit vhost
+    const ADD_VHOST_TITLE = 'addVhostTitle';
+    const VHOST_SERVER_NAME_LABEL = 'vhostServerNameLabel';
+    const VHOST_DOCUMENT_ROOT_LABEL = 'vhostDocumentRootLabel';
+    const VHOST_EXP_LABEL = 'vhostExpLabel';
+    const VHOST_DOC_ROOT_PATH = 'vhostDocRootPath';
+    const VHOST_ALREADY_EXISTS = 'vhostAlreadyExists';
+    const VHOST_CREATED = 'vhostCreated';
+    const VHOST_CREATED_ERROR = 'vhostCreatedError';
+    const EDIT_VHOST_TITLE = 'editVhostTitle';
+    
     // Action Change port
     const CHANGE_PORT_TITLE = 'changePortTitle';
     const CHANGE_PORT_CURRENT_LABEL = 'changePortCurrentLabel';
@@ -167,6 +191,7 @@ class Lang
     const STARTUP_PORT_ERROR = 'startupPortError';
     const STARTUP_SERVICE_CREATE_ERROR = 'startupServiceCreateError';
     const STARTUP_SERVICE_START_ERROR = 'startupServiceStartError';
+    const STARTUP_SERVICE_APACHE_ERROR = 'startupServiceApacheError';
     const STARTUP_SERVICE_PORT_ERROR = 'startupServicePortError';
     const STARTUP_REFRESH_GIT_REPOS_TEXT = 'startupRefreshGitReposText';
     const STARTUP_REFRESH_SVN_REPOS_TEXT = 'startupRefreshSvnReposText';
@@ -184,6 +209,15 @@ class Lang
     // Action About
     const ABOUT_TITLE = 'aboutTitle';
     const ABOUT_TEXT = 'aboutText';
+    
+    // Action Debug Apache
+    const DEBUG_APACHE_VERSION_NUMBER = 'debugApacheVersionNumber';
+    const DEBUG_APACHE_COMPILE_SETTINGS = 'debugApacheCompileSettings';
+    const DEBUG_APACHE_COMPILED_MODULES = 'debugApacheCompiledModules';
+    const DEBUG_APACHE_CONFIG_DIRECTIVES = 'debugApacheConfigDirectives';
+    const DEBUG_APACHE_VHOSTS_SETTINGS = 'debugApacheVhostsSettings';
+    const DEBUG_APACHE_LOADED_MODULES = 'debugApacheLoadedModules';
+    const DEBUG_APACHE_SYNTAX_CHECK = 'debugApacheSyntaxCheck';
     
     // Action others...
     const REGISTRY_SET_ERROR_TEXT = 'registrySetErrorText';

@@ -4,10 +4,13 @@ class Action
 {
     const ABOUT = 'about';
     const ADD_ALIAS = 'addAlias';
+    const ADD_VHOST = 'addVhost';
     const CHANGE_BROWSER = 'changeBrowser';
     const CHANGE_PORT = 'changePort';
     const CHECK_PORT = 'checkPort';
+    const DEBUG_APACHE = 'debugApache';
     const EDIT_ALIAS = 'editAlias';
+    const EDIT_VHOST = 'editVhost';
     const EXEC = 'exec';
     const LOADING = 'loading';
     const QUIT = 'quit';
@@ -19,6 +22,7 @@ class Action
     const SWITCH_APACHE_MODULE = 'switchApacheModule';
     const SWITCH_HOST = 'switchHost';
     const SWITCH_LANG = 'switchLang';
+    const SWITCH_LOGS_VERBOSE = 'switchLogsVerbose';
     const SWITCH_PHP_EXTENSION = 'switchPhpExtension';
     const SWITCH_PHP_PARAM = 'switchPhpParam';
     const SWITCH_STATUS = 'switchStatus';
