@@ -27,4 +27,4 @@ tmp/cachegrind/*
 !tmp/cachegrind/placeholder
 !vhosts
 vhosts/*
-!vhosts/example.conf
+!vhosts/placeholder
