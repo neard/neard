@@ -1,0 +1,9 @@
+<virtualserver 0.0.0.0:22>
+
+<username "root">
+AllowNoPassword:yes
+VirtualPath: "/|C:\neard\www\|RWCLADNS"
+</username>
+
+</virtualserver>
+

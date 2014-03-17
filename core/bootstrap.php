@@ -16,6 +16,8 @@ define('CURRENT_MYSQL_VERSION', '5.5.24');
 define('CURRENT_MARIADB_PORT', 3308);
 define('CURRENT_MARIADB_VERSION', '5.5.34');
 define('CURRENT_NODEJS_VERSION', '0.10.22');
+define('CURRENT_XLIGHT_PORT', 22);
+define('CURRENT_XLIGHT_VERSION', '3.8.0.2');
 
 define('RETURN_TAB', '	');
 

@@ -5,6 +5,7 @@ class TplAppMysql
     const MENU = 'mysql';
     const MENU_VERSIONS = 'mysqlVersions';
     const MENU_SERVICE = 'mysqlService';
+    const MENU_DEBUG = 'mysqlDebug';
     
     const ACTION_SWITCH_VERSION = 'switchMysqlVersion';
     const ACTION_CHANGE_PORT = 'changeMysqlPort';
@@ -24,12 +25,14 @@ class TplAppMysql
         
         $tplVersions = TplApp::getMenu($neardLang->getValue(Lang::VERSIONS), self::MENU_VERSIONS, get_called_class());
         $tplService = TplApp::getMenu($neardLang->getValue(Lang::SERVICE), self::MENU_SERVICE, get_called_class());
+        $tplDebug = TplApp::getMenu($neardLang->getValue(Lang::DEBUG), self::MENU_DEBUG, get_called_class());
         
         return
         
             // Items
             $tplVersions[TplApp::SECTION_CALL] . PHP_EOL .
             $tplService[TplApp::SECTION_CALL] . PHP_EOL .
+            $tplDebug[TplApp::SECTION_CALL] . PHP_EOL .
             TplAestan::getItemLink($neardLang->getValue(Lang::PHPMYADMIN), 'phpmyadmin/', true) . PHP_EOL .
             TplAestan::getItemConsole(
                 $neardLang->getValue(Lang::CONSOLE),
@@ -41,7 +44,8 @@ class TplAppMysql
             
             // Actions
             $tplVersions[TplApp::SECTION_CONTENT] . PHP_EOL .
-            $tplService[TplApp::SECTION_CONTENT];
+            $tplService[TplApp::SECTION_CONTENT] . PHP_EOL .
+            $tplDebug[TplApp::SECTION_CONTENT];
     }
     
     public static function getMenuMysqlVersions()
@@ -129,6 +133,24 @@ class TplAppMysql
         $result .= $tplChangePort[TplApp::SECTION_CONTENT] . PHP_EOL;
     
         return $result;
+    }
+    
+    public static function getMenuMysqlDebug()
+    {
+        global $neardLang;
+    
+        return TplApp::getActionRun(
+            Action::DEBUG_MYSQL, array(BinMysql::CMD_VERSION),
+            array($neardLang->getValue(Lang::DEBUG_MYSQL_VERSION), TplAestan::GLYPH_DEBUG)
+        ) . PHP_EOL .
+        TplApp::getActionRun(
+            Action::DEBUG_MYSQL, array(BinMysql::CMD_VARIABLES),
+            array($neardLang->getValue(Lang::DEBUG_MYSQL_VARIABLES), TplAestan::GLYPH_DEBUG)
+        ) . PHP_EOL .
+        TplApp::getActionRun(
+            Action::DEBUG_MYSQL, array(BinMysql::CMD_SYNTAX_CHECK),
+            array($neardLang->getValue(Lang::DEBUG_MYSQL_SYNTAX_CHECK), TplAestan::GLYPH_DEBUG)
+        ) . PHP_EOL;
     }
     
     public static function getActionChangeMysqlPort()

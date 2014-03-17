@@ -159,7 +159,13 @@ class WinBinder
     
     public function wait($wbobject = null)
     {
-        return $this->callWinBinder('wb_wait', array($wbobject));
+        global $neardBs;
+        
+        $neardBs->removeErrorHandling();
+        $result = $this->callWinBinder('wb_wait', array($wbobject));
+        $neardBs->initErrorHandling();
+        
+        return $result;
     }
     
     public function createTimer($wbobject, $wait = 1000)
@@ -181,11 +187,12 @@ class WinBinder
         global $neardCore;
         
         if ($silent) {
-            $silent = '"' . Util::getSilentVbs() . '" "' . $cmd . '"';
+            $silent = '"' . $neardCore->getScript(Core::SCRIPT_EXEC_SILENT_VBS) . '" "' . $cmd . '"';
             $cmd = 'wscript.exe';
             $params = !empty($params) ? $silent . ' "' . $params . '"' : $silent;
         }
         
+        Util::logDebug('wb_exec: ' . $cmd . ' ' . $params);
         return $this->callWinBinder('wb_exec', array($cmd, $params));
     }
     

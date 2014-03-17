@@ -51,21 +51,26 @@ class Lang
     const MENU_ADD_VHOST = 'menuAddVhost';
     const MENU_CHANGE_PORT = 'menuChangePort';
     const MENU_CHECK_PORT = 'menuCheckPort';
+    const MENU_CLEAR_FOLDERS = 'menuClearFolders';
     const MENU_EDIT_ALIAS = 'menuEditAlias';
     const MENU_EDIT_VHOST = 'menuEditVhost';
     const MENU_ERROR_LOGS = 'menuErrorLogs';
     const MENU_INSTALL_SERVICE = 'menuInstallService';
     const MENU_LOCALHOST = 'menuLocalhost';
+    const MENU_LOGS = 'menuLogs';
     const MENU_PUT_OFFLINE = 'menuPutOffline';
     const MENU_PUT_ONLINE = 'menuPutOnline';
     const MENU_REFRESH_REPOS = 'menuRefreshRepos';
     const MENU_REMOVE_SERVICE = 'menuRemoveService';
     const MENU_RESTART_SERVICE = 'menuRestartService';
     const MENU_RESTART_SERVICES = 'menuRestartServices';
+    const MENU_SESSION_LOGS = 'menuSessionLogs';
     const MENU_START_SERVICE = 'menuStartService';
     const MENU_START_SERVICES = 'menuStartServices';
+    const MENU_STATS_LOGS = 'menuStatsLogs';
     const MENU_STOP_SERVICE = 'menuStopService';
     const MENU_STOP_SERVICES = 'menuStopServices';
+    const MENU_TRANSFER_LOGS = 'menuTransferLogs';
     const MENU_WWW_DIRECTORY = 'menuWwwDirectory';
     
     // Bins
@@ -75,6 +80,7 @@ class Lang
     const MYSQL = 'mysql';
     const MARIADB = 'mariadb';
     const NODEJS = 'nodejs';
+    const XLIGHT = 'xlight';
     
     // Apps
     const GITLIST = 'gitlist';
@@ -86,6 +92,7 @@ class Lang
     const CONSOLE = 'console';
     const GIT = 'git';
     const IMAGICK = 'imagick';
+    const SUBLIMETEXT = 'sublimetext';
     const SVN = 'svn';
     const TCCLE = 'tccle';
     const XDC = 'xdc';
@@ -174,7 +181,6 @@ class Lang
     const STARTUP_KILL_PHP_PROCS_TEXT = 'startupKillPhpProcsText';
     const STARTUP_REFRESH_HOSTNAME_TEXT = 'startupRefreshHostnameText';
     const STARTUP_CHECK_BROWSER_TEXT = 'startupCheckBrowserText';
-    const STARTUP_CLEAR_TMP_FOLDERS_TEXT = 'startupClearTmpFoldersText';
     const STARTUP_PURGE_LOGS_TEXT = 'startupPurgeLogsText';
     const STARTUP_REFRESH_ALIAS_HOMEPAGE_TEXT = 'startupRefreshAliasHomepageText';
     const STARTUP_CHECK_PATH_TEXT = 'startupCheckPathText';
@@ -191,7 +197,7 @@ class Lang
     const STARTUP_PORT_ERROR = 'startupPortError';
     const STARTUP_SERVICE_CREATE_ERROR = 'startupServiceCreateError';
     const STARTUP_SERVICE_START_ERROR = 'startupServiceStartError';
-    const STARTUP_SERVICE_APACHE_ERROR = 'startupServiceApacheError';
+    const STARTUP_SERVICE_SYNTAX_ERROR = 'startupServiceSyntaxError';
     const STARTUP_SERVICE_PORT_ERROR = 'startupServicePortError';
     const STARTUP_REFRESH_GIT_REPOS_TEXT = 'startupRefreshGitReposText';
     const STARTUP_REFRESH_SVN_REPOS_TEXT = 'startupRefreshSvnReposText';
@@ -218,6 +224,16 @@ class Lang
     const DEBUG_APACHE_VHOSTS_SETTINGS = 'debugApacheVhostsSettings';
     const DEBUG_APACHE_LOADED_MODULES = 'debugApacheLoadedModules';
     const DEBUG_APACHE_SYNTAX_CHECK = 'debugApacheSyntaxCheck';
+    
+    // Action Debug MySQL
+    const DEBUG_MYSQL_VERSION = 'debugMysqlVersion';
+    const DEBUG_MYSQL_VARIABLES = 'debugMysqlVariables';
+    const DEBUG_MYSQL_SYNTAX_CHECK = 'debugMysqlSyntaxCheck';
+    
+    // Action Debug MariaDB
+    const DEBUG_MARIADB_VERSION = 'debugMariadbVersion';
+    const DEBUG_MARIADB_VARIABLES = 'debugMariadbVariables';
+    const DEBUG_MARIADB_SYNTAX_CHECK = 'debugMariadbSyntaxCheck';
     
     // Action others...
     const REGISTRY_SET_ERROR_TEXT = 'registrySetErrorText';
@@ -290,7 +306,281 @@ class Lang
 
     public function getValue($key)
     {
+        global $neardBs;
+       
+        if (!isset($this->raw[$key])) {
+            $content = '[' . date('Y-m-d H:i:s', time()) . '] ';
+            $content .= 'ERROR: Lang var missing ' . $key;
+            $content .= ' for ' . $this->current . ' language.' . PHP_EOL;
+            file_put_contents($neardBs->getErrorLogFilePath(), $content, FILE_APPEND);
+            return $key;
+        }
+        
         return $this->raw[$key];
+    }
+    
+    public function getKeys()
+    {
+        return array(
+            // General
+            self::ALL_RUNNING_HINT,
+            self::SOME_RUNNING_HINT,
+            self::NONE_RUNNING_HINT,
+            
+            // Single
+            self::ABOUT,
+            self::ALIASES,
+            self::APPS,
+            self::BINS,
+            self::BITCOIN,
+            self::DEBUG,
+            self::DONATE,
+            self::DONATE_BITCOIN,
+            self::DONATE_VIA,
+            self::ERROR,
+            self::EXECUTABLE,
+            self::EXTENSIONS,
+            self::GITHUB,
+            self::HELP,
+            self::HOSTS,
+            self::LANG,
+            self::LOGS_VERBOSE,
+            self::MODULES,
+            self::PAYPAL,
+            self::QUIT,
+            self::RELOAD,
+            self::REPOS,
+            self::RESTART,
+            self::SERVICE,
+            self::SETTINGS,
+            self::STARTUP,
+            self::STATUS,
+            self::TOOLS,
+            self::VERBOSE_DEBUG,
+            self::VERBOSE_REPORT,
+            self::VERBOSE_SIMPLE,
+            self::VERSION,
+            self::VERSIONS,
+            self::VIRTUAL_HOSTS,
+            self::WINDOWS_HOSTS,
+            
+            // Menu
+            self::MENU_ABOUT,
+            self::MENU_ACCESS_LOGS,
+            self::MENU_ADD_ALIAS,
+            self::MENU_ADD_VHOST,
+            self::MENU_CHANGE_PORT,
+            self::MENU_CHECK_PORT,
+            self::MENU_CLEAR_FOLDERS,
+            self::MENU_EDIT_ALIAS,
+            self::MENU_EDIT_VHOST,
+            self::MENU_ERROR_LOGS,
+            self::MENU_INSTALL_SERVICE,
+            self::MENU_LOCALHOST,
+            self::MENU_LOGS,
+            self::MENU_PUT_OFFLINE,
+            self::MENU_PUT_ONLINE,
+            self::MENU_REFRESH_REPOS,
+            self::MENU_REMOVE_SERVICE,
+            self::MENU_RESTART_SERVICE,
+            self::MENU_RESTART_SERVICES,
+            self::MENU_SESSION_LOGS,
+            self::MENU_START_SERVICE,
+            self::MENU_START_SERVICES,
+            self::MENU_STATS_LOGS,
+            self::MENU_STOP_SERVICE,
+            self::MENU_STOP_SERVICES,
+            self::MENU_TRANSFER_LOGS,
+            self::MENU_WWW_DIRECTORY,
+            
+            // Bins
+            self::APACHE,
+            self::PHP,
+            self::PEAR,
+            self::MYSQL,
+            self::MARIADB,
+            self::NODEJS,
+            self::XLIGHT,
+            
+            // Apps
+            self::GITLIST,
+            self::PHPMYADMIN,
+            self::WEBGRIND,
+            self::WEBSVN,
+            
+            // Tools
+            self::CONSOLE,
+            self::GIT,
+            self::IMAGICK,
+            self::SUBLIMETEXT,
+            self::SVN,
+            self::TCCLE,
+            self::XDC,
+            
+            // Init
+            self::BIN_NOT_FOUND,
+            self::BIN_CONF_NOT_FOUND,
+            self::BIN_EXE_NOT_FOUND,
+            
+            // Action Switch version
+            self::SWITCH_VERSION_TITLE,
+            self::SWITCH_VERSION_RELOAD_CONFIG,
+            self::SWITCH_VERSION_RELOAD_BINS,
+            self::SWITCH_VERSION_REGISTRY,
+            self::SWITCH_VERSION_RESET_SERVICES,
+            self::SWITCH_VERSION_SAME_ERROR,
+            self::SWITCH_VERSION_OK,
+            self::SWITCH_VERSION_OK_RESTART,
+            self::APACHE_INCPT,
+            self::PHP_INCPT,
+            self::NEARD_CONF_NOT_FOUND_ERROR,
+            self::NEARD_CONF_MALFORMED_ERROR,
+            
+            // Action Check port
+            self::CHECK_PORT_TITLE,
+            self::PORT_USED_BY,
+            self::PORT_NOT_USED,
+            self::PORT_NOT_USED_BY,
+            self::PORT_USED_BY_ANOTHER_DBMS,
+            self::PORT_CHANGED,
+            
+            // Action Install service
+            self::INSTALL_SERVICE_TITLE,
+            self::SERVICE_ALREADY_INSTALLED,
+            self::SERVICE_INSTALLED,
+            self::SERVICE_INSTALL_ERROR,
+            
+            // Action Remove service
+            self::REMOVE_SERVICE_TITLE,
+            self::SERVICE_NOT_EXIST,
+            self::SERVICE_REMOVED,
+            self::SERVICE_REMOVE_ERROR,
+            
+            // Action Delete alias
+            self::DELETE_ALIAS_TITLE,
+            self::DELETE_ALIAS,
+            self::ALIAS_REMOVED,
+            self::ALIAS_REMOVE_ERROR,
+            
+            // Action Add/Edit alias
+            self::ADD_ALIAS_TITLE,
+            self::ALIAS_NAME_LABEL,
+            self::ALIAS_DEST_LABEL,
+            self::ALIAS_EXP_LABEL,
+            self::ALIAS_DEST_PATH,
+            self::ALIAS_ALREADY_EXISTS,
+            self::ALIAS_CREATED,
+            self::ALIAS_CREATED_ERROR,
+            self::EDIT_ALIAS_TITLE,
+            
+            // Action Delete vhost
+            self::DELETE_VHOST_TITLE,
+            self::DELETE_VHOST,
+            self::VHOST_REMOVED,
+            self::VHOST_REMOVE_ERROR,
+            
+            // Action Add/Edit vhost
+            self::ADD_VHOST_TITLE,
+            self::VHOST_SERVER_NAME_LABEL,
+            self::VHOST_DOCUMENT_ROOT_LABEL,
+            self::VHOST_EXP_LABEL,
+            self::VHOST_DOC_ROOT_PATH,
+            self::VHOST_ALREADY_EXISTS,
+            self::VHOST_CREATED,
+            self::VHOST_CREATED_ERROR,
+            self::EDIT_VHOST_TITLE,
+            
+            // Action Change port
+            self::CHANGE_PORT_TITLE,
+            self::CHANGE_PORT_CURRENT_LABEL,
+            self::CHANGE_PORT_NEW_LABEL,
+            self::CHANGE_PORT_SAME_ERROR,
+            
+            // Action Startup
+            self::STARTUP_STARTING_TEXT,
+            self::STARTUP_KILL_PHP_PROCS_TEXT,
+            self::STARTUP_REFRESH_HOSTNAME_TEXT,
+            self::STARTUP_CHECK_BROWSER_TEXT,
+            self::STARTUP_PURGE_LOGS_TEXT,
+            self::STARTUP_REFRESH_ALIAS_HOMEPAGE_TEXT,
+            self::STARTUP_CHECK_PATH_TEXT,
+            self::STARTUP_SCAN_FOLDERS_TEXT,
+            self::STARTUP_CHANGE_OLD_PATHS_TEXT,
+            self::STARTUP_REGISTRY_TEXT,
+            self::STARTUP_REGISTRY_ERROR_TEXT,
+            self::STARTUP_INSTALL_SERVICE_TEXT,
+            self::STARTUP_START_SERVICE_TEXT,
+            self::STARTUP_PREPARE_RESTART_TEXT,
+            self::STARTUP_RESTARTING_TEXT,
+            self::STARTUP_ERROR_TITLE,
+            self::STARTUP_SERVICE_ERROR,
+            self::STARTUP_PORT_ERROR,
+            self::STARTUP_SERVICE_CREATE_ERROR,
+            self::STARTUP_SERVICE_START_ERROR,
+            self::STARTUP_SERVICE_SYNTAX_ERROR,
+            self::STARTUP_SERVICE_PORT_ERROR,
+            self::STARTUP_REFRESH_GIT_REPOS_TEXT,
+            self::STARTUP_REFRESH_SVN_REPOS_TEXT,
+            
+            // Action Quit
+            self::EXIT_LEAVING_TEXT,
+            self::EXIT_REMOVE_SERVICE_TEXT,
+            
+            // Action Change browser
+            self::CHANGE_BROWSER_TITLE,
+            self::CHANGE_BROWSER_EXP_LABEL,
+            self::CHANGE_BROWSER_OTHER_LABEL,
+            self::CHANGE_BROWSER_OK,
+            
+            // Action About
+            self::ABOUT_TITLE,
+            self::ABOUT_TEXT,
+            
+            // Action Debug Apache
+            self::DEBUG_APACHE_VERSION_NUMBER,
+            self::DEBUG_APACHE_COMPILE_SETTINGS,
+            self::DEBUG_APACHE_COMPILED_MODULES,
+            self::DEBUG_APACHE_CONFIG_DIRECTIVES,
+            self::DEBUG_APACHE_VHOSTS_SETTINGS,
+            self::DEBUG_APACHE_LOADED_MODULES,
+            self::DEBUG_APACHE_SYNTAX_CHECK,
+            
+            // Action Debug MySQL
+            self::DEBUG_MYSQL_VERSION,
+            self::DEBUG_MYSQL_VARIABLES,
+            self::DEBUG_MYSQL_SYNTAX_CHECK,
+            
+            // Action Debug MariaDB
+            self::DEBUG_MARIADB_VERSION,
+            self::DEBUG_MARIADB_VARIABLES,
+            self::DEBUG_MARIADB_SYNTAX_CHECK,
+            
+            // Action others...
+            self::REGISTRY_SET_ERROR_TEXT,
+            
+            // Windows forms
+            self::BUTTON_OK,
+            self::BUTTON_DELETE,
+            self::BUTTON_SAVE,
+            self::BUTTON_FINISH,
+            self::BUTTON_CANCEL,
+            self::BUTTON_NEXT,
+            self::BUTTON_BACK,
+            self::BUTTON_BROWSE,
+            self::LOADING,
+            
+            // Homepage
+            self::HOMEPAGE_OFFICIAL_WEBSITE,
+            self::HOMEPAGE_SERVICE_STARTED,
+            self::HOMEPAGE_SERVICE_STOPPED,
+            self::HOMEPAGE_ABOUT_TEXT,
+            self::HOMEPAGE_QUESTIONS_TITLE,
+            self::HOMEPAGE_QUESTIONS_TEXT,
+            self::HOMEPAGE_POST_ISSUE,
+            self::HOMEPAGE_DONATE_TEXT,
+            self::HOMEPAGE_PHPINFO_TEXT,
+            self::HOMEPAGE_BACK_TEXT,
+        );
     }
 
 }

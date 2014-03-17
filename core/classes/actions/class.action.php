@@ -8,7 +8,10 @@ class Action
     const CHANGE_BROWSER = 'changeBrowser';
     const CHANGE_PORT = 'changePort';
     const CHECK_PORT = 'checkPort';
+    const CLEAR_FOLDERS = 'clearFolders';
     const DEBUG_APACHE = 'debugApache';
+    const DEBUG_MARIADB = 'debugMariadb';
+    const DEBUG_MYSQL = 'debugMysql';
     const EDIT_ALIAS = 'editAlias';
     const EDIT_VHOST = 'editVhost';
     const EXEC = 'exec';

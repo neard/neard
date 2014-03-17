@@ -5,6 +5,7 @@ class TplAppMariadb
     const MENU = 'mariadb';
     const MENU_VERSIONS = 'mariadbVersions';
     const MENU_SERVICE = 'mariadbService';
+    const MENU_DEBUG = 'mariadbDebug';
     
     const ACTION_SWITCH_VERSION = 'switchMariadbVersion';
     const ACTION_CHANGE_PORT = 'changeMariadbPort';
@@ -24,12 +25,14 @@ class TplAppMariadb
         
         $tplVersions = TplApp::getMenu($neardLang->getValue(Lang::VERSIONS), self::MENU_VERSIONS, get_called_class());
         $tplService = TplApp::getMenu($neardLang->getValue(Lang::SERVICE), self::MENU_SERVICE, get_called_class());
+        $tplDebug = TplApp::getMenu($neardLang->getValue(Lang::DEBUG), self::MENU_DEBUG, get_called_class());
         
         return
         
             // Items
             $tplVersions[TplApp::SECTION_CALL] . PHP_EOL .
             $tplService[TplApp::SECTION_CALL] . PHP_EOL .
+            $tplDebug[TplApp::SECTION_CALL] . PHP_EOL .
             TplAestan::getItemLink($neardLang->getValue(Lang::PHPMYADMIN), 'phpmyadmin/', true) . PHP_EOL .
             TplAestan::getItemConsole(
                 $neardLang->getValue(Lang::CONSOLE),
@@ -41,7 +44,8 @@ class TplAppMariadb
             
             // Actions
             $tplVersions[TplApp::SECTION_CONTENT] . PHP_EOL .
-            $tplService[TplApp::SECTION_CONTENT];
+            $tplService[TplApp::SECTION_CONTENT] . PHP_EOL .
+            $tplDebug[TplApp::SECTION_CONTENT];
     }
     
     public static function getMenuMariadbVersions()
@@ -129,6 +133,24 @@ class TplAppMariadb
         $result .= $tplChangePort[TplApp::SECTION_CONTENT] . PHP_EOL;
     
         return $result;
+    }
+    
+    public static function getMenuMariadbDebug()
+    {
+        global $neardLang;
+    
+        return TplApp::getActionRun(
+            Action::DEBUG_MARIADB, array(BinMariadb::CMD_VERSION),
+            array($neardLang->getValue(Lang::DEBUG_MARIADB_VERSION), TplAestan::GLYPH_DEBUG)
+        ) . PHP_EOL .
+        TplApp::getActionRun(
+            Action::DEBUG_MARIADB, array(BinMariadb::CMD_VARIABLES),
+            array($neardLang->getValue(Lang::DEBUG_MARIADB_VARIABLES), TplAestan::GLYPH_DEBUG)
+        ) . PHP_EOL .
+        TplApp::getActionRun(
+            Action::DEBUG_MARIADB, array(BinMariadb::CMD_SYNTAX_CHECK),
+            array($neardLang->getValue(Lang::DEBUG_MARIADB_SYNTAX_CHECK), TplAestan::GLYPH_DEBUG)
+        ) . PHP_EOL;
     }
     
     public static function getActionChangeMariadbPort()

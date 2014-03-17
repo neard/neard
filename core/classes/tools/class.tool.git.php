@@ -71,7 +71,7 @@ class ToolGit
         } else {
             if (!empty($this->repos)) {
                 foreach ($this->getRepos() as $repo) {
-                    $foundRepos = Util::findReposVbs($repo, '.git', 'config');
+                    $foundRepos = Vbs::findReposVbs($repo, '.git', 'config');
                     if (!empty($foundRepos)) {
                         foreach ($foundRepos as $foundRepo) {
                             array_push($result, $foundRepo);

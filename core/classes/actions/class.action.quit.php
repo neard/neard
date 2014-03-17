@@ -14,7 +14,7 @@ class ActionQuit
         $this->neardSplash = new Splash();
         $this->neardSplash->init(
             $neardLang->getValue(Lang::QUIT),
-            self::GAUGE_LOADING * count($neardBins->getServices()) + 1,
+            self::GAUGE_LOADING * count($neardBins->getServices()),
             sprintf($neardLang->getValue(Lang::EXIT_LEAVING_TEXT), APP_TITLE . ' ' . $neardConfig->getAppVersion()),
             Splash::IMG_EXIT
         );
@@ -37,6 +37,9 @@ class ActionQuit
             } elseif ($sName == BinMariadb::SERVICE_NAME) {
                 $name = $neardBins->getMariadb()->getName() . ' ' . $neardBins->getMariadb()->getVersion();
                 $port = $neardBins->getMariadb()->getPort();
+            } elseif ($sName == BinXlight::SERVICE_NAME) {
+                $name = $neardBins->getXlight()->getName() . ' ' . $neardBins->getXlight()->getVersion();
+                $port = $neardBins->getXlight()->getPort();
             }
             $name .= ' (' . $service->getName() . ')';
             
@@ -44,9 +47,6 @@ class ActionQuit
             $this->neardSplash->setTextLoading(sprintf($neardLang->getValue(Lang::EXIT_REMOVE_SERVICE_TEXT), $name));
             $service->delete();
         }
-        
-        // Display last incr
-        usleep(500000);
         
         $neardWinbinder->destroyWindow($window);
     }

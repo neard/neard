@@ -1,0 +1,261 @@
+; Author: Anonymous
+;
+
+; General
+allRunningHint = "Alla tjänster körs"
+someRunningHint = "%n av %t tjänster körs"
+noneRunningHint = "Ingen av %t tjänster körs"
+
+; Single
+about = "Om"
+aliases = "Alias"
+apps = "Applikationer"
+bins = "Binärer"
+bitcoin = "Bitcoin"
+debug = "Debug"
+donate = "Donera"
+donateBitcoin = "Donera bitcoins till :"
+donateVia = "Donera via %s"
+error = "Fel"
+executable = "Körbar"
+extensions = "Tilläggsprogram"
+github = "Github"
+help = "Hjälp"
+hosts = "Värdar"
+lang = "Språk"
+logsVerbose = "Logs verbose"
+modules = "Moduler"
+paypal = "Paypal"
+quit = "Avsluta"
+reload = "Uppdatera"
+repos = "Repositories"
+restart = "Starta om"
+service = "Tjänst"
+settings = "Inställningar"
+startup = "Starta upp"
+status = "Status"
+tools = "Verktyg"
+verboseDebug = "Debug"
+verboseReport = "Report"
+verboseSimple = "Simple"
+version = "Version"
+versions = "Versioner"
+virtualHosts = "Virtuella Värdar"
+windowsHosts = "Windows Värdar"
+
+; Menu
+menuAbout = "Om..."
+menuAccessLogs = "Åtkomstloggar"
+menuAddAlias = "Lägg till ett alias"
+menuAddVhost = "Lägg till en virtuell värd"
+menuChangePort = "Ändra port"
+menuCheckPort = "Kontrollera port %s"
+menuClearFolders = "Radera temporära filer"
+menuEditAlias = "Redigera %s"
+menuEditVhost = "Redigera %s"
+menuErrorLogs = "Felloggar"
+menuInstallService = "Installera Tjänst"
+menuLocalhost = "Localhost"
+menuLogs = "Loggar"
+menuPutOffline = "Sätt Offline"
+menuPutOnline = "Sätt Online"
+menuRefreshRepos = "Refresh repositories"
+menuRemoveService = "Ta bort Tjänst"
+menuRestartService = "Starta om tjänst"
+menuRestartServices = "Starta om alla tjänster"
+menuSessionLogs = "Sessionsloggar"
+menuStartService = "Starta tjänst"
+menuStartServices = "Starta alla tjänster"
+menuStatsLogs = "Statistikloggar"
+menuStopService = "Stoppa tjänst"
+menuStopServices = "Stoppa alla tjänster"
+menuTransferLogs = "Överföringsloggar"
+menuWwwDirectory = "www filkatalog"
+
+; Bins
+apache = "Apache"
+php = "PHP"
+pear = "PEAR"
+mysql = "MySQL"
+mariadb = "MariaDB"
+nodejs = "Node.js"
+xlight = "Xlight"
+
+; Apps
+gitlist = "GitList"
+phpmyadmin = "phpMyAdmin"
+webgrind = "Webgrind"
+websvn = "WebSVN"
+
+; Tools
+console = "Console"
+git = "Git"
+imagick = "Imagick"
+sublimetext = "Sublime Text"
+svn = "SVN"
+tccle = "TCC/LE"
+xdc = "XDebugClient"
+
+; Init
+binNotFound = "%s hittades inte i %s"
+binConfNotFound = "%s konfigurationsfil hittades inte i %s"
+binExeNotFound = "%s .exe-fil hittades inte i %s"
+
+; Action Switch version
+switchVersionTitle = "Byt %s version %s"
+switchVersionReloadConfig = "Uppdatera konfig"
+switchVersionReloadBins = "Reload bins"
+switchVersionRegistry = "Återställ %s registernyckel"
+switchVersionResetServices = "Återställ alla tjänster"
+switchVersionSameError = "Du befinner dig redan på %s %s."
+switchVersionOk = "%s version har bytts till %s"
+switchVersionOkRestart = "%s version har bytts till %s@nl@%s kommer nu starta om ..."
+apacheIncpt = "Apache %s verkar inte vara kompatibelt med PHP %s."
+phpIncpt = "PHP %s verkar inte vara kompatibelt med Apache %s."
+neardConfNotFoundError = "Neard konfig-filer hittades inte för %s."
+neardConfMalformedError = "Neard konfig-filer felbildades för %s."
+
+; Action Check port
+checkPortTitle = "Kontrollera %s port %s"
+portUsedBy = "Port %s används av %s."
+portNotUsed = "Port %s är inte i bruk."
+portNotUsedBy = "Port %s av en annan applikation : %s."
+portUsedByAnotherDbms = "Port %s används av en annan DBMS."
+portChanged = "%s port ändrades framgångsrikt till %s"
+
+; Action Install service
+installServiceTitle = "Installerar tjänsten %s"
+serviceAlreadyInstalled = "Tjänsten %s är redan installerad."
+serviceInstalled = "Tjänsten %s installerades framgångsrikt.@nl@Namn: %s@nl@Port: %s"
+serviceInstallError = "Fel vid installation av tjänsten %s."
+
+; Action Remove service
+removeServiceTitle = "Ta bort tjänsten %s"
+serviceNotExist = "Tjänsten %s finns inte."
+serviceRemoved = "Tjänsten %s har framgångsrikt tagits bort."
+serviceRemoveError = "Fel vid installation av tjänsten %s."
+
+; Action Delete alias
+deleteAliasTitle = "Ta bort alias"
+deleteAlias = "Vill du verkligen ta bort alias '%s' ?"
+aliasRemoved = "Alias '%s' har framgångsrikt tagits bort."
+aliasRemoveError = "Det går inte att ta bort aliasets konfigurations-fil i:@nl@%s"
+
+; Action Add/Edit alias
+addAliasTitle = "Lägg till alias"
+aliasNameLabel = "Namn"
+aliasDestLabel = "Destination"
+aliasExpLabel = "Aliaset skulle vara till http://localhost%s/%s/@nl@och skulle peka till %s"
+aliasDestPath = "Välj destinationsmapp för ditt alias :"
+aliasAlreadyExists = "Alias '%s' finns redan."
+aliasCreated = "Alias '%s' skapades framgångsrikt.@nl@@nl@Url: http://localhost%s/%s/@nl@Sökväg: %s"
+aliasCreatedError = "Det går inte att skapa aliasets konfigurationsfil."
+editAliasTitle = "Redigera alias %s"
+
+; Action Delete vhost
+deleteVhostTitle = "Ta bort virtuell värd"
+deleteVhost = "Vill du verkligen ta bort den virtuella värden '%s' ?"
+vhostRemoved = "Virtuell värd '%s' har framgångsrikt tagits bort."
+vhostRemoveError = "Det går inte att ta bort den virtuella värdens konfigurationsfil i:@nl@%s"
+
+; Action Add/Edit vhost
+addVhostTitle = "Lägg till virtuell värd"
+vhostServerNameLabel = "Servernamn"
+vhostDocumentRootLabel = "Rotdokument"
+vhostExpLabel = "Virtuell värd skulle vara till http://%s/@nl@och skulle peka till %s"
+vhostDocRootPath = "Välj rotdokumentet för din virtuella värd :"
+vhostAlreadyExists = "Virtuell värd '%s' finns redan."
+vhostCreated = "Virtuell värd '%s' skapades framgångsrikt.@nl@@nl@Url: http://%s/@nl@Sökväg: %s"
+vhostCreatedError = "Det går inte att skapa den virtuella värdens konfigurationsfil."
+editVhostTitle = "Redigera virtuell värd %s"
+
+: Action Change port
+changePortTitle = "Ändrar port för %s"
+changePortCurrentLabel = "Faktisk port som används av %s : %s"
+changePortNewLabel = "Ny port"
+changePortSameError = "Detta är samma port som faktiskt används."
+
+; Action Startup
+startupStartingText = "Startar %s. Var vänlig vänta"
+startupKillPhpProcsText = "Stoppar föregående PHP-instans"
+startupRefreshHostnameText = "Uppdaterar värdnamn"
+startupCheckBrowserText = "Kontrollerar webbläsare"
+startupPurgeLogsText = "Rensar loggar"
+startupRefreshAliasHomepageText = "Uppdaterar aliasets startsida"
+startupCheckPathText = "Kontrollerar nuvarande sökväg"
+startupScanFoldersText = "Skannar filkataloger"
+startupChangeOldPathsText = "Byter föregående sökvägar till %s"
+startupRegistryText = "Kontrollerar registernyckeln %s"
+startupRegistryErrorText = "Felinställning %s registernyckel :"
+startupInstallServiceText = "Installerar tjänsten %s"
+startupStartServiceText = "Startar tjänsten %s"
+startupPrepareRestartText = "Förbered omstart av %s"
+startupRestartingText = "Omstartar %s. Var vänlig vänta"
+startupErrorTitle = "Fel vid uppstart"
+startupServiceError = "Tjänsten %s kan inte installeras :"
+startupPortError = "- Porten är inte giltig : %s"
+startupServiceCreateError = "- Kan inte skapa tjänsten : Fel %s"
+startupServiceStartError = "- Kan inte starta tjänsten : Fel %s"
+startupServiceSyntaxError = "- Konf-fel upptäckta : %s"
+startupServicePortError = "- Port %s används av en annan applikation : %s."
+startupRefreshGitReposText = "Refresh Git repositories"
+startupRefreshSvnReposText = "Refresh SVN repositories"
+
+; Action Quit
+exitLeavingText = "Lämnar %s"
+exitRemoveServiceText = "Tar bort tjänsten %s"
+
+; Action Change browser
+changeBrowserTitle = "Byt webbläsare"
+changeBrowserExpLabel = "Välj en webbläsare :"
+changeBrowserOtherLabel = "Annan :"
+changeBrowserOk = "Webbläsare byttes framgångsrikt till:@nl@%s"
+
+; Action About
+aboutTitle = "Om..."
+aboutText = "%s@nl@Copyright(C) 2014 %s <%s>@nl@@nl@Neard är en kostnadsfri mjukvara; du får återdistribuera den och/eller modifiera@nl@den under villkoren av GNU LESSER GENERAL PUBLIC LICENSE.@nl@För mer information, besök webbplatsen :"
+
+; Action Debug Apache
+debugApacheVersionNumber = "Versions-nummer"
+debugApacheCompileSettings = "Sammanställ inställningar"
+debugApacheCompiledModules = "Sammanställda moduler"
+debugApacheConfigDirectives = "Konfig-direktiv"
+debugApacheVhostsSettings = "Virtuell värds inställningar"
+debugApacheLoadedModules = "Inlästa moduler"
+debugApacheSyntaxCheck = "Konfig syntaxkontroll"
+
+; Action Debug MySQL
+debugMysqlVersion = "Version"
+debugMysqlVariables = "Variabler"
+debugMysqlSyntaxCheck = "Konfig syntax-verifiering"
+
+; Action Debug MariaDB
+debugMariadbVersion = "Version"
+debugMariadbVariables = "Variabler"
+debugMariadbSyntaxCheck = "Konfig syntax-verifiering"
+
+; Action others...
+registrySetErrorText = "Registreringsvärde inkorrekt : %s"
+
+; Windows forms
+buttonOk = "OK"
+buttonDelete = "Ta bort"
+buttonSave = "Spara"
+buttonFinish = "Slutför"
+buttonCancel = "Avbryt"
+buttonNext = "Nästa >"
+buttonBack = "< Tillbaka"
+buttonBrowse = "Sök..."
+loading = "Laddar..."
+
+; Homepage
+homepageOfficialWebsite = "Officiell Webbplats"
+homepageServiceStarted = "startad på port %s"
+homepageServiceStopped = "stoppad"
+homepageAboutText = "Neard är en kostnadsfri mjukvara; du får återdistribuera den och/eller modifiera den under villkoren av GNU Lesser General Public License som publicerats av Free Software Foundation, antingen version 3 av Licensen, eller (ut efter ditt val) någon senare version."
+homepageQuestionsTitle = "Frågor ?"
+homepageQuestionsText = "Om du upptäcker problem eller om du har idéer kring utvecklandet av Neard, publicera då frågan på GitHub!"
+homepagePostIssue = "Publicera ett problem"
+homepageDonateText = "Jag har lagt mycket tid på detta projektet och uppskattar donationer.<br />Du har två sätt att donera på. Via <strong>Paypal</strong> eller <strong>Bitcoin</strong> :"
+homepagePhpinfoText = "Visa phpinfo()"
+homepageBackText = "Tillbaka till webbplats"

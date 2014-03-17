@@ -1,0 +1,14 @@
+*
+!.gitignore
+
+# Neard
+!Data
+Data/*
+!Data/Packages
+Data/Packages/*
+!Data/Packages/User
+Data/Packages/User/*
+!Data/Packages/User/Preferences.sublime-settings
+!Data/Local
+Data/Local/*
+!Data/Local/Session.sublime_session

@@ -1,5 +1,22 @@
 # Changelog
 
+## 1.0.4 (2014/03/17)
+
+* Add Xlight FTP Server ([Issue #30](https://github.com/crazy-max/neard/issues/30))
+* Add Swedish language ([Issue #28](https://github.com/crazy-max/neard/issues/28))
+* Create Microsoft Visual C++ Runtime libraries package ([Issue #27](https://github.com/crazy-max/neard/issues/27))
+* Add Sublime Text app to display debug infos ([Issue #26](https://github.com/crazy-max/neard/issues/26))
+* Add debug settings in MySQL and MariaDB menu ([Issue #25](https://github.com/crazy-max/neard/issues/25))
+* If 'port X already used' error occurred, display the process using this port ([Issue #20](https://github.com/crazy-max/neard/issues/20))
+* Create patches ([Issue #18](https://github.com/crazy-max/neard/issues/18))
+* Review services launch process and increase pending timeout to 10 seconds
+* Edit some gitignore
+* Add clear temp folder item (right menu)
+* Move VBS and Batch processes
+* Review loader
+* Review switch online/offline
+* Add batch and vbs logs files (neard-batch.log and neard-vbs.log)
+
 ## 1.0.3 (2014/03/10)
 
 * Add debug settings in Apache menu ([Issue #22](https://github.com/crazy-max/neard/issues/22))

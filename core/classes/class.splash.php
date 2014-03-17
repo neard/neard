@@ -7,6 +7,7 @@ class Splash
     const IMG_APACHE = 'splash-apache.bmp';
     const IMG_MYSQL = 'splash-mysql.bmp';
     const IMG_MARIADB = 'splash-mariadb.bmp';
+    const IMG_XLIGHT = 'splash-xlight.bmp';
     const IMG_GIT = 'splash-git.bmp';
     const IMG_SVN = 'splash-svn.bmp';
     const IMG_RESTART = 'splash-restart.bmp';

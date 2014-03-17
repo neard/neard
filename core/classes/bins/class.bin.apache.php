@@ -89,7 +89,8 @@ class BinApache
         $port = intval($port);
         $neardWinbinder->incrProgressBar($wbProgressBar);
         
-        if (!$checkUsed || !Util::isPortInUse($port, $wbProgressBar)) {
+        $isPortInUse = Batch::isPortInUse($port);
+        if (!$checkUsed || $isPortInUse === false) {
             // bootstrap
             Util::replaceDefine($neardCore->getBootstrapFilePath(), 'CURRENT_APACHE_PORT', intval($port));
             $neardWinbinder->incrProgressBar($wbProgressBar);
@@ -120,8 +121,8 @@ class BinApache
             return true;
         }
         
-        Util::logDebug($this->getName() . ' port in used: ' . $port);
-        return false;
+        Util::logDebug($this->getName() . ' port in used: ' . $port . ' - ' . $isPortInUse);
+        return $isPortInUse;
     }
     
     public function checkPort($port, $showWindow = false)
@@ -354,18 +355,13 @@ class BinApache
     
     public function getCmdLineOutput($cmd)
     {
-        global $neardCore, $neardBins;
         $result = array(
             'syntaxOk' => false,
             'content'  => null,
         );
         
         if (file_exists($this->getExe())) {
-            $resultFile = Util::formatWindowsPath($neardCore->getTmpPath() . '/' . Util::random() . '.tmp');
-            $scriptContent = '@ECHO OFF' . PHP_EOL . PHP_EOL;
-            $scriptContent .= '"' . $this->getExe() . '" ' . $cmd . ' > "' . $resultFile . '" 2>&1' . PHP_EOL;
-            
-            $tmpResult = Util::execBatch($resultFile, $scriptContent, 10);
+            $tmpResult = Batch::exec('apacheGetCmdLineOutput', '"' . $this->getExe() . '" ' . $cmd, 10);
             if ($tmpResult !== false && is_array($tmpResult)) {
                 $result['syntaxOk'] = trim($tmpResult[count($tmpResult) - 1]) == 'Syntax OK';
                 if ($result['syntaxOk']) {

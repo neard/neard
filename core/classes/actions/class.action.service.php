@@ -113,7 +113,8 @@ class ActionService
             return;
         }
         
-        if (!Util::isPortInUse($port)) {
+        $isPortInUse = Batch::isPortInUse($port);
+        if ($isPortInUse === false) {
             if (!$service->isInstalled()) {
                 $service->create();
                 if ($service->start() !== true) {
@@ -136,7 +137,7 @@ class ActionService
                 $boxTitle);
         } else {
             $neardWinbinder->messageBoxError(
-                sprintf($neardLang->getValue(Lang::PORT_NOT_USED_BY), $port),
+                sprintf($neardLang->getValue(Lang::PORT_NOT_USED_BY), $port, $isPortInUse),
                 $boxTitle);
         }
     }

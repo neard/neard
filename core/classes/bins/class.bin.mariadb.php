@@ -7,8 +7,13 @@ class BinMariadb
     const CFG_VERSION = 'mariadbVersion';
     const CFG_EXE = 'mariadbExe';
     const CFG_CLI_EXE = 'mariadbCliExe';
+    const CFG_ADMIN = 'mariadbAdmin';
     const CFG_CONF = 'mariadbConf';
     const CFG_PORT = 'mariadbPort';
+    
+    const CMD_VERSION = '--version';
+    const CMD_VARIABLES = 'variables';
+    const CMD_SYNTAX_CHECK = '--help --verbose 1>NUL';
     
     private $name;
     private $version;
@@ -20,6 +25,7 @@ class BinMariadb
     private $errorLog;
     private $exe;
     private $cliExe;
+    private $admin;
     private $conf;
     private $neardConf;
     
@@ -37,6 +43,7 @@ class BinMariadb
         $this->version = $neardConfig->getRaw(self::CFG_VERSION);
         $this->exe = $neardConfig->getRaw(self::CFG_EXE);
         $this->cliExe = $neardConfig->getRaw(self::CFG_CLI_EXE);
+        $this->admin = $neardConfig->getRaw(self::CFG_ADMIN);
         $this->conf = $neardConfig->getRaw(self::CFG_CONF);
         $this->port = $neardConfig->getRaw(self::CFG_PORT);
         
@@ -45,6 +52,7 @@ class BinMariadb
         $this->errorLog = $neardBs->getLogsPath() . '/mariadb.log';
         $this->exe = $this->currentPath . '/' . $this->exe;
         $this->cliExe = $this->currentPath . '/' . $this->cliExe;
+        $this->admin = $this->currentPath . '/' . $this->admin;
         $this->conf = $this->currentPath . '/' . $this->conf;
         $this->neardConf = $this->currentPath . '/neard.conf';
         
@@ -80,7 +88,8 @@ class BinMariadb
         $port = intval($port);
         $neardWinbinder->incrProgressBar($wbProgressBar);
         
-        if (!$checkUsed || !Util::isPortInUse($port)) {
+        $isPortInUse = Batch::isPortInUse($port);
+        if (!$checkUsed || $isPortInUse === false) {
             // bootstrap
             Util::replaceDefine($neardCore->getBootstrapFilePath(), 'CURRENT_MARIADB_PORT', intval($port));
             $neardWinbinder->incrProgressBar($wbProgressBar);
@@ -104,8 +113,8 @@ class BinMariadb
             return true;
         }
         
-        Util::logDebug($this->getName() . ' port in used: ' . $port);
-        return false;
+        Util::logDebug($this->getName() . ' port in used: ' . $port . ' - ' . $isPortInUse);
+        return $isPortInUse;
     }
     
     public function checkPort($port, $showWindow = false)
@@ -218,6 +227,37 @@ class BinMariadb
         $neardConfig->replace(BinMariadb::CFG_VERSION, $version);
     }
     
+    public function getCmdLineOutput($cmd)
+    {
+        $result = array(
+            'syntaxOk' => false,
+            'content'  => null,
+        );
+    
+        $bin = $this->getExe();
+        $removeLines = 0;
+        $outputFrom = '';
+        if ($cmd == self::CMD_SYNTAX_CHECK) {
+            $outputFrom = '2';
+        } elseif ($cmd == self::CMD_VARIABLES) {
+            $bin = $this->getAdmin();
+            $removeLines = 2;
+        }
+    
+        if (file_exists($this->getExe())) {
+            $tmpResult = Batch::exec('mariadbGetCmdLineOutput', '"' . $bin . '" ' . $cmd . ' ' . $outputFrom, 10);
+            if ($tmpResult !== false && is_array($tmpResult)) {
+                $result['syntaxOk'] = !Util::contains(trim($tmpResult[count($tmpResult) - 1]), '[ERROR]');
+                for ($i = 0; $i < $removeLines; $i++) {
+                    unset($tmpResult[$i]);
+                }
+                $result['content'] = trim(str_replace($bin, '', implode(PHP_EOL, $tmpResult)));
+            }
+        }
+    
+        return $result;
+    }
+    
     public function getName()
     {
         return $this->name;
@@ -241,6 +281,11 @@ class BinMariadb
     public function getCliExe()
     {
         return $this->cliExe;
+    }
+    
+    public function getAdmin()
+    {
+        return $this->admin;
     }
 
     public function getConf()

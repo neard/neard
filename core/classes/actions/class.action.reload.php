@@ -15,7 +15,7 @@ class ActionReload
         // Check browser
         $currentBrowser = $neardConfig->getBrowser();
         if (empty($currentBrowser) || !file_exists($currentBrowser)) {
-            $neardConfig->replace(Config::CFG_BROWSER, Util::getDefaultBrowser());
+            $neardConfig->replace(Config::CFG_BROWSER, Vbs::getDefaultBrowser());
         }
         
         // Rebuild hosts file
@@ -25,13 +25,16 @@ class ActionReload
         file_put_contents($neardBs->getIniFilePath(), Util::utf8ToCp1252(TplApp::process()));
         
         // Process Console config 
-        file_put_contents($neardTools->getConsole()->getConf(), TplConsole::process());
+        TplConsole::process();
+        
+        // Process Sublimetext config
+        TplSublimetext::process();
         
         // Process Websvn config
-        file_put_contents($neardApps->getWebsvn()->getConf(), TplWebsvn::process());
+        TplWebsvn::process();
         
         // Process Gitlist config
-        file_put_contents($neardApps->getGitlist()->getConf(), TplGitlist::process());
+        TplGitlist::process();
         
         // Refresh PEAR version cache file
         $neardBins->getPhp()->getPearVersion();
