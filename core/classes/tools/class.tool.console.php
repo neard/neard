@@ -153,7 +153,7 @@ class ToolConsole
     public function getTabTitlePear()
     {
         global $neardLang, $neardBins;
-        return $neardLang->getValue(Lang::PEAR) . ' ' . $neardBins->getPhp()->getPearVersion();
+        return $neardLang->getValue(Lang::PEAR) . ' ' . $neardBins->getPhp()->getPearVersion(true);
     }
     
     public function getTabTitleMysql()

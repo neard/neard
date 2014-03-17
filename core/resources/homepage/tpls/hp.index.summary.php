@@ -89,6 +89,15 @@
             <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardBins->getNodejs()->getVersion(); ?></span>
             <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::NODEJS); ?>
           </a>
+          <a class="list-group-item" href="#xlight">
+            <?php
+            if ($neardBins->getXlight()->checkPort($neardBins->getXlight()->getPort())) {
+                ?><span style="float:right;font-size:12px" class="label label-success"><?php echo $neardBins->getXlight()->getVersion(); ?></span><?php
+            } else { 
+                ?><span style="float:right;font-size:12px" class="label label-danger"><?php echo $neardBins->getXlight()->getVersion(); ?></span><?php
+            } ?>
+            <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::XLIGHT); ?>
+          </a>
         </div>
       </div>
     </div>

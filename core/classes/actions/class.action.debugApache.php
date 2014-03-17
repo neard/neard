@@ -4,12 +4,10 @@ class ActionDebugApache
 {
     public function __construct($args)
     {
-        global $neardLang, $neardBins, $neardWinbinder;
+        global $neardLang, $neardBins, $neardTools, $neardWinbinder;
         
         if (isset($args[0]) && !empty($args[0])) {
-            $debugOutput = $neardBins->getApache()->getCmdLineOutput($args[0]);
-            
-            $popupWindow = false;
+            $editor = false;
             $msgBoxError = false;
             $caption = $neardLang->getValue(Lang::DEBUG) . ' ' . $neardLang->getValue(Lang::APACHE) . ' - ';
             if ($args[0] == BinApache::CMD_VERSION_NUMBER) {
@@ -19,26 +17,32 @@ class ActionDebugApache
             } elseif ($args[0] == BinApache::CMD_COMPILED_MODULES) {
                 $caption .= $neardLang->getValue(Lang::DEBUG_APACHE_COMPILED_MODULES);
             } elseif ($args[0] == BinApache::CMD_CONFIG_DIRECTIVES) {
-                $popupWindow = true;
+                $editor = true;
                 $caption .= $neardLang->getValue(Lang::DEBUG_APACHE_CONFIG_DIRECTIVES);
             } elseif ($args[0] == BinApache::CMD_VHOSTS_SETTINGS) {
-                $popupWindow = true;
+                $editor = true;
                 $caption .= $neardLang->getValue(Lang::DEBUG_APACHE_VHOSTS_SETTINGS);
             } elseif ($args[0] == BinApache::CMD_LOADED_MODULES) {
-                $popupWindow = true;
+                $editor = true;
                 $caption .= $neardLang->getValue(Lang::DEBUG_APACHE_LOADED_MODULES);
             } elseif ($args[0] == BinApache::CMD_SYNTAX_CHECK) {
-                $msgBoxError = !$debugOutput['syntaxOk'];
-                $debugOutput['content'] = $debugOutput['syntaxOk'] ? 'Syntax OK !' : $debugOutput['content'];
                 $caption .= $neardLang->getValue(Lang::DEBUG_APACHE_SYNTAX_CHECK);
             }
             $caption .= ' (' . $args[0] . ')';
             
-            if ($popupWindow) {
-                $neardWinbinder->reset();
-                $window = $neardWinbinder->createWindow(null, PopupWindow, $caption, WBC_CENTER, WBC_CENTER, 540, 340, WBC_READONLY, null);
-                $neardWinbinder->createEditBox($window, $debugOutput['content'], 0, 0, 535, 315, WBC_READONLY);
-                $neardWinbinder->mainLoop();
+            if ($editor) {
+                Util::startLoading();
+            }
+            
+            $debugOutput = $neardBins->getApache()->getCmdLineOutput($args[0]);
+            
+            if ($args[0] == BinApache::CMD_SYNTAX_CHECK) {
+                $msgBoxError = !$debugOutput['syntaxOk'];
+                $debugOutput['content'] = $debugOutput['syntaxOk'] ? 'Syntax OK !' : $debugOutput['content'];
+            }
+            
+            if ($editor) {
+                $neardTools->getSublimetext()->open($caption, $debugOutput['content']);
             } else {
                 if ($msgBoxError) {
                     $neardWinbinder->messageBoxError(

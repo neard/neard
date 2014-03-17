@@ -161,6 +161,16 @@ class Bootstrap
         return $this->getLogsPath($aetrayPath) . '/neard-startup.log';
     }
     
+    public function getBatchLogFilePath($aetrayPath = false)
+    {
+        return $this->getLogsPath($aetrayPath) . '/neard-batch.log';
+    }
+    
+    public function getVbsLogFilePath($aetrayPath = false)
+    {
+        return $this->getLogsPath($aetrayPath) . '/neard-vbs.log';
+    }
+    
     public function getHomepageFilePath($aetrayPath = false)
     {
         return $this->getWwwPath($aetrayPath) . '/index.php';

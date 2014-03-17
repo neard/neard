@@ -1,0 +1,5 @@
+*
+!.gitignore
+
+# Neard
+!git-bash.bat

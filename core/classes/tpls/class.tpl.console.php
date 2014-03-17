@@ -16,7 +16,7 @@ class TplConsole
     
     public static function process()
     {
-        global $neardConfig;
+        global $neardConfig, $neardTools;
         
         //TODO: Use SimpleXML
         /*$root = new SimpleXMLElement('<settings/>');
@@ -53,7 +53,7 @@ class TplConsole
         $dom->loadXML($root->asXML());
         var_dump(trim($dom->saveXML()));*/
         
-        return '<?xml version="1.0"?>' . PHP_EOL . '<settings>' . PHP_EOL .
+        $result = '<?xml version="1.0"?>' . PHP_EOL . '<settings>' . PHP_EOL .
             self::getConsoleSection() . PHP_EOL .
             self::getAppearanceSection() . PHP_EOL .
             self::getBehaviorSection() . PHP_EOL .
@@ -61,6 +61,8 @@ class TplConsole
             self::getMouseSection() . PHP_EOL .
             self::getTabsSection() . PHP_EOL .
             '</settings>';
+            
+        file_put_contents($neardTools->getConsole()->getConf(), $result);
     }
     
     private static function getConsoleSection()
@@ -340,7 +342,7 @@ class TplConsole
     {
         global $neardBs, $neardTools;
         
-        $svnVersion = Util::getSvnVersion();
+        $svnVersion = Batch::getSvnVersion();
         $shell = $neardTools->getConsole()->getCmdShell() .
             (!empty($svnVersion) ? ' echo ' . $svnVersion[0] . ' &amp; echo ' . $svnVersion[1] : null);
         

@@ -13,6 +13,8 @@ class ActionCheckPort
                 $bin = $neardBins->getMysql()->checkPort($args[1], true);
             } elseif ($args[0] == $neardBins->getMariadb()->getName()) {
                 $bin = $neardBins->getMariadb()->checkPort($args[1], true);
+            } elseif ($args[0] == $neardBins->getXlight()->getName()) {
+                $bin = $neardBins->getXlight()->checkPort($args[1], true);
             }
         }
     }

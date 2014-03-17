@@ -1,0 +1,25 @@
+// Settings in here override those in "Default/Preferences.sublime-settings",
+// and are overridden in turn by file type specific settings.
+{
+  "hot_exit": false,
+  "remember_open_files": false,
+  //"trim_trailing_white_space_on_save": true,
+
+  "tab_size": 4,
+  "translate_tabs_to_spaces": true,
+  "detect_indentation": true,
+
+  "menu_visible": false,
+  "show_minimap": true,
+  "show_open_files": false,
+  "show_tabs": false,
+  "show_full_path": false,
+
+  "side_bar_visible": false,
+
+  "status_bar_visible": true,
+
+  "word_wrap": false,
+  //"draw_indent_guides": true,
+  //"draw_white_space": "all",
+}

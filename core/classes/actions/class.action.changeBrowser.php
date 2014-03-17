@@ -30,7 +30,7 @@ class ActionChangeBrowser
         $this->wbRadioButton[] = $neardWinbinder->createRadioButton($this->wbWindow, $currentBrowser, true, 15, 40, 470, 20, true);
         
         $yPos = 70;
-        $installedBrowsers = Util::getInstalledBrowsers();
+        $installedBrowsers = Vbs::getInstalledBrowsers();
         foreach ($installedBrowsers as $installedBrowser) {
             if ($installedBrowser != $currentBrowser) {
                 $this->wbRadioButton[] = $neardWinbinder->createRadioButton($this->wbWindow, $installedBrowser, false, 15, $yPos, 470, 20);

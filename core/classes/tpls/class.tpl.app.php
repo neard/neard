@@ -159,6 +159,7 @@ class TplApp
             
             TplAestan::getItemSeparator() . PHP_EOL .
             $tplReload[self::SECTION_CALL] . PHP_EOL .
+            TplAppClearFolders::process() . PHP_EOL .
             $tplBrowser[self::SECTION_CALL] . PHP_EOL .
             TplAestan::getItemConsole($neardLang->getValue(Lang::CONSOLE), TplAestan::GLYPH_CONSOLE) . PHP_EOL .
             
@@ -184,6 +185,7 @@ class TplApp
         $tplPhp = TplAppPhp::process();
         $tplMysql = TplAppMysql::process();
         $tplMariadb = TplAppMariadb::process();
+        $tplXlight = TplAppXlight::process();
         
         $tplGit = TplAppGit::process();
         $tplSvn = TplAppSvn::process();
@@ -208,6 +210,7 @@ class TplApp
             $tplPhp[self::SECTION_CALL] . PHP_EOL .
             $tplMysql[self::SECTION_CALL] . PHP_EOL .
             $tplMariadb[self::SECTION_CALL] . PHP_EOL .
+            $tplXlight[self::SECTION_CALL] . PHP_EOL .
             
             //// Git / SVN menus
             TplAestan::getItemSeparator() . PHP_EOL .
@@ -233,6 +236,7 @@ class TplApp
             PHP_EOL . $tplPhp[self::SECTION_CONTENT] .
             PHP_EOL . $tplMysql[self::SECTION_CONTENT] .
             PHP_EOL . $tplMariadb[self::SECTION_CONTENT] .
+            PHP_EOL . $tplXlight[self::SECTION_CONTENT] .
             PHP_EOL . $tplGit[self::SECTION_CONTENT] .
             PHP_EOL . $tplSvn[self::SECTION_CONTENT] .
             PHP_EOL . $tplHosts[self::SECTION_CONTENT] .

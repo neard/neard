@@ -12,6 +12,8 @@ class Core
     const APP_PATHS = 'paths.dat';
     const EXEC = 'exec';
     const LOADING_PID = 'loading.pid';
+    
+    const SCRIPT_EXEC_SILENT_VBS = 'execSilent.vbs';
 
     private $langsPath;
     private $libsPath;
@@ -39,6 +41,16 @@ class Core
     {
         global $neardBs;
         return $neardBs->getCorePath($aetrayPath) . '/resources';
+    }
+    
+    public function getScriptsPath($aetrayPath = false)
+    {
+        return $this->getResourcesPath($aetrayPath) . '/scripts';
+    }
+    
+    public function getScript($type)
+    {
+        return $this->getScriptsPath() . '/' . $type;
     }
     
     public function getTmpPath($aetrayPath = false)
@@ -73,9 +85,9 @@ class Core
         return $this->getResourcesPath($aetrayPath) . '/' . self::LOADING_PID;
     }
     
-    public function setLoadingPid($pid)
+    public function addLoadingPid($pid)
     {
-        file_put_contents($this->getLoadingPid(), $pid);
+        file_put_contents($this->getLoadingPid(), $pid . PHP_EOL, FILE_APPEND);
     }
 
     public function getPhpPath($aetrayPath = false)

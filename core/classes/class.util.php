@@ -173,7 +173,7 @@ class Util
         if (!$handle) {
             return $result;
         }
-    
+        
         while ($file = readdir($handle)) {
             if ($file == '.' || $file == '..') {
                 continue;
@@ -191,7 +191,7 @@ class Util
                 }
             }
         }
-    
+        
         closedir($handle);
         return $result;
     }
@@ -347,41 +347,6 @@ class Util
         return $result;
     }
     
-    public static function psListProcs()
-    {
-        global $neardBs;
-        
-        $neardBs->removeErrorHandling();
-        $result = call_user_func('win32_ps_list_procs');
-        $neardBs->initErrorHandling();
-        
-        return $result;
-    }
-    
-    public static function psStatProc()
-    {
-        global $neardBs;
-    
-        $neardBs->removeErrorHandling();
-        $result = call_user_func('win32_ps_stat_proc');
-        $neardBs->initErrorHandling();
-    
-        return $result;
-    }
-    
-    public static function isPortInUse($port)
-    {
-        /*global $neardCore, $neardBins;
-        
-        $resultFile = self::formatWindowsPath($neardCore->getTmpPath() . '/' . self::random() . '.tmp');
-        $scriptContent = '@ECHO OFF' . PHP_EOL . PHP_EOL;
-        $scriptContent .= 'netstat -an | find ":' . $port . '" | find "LISTENING" > "' . $resultFile . '"' . PHP_EOL;
-        
-        $result = self::execBatch($resultFile, $scriptContent, 10);
-        return isset($result[0]) && !empty($result[0]);*/
-        return self::fsockopenAlt('127.0.0.1', intval($port), 1) !== false;
-    }
-    
     public static function isOnline()
     {
         global $neardConfig;
@@ -409,22 +374,22 @@ class Util
     {
         $dest = self::formatUnixPath($dest);
         return 'Alias /' . $name . ' "' . $dest . '"' . PHP_EOL . PHP_EOL .
-        '# to give access to ' . $name . ' from outside' . PHP_EOL .
-        '# replace the lines' . PHP_EOL .
-        '#' . PHP_EOL .
-        '#    Order Deny,Allow' . PHP_EOL .
-        '#    Deny from all' . PHP_EOL .
-        '#    Allow from ::1 127.0.0.1 localhost' . PHP_EOL .
-        '#' . PHP_EOL . '# by' . PHP_EOL . '#' . PHP_EOL .
-        '#    Order Allow,Deny' . PHP_EOL .
-        '#    Allow from all' . PHP_EOL . '#' . PHP_EOL .
-        '<Directory "' . $dest . '">' . PHP_EOL .
-        '    Options Indexes FollowSymLinks MultiViews' . PHP_EOL .
-        '    AllowOverride all' . PHP_EOL .
-        '    Order Deny,Allow' . PHP_EOL .
-        '    Deny from all' . PHP_EOL .
-        '    Allow from ::1 127.0.0.1 localhost' . PHP_EOL .
-        '</Directory>' . PHP_EOL;
+            '# to give access to ' . $name . ' from outside' . PHP_EOL .
+            '# replace the lines' . PHP_EOL .
+            '#' . PHP_EOL .
+            '#    Order Deny,Allow' . PHP_EOL .
+            '#    Deny from all' . PHP_EOL .
+            '#    Allow from ::1 127.0.0.1 localhost' . PHP_EOL .
+            '#' . PHP_EOL . '# by' . PHP_EOL . '#' . PHP_EOL .
+            '#    Order Allow,Deny' . PHP_EOL .
+            '#    Allow from all' . PHP_EOL . '#' . PHP_EOL .
+            '<Directory "' . $dest . '">' . PHP_EOL .
+            '    Options Indexes FollowSymLinks MultiViews' . PHP_EOL .
+            '    AllowOverride all' . PHP_EOL .
+            '    Order Deny,Allow' . PHP_EOL .
+            '    Deny from all' . PHP_EOL .
+            '    Allow from ::1 127.0.0.1 localhost' . PHP_EOL .
+            '</Directory>' . PHP_EOL;
     }
     
     public static function getVhostContent($serverName, $documentRoot)
@@ -447,54 +412,6 @@ class Util
     {
         list($usec, $sec) = explode(" ", microtime());
         return ((float)$usec + (float)$sec);
-    }
-    
-    public static function getSilentVbs()
-    {
-        global $neardCore;
-        
-        $scriptName = $neardCore->getTmpPath() . '/' . self::random() . '.vbs';
-        $scriptContent = 'Set objShell = WScript.CreateObject("WScript.Shell")' . PHP_EOL;
-        $scriptContent .= 'Set objFso = CreateObject("Scripting.FileSystemObject")' . PHP_EOL;
-        $scriptContent .= 'Set args = WScript.Arguments' . PHP_EOL;
-        $scriptContent .= 'num = args.Count' . PHP_EOL;
-        $scriptContent .= 'sargs = ""' . PHP_EOL . PHP_EOL;
-        $scriptContent .= 'If num = 0 Then' . PHP_EOL;
-        $scriptContent .= '    WScript.Quit 1' . PHP_EOL;
-        $scriptContent .= 'End If' . PHP_EOL . PHP_EOL;
-        $scriptContent .= 'If num > 1 Then' . PHP_EOL;
-        $scriptContent .= '    sargs = " "' . PHP_EOL;
-        $scriptContent .= '    For k = 1 To num - 1' . PHP_EOL;
-        $scriptContent .= '        anArg = args.Item(k)' . PHP_EOL;
-        $scriptContent .= '        sargs = sargs & anArg & " "' . PHP_EOL;
-        $scriptContent .= '    Next' . PHP_EOL;
-        $scriptContent .= 'End If' . PHP_EOL . PHP_EOL;
-        $scriptContent .= 'Return = objShell.Run("""" & args(0) & """" & sargs, 0, True)' . PHP_EOL;
-        $scriptContent .= 'objFso.DeleteFile("' . self::formatWindowsPath($scriptName) . '")' . PHP_EOL;
-        
-        file_put_contents($scriptName, $scriptContent);
-        return $scriptName;
-    }
-    
-    public static function exitApp($restart = false)
-    {
-        global $neardBs, $neardCore, $neardWinbinder;
-    
-        $scriptName = $neardCore->getTmpPath() . '/' . self::random() . '.bat';
-        $scriptContent = '@ECHO OFF' . PHP_EOL . PHP_EOL;
-        $scriptContent .= 'SETLOCAL EnableDelayedExpansion' . PHP_EOL;
-        $scriptContent .= 'ping 1.1.1.1 -n 1 -w 2000 > nul' . PHP_EOL;
-        $scriptContent .= '"' . $neardBs->getExeFilePath() . '" -quit -id={neard}' . PHP_EOL;
-        if ($restart) {
-            self::logInfo('Restart App');
-            $scriptContent .= '"' . $neardCore->getPhpCliSilentExe() . '" "' . Core::BOOTSTRAP_FILE . '" "' . Action::RESTART . '"' . PHP_EOL;
-        } else {
-            self::logInfo('Exit App');
-        }
-        $scriptContent .= 'ENDLOCAL' . PHP_EOL;
-        file_put_contents($scriptName, $scriptContent);
-        
-        $neardWinbinder->exec($scriptName, null, true);
     }
     
     public static function getAppBinsRegKey($fromRegistry = true)
@@ -637,45 +554,6 @@ class Util
         return false;
     }
     
-    public static function getPearVersion()
-    {
-        global $neardCore, $neardBins;
-        
-        $resultFile = self::formatWindowsPath($neardCore->getTmpPath() . '/' . self::random() . '.tmp');
-        $scriptContent = '@ECHO OFF' . PHP_EOL . PHP_EOL;
-        $scriptContent .= 'cmd /c "' . $neardBins->getPhp()->getPearExe() . '" -V > "' . $resultFile . '"' . PHP_EOL;
-        
-        $result = self::execBatch($resultFile, $scriptContent, 10);
-        if (isset($result[0])) {
-            $expResult = explode(' ', $result[0]);
-            if (count($expResult) == 3) {
-                $result = trim($expResult[2]);
-            }
-        }
-        
-        return $result;
-    }
-    
-    public static function getSvnVersion()
-    {
-        global $neardCore, $neardTools;
-        
-        $resultFile = self::formatWindowsPath($neardCore->getTmpPath() . '/' . self::random() . '.tmp');
-        $scriptContent = '@ECHO OFF' . PHP_EOL . PHP_EOL;
-        $scriptContent .= 'cmd /c "' . $neardTools->getSvn()->getExe() . '" --version > "' . $resultFile . '"' . PHP_EOL;
-        
-        $result = self::execBatch($resultFile, $scriptContent, 10);
-        if (!empty($result) && is_array($result)) {
-            $rebuildResult = array();
-            foreach ($result as $row) {
-                $rebuildResult[] = self::cp1252ToUtf8($row);
-            }
-            $result = $rebuildResult;
-        }
-        
-        return $result;
-    }
-    
     public static function findRepos($startPath, $findFolder, $checkFileIns = null)
     {
         $result = array();
@@ -704,240 +582,6 @@ class Util
         }
         
         closedir($handle);
-        return $result;
-    }
-    
-    public static function countFilesFolders($path)
-    {
-        global $neardCore;
-        
-        $resultFile = self::formatWindowsPath($neardCore->getTmpPath() . '/' . self::random() . '.tmp');
-        $scriptContent = 'Dim objFso, objResultFile, objCheckFile' . PHP_EOL . PHP_EOL;
-        $scriptContent .= 'Set objFso = CreateObject("scripting.filesystemobject")' . PHP_EOL;
-        $scriptContent .= 'Set objResultFile = objFso.CreateTextFile("' . $resultFile . '", True)' . PHP_EOL;
-        $scriptContent .= 'count = 0' . PHP_EOL;
-        $scriptContent .= 'CountFiles("' . $path . '")' . PHP_EOL . PHP_EOL;
-        $scriptContent .= 'Function CountFiles(ByVal path)' . PHP_EOL;
-        $scriptContent .= '    Dim parentFld, subFld' . PHP_EOL;
-        $scriptContent .= '    Set parentFld = objFso.GetFolder(path)' . PHP_EOL . PHP_EOL;
-        $scriptContent .= '    count = count + parentFld.Files.Count + + parentFld.SubFolders.Count' . PHP_EOL;
-        $scriptContent .= '    For Each subFld In parentFld.SubFolders' . PHP_EOL;
-        $scriptContent .= '        count = count + CountFiles(subFld.Path)' . PHP_EOL;
-        $scriptContent .= '    Next' . PHP_EOL . PHP_EOL;
-        $scriptContent .= 'End Function' . PHP_EOL . PHP_EOL;
-        $scriptContent .= 'objResultFile.Write count' . PHP_EOL;
-        $scriptContent .= 'objResultFile.Close' . PHP_EOL;
-    
-        $result = self::execVbs($resultFile, $scriptContent, 30);
-        return isset($result[0]) && is_numeric($result[0]) ? intval($result[0]) : false;
-    }
-    
-    public static function findReposVbs($startPath, $findFolder, $checkFileIns)
-    {
-        global $neardCore;
-        
-        $resultFile = self::formatWindowsPath($neardCore->getTmpPath() . '/' . self::random() . '.tmp');
-        $scriptContent = 'Dim objFso, objFile' . PHP_EOL . PHP_EOL;
-        $scriptContent .= 'Set objFso = CreateObject("scripting.filesystemobject")' . PHP_EOL;
-        $scriptContent .= 'Set objFile = objFso.CreateTextFile("' . $resultFile . '", True)' . PHP_EOL;
-        $scriptContent .= 'findFolder = "' . $findFolder . '"' . PHP_EOL;
-        $scriptContent .= 'checkFileIns = "' . $checkFileIns . '"' . PHP_EOL . PHP_EOL;
-        $scriptContent .= 'FindRepos("' . $startPath . '")' . PHP_EOL . PHP_EOL;
-        $scriptContent .= 'Function FindRepos(ByVal path)' . PHP_EOL;
-        $scriptContent .= '    Dim parentFld, subFld' . PHP_EOL;
-        $scriptContent .= '    Set parentFld = objFso.GetFolder(path)' . PHP_EOL . PHP_EOL;
-        $scriptContent .= '    For Each subFld In parentFld.SubFolders' . PHP_EOL;
-        $scriptContent .= '        If subFld.Name = findFolder And objFso.FileExists(subFld.Path & "\" & checkFileIns) Then' . PHP_EOL;
-        $scriptContent .= '            objFile.Write parentFld.Path & vbCrLf' . PHP_EOL;
-        $scriptContent .= '        End If' . PHP_EOL;
-        $scriptContent .= '        FindRepos(subFld.Path)' . PHP_EOL;
-        $scriptContent .= '    Next' . PHP_EOL;
-        $scriptContent .= 'End Function' . PHP_EOL . PHP_EOL;
-        $scriptContent .= 'objFile.Close' . PHP_EOL;
-        
-        return self::execVbs($resultFile, $scriptContent, 30);
-    }
-    
-    public static function getDefaultBrowser()
-    {
-        global $neardCore;
-    
-        $resultFile = self::formatWindowsPath($neardCore->getTmpPath() . '/' . self::random() . '.tmp');
-        $scriptContent = 'On Error Resume Next' . PHP_EOL;
-        $scriptContent .= 'Err.Clear' . PHP_EOL . PHP_EOL;
-    
-        $scriptContent .= 'Dim objShell, objFso, objFile' . PHP_EOL . PHP_EOL;
-    
-        $scriptContent .= 'Set objShell = WScript.CreateObject("WScript.Shell")' . PHP_EOL;
-        $scriptContent .= 'Set objFso = CreateObject("scripting.filesystemobject")' . PHP_EOL;
-        $scriptContent .= 'Set objFile = objFso.CreateTextFile("' . $resultFile . '", True)' . PHP_EOL . PHP_EOL;
-        
-        $scriptContent .= 'objFile.Write objShell.RegRead("HKLM\SOFTWARE\Classes\http\shell\open\command\")' . PHP_EOL;
-        $scriptContent .= 'objFile.Close' . PHP_EOL;
-    
-        $result = self::execVbs($resultFile, $scriptContent, 2);
-        if ($result !== false && !empty($result)) {
-            if (preg_match('/"([^"]+)"/', $result[0], $matches)) {
-                return $matches[1];
-            } else {
-                return str_replace('"', '', $result[0]);
-            }
-        } else {
-            return false;
-        }
-    }
-    
-    public static function getInstalledBrowsers()
-    {
-        global $neardCore;
-    
-        $resultFile = self::formatWindowsPath($neardCore->getTmpPath() . '/' . self::random() . '.tmp');
-        $scriptContent = 'On Error Resume Next' . PHP_EOL;
-        $scriptContent .= 'Err.Clear' . PHP_EOL . PHP_EOL;
-        
-        $scriptContent .= 'Dim objShell, objRegistry, objFso, objFile' . PHP_EOL . PHP_EOL;
-        
-        $scriptContent .= 'Set objShell = WScript.CreateObject("WScript.Shell")' . PHP_EOL;
-        $scriptContent .= 'Set objRegistry = GetObject("winmgmts://./root/default:StdRegProv")' . PHP_EOL;
-        $scriptContent .= 'Set objFso = CreateObject("scripting.filesystemobject")' . PHP_EOL;
-        $scriptContent .= 'Set objFile = objFso.CreateTextFile("' . $resultFile . '", True)' . PHP_EOL . PHP_EOL;
-        
-        $scriptContent .= 'mainKey = "SOFTWARE\WOW6432Node\Clients\StartMenuInternet"' . PHP_EOL;
-        $scriptContent .= 'checkKey = objShell.RegRead("HKLM\" & mainKey & "\")' . PHP_EOL;
-        $scriptContent .= 'If Err.Number <> 0 Then' . PHP_EOL;
-        $scriptContent .= '    Err.Clear' . PHP_EOL;
-        $scriptContent .= '    mainKey = "SOFTWARE\Clients\StartMenuInternet"' . PHP_EOL;
-        $scriptContent .= '    checkKey = objShell.RegRead("HKLM\" & mainKey & "\")' . PHP_EOL;
-        $scriptContent .= '    If Err.Number <> 0 Then' . PHP_EOL;
-        $scriptContent .= '        mainKey = ""' . PHP_EOL;
-        $scriptContent .= '    End If' . PHP_EOL;
-        $scriptContent .= 'End If' . PHP_EOL . PHP_EOL;
-        
-        $scriptContent .= 'Err.Clear' . PHP_EOL;
-        $scriptContent .= 'If mainKey <> "" Then' . PHP_EOL;
-        $scriptContent .= '    objRegistry.EnumKey &H80000002, mainKey, arrSubKeys' . PHP_EOL;
-        $scriptContent .= '    For Each subKey In arrSubKeys' . PHP_EOL;
-        $scriptContent .= '        objFile.Write objShell.RegRead("HKLM\SOFTWARE\Clients\StartMenuInternet\" & subKey & "\shell\open\command\") & vbCrLf' . PHP_EOL;
-        $scriptContent .= '    Next' . PHP_EOL;
-        $scriptContent .= 'End If' . PHP_EOL;
-        $scriptContent .= 'objFile.Close' . PHP_EOL;
-        
-        $result = self::execVbs($resultFile, $scriptContent, 2);
-        if ($result !== false && !empty($result)) {
-            $rebuildResult = array();
-            foreach ($result as $browser) {
-                $rebuildResult[] = str_replace('"', '', $browser);
-            }
-            $result = $rebuildResult;
-        }
-    
-        return $result;
-    }
-    
-    public static function execBatch($resultFile, $content, $timeout, $silent = true)
-    {
-        global $neardCore, $neardWinbinder;
-    
-        $result = false;
-        $endProcessStr = 'FINISHED!';
-    
-        $scriptPath = self::formatWindowsPath($neardCore->getTmpPath() . '/' . self::random()) . '.bat';
-        $checkFile = self::formatWindowsPath($neardCore->getTmpPath() . '/' . self::random()) . '.tmp';
-    
-        // Build script footer
-        $footer = PHP_EOL . PHP_EOL . 'REM START Footer Batch PHP class' . PHP_EOL .
-            'echo ' . $endProcessStr . ' > "' . $checkFile . '"' . PHP_EOL .
-            'REM END Footer Batch PHP class';
-    
-        // Process
-        file_put_contents($scriptPath, $content . $footer);
-        $neardWinbinder->exec($scriptPath, null, $silent);
-    
-        $maxtime = time() + $timeout;
-        $noTimeout = $timeout == 0;
-        while ($result === false || empty($result)) {
-            if (file_exists($checkFile)) {
-                $check = file($checkFile);
-                if (!empty($check) && trim($check[0]) == $endProcessStr) {
-                    $result = file($resultFile);
-                }
-            }
-            if ($maxtime < time() && !$noTimeout) {
-                break;
-            }
-        }
-    
-        self::unlinkAlt($checkFile);
-        self::unlinkAlt($resultFile);
-        self::unlinkAlt($scriptPath);
-    
-        if ($result !== false && !empty($result)) {
-            $rebuildResult = array();
-            foreach ($result as $repo) {
-                $rebuildResult[] = trim($repo);
-            }
-            $result = $rebuildResult;
-        }
-    
-        return $result;
-    }
-    
-    public static function execVbs($resultFile , $content, $timeout)
-    {
-        global $neardCore, $neardWinbinder;
-    
-        $result = false;
-        $endProcessStr = 'FINISHED!';
-        
-        $scriptPath = self::formatWindowsPath($neardCore->getTmpPath() . '/' . self::random()) . '.vbs';
-        $checkFile = self::formatWindowsPath($neardCore->getTmpPath() . '/' . self::random()) . '.tmp';
-    
-        $randomVarName = self::random(15, false);
-        $randomObjFso = self::random(15, false);
-        $randomObjFile = self::random(15, false);
-    
-        // Build script header
-        $header = '\' START Header Vbs PHP class' . PHP_EOL .
-        'Dim ' . $randomVarName . ', ' . $randomObjFso . ', ' . $randomObjFile . PHP_EOL .
-        'Set ' . $randomObjFso . ' = CreateObject("scripting.filesystemobject")' . PHP_EOL .
-        'Set ' . $randomObjFile . ' = ' . $randomObjFso . '.CreateTextFile("' . $checkFile . '", True)' . PHP_EOL .
-        '\' END Header Vbs PHP class' . PHP_EOL . PHP_EOL;
-    
-        // Build script footer
-        $footer = PHP_EOL . PHP_EOL . '\' START Footer Vbs PHP class' . PHP_EOL .
-        $randomObjFile . '.Write "' . $endProcessStr . '"' . PHP_EOL .
-        $randomObjFile . '.Close' . PHP_EOL .
-        '\' END Footer Vbs PHP class';
-    
-        // Process
-        file_put_contents($scriptPath, $header . $content . $footer);
-        $neardWinbinder->exec('wscript.exe', '"' . $scriptPath . '"');
-    
-        $maxtime = time() + $timeout;
-        while ($result === false || empty($result)) {
-            if (file_exists($checkFile)) {
-                $check = file($checkFile);
-                if (!empty($check) && $check[0] == $endProcessStr) {
-                    $result = file($resultFile);
-                }
-            }
-            if ($maxtime < time()) {
-                break;
-            }
-        }
-    
-        self::unlinkAlt($checkFile);
-        self::unlinkAlt($resultFile);
-        self::unlinkAlt($scriptPath);
-    
-        if ($result !== false && !empty($result)) {
-            $rebuildResult = array();
-            foreach ($result as $repo) {
-                $rebuildResult[] = trim($repo);
-            }
-            $result = $rebuildResult;
-        }
-    
         return $result;
     }
     
@@ -973,18 +617,6 @@ class Util
         return 'data:image/' . $type . ';base64,' . base64_encode($data);
     }
     
-    public static function refreshEnvVars()
-    {
-        global $neardBs, $neardCore;
-    
-        $resultFile = self::formatWindowsPath($neardCore->getTmpPath() . '/' . self::random() . '.tmp');
-        $scriptContent = '@ECHO OFF' . PHP_EOL . PHP_EOL;
-        $scriptContent .= 'SETX /M ' . Registry::APP_PATH_REG_ENTRY . ' "' . self::formatWindowsPath($neardBs->getRootPath()) . '"' . PHP_EOL;
-        $scriptContent .= 'ECHO FINISHED! > "' . $resultFile . '"' . PHP_EOL;
-    
-        self::execBatch($resultFile, $scriptContent, 2);
-    }
-    
     public static function utf8ToCp1252($data)
     {
         return iconv("UTF-8", "WINDOWS-1252", $data);
@@ -995,51 +627,55 @@ class Util
         return iconv("WINDOWS-1252", "UTF-8", $data);
     }
     
-    public static function killByPid($pid)
-    {
-        global $neardWinbinder;
-        
-        if (!empty($pid) && self::existsPid($pid)) {
-            $neardWinbinder->exec('TASKKILL', '/F /PID ' . $pid, true);
-        }
-    }
-    
-    public static function getPid()
-    {
-        $procInfo = self::psStatProc();
-        return isset($procInfo['pid']) ? intval($procInfo['pid']) : 0;
-    }
-    
-    public static function existsPid($pid)
-    {
-        $pids = self::psListProcs();
-        if ($pids !== false) {
-            foreach ($pids as $aPid) {
-                if (isset($aPid['pid']) && $aPid['pid'] == $pid) {
-                    return true;
-                }
-            }
-        }
-        
-        return false;
-    }
-    
     public static function startLoading()
     {
         global $neardCore, $neardWinbinder;
-        if (!file_exists($neardCore->getLoadingPid())) {
-            $neardWinbinder->exec($neardCore->getPhpCliSilentExe(), Core::BOOTSTRAP_FILE . ' ' . Action::LOADING);
-        }
+        $neardWinbinder->exec($neardCore->getPhpCliSilentExe(), Core::BOOTSTRAP_FILE . ' ' . Action::LOADING);
     }
     
     public static function stopLoading()
     {
         global $neardCore;
         if (file_exists($neardCore->getLoadingPid())) {
-            $pid = trim(file_get_contents($neardCore->getLoadingPid()));
+            $pids = file($neardCore->getLoadingPid());
+            foreach ($pids as $pid) {
+                Win32Ps::kill(trim($pid));
+            }
             self::unlinkAlt($neardCore->getLoadingPid());
-            self::killByPid($pid);
         }
+    }
+    
+    public static function getPathsToScan()
+    {
+        global $neardBs, $neardCore, $neardBins, $neardApps, $neardTools;
+        return array(
+            $neardBs->getAliasPath()                     => array(''),
+            $neardBs->getVhostsPath()                    => array(''),
+            $neardBins->getApache()->getRootPath()       => array('.ini', '.conf'),
+            $neardBins->getPhp()->getRootPath()          => array('.php', '.bat', '.ini', '.reg'),
+            $neardBins->getMysql()->getRootPath()        => array('my.ini'),
+            $neardBins->getMariadb()->getRootPath()      => array('my.ini'),
+            $neardBins->getNodejs()->getRootPath()       => array('.bat', 'npmrc'),
+            $neardBins->getXlight()->getRootPath()       => array('.hosts', '.option', '.rules', '.users'),
+            $neardApps->getWebsvn()->getRootPath()       => array('config.php'),
+            $neardApps->getGitlist()->getRootPath()      => array('config.ini'),
+            $neardTools->getConsole()->getRootPath()     => array('console.xml'),
+            $neardTools->getTccle()->getRootPath()       => array('.ini'),
+            $neardCore->getResourcesPath() . '/homepage' => array('.conf'),
+        );
+    }
+    
+    public static function getFilesToScan()
+    {
+        $result = array();
+        $pathsToScan = self::getPathsToScan();
+        foreach ($pathsToScan as $pathToScan => $toFind) {
+            $findFiles = self::findFiles($pathToScan, $toFind);
+            foreach ($findFiles as $findFile) {
+                $result[] = $findFile;
+            }
+        }
+        return $result;
     }
     
 }

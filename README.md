@@ -4,11 +4,12 @@ Neard is an Integrated Web Development Tools environment combining :
 
 ### Major binaries
 
-* **Apache2**
+* **Apache**
 * **PHP**
 * **MySQL**
 * **MariaDB**
 * **Node.js**
+* **Xlight**
 
 ### Applications
 
@@ -32,26 +33,26 @@ And many other features.
 * [WSH (Windows Script Host)](http://support.microsoft.com/kb/232211) : Open a command prompt and type ``wscript`` to check.
 * [SETX](http://technet.microsoft.com/en-us/library/cc755104.aspx) : Open a command prompt and type ``setx /?`` to check.
 * Be [Admin user](http://windows.microsoft.com/en-US/windows7/How-do-I-log-on-as-an-administrator).
+* Download and install the latests [Visual C++ Redistributables Packages (x86)](https://sourceforge.net/projects/neard/files/Tools/neard-vcredists-x86.exe/download).
 
 ### Windows XP
 
-* Download and install [Visual C++ 2008 SP1 Redistributable Package (x86)](http://www.microsoft.com/en-us/download/details.aspx?id=5582).
-* Download and install [Visual C++ 2010 SP1 Redistributable Package (x86)](https://www.microsoft.com/en-us/download/details.aspx?id=8328).
 * Download and install [Windows Support Tools](http://www.microsoft.com/en-us/download/details.aspx?id=18546).
 
 ## Download
 
 Neard is [available on SourceForge](https://sourceforge.net/projects/neard/) :
 
-* Latest release : [Neard 1.0.3](https://sourceforge.net/projects/neard/files/Releases/1.0.3/neard-1.0.3.zip/download) (2014/03/10)
-* [Archives](https://sourceforge.net/projects/neard/files/Releases/).
+* Latest release : [Neard 1.0.4](https://sourceforge.net/projects/neard/files/Releases/1.0.4/neard-1.0.4.zip/download) (2014/03/17)
+* [Patches](https://sourceforge.net/projects/neard/files/Patches/).
 * [Testing](https://sourceforge.net/projects/neard/files/Testing/).
 * [Addons](https://sourceforge.net/projects/neard/files/Addons/).
+* [Tools](https://sourceforge.net/projects/neard/files/Tools/).
+* [Archives](https://sourceforge.net/projects/neard/files/Releases/).
 
 ### RSS feed
 
-Stay up-to-date with the latest releases of Neard.<br />
-You can subscribe to [this feed](https://sourceforge.net/api/file/index/project-id/2115941/path/Releases/mtime/desc/rss) that will deliver latest updates. 
+Stay up-to-date with the latest release of Neard by subscribe to [this feed](https://sourceforge.net/api/file/index/project-id/2115941/path/Releases/mtime/desc/rss). 
 
 ## Configuration
 
@@ -86,6 +87,12 @@ I have put in a lot of time to this project and appreciate donations.
 If you prefer to donate via paypal you can use the [donate link](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=4H86AJZ6M865A&item_name=Neard&no_note=0&cn=Message%20%3a&no_shipping=1&rm=1&return=https%3A%2F%2Fgithub.com%2Fcrazy-max%2Fneard&cancel_return=https%3A%2F%2Fgithub.com%2Fcrazy-max%2Fneard&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted).
 Or with bitcoin you can send your donations to [1BdhK62JY2xQKXjmvLLA8Dpbit1uJ5JkrC](bitcoin:1BdhK62JY2xQKXjmvLLA8Dpbit1uJ5JkrC?label=Neard%20Donations&message=Contribution%20to%20Neard).<br /><br />
 Thank you to everyone who has donated, it is much appreciated.
+
+## Contribute
+
+### Translations
+
+If you want to translate Neard in your language, just follow [these steps](https://github.com/crazy-max/neard/issues/28).
 
 ## License
 

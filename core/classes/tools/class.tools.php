@@ -6,6 +6,7 @@ class Tools
     private $git;
     private $svn;
     private $tccle;
+    private $sublimetext;
     private $xdc;
     private $imagick;
     
@@ -50,6 +51,14 @@ class Tools
             $this->tccle = new ToolTccle($this->getRootPath('tccle'));
         }
         return $this->tccle;
+    }
+    
+    public function getSublimetext()
+    {
+        if ($this->sublimetext == null) {
+            $this->sublimetext = new ToolSublimetext($this->getRootPath('sublimetext'));
+        }
+        return $this->sublimetext;
     }
     
     public function getXdc()

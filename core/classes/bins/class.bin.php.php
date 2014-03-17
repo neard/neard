@@ -546,7 +546,7 @@ class BinPhp
     {
         $cacheFile = $this->getPearPath() . '/version';
         if (!$cache) {
-            file_put_contents($cacheFile, Util::getPearVersion());
+            file_put_contents($cacheFile, Batch::getPearVersion());
         }
         return file_exists($cacheFile) ? file_get_contents($cacheFile) : null;
     }

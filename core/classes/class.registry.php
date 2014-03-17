@@ -50,7 +50,9 @@ class Registry
     public function exists($key, $subkey, $entry)
     {
         global $neardCore, $neardLang;
-        $resultFile = Util::formatWindowsPath($neardCore->getTmpPath() . '/' . Util::random() . '.tmp');
+        
+        $basename = 'registryExists';
+        $resultFile = Vbs::getResultFile($basename);
         $this->latestError = null;
         
         $scriptContent = 'On Error Resume Next' . PHP_EOL;
@@ -71,7 +73,8 @@ class Registry
         $scriptContent .= 'End If' . PHP_EOL;
         $scriptContent .= 'objFile.Close' . PHP_EOL;
         
-        $result = $this->execVbs($scriptContent, $resultFile);
+        $result = Vbs::exec($basename, $resultFile, $scriptContent, 10);
+        $result = isset($result[0]) ? $result[0] : null;
         $this->writeLog('Exists ' . $key . '\\' . $subkey . '\\' . $entry);
         $this->writeLog('-> result: ' . $result);
         if ($result != self::REG_NO_ERROR) {
@@ -85,7 +88,9 @@ class Registry
     public function getValue($key, $subkey, $entry)
     {
         global $neardCore, $neardLang;
-        $resultFile = Util::formatWindowsPath($neardCore->getTmpPath() . '/' . Util::random() . '.tmp');
+        
+        $basename = 'registryGetValue';
+        $resultFile = Vbs::getResultFile($basename);
         $this->latestError = null;
         
         $scriptContent = 'On Error Resume Next' . PHP_EOL;
@@ -106,7 +111,8 @@ class Registry
         $scriptContent .= 'End If' . PHP_EOL;
         $scriptContent .= 'objFile.Close' . PHP_EOL;
         
-        $result = $this->execVbs($scriptContent, $resultFile);
+        $result = Vbs::exec($basename, $resultFile, $scriptContent, 10);
+        $result = isset($result[0]) ? $result[0] : null;
         $this->writeLog('GetValue ' . $key . '\\' . $subkey . '\\' . $entry);
         $this->writeLog('-> result: ' . $result);
         if (Util::startWith($result, self::REG_ERROR_ENTRY)) {
@@ -130,7 +136,9 @@ class Registry
     private function setValue($key, $subkey, $entry, $value, $type)
     {
         global $neardCore, $neardLang;
-        $resultFile = Util::formatWindowsPath($neardCore->getTmpPath() . '/' . Util::random() . '.tmp');
+        
+        $basename = 'registrySetValue';
+        $resultFile = Vbs::getResultFile($basename);
         $this->latestError = null;
     
         $strKey = $key;
@@ -171,8 +179,9 @@ class Registry
         $scriptContent .= 'End If' . PHP_EOL;
         $scriptContent .= 'objFile.Close' . PHP_EOL;
     
-        $result = $this->execVbs($scriptContent, $resultFile);
-        Util::refreshEnvVars();
+        $result = Vbs::exec($basename, $resultFile, $scriptContent, 10);
+        $result = isset($result[0]) ? $result[0] : null;
+        Batch::refreshEnvVars();
         
         $this->writeLog('SetValue ' . $strKey . '\\' . $subkey . '\\' . $entry);
         $this->writeLog('-> value: ' . $value);
@@ -186,31 +195,6 @@ class Registry
         }
         
         return $result == self::REG_NO_ERROR;
-    }
-    
-    private function execVbs($scriptContent, $resultFile)
-    {
-        global $neardCore, $neardWinbinder;
-        $result = false;
-        
-        $scriptPath = $neardCore->getTmpPath() . '/' . Util::random() . '.vbs';
-        $this->writeLog('execVbs script: ' . $scriptPath);
-        file_put_contents($scriptPath, $scriptContent);
-        
-        $maxtime = time() + 10;
-        $neardWinbinder->exec('wscript.exe', '"' . $scriptPath . '"');
-        
-        while ($result === false || empty($result)) {
-            $result = file_exists($resultFile) ? file_get_contents($resultFile) : false;
-            if ($maxtime < time()) {
-                break;
-            }
-        }
-        
-        Util::unlinkAlt($scriptPath);
-        Util::unlinkAlt($resultFile);
-        
-        return $result;
     }
     
     public function getLatestError()

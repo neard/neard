@@ -52,6 +52,12 @@ class ActionSwitchVersion
                 $this->restart = false;
                 $this->service = null;
                 $this->changePort = false;
+            } elseif ($args[0] == $neardBins->getXlight()->getName()) {
+                $this->currentVersion = CURRENT_XLIGHT_VERSION;
+                $this->bin = $neardBins->getXlight();
+                $this->restart = false;
+                $this->service = $neardBins->getXlight()->getService();
+                $this->changePort = true;
             }
             
             $this->boxTitle = sprintf($neardLang->getValue(Lang::SWITCH_VERSION_TITLE), $this->bin->getName(), $this->version);

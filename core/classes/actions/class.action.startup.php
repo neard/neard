@@ -5,7 +5,7 @@ class ActionStartup
     private $neardSplash;
     
     const GAUGE_SERVICES = 6;
-    const GAUGE_OTHERS = 14;
+    const GAUGE_OTHERS = 13;
     
     public function __construct($args)
     {
@@ -34,13 +34,13 @@ class ActionStartup
         // Kill old PHP instances
         $this->neardSplash->setTextLoading($neardLang->getValue(Lang::STARTUP_KILL_PHP_PROCS_TEXT));
         $this->neardSplash->incrProgressBar();
-        $pids = Util::psListProcs();
+        $pids = Win32Ps::getListProcs();
         if ($pids !== false) {
             foreach ($pids as $aPid) {
-                if (isset($aPid['pid']) && isset($aPid['exe'])) {
-                    $unixExePath = Util::formatUnixPath($aPid['exe']);
-                    if ($unixExePath == $neardCore->getPhpCliSilentExe() && $aPid['pid'] != Util::getPid()) {
-                        Util::killByPid($aPid['pid']);
+                if (isset($aPid[Win32Ps::PID]) && isset($aPid[Win32Ps::EXE])) {
+                    $unixExePath = Util::formatUnixPath($aPid[Win32Ps::EXE]);
+                    if ($unixExePath == $neardCore->getPhpCliSilentExe() && $aPid[Win32Ps::PID] != Win32Ps::getCurrentPid()) {
+                        Win32Ps::kill($aPid[Win32Ps::PID]);
                     }
                 }
             }
@@ -56,15 +56,8 @@ class ActionStartup
         $this->neardSplash->incrProgressBar();
         $currentBrowser = $neardConfig->getBrowser();
         if (empty($currentBrowser) || !file_exists($currentBrowser)) {
-            $neardConfig->replace(Config::CFG_BROWSER, Util::getDefaultBrowser());
+            $neardConfig->replace(Config::CFG_BROWSER, Vbs::getDefaultBrowser());
         }
-        
-        // Clear tmp folder
-        $this->neardSplash->setTextLoading($neardLang->getValue(Lang::STARTUP_CLEAR_TMP_FOLDERS_TEXT));
-        $this->neardSplash->incrProgressBar();
-        Util::clearFolder($neardBs->getTmpPath(), array('placeholder', 'cachegrind'));
-        Util::clearFolder($neardCore->getTmpPath(), array('placeholder'));
-        $this->writeLog('Clear tmp folder: ' . $neardCore->getTmpPath());
         
         // Purge logs
         if ($neardConfig->getAppPurgeLogsOnStartup()) {
@@ -92,27 +85,7 @@ class ActionStartup
         // Scan folders
         $this->neardSplash->setTextLoading($neardLang->getValue(Lang::STARTUP_SCAN_FOLDERS_TEXT));
         $this->neardSplash->incrProgressBar();
-        $pathsToScan = array(
-            $neardBs->getAliasPath()                 => array(''),
-            $neardBs->getVhostsPath()                => array(''),
-            $neardBins->getApache()->getRootPath()   => array('.ini', '.conf'),
-            $neardBins->getPhp()->getRootPath()      => array('.php', '.bat', '.ini', '.reg'),
-            $neardBins->getMysql()->getRootPath()    => array('my.ini'),
-            $neardBins->getMariadb()->getRootPath()  => array('my.ini'),
-            $neardBins->getNodejs()->getRootPath()   => array('.bat', 'npmrc'),
-            $neardApps->getWebsvn()->getRootPath()   => array('config.php'),
-            $neardApps->getGitlist()->getRootPath()  => array('config.ini'),
-            $neardTools->getConsole()->getRootPath() => array('console.xml'),
-            $neardTools->getTccle()->getRootPath()   => array('.ini'),
-        );
-        
-        $filesToScan = array();
-        foreach ($pathsToScan as $pathToScan => $toFind) {
-            $findFiles = Util::findFiles($pathToScan, $toFind);
-            foreach ($findFiles as $findFile) {
-                $filesToScan[] = $findFile;
-            }
-        }
+        $filesToScan = Util::getFilesToScan();
         $this->writeLog('Files to scan: ' . count($filesToScan));
         
         // Change old paths
@@ -228,15 +201,22 @@ class ActionStartup
                 $serviceError = '';
                 $serviceRestart = false;
             
+                $syntaxCheckCmd = null;
                 if ($sName == BinApache::SERVICE_NAME) {
                     $this->neardSplash->setImage(Splash::IMG_APACHE);
                     $bin = $neardBins->getApache();
+                    $syntaxCheckCmd = BinApache::CMD_SYNTAX_CHECK;
                 } elseif ($sName == BinMysql::SERVICE_NAME) {
                     $this->neardSplash->setImage(Splash::IMG_MYSQL);
                     $bin = $neardBins->getMysql();
+                    $syntaxCheckCmd = BinMysql::CMD_SYNTAX_CHECK;
                 } elseif ($sName == BinMariadb::SERVICE_NAME) {
                     $this->neardSplash->setImage(Splash::IMG_MARIADB);
                     $bin = $neardBins->getMariadb();
+                    $syntaxCheckCmd = BinMariadb::CMD_SYNTAX_CHECK;
+                } elseif ($sName == BinXlight::SERVICE_NAME) {
+                    $this->neardSplash->setImage(Splash::IMG_XLIGHT);
+                    $bin = $neardBins->getXlight();
                 }
             
                 $name = $bin->getName() . ' ' . $bin->getVersion() . ' (' . $service->getName() . ')';
@@ -251,15 +231,16 @@ class ActionStartup
                 }
             
                 $this->neardSplash->incrProgressBar();
-                if (!$bin->changePort($port)) {
+                if ($bin->changePort($port) !== true) {
                     $serviceError .= sprintf($neardLang->getValue(Lang::STARTUP_PORT_ERROR), $port);
                 }
             
                 if (!$serviceRestart) {
-                    if (!Util::isPortInUse($port)) {
+                    $isPortInUse = Batch::isPortInUse($port);
+                    if ($isPortInUse === false) {
                         $this->neardSplash->incrProgressBar();
                         if (!$service->create()) {
-                            $serviceError .= sprintf($neardLang->getValue(Lang::STARTUP_SERVICE_CREATE_ERROR), $service->getLatestError());
+                            $serviceError .= sprintf($neardLang->getValue(Lang::STARTUP_SERVICE_CREATE_ERROR), $service->getError());
                         }
             
                         $this->neardSplash->incrProgressBar();
@@ -269,11 +250,11 @@ class ActionStartup
                             if (!empty($serviceError)) {
                                 $serviceError .= PHP_EOL;
                             }
-                            $serviceError .= sprintf($neardLang->getValue(Lang::STARTUP_SERVICE_START_ERROR), $service->getLatestError());
-                            if ($sName == BinApache::SERVICE_NAME) {
-                                $cmdSyntaxCheck = $bin->getCmdLineOutput(BinApache::CMD_SYNTAX_CHECK);
+                            $serviceError .= sprintf($neardLang->getValue(Lang::STARTUP_SERVICE_START_ERROR), $service->getError());
+                            if (!empty($syntaxCheckCmd)) {
+                                $cmdSyntaxCheck = $bin->getCmdLineOutput($syntaxCheckCmd);
                                 if (!$cmdSyntaxCheck['syntaxOk']) {
-                                    $serviceError .= PHP_EOL . sprintf($neardLang->getValue(Lang::STARTUP_SERVICE_APACHE_ERROR), $cmdSyntaxCheck['content']);
+                                    $serviceError .= PHP_EOL . sprintf($neardLang->getValue(Lang::STARTUP_SERVICE_SYNTAX_ERROR), $cmdSyntaxCheck['content']);
                                 }
                             }
                         }
@@ -282,7 +263,7 @@ class ActionStartup
                         if (!empty($serviceError)) {
                             $serviceError .= PHP_EOL;
                         }
-                        $serviceError .= sprintf($neardLang->getValue(Lang::STARTUP_SERVICE_PORT_ERROR), $port);
+                        $serviceError .= sprintf($neardLang->getValue(Lang::STARTUP_SERVICE_PORT_ERROR), $port, $isPortInUse);
                         $this->neardSplash->incrProgressBar(3);
                     }
                 } else {

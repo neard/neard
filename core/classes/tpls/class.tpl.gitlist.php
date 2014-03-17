@@ -9,7 +9,7 @@ class TplGitlist
     
     public static function process()
     {
-        global $neardConfig, $neardTools;
+        global $neardConfig, $neardApps, $neardTools;
         
         $result = '[git]' . PHP_EOL;
         $result .= 'client = \'' . $neardTools->getGit()->getExe() . '\'' . PHP_EOL;
@@ -41,6 +41,6 @@ class TplGitlist
         $result .= '; svh = false' . PHP_EOL;
         $result .= '; map = true' . PHP_EOL . PHP_EOL;
         
-        return $result;
+        file_put_contents($neardApps->getGitlist()->getConf(), $result);
     }
 }

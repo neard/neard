@@ -9,7 +9,7 @@ class TplWebsvn
     
     public static function process()
     {
-        global $neardBs, $neardConfig, $neardTools;
+        global $neardBs, $neardConfig, $neardApps, $neardTools;
         
         $result = '<?php' . PHP_EOL . PHP_EOL;
         
@@ -47,6 +47,6 @@ class TplWebsvn
         // Temp dir
         $result .= '$config->setTempDir(\'' . $neardBs->getTmpPath() . '\');' . PHP_EOL . PHP_EOL;
         
-        return $result;
+        file_put_contents($neardApps->getWebsvn()->getConf(), $result);
     }
 }

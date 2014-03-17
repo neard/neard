@@ -12,8 +12,9 @@ class ActionLoading
     public function __construct($args)
     {
         global $neardCore, $neardLang, $neardWinbinder;
+        
         $neardWinbinder->reset();
-        $neardCore->setLoadingPid(Util::getPid());
+        $neardCore->addLoadingPid(Win32Ps::getCurrentPid());
         
         // Screen infos
         $screenArea = explode(' ', $neardWinbinder->getSystemInfo(WinBinder::SYSINFO_WORKAREA));
@@ -45,16 +46,16 @@ class ActionLoading
     
     public function processLoading($window, $id, $ctrl, $param1, $param2)
     {
-        global $neardWinbinder;
+        global $neardBs, $neardWinbinder;
         
         switch($id) {
             case IDCLOSE:
-                $neardWinbinder->destroyWindow($window);
-                Util::stopLoading();
+                Win32Ps::kill(Win32Ps::getCurrentPid());
                 break;
         }
         
         while (true) {
+            $neardBs->removeErrorHandling();
             $neardWinbinder->resetProgressBar($this->wbProgressBar);
             usleep(100000);
             for ($i = 0; $i < self::GAUGE; $i++) {

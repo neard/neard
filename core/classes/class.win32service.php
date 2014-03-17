@@ -2,14 +2,17 @@
 
 class Win32Service
 {
-    const STOPPED = "1";
-    const START_PENDING = "2";
-    const STOP_PENDING = "3";
-    const RUNNING = "4";
-    const CONTINUE_PENDING = "5";
-    const PAUSE_PENDING = "6";
-    const PAUSED = "7";
+    // Win32Service Service Status Constants
+    const WIN32_SERVICE_CONTINUE_PENDING = "5";
+    const WIN32_SERVICE_PAUSE_PENDING = "6";
+    const WIN32_SERVICE_PAUSED = "7";
+    const WIN32_SERVICE_RUNNING = "4";
+    const WIN32_SERVICE_START_PENDING = "2";
+    const WIN32_SERVICE_STOP_PENDING = "3";
+    const WIN32_SERVICE_STOPPED = "1";
+    const WIN32_SERVICE_NA = "0";
     
+    // Win32 Error Codes
     const WIN32_ERROR_ACCESS_DENIED = "5";
     const WIN32_ERROR_CIRCULAR_DEPENDENCY = "423";
     const WIN32_ERROR_DATABASE_DOES_NOT_EXIST = "429";
@@ -48,7 +51,7 @@ class Win32Service
     const SERVICE_DEMAND_START = "3";
     const SERVICE_DISABLED = "4";
     
-    const PENDING_TIMEOUT = 5;
+    const PENDING_TIMEOUT = 10;
     const SLEEP_TIME = 500000;
     
     private $name;
@@ -57,6 +60,7 @@ class Win32Service
     private $params;
     private $startType;
     private $errorControl;
+    private $latestStatus;
     private $latestError;
     
     public function __construct($name)
@@ -83,6 +87,33 @@ class Win32Service
         }
         return $result;
     }
+    
+    public function status($timeout = true)
+    {
+        usleep(self::SLEEP_TIME);
+    
+        $this->latestStatus = self::WIN32_SERVICE_NA;
+        $maxtime = time() + self::PENDING_TIMEOUT;
+    
+        while ($this->latestStatus == self::WIN32_SERVICE_NA || $this->isPending($this->latestStatus)) {
+            $this->latestStatus = $this->callWin32Service('win32_query_service_status', $this->getName());
+            if (is_array($this->latestStatus) && isset($this->latestStatus['CurrentState'])) {
+                $this->latestStatus = dechex($this->latestStatus['CurrentState']);
+            } elseif (dechex($this->latestStatus) == self::WIN32_ERROR_SERVICE_DOES_NOT_EXIST) {
+                $this->latestStatus = dechex($this->latestStatus);
+            }
+            if ($timeout && $maxtime < time()) {
+                break;
+            }
+        }
+        
+        if ($this->latestStatus == self::WIN32_ERROR_SERVICE_DOES_NOT_EXIST) {
+            $this->latestError = $this->latestStatus;
+            $this->latestStatus = self::WIN32_SERVICE_NA;
+        }
+    
+        return $this->latestStatus;
+    }
 
     public function create()
     {
@@ -107,7 +138,13 @@ class Win32Service
         $this->writeLog('-> start_type: ' . ($this->getStartType() != null ? $this->getStartType() : self::SERVICE_DEMAND_START));
         $this->writeLog('-> service: ' . ($this->getErrorControl() != null ? $this->getErrorControl() : self::SERVER_ERROR_NORMAL));
         
-        return $this->isInstalled();
+        if ($create != self::WIN32_NO_ERROR) {
+            return false;
+        } elseif (!$this->isInstalled()) {
+            $this->latestError = self::WIN32_NO_ERROR;
+            return false;
+        }
+        return true;
     }
 
     public function delete()
@@ -118,41 +155,22 @@ class Win32Service
         $delete = dechex($this->callWin32Service('win32_delete_service', $this->getName(), true));
         $this->writeLog('Delete service ' . $this->getName() . ': ' . $delete . ' (status: ' . $this->status() . ')');
         
-        return !$this->isInstalled();
-    }
-
-    public function status()
-    {
-        usleep(self::SLEEP_TIME);
-        
-        $status = false;
-        $maxtime = time() + self::PENDING_TIMEOUT;
-        
-        while ($status === false || $this->isPending($status)) {
-            $status = $this->callWin32Service('win32_query_service_status', $this->getName());
-            if (is_array($status) && isset($status['CurrentState'])) {
-                $status = dechex($status['CurrentState']);
-            } elseif (dechex($status) == self::WIN32_ERROR_SERVICE_DOES_NOT_EXIST) {
-                $status = dechex($status);
-            }
-            /*$this->writeLog('Status ' . $status .
-                 PHP_EOL . 'false: ' . ($status === false ? 'YES' : 'NO') .
-                 PHP_EOL . 'pending: ' . ($this->isPending($status) ? 'YES' : 'NO') .
-                 PHP_EOL . 'maxtime < time: ' . ($maxtime > time() ? 'YES' : 'NO'));*/
-            if ($maxtime < time()) {
-                break;
-            }
+        if ($delete != self::WIN32_NO_ERROR && $delete != self::WIN32_ERROR_SERVICE_DOES_NOT_EXIST) {
+            return false;
+        } elseif ($this->isInstalled()) {
+            $this->latestError = self::WIN32_NO_ERROR;
+            return false;
         }
-        
-        return $status;
+        return true;
     }
-
+    
     public function start()
     {
         global $neardBs, $neardBins;
         $start = dechex($this->callWin32Service('win32_start_service', $this->getName(), true));
         $this->writeLog('Start service ' . $this->getName() . ': ' . $start . ' (status: ' . $this->status() . ')');
-        if (!$this->isRunning()) {
+    
+        if ($start != self::WIN32_NO_ERROR && $start != self::WIN32_ERROR_SERVICE_ALREADY_RUNNING) {
             if ($this->getName() == BinApache::SERVICE_NAME) {
                 $cmdOutput = $neardBins->getApache()->getCmdLineOutput(BinApache::CMD_SYNTAX_CHECK);
                 if (!$cmdOutput['syntaxOk']) {
@@ -162,18 +180,46 @@ class Win32Service
                         FILE_APPEND
                     );
                 }
+            } elseif ($this->getName() == BinMysql::SERVICE_NAME) {
+                $cmdOutput = $neardBins->getMysql()->getCmdLineOutput(BinMysql::CMD_SYNTAX_CHECK);
+                if (!$cmdOutput['syntaxOk']) {
+                    file_put_contents(
+                        $neardBins->getMysql()->getErrorLog(),
+                        '[' . date('Y-m-d H:i:s', time()) . '] [error] ' . $cmdOutput['content'] . PHP_EOL,
+                        FILE_APPEND
+                    );
+                }
+            } elseif ($this->getName() == BinMariadb::SERVICE_NAME) {
+                $cmdOutput = $neardBins->getMariadb()->getCmdLineOutput(BinMariadb::CMD_SYNTAX_CHECK);
+                if (!$cmdOutput['syntaxOk']) {
+                    file_put_contents(
+                        $neardBins->getMariadb()->getErrorLog(),
+                        '[' . date('Y-m-d H:i:s', time()) . '] [error] ' . $cmdOutput['content'] . PHP_EOL,
+                        FILE_APPEND
+                    );
+                }
             }
+            return false;
+        } elseif (!$this->isRunning()) {
+            $this->latestError = self::WIN32_NO_ERROR;
             return false;
         }
         return true;
     }
-
+    
     public function stop()
     {
         global $neardBs;
         $stop = dechex($this->callWin32Service('win32_stop_service', $this->getName(), true));
         $this->writeLog('Stop service ' . $this->getName() . ': ' . $stop . ' (status: ' . $this->status() . ')');
-        return $this->isStopped(); 
+    
+        if ($stop != self::WIN32_NO_ERROR) {
+            return false;
+        } elseif (!$this->isStopped()) {
+            $this->latestError = self::WIN32_NO_ERROR;
+            return false;
+        }
+        return true;
     }
     
     public function restart()
@@ -183,43 +229,207 @@ class Win32Service
         }
         return false;
     }
-    
+
     public function isInstalled()
     {
         global $neardBs;
         $status = $this->status();
-        $this->writeLog('isInstalled ' . $this->getName() . ': ' . ($status != self::WIN32_ERROR_SERVICE_DOES_NOT_EXIST ? 'YES' : 'NO') . ' (status: ' . $status . ')');
-        return $status != self::WIN32_ERROR_SERVICE_DOES_NOT_EXIST;
+        $this->writeLog('isInstalled ' . $this->getName() . ': ' . ($status != self::WIN32_SERVICE_NA ? 'YES' : 'NO') . ' (status: ' . $status . ')');
+        return $status != self::WIN32_SERVICE_NA;
     }
     
     public function isRunning()
     {
         global $neardBs;
         $status = $this->status();
-        $this->writeLog('isRunning ' . $this->getName() . ': ' . ($status == self::RUNNING ? 'YES' : 'NO') . ' (status: ' . $status . ')');
-        return $status == self::RUNNING;
+        $this->writeLog('isRunning ' . $this->getName() . ': ' . ($status == self::WIN32_SERVICE_RUNNING ? 'YES' : 'NO') . ' (status: ' . $status . ')');
+        return $status == self::WIN32_SERVICE_RUNNING;
     }
     
     public function isStopped()
     {
         global $neardBs;
         $status = $this->status();
-        $this->writeLog('isStopped ' . $this->getName() . ': ' . ($status == self::STOPPED ? 'YES' : 'NO') . ' (status: ' . $status . ')');
-        return $status == self::STOPPED;
+        $this->writeLog('isStopped ' . $this->getName() . ': ' . ($status == self::WIN32_SERVICE_STOPPED ? 'YES' : 'NO') . ' (status: ' . $status . ')');
+        return $status == self::WIN32_SERVICE_STOPPED;
     }
     
     public function isPaused()
     {
         global $neardBs;
         $status = $this->status();
-        $this->writeLog('isPaused ' . $this->getName() . ': ' . ($status == self::PAUSED ? 'YES' : 'NO') . ' (status: ' . $status . ')');
-        return $status == self::PAUSED;
+        $this->writeLog('isPaused ' . $this->getName() . ': ' . ($status == self::WIN32_SERVICE_PAUSED ? 'YES' : 'NO') . ' (status: ' . $status . ')');
+        return $status == self::WIN32_SERVICE_PAUSED;
     }
     
     public function isPending($status)
     {
-        return $status == self::START_PENDING || $status == self::STOP_PENDING
-            || $status == self::CONTINUE_PENDING || $status == self::PAUSE_PENDING;
+        return $status == self::WIN32_SERVICE_START_PENDING || $status == self::WIN32_SERVICE_STOP_PENDING
+            || $status == self::WIN32_SERVICE_CONTINUE_PENDING || $status == self::WIN32_SERVICE_PAUSE_PENDING;
+    }
+    
+    private function getWin32ServiceStatusDesc($status)
+    {
+        switch ($status) {
+            case self::WIN32_SERVICE_CONTINUE_PENDING :
+                return 'The service continue is pending.';
+                break;
+                
+            case self::WIN32_SERVICE_PAUSE_PENDING :
+                return 'The service pause is pending.';
+                break;
+                    
+            case self::WIN32_SERVICE_PAUSED :
+                return 'The service is paused.';
+                break;
+                        
+            case self::WIN32_SERVICE_RUNNING :
+                return 'The service is running.';
+                break;
+                            
+            case self::WIN32_SERVICE_START_PENDING :
+                return 'The service is starting.';
+                break;
+                                
+            case self::WIN32_SERVICE_STOP_PENDING :
+                return 'The service is stopping.';
+                break;
+                
+            case self::WIN32_SERVICE_STOPPED :
+                return 'The service is not running.';
+                break;
+                
+            case self::WIN32_SERVICE_NA :
+                return 'Cannot retrieve service status.';
+                break;
+                
+            default :
+                break;
+        }
+    }
+    
+    private function getWin32ErrorCodeDesc($code)
+    {
+        switch ($code) {
+            case self::WIN32_ERROR_ACCESS_DENIED :
+                return 'The handle to the SCM database does not have the appropriate access rights.';
+                break;
+                
+            case self::WIN32_ERROR_CIRCULAR_DEPENDENCY :
+                return 'A circular service dependency was specified.';
+                break;
+            
+            case self::WIN32_ERROR_DATABASE_DOES_NOT_EXIST :
+                return 'The specified database does not exist.';
+                break;
+            
+            case self::WIN32_ERROR_DEPENDENT_SERVICES_RUNNING :
+                return 'The service cannot be stopped because other running services are dependent on it.';
+                break;
+                
+            case self::WIN32_ERROR_DUPLICATE_SERVICE_NAME :
+                return 'The display name already exists in the service control manager database either as a service name or as another display name.';
+                break;
+                
+            case self::WIN32_ERROR_FAILED_SERVICE_CONTROLLER_CONNECT :
+                return 'This error is returned if the program is being run as a console application rather than as a service. If the program will be run as a console application for debugging purposes, structure it such that service-specific code is not called.';
+                break;
+                
+            case self::WIN32_ERROR_INSUFFICIENT_BUFFER :
+                return 'The buffer is too small for the service status structure. Nothing was written to the structure.';
+                break;
+            
+            case self::WIN32_ERROR_INVALID_DATA :
+                return 'The specified service status structure is invalid. ';
+                break;
+            
+            case self::WIN32_ERROR_INVALID_HANDLE :
+                return 'The handle to the specified service control manager database is invalid.';
+                break;
+            
+            case self::WIN32_ERROR_INVALID_LEVEL :
+                return 'The InfoLevel parameter contains an unsupported value.';
+                break;
+            
+            case self::WIN32_ERROR_INVALID_NAME :
+                return 'The specified service name is invalid.';
+                break;
+                
+            case self::WIN32_ERROR_INVALID_PARAMETER :
+                return 'A parameter that was specified is invalid.';
+                break;
+            
+            case self::WIN32_ERROR_INVALID_SERVICE_ACCOUNT :
+                return 'The user account name specified in the user parameter does not exist.';
+                break;
+            
+            case self::WIN32_ERROR_INVALID_SERVICE_CONTROL :
+                return 'The requested control code is not valid, or it is unacceptable to the service.';
+                break;
+            
+            case self::WIN32_ERROR_PATH_NOT_FOUND :
+                return 'The service binary file could not be found.';
+                break;
+            
+            case self::WIN32_ERROR_SERVICE_ALREADY_RUNNING :
+                return 'An instance of the service is already running.';
+                break;
+                
+            case self::WIN32_ERROR_SERVICE_CANNOT_ACCEPT_CTRL :
+                return 'The requested control code cannot be sent to the service because the state of the service is WIN32_SERVICE_STOPPED, WIN32_SERVICE_START_PENDING, or WIN32_SERVICE_STOP_PENDING.';
+                break;
+            
+            case self::WIN32_ERROR_SERVICE_DATABASE_LOCKED :
+                return 'The database is locked.';
+                break;
+            
+            case self::WIN32_ERROR_SERVICE_DEPENDENCY_DELETED :
+                return 'The service depends on a service that does not exist or has been marked for deletion.';
+                break;
+            
+            case self::WIN32_ERROR_SERVICE_DEPENDENCY_FAIL :
+                return 'The service depends on another service that has failed to start.';
+                break;
+            
+            case self::WIN32_ERROR_SERVICE_DISABLED :
+                return 'The service has been disabled.';
+                break;
+            
+            case self::WIN32_ERROR_SERVICE_DOES_NOT_EXIST :
+                return 'The specified service does not exist as an installed service.';
+                break;
+            
+            case self::WIN32_ERROR_SERVICE_EXISTS :
+                return 'The specified service already exists in this database.';
+                break;
+            
+            case self::WIN32_ERROR_SERVICE_LOGON_FAILED :
+                return 'The service did not start due to a logon failure. This error occurs if the service is configured to run under an account that does not have the "Log on as a service" right.';
+                break;
+            
+            case self::WIN32_ERROR_SERVICE_MARKED_FOR_DELETE :
+                return 'The specified service has already been marked for deletion.';
+                break;
+            
+            case self::WIN32_ERROR_SERVICE_NO_THREAD :
+                return 'A thread could not be created for the service.';
+                break;
+            
+            case self::WIN32_ERROR_SERVICE_NOT_ACTIVE :
+                return 'The service has not been started.';
+                break;
+            
+            case self::WIN32_ERROR_SERVICE_REQUEST_TIMEOUT :
+                return 'The process for the service was started, but it did not call StartServiceCtrlDispatcher, or the thread that called StartServiceCtrlDispatcher may be blocked in a control handler function.';
+                break;
+            
+            case self::WIN32_ERROR_SHUTDOWN_IN_PROGRESS :
+                return 'The system is shutting down; this function cannot be called.';
+                break;
+                
+            default :
+                break;
+        }
     }
     
     public function getName() {
@@ -269,9 +479,24 @@ class Win32Service
     public function setErrorControl($errorControl) {
         $this->errorControl = $errorControl;
     }
+    
+    public function getLatestStatus() {
+        return $this->latestStatus;
+    }
 
     public function getLatestError() {
         return $this->latestError;
+    }
+    
+    public function getError() {
+        global $neardLang;
+        if ($this->latestError != self::WIN32_NO_ERROR) {
+            return $neardLang->getValue(Lang::ERROR) . ' ' .
+                $this->latestError . '(' . hexdec($this->latestError) . ' : ' . $this->getWin32ErrorCodeDesc($this->latestError) . ')';
+        } elseif ($this->latestStatus != self::WIN32_SERVICE_NA) {
+            return $neardLang->getValue(Lang::STATUS) . ' ' .
+                $this->latestStatus . '(' . hexdec($this->latestStatus) . ' : ' . $this->getWin32ServiceStatusDesc($this->latestStatus) . ')';
+        }
     }
     
 }

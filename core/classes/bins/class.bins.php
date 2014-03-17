@@ -7,6 +7,7 @@ class Bins
     private $mysql;
     private $mariadb;
     private $nodejs;
+    private $xlight;
     
     public function __construct()
     {
@@ -27,6 +28,7 @@ class Bins
         $this->getMysql()->reload();
         $this->getMariadb()->reload();
         $this->getNodejs()->reload();
+        $this->getXlight()->reload();
     }
 
     public function getApache()
@@ -68,6 +70,14 @@ class Bins
         }
         return $this->nodejs;
     }
+    
+    public function getXlight()
+    {
+        if ($this->xlight == null) {
+            $this->xlight = new BinXlight($this->getRootPath('xlight'));
+        }
+        return $this->xlight;
+    }
 
     public function getServices()
     {
@@ -75,6 +85,7 @@ class Bins
             BinApache::SERVICE_NAME => $this->getApache()->getService(),
             BinMysql::SERVICE_NAME => $this->getMysql()->getService(),
             BinMariadb::SERVICE_NAME => $this->getMariadb()->getService(),
+            BinXlight::SERVICE_NAME => $this->getXlight()->getService(),
         );
     }
 }

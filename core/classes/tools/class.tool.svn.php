@@ -75,7 +75,7 @@ class ToolSvn
         } else {
             if (!empty($this->repos)) {
                 foreach ($this->getRepos() as $repo) {
-                    $foundRepos = Util::findReposVbs($repo, '.svn', 'entries');
+                    $foundRepos = Vbs::findReposVbs($repo, '.svn', 'entries');
                     if (!empty($foundRepos)) {
                         foreach ($foundRepos as $foundRepo) {
                             array_push($result, $foundRepo);

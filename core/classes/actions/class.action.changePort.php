@@ -33,6 +33,10 @@ class ActionChangePort
                 $this->currentPort = CURRENT_MARIADB_PORT;
                 $this->bin = $neardBins->getMariadb();
                 $this->cntProcessActions = 5;
+            } elseif ($args[0] == $neardBins->getXlight()->getName()) {
+                $this->currentPort = CURRENT_XLIGHT_PORT;
+                $this->bin = $neardBins->getXlight();
+                $this->cntProcessActions = 5;
             }
             
             $neardWinbinder->reset();
@@ -73,7 +77,8 @@ class ActionChangePort
                     $neardWinbinder->resetProgressBar($this->wbProgressBar);
                     break;
                 }
-                if ($this->bin->changePort($port, true, $this->wbProgressBar)) {
+                $changePort = $this->bin->changePort($port, true, $this->wbProgressBar);
+                if ($changePort === true) {
                     $neardWinbinder->messageBoxInfo(
                         sprintf($neardLang->getValue(Lang::PORT_CHANGED), $this->bin, $port),
                         $boxTitle);
@@ -81,10 +86,9 @@ class ActionChangePort
                     
                     Util::startLoading();
                     $this->bin->getService()->restart();
-                    
                 } else {
                     $neardWinbinder->messageBoxError(
-                        sprintf($neardLang->getValue(Lang::PORT_NOT_USED_BY), $port),
+                        sprintf($neardLang->getValue(Lang::PORT_NOT_USED_BY), $port, $changePort),
                         $boxTitle);
                     $neardWinbinder->resetProgressBar($this->wbProgressBar);
                 }
