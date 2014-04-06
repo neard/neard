@@ -5,7 +5,7 @@ class TplAppSvn
     const MENU = 'svn';
     const MENU_REPOS = 'svnRepos';
     
-    const ACTION_REFRESH_REPOS = 'refreshRepos';
+    const ACTION_REFRESH_REPOS = 'refreshSvnRepos';
     
     public static function process()
     {
@@ -34,7 +34,7 @@ class TplAppSvn
             TplAestan::getItemLink($neardLang->getValue(Lang::WEBSVN), 'websvn/', true) . PHP_EOL .
             
             // Actions
-            (!$emptyRepos ? $tplRepos[TplApp::SECTION_CONTENT] . PHP_EOL : '') .
+            (!$emptyRepos ? $tplRepos[TplApp::SECTION_CONTENT] . PHP_EOL : PHP_EOL) .
             $tplRefreshRepos[TplApp::SECTION_CONTENT];
     }
     
@@ -56,7 +56,7 @@ class TplAppSvn
         return $result;
     }
     
-    public static function getActionRefreshRepos()
+    public static function getActionRefreshSvnRepos()
     {
         global $neardBins;
     

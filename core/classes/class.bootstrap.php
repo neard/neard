@@ -181,6 +181,14 @@ class Bootstrap
         return 'neard';
     }
     
+    public function getLocalUrl($request = null)
+    {
+        global $neardBins;
+        return 'http://' . $_SERVER['HTTP_HOST'] .
+            ($neardBins->getApache()->getPort() != 80 ? ':' . $neardBins->getApache()->getPort() : '') .
+            (!empty($request) ? '/' . $request : '');
+    }
+    
     public static function loadCore()
     {
         global $neardCore;
@@ -247,6 +255,11 @@ class Bootstrap
     {
         $errfile = Util::formatUnixPath($errfile);
         $errfile = str_replace($this->getRootPath(), '', $errfile);
+        
+        var_dump($errno);
+        var_dump($errstr);
+        var_dump($errfile);
+        var_dump($errline);
         
         $errNames = array(
             E_ERROR             => 'E_ERROR',

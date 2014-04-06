@@ -15,25 +15,29 @@ REM  Last updated 12/29/2004 ($Id$ is not replaced if the file is binary)
 REM change this lines to match the paths of your system
 REM -------------------
 
+REM -------------------
+REM START NEARD EDIT
+REM -------------------
+
 REM Get parent path (Neard)
 FOR %%i IN ("%~dp0..") DO SET "NEARD_PHP_PATH=%%~fi"
 
 REM Force system tmp dir (Neard)
 SET "TMP=%NEARD_PHP_PATH%\pear\tmp"
 
-REM Overwrite pear.ini (Neard)
-ECHO #PEAR_Config 0.9>"%NEARD_PHP_PATH%\pear\pear.ini"
-ECHO a:12:{s:15:"preferred_state";s:6:"stable";s:8:"temp_dir";s:44:"%NEARD_PHP_PATH%\pear\tmp";s:12:"download_dir";s:44:"%NEARD_PHP_PATH%\pear\tmp";s:7:"bin_dir";s:40:"%NEARD_PHP_PATH%\pear";s:7:"php_dir";s:45:"%NEARD_PHP_PATH%\pear\pear";s:7:"doc_dir";s:45:"%NEARD_PHP_PATH%\pear\docs";s:8:"data_dir";s:45:"%NEARD_PHP_PATH%\pear\data";s:7:"cfg_dir";s:44:"%NEARD_PHP_PATH%\pear\cfg";s:7:"www_dir";s:44:"%NEARD_PHP_PATH%\pear\www";s:8:"test_dir";s:46:"%NEARD_PHP_PATH%\pear\tests";s:7:"php_bin";s:43:"%NEARD_PHP_PATH%\php.exe";s:10:"__channels";a:3:{s:5:"__uri";a:0:{}s:11:"doc.php.net";a:0:{}s:12:"pecl.php.net";a:0:{}}}>>"%NEARD_PHP_PATH%\pear\pear.ini"
-
 REM Test to see if this is a raw pear.bat (uninstalled version)
 SET TMPTMPTMPTMPT=@includ
 SET PMTPMTPMT=%TMPTMPTMPTMPT%e_path@
-FOR %%x IN ("C:\neard\bin\php\php5.4.16\pear\pear") DO (if %%x=="%PMTPMTPMT%" GOTO :NOTINSTALLED)
+FOR %%x IN ("%NEARD_PHP_PATH%\pear\pear") DO (if %%x=="%PMTPMTPMT%" GOTO :NOTINSTALLED)
 
-REM Check PEAR global ENV, set them if they do not exist
-IF "%PHP_PEAR_INSTALL_DIR%"=="" SET "PHP_PEAR_INSTALL_DIR=C:\neard\bin\php\php5.4.16\pear\pear"
-IF "%PHP_PEAR_BIN_DIR%"=="" SET "PHP_PEAR_BIN_DIR=C:\neard\bin\php\php5.4.16\pear"
-IF "%PHP_PEAR_PHP_BIN%"=="" SET "PHP_PEAR_PHP_BIN=C:\neard\bin\php\php5.4.16\php.exe"
+REM Set PEAR global ENV (Neard)
+SET "PHP_PEAR_INSTALL_DIR=%NEARD_PHP_PATH%\pear\pear"
+SET "PHP_PEAR_BIN_DIR=%NEARD_PHP_PATH%\pear"
+SET "PHP_PEAR_PHP_BIN=%NEARD_PHP_PATH%\php.exe"
+
+REM -------------------
+REM END NEARD EDIT
+REM -------------------
 
 GOTO :INSTALLED
 

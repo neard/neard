@@ -20,7 +20,7 @@
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="collapse navbar-collapse navbar-ex1-collapse">
         <ul class="nav navbar-nav navbar-header">
-          <li><a href="<?php echo $neardHomepage->getUrl() ?>"><img alt="<?php echo APP_TITLE . ' ' . $neardConfig->getAppVersion(); ?>" src="<?php echo Util::imgToBase64($neardHomepage->getPath() . '/img/logo.png'); ?>" /></a></li>
+          <li><a href="<?php echo $neardBs->getLocalUrl(); ?>"><img alt="<?php echo APP_TITLE . ' ' . $neardConfig->getAppVersion(); ?>" src="<?php echo Util::imgToBase64($neardHomepage->getPath() . '/img/logo.png'); ?>" /></a></li>
         </ul>
         <ul style="margin-right:0;" class="nav navbar-nav navbar-right">
           <li><a title="<?php echo $neardLang->getValue(Lang::GITHUB); ?>" target="_blank" href="<?php echo APP_GITHUB_HOME; ?>"><img src="<?php echo Util::imgToBase64($neardHomepage->getPath() . '/img/github.png'); ?>" /></a></li>

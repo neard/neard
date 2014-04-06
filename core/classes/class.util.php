@@ -403,8 +403,6 @@ class Util
             '    ServerName ' . $serverName . PHP_EOL .
             '    ErrorLog "' . $neardBs->getLogsPath() . '/' . $serverName . '_error.log"' . PHP_EOL .
             '    CustomLog "' . $neardBs->getLogsPath() . '/' . $serverName . '_access.log" combined' . PHP_EOL .
-            '    RewriteLog "' . $neardBs->getLogsPath() . '/' . $serverName . '_access.log"' . PHP_EOL .
-            '    RewriteLogLevel 3' . PHP_EOL .
             '</VirtualHost>' . PHP_EOL;
     }
     

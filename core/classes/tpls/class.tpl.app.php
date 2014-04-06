@@ -18,8 +18,6 @@ class TplApp
         global $neardConfig;
         
         return TplAestan::getSectionConfig() . PHP_EOL .
-            //TODO: Add variables?
-            //self::getSectionVariables() . PHP_EOL .
             self::getSectionServices() . PHP_EOL .
             TplAestan::getSectionMessages() . PHP_EOL .
             self::getSectionStartupAction() . PHP_EOL .

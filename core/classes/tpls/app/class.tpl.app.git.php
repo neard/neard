@@ -5,7 +5,7 @@ class TplAppGit
     const MENU = 'git';
     const MENU_REPOS = 'gitRepos';
     
-    const ACTION_REFRESH_REPOS = 'refreshRepos';
+    const ACTION_REFRESH_REPOS = 'refreshGitRepos';
     
     public static function process()
     {
@@ -34,7 +34,7 @@ class TplAppGit
             TplAestan::getItemLink($neardLang->getValue(Lang::GITLIST), 'gitlist/', true) . PHP_EOL .
             
             // Actions
-            (!$emptyRepos ? $tplRepos[TplApp::SECTION_CONTENT] . PHP_EOL : '') .
+            (!$emptyRepos ? $tplRepos[TplApp::SECTION_CONTENT] . PHP_EOL : PHP_EOL) .
             $tplRefreshRepos[TplApp::SECTION_CONTENT];
     }
     
@@ -56,7 +56,7 @@ class TplAppGit
         return $result;
     }
     
-    public static function getActionRefreshRepos()
+    public static function getActionRefreshGitRepos()
     {
         global $neardBins;
     

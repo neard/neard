@@ -1,4 +1,4 @@
-<virtualserver 0.0.0.0:22>
+<virtualserver 0.0.0.0:21>
 WriteStatisticsToFile:yes
 WelcomeMsgFile:"C:\neard\bin\xlight\xlight3.8.0.2\welcome"
 ServerNotes:"Neard"

@@ -27,6 +27,7 @@ class BinApache
     private $currentPath;
     private $modulesPath;
     private $accessLog;
+    private $rewriteLog;
     private $errorLog;
     private $exe;
     private $conf;
@@ -52,6 +53,7 @@ class BinApache
         $this->currentPath = $this->rootPath . '/apache' . $this->version;
         $this->modulesPath = $this->currentPath . '/modules';
         $this->accessLog = $neardBs->getLogsPath() . '/apache_access.log';
+        $this->rewriteLog = $neardBs->getLogsPath() . '/apache_rewrite.log';
         $this->errorLog = $neardBs->getLogsPath() . '/apache_error.log';
         $this->exe = $this->currentPath . '/' . $this->exe;
         $this->conf = $this->currentPath . '/' . $this->conf;
@@ -224,8 +226,10 @@ class BinApache
         // neard.conf
         $neardConfig->replace(BinApache::CFG_VERSION, $version);
         
-        // change PHP module
+        // php
         Util::replaceInFile($apacheConf, array(
+            '/^PHPIniDir\s.*/' => 'PHPIniDir "' . $neardBins->getPhp()->getCurrentPath() . '"',
+            '/^(#?)LoadFile\s.*php5ts.dll.*/' => (!file_exists($neardBins->getPhp()->getCurrentPath() . '/php5ts.dll') ? '#' : '') . 'LoadFile "' . $neardBins->getPhp()->getCurrentPath() . '/php5ts.dll"',
             '/^LoadModule\sphp5_module\s.*/' => 'LoadModule php5_module "' . $apachePhpModule . '"',
         ));
     }
@@ -374,6 +378,37 @@ class BinApache
         return $result;
     }
     
+    public function getOnlineContent($version = null)
+    {
+        $version = $version != null ? $version : $this->getVersion();
+        $result = '    # START switchOnline tag - Do not replace!' . PHP_EOL;
+        
+        if (Util::startWith($version, '2.4')) {
+            $result .= '    Require all granted' . PHP_EOL;
+        } else {
+            $result .= '    Order Allow,Deny' . PHP_EOL .
+                '    Allow from all' . PHP_EOL;
+        }
+        
+        return $result . '    # END switchOnline tag - Do not replace!';
+    }
+    
+    public function getOfflineContent($version = null)
+    {
+        $version = $version != null ? $version : $this->getVersion();
+        $result = '    # START switchOnline tag - Do not replace!' . PHP_EOL;
+    
+        if (Util::startWith($version, '2.4')) {
+            $result .= '    Require local' . PHP_EOL;
+        } else {
+            $result .= '    Order Deny,Allow' . PHP_EOL .
+                '    Deny from all' . PHP_EOL .
+                '    Allow from 127.0.0.1 ::1' . PHP_EOL;
+        }
+    
+        return $result . '    # END switchOnline tag - Do not replace!';
+    }
+    
     public function getName()
     {
         return $this->name;
@@ -417,6 +452,11 @@ class BinApache
     public function getAccessLog()
     {
         return $this->accessLog;
+    }
+    
+    public function getRewriteLog()
+    {
+        return $this->rewriteLog;
     }
     
     public function getErrorLog()

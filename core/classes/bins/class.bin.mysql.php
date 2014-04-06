@@ -104,14 +104,9 @@ class BinMysql
             ));
             $neardWinbinder->incrProgressBar($wbProgressBar);
             
-            // php.ini (apache)
-            Util::replaceInFile($neardBins->getPhp()->getApacheConf(), array(
-                '/^mysqli.default_port\s=\s(\d+)/' => 'mysqli.default_port = ' . $port
-            ));
-            $neardWinbinder->incrProgressBar($wbProgressBar);
-            
-            // php.ini (php)
+            // php.ini
             Util::replaceInFile($neardBins->getPhp()->getConf(), array(
+                '/^mysql.default_port\s=\s(\d+)/' => 'mysql.default_port = ' . $port,
                 '/^mysqli.default_port\s=\s(\d+)/' => 'mysqli.default_port = ' . $port
             ));
             $neardWinbinder->incrProgressBar($wbProgressBar);

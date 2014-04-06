@@ -37,7 +37,8 @@ class TplAppTools
             ) . PHP_EOL .
             TplAestan::getItemLink(
                 $neardLang->getValue(Lang::WEBGRIND),
-                'http://localhost/webgrind/'
+                'webgrind/',
+                true
             );
     }
     

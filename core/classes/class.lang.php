@@ -64,6 +64,7 @@ class Lang
     const MENU_REMOVE_SERVICE = 'menuRemoveService';
     const MENU_RESTART_SERVICE = 'menuRestartService';
     const MENU_RESTART_SERVICES = 'menuRestartServices';
+    const MENU_REWRITE_LOGS = 'menuRewriteLogs';
     const MENU_SESSION_LOGS = 'menuSessionLogs';
     const MENU_START_SERVICE = 'menuStartService';
     const MENU_START_SERVICES = 'menuStartServices';
@@ -115,6 +116,10 @@ class Lang
     const PHP_INCPT = 'phpIncpt';
     const NEARD_CONF_NOT_FOUND_ERROR = 'neardConfNotFoundError';
     const NEARD_CONF_MALFORMED_ERROR = 'neardConfMalformedError';
+    
+    // Action Switch PHP setting
+    const SWITCH_PHP_SETTING_TITLE = 'switchPhpSettingTitle';
+    const SWITCH_PHP_SETTING_NOT_FOUND = 'switchPhpSettingNotFound';
     
     // Action Check port
     const CHECK_PORT_TITLE = 'checkPortTitle';
@@ -384,6 +389,7 @@ class Lang
             self::MENU_REMOVE_SERVICE,
             self::MENU_RESTART_SERVICE,
             self::MENU_RESTART_SERVICES,
+            self::MENU_REWRITE_LOGS,
             self::MENU_SESSION_LOGS,
             self::MENU_START_SERVICE,
             self::MENU_START_SERVICES,
@@ -435,6 +441,10 @@ class Lang
             self::PHP_INCPT,
             self::NEARD_CONF_NOT_FOUND_ERROR,
             self::NEARD_CONF_MALFORMED_ERROR,
+            
+            // Action Switch PHP setting
+            self::SWITCH_PHP_SETTING_TITLE,
+            self::SWITCH_PHP_SETTING_NOT_FOUND,
             
             // Action Check port
             self::CHECK_PORT_TITLE,
