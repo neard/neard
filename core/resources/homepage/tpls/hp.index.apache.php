@@ -64,7 +64,7 @@
 <div class="row">
   <div class="col-lg-12">
   <?php foreach($neardBins->getApache()->getAlias() as $alias) {
-    ?><div style="float:left;padding:3px;"><a class="btn btn-default" target="_blank" href="<?php echo $neardHomepage->getUrl() . '/' . $alias; ?>"><span class="fa fa-link"></span> <?php echo $alias; ?></a></div><?php
+    ?><div style="float:left;padding:3px;"><a class="btn btn-default" target="_blank" href="<?php echo $neardBs->getLocalUrl($alias); ?>"><span class="fa fa-link"></span> <?php echo $alias; ?></a></div><?php
   } ?>
   </div>
 </div>

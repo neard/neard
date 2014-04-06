@@ -492,10 +492,10 @@ class Win32Service
         global $neardLang;
         if ($this->latestError != self::WIN32_NO_ERROR) {
             return $neardLang->getValue(Lang::ERROR) . ' ' .
-                $this->latestError . '(' . hexdec($this->latestError) . ' : ' . $this->getWin32ErrorCodeDesc($this->latestError) . ')';
+                $this->latestError . ' (' . hexdec($this->latestError) . ' : ' . $this->getWin32ErrorCodeDesc($this->latestError) . ')';
         } elseif ($this->latestStatus != self::WIN32_SERVICE_NA) {
             return $neardLang->getValue(Lang::STATUS) . ' ' .
-                $this->latestStatus . '(' . hexdec($this->latestStatus) . ' : ' . $this->getWin32ServiceStatusDesc($this->latestStatus) . ')';
+                $this->latestStatus . ' (' . hexdec($this->latestStatus) . ' : ' . $this->getWin32ServiceStatusDesc($this->latestStatus) . ')';
         }
     }
     

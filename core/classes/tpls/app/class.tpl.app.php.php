@@ -32,7 +32,7 @@ class TplAppPhp
             $tplVersions[TplApp::SECTION_CALL] . PHP_EOL .
             $tplSettings[TplApp::SECTION_CALL] . PHP_EOL .
             $tplExtensions[TplApp::SECTION_CALL] . PHP_EOL .
-            TplAestan::getItemNotepad(basename($neardBins->getPhp()->getApacheConf()), $neardBins->getPhp()->getApacheConf()) . PHP_EOL .
+            TplAestan::getItemNotepad(basename($neardBins->getPhp()->getConf()), $neardBins->getPhp()->getConf()) . PHP_EOL .
             TplAestan::getItemNotepad($neardLang->getValue(Lang::MENU_ERROR_LOGS), $neardBins->getPhp()->getErrorLog()) . PHP_EOL . PHP_EOL .
             
             // Actions
@@ -97,10 +97,16 @@ class TplAppPhp
                     'SubMenu: MenuPhpSetting-' . md5($key) . '; ' .
                     'Glyph: ' . TplAestan::GLYPH_FOLDER_CLOSE . PHP_EOL;
             } else {
+                $glyph = '';
                 $settingEnabled = $neardBins->getPhp()->isSettingActive($value);
+                if (!$neardBins->getPhp()->isSettingExists($value)) {
+                    $glyph = TplAestan::GLYPH_WARNING;
+                } elseif ($settingEnabled) {
+                    $glyph = TplAestan::GLYPH_CHECK;
+                }
                 $tplSwitchPhpSetting = TplApp::getActionMulti(
                     self::ACTION_SWITCH_SETTING, array($value, $settingEnabled),
-                    array($key, $settingEnabled ? TplAestan::GLYPH_CHECK : ''),
+                    array($key, $glyph),
                     false, get_called_class()
                 );
                 
@@ -142,10 +148,16 @@ class TplAppPhp
                                     'SubMenu: MenuPhpSetting-' . md5($key2) . '; ' .
                                     'Glyph: ' . TplAestan::GLYPH_FOLDER_CLOSE . PHP_EOL;
                             } elseif (!is_array($value2)) {
+                                $glyph = '';
                                 $settingEnabled = $neardBins->getPhp()->isSettingActive($value2);
+                                if (!$neardBins->getPhp()->isSettingExists($value2)) {
+                                    $glyph = TplAestan::GLYPH_WARNING;
+                                } elseif ($settingEnabled) {
+                                    $glyph = TplAestan::GLYPH_CHECK;
+                                }
                                 $tplSwitchPhpSetting = TplApp::getActionMulti(
                                     self::ACTION_SWITCH_SETTING, array($value2, $settingEnabled),
-                                    array($key2, $settingEnabled ? TplAestan::GLYPH_CHECK : ''),
+                                    array($key2, $glyph),
                                     false, get_called_class()
                                 );
                                 
@@ -166,12 +178,12 @@ class TplAppPhp
         return $result;
     }
     
-    public static function getActionSwitchPhpSetting($extension, $enabled)
+    public static function getActionSwitchPhpSetting($setting, $enabled)
     {
         global $neardBins;
         
         $switch = $enabled ? ActionSwitchPhpExtension::SWITCH_OFF : ActionSwitchPhpExtension::SWITCH_ON;
-        return TplApp::getActionRun(Action::SWITCH_PHP_PARAM, array($extension, $switch)) . PHP_EOL .
+        return TplApp::getActionRun(Action::SWITCH_PHP_PARAM, array($setting, $switch)) . PHP_EOL .
             TplAppReload::getActionReload() . PHP_EOL .
             TplService::getActionRestart(BinApache::SERVICE_NAME) . PHP_EOL;
     }

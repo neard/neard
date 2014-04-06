@@ -49,6 +49,7 @@ class TplAppApache
             $tplVhosts[TplApp::SECTION_CALL] . PHP_EOL .
             TplAestan::getItemNotepad(basename($neardBins->getApache()->getConf()), $neardBins->getApache()->getConf()) . PHP_EOL .
             TplAestan::getItemNotepad($neardLang->getValue(Lang::MENU_ACCESS_LOGS), $neardBins->getApache()->getAccessLog()) . PHP_EOL .
+            TplAestan::getItemNotepad($neardLang->getValue(Lang::MENU_REWRITE_LOGS), $neardBins->getApache()->getRewriteLog()) . PHP_EOL .
             TplAestan::getItemNotepad($neardLang->getValue(Lang::MENU_ERROR_LOGS), $neardBins->getApache()->getErrorLog()) . PHP_EOL . PHP_EOL .
             
             // Actions

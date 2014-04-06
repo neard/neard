@@ -91,7 +91,8 @@ class ActionSwitchVersion
         if ($this->bin->switchVersion($this->version, true) !== false) {
             // remove service
             if ($this->service != null) {
-                $this->neardSplash->setTextLoading(sprintf($neardLang->getValue(Lang::REMOVE_SERVICE_TITLE), $this->bin->getName()));
+                $binName = $this->bin->getName() == $neardLang->getValue(Lang::PHP) ? $neardLang->getValue(Lang::APACHE) : $this->bin->getName();
+                $this->neardSplash->setTextLoading(sprintf($neardLang->getValue(Lang::REMOVE_SERVICE_TITLE), $binName));
                 $this->neardSplash->incrProgressBar();
                 $this->service->delete();
             } else {

@@ -1,7 +1,5 @@
 <?php
 
-//TODO: Add Winbinder window
-
 class ActionRefreshRepos
 {
     const GIT = 'git';

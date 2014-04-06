@@ -6,7 +6,6 @@ class BinPhp
     const CFG_CLI_EXE = 'phpCliExe';
     const CFG_CLI_SILENT_EXE = 'phpCliSilentExe';
     const CFG_CONF = 'phpConf';
-    const CFG_APACHE_CONF = 'phpApacheConf';
     const CFG_PEAR_EXE = 'phpPearExe';
     
     const INI_SHORT_OPEN_TAG = 'short_open_tag';
@@ -50,6 +49,7 @@ class BinPhp
     const INI_MYSQL_ALLOW_LOCAL_INFILE = 'mysql.allow_local_infile';
     const INI_MYSQL_ALLOW_PERSISTENT = 'mysql.allow_persistent';
     const INI_MYSQL_TRACE_MODE = 'mysql.trace_mode';
+    const INI_MYSQLI_ALLOW_PERSISTENT = 'mysqli.allow_persistent';
     const INI_MYSQLI_RECONNECT = 'mysqli.reconnect';
     const INI_MYSQLND_COLLECT_STATISTICS = 'mysqlnd.collect_statistics';
     const INI_MYSQLND_COLLECT_MEMORY_STATISTICS = 'mysqlnd.collect_memory_statistics';
@@ -104,7 +104,6 @@ class BinPhp
         $this->cliExe = $neardConfig->getRaw(self::CFG_CLI_EXE);
         $this->cliSilentExe = $neardConfig->getRaw(self::CFG_CLI_SILENT_EXE);
         $this->conf = $neardConfig->getRaw(self::CFG_CONF);
-        $this->apacheConf = $neardConfig->getRaw(self::CFG_APACHE_CONF);
         $this->pearExe = $neardConfig->getRaw(self::CFG_PEAR_EXE);
         
         $this->rootPath = $rootPath == null ? $this->rootPath : $rootPath;
@@ -140,6 +139,7 @@ class BinPhp
         
         $boxTitle = sprintf($neardLang->getValue(Lang::SWITCH_VERSION_TITLE), $this->getName(), $version);
         
+        $phpPath = str_replace('php' . $this->getVersion(), 'php' . $version, $this->getCurrentPath());
         $phpConf = str_replace('php' . $this->getVersion(), 'php' . $version, $this->getConf());
         $neardConf = str_replace('php' . $this->getVersion(), 'php' . $version, $this->getNeardConf());
         $apachePhpModule = $this->getApacheModule($neardBins->getApache()->getVersion(), $version);
@@ -184,8 +184,10 @@ class BinPhp
         // neard.conf
         $neardConfig->replace(BinPhp::CFG_VERSION, $version);
         
-        // change PHP module
+        // apache
         Util::replaceInFile($neardBins->getApache()->getConf(), array(
+            '/^PHPIniDir\s.*/' => 'PHPIniDir "' . $phpPath . '"',
+            '/^(#?)LoadFile\s.*php5ts.dll.*/' => (!file_exists($phpPath . '/php5ts.dll') ? '#' : '') . 'LoadFile "' . $phpPath . '/php5ts.dll"',
             '/^LoadModule\sphp5_module\s.*/' => 'LoadModule php5_module "' . $apachePhpModule . '"',
         ));
     }
@@ -262,6 +264,7 @@ class BinPhp
                     'Trace mode' => self::INI_MYSQL_TRACE_MODE,
                 ),
                 'MySQLi' => array(
+                    'Allow persistent' => self::INI_MYSQLI_ALLOW_PERSISTENT,
                     'Reconnect' => self::INI_MYSQLI_RECONNECT,
                 ),
                 'MySQL Native Driver' => array(
@@ -348,6 +351,7 @@ class BinPhp
             self::INI_MYSQL_ALLOW_LOCAL_INFILE => array('On', 'Off', 'Off'),
             self::INI_MYSQL_ALLOW_PERSISTENT => array('On', 'Off', 'On'),
             self::INI_MYSQL_TRACE_MODE => array('On', 'Off', 'Off'),
+            self::INI_MYSQLI_ALLOW_PERSISTENT => array('On', 'Off', 'On'),
             self::INI_MYSQLI_RECONNECT => array('On', 'Off', 'Off'),
             self::INI_MYSQLND_COLLECT_STATISTICS => array('On', 'Off', 'On'),
             self::INI_MYSQLND_COLLECT_MEMORY_STATISTICS => array('On', 'Off', 'On'),
@@ -378,11 +382,23 @@ class BinPhp
         $result = array();
         $settingsValues = $this->getSettingsValues();
         
-        $confContent = file($this->getApacheConf());
+        $confContent = file($this->getConf());
         foreach ($confContent as $row) {
             $settingMatch = array();
             if (preg_match('/^' . $name . '\s*=\s*(.+)/i', $row, $settingMatch)) {
                 return isset($settingMatch[1]) && isset($settingsValues[$name]) && $settingsValues[$name][0] == trim($settingMatch[1]);
+            }
+        }
+        
+        return false;
+    }
+    
+    public function isSettingExists($name)
+    {
+        $confContent = file($this->getConf());
+        foreach ($confContent as $row) {
+            if (preg_match('/^\s*?;?\s*?' . $name . '\s*=\s*.*/i', $row)) {
+                return true;
             }
         }
         
@@ -402,7 +418,7 @@ class BinPhp
     {
         $result = array();
         
-        $confContent = file($this->getApacheConf());
+        $confContent = file($this->getConf());
         foreach ($confContent as $row) {
             $extMatch = array();
             if (preg_match('/^(;)?extension\s*=\s*"?(.+)\.dll"?/i', $row, $extMatch)) {
@@ -515,11 +531,6 @@ class BinPhp
     public function getConf()
     {
         return $this->conf;
-    }
-    
-    public function getApacheConf()
-    {
-        return $this->apacheConf;
     }
     
     public function getNeardConf()

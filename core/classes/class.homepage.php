@@ -26,11 +26,13 @@ class Homepage
     
     public function getPageUrl($page)
     {
+        global $neardBs;
+        
         $request = '';
         if (!empty($page) && in_array($page, $this->pageList) && $page != self::PAGE_INDEX) {
-            $request = '/?p=' . $page;
+            $request = '?p=' . $page;
         }
-        return $this->getUrl() . $request;
+        return $neardBs->getLocalUrl($request);
     }
     
     public function getPath()
@@ -39,16 +41,10 @@ class Homepage
         return $neardCore->getResourcesPath(false) . '/homepage';
     }
     
-    public function getUrl()
-    {
-        global $neardBins;
-        return 'http://localhost' . ($neardBins->getApache()->getPort() != 80 ? ':' . $neardBins->getApache()->getPort() : '');
-    }
-    
     public function getResourcesUrl()
     {
-        global $neardConfig;
-        return $this->getUrl() . '/' . md5(APP_TITLE . $neardConfig->getAppVersion());
+        global $neardBs, $neardConfig;
+        return $neardBs->getLocalUrl(md5(APP_TITLE . $neardConfig->getAppVersion()));
     }
     
     public function getAliasFilePath()

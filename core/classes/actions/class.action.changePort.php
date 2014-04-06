@@ -28,7 +28,7 @@ class ActionChangePort
             if ($args[0] == $neardBins->getMysql()->getName()) {
                 $this->currentPort = CURRENT_MYSQL_PORT;
                 $this->bin = $neardBins->getMysql();
-                $this->cntProcessActions = 7;
+                $this->cntProcessActions = 6;
             } elseif ($args[0] == $neardBins->getMariadb()->getName()) {
                 $this->currentPort = CURRENT_MARIADB_PORT;
                 $this->bin = $neardBins->getMariadb();

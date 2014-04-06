@@ -123,7 +123,7 @@ class Batch
     
         // Redirect output
         if ($catchOutput) {
-            $content .= '> "' . $resultFile . '"';
+            $content .= '> "' . $resultFile . '"' . (!Util::endWith($content, '2') ? ' 2>&1' : '');
         }
         
         // Header

@@ -79,12 +79,10 @@ class TplAestan
     
     public static function getItemLink($caption, $link, $local = false)
     {
-        global $neardConfig, $neardBins;
+        global $neardBs, $neardConfig;
         
         if ($local) {
-            $link = 'http://localhost' .
-                ($neardBins->getApache()->getPort() != 80 ? ':' . $neardBins->getApache()->getPort() : '') .
-                '/' . $link;
+            $link = $neardBs->getLocalUrl($link);
         }
         
         return self::getItemExe(
@@ -184,7 +182,7 @@ class TplAestan
     
     public static function getActionServiceRestart($service)
     {
-        //TODO: Reveiw restart service
+        //TODO: Review restart service
         return self::getActionService($service, self::SERVICE_RESTART, false);
         /*return self::getActionServiceStop($service) . PHP_EOL .
             self::getActionServiceStart($service);*/

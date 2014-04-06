@@ -11,12 +11,12 @@ define('HOSTS_FILE', 'C:\Windows\System32\drivers\etc\hosts');
 define('CURRENT_APACHE_PORT', 80);
 define('CURRENT_APACHE_VERSION', '2.2.22');
 define('CURRENT_PHP_VERSION', '5.3.13');
-define('CURRENT_MYSQL_PORT', 3307);
+define('CURRENT_MYSQL_PORT', 3306);
 define('CURRENT_MYSQL_VERSION', '5.5.24');
-define('CURRENT_MARIADB_PORT', 3308);
+define('CURRENT_MARIADB_PORT', 3307);
 define('CURRENT_MARIADB_VERSION', '5.5.34');
 define('CURRENT_NODEJS_VERSION', '0.10.22');
-define('CURRENT_XLIGHT_PORT', 22);
+define('CURRENT_XLIGHT_PORT', 21);
 define('CURRENT_XLIGHT_VERSION', '3.8.0.2');
 
 define('RETURN_TAB', '	');

@@ -19,16 +19,8 @@ class ActionSwitchStatus
     {
         global $neardBins;
         
-        $onlineContent = '    # START switchOnline tag - Do not replace!' . PHP_EOL .
-            '    Order Allow,Deny' . PHP_EOL .
-            '    Allow from all' . PHP_EOL .
-            '    # END switchOnline tag - Do not replace!';
-        
-        $offlineContent = '    # START switchOnline tag - Do not replace!' . PHP_EOL .
-            '    Order Deny,Allow' . PHP_EOL .
-            '    Deny from all' . PHP_EOL .
-            '    Allow from 127.0.0.1 ::1 localhost' . PHP_EOL .
-            '    # END switchOnline tag - Do not replace!';
+        $onlineContent = $neardBins->getApache()->getOnlineContent();
+        $offlineContent = $neardBins->getApache()->getOfflineContent();
         
         $result = file_get_contents($neardBins->getApache()->getConf());
         if ($putOnline) {

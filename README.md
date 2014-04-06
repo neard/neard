@@ -43,12 +43,11 @@ And many other features.
 
 Neard is [available on SourceForge](https://sourceforge.net/projects/neard/) :
 
-* Latest release : [Neard 1.0.4](https://sourceforge.net/projects/neard/files/Releases/1.0.4/neard-1.0.4.zip/download) (2014/03/17)
-* [Patches](https://sourceforge.net/projects/neard/files/Patches/).
-* [Testing](https://sourceforge.net/projects/neard/files/Testing/).
-* [Addons](https://sourceforge.net/projects/neard/files/Addons/).
-* [Tools](https://sourceforge.net/projects/neard/files/Tools/).
-* [Archives](https://sourceforge.net/projects/neard/files/Releases/).
+* Latest release : [Neard 1.0.5](https://sourceforge.net/projects/neard/files/Releases/1.0.5/neard-1.0.5.zip/download) (2014/04/06)
+* [Patches](https://sourceforge.net/projects/neard/files/Patches/) : to migrate from older release to the latest.
+* [Addons](https://sourceforge.net/projects/neard/files/Addons/) : other versions of binaries (Apache, PHP, MYSQL, MariaDB, etc...).
+* [Tools](https://sourceforge.net/projects/neard/files/Tools/) : useful tools for Neard.
+* [Archives](https://sourceforge.net/projects/neard/files/Releases/) : all releases.
 
 ### RSS feed
 
@@ -73,8 +72,13 @@ Launch ``neard.exe``.
 
 See ``CHANGELOG.md``.
 
-## Reporting an issue
+## Get involved
 
+Neard is open for everyone to contribute. Please give us some feedback and join the development!
+
+## Found a bug?
+
+Please search for existing issues first and make sure to include all relevant information.
 Before [reporting an issue](https://github.com/crazy-max/neard/issues), please :
 * Tell me what is your operating system and platform (eg. Windows 7 64-bits).
 * Tell me your Neard version (eg. 1.0.0).
@@ -89,6 +93,8 @@ Or with bitcoin you can send your donations to [1BdhK62JY2xQKXjmvLLA8Dpbit1uJ5Jk
 Thank you to everyone who has donated, it is much appreciated.
 
 ## Contribute
+
+You want to help us and participate in the development or the documentation? Just fork Neard and send us a pull request.
 
 ### Translations
 

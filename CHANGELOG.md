@@ -1,5 +1,21 @@
 # Changelog
 
+## 1.0.5 (2014/04/06)
+
+* Move Apache rewrite logs ([Issue #37](https://github.com/crazy-max/neard/issues/37))
+* Move PHP config file to his root folder ([Issue #36](https://github.com/crazy-max/neard/issues/36))
+* Path bug in Node.js configuration file ([Issue #35](https://github.com/crazy-max/neard/issues/35))
+* Addons : Apache 2.2.27, Apache 2.4.9, PHP 5.3.28, PHP 5.4.26, PHP 5.5.10, PHP 5.6.a3 ([Issue #34](https://github.com/crazy-max/neard/issues/34))
+* Error window when refresh Git or SVN repo ([Issue #33](https://github.com/crazy-max/neard/issues/33))
+* Port 21 by default for FTP server
+* Port 3306 by default for MySQL
+* Port 3307 by default for MariaDB
+* Add cgi-bin path (to use via http://localhost/cgi-bin)
+* Add mysqli.allow_persistent PHP setting
+* Review batch exec output redirect
+* Check PHP setting exists
+* Remove rewrite log when creating virtual host
+
 ## 1.0.4 (2014/03/17)
 
 * Add Xlight FTP Server ([Issue #30](https://github.com/crazy-max/neard/issues/30))

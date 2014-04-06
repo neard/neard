@@ -29,6 +29,7 @@ class ActionStartup
     {
         global $neardBs, $neardCore, $neardConfig, $neardLang, $neardBins, $neardApps, $neardTools, $neardWinbinder, $neardRegistry, $neardHomepage;
         $error = '';
+        $startTime = Util::getMicrotime();
         $restart = false;
         
         // Kill old PHP instances
@@ -200,6 +201,7 @@ class ActionStartup
             foreach ($neardBins->getServices() as $sName => $service) {
                 $serviceError = '';
                 $serviceRestart = false;
+                $startServiceTime = Util::getMicrotime();
             
                 $syntaxCheckCmd = null;
                 if ($sName == BinApache::SERVICE_NAME) {
@@ -276,6 +278,8 @@ class ActionStartup
                         $error .= PHP_EOL . PHP_EOL;
                     }
                     $error .= sprintf($neardLang->getValue(Lang::STARTUP_SERVICE_ERROR), $name) . PHP_EOL . $serviceError;
+                } else {
+                    $this->writeLog($name . ' service installed in ' . round(Util::getMicrotime() - $startServiceTime, 3) . 's');
                 }
             }
         } else {
@@ -297,6 +301,8 @@ class ActionStartup
             $this->neardSplash->setTextLoading(sprintf($neardLang->getValue(Lang::STARTUP_REFRESH_SVN_REPOS_TEXT), $name));
             $repos = $neardTools->getSvn()->findRepos(false);
             $this->writeLog('Update SVN repos: ' . count($repos) . ' found');
+            
+            $this->writeLog('Started in ' . round(Util::getMicrotime() - $startTime, 3) . 's');
         } else {
             $this->neardSplash->incrProgressBar(2);
         }
