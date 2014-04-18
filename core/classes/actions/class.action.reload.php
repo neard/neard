@@ -4,13 +4,16 @@ class ActionReload
 {
     public function __construct($args)
     {
-        global $neardBs, $neardConfig, $neardBins, $neardTools, $neardApps, $neardHomepage;
+        global $neardBs, $neardCore, $neardConfig, $neardBins, $neardTools, $neardApps, $neardHomepage;
         
         // Start loading
         Util::startLoading();
         
         // Refresh hostname
         $neardConfig->replace(Config::CFG_HOSTNAME, gethostname());
+        
+        // Refresh launch startup
+        $neardConfig->replace(Config::CFG_LAUNCH_STARTUP, Util::isLaunchStartup() ? Config::LAUNCH_STARTUP_ON : Config::LAUNCH_STARTUP_OFF);
         
         // Check browser
         $currentBrowser = $neardConfig->getBrowser();

@@ -184,7 +184,7 @@ class Bootstrap
     public function getLocalUrl($request = null)
     {
         global $neardBins;
-        return 'http://' . $_SERVER['HTTP_HOST'] .
+        return 'http://' . (isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost') .
             ($neardBins->getApache()->getPort() != 80 ? ':' . $neardBins->getApache()->getPort() : '') .
             (!empty($request) ? '/' . $request : '');
     }
@@ -255,11 +255,6 @@ class Bootstrap
     {
         $errfile = Util::formatUnixPath($errfile);
         $errfile = str_replace($this->getRootPath(), '', $errfile);
-        
-        var_dump($errno);
-        var_dump($errstr);
-        var_dump($errfile);
-        var_dump($errline);
         
         $errNames = array(
             E_ERROR             => 'E_ERROR',

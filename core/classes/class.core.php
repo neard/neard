@@ -23,6 +23,7 @@ class Core
         if (extension_loaded('winbinder')) {
             require_once $this->getLibsPath() . '/winbinder/winbinder.php';
         }
+        require_once $this->getLibsPath() . '/markdown/markdown.php';
     }
 
     public function getLangsPath($aetrayPath = false)
@@ -98,6 +99,11 @@ class Core
     public function getPhpCliSilentExe($aetrayPath = false)
     {
         return $this->getPhpPath($aetrayPath) . '/' . self::PHP_CLI_SILENT_EXE;
+    }
+    
+    public function getWgetExe($aetrayPath = false)
+    {
+        return $this->getLibsPath($aetrayPath) . '/wget/wget.exe';
     }
 
 }

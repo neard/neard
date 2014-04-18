@@ -5,7 +5,7 @@ class ActionStartup
     private $neardSplash;
     
     const GAUGE_SERVICES = 6;
-    const GAUGE_OTHERS = 13;
+    const GAUGE_OTHERS = 14;
     
     public function __construct($args)
     {
@@ -52,6 +52,13 @@ class ActionStartup
         $this->neardSplash->incrProgressBar();
         $neardConfig->replace(Config::CFG_HOSTNAME, gethostname());
         
+        // Check launch Startup
+        if ($neardConfig->getLaunchStartup() == Config::LAUNCH_STARTUP_ON) {
+            Util::setLaunchStartupRegKey();
+        } else {
+            Util::deleteLaunchStartupRegKey();
+        }
+        
         // Check default browser
         $this->neardSplash->setTextLoading($neardLang->getValue(Lang::STARTUP_CHECK_BROWSER_TEXT));
         $this->neardSplash->incrProgressBar();
@@ -70,11 +77,17 @@ class ActionStartup
             $this->neardSplash->incrProgressBar();
         }
         
-        // Refresh alias homepage
-        $this->neardSplash->setTextLoading($neardLang->getValue(Lang::STARTUP_REFRESH_ALIAS_HOMEPAGE_TEXT));
+        // Refresh alias
+        $this->neardSplash->setTextLoading($neardLang->getValue(Lang::STARTUP_REFRESH_ALIAS_TEXT));
         $this->neardSplash->incrProgressBar();
-        $neardHomepage->refreshAliasContent();
-        $this->writeLog('Refresh alias homepage');
+        $neardBins->getApache()->refreshAlias(Util::isOnline());
+        $this->writeLog('Refresh alias');
+        
+        // Refresh vhosts
+        $this->neardSplash->setTextLoading($neardLang->getValue(Lang::STARTUP_REFRESH_VHOSTS_TEXT));
+        $this->neardSplash->incrProgressBar();
+        $neardBins->getApache()->refreshVhosts(Util::isOnline());
+        $this->writeLog('Refresh vhosts');
         
         // Check path
         $this->neardSplash->setTextLoading($neardLang->getValue(Lang::STARTUP_CHECK_PATH_TEXT));
@@ -194,6 +207,10 @@ class ActionStartup
             } else {
                 $restart = true;
             }
+        } else {
+            $this->writeLog('Refresh system PATH: ' . $currentSysPathRegKey);
+            Util::setSysPathRegKey(str_replace('%' . Registry::APP_BINS_REG_ENTRY . '%', '', $currentSysPathRegKey));
+            Util::setSysPathRegKey($currentSysPathRegKey);
         }
         
         // Services

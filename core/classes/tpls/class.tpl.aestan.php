@@ -32,6 +32,7 @@ class TplAestan
     const GLYPH_WEB_PAGE = 30;
     const GLYPH_DEBUG = 31;
     const GLYPH_TRASHCAN = 32;
+    const GLYPH_UPDATE = 33;
     
     const SERVICE_START = 'startresume';
     const SERVICE_STOP = 'stop';

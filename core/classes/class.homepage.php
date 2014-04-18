@@ -54,25 +54,13 @@ class Homepage
     
     public function refreshAliasContent()
     {
-        global $neardConfig;
+        global $neardConfig, $neardBins;
     
-        $result = 'Alias /' . md5(APP_TITLE . $neardConfig->getAppVersion()) .
-            ' "' . $this->getPath() . '/"' . PHP_EOL .
-            '<Directory "' . $this->getPath() . '/">' . PHP_EOL .
-            '    Options FollowSymLinks MultiViews' . PHP_EOL;
-    
-        if (Util::isOnline()) {
-            $result .= '    Order Allow,Deny' . PHP_EOL .
-            '    Allow from all';
-        } else {
-            $result .= '    Order Deny,Allow' . PHP_EOL .
-            '    Deny from all' . PHP_EOL .
-            '    Allow from 127.0.0.1 ::1 localhost';
-        }
-    
-        $result .= PHP_EOL . '</Directory>';
+        $result = $neardBins->getApache()->getAliasContent(
+            md5(APP_TITLE . $neardConfig->getAppVersion()),
+            $this->getPath());
+        
         return file_put_contents($this->getAliasFilePath(), $result) !== false;
     }
-    
 
 }

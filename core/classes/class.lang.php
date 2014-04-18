@@ -13,10 +13,12 @@ class Lang
     const APPS = 'apps';
     const BINS = 'bins';
     const BITCOIN = 'bitcoin';
+    const CHANGELOG = 'changelog';
     const DEBUG = 'debug';
     const DONATE = 'donate';
     const DONATE_BITCOIN = 'donateBitcoin';
     const DONATE_VIA = 'donateVia';
+    const DOWNLOAD = 'download';
     const ERROR = 'error';
     const EXECUTABLE = 'executable';
     const EXTENSIONS = 'extensions';
@@ -28,6 +30,7 @@ class Lang
     const MODULES = 'modules';
     const PAYPAL = 'paypal';
     const QUIT = 'quit';
+    const READ_CHANGELOG = 'readChangelog';
     const RELOAD = 'reload';
     const REPOS = 'repos';
     const RESTART = 'restart';
@@ -51,11 +54,13 @@ class Lang
     const MENU_ADD_VHOST = 'menuAddVhost';
     const MENU_CHANGE_PORT = 'menuChangePort';
     const MENU_CHECK_PORT = 'menuCheckPort';
+    const MENU_CHECK_UPDATE = 'menuCheckUpdate';
     const MENU_CLEAR_FOLDERS = 'menuClearFolders';
     const MENU_EDIT_ALIAS = 'menuEditAlias';
     const MENU_EDIT_VHOST = 'menuEditVhost';
     const MENU_ERROR_LOGS = 'menuErrorLogs';
     const MENU_INSTALL_SERVICE = 'menuInstallService';
+    const MENU_LAUNCH_STARTUP = 'menuLaunchStartup';
     const MENU_LOCALHOST = 'menuLocalhost';
     const MENU_LOGS = 'menuLogs';
     const MENU_PUT_OFFLINE = 'menuPutOffline';
@@ -187,7 +192,8 @@ class Lang
     const STARTUP_REFRESH_HOSTNAME_TEXT = 'startupRefreshHostnameText';
     const STARTUP_CHECK_BROWSER_TEXT = 'startupCheckBrowserText';
     const STARTUP_PURGE_LOGS_TEXT = 'startupPurgeLogsText';
-    const STARTUP_REFRESH_ALIAS_HOMEPAGE_TEXT = 'startupRefreshAliasHomepageText';
+    const STARTUP_REFRESH_ALIAS_TEXT = 'startupRefreshAliasText';
+    const STARTUP_REFRESH_VHOSTS_TEXT = 'startupRefreshVhostsText';
     const STARTUP_CHECK_PATH_TEXT = 'startupCheckPathText';
     const STARTUP_SCAN_FOLDERS_TEXT = 'startupScanFoldersText';
     const STARTUP_CHANGE_OLD_PATHS_TEXT = 'startupChangeOldPathsText';
@@ -242,6 +248,11 @@ class Lang
     
     // Action others...
     const REGISTRY_SET_ERROR_TEXT = 'registrySetErrorText';
+    
+    // Action check version
+    const CHECK_VERSION_TITLE = 'checkVersionTitle';
+    const CHECK_VERSION_AVAILABLE_TEXT = 'checkVersionAvailableText';
+    const CHECK_VERSION_LATEST_TEXT = 'checkVersionLatestText';
     
     // Windows forms
     const BUTTON_OK = 'buttonOk';
@@ -338,10 +349,12 @@ class Lang
             self::APPS,
             self::BINS,
             self::BITCOIN,
+            self::CHANGELOG,
             self::DEBUG,
             self::DONATE,
             self::DONATE_BITCOIN,
             self::DONATE_VIA,
+            self::DOWNLOAD,
             self::ERROR,
             self::EXECUTABLE,
             self::EXTENSIONS,
@@ -353,6 +366,7 @@ class Lang
             self::MODULES,
             self::PAYPAL,
             self::QUIT,
+            self::READ_CHANGELOG,
             self::RELOAD,
             self::REPOS,
             self::RESTART,
@@ -376,11 +390,13 @@ class Lang
             self::MENU_ADD_VHOST,
             self::MENU_CHANGE_PORT,
             self::MENU_CHECK_PORT,
+            self::MENU_CHECK_UPDATE,
             self::MENU_CLEAR_FOLDERS,
             self::MENU_EDIT_ALIAS,
             self::MENU_EDIT_VHOST,
             self::MENU_ERROR_LOGS,
             self::MENU_INSTALL_SERVICE,
+            self::MENU_LAUNCH_STARTUP,
             self::MENU_LOCALHOST,
             self::MENU_LOGS,
             self::MENU_PUT_OFFLINE,
@@ -512,7 +528,8 @@ class Lang
             self::STARTUP_REFRESH_HOSTNAME_TEXT,
             self::STARTUP_CHECK_BROWSER_TEXT,
             self::STARTUP_PURGE_LOGS_TEXT,
-            self::STARTUP_REFRESH_ALIAS_HOMEPAGE_TEXT,
+            self::STARTUP_REFRESH_ALIAS_TEXT,
+            self::STARTUP_REFRESH_VHOSTS_TEXT,
             self::STARTUP_CHECK_PATH_TEXT,
             self::STARTUP_SCAN_FOLDERS_TEXT,
             self::STARTUP_CHANGE_OLD_PATHS_TEXT,
@@ -567,6 +584,11 @@ class Lang
             
             // Action others...
             self::REGISTRY_SET_ERROR_TEXT,
+            
+            // Action check version,
+            self::CHECK_VERSION_TITLE,
+            self::CHECK_VERSION_AVAILABLE_TEXT,
+            self::CHECK_VERSION_LATEST_TEXT,
             
             // Windows forms
             self::BUTTON_OK,

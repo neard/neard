@@ -129,14 +129,14 @@ class BinMariadb
         
         $fp = Util::fsockopenAlt('127.0.0.1', $port);
         if ($fp) {
-            $dbLink = mysql_connect('127.0.0.1:' . $port, 'root', '');
+            $dbLink = mysqli_connect('127.0.0.1:' . $port, 'root', '');
             $isMariadb = false;
             $version = false;
         
             if ($dbLink) {
-                $result = mysql_query('SHOW VARIABLES', $dbLink);
+                $result = mysqli_query($dbLink, 'SHOW VARIABLES');
                 if ($result) {
-                    while ($row = mysql_fetch_array($result, MYSQL_NUM)) {
+                    while ($row = mysqli_fetch_array($result, MYSQLI_NUM)) {
                         if ($row[0] == 'version') {
                             $version = explode("-", $row[1]);
                             $version = count($version) > 1 ? $version[0] : $row[1];

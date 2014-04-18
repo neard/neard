@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.0.6 (2014/04/18)
+
+* Error window when switching status (online/offline) ([Issue #40](https://github.com/crazy-max/neard/issues/40))
+* Refresh aliases and vhosts when switching status ([Issue #39](https://github.com/crazy-max/neard/issues/39))
+* Localhost menu item wrong redirect bug ([Issue #38](https://github.com/crazy-max/neard/issues/38))
+* Launch on startup item ([Issue #29](https://github.com/crazy-max/neard/issues/29))
+* Check version on homepage and startup ([Issue #8](https://github.com/crazy-max/neard/issues/8))
+* Clean some var_dump
+* Bug with depreciated functions on PHP 5.6 (homepage)
+* Bug with Gitlist
+
 ## 1.0.5 (2014/04/06)
 
 * Move Apache rewrite logs ([Issue #37](https://github.com/crazy-max/neard/issues/37))

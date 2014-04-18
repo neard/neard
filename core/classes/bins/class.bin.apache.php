@@ -409,6 +409,80 @@ class BinApache
         return $result . '    # END switchOnline tag - Do not replace!';
     }
     
+    public function getRequiredContent($version = null)
+    {
+        return Util::isOnline() ? $this->getOnlineContent($version) : $this->getOfflineContent($version);
+    }
+    
+    public function getAliasContent($name, $dest)
+    {
+        $dest = Util::formatUnixPath($dest);
+        return 'Alias /' . $name . ' "' . $dest . '"' . PHP_EOL . PHP_EOL .
+            '<Directory "' . $dest . '">' . PHP_EOL .
+            '    Options Indexes FollowSymLinks MultiViews' . PHP_EOL .
+            '    AllowOverride all' . PHP_EOL .
+            $this->getRequiredContent() . PHP_EOL .
+            '</Directory>' . PHP_EOL;
+    }
+    
+    public function getVhostContent($serverName, $documentRoot)
+    {
+        global $neardBs;
+        
+        $documentRoot = Util::formatUnixPath($documentRoot);
+        return '<VirtualHost *:' . $this->getPort() . '>' . PHP_EOL .
+            '    ServerAdmin webmaster@' . $serverName . PHP_EOL .
+            '    DocumentRoot "' . $documentRoot . '"' . PHP_EOL .
+            '    <Directory "' . $documentRoot . '">' . PHP_EOL .
+            '        Options Indexes FollowSymLinks MultiViews' . PHP_EOL .
+            '        AllowOverride all' . PHP_EOL .
+            $this->getRequiredContent() . PHP_EOL .
+            '    </Directory>' . PHP_EOL .
+            '    ServerName ' . $serverName . PHP_EOL .
+            '    ErrorLog "' . $neardBs->getLogsPath() . '/' . $serverName . '_error.log"' . PHP_EOL .
+            '    CustomLog "' . $neardBs->getLogsPath() . '/' . $serverName . '_access.log" combined' . PHP_EOL .
+            '</VirtualHost>' . PHP_EOL;
+    }
+    
+    public function refreshAlias($putOnline)
+    {
+        global $neardBs, $neardBins, $neardHomepage;
+        
+        $onlineContent = $this->getOnlineContent();
+        $offlineContent = $this->getOfflineContent();
+        
+        foreach ($this->getAlias() as $alias) {
+            $aliasConf = file_get_contents($neardBs->getAliasPath() . '/' . $alias . '.conf');
+            if ($putOnline) {
+                $aliasConf = str_replace($offlineContent, $onlineContent, $aliasConf);
+            } else {
+                $aliasConf = str_replace($onlineContent, $offlineContent, $aliasConf);
+            }
+            file_put_contents($neardBs->getAliasPath() . '/' . $alias . '.conf', $aliasConf);
+        }
+        
+        // Homepage
+        $neardHomepage->refreshAliasContent();
+    }
+    
+    public function refreshVhosts($putOnline)
+    {
+        global $neardBs, $neardBins;
+        
+        $onlineContent = $this->getOnlineContent();
+        $offlineContent = $this->getOfflineContent();
+        
+        foreach ($this->getVhosts() as $vhost) {
+            $vhostConf = file_get_contents($neardBs->getVhostsPath() . '/' . $vhost . '.conf');
+            if ($putOnline) {
+                $vhostConf = str_replace($offlineContent, $onlineContent, $vhostConf);
+            } else {
+                $vhostConf = str_replace($onlineContent, $offlineContent, $vhostConf);
+            }
+            file_put_contents($neardBs->getVhostsPath() . '/' . $vhost . '.conf', $vhostConf);
+        }
+    }
+    
     public function getName()
     {
         return $this->name;

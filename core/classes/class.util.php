@@ -370,42 +370,6 @@ class Util
         return $result;
     }
     
-    public static function getAliasContent($name, $dest)
-    {
-        $dest = self::formatUnixPath($dest);
-        return 'Alias /' . $name . ' "' . $dest . '"' . PHP_EOL . PHP_EOL .
-            '# to give access to ' . $name . ' from outside' . PHP_EOL .
-            '# replace the lines' . PHP_EOL .
-            '#' . PHP_EOL .
-            '#    Order Deny,Allow' . PHP_EOL .
-            '#    Deny from all' . PHP_EOL .
-            '#    Allow from ::1 127.0.0.1 localhost' . PHP_EOL .
-            '#' . PHP_EOL . '# by' . PHP_EOL . '#' . PHP_EOL .
-            '#    Order Allow,Deny' . PHP_EOL .
-            '#    Allow from all' . PHP_EOL . '#' . PHP_EOL .
-            '<Directory "' . $dest . '">' . PHP_EOL .
-            '    Options Indexes FollowSymLinks MultiViews' . PHP_EOL .
-            '    AllowOverride all' . PHP_EOL .
-            '    Order Deny,Allow' . PHP_EOL .
-            '    Deny from all' . PHP_EOL .
-            '    Allow from ::1 127.0.0.1 localhost' . PHP_EOL .
-            '</Directory>' . PHP_EOL;
-    }
-    
-    public static function getVhostContent($serverName, $documentRoot)
-    {
-        global $neardBs, $neardBins;
-        
-        $documentRoot = self::formatUnixPath($documentRoot);
-        return '<VirtualHost *:' . $neardBins->getApache()->getPort() . '>' . PHP_EOL .
-            '    ServerAdmin webmaster@' . $serverName . PHP_EOL .
-            '    DocumentRoot "' . $documentRoot . '"' . PHP_EOL .
-            '    ServerName ' . $serverName . PHP_EOL .
-            '    ErrorLog "' . $neardBs->getLogsPath() . '/' . $serverName . '_error.log"' . PHP_EOL .
-            '    CustomLog "' . $neardBs->getLogsPath() . '/' . $serverName . '_access.log" combined' . PHP_EOL .
-            '</VirtualHost>' . PHP_EOL;
-    }
-    
     public static function getMicrotime()
     {
         list($usec, $sec) = explode(" ", microtime());
@@ -489,6 +453,45 @@ class Util
             Registry::SYSPATH_REG_ENTRY,
             $value
         );
+    }
+    
+    public static function getLaunchStartupRegKey()
+    {
+        global $neardRegistry;
+        return $neardRegistry->getValue(
+            Registry::HKEY_LOCAL_MACHINE,
+            Registry::STARTUP_REG_SUBKEY,
+            Registry::STARTUP_REG_ENTRY
+        );
+    }
+    
+    public static function setLaunchStartupRegKey()
+    {
+        global $neardBs, $neardRegistry;
+        return $neardRegistry->setStringValue(
+            Registry::HKEY_LOCAL_MACHINE,
+            Registry::STARTUP_REG_SUBKEY,
+            Registry::STARTUP_REG_ENTRY,
+            '"' . self::formatWindowsPath($neardBs->getExeFilePath()) . '"'
+        );
+    }
+    
+    public static function deleteLaunchStartupRegKey()
+    {
+        global $neardBs, $neardRegistry;
+        return $neardRegistry->deleteValue(
+            Registry::HKEY_LOCAL_MACHINE,
+            Registry::STARTUP_REG_SUBKEY,
+            Registry::STARTUP_REG_ENTRY
+        );
+    }
+    
+    public static function isLaunchStartup()
+    {
+        global $neardBs;
+        $exe = '"' . self::formatWindowsPath($neardBs->getExeFilePath()) . '"';
+        $value = self::getLaunchStartupRegKey();
+        return !empty($value) && $value == $exe;
     }
     
     private static function log($data, $type, $file = null)
@@ -676,4 +679,69 @@ class Util
         return $result;
     }
     
+    public static function getLatestVersion()
+    {
+        $rssContent = file_get_contents('http://sourceforge.net/api/file/index/project-id/2115941/path/Releases/mtime/desc/rss');
+        if ($rssContent !== false) {
+            $simpleXml = simplexml_load_string($rssContent);
+            if ($simpleXml !== false) {
+                $rss = json_decode(json_encode((array) $simpleXml), 1);
+                if ($rss !== false && isset($rss['channel']) && isset($rss['channel']['item']) && isset($rss['channel']['item'][0])) {
+                    $latestItem = explode('/', $rss['channel']['item'][0]['link']);
+                    if ($latestItem !== false) {
+                        return $latestItem[count($latestItem) - 2];
+                    }
+                }
+            }
+        }
+        
+        return null;
+    }
+    
+    public static function getVersionUrl($version)
+    {
+        return 'http://sourceforge.net/projects/neard/files/Releases/' . $version . '/neard-' . $version . '.zip/download';
+    }
+    
+    public static function getPatchUrl($oldVersion, $latestVersion)
+    {
+        return 'http://sourceforge.net/projects/neard/files/Patches/' . $oldVersion . '-' . $latestVersion . '/neard-' . $oldVersion . '-' . $latestVersion . '.zip/download';
+    }
+    
+    public static function getLatestChangelog()
+    {
+        $content = file_get_contents('http://sourceforge.net/projects/neard/files/CHANGELOG.md/download');
+        if ($content != false) {
+            return Markdown(preg_replace('/^.+\n.*\n/', '', $content));
+        }
+        return null;
+    }
+    
+    public static function getRemoteFilesize($url, $humanFileSize = true)
+    {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HEADER, true);
+        curl_setopt($ch, CURLOPT_NOBODY, true);
+        curl_exec($ch);
+        
+        $size = curl_getinfo($ch, CURLINFO_CONTENT_LENGTH_DOWNLOAD);
+        return $humanFileSize ? self::humanFileSize($size) : $size;
+    }
+    
+    public static function humanFileSize($size, $unit = '')
+    {
+        if ((!$unit && $size >= 1 << 30) || $unit == 'GB') {
+            return number_format($size / (1 << 30), 2) . 'GB';
+        }
+        if ((!$unit && $size >= 1 << 20) || $unit == 'MB') {
+            return number_format($size / (1 << 20), 2) . 'MB';
+        }
+        if ((!$unit && $size >= 1 << 10) || $unit == 'KB') {
+            return number_format($size / (1 << 10), 2) . 'KB';
+        }
+        return number_format($size) . ' bytes';
+    }
 }

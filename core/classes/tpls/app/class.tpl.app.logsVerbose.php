@@ -27,7 +27,7 @@ class TplAppLogsVerbose
         foreach ($verboses as $verbose => $caption) {
             $tplSwitchLogsVerbose = TplApp::getActionMulti(
                 Action::SWITCH_LOGS_VERBOSE, array($verbose),
-                array($caption, $verbose == $neardConfig->getAppLogsVerbose() ? TplAestan::GLYPH_CHECK : null),
+                array($caption, $verbose == $neardConfig->getAppLogsVerbose() ? TplAestan::GLYPH_CHECK : ''),
                 false, get_called_class()
             );
             
