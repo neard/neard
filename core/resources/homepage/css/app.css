@@ -20,7 +20,6 @@ body {
 }
 
 /* Nav Messages */
-
 .messages-dropdown .dropdown-menu .message-preview .avatar,
 .messages-dropdown .dropdown-menu .message-preview .name,
 .messages-dropdown .dropdown-menu .message-preview .message,
@@ -46,7 +45,6 @@ body {
 }
 
 /* Nav Announcements */
-
 .announcement-heading {
   font-size: 50px;
   margin: 0;
@@ -57,7 +55,6 @@ body {
 }
 
 /* Table Headers */
-
 table.tablesorter thead {
   cursor: pointer;
 }
@@ -67,7 +64,6 @@ table.tablesorter thead tr th:hover {
 }
 
 /* Flot Chart Containers */
-
 .flot-chart {
   display: block;
   height: 400px;
@@ -78,67 +74,68 @@ table.tablesorter thead tr th:hover {
   height: 100%;
 }
 
+/* Homepage */
+.modal-changelog .modal-dialog {
+  width: 70%;
+}
+
 /* Edit Below to Customize Widths > 768px */
 @media (min-width:768px) {
 
-/* Side Nav */
-
-.side-nav {
-  margin-left: -225px;
-  left: 225px;
-  width: 225px;
-  position: fixed;
-  top: 90px;
-  height: 100%;
-  border-radius: 0;
-  border: none;
-  background-color: #222222;
-  overflow-y: auto;
-}
-
-/* Bootstrap Default Overrides - Customized Dropdowns for the Side Nav */
-
-.side-nav>li.dropdown>ul.dropdown-menu {
-  position: relative;
-  min-width: 225px;
-  margin: 0;
-  padding: 0;
-  border: none;
-  border-radius: 0;
-  background-color: transparent;
-  box-shadow: none;
-  -webkit-box-shadow: none;
-}
-
-.side-nav>li.dropdown>ul.dropdown-menu>li>a {
-  color: #999999;
-  padding: 15px 15px 15px 25px;
-}
-
-.side-nav>li.dropdown>ul.dropdown-menu>li>a:hover,
-.side-nav>li.dropdown>ul.dropdown-menu>li>a.active,
-.side-nav>li.dropdown>ul.dropdown-menu>li>a:focus {
-  color: #fff;
-  background-color: #080808;
-}
-
-.side-nav>li>a {
-  width: 225px;
+  /* Side Nav */
+  .side-nav {
+    margin-left: -225px;
+    left: 225px;
+    width: 225px;
+    position: fixed;
+    top: 90px;
+    height: 100%;
+    border-radius: 0;
+    border: none;
+    background-color: #222222;
+    overflow-y: auto;
   }
 
-.navbar-inverse .navbar-nav>li>a:hover,
-.navbar-inverse .navbar-nav>li>a:focus {
-  background-color: #080808;
+  /* Bootstrap Default Overrides - Customized Dropdowns for the Side Nav */
+  .side-nav>li.dropdown>ul.dropdown-menu {
+    position: relative;
+    min-width: 225px;
+    margin: 0;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    background-color: transparent;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+  }
+
+  .side-nav>li.dropdown>ul.dropdown-menu>li>a {
+    color: #999999;
+    padding: 15px 15px 15px 25px;
+  }
+
+  .side-nav>li.dropdown>ul.dropdown-menu>li>a:hover,
+  .side-nav>li.dropdown>ul.dropdown-menu>li>a.active,
+  .side-nav>li.dropdown>ul.dropdown-menu>li>a:focus {
+    color: #fff;
+    background-color: #080808;
+  }
+
+  .side-nav>li>a {
+    width: 225px;
+  }
+
+  .navbar-inverse .navbar-nav>li>a:hover,
+  .navbar-inverse .navbar-nav>li>a:focus {
+    background-color: #080808;
   }
 
   /* Nav Messages */
-
-.messages-dropdown .dropdown-menu {
-  min-width: 300px;
+  .messages-dropdown .dropdown-menu {
+    min-width: 300px;
   }
 
-.messages-dropdown .dropdown-menu li a {
-  white-space: normal;
+  .messages-dropdown .dropdown-menu li a {
+    white-space: normal;
   }
-
 }

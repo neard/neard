@@ -136,6 +136,7 @@ class TplApp
         return '[StartupAction]' . PHP_EOL .
             self::getActionRun(Action::STARTUP) . PHP_EOL .
             TplAppReload::getActionReload() . PHP_EOL .
+            self::getActionRun(Action::CHECK_VERSION) . PHP_EOL .
             self::getActionExec() . PHP_EOL;
     }
     
@@ -147,12 +148,18 @@ class TplApp
         $tplBrowser = TplAppBrowser::process();
         $tplLang = TplAppLang::process();
         $tplLogsVerbose = TplAppLogsVerbose::process();
+        $tplLaunchStartup = TplAppLaunchStartup::process();
         $tplExit = TplAppExit::process();
         
         return
             // Items
             '[Menu.Right]' . PHP_EOL .
-            TplApp::getActionRun(Action::ABOUT, null, array($neardLang->getValue(Lang::MENU_ABOUT), TplAestan::GLYPH_ABOUT)) . PHP_EOL . 
+            self::getActionRun(Action::ABOUT, null, array($neardLang->getValue(Lang::MENU_ABOUT), TplAestan::GLYPH_ABOUT)) . PHP_EOL .
+            self::getActionRun(
+                Action::CHECK_VERSION,
+                array(ActionCheckVersion::DISPLAY_OK),
+                array($neardLang->getValue(Lang::MENU_CHECK_UPDATE), TplAestan::GLYPH_UPDATE)
+            ) . PHP_EOL .
             TplAestan::getItemLink($neardLang->getValue(Lang::HELP), APP_GITHUB_HOME) . PHP_EOL .
             
             TplAestan::getItemSeparator() . PHP_EOL .
@@ -164,6 +171,7 @@ class TplApp
             TplAestan::getItemSeparator() . PHP_EOL .
             $tplLang[self::SECTION_CALL] . PHP_EOL .
             $tplLogsVerbose[self::SECTION_CALL] . PHP_EOL .
+            $tplLaunchStartup[self::SECTION_CALL] . PHP_EOL .
             $tplExit[self::SECTION_CALL] . PHP_EOL .
         
             // Actions
@@ -171,6 +179,7 @@ class TplApp
             PHP_EOL . $tplBrowser[self::SECTION_CONTENT] . PHP_EOL .
             PHP_EOL . $tplLang[self::SECTION_CONTENT] .
             PHP_EOL . $tplLogsVerbose[self::SECTION_CONTENT] .
+            PHP_EOL . $tplLaunchStartup[self::SECTION_CONTENT] .
             PHP_EOL . $tplExit[self::SECTION_CONTENT] . PHP_EOL;
     }
     

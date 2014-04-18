@@ -74,14 +74,18 @@ class Batch
         global $neardBins;
         
         $result = self::exec('getPearVersion', 'CMD /C "' . $neardBins->getPhp()->getPearExe() . '" -V', 2);
-        if (isset($result[0])) {
-            $expResult = explode(' ', $result[0]);
-            if (count($expResult) == 3) {
-                $result = trim($expResult[2]);
+        if (is_array($result)) {
+            foreach ($result as $row) {
+                if (Util::startWith($row, 'PEAR Version:')) {
+                    $expResult = explode(' ', $row);
+                    if (count($expResult) == 3) {
+                        return trim($expResult[2]);
+                    }
+                }
             }
         }
         
-        return $result;
+        return null;
     }
     
     public static function getSvnVersion()
@@ -100,6 +104,31 @@ class Batch
         return $result;
     }
     
+    public static function downloadWget($url, $genFile = true)
+    {
+        global $neardCore;
+    
+        $result = self::exec('wget',
+            '"' . $neardCore->getWgetExe() . '" -q --no-check-certificate -O - "' . $url . '"',
+            10, true, false, true, false
+        );
+        
+        if (!empty($result) && is_array($result)) {
+            array_pop($result);
+            array_pop($result);
+            array_pop($result);
+            $result = implode('', $result);
+        }
+        
+        if ($genFile && !empty($result)) {
+            $resultFile = self::getTmpFile('.tmp', 'wget');
+            file_put_contents($resultFile, $result);
+            return $resultFile;
+        }
+    
+        return $result;
+    }
+    
     public static function refreshEnvVars()
     {
         global $neardBs, $neardCore;
@@ -112,7 +141,7 @@ class Batch
         return self::exec($basename, $content, 0, false, true, $silent);
     }
     
-    public static function exec($basename, $content, $timeout, $catchOutput = true, $standalone = false, $silent = true)
+    public static function exec($basename, $content, $timeout, $catchOutput = true, $standalone = false, $silent = true, $rebuild = true)
     {
         global $neardCore, $neardWinbinder;
         $result = false;
@@ -171,14 +200,16 @@ class Batch
         self::writeLog('-> scriptPath: ' . $scriptPath);
         
         if ($result !== false && !empty($result) && is_array($result)) {
-            $rebuildResult = array();
-            foreach ($result as $row) {
-                $row = trim($row);
-                if (!empty($row)) {
-                    $rebuildResult[] = $row;
+            if ($rebuild) {
+                $rebuildResult = array();
+                foreach ($result as $row) {
+                    $row = trim($row);
+                    if (!empty($row)) {
+                        $rebuildResult[] = $row;
+                    }
                 }
+                $result = $rebuildResult;
             }
-            $result = $rebuildResult;
             self::writeLog('-> result: ' . substr(implode(' \\\\ ', $result), 0, 2048));
         } else {
             self::writeLog('-> result: NULL');

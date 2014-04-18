@@ -20,7 +20,7 @@ class TplAppLang
         foreach ($neardLang->getList() as $lang) {
             $tplSwitchLang = TplApp::getActionMulti(
                 Action::SWITCH_LANG, array($lang),
-                array(ucfirst($lang), $lang == $neardLang->getCurrent() ? TplAestan::GLYPH_CHECK : null),
+                array(ucfirst($lang), $lang == $neardLang->getCurrent() ? TplAestan::GLYPH_CHECK : ''),
                 false, get_called_class()
             );
             

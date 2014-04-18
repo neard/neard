@@ -1,0 +1,7 @@
+<IfModule mod_rewrite.c>
+    Options +FollowSymlinks
+    RewriteEngine On
+    RewriteBase /
+    RewriteCond %{HTTP_HOST} !^localhost$ [NC]
+    RewriteRule (.*) http://localhost/$1 [QSA,R=301,L]
+</IfModule>

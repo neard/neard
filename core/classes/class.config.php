@@ -2,20 +2,24 @@
 
 class Config
 {
+    const CFG_APP_LOGS_VERBOSE = 'appLogsVerbose';
+    const CFG_APP_PURGE_LOGS_ON_STARTUP = 'appPurgeLogsOnStartup';
     const CFG_LANG = 'lang';
-    const CFG_DEFAULT_LANG = 'defaultLang';
     const CFG_TIMEZONE = 'timezone';
-    const CFG_STATUS = 'status';
-    const CFG_HOSTNAME = 'hostname';
-    const CFG_BROWSER = 'browser';
     const CFG_NOTEPAD = 'notepad';
     
     const CFG_APP_VERSION = 'appVersion';
-    const CFG_APP_LOGS_VERBOSE = 'appLogsVerbose';
-    const CFG_APP_PURGE_LOGS_ON_STARTUP = 'appPurgeLogsOnStartup';
+    const CFG_DEFAULT_LANG = 'defaultLang';
+    const CFG_HOSTNAME = 'hostname';
+    const CFG_BROWSER = 'browser';
+    const CFG_STATUS = 'status';
+    const CFG_LAUNCH_STARTUP = 'launchStartup';
     
     const STATUS_ONLINE = 'online';
     const STATUS_OFFLINE = 'offline';
+    
+    const LAUNCH_STARTUP_ON = 'on';
+    const LAUNCH_STARTUP_OFF = 'off';
     
     const VERBOSE_SIMPLE = 0;
     const VERBOSE_REPORT = 1;
@@ -76,6 +80,11 @@ class Config
     public function getStatus()
     {
         return $this->raw[self::CFG_STATUS];
+    }
+    
+    public function getLaunchStartup()
+    {
+        return $this->raw[self::CFG_LAUNCH_STARTUP];
     }
 
     public function getBrowser()

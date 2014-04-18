@@ -13,16 +13,20 @@ class TplGitlist
         
         $result = '[git]' . PHP_EOL;
         $result .= 'client = \'' . $neardTools->getGit()->getExe() . '\'' . PHP_EOL;
-        $result .= 'repositories[] = \'\'' . PHP_EOL;
         
-        // Repositories
-        $refactorRepos = array();
-        foreach ($neardTools->getGit()->findRepos(true) as $repo) {
-            /*$repo = dirname($repo);
-            if (!in_array($repo, $refactorRepos)) {
+        $foundRepos = $neardTools->getGit()->findRepos(true);
+        if (!empty($foundRepos)) {
+            // Repositories
+            $refactorRepos = array();
+            foreach ($foundRepos as $repo) {
+                /*$repo = dirname($repo);
+                 if (!in_array($repo, $refactorRepos)) {
                 $refactorRepos[] = $repo;*/
                 $result .= 'repositories[] = \'' . Util::formatUnixPath($repo) . '\'' . PHP_EOL;
-            //}
+                //}
+            }
+        } else {
+            $result .= 'repositories[] = \'\'' . PHP_EOL;
         }
         
         // App

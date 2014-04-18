@@ -7,9 +7,12 @@ class ActionSwitchStatus
         global $neardConfig, $neardBins;
         
         if (isset($args[0]) && !empty($args[0])) {
+            Util::startLoading();
             $putOnline = $args[0] == Config::STATUS_ONLINE;
             
             $this->switchApache($putOnline);
+            $this->switchAlias($putOnline);
+            $this->switchVhosts($putOnline);
             $this->switchXlight($putOnline);
             $neardConfig->replace(Config::CFG_STATUS, $args[0]);
         }
@@ -17,19 +20,30 @@ class ActionSwitchStatus
     
     private function switchApache($putOnline)
     {
-        global $neardBins;
+        global $neardBs, $neardBins;
         
         $onlineContent = $neardBins->getApache()->getOnlineContent();
         $offlineContent = $neardBins->getApache()->getOfflineContent();
         
-        $result = file_get_contents($neardBins->getApache()->getConf());
+        $apacheConf = file_get_contents($neardBins->getApache()->getConf());
         if ($putOnline) {
-            $result = str_replace($offlineContent, $onlineContent, $result);
+            $apacheConf = str_replace($offlineContent, $onlineContent, $apacheConf);
         } else {
-            $result = str_replace($onlineContent, $offlineContent, $result);
+            $apacheConf = str_replace($onlineContent, $offlineContent, $apacheConf);
         }
-        
-        file_put_contents($neardBins->getApache()->getConf(), $result);
+        file_put_contents($neardBins->getApache()->getConf(), $apacheConf);
+    }
+    
+    private function switchAlias($putOnline)
+    {
+        global $neardBins;
+        $neardBins->getApache()->refreshAlias($putOnline);
+    }
+    
+    private function switchVhosts($putOnline)
+    {
+        global $neardBins;
+        $neardBins->getApache()->refreshVhosts($putOnline);
     }
     
     private function switchXlight($putOnline)

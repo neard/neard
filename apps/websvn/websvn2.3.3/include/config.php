@@ -1,7 +1,7 @@
 <?php
 
 
-$config->parentPath('C:/neard/svnrepos');
+$config->parentPath('V:/neard/www/github/neard/svnrepos');
 
 $config->addTemplatePath($locwebsvnreal.'/templates/calm/');
 $config->addTemplatePath($locwebsvnreal.'/templates/BlueGrey/');
@@ -19,5 +19,5 @@ set_time_limit(0);
 
 $config->expandTabsBy(8);
 
-$config->setTempDir('C:/neard/tmp');
+$config->setTempDir('V:/neard/www/github/neard/tmp');
 

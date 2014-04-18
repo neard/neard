@@ -88,7 +88,7 @@ class ActionAddAlias
                     $neardWinbinder->resetProgressBar($this->wbProgressBar);
                     break;
                 }
-                if (file_put_contents($neardBs->getAliasPath() . '/' . $aliasName . '.conf', Util::getAliasContent($aliasName, $aliasDest)) !== false) {
+                if (file_put_contents($neardBs->getAliasPath() . '/' . $aliasName . '.conf', $neardBins->getApache()->getAliasContent($aliasName, $aliasDest)) !== false) {
                     $neardWinbinder->incrProgressBar($this->wbProgressBar);
                     
                     $neardBins->getApache()->getService()->restart();

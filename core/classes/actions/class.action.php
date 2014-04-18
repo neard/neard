@@ -8,6 +8,7 @@ class Action
     const CHANGE_BROWSER = 'changeBrowser';
     const CHANGE_PORT = 'changePort';
     const CHECK_PORT = 'checkPort';
+    const CHECK_VERSION = 'checkVersion';
     const CLEAR_FOLDERS = 'clearFolders';
     const DEBUG_APACHE = 'debugApache';
     const DEBUG_MARIADB = 'debugMariadb';
@@ -15,6 +16,7 @@ class Action
     const EDIT_ALIAS = 'editAlias';
     const EDIT_VHOST = 'editVhost';
     const EXEC = 'exec';
+    const LAUNCH_STARTUP = 'launchStartup';
     const LOADING = 'loading';
     const QUIT = 'quit';
     const REFRESH_REPOS = 'refreshRepos';

@@ -28,7 +28,10 @@
       </div>
     </nav>
     
-    <div id="page-wrapper"><?php include 'tpls/hp.' . $neardHomepage->getPage() . '.php'; ?></div>
+    <div id="page-wrapper">
+        <?php include 'tpls/hp.latestversion.php'; ?>
+        <?php include 'tpls/hp.' . $neardHomepage->getPage() . '.php'; ?>
+    </div>
     
     <script type="text/javascript">
     $('.navbar-nav a[title]').tooltip({ html: true, placement: 'bottom' });

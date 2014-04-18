@@ -32,6 +32,10 @@ class Registry
     const SYSPATH_REG_SUBKEY = 'SYSTEM\CurrentControlSet\Control\Session Manager\Environment';
     const SYSPATH_REG_ENTRY = 'Path';
     
+    // Launch startup
+    const STARTUP_REG_SUBKEY = 'SOFTWARE\Microsoft\Windows\CurrentVersion\Run';
+    const STARTUP_REG_ENTRY = 'Neard';
+    
     private $latestError;
     
     public function __construct()
@@ -133,6 +137,12 @@ class Registry
         return $this->setValue($key, $subkey, $entry, $value, 'SetExpandedStringValue');
     }
     
+    public function deleteValue($key, $subkey, $entry)
+    {
+        $this->writeLog('delete');
+        return $this->setValue($key, $subkey, $entry, null, 'DeleteValue');
+    }
+    
     private function setValue($key, $subkey, $entry, $value, $type)
     {
         global $neardCore, $neardLang;
@@ -159,23 +169,31 @@ class Registry
     
         $scriptContent .= 'Dim objShell, objRegistry, objFso, objFile, outFile, entryValue, newValue' . PHP_EOL . PHP_EOL;
     
-        $scriptContent .= 'newValue = "' . str_replace('"', '""', $value) . '"' . PHP_EOL;
+        $scriptContent .= 'newValue = "' . (!empty($value) ? str_replace('"', '""', $value) : '') . '"' . PHP_EOL;
         $scriptContent .= 'outFile = "' . $resultFile . '"' . PHP_EOL;
         $scriptContent .= 'Set objShell = WScript.CreateObject("WScript.Shell")' . PHP_EOL;
         $scriptContent .= 'Set objRegistry = GetObject("winmgmts://./root/default:StdRegProv")' . PHP_EOL;
         $scriptContent .= 'Set objFso = CreateObject("Scripting.FileSystemObject")' . PHP_EOL;
         $scriptContent .= 'Set objFile = objFso.CreateTextFile(outFile, True)' . PHP_EOL . PHP_EOL;
-    
-        $scriptContent .= 'objRegistry.' . $type . ' HKEY, "' . $subkey . '", "' . $entry . '", newValue' . PHP_EOL;
+        
+        if (!empty($value)) {
+            $scriptContent .= 'objRegistry.' . $type . ' HKEY, "' . $subkey . '", "' . $entry . '", newValue' . PHP_EOL;
+        } else {
+            $scriptContent .= 'objRegistry.' . $type . ' HKEY, "' . $subkey . '", "' . $entry . '"' . PHP_EOL;
+        }
         $scriptContent .= 'If Err.Number <> 0 Then' . PHP_EOL;
         $scriptContent .= '    objFile.Write "' . self::REG_ERROR_ENTRY . '" & Err.Number & ": " & Err.Description' . PHP_EOL;
         $scriptContent .= 'Else' . PHP_EOL;
-        $scriptContent .= '    entryValue = objShell.RegRead("' . $strKey . '\\' . $subkey . '\\' . $entry . '")' . PHP_EOL;
-        $scriptContent .= '    If entryValue = newValue Then' . PHP_EOL;
-        $scriptContent .= '        objFile.Write "' . self::REG_NO_ERROR . '"' . PHP_EOL;
-        $scriptContent .= '    Else' . PHP_EOL;
-        $scriptContent .= '        objFile.Write "' . self::REG_ERROR_SET . '" & newValue' . PHP_EOL;
-        $scriptContent .= '    End If' . PHP_EOL;
+        if (!empty($value)) {
+            $scriptContent .= '    entryValue = objShell.RegRead("' . $strKey . '\\' . $subkey . '\\' . $entry . '")' . PHP_EOL;
+            $scriptContent .= '    If entryValue = newValue Then' . PHP_EOL;
+            $scriptContent .= '        objFile.Write "' . self::REG_NO_ERROR . '"' . PHP_EOL;
+            $scriptContent .= '    Else' . PHP_EOL;
+            $scriptContent .= '        objFile.Write "' . self::REG_ERROR_SET . '" & newValue' . PHP_EOL;
+            $scriptContent .= '    End If' . PHP_EOL;
+        } else {
+            $scriptContent .= '    objFile.Write "' . self::REG_NO_ERROR . '"' . PHP_EOL;
+        }
         $scriptContent .= 'End If' . PHP_EOL;
         $scriptContent .= 'objFile.Close' . PHP_EOL;
     

@@ -43,7 +43,7 @@ And many other features.
 
 Neard is [available on SourceForge](https://sourceforge.net/projects/neard/) :
 
-* Latest release : [Neard 1.0.5](https://sourceforge.net/projects/neard/files/Releases/1.0.5/neard-1.0.5.zip/download) (2014/04/06)
+* Latest release : [Neard 1.0.6](https://sourceforge.net/projects/neard/files/Releases/1.0.6/neard-1.0.6.zip/download) (2014/04/18)
 * [Patches](https://sourceforge.net/projects/neard/files/Patches/) : to migrate from older release to the latest.
 * [Addons](https://sourceforge.net/projects/neard/files/Addons/) : other versions of binaries (Apache, PHP, MYSQL, MariaDB, etc...).
 * [Tools](https://sourceforge.net/projects/neard/files/Tools/) : useful tools for Neard.
