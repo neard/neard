@@ -10,6 +10,7 @@ class TplAppXlight
     const ACTION_CHANGE_PORT = 'changeXlightPort';
     const ACTION_INSTALL_SERVICE = 'installXlightService';
     const ACTION_REMOVE_SERVICE = 'removeXlightService';
+    const ACTION_LAUNCH_STARTUP = 'launchStartupXlight';
     
     public static function process()
     {
@@ -87,6 +88,13 @@ class TplAppXlight
             false, get_called_class()
         );
         
+        $isLaunchStartup = $neardBins->getXlight()->getLaunchStartup() == BinXlight::LAUNCH_STARTUP_ON;
+        $tplLaunchStartup = TplApp::getActionMulti(
+            self::ACTION_LAUNCH_STARTUP, array($isLaunchStartup ? BinXlight::LAUNCH_STARTUP_OFF : BinXlight::LAUNCH_STARTUP_ON),
+            array($neardLang->getValue(Lang::MENU_LAUNCH_STARTUP_SERVICE), $isLaunchStartup ? TplAestan::GLYPH_CHECK : ''),
+            false, get_called_class()
+        );
+        
         //TODO: Manage services via Aestan or Win32Service ext ?
         $result = TplAestan::getItemActionServiceStart($neardBins->getXlight()->getService()->getName()) . PHP_EOL .
             TplAestan::getItemActionServiceStop($neardBins->getXlight()->getService()->getName()) . PHP_EOL .
@@ -99,7 +107,8 @@ class TplAppXlight
                 Action::CHECK_PORT, array($neardBins->getXlight()->getName(), $neardBins->getXlight()->getPort()),
                 array(sprintf($neardLang->getValue(Lang::MENU_CHECK_PORT), $neardBins->getXlight()->getPort()), TplAestan::GLYPH_LIGHT)
             ) . PHP_EOL .
-            $tplChangePort[TplApp::SECTION_CALL] . PHP_EOL;
+            $tplChangePort[TplApp::SECTION_CALL] . PHP_EOL .
+            $tplLaunchStartup[TplApp::SECTION_CALL] . PHP_EOL;
         
         $isInstalled = $neardBins->getXlight()->getService()->isInstalled();
         if (!$isInstalled) {
@@ -122,14 +131,15 @@ class TplAppXlight
             $tplRemoveService[TplApp::SECTION_CONTENT] . PHP_EOL;
         }
         
-        $result .= $tplChangePort[TplApp::SECTION_CONTENT] . PHP_EOL;
+        $result .= $tplChangePort[TplApp::SECTION_CONTENT] . PHP_EOL .
+            $tplLaunchStartup[TplApp::SECTION_CONTENT] . PHP_EOL;
     
         return $result;
     }
     
     public static function getActionChangeXlightPort()
     {
-        global $neardLang, $neardBins;
+        global $neardBins;
     
         return TplApp::getActionRun(Action::CHANGE_PORT, array($neardBins->getXlight()->getName())) . PHP_EOL .
             TplAppReload::getActionReload();
@@ -144,6 +154,14 @@ class TplAppXlight
     public static function getActionRemoveXlightService()
     {
         return TplApp::getActionRun(Action::SERVICE, array(BinXlight::SERVICE_NAME, ActionService::REMOVE)) . PHP_EOL .
+            TplAppReload::getActionReload();
+    }
+    
+    public static function getActionLaunchStartupXlight($launchStartup)
+    {
+        global $neardBins;
+        
+        return TplApp::getActionRun(Action::LAUNCH_STARTUP_SERVICE, array($neardBins->getXlight()->getName(), $launchStartup)) . PHP_EOL .
             TplAppReload::getActionReload();
     }
     

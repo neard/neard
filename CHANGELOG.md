@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.7 (2014/05/20)
+
+* Restart item menu ([Issue #46](https://github.com/crazy-max/neard/issues/46))
+* Node.js - npm fail with any command ([Issue #44](https://github.com/crazy-max/neard/issues/44))
+* Manage and disable a service ([Issue #43](https://github.com/crazy-max/neard/issues/43)) 
+
 ## 1.0.6 (2014/04/18)
 
 * Error window when switching status (online/offline) ([Issue #40](https://github.com/crazy-max/neard/issues/40))

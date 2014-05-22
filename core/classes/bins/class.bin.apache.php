@@ -9,6 +9,10 @@ class BinApache
     const CFG_EXE = 'apacheExe';
     const CFG_CONF = 'apacheConf';
     const CFG_PORT = 'apachePort';
+    const CFG_LAUNCH_STARTUP = 'apacheLaunchStartup';
+    
+    const LAUNCH_STARTUP_ON = 'on';
+    const LAUNCH_STARTUP_OFF = 'off';
     
     const CMD_VERSION_NUMBER = '-v';
     const CMD_COMPILE_SETTINGS = '-V';
@@ -22,6 +26,7 @@ class BinApache
     private $version;
     private $service;
     private $port;
+    private $launchStartup;
     
     private $rootPath;
     private $currentPath;
@@ -48,6 +53,7 @@ class BinApache
         $this->exe = $neardConfig->getRaw(self::CFG_EXE);
         $this->conf = $neardConfig->getRaw(self::CFG_CONF);
         $this->port = $neardConfig->getRaw(self::CFG_PORT);
+        $this->launchStartup = $neardConfig->getRaw(self::CFG_LAUNCH_STARTUP);
         
         $this->rootPath = $rootPath == null ? $this->rootPath : $rootPath;
         $this->currentPath = $this->rootPath . '/apache' . $this->version;
@@ -506,6 +512,11 @@ class BinApache
     public function getPort()
     {
         return $this->port;
+    }
+    
+    public function getLaunchStartup()
+    {
+        return $this->launchStartup;
     }
     
     public function getRootPath()

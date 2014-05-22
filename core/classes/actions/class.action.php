@@ -17,6 +17,8 @@ class Action
     const EDIT_VHOST = 'editVhost';
     const EXEC = 'exec';
     const LAUNCH_STARTUP = 'launchStartup';
+    const LAUNCH_STARTUP_SERVICE = 'launchStartupService';
+    const MANUAL_RESTART = 'manualRestart';
     const LOADING = 'loading';
     const QUIT = 'quit';
     const REFRESH_REPOS = 'refreshRepos';

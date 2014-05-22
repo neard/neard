@@ -10,6 +10,10 @@ class BinMariadb
     const CFG_ADMIN = 'mariadbAdmin';
     const CFG_CONF = 'mariadbConf';
     const CFG_PORT = 'mariadbPort';
+    const CFG_LAUNCH_STARTUP = 'mariadbLaunchStartup';
+    
+    const LAUNCH_STARTUP_ON = 'on';
+    const LAUNCH_STARTUP_OFF = 'off';
     
     const CMD_VERSION = '--version';
     const CMD_VARIABLES = 'variables';
@@ -19,6 +23,7 @@ class BinMariadb
     private $version;
     private $service;
     private $port;
+    private $launchStartup;
     
     private $rootPath;
     private $currentPath;
@@ -46,6 +51,7 @@ class BinMariadb
         $this->admin = $neardConfig->getRaw(self::CFG_ADMIN);
         $this->conf = $neardConfig->getRaw(self::CFG_CONF);
         $this->port = $neardConfig->getRaw(self::CFG_PORT);
+        $this->launchStartup = $neardConfig->getRaw(self::CFG_LAUNCH_STARTUP);
         
         $this->rootPath = $rootPath == null ? $this->rootPath : $rootPath;
         $this->currentPath = $this->rootPath . '/mariadb' . $this->version;
@@ -301,6 +307,11 @@ class BinMariadb
     public function getPort()
     {
         return $this->port;
+    }
+    
+    public function getLaunchStartup()
+    {
+        return $this->launchStartup;
     }
 
     public function getRootPath()

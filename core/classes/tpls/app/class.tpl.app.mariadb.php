@@ -11,6 +11,7 @@ class TplAppMariadb
     const ACTION_CHANGE_PORT = 'changeMariadbPort';
     const ACTION_INSTALL_SERVICE = 'installMariadbService';
     const ACTION_REMOVE_SERVICE = 'removeMariadbService';
+    const ACTION_LAUNCH_STARTUP = 'launchStartupMariadb';
     
     public static function process()
     {
@@ -95,6 +96,13 @@ class TplAppMariadb
             false, get_called_class()
         );
         
+        $isLaunchStartup = $neardBins->getMariadb()->getLaunchStartup() == BinMariadb::LAUNCH_STARTUP_ON;
+        $tplLaunchStartup = TplApp::getActionMulti(
+            self::ACTION_LAUNCH_STARTUP, array($isLaunchStartup ? BinMariadb::LAUNCH_STARTUP_OFF : BinMariadb::LAUNCH_STARTUP_ON),
+            array($neardLang->getValue(Lang::MENU_LAUNCH_STARTUP_SERVICE), $isLaunchStartup ? TplAestan::GLYPH_CHECK : ''),
+            false, get_called_class()
+        );
+        
         //TODO: Manage services via Aestan or Win32Service ext ?
         $result = TplAestan::getItemActionServiceStart($neardBins->getMariadb()->getService()->getName()) . PHP_EOL .
             TplAestan::getItemActionServiceStop($neardBins->getMariadb()->getService()->getName()) . PHP_EOL .
@@ -107,7 +115,8 @@ class TplAppMariadb
                 Action::CHECK_PORT, array($neardBins->getMariadb()->getName(), $neardBins->getMariadb()->getPort()),
                 array(sprintf($neardLang->getValue(Lang::MENU_CHECK_PORT), $neardBins->getMariadb()->getPort()), TplAestan::GLYPH_LIGHT)
             ) . PHP_EOL .
-            $tplChangePort[TplApp::SECTION_CALL] . PHP_EOL;
+            $tplChangePort[TplApp::SECTION_CALL] . PHP_EOL .
+            $tplLaunchStartup[TplApp::SECTION_CALL] . PHP_EOL;
             
         $isInstalled = $neardBins->getMariadb()->getService()->isInstalled();
         if (!$isInstalled) {
@@ -130,7 +139,8 @@ class TplAppMariadb
             $tplRemoveService[TplApp::SECTION_CONTENT] . PHP_EOL;
         }
         
-        $result .= $tplChangePort[TplApp::SECTION_CONTENT] . PHP_EOL;
+        $result .= $tplChangePort[TplApp::SECTION_CONTENT] . PHP_EOL .
+            $tplLaunchStartup[TplApp::SECTION_CONTENT] . PHP_EOL;
     
         return $result;
     }
@@ -170,6 +180,14 @@ class TplAppMariadb
     public static function getActionRemoveMariadbService()
     {
         return TplApp::getActionRun(Action::SERVICE, array(BinMariadb::SERVICE_NAME, ActionService::REMOVE)) . PHP_EOL .
+            TplAppReload::getActionReload();
+    }
+    
+    public static function getActionLaunchStartupMariadb($launchStartup)
+    {
+        global $neardBins;
+    
+        return TplApp::getActionRun(Action::LAUNCH_STARTUP_SERVICE, array($neardBins->getMariadb()->getName(), $launchStartup)) . PHP_EOL .
             TplAppReload::getActionReload();
     }
     
