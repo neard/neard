@@ -61,6 +61,7 @@ class Lang
     const MENU_ERROR_LOGS = 'menuErrorLogs';
     const MENU_INSTALL_SERVICE = 'menuInstallService';
     const MENU_LAUNCH_STARTUP = 'menuLaunchStartup';
+    const MENU_LAUNCH_STARTUP_SERVICE = 'menuLaunchStartupService';
     const MENU_LOCALHOST = 'menuLocalhost';
     const MENU_LOGS = 'menuLogs';
     const MENU_PUT_OFFLINE = 'menuPutOffline';
@@ -397,6 +398,7 @@ class Lang
             self::MENU_ERROR_LOGS,
             self::MENU_INSTALL_SERVICE,
             self::MENU_LAUNCH_STARTUP,
+            self::MENU_LAUNCH_STARTUP_SERVICE,
             self::MENU_LOCALHOST,
             self::MENU_LOGS,
             self::MENU_PUT_OFFLINE,

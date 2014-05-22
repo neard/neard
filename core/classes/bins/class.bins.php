@@ -88,4 +88,24 @@ class Bins
             BinXlight::SERVICE_NAME => $this->getXlight()->getService(),
         );
     }
+    
+    public function getServicesStartup()
+    {
+        $result = array();
+        
+        if ($this->getApache()->getLaunchStartup() == BinApache::LAUNCH_STARTUP_ON) {
+            $result[BinApache::SERVICE_NAME] = $this->getApache()->getService();
+        }
+        if ($this->getMysql()->getLaunchStartup() == BinMysql::LAUNCH_STARTUP_ON) {
+            $result[BinMysql::SERVICE_NAME] = $this->getMysql()->getService();
+        }
+        if ($this->getMariadb()->getLaunchStartup() == BinMariadb::LAUNCH_STARTUP_ON) {
+            $result[BinMariadb::SERVICE_NAME] = $this->getMariadb()->getService();
+        }
+        if ($this->getXlight()->getLaunchStartup() == BinXlight::LAUNCH_STARTUP_ON) {
+            $result[BinXlight::SERVICE_NAME] = $this->getXlight()->getService();
+        }
+        
+        return $result;
+    }
 }

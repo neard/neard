@@ -19,6 +19,7 @@ class TplAppApache
     const ACTION_EDIT_ALIAS = 'editAlias';
     const ACTION_ADD_VHOST = 'addVhost';
     const ACTION_EDIT_VHOST = 'editVhost';
+    const ACTION_LAUNCH_STARTUP = 'launchStartupApache';
     
     public static function process()
     {
@@ -113,6 +114,13 @@ class TplAppApache
             false, get_called_class()
         );
         
+        $isLaunchStartup = $neardBins->getApache()->getLaunchStartup() == BinApache::LAUNCH_STARTUP_ON;
+        $tplLaunchStartup = TplApp::getActionMulti(
+            self::ACTION_LAUNCH_STARTUP, array($isLaunchStartup ? BinApache::LAUNCH_STARTUP_OFF : BinApache::LAUNCH_STARTUP_ON),
+            array($neardLang->getValue(Lang::MENU_LAUNCH_STARTUP_SERVICE), $isLaunchStartup ? TplAestan::GLYPH_CHECK : ''),
+            false, get_called_class()
+        );
+        
         //TODO: Manage services via Aestan or Win32Service ext ?
         $result = TplAestan::getItemActionServiceStart($neardBins->getApache()->getService()->getName()) . PHP_EOL .
             TplAestan::getItemActionServiceStop($neardBins->getApache()->getService()->getName()) . PHP_EOL .
@@ -125,7 +133,8 @@ class TplAppApache
                 Action::CHECK_PORT, array($neardBins->getApache()->getName(), $neardBins->getApache()->getPort()),
                 array(sprintf($neardLang->getValue(Lang::MENU_CHECK_PORT), $neardBins->getApache()->getPort()), TplAestan::GLYPH_LIGHT)
             ) . PHP_EOL .
-            $tplChangePort[TplApp::SECTION_CALL] . PHP_EOL;
+            $tplChangePort[TplApp::SECTION_CALL] . PHP_EOL .
+            $tplLaunchStartup[TplApp::SECTION_CALL] . PHP_EOL;
         
         $isInstalled = $neardBins->getApache()->getService()->isInstalled();
         if (!$isInstalled) {
@@ -148,7 +157,8 @@ class TplAppApache
                 $tplRemoveService[TplApp::SECTION_CONTENT] . PHP_EOL;
         }
         
-        $result .= $tplChangePort[TplApp::SECTION_CONTENT] . PHP_EOL;
+        $result .= $tplChangePort[TplApp::SECTION_CONTENT] . PHP_EOL .
+            $tplLaunchStartup[TplApp::SECTION_CONTENT] . PHP_EOL;
         
         return $result;
     }
@@ -330,5 +340,13 @@ class TplAppApache
     {
         return TplApp::getActionRun(Action::EDIT_VHOST, array($vhost)) . PHP_EOL .
         TplAppReload::getActionReload();
+    }
+    
+    public static function getActionLaunchStartupApache($launchStartup)
+    {
+        global $neardBins;
+    
+        return TplApp::getActionRun(Action::LAUNCH_STARTUP_SERVICE, array($neardBins->getApache()->getName(), $launchStartup)) . PHP_EOL .
+            TplAppReload::getActionReload();
     }
 }

@@ -10,6 +10,10 @@ class BinMysql
     const CFG_ADMIN = 'mysqlAdmin';
     const CFG_CONF = 'mysqlConf';
     const CFG_PORT = 'mysqlPort';
+    const CFG_LAUNCH_STARTUP = 'mysqlLaunchStartup';
+    
+    const LAUNCH_STARTUP_ON = 'on';
+    const LAUNCH_STARTUP_OFF = 'off';
     
     const CMD_VERSION = '--version';
     const CMD_VARIABLES = 'variables';
@@ -19,6 +23,7 @@ class BinMysql
     private $version;
     private $service;
     private $port;
+    private $launchStartup;
     
     private $rootPath;
     private $currentPath;
@@ -46,6 +51,7 @@ class BinMysql
         $this->admin = $neardConfig->getRaw(self::CFG_ADMIN);
         $this->conf = $neardConfig->getRaw(self::CFG_CONF);
         $this->port = $neardConfig->getRaw(self::CFG_PORT);
+        $this->launchStartup = $neardConfig->getRaw(self::CFG_LAUNCH_STARTUP);
         
         $this->rootPath = $rootPath == null ? $this->rootPath : $rootPath;
         $this->currentPath = $this->rootPath . '/mysql' . $this->version;
@@ -308,6 +314,11 @@ class BinMysql
     public function getPort()
     {
         return $this->port;
+    }
+    
+    public function getLaunchStartup()
+    {
+        return $this->launchStartup;
     }
 
     public function getRootPath()

@@ -15,7 +15,7 @@ class ActionStartup
         $this->neardSplash = new Splash();
         $this->neardSplash->init(
             $neardLang->getValue(Lang::STARTUP),
-            self::GAUGE_SERVICES * count($neardBins->getServices()) + self::GAUGE_OTHERS,
+            self::GAUGE_SERVICES * count($neardBins->getServicesStartup()) + self::GAUGE_OTHERS + 1,
             sprintf($neardLang->getValue(Lang::STARTUP_STARTING_TEXT), APP_TITLE . ' ' . $neardConfig->getAppVersion()),
             Splash::IMG_STARTING
         );
@@ -215,7 +215,7 @@ class ActionStartup
         
         // Services
         if (!$restart) {
-            foreach ($neardBins->getServices() as $sName => $service) {
+            foreach ($neardBins->getServicesStartup() as $sName => $service) {
                 $serviceError = '';
                 $serviceRestart = false;
                 $startServiceTime = Util::getMicrotime();
@@ -300,7 +300,7 @@ class ActionStartup
                 }
             }
         } else {
-            $this->neardSplash->incrProgressBar(self::GAUGE_SERVICES * count($neardBins->getServices()));
+            $this->neardSplash->incrProgressBar(self::GAUGE_SERVICES * count($neardBins->getServicesStartup()));
         }
         
         // Actions if everything OK

@@ -2,7 +2,7 @@
 
 <username "root">
 AllowNoPassword:yes
-VirtualPath: "/|V:\neard\www\github\neard\www\|RWCLADNS"
+VirtualPath: "/|C:\neard\www\|RWCLADNS"
 </username>
 
 </virtualserver>

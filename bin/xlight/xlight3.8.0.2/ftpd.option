@@ -1,8 +1,8 @@
 RemoteAdminIPPort:"0.0.0.0:0"
 LogCommandType:"both"
 EnableLogtoFile:yes
-LogFilename:"V:\neard\www\github\neard\logs\xlight_session.log"
+LogFilename:"C:\neard\logs\xlight_session.log"
 EnableErrorLogtoFile:yes
-ErrorLogFilename:"V:\neard\www\github\neard\logs\xlight_error.log"
-XferLogSyslogServer:"V:\neard\www\github\neard\logs\xlight_transfer.log"
+ErrorLogFilename:"C:\neard\logs\xlight_error.log"
+XferLogSyslogServer:"C:\neard\logs\xlight_transfer.log"
 AllowedIPList:"127.0.0.1|::1"

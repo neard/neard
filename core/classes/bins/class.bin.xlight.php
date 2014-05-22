@@ -11,11 +11,16 @@ class BinXlight
     const CFG_CONF_HOSTS = 'xlightConfHosts';
     const CFG_CONF_USERS = 'xlightConfUsers';
     const CFG_PORT = 'xlightPort';
+    const CFG_LAUNCH_STARTUP = 'xlightLaunchStartup';
+    
+    const LAUNCH_STARTUP_ON = 'on';
+    const LAUNCH_STARTUP_OFF = 'off';
     
     private $name;
     private $version;
     private $service;
     private $port;
+    private $launchStartup;
     
     private $rootPath;
     private $currentPath;
@@ -46,6 +51,7 @@ class BinXlight
         $this->confHosts = $neardConfig->getRaw(self::CFG_CONF_HOSTS);
         $this->confUsers = $neardConfig->getRaw(self::CFG_CONF_USERS);
         $this->port = $neardConfig->getRaw(self::CFG_PORT);
+        $this->launchStartup = $neardConfig->getRaw(self::CFG_LAUNCH_STARTUP);
         
         $this->rootPath = $rootPath == null ? $this->rootPath : $rootPath;
         $this->currentPath = $this->rootPath . '/xlight' . $this->version;
@@ -234,6 +240,11 @@ class BinXlight
     public function getPort()
     {
         return $this->port;
+    }
+    
+    public function getLaunchStartup()
+    {
+        return $this->launchStartup;
     }
     
     public function getRootPath()
