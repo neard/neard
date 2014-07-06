@@ -184,8 +184,7 @@ class Bootstrap
     public function getLocalUrl($request = null)
     {
         global $neardBins;
-        return 'http://' . (isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost') .
-            ($neardBins->getApache()->getPort() != 80 ? ':' . $neardBins->getApache()->getPort() : '') .
+        return 'http://localhost' . ($neardBins->getApache()->getPort() != 80 ? ':' . $neardBins->getApache()->getPort() : '') .
             (!empty($request) ? '/' . $request : '');
     }
     

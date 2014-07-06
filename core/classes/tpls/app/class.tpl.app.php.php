@@ -182,7 +182,7 @@ class TplAppPhp
     {
         global $neardBins;
         
-        $switch = $enabled ? ActionSwitchPhpExtension::SWITCH_OFF : ActionSwitchPhpExtension::SWITCH_ON;
+        $switch = $enabled ? ActionSwitchPhpParam::SWITCH_OFF : ActionSwitchPhpParam::SWITCH_ON;
         return TplApp::getActionRun(Action::SWITCH_PHP_PARAM, array($setting, $switch)) . PHP_EOL .
             TplAppReload::getActionReload() . PHP_EOL .
             TplService::getActionRestart(BinApache::SERVICE_NAME) . PHP_EOL;
@@ -194,10 +194,10 @@ class TplAppPhp
         $items = '';
         $actions = '';
     
-        foreach ($neardBins->getPhp()->getExtensions() as $extension => $enabled) {
+        foreach ($neardBins->getPhp()->getExtensions() as $extension => $switch) {
             $tplSwitchPhpExtension = TplApp::getActionMulti(
-                self::ACTION_SWITCH_EXTENSION, array($extension, $enabled),
-                array($extension, ($enabled == ActionSwitchPhpExtension::SWITCH_ON ? TplAestan::GLYPH_CHECK : '')),
+                self::ACTION_SWITCH_EXTENSION, array($extension, $switch),
+                array($extension, ($switch == ActionSwitchPhpExtension::SWITCH_ON ? TplAestan::GLYPH_CHECK : '')),
                 false, get_called_class()
             );
     
@@ -211,14 +211,14 @@ class TplAppPhp
         return $items . $actions;
     }
     
-    public static function getActionSwitchPhpExtension($extension, $enabled)
+    public static function getActionSwitchPhpExtension($extension, $switch)
     {
         global $neardBins;
     
-        $switch = $enabled ? ActionSwitchApacheModule::SWITCH_OFF : ActionSwitchApacheModule::SWITCH_ON;
+        $switch = $switch == ActionSwitchPhpExtension::SWITCH_OFF ? ActionSwitchPhpExtension::SWITCH_ON : $switch;
         return TplApp::getActionRun(Action::SWITCH_PHP_EXTENSION, array($extension, $switch)) . PHP_EOL .
-        TplAppReload::getActionReload() . PHP_EOL .
-        TplService::getActionRestart(BinApache::SERVICE_NAME) . PHP_EOL;
+            TplService::getActionRestart(BinApache::SERVICE_NAME) . PHP_EOL .
+            TplAppReload::getActionReload() . PHP_EOL;
     }
     
 }
