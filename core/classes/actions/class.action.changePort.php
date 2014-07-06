@@ -24,7 +24,7 @@ class ActionChangePort
         if (isset($args[0]) && !empty($args[0])) {
             $this->currentPort = CURRENT_APACHE_PORT;
             $this->bin = $neardBins->getApache();
-            $this->cntProcessActions = 5;
+            $this->cntProcessActions = 6;
             if ($args[0] == $neardBins->getMysql()->getName()) {
                 $this->currentPort = CURRENT_MYSQL_PORT;
                 $this->bin = $neardBins->getMysql();

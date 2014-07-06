@@ -223,10 +223,10 @@ class TplAppApache
         $items = '';
         $actions = '';
     
-        foreach ($neardBins->getApache()->getModulesFromConf() as $module => $enabled) {
+        foreach ($neardBins->getApache()->getModulesFromConf() as $module => $switch) {
             $tplSwitchApacheModule = TplApp::getActionMulti(
-                self::ACTION_SWITCH_MODULE, array($module, $enabled),
-                array($module, ($enabled == ActionSwitchApacheModule::SWITCH_ON ? TplAestan::GLYPH_CHECK : '')),
+                self::ACTION_SWITCH_MODULE, array($module, $switch),
+                array($module, ($switch == ActionSwitchApacheModule::SWITCH_ON ? TplAestan::GLYPH_CHECK : '')),
                 false, get_called_class()
             );
             
@@ -240,14 +240,14 @@ class TplAppApache
         return $items . $actions;
     }
     
-    public static function getActionSwitchApacheModule($module, $enabled)
+    public static function getActionSwitchApacheModule($module, $switch)
     {
         global $neardBins;
     
-        $switch = $enabled ? ActionSwitchApacheModule::SWITCH_OFF : ActionSwitchApacheModule::SWITCH_ON;
+        $switch = $switch == ActionSwitchApacheModule::SWITCH_OFF ? ActionSwitchApacheModule::SWITCH_ON : $switch;
         return TplApp::getActionRun(Action::SWITCH_APACHE_MODULE, array($module, $switch)) . PHP_EOL .
-            TplAppReload::getActionReload() . PHP_EOL .
-            TplService::getActionRestart(BinApache::SERVICE_NAME) . PHP_EOL;
+            TplService::getActionRestart(BinApache::SERVICE_NAME) . PHP_EOL .
+            TplAppReload::getActionReload() . PHP_EOL;
     }
     
     public static function getMenuApacheAlias()

@@ -126,6 +126,12 @@ class BinApache
             }
             $neardWinbinder->incrProgressBar($wbProgressBar);
             
+            // .htaccess
+            Util::replaceInFile($neardBs->getWwwPath() . '/.htaccess', array(
+                '/(.*)\/localhost(.*)/' => '{{1}}/localhost' . ($port != 80 ? ':' . $port : '') . '/$1 [QSA,R=301,L]',
+            ));
+            $neardWinbinder->incrProgressBar($wbProgressBar);
+            
             return true;
         }
         

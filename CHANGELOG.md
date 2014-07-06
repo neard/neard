@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.8 (2014/07/06)
+
+* Bug switching php extension or apache module ([Issue #49](https://github.com/crazy-max/neard/issues/49))
+* Port other than 80 issue ([Issue #48](https://github.com/crazy-max/neard/issues/48))
+* XLight service disable by default
+
 ## 1.0.7 (2014/05/20)
 
 * Restart item menu ([Issue #46](https://github.com/crazy-max/neard/issues/46))

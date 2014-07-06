@@ -14,6 +14,7 @@ class ActionService
     public function __construct($args)
     {
         global $neardBs, $neardBins;
+        Util::startLoading();
         
         // reload bins
         $neardBins->reload();
@@ -36,6 +37,10 @@ class ActionService
                 $name = $neardBins->getMariadb()->getName();
                 $service = $neardBins->getMariadb()->getService();
                 $port = $neardBins->getMariadb()->getPort();
+            } elseif ($sName == BinXlight::SERVICE_NAME) {
+                $name = $neardBins->getXlight()->getName();
+                $service = $neardBins->getXlight()->getService();
+                $port = $neardBins->getXlight()->getPort();
             }
             
             if (!empty($port) && !empty($service) && $service instanceof Win32Service) {
@@ -56,6 +61,8 @@ class ActionService
                 }
             }
         }
+        
+        Util::stopLoading();
     }
     
     private function create($service)
@@ -117,7 +124,7 @@ class ActionService
         if ($isPortInUse === false) {
             if (!$service->isInstalled()) {
                 $service->create();
-                if ($service->start() !== true) {
+                if ($service->start()) {
                     $neardWinbinder->messageBoxInfo(
                         sprintf($neardLang->getValue(Lang::SERVICE_INSTALLED), $name, $service->getName(), $port),
                         $boxTitle);
