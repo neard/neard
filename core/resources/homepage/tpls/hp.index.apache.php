@@ -70,6 +70,18 @@
 </div>
 <div class="row">
   <div class="col-lg-12">
+    <h3><i class="fa fa-folder"></i> <?php echo $neardLang->getValue(Lang::MENU_WWW_DIRECTORY); ?> <small></small></h3>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-12">
+  <?php foreach($neardBins->getApache()->getWwwDirectories() as $wwwDirectory) {
+    ?><div style="float:left;padding:3px;"><a class="btn btn-default" target="_blank" href="<?php echo $neardBs->getLocalUrl($wwwDirectory); ?>"><span class="fa fa-link"></span> <?php echo $wwwDirectory; ?></a></div><?php
+  } ?>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-12">
     <h3><i class="fa fa-globe"></i> <?php echo $neardLang->getValue(Lang::VIRTUAL_HOSTS); ?> <small></small></h3>
   </div>
 </div>

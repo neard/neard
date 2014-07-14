@@ -132,9 +132,4 @@ class Config
             '&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted';
     }
     
-    public function getBitcoinAddress()
-    {
-        return '1BdhK62JY2xQKXjmvLLA8Dpbit1uJ5JkrC';
-    }
-    
 }

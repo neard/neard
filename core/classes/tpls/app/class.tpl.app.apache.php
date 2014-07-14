@@ -96,11 +96,7 @@ class TplAppApache
     public static function getActionSwitchApacheVersion($version)
     {
         global $neardBins;
-    
-        //TODO: Manage services via Aestan or Win32Service ext ?
-        return /*TplService::getActionDelete(BinApache::SERVICE_NAME) . PHP_EOL .
-            TplAestan::getActionServicesClose() . PHP_EOL .*/
-            TplApp::getActionRun(Action::SWITCH_VERSION, array($neardBins->getApache()->getName(), $version)) . PHP_EOL .
+        return TplApp::getActionRun(Action::SWITCH_VERSION, array($neardBins->getApache()->getName(), $version)) . PHP_EOL .
             TplApp::getActionExec() . PHP_EOL;
     }
     
@@ -121,13 +117,9 @@ class TplAppApache
             false, get_called_class()
         );
         
-        //TODO: Manage services via Aestan or Win32Service ext ?
         $result = TplAestan::getItemActionServiceStart($neardBins->getApache()->getService()->getName()) . PHP_EOL .
             TplAestan::getItemActionServiceStop($neardBins->getApache()->getService()->getName()) . PHP_EOL .
             TplAestan::getItemActionServiceRestart($neardBins->getApache()->getService()->getName()) . PHP_EOL .
-            /*TplService::getItemStart(BinApache::SERVICE_NAME) . PHP_EOL .
-            TplService::getItemStop(BinApache::SERVICE_NAME) . PHP_EOL .
-            TplService::getItemRestart(BinApache::SERVICE_NAME) . PHP_EOL .*/
             TplAestan::getItemSeparator() . PHP_EOL .
             TplApp::getActionRun(
                 Action::CHECK_PORT, array($neardBins->getApache()->getName(), $neardBins->getApache()->getPort()),
@@ -244,7 +236,7 @@ class TplAppApache
     {
         global $neardBins;
     
-        $switch = $switch == ActionSwitchApacheModule::SWITCH_OFF ? ActionSwitchApacheModule::SWITCH_ON : $switch;
+        $switch = $switch == ActionSwitchApacheModule::SWITCH_OFF ? ActionSwitchApacheModule::SWITCH_ON : ActionSwitchApacheModule::SWITCH_OFF;
         return TplApp::getActionRun(Action::SWITCH_APACHE_MODULE, array($module, $switch)) . PHP_EOL .
             TplService::getActionRestart(BinApache::SERVICE_NAME) . PHP_EOL .
             TplAppReload::getActionReload() . PHP_EOL;

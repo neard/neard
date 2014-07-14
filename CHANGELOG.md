@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.0.9 (2014/07/14)
+
+* Bug check MySQL and MariaDB ports ([Issue #56](https://github.com/crazy-max/neard/issues/56))
+* Add Adminer application ([Issue #55](https://github.com/crazy-max/neard/issues/55))
+* Failed to load PHP extensions from config file ([Issue #53](https://github.com/crazy-max/neard/issues/53))
+* Restart all services restarts Neard ([Issue #52](https://github.com/crazy-max/neard/issues/52))
+* Display www directories on homepage ([Issue #50](https://github.com/crazy-max/neard/issues/50))
+* Bug switching php extension or apache module ([Issue #49](https://github.com/crazy-max/neard/issues/49))
+* Addons : PHP 5.4.30, PHP 5.5.14 ([Issue #34](https://github.com/crazy-max/neard/issues/34))
+* Remove Bitcoin donation
+* Remove comments to manage services via Aestan or Win32Service ext
+
 ## 1.0.8 (2014/07/06)
 
 * Bug switching php extension or apache module ([Issue #49](https://github.com/crazy-max/neard/issues/49))

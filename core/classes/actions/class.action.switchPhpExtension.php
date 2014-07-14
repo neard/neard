@@ -23,7 +23,7 @@ class ActionSwitchPhpExtension
             
             $phpiniContentOr = file_get_contents($neardBins->getPhp()->getConf());
             if ($phpiniContent == $phpiniContentOr && $extExists) {
-                $extsIni = $neardBins->getPhp()->getExtensionsFromIni();
+                $extsIni = $neardBins->getPhp()->getExtensionsFromConf();
                 $latestExt = (end($extsIni) == '0' ? ';' : '') . 'extension=' . key($extsIni);
                 $phpiniContent = str_replace(
                     $latestExt,

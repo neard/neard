@@ -369,6 +369,24 @@ class BinApache
         return $result;
     }
     
+    public function getWwwDirectories()
+    {
+        global $neardBs;
+        $result = array();
+    
+        if ($handle = opendir($neardBs->getWwwPath())) {
+            while (false !== ($file = readdir($handle))) {
+                if ($file != "." && $file != ".." && is_dir($neardBs->getWwwPath() . '/' . $file)) {
+                    $result[] = $file;
+                }
+            }
+            closedir($handle);
+        }
+    
+        ksort($result);
+        return $result;
+    }
+    
     public function getCmdLineOutput($cmd)
     {
         $result = array(

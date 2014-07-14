@@ -12,11 +12,9 @@ class Lang
     const ALIASES = 'aliases';
     const APPS = 'apps';
     const BINS = 'bins';
-    const BITCOIN = 'bitcoin';
     const CHANGELOG = 'changelog';
     const DEBUG = 'debug';
     const DONATE = 'donate';
-    const DONATE_BITCOIN = 'donateBitcoin';
     const DONATE_VIA = 'donateVia';
     const DOWNLOAD = 'download';
     const ERROR = 'error';
@@ -94,6 +92,7 @@ class Lang
     const PHPMYADMIN = 'phpmyadmin';
     const WEBGRIND = 'webgrind';
     const WEBSVN = 'websvn';
+    const ADMINER = 'adminer';
     
     // Tools
     const CONSOLE = 'console';
@@ -349,11 +348,9 @@ class Lang
             self::ALIASES,
             self::APPS,
             self::BINS,
-            self::BITCOIN,
             self::CHANGELOG,
             self::DEBUG,
             self::DONATE,
-            self::DONATE_BITCOIN,
             self::DONATE_VIA,
             self::DOWNLOAD,
             self::ERROR,
@@ -431,6 +428,7 @@ class Lang
             self::PHPMYADMIN,
             self::WEBGRIND,
             self::WEBSVN,
+            self::ADMINER,
             
             // Tools
             self::CONSOLE,

@@ -109,6 +109,12 @@ class BinMariadb
                 '/^\$mariadbPort\s=\s(\d+)/' => '$mariadbPort = ' . $port . ';'
             ));
             $neardWinbinder->incrProgressBar($wbProgressBar);
+            
+            // config.php (adminer)
+            Util::replaceInFile($neardApps->getAdminer()->getConf(), array(
+                '/^\$mariadbPort\s=\s(\d+)/' => '$mariadbPort = ' . $port . ';'
+            ));
+            $neardWinbinder->incrProgressBar($wbProgressBar);
     
             // my.ini
             Util::replaceInFile($this->getConf(), array(
@@ -170,7 +176,7 @@ class BinMariadb
                         return true;
                     }
                 }
-                mysql_close($dbLink);
+                mysqli_close($dbLink);
             } else {
                 Util::logDebug($this->getName() . ' port ' . $port . ' is used by another application');
                 if ($showWindow) {

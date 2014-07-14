@@ -17,6 +17,7 @@ Neard is an Integrated Web Development Tools environment combining :
 * **phpMyAdmin** to handle the administration of MySQL over the Web.
 * **Webgrind**, the Xdebug Profiling Web Frontend in PHP.
 * **WebSVN**, an Online subversion repository browser.
+* **Adminer** (formerly phpMinAdmin) is a full-featured database management tool written in PHP.
 
 ### Tools
 
@@ -43,7 +44,7 @@ And many other features.
 
 Neard is [available on SourceForge](https://sourceforge.net/projects/neard/) :
 
-* Latest release : [Neard 1.0.8](https://sourceforge.net/projects/neard/files/Releases/1.0.8/neard-1.0.8.zip/download) (2014/07/06)
+* Latest release : [Neard 1.0.9](https://sourceforge.net/projects/neard/files/Releases/1.0.9/neard-1.0.9.zip/download) (2014/07/14)
 * [Patches](https://sourceforge.net/projects/neard/files/Patches/) : to migrate from older release to the latest.
 * [Addons](https://sourceforge.net/projects/neard/files/Addons/) : other versions of binaries (Apache, PHP, MYSQL, MariaDB, etc...).
 * [Tools](https://sourceforge.net/projects/neard/files/Tools/) : useful tools for Neard.
@@ -88,8 +89,7 @@ Before [reporting an issue](https://github.com/crazy-max/neard/issues), please :
 ## Donate
 
 I have put in a lot of time to this project and appreciate donations.
-If you prefer to donate via paypal you can use the [donate link](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=4H86AJZ6M865A&item_name=Neard&no_note=0&cn=Message%20%3a&no_shipping=1&rm=1&return=https%3A%2F%2Fgithub.com%2Fcrazy-max%2Fneard&cancel_return=https%3A%2F%2Fgithub.com%2Fcrazy-max%2Fneard&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted).
-Or with bitcoin you can send your donations to [1BdhK62JY2xQKXjmvLLA8Dpbit1uJ5JkrC](bitcoin:1BdhK62JY2xQKXjmvLLA8Dpbit1uJ5JkrC?label=Neard%20Donations&message=Contribution%20to%20Neard).<br /><br />
+You can use the [Paypal donate link](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=4H86AJZ6M865A&item_name=Neard&no_note=0&cn=Message%20%3a&no_shipping=1&rm=1&return=https%3A%2F%2Fgithub.com%2Fcrazy-max%2Fneard&cancel_return=https%3A%2F%2Fgithub.com%2Fcrazy-max%2Fneard&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted).<br /><br />
 Thank you to everyone who has donated, it is much appreciated.
 
 ## Contribute

@@ -184,10 +184,7 @@ class TplAestan
     
     public static function getActionServiceRestart($service)
     {
-        //TODO: Review restart service
         return self::getActionService($service, self::SERVICE_RESTART, false);
-        /*return self::getActionServiceStop($service) . PHP_EOL .
-            self::getActionServiceStart($service);*/
     }
     
     public static function getItemActionServiceRestart($service)

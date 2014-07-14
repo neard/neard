@@ -28,11 +28,11 @@ class ActionChangePort
             if ($args[0] == $neardBins->getMysql()->getName()) {
                 $this->currentPort = CURRENT_MYSQL_PORT;
                 $this->bin = $neardBins->getMysql();
-                $this->cntProcessActions = 6;
+                $this->cntProcessActions = 7;
             } elseif ($args[0] == $neardBins->getMariadb()->getName()) {
                 $this->currentPort = CURRENT_MARIADB_PORT;
                 $this->bin = $neardBins->getMariadb();
-                $this->cntProcessActions = 5;
+                $this->cntProcessActions = 6;
             } elseif ($args[0] == $neardBins->getXlight()->getName()) {
                 $this->currentPort = CURRENT_XLIGHT_PORT;
                 $this->bin = $neardBins->getXlight();

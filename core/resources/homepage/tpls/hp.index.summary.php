@@ -24,23 +24,7 @@
         <h4 class="list-group-item-heading"><?php echo $neardLang->getValue(Lang::DONATE); ?></h4>
         <div class="list-group-item-text">
           <p><?php echo $neardLang->getValue(Lang::HOMEPAGE_DONATE_TEXT); ?></p>
-          <p>
-            <a target="_blank" href="<?php echo $neardConfig->getPaypalLink(); ?>" class="btn btn-primary" role="button"><img style="padding-right:5px" src="<?php echo Util::imgToBase64($neardHomepage->getPath() . '/img/btn-paypal.png'); ?>" /> <?php echo sprintf($neardLang->getValue(Lang::DONATE_VIA), $neardLang->getValue(Lang::PAYPAL)); ?></a>
-            <span class="btn btn-warning btn-bitcoin" role="button" data-toggle="modal" data-target=".modal-bitcoin"><img style="padding-right:5px" src="<?php echo Util::imgToBase64($neardHomepage->getPath() . '/img/btn-bitcoin.png'); ?>" /> <?php echo sprintf($neardLang->getValue(Lang::DONATE_VIA), $neardLang->getValue(Lang::BITCOIN)); ?></span>
-          </p>
-          <div class="modal fade modal-bitcoin" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog modal-sm">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                  <h4 class="modal-title"><?php echo $neardLang->getValue(Lang::DONATE_BITCOIN); ?></h4>
-                </div>
-                <div class="modal-body">
-                  <p><input type="text" class="form-control" onclick="this.focus();this.select();" value="<?php echo $neardConfig->getBitcoinAddress(); ?>"></p>
-                </div>
-              </div>
-            </div>
-          </div>
+          <p><a target="_blank" href="<?php echo $neardConfig->getPaypalLink(); ?>" class="btn btn-primary" role="button"><img style="padding-right:5px" src="<?php echo Util::imgToBase64($neardHomepage->getPath() . '/img/btn-paypal.png'); ?>" /> <?php echo sprintf($neardLang->getValue(Lang::DONATE_VIA), $neardLang->getValue(Lang::PAYPAL)); ?></a></p>
         </div>
       </div>
     </div>
@@ -159,6 +143,10 @@
           <a class="list-group-item" href="#websvn">
             <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardApps->getWebsvn()->getVersion(); ?></span>
             <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::WEBSVN); ?>
+          </a>
+          <a class="list-group-item" href="#adminer">
+            <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardApps->getAdminer()->getVersion(); ?></span>
+            <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::ADMINER); ?>
           </a>
         </div>
       </div>
