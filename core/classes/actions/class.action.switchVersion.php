@@ -138,19 +138,6 @@ class ActionSwitchVersion
             } else {
                 $this->neardSplash->incrProgressBar(self::GAUGE_SERVICES * count($neardBins->getServices()) + 1);
                 
-                //TODO: Create and start service ?
-                /*if ($this->service != null) {
-                    $this->neardSplash->setTextLoading(sprintf($neardLang->getValue(Lang::INSTALL_SERVICE_TITLE), $this->bin->getName()));
-                    $this->neardSplash->incrProgressBar();
-                    $this->service->create();
-                    
-                    $this->neardSplash->setTextLoading(sprintf($neardLang->getValue(Lang::STARTUP_START_SERVICE_TEXT), $this->bin->getName()));
-                    $this->neardSplash->incrProgressBar();
-                    $this->service->start();
-                } else {
-                    $this->neardSplash->incrProgressBar(2);
-                }*/
-                
                 $neardWinbinder->messageBoxInfo(
                     sprintf($neardLang->getValue(Lang::SWITCH_VERSION_OK), $this->bin->getName(), $this->version),
                     $this->boxTitle);

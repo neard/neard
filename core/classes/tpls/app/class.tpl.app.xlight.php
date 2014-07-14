@@ -68,7 +68,6 @@ class TplAppXlight
     {
         global $neardBs, $neardCore, $neardBins;
     
-        //TODO: Manage services via Aestan or Win32Service ext ?
         return TplService::getActionDelete(BinXlight::SERVICE_NAME) . PHP_EOL .
             TplAestan::getActionServicesClose() . PHP_EOL .
             TplApp::getActionRun(Action::SWITCH_VERSION, array($neardBins->getXlight()->getName(), $version)) . PHP_EOL .
@@ -95,13 +94,9 @@ class TplAppXlight
             false, get_called_class()
         );
         
-        //TODO: Manage services via Aestan or Win32Service ext ?
         $result = TplAestan::getItemActionServiceStart($neardBins->getXlight()->getService()->getName()) . PHP_EOL .
             TplAestan::getItemActionServiceStop($neardBins->getXlight()->getService()->getName()) . PHP_EOL .
             TplAestan::getItemActionServiceRestart($neardBins->getXlight()->getService()->getName()) . PHP_EOL .
-            /*TplService::getItemStart(BinXlight::SERVICE_NAME) . PHP_EOL .
-            TplService::getItemStop(BinXlight::SERVICE_NAME) . PHP_EOL .
-            TplService::getItemRestart(BinXlight::SERVICE_NAME) . PHP_EOL .*/
             TplAestan::getItemSeparator() . PHP_EOL .
             TplApp::getActionRun(
                 Action::CHECK_PORT, array($neardBins->getXlight()->getName(), $neardBins->getXlight()->getPort()),

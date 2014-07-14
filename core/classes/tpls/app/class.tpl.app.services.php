@@ -2,9 +2,9 @@
 
 class TplAppServices
 {
-    const ACTION_START = 'start';
-    const ACTION_STOP = 'stop';
-    const ACTION_RESTART = 'restart';
+    const ACTION_START = 'startServices';
+    const ACTION_STOP = 'stopServices';
+    const ACTION_RESTART = 'restartServices';
     
     public static function process()
     {
@@ -41,36 +41,32 @@ class TplAppServices
         return array($items, $actions);
     }
     
-    public static function getActionStart()
+    public static function getActionStartServices()
     {
         global $neardBins;
         $actions = '';
         
-        //TODO: Manage services via Aestan or Win32Service ext ?
         foreach ($neardBins->getServices() as $sName => $service) {
-            $actions .= //TplAestan::getActionServiceStart($service->getName()) . PHP_EOL;
-                TplService::getActionStart($service->getName()) . PHP_EOL;
+            $actions .= TplService::getActionStart($service->getName()) . PHP_EOL;
         }
         
         return $actions;
     }
     
-    public static function getActionStop()
+    public static function getActionStopServices()
     {
         global $neardBins;
         $actions = '';
         
-        //TODO: Manage services via Aestan or Win32Service ext ?
         foreach ($neardBins->getServices() as $sName => $service) {
-            $actions .= //TplAestan::getActionServiceStop($service->getName()) . PHP_EOL;
-                TplService::getActionStop($service->getName()) . PHP_EOL;
+            $actions .= TplService::getActionStop($service->getName()) . PHP_EOL;
         }
     
         return $actions;
     }
     
-    public static function getActionRestart()
+    public static function getActionRestartServices()
     {
-        return self::getActionStop() . self::getActionStart();
+        return self::getActionStopServices() . self::getActionStartServices();
     }
 }

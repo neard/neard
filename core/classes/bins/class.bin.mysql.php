@@ -110,6 +110,12 @@ class BinMysql
             ));
             $neardWinbinder->incrProgressBar($wbProgressBar);
             
+            // config.php (adminer)
+            Util::replaceInFile($neardApps->getAdminer()->getConf(), array(
+                '/^\$mysqlPort\s=\s(\d+)/' => '$mysqlPort = ' . $port . ';'
+            ));
+            $neardWinbinder->incrProgressBar($wbProgressBar);
+            
             // php.ini
             Util::replaceInFile($neardBins->getPhp()->getConf(), array(
                 '/^mysql.default_port\s=\s(\d+)/' => 'mysql.default_port = ' . $port,
@@ -177,7 +183,7 @@ class BinMysql
                         return true;
                     }
                 }
-                mysql_close($dbLink);
+                mysqli_close($dbLink);
             } else {
                 Util::logDebug($this->getName() . ' port ' . $port . ' is used by another application');
                 if ($showWindow) {

@@ -76,12 +76,8 @@ class TplAppPhp
     {
         global $neardBins;
     
-        //TODO: Check stop apache service
-        return //TplService::getActionStop(BinApache::SERVICE_NAME) . PHP_EOL .
-            TplApp::getActionRun(Action::SWITCH_VERSION, array($neardBins->getPhp()->getName(), $version)) . PHP_EOL .
+        return TplApp::getActionRun(Action::SWITCH_VERSION, array($neardBins->getPhp()->getName(), $version)) . PHP_EOL .
             TplApp::getActionExec() . PHP_EOL;
-            /*TplService::getActionRestart(BinApache::SERVICE_NAME) . PHP_EOL .
-            TplAppReload::getActionReload() . PHP_EOL;*/
     }
     
     public static function getMenuPhpSettings()
@@ -215,7 +211,7 @@ class TplAppPhp
     {
         global $neardBins;
     
-        $switch = $switch == ActionSwitchPhpExtension::SWITCH_OFF ? ActionSwitchPhpExtension::SWITCH_ON : $switch;
+        $switch = $switch == ActionSwitchPhpExtension::SWITCH_OFF ? ActionSwitchPhpExtension::SWITCH_ON : ActionSwitchPhpExtension::SWITCH_OFF;
         return TplApp::getActionRun(Action::SWITCH_PHP_EXTENSION, array($extension, $switch)) . PHP_EOL .
             TplService::getActionRestart(BinApache::SERVICE_NAME) . PHP_EOL .
             TplAppReload::getActionReload() . PHP_EOL;

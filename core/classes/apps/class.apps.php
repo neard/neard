@@ -6,6 +6,7 @@ class Apps
     private $gitlist;
     private $websvn;
     private $webgrind;
+    private $adminer;
     
     public function __construct()
     {
@@ -48,6 +49,14 @@ class Apps
             $this->webgrind = new AppWebgrind($this->getRootPath('webgrind'));
         }
         return $this->webgrind;
+    }
+    
+    public function getAdminer()
+    {
+        if ($this->adminer == null) {
+            $this->adminer = new AppAdminer($this->getRootPath('adminer'));
+        }
+        return $this->adminer;
     }
     
 }

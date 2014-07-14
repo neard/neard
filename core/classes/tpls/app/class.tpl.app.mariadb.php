@@ -35,6 +35,7 @@ class TplAppMariadb
             $tplService[TplApp::SECTION_CALL] . PHP_EOL .
             $tplDebug[TplApp::SECTION_CALL] . PHP_EOL .
             TplAestan::getItemLink($neardLang->getValue(Lang::PHPMYADMIN), 'phpmyadmin/', true) . PHP_EOL .
+            TplAestan::getItemLink($neardLang->getValue(Lang::ADMINER), 'adminer/?server=127.0.0.1%3A' . $neardBins->getMariadb()->getPort() . '&username=', true) . PHP_EOL .
             TplAestan::getItemConsole(
                 $neardLang->getValue(Lang::CONSOLE),
                 TplAestan::GLYPH_CONSOLE,
@@ -76,7 +77,6 @@ class TplAppMariadb
     {
         global $neardBs, $neardCore, $neardBins;
     
-        //TODO: Manage services via Aestan or Win32Service ext ?
         return TplService::getActionDelete(BinMariadb::SERVICE_NAME) . PHP_EOL .
             TplAestan::getActionServicesClose() . PHP_EOL .
             TplApp::getActionRun(Action::SWITCH_VERSION, array($neardBins->getMariadb()->getName(), $version)) . PHP_EOL .
@@ -103,13 +103,9 @@ class TplAppMariadb
             false, get_called_class()
         );
         
-        //TODO: Manage services via Aestan or Win32Service ext ?
         $result = TplAestan::getItemActionServiceStart($neardBins->getMariadb()->getService()->getName()) . PHP_EOL .
             TplAestan::getItemActionServiceStop($neardBins->getMariadb()->getService()->getName()) . PHP_EOL .
             TplAestan::getItemActionServiceRestart($neardBins->getMariadb()->getService()->getName()) . PHP_EOL .
-            /*TplService::getItemStart(BinMariadb::SERVICE_NAME) . PHP_EOL .
-            TplService::getItemStop(BinMariadb::SERVICE_NAME) . PHP_EOL .
-            TplService::getItemRestart(BinMariadb::SERVICE_NAME) . PHP_EOL .*/
             TplAestan::getItemSeparator() . PHP_EOL .
             TplApp::getActionRun(
                 Action::CHECK_PORT, array($neardBins->getMariadb()->getName(), $neardBins->getMariadb()->getPort()),

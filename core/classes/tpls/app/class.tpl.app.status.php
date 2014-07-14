@@ -19,9 +19,7 @@ class TplAppStatus
     {
         global $neardBins;
         
-        //TODO: Manage services via Aestan or Win32Service ext ?
         return TplApp::getActionRun(Action::SWITCH_STATUS, array($status)) . PHP_EOL .
-            //TplAestan::getActionServiceRestart($neardBins->getApache()->getService()->getName());
             TplService::getActionRestart(BinApache::SERVICE_NAME) . PHP_EOL .
             TplService::getActionRestart(BinXlight::SERVICE_NAME) . PHP_EOL .
             TplAppReload::getActionReload() . PHP_EOL;
