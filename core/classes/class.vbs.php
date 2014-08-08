@@ -184,9 +184,9 @@ class Vbs
             }
         }
         
-        Util::unlinkAlt($scriptPath);
-        Util::unlinkAlt($checkFile);
-        Util::unlinkAlt($resultFile);
+        @unlink($scriptPath);
+        @unlink($checkFile);
+        @unlink($resultFile);
     
         self::writeLog('Exec:');
         self::writeLog('-> content: ' . str_replace(PHP_EOL, ' \\\\ ', $content));

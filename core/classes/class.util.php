@@ -105,7 +105,7 @@ class Util
                     return $result;
                 }
             } else {
-                $r = self::unlinkAlt($path . '/' . $file);
+                $r = @unlink($path . '/' . $file);
                 if ($r) {
                     $result['nb_files']++;
                 } else {
@@ -322,29 +322,6 @@ class Util
             }
             fclose($fp);
         }
-    }
-    
-    public static function fsockopenAlt($hostname, $port, $timeout = null)
-    {
-        global $neardBs;
-        
-        $neardBs->removeErrorHandling();
-        $timeout = $timeout == null ? ini_get("default_socket_timeout") : $timeout;
-        $result = @fsockopen('127.0.0.1', intval($port), $errno, $errstr, 1);
-        $neardBs->initErrorHandling();
-        
-        return $result;
-    }
-    
-    public static function unlinkAlt($path)
-    {
-        global $neardBs;
-    
-        $neardBs->removeErrorHandling();
-        $result = @unlink($path);
-        $neardBs->initErrorHandling();
-    
-        return $result;
     }
     
     public static function isOnline()
@@ -642,7 +619,7 @@ class Util
             foreach ($pids as $pid) {
                 Win32Ps::kill(trim($pid));
             }
-            self::unlinkAlt($neardCore->getLoadingPid());
+            @unlink($neardCore->getLoadingPid());
         }
     }
     
@@ -652,6 +629,7 @@ class Util
         return array(
             $neardBs->getAliasPath()                     => array(''),
             $neardBs->getVhostsPath()                    => array(''),
+            $neardBs->getSslPath()                       => array('.cnf'),
             $neardBins->getApache()->getRootPath()       => array('.ini', '.conf'),
             $neardBins->getPhp()->getRootPath()          => array('.php', '.bat', '.ini', '.reg'),
             $neardBins->getMysql()->getRootPath()        => array('my.ini'),

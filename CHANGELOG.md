@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.10 (2014/08/8)
+
+* Htaccess bug on homepage ([Issue #59](https://github.com/crazy-max/neard/issues/59))
+* Add HTTPS support ([Issue #58](https://github.com/crazy-max/neard/issues/58))
+* SSL requests are written in ``*_sslreq.log`` files
+* Edit vhost window title bug
+* Localhost apache logs are moved in ``apache_*.log`` files
+
 ## 1.0.9 (2014/07/14)
 
 * Bug check MySQL and MariaDB ports ([Issue #56](https://github.com/crazy-max/neard/issues/56))

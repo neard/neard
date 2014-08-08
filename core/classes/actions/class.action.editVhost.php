@@ -91,11 +91,14 @@ class ActionEditVhost
                 if ($serverName != $this->initServerName && is_file($neardBs->getVhostsPath() . '/' . $serverName . '.conf')) {
                     $neardWinbinder->messageBoxError(
                         sprintf($neardLang->getValue(Lang::VHOST_ALREADY_EXISTS), $serverName),
-                        $neardLang->getValue(Lang::ADD_VHOST_TITLE));
+                        sprintf($neardLang->getValue(Lang::EDIT_VHOST_TITLE), $this->initServerName));
                     $neardWinbinder->resetProgressBar($this->wbProgressBar);
                     break;
                 }
-                if (file_put_contents($neardBs->getVhostsPath() . '/' . $serverName . '.conf', $neardBins->getApache()->getVhostContent($serverName, $documentRoot)) !== false) {
+                if ($neardBins->getApache()->removeSslCrt($this->initServerName) && @unlink($neardBs->getVhostsPath() . '/' . $this->initServerName . '.conf')) {
+                    new ActionSwitchHost(array('127.0.0.1', $this->initServerName, ActionSwitchHost::SWITCH_OFF));
+                }
+                if (Batch::genApacheCertificate($serverName) && file_put_contents($neardBs->getVhostsPath() . '/' . $serverName . '.conf', $neardBins->getApache()->getVhostContent($serverName, $documentRoot)) !== false) {
                     $neardWinbinder->incrProgressBar($this->wbProgressBar);
                     
                     Util::addWindowsHost('127.0.0.1', $serverName);
@@ -105,11 +108,13 @@ class ActionEditVhost
                     $neardWinbinder->incrProgressBar($this->wbProgressBar);
                     
                     $neardWinbinder->messageBoxInfo(
-                        sprintf($neardLang->getValue(Lang::VHOST_CREATED), $serverName, $apachePortUri, $serverName, $documentRoot),
-                        $neardLang->getValue(Lang::ADD_VHOST_TITLE));
+                        sprintf($neardLang->getValue(Lang::VHOST_CREATED), $serverName, $serverName, $documentRoot),
+                        sprintf($neardLang->getValue(Lang::EDIT_VHOST_TITLE), $this->initServerName));
                     $neardWinbinder->destroyWindow($window);
                 } else {
-                    $neardWinbinder->messageBoxError($neardLang->getValue(Lang::VHOST_CREATED_ERROR), $neardLang->getValue(Lang::ADD_VHOST_TITLE));
+                    $neardWinbinder->messageBoxError(
+                        $neardLang->getValue(Lang::VHOST_CREATED_ERROR),
+                        sprintf($neardLang->getValue(Lang::EDIT_VHOST_TITLE), $this->initServerName));
                     $neardWinbinder->resetProgressBar($this->wbProgressBar);
                 }
                 break;
@@ -124,7 +129,7 @@ class ActionEditVhost
                 $neardWinbinder->incrProgressBar($this->wbProgressBar);
                 
                 if ($confirm) {
-                    if (Util::unlinkAlt($neardBs->getVhostsPath() . '/' . $this->initServerName . '.conf')) {
+                    if ($neardBins->getApache()->removeSslCrt($this->initServerName) && @unlink($neardBs->getVhostsPath() . '/' . $this->initServerName . '.conf')) {
                         $neardWinbinder->incrProgressBar($this->wbProgressBar);
                         
                         new ActionSwitchHost(array('127.0.0.1', $this->initServerName, ActionSwitchHost::SWITCH_OFF));

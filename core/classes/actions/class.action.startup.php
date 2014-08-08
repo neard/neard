@@ -261,10 +261,14 @@ class ActionStartup
                         if (!$service->create()) {
                             $serviceError .= sprintf($neardLang->getValue(Lang::STARTUP_SERVICE_CREATE_ERROR), $service->getError());
                         }
+                        
+                        if ($sName == BinApache::SERVICE_NAME && !$neardBins->getApache()->existsSslCrt()) {
+                            $this->neardSplash->setTextLoading($neardLang->getValue(Lang::STARTUP_GEN_SSL_CRT_TEXT));
+                            Batch::genApacheCertificate();
+                        }
             
                         $this->neardSplash->incrProgressBar();
                         $this->neardSplash->setTextLoading(sprintf($neardLang->getValue(Lang::STARTUP_START_SERVICE_TEXT), $name));
-            
                         if (!$service->start()) {
                             if (!empty($serviceError)) {
                                 $serviceError .= PHP_EOL;

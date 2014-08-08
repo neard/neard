@@ -16,7 +16,7 @@ class ActionExec
             } elseif ($action == self::RESTART) {
                 Batch::restartApp();
             }
-            Util::unlinkAlt($neardCore->getExec());
+            @unlink($neardCore->getExec());
         }
     }
 }

@@ -32,6 +32,14 @@ class ActionSwitchStatus
             $apacheConf = str_replace($onlineContent, $offlineContent, $apacheConf);
         }
         file_put_contents($neardBins->getApache()->getConf(), $apacheConf);
+        
+        $sslConf = file_get_contents($neardBins->getApache()->getSslConf());
+        if ($putOnline) {
+            $sslConf = str_replace($offlineContent, $onlineContent, $sslConf);
+        } else {
+            $sslConf = str_replace($onlineContent, $offlineContent, $sslConf);
+        }
+        file_put_contents($neardBins->getApache()->getSslConf(), $sslConf);
     }
     
     private function switchAlias($putOnline)

@@ -139,7 +139,7 @@ class BinMariadb
             return false;
         }
         
-        $fp = Util::fsockopenAlt('127.0.0.1', $port);
+        $fp = @fsockopen('127.0.0.1', $port);
         if ($fp) {
             $dbLink = mysqli_connect('127.0.0.1:' . $port, 'root', '');
             $isMariadb = false;

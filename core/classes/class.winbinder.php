@@ -57,11 +57,15 @@ class WinBinder
         $this->callback = array();
     }
 
-    private function callWinBinder($function, $params = array())
+    private function callWinBinder($function, $params = array(), $removeErrorHandler = false)
     {
         $result = false;
         if (function_exists($function)) {
-            $result = call_user_func_array($function, $params);
+            if ($removeErrorHandler) {
+                $result = @call_user_func_array($function, $params);
+            } else {
+                $result = call_user_func_array($function, $params);
+            }
         }
         return $result;
     }
@@ -104,13 +108,7 @@ class WinBinder
     
     public function destroyWindow($window)
     {
-        global $neardBs;
-        
-        $neardBs->removeErrorHandling();
-        $result = $this->callWinBinder('wb_destroy_window', array($window));
-        $neardBs->initErrorHandling();
-        
-        return $result;
+        return $this->callWinBinder('wb_destroy_window', array($window), true);
     }
     
     public function mainLoop()
@@ -159,13 +157,7 @@ class WinBinder
     
     public function wait($wbobject = null)
     {
-        global $neardBs;
-        
-        $neardBs->removeErrorHandling();
-        $result = $this->callWinBinder('wb_wait', array($wbobject));
-        $neardBs->initErrorHandling();
-        
-        return $result;
+        return $this->callWinBinder('wb_wait', array($wbobject), true);
     }
     
     public function createTimer($wbobject, $wait = 1000)

@@ -83,7 +83,8 @@ class ActionAddVhost
                     $neardWinbinder->resetProgressBar($this->wbProgressBar);
                     break;
                 }
-                if (file_put_contents($neardBs->getVhostsPath() . '/' . $serverName . '.conf',  $neardBins->getApache()->getVhostContent($serverName, $documentRoot)) !== false) {
+                
+                if (Batch::genApacheCertificate($serverName) && file_put_contents($neardBs->getVhostsPath() . '/' . $serverName . '.conf',  $neardBins->getApache()->getVhostContent($serverName, $documentRoot)) !== false) {
                     $neardWinbinder->incrProgressBar($this->wbProgressBar);
                     
                     Util::addWindowsHost('127.0.0.1', $serverName);

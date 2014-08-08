@@ -83,8 +83,13 @@ Please search for existing issues first and make sure to include all relevant in
 Before [reporting an issue](https://github.com/crazy-max/neard/issues), please :
 * Tell me what is your operating system and platform (eg. Windows 7 64-bits).
 * Tell me your Neard version (eg. 1.0.0).
+* Close Neard.
 * Change this variable in the ``neard.conf`` file ``appLogsVerbose = 2``.
-* Zip the ``logs`` folder and a screenshot of your issue and attached the archive file to the issue.
+* Launch Neard and reproduce your problem.
+* Close Neard.
+* Zip the ``logs`` folder and a screenshot of your issue.
+* Upload the zip file on a file hosting system like [Sendspace](https://www.sendspace.com/).
+* Add the link of the uploaded file to the issue.
 
 ## Donate
 
@@ -94,7 +99,7 @@ Thank you to everyone who has donated, it is much appreciated.
 
 ## Contribute
 
-You want to help us and participate in the development or the documentation? Just fork Neard and send us a pull request.
+You want to help me and participate in the development or the documentation? Just fork Neard and send me a pull request.
 
 ### Translations
 

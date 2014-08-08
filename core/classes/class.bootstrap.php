@@ -101,6 +101,11 @@ class Bootstrap
         return $this->getRootPath($aetrayPath) . '/logs';
     }
     
+    public function getSslPath($aetrayPath = false)
+    {
+        return $this->getRootPath($aetrayPath) . '/ssl';
+    }
+    
     public function getTmpPath($aetrayPath = false)
     {
         return $this->getRootPath($aetrayPath) . '/tmp';
@@ -134,6 +139,11 @@ class Bootstrap
     public function getIniFilePath($aetrayPath = false)
     {
         return $this->getRootPath($aetrayPath) . '/neard.ini';
+    }
+    
+    public function getSslConfPath($aetrayPath = false)
+    {
+        return $this->getSslPath($aetrayPath) . '/openssl.cnf';
     }
 
     public function getLogFilePath($aetrayPath = false)
@@ -184,7 +194,8 @@ class Bootstrap
     public function getLocalUrl($request = null)
     {
         global $neardBins;
-        return 'http://localhost' . ($neardBins->getApache()->getPort() != 80 ? ':' . $neardBins->getApache()->getPort() : '') .
+        return (isset($_SERVER['HTTPS']) ? 'https://' : 'http://') . 'localhost' .
+            ($neardBins->getApache()->getPort() != 80 && !isset($_SERVER['HTTPS']) ? ':' . $neardBins->getApache()->getPort() : '') .
             (!empty($request) ? '/' . $request : '');
     }
     
@@ -252,6 +263,10 @@ class Bootstrap
     
     public function errorHandler($errno, $errstr, $errfile, $errline)
     {
+        if (error_reporting() === 0) {
+            return;
+        }
+        
         $errfile = Util::formatUnixPath($errfile);
         $errfile = str_replace($this->getRootPath(), '', $errfile);
         
