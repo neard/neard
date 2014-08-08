@@ -15,9 +15,7 @@ class Win32Ps
         $result = false;
         
         if (function_exists($function)) {
-            $neardBs->removeErrorHandling();
-            $result = call_user_func($function);
-            $neardBs->initErrorHandling();
+            $result = @call_user_func($function);
         }
         
         return $result;

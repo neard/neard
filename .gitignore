@@ -16,6 +16,9 @@ alias/*
 !logs
 logs/*
 !logs/placeholder
+!ssl
+ssl/*
+!ssl/openssl.cnf
 !svnrepos
 svnrepos/*
 !svnrepos/placeholder

@@ -43,7 +43,7 @@ class Batch
         }
         
         return false;
-        //return self::fsockopenAlt('127.0.0.1', intval($port), 1) !== false;
+        //return @fsockopen('127.0.0.1', intval($port)) !== false;
     }
     
     public static function exitApp($restart = false)
@@ -136,6 +136,27 @@ class Batch
         self::execStandalone('refreshEnvVars', 'SETX /M ' . Registry::APP_PATH_REG_ENTRY . ' "' . Util::formatWindowsPath($neardBs->getRootPath()) . '"');
     }
     
+    public static function genApacheCertificate($domain = 'localhost')
+    {
+        global $neardBs, $neardBins;
+        
+        $subject = '"/C=FR/O=neard/CN=' . $domain . '"';
+        $password = 'pass:neard';
+        $ppkPath = '"' . $neardBs->getSslPath() . '/' . $domain . '.ppk"';
+        $pubPath = '"' . $neardBs->getSslPath() . '/' . $domain . '.pub"';
+        $crtPath = '"' . $neardBs->getSslPath() . '/' . $domain . '.crt"';
+        $exe = '"' . $neardBins->getApache()->getOpensslExe() . '"';
+        $conf = '"' . $neardBs->getSslConfPath() . '"';
+        
+        $cmdGeneratingKey = $exe . ' genrsa -des3 -passout ' . $password . ' -out ' . $ppkPath . ' 2048 -noout -config ' . $conf . PHP_EOL;
+        $cmdGeneratingPub = $exe . ' rsa -in ' . $ppkPath . ' -passin ' . $password . ' -out ' . $pubPath . PHP_EOL;
+        $cmdCreateCrt = $exe . ' req -x509 -nodes -sha1 -new -key ' . $pubPath . ' -out ' . $crtPath . ' -passin ' . $password . ' -subj ' . $subject . ' -config ' . $conf . PHP_EOL;
+        self::exec('genCertificate', $cmdGeneratingKey . $cmdGeneratingPub . $cmdCreateCrt, 5);
+        
+        $result = self::exec('checkCertificate', '@ECHO ON' . PHP_EOL . 'IF EXIST ' . $pubPath . ' IF EXIST ' . $crtPath . ' ECHO OK', 2);
+        return isset($result[0]) && $result[0] == 'OK';
+    }
+    
     public static function execStandalone($basename, $content, $silent = true)
     {
         return self::exec($basename, $content, 0, false, true, $silent);
@@ -186,11 +207,11 @@ class Batch
                     break;
                 }
             }
-            Util::unlinkAlt($scriptPath);
+            @unlink($scriptPath);
         }
         
-        Util::unlinkAlt($checkFile);
-        Util::unlinkAlt($resultFile);
+        @unlink($checkFile);
+        @unlink($resultFile);
         
         self::writeLog('Exec:');
         self::writeLog('-> basename: ' . $basename);

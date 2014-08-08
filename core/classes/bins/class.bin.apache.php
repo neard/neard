@@ -9,6 +9,7 @@ class BinApache
     const CFG_EXE = 'apacheExe';
     const CFG_CONF = 'apacheConf';
     const CFG_PORT = 'apachePort';
+    const CFG_OPENSSL_EXE = 'apacheOpensslExe';
     const CFG_LAUNCH_STARTUP = 'apacheLaunchStartup';
     
     const LAUNCH_STARTUP_ON = 'on';
@@ -31,11 +32,13 @@ class BinApache
     private $rootPath;
     private $currentPath;
     private $modulesPath;
+    private $sslConf;
     private $accessLog;
     private $rewriteLog;
     private $errorLog;
     private $exe;
     private $conf;
+    private $opensslExe;
     private $neardConf;
     
     public function __construct($rootPath, $version=null)
@@ -53,16 +56,19 @@ class BinApache
         $this->exe = $neardConfig->getRaw(self::CFG_EXE);
         $this->conf = $neardConfig->getRaw(self::CFG_CONF);
         $this->port = $neardConfig->getRaw(self::CFG_PORT);
+        $this->opensslExe = $neardConfig->getRaw(self::CFG_OPENSSL_EXE);
         $this->launchStartup = $neardConfig->getRaw(self::CFG_LAUNCH_STARTUP);
         
         $this->rootPath = $rootPath == null ? $this->rootPath : $rootPath;
         $this->currentPath = $this->rootPath . '/apache' . $this->version;
         $this->modulesPath = $this->currentPath . '/modules';
+        $this->sslConf = $this->currentPath . '/conf/extra/httpd-ssl.conf';
         $this->accessLog = $neardBs->getLogsPath() . '/apache_access.log';
         $this->rewriteLog = $neardBs->getLogsPath() . '/apache_rewrite.log';
         $this->errorLog = $neardBs->getLogsPath() . '/apache_error.log';
         $this->exe = $this->currentPath . '/' . $this->exe;
         $this->conf = $this->currentPath . '/' . $this->conf;
+        $this->opensslExe = $this->currentPath . '/' . $this->opensslExe;
         $this->neardConf = $this->currentPath . '/neard.conf';
         
         $this->service = new Win32Service(self::SERVICE_NAME);
@@ -128,7 +134,7 @@ class BinApache
             
             // .htaccess
             Util::replaceInFile($neardBs->getWwwPath() . '/.htaccess', array(
-                '/(.*)\/localhost(.*)/' => '{{1}}/localhost' . ($port != 80 ? ':' . $port : '') . '/$1 [QSA,R=301,L]',
+                '/(.*)http:\/\/localhost(.*)/' => '{{1}}http://localhost' . ($port != 80 ? ':' . $port : '') . '/$1 [QSA,R=301,L]',
             ));
             $neardWinbinder->incrProgressBar($wbProgressBar);
             
@@ -149,7 +155,7 @@ class BinApache
             return false;
         }
         
-        $fp = Util::fsockopenAlt('127.0.0.1', $port);
+        $fp = @fsockopen('127.0.0.1', $port);
         $out = "GET / HTTP/1.1\r\nHost: 127.0.0.1\r\nConnection: Close\r\n\r\n";
         if ($fp) {
             fwrite($fp, $out);
@@ -463,14 +469,34 @@ class BinApache
         return '<VirtualHost *:' . $this->getPort() . '>' . PHP_EOL .
             '    ServerAdmin webmaster@' . $serverName . PHP_EOL .
             '    DocumentRoot "' . $documentRoot . '"' . PHP_EOL .
+            '    ServerName ' . $serverName . PHP_EOL .
+            '    ErrorLog "' . $neardBs->getLogsPath() . '/' . $serverName . '_error.log"' . PHP_EOL .
+            '    CustomLog "' . $neardBs->getLogsPath() . '/' . $serverName . '_access.log" combined' . PHP_EOL . PHP_EOL .
             '    <Directory "' . $documentRoot . '">' . PHP_EOL .
             '        Options Indexes FollowSymLinks MultiViews' . PHP_EOL .
             '        AllowOverride all' . PHP_EOL .
             $this->getRequiredContent() . PHP_EOL .
             '    </Directory>' . PHP_EOL .
+            '</VirtualHost>' . PHP_EOL . PHP_EOL .
+            '<VirtualHost *:443>' . PHP_EOL .
+            '    DocumentRoot "' . $documentRoot . '"' . PHP_EOL .
             '    ServerName ' . $serverName . PHP_EOL .
+            '    ServerAdmin webmaster@' . $serverName . PHP_EOL .
             '    ErrorLog "' . $neardBs->getLogsPath() . '/' . $serverName . '_error.log"' . PHP_EOL .
-            '    CustomLog "' . $neardBs->getLogsPath() . '/' . $serverName . '_access.log" combined' . PHP_EOL .
+            '    TransferLog "' . $neardBs->getLogsPath() . '/' . $serverName . '_access.log"' . PHP_EOL . PHP_EOL .
+            '    SSLEngine on' . PHP_EOL .
+            '    SSLProtocol all -SSLv2' . PHP_EOL .
+            '    SSLCipherSuite HIGH:MEDIUM:!aNULL:!MD5' . PHP_EOL .
+            '    SSLCertificateFile "' . $neardBs->getSslPath() . '/' . $serverName . '.crt"' . PHP_EOL .
+            '    SSLCertificateKeyFile "' . $neardBs->getSslPath() . '/' . $serverName . '.pub"' . PHP_EOL .
+            '    BrowserMatch "MSIE [2-5]" nokeepalive ssl-unclean-shutdown downgrade-1.0 force-response-1.0' . PHP_EOL .
+            '    CustomLog "' . $neardBs->getLogsPath() . '/' . $serverName . '_sslreq.log" "%t %h %{SSL_PROTOCOL}x %{SSL_CIPHER}x \"%r\" %b"' . PHP_EOL .PHP_EOL .
+            '    <Directory "' . $documentRoot . '">' . PHP_EOL .
+            '        SSLOptions +StdEnvVars' . PHP_EOL .
+            '        Options Indexes FollowSymLinks MultiViews' . PHP_EOL .
+            '        AllowOverride all' . PHP_EOL .
+            $this->getRequiredContent() . PHP_EOL .
+            '    </Directory>' . PHP_EOL .
             '</VirtualHost>' . PHP_EOL;
     }
     
@@ -511,6 +537,28 @@ class BinApache
             }
             file_put_contents($neardBs->getVhostsPath() . '/' . $vhost . '.conf', $vhostConf);
         }
+    }
+    
+    public function existsSslCrt($domain = 'localhost')
+    {
+        global $neardBs;
+        
+        $ppkPath = $neardBs->getSslPath() . '/' . $domain . '.ppk';
+        $pubPath = $neardBs->getSslPath() . '/' . $domain . '.pub';
+        $crtPath = $neardBs->getSslPath() . '/' . $domain . '.crt';
+        
+        return is_file($ppkPath) && is_file($pubPath) && is_file($crtPath);
+    }
+    
+    public function removeSslCrt($domain = 'localhost')
+    {
+        global $neardBs;
+    
+        $ppkPath = $neardBs->getSslPath() . '/' . $domain . '.ppk';
+        $pubPath = $neardBs->getSslPath() . '/' . $domain . '.pub';
+        $crtPath = $neardBs->getSslPath() . '/' . $domain . '.crt';
+    
+        return @unlink($ppkPath) && @unlink($pubPath) && @unlink($crtPath);
     }
     
     public function getName()
@@ -558,6 +606,11 @@ class BinApache
         return $this->modulesPath;
     }
     
+    public function getSslConf()
+    {
+        return $this->sslConf;
+    }
+    
     public function getAccessLog()
     {
         return $this->accessLog;
@@ -581,6 +634,11 @@ class BinApache
     public function getConf()
     {
         return $this->conf;
+    }
+    
+    public function getOpensslExe()
+    {
+        return $this->opensslExe;
     }
     
     public function getNeardConf()

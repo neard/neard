@@ -122,7 +122,7 @@ class ActionEditAlias
                 $neardWinbinder->incrProgressBar($this->wbProgressBar);
                 
                 if ($confirm) {
-                    if (Util::unlinkAlt($neardBs->getAliasPath() . '/' . $this->initName . '.conf')) {
+                    if (@unlink($neardBs->getAliasPath() . '/' . $this->initName . '.conf')) {
                         $neardWinbinder->incrProgressBar($this->wbProgressBar);
                         
                         $neardBins->getApache()->getService()->restart();

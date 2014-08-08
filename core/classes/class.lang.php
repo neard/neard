@@ -34,6 +34,7 @@ class Lang
     const RESTART = 'restart';
     const SERVICE = 'service';
     const SETTINGS = 'settings';
+    const SSL = 'ssl';
     const STARTUP = 'startup';
     const STATUS = 'status';
     const TOOLS = 'tools';
@@ -212,6 +213,7 @@ class Lang
     const STARTUP_SERVICE_PORT_ERROR = 'startupServicePortError';
     const STARTUP_REFRESH_GIT_REPOS_TEXT = 'startupRefreshGitReposText';
     const STARTUP_REFRESH_SVN_REPOS_TEXT = 'startupRefreshSvnReposText';
+    const STARTUP_GEN_SSL_CRT_TEXT = 'startupGenSslCrtText';
     
     // Action Quit
     const EXIT_LEAVING_TEXT = 'exitLeavingText';
@@ -370,6 +372,7 @@ class Lang
             self::RESTART,
             self::SERVICE,
             self::SETTINGS,
+            self::SSL,
             self::STARTUP,
             self::STATUS,
             self::TOOLS,
@@ -548,6 +551,7 @@ class Lang
             self::STARTUP_SERVICE_PORT_ERROR,
             self::STARTUP_REFRESH_GIT_REPOS_TEXT,
             self::STARTUP_REFRESH_SVN_REPOS_TEXT,
+            self::STARTUP_START_SERVICE_TEXT,
             
             // Action Quit
             self::EXIT_LEAVING_TEXT,
