@@ -43,7 +43,6 @@ class Batch
         }
         
         return false;
-        //return @fsockopen('127.0.0.1', intval($port)) !== false;
     }
     
     public static function exitApp($restart = false)
@@ -136,15 +135,16 @@ class Batch
         self::execStandalone('refreshEnvVars', 'SETX /M ' . Registry::APP_PATH_REG_ENTRY . ' "' . Util::formatWindowsPath($neardBs->getRootPath()) . '"');
     }
     
-    public static function genApacheCertificate($domain = 'localhost')
+    public static function genSslCertificate($name, $destPath = null)
     {
         global $neardBs, $neardBins;
+        $destPath = empty($destPath) ? $neardBs->getSslPath() : $destPath;
         
-        $subject = '"/C=FR/O=neard/CN=' . $domain . '"';
+        $subject = '"/C=FR/O=neard/CN=' . $name . '"';
         $password = 'pass:neard';
-        $ppkPath = '"' . $neardBs->getSslPath() . '/' . $domain . '.ppk"';
-        $pubPath = '"' . $neardBs->getSslPath() . '/' . $domain . '.pub"';
-        $crtPath = '"' . $neardBs->getSslPath() . '/' . $domain . '.crt"';
+        $ppkPath = '"' . $destPath . '/' . $name . '.ppk"';
+        $pubPath = '"' . $destPath . '/' . $name . '.pub"';
+        $crtPath = '"' . $destPath . '/' . $name . '.crt"';
         $exe = '"' . $neardBins->getApache()->getOpensslExe() . '"';
         $conf = '"' . $neardBs->getSslConfPath() . '"';
         
@@ -155,6 +155,22 @@ class Batch
         
         $result = self::exec('checkCertificate', '@ECHO ON' . PHP_EOL . 'IF EXIST ' . $pubPath . ' IF EXIST ' . $crtPath . ' ECHO OK', 2);
         return isset($result[0]) && $result[0] == 'OK';
+    }
+    
+    public static function installFilezillaService()
+    {
+        global $neardBins;
+        
+        self::exec('installFilezillaService', '"' . $neardBins->getFilezilla()->getExe() . '" /install', 10, false);
+        return $neardBins->getFilezilla()->getService()->isInstalled();
+    }
+    
+    public static function uninstallFilezillaService()
+    {
+        global $neardBins;
+    
+        self::exec('uninstallFilezillaService', '"' . $neardBins->getFilezilla()->getExe() . '" /uninstall', 10, false);
+        return !$neardBins->getFilezilla()->getService()->isInstalled();
     }
     
     public static function execStandalone($basename, $content, $silent = true)

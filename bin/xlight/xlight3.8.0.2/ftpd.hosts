@@ -1,7 +1,0 @@
-<virtualserver 0.0.0.0:21>
-WriteStatisticsToFile:yes
-WelcomeMsgFile:"C:\neard\bin\xlight\xlight3.8.0.2\welcome"
-ServerNotes:"Neard"
-StatisticsFilename:"C:\neard\logs\xlight_stats.log"
-</virtualserver>
-

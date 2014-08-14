@@ -13,7 +13,7 @@ class ActionSwitchStatus
             $this->switchApache($putOnline);
             $this->switchAlias($putOnline);
             $this->switchVhosts($putOnline);
-            $this->switchXlight($putOnline);
+            $this->switchFilezilla($putOnline);
             $neardConfig->replace(Config::CFG_STATUS, $args[0]);
         }
     }
@@ -54,28 +54,21 @@ class ActionSwitchStatus
         $neardBins->getApache()->refreshVhosts($putOnline);
     }
     
-    private function switchXlight($putOnline)
+    private function switchFilezilla($putOnline)
     {
         global $neardBins;
         
-        $offlineContent = 'AllowedIPList:"127.0.0.1|::1"';
-        
-        $result = '';
         if ($putOnline) {
-            $fileContent = file_get_contents($neardBins->getXlight()->getConfOption());
-            $result = str_replace($offlineContent, '', $fileContent);
+            $neardBins->getFilezilla()->setConf(array(
+                BinFilezilla::CFG_IP_FILTER_ALLOWED => '*',
+                BinFilezilla::CFG_IP_FILTER_DISALLOWED => '',
+            ));
         } else {
-            $fileContent = file($neardBins->getXlight()->getConfOption());
-            foreach ($fileContent as $row) {
-                $row = trim($row);
-                if (!empty($row)) {
-                    $result .= $row . PHP_EOL;
-                }
-            }
-            $result .= $offlineContent . PHP_EOL;
+            $neardBins->getFilezilla()->setConf(array(
+                BinFilezilla::CFG_IP_FILTER_ALLOWED => '127.0.0.1 ::1',
+                BinFilezilla::CFG_IP_FILTER_DISALLOWED => '*',
+            ));
         }
-        
-        file_put_contents($neardBins->getXlight()->getConfOption(), $result);
     }
 
 }

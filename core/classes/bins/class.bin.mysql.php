@@ -146,7 +146,7 @@ class BinMysql
             return false;
         }
         
-        $fp = @fsockopen('127.0.0.1', $port);
+        $fp = @fsockopen('127.0.0.1', $port, $errno, $errstr, 5);
         if ($fp) {
             $dbLink = mysqli_connect('127.0.0.1:' . $port, 'root', '');
             $isMysql = false;

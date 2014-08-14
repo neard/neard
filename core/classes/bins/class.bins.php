@@ -7,7 +7,7 @@ class Bins
     private $mysql;
     private $mariadb;
     private $nodejs;
-    private $xlight;
+    private $filezilla;
     
     public function __construct()
     {
@@ -28,7 +28,7 @@ class Bins
         $this->getMysql()->reload();
         $this->getMariadb()->reload();
         $this->getNodejs()->reload();
-        $this->getXlight()->reload();
+        $this->getFilezilla()->reload();
     }
 
     public function getApache()
@@ -71,12 +71,12 @@ class Bins
         return $this->nodejs;
     }
     
-    public function getXlight()
+    public function getFilezilla()
     {
-        if ($this->xlight == null) {
-            $this->xlight = new BinXlight($this->getRootPath('xlight'));
+        if ($this->filezilla == null) {
+            $this->filezilla = new BinFilezilla($this->getRootPath('filezilla'));
         }
-        return $this->xlight;
+        return $this->filezilla;
     }
 
     public function getServices()
@@ -85,7 +85,7 @@ class Bins
             BinApache::SERVICE_NAME => $this->getApache()->getService(),
             BinMysql::SERVICE_NAME => $this->getMysql()->getService(),
             BinMariadb::SERVICE_NAME => $this->getMariadb()->getService(),
-            BinXlight::SERVICE_NAME => $this->getXlight()->getService(),
+            BinFilezilla::SERVICE_NAME => $this->getFilezilla()->getService(),
         );
     }
     
@@ -102,8 +102,8 @@ class Bins
         if ($this->getMariadb()->getLaunchStartup() == BinMariadb::LAUNCH_STARTUP_ON) {
             $result[BinMariadb::SERVICE_NAME] = $this->getMariadb()->getService();
         }
-        if ($this->getXlight()->getLaunchStartup() == BinXlight::LAUNCH_STARTUP_ON) {
-            $result[BinXlight::SERVICE_NAME] = $this->getXlight()->getService();
+        if ($this->getFilezilla()->getLaunchStartup() == BinFilezilla::LAUNCH_STARTUP_ON) {
+            $result[BinFilezilla::SERVICE_NAME] = $this->getFilezilla()->getService();
         }
         
         return $result;

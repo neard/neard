@@ -66,7 +66,6 @@ class Win32Service
     public function __construct($name)
     {
         Util::logInitClass($this);
-        
         $this->name = $name;
     }
     
@@ -117,7 +116,12 @@ class Win32Service
 
     public function create()
     {
-        global $neardBs;
+        global $neardBs, $neardBins;
+        
+        if ($this->getName() == BinFilezilla::SERVICE_NAME) {
+            $neardBins->getFilezilla()->rebuildConf();
+            return Batch::installFilezillaService();
+        }
         
         $create = dechex($this->callWin32Service('win32_create_service', array(
             'service' => $this->getName(),
@@ -152,6 +156,11 @@ class Win32Service
         global $neardBs;
         
         $this->stop();
+        
+        if ($this->getName() == BinFilezilla::SERVICE_NAME) {
+            return Batch::uninstallFilezillaService();
+        }
+        
         $delete = dechex($this->callWin32Service('win32_delete_service', $this->getName(), true));
         $this->writeLog('Delete service ' . $this->getName() . ': ' . $delete . ' (status: ' . $this->status() . ')');
         
@@ -167,6 +176,11 @@ class Win32Service
     public function start()
     {
         global $neardBs, $neardBins;
+        
+        if ($this->getName() == BinFilezilla::SERVICE_NAME) {
+            $neardBins->getFilezilla()->rebuildConf();
+        }
+        
         $start = dechex($this->callWin32Service('win32_start_service', $this->getName(), true));
         $this->writeLog('Start service ' . $this->getName() . ': ' . $start . ' (status: ' . $this->status() . ')');
     

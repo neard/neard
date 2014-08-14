@@ -7,7 +7,7 @@ class Splash
     const IMG_APACHE = 'splash-apache.bmp';
     const IMG_MYSQL = 'splash-mysql.bmp';
     const IMG_MARIADB = 'splash-mariadb.bmp';
-    const IMG_XLIGHT = 'splash-xlight.bmp';
+    const IMG_FILEZILLA = 'splash-filezilla.bmp';
     const IMG_GIT = 'splash-git.bmp';
     const IMG_SVN = 'splash-svn.bmp';
     const IMG_RESTART = 'splash-restart.bmp';
@@ -59,13 +59,8 @@ class Splash
     {
         global $neardConfig, $neardCore, $neardWinbinder;
         
-        $img = $neardCore->getResourcesPath() . '/release.bmp';
-        if (Util::startWith('testing', $neardConfig->getAppVersion())) {
-            $img = $neardCore->getResourcesPath() . '/testing.bmp';
-        }
-        
         $this->wbImageVersion = $neardWinbinder->drawImage(
-            $this->wbWindow, $img,
+            $this->wbWindow, $neardCore->getResourcesPath() . '/release.bmp',
             441, 253,
             191, 26
         );

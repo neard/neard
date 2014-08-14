@@ -1,37 +1,39 @@
 <?php
 
-class BinXlight
+class BinFilezilla
 {
-    const SERVICE_NAME = 'neardxlight';
-    const SERVICE_PARAMS = '-runservice';
+    const SERVICE_NAME = 'neardfilezilla';
     
-    const CFG_VERSION = 'xlightVersion';
-    const CFG_EXE = 'xlightExe';
-    const CFG_CONF_OPTION = 'xlightConfOption';
-    const CFG_CONF_HOSTS = 'xlightConfHosts';
-    const CFG_CONF_USERS = 'xlightConfUsers';
-    const CFG_PORT = 'xlightPort';
-    const CFG_LAUNCH_STARTUP = 'xlightLaunchStartup';
+    const CFG_VERSION = 'filezillaVersion';
+    const CFG_EXE = 'filezillaExe';
+    const CFG_CONF = 'filezillaConf';
+    const CFG_PORT = 'filezillaPort';
+    const CFG_SSL_PORT = 'filezillaSslPort';
+    const CFG_LAUNCH_STARTUP = 'filezillaLaunchStartup';
     
     const LAUNCH_STARTUP_ON = 'on';
     const LAUNCH_STARTUP_OFF = 'off';
+    
+    const CFG_SERVER_PORT = 0;
+    const CFG_WELCOME_MSG = 15;
+    const CFG_IP_FILTER_ALLOWED = 39;
+    const CFG_IP_FILTER_DISALLOWED = 40;
+    const CFG_SERVICE_NAME = 58;
+    const CFG_SERVICE_DISPLAY_NAME = 59;
     
     private $name;
     private $version;
     private $service;
     private $port;
+    private $sslPort;
     private $launchStartup;
     
     private $rootPath;
     private $currentPath;
-    private $logError;
-    private $logSession;
-    private $logTransfer;
-    private $logStats;
+    private $log;
+    private $linkLog;
     private $exe;
-    private $confOption;
-    private $confHosts;
-    private $confUsers;
+    private $conf;
     private $neardConf;
     
     public function __construct($rootPath, $version=null)
@@ -44,45 +46,38 @@ class BinXlight
     {
         global $neardBs, $neardConfig, $neardLang;
         
-        $this->name = $neardLang->getValue(Lang::XLIGHT);
+        $this->name = $neardLang->getValue(Lang::FILEZILLA);
         $this->version = $neardConfig->getRaw(self::CFG_VERSION);
         $this->exe = $neardConfig->getRaw(self::CFG_EXE);
-        $this->confOption = $neardConfig->getRaw(self::CFG_CONF_OPTION);
-        $this->confHosts = $neardConfig->getRaw(self::CFG_CONF_HOSTS);
-        $this->confUsers = $neardConfig->getRaw(self::CFG_CONF_USERS);
+        $this->conf = $neardConfig->getRaw(self::CFG_CONF);
         $this->port = $neardConfig->getRaw(self::CFG_PORT);
+        $this->sslPort = $neardConfig->getRaw(self::CFG_SSL_PORT);
         $this->launchStartup = $neardConfig->getRaw(self::CFG_LAUNCH_STARTUP);
         
         $this->rootPath = $rootPath == null ? $this->rootPath : $rootPath;
-        $this->currentPath = $this->rootPath . '/xlight' . $this->version;
-        $this->logError = $neardBs->getLogsPath() . '/xlight_error.log';
-        $this->logSession = $neardBs->getLogsPath() . '/xlight_session.log';
-        $this->logStats = $neardBs->getLogsPath() . '/xlight_stats.log';
-        $this->logTransfer = $neardBs->getLogsPath() . '/xlight_transfer.log';
+        $this->currentPath = $this->rootPath . '/filezilla' . $this->version;
+        $this->log = $neardBs->getLogsPath() . '/filezilla.log';
         $this->exe = $this->currentPath . '/' . $this->exe;
-        $this->confOption = $this->currentPath . '/' . $this->confOption;
-        $this->confHosts = $this->currentPath . '/' . $this->confHosts;
-        $this->confUsers = $this->currentPath . '/' . $this->confUsers;
+        $this->conf = $this->currentPath . '/' . $this->conf;
         $this->neardConf = $this->currentPath . '/neard.conf';
         
         $this->service = new Win32Service(self::SERVICE_NAME);
         $this->service->setDisplayName(APP_TITLE . ' ' . $this->getName() . ' ' . $this->version);
         $this->service->setBinPath($this->exe);
-        $this->service->setParams(self::SERVICE_PARAMS);
         $this->service->setStartType(Win32Service::SERVICE_DEMAND_START);
         $this->service->setErrorControl(Win32Service::SERVER_ERROR_NORMAL);
         
         if (!is_dir($this->currentPath)) {
             Util::logError(sprintf($neardLang->getValue(Lang::BIN_NOT_FOUND), $this->name . ' ' . $this->version, $this->currentPath));
         }
-        if (!is_file($this->confOption)) {
-            Util::logError(sprintf($neardLang->getValue(Lang::BIN_CONF_NOT_FOUND), $this->name . ' ' . $this->version, $this->confOption));
+        if (!is_file($this->conf)) {
+            Util::logError(sprintf($neardLang->getValue(Lang::BIN_CONF_NOT_FOUND), $this->name . ' ' . $this->version, $this->conf));
         }
-        if (!is_file($this->confHosts)) {
-            Util::logError(sprintf($neardLang->getValue(Lang::BIN_CONF_NOT_FOUND), $this->name . ' ' . $this->version, $this->confHosts));
-        }
-        if (!is_file($this->confUsers)) {
-            Util::logError(sprintf($neardLang->getValue(Lang::BIN_CONF_NOT_FOUND), $this->name . ' ' . $this->version, $this->confUsers));
+        
+        // Create log hard link
+        $log = $this->currentPath . '/Logs/FileZilla Server.log';
+        if (!file_exists($this->linkLog) && file_exists($log)) {
+            @link($log, $this->linkLog);
         }
     }
     
@@ -91,10 +86,28 @@ class BinXlight
         return $this->getName();
     }
     
+    public function rebuildConf()
+    {
+        $this->setConf(array(
+            self::CFG_SERVICE_NAME => $this->service->getName(),
+            self::CFG_WELCOME_MSG => $this->service->getDisplayName(),
+            self::CFG_SERVICE_DISPLAY_NAME => $this->service->getDisplayName()
+        ));
+    }
+    
+    public function setConf($elts)
+    {
+        $conf = simplexml_load_file($this->conf);
+        foreach ($elts as $key => $value) {
+            $conf->Settings->Item[$key] = $value;
+        }
+        $conf->asXML($this->conf);
+    }
+    
     public function changePort($port, $checkUsed = false, $wbProgressBar = null)
     {
         global $neardCore, $neardConfig, $neardBins, $neardApps, $neardWinbinder;
-    
+        
         if (!Util::isValidPort($port)) {
             Util::logError($this->getName() . ' port not valid: ' . $port);
             return false;
@@ -106,23 +119,15 @@ class BinXlight
         $isPortInUse = Batch::isPortInUse($port);
         if (!$checkUsed || $isPortInUse === false) {
             // bootstrap
-            Util::replaceDefine($neardCore->getBootstrapFilePath(), 'CURRENT_XLIGHT_PORT', intval($port));
+            Util::replaceDefine($neardCore->getBootstrapFilePath(), 'CURRENT_FILEZILLA_PORT', intval($port));
             $neardWinbinder->incrProgressBar($wbProgressBar);
     
             // neard.conf
             $neardConfig->replace(self::CFG_PORT, $port);
             $neardWinbinder->incrProgressBar($wbProgressBar);
     
-            // ftpd.hosts
-            Util::replaceInFile($this->getConfHosts(), array(
-                '/^<virtualserver\s+([a-zA-Z0-9.*]+):(\d+)>/' => '<virtualserver {{1}}:' . $port . '>'
-            ));
-            $neardWinbinder->incrProgressBar($wbProgressBar);
-            
-            // ftpd.users
-            Util::replaceInFile($this->getConfUsers(), array(
-                '/^<virtualserver\s+([a-zA-Z0-9.*]+):(\d+)>/' => '<virtualserver {{1}}:' . $port . '>'
-            ));
+            // FileZilla Server.xml
+            $this->setConf(array(self::CFG_SERVER_PORT => $port));
             $neardWinbinder->incrProgressBar($wbProgressBar);
 
             return true;
@@ -132,7 +137,7 @@ class BinXlight
         return $isPortInUse;
     }
     
-    public function checkPort($port, $showWindow = false)
+    public function checkPort($port, $ssl = false, $showWindow = false)
     {
         global $neardLang, $neardWinbinder;
         $boxTitle = sprintf($neardLang->getValue(Lang::CHECK_PORT_TITLE), $this->getName(), $port);
@@ -141,16 +146,16 @@ class BinXlight
             Util::logError($this->getName() . ' port not valid: ' . $port);
             return false;
         }
-    
-        $fp = @fsockopen('127.0.0.1', $port);
+        
+        $fp = fsockopen(($ssl ? 'ssl://' : '') . '127.0.0.1', $port, $errno, $errstr, 5);
         if ($fp) {
             $out = fgets($fp);
-            $expOut = explode(' ', $out);
-            if (count($expOut) > 4 && $expOut[1] == 'Xlight') {
-                Util::logDebug($this->getName() . ' port ' . $port . ' is used by: ' . $expOut[1] . ' ' . $expOut[2] . ' ' . $expOut[3]);
+            $expOut = explode(PHP_EOL, $out);
+            if ($expOut[0] == '220 ' . $this->getService()->getDisplayName()) {
+                Util::logDebug($this->getName() . ' port ' . $port . ' is used by: ' . str_replace('220 ', '', $expOut[0]));
                 if ($showWindow) {
                     $neardWinbinder->messageBoxInfo(
-                        sprintf($neardLang->getValue(Lang::PORT_USED_BY), $port, $expOut[1] . ' ' . $expOut[2] . ' ' . $expOut[3]),
+                        sprintf($neardLang->getValue(Lang::PORT_USED_BY), $port, str_replace('220 ', '', $expOut[0])),
                         $boxTitle
                     );
                 }
@@ -180,12 +185,12 @@ class BinXlight
     public function switchVersion($version, $showWindow = false)
     {
         global $neardBs, $neardCore, $neardConfig, $neardLang, $neardBins, $neardWinbinder;
-        Util::logDebug('Switch Xlight version to ' . $version);
+        Util::logDebug('Switch Filezilla Server version to ' . $version);
     
         $boxTitle = sprintf($neardLang->getValue(Lang::SWITCH_VERSION_TITLE), $this->getName(), $version);
     
-        $newConf = str_replace('xlight' . $this->getVersion(), 'xlight' . $version, $this->getConfOption());
-        $neardConf = str_replace('xlight' . $this->getVersion(), 'xlight' . $version, $this->getNeardConf());
+        $newConf = str_replace('filezilla' . $this->getVersion(), 'filezilla' . $version, $this->getConf());
+        $neardConf = str_replace('filezilla' . $this->getVersion(), 'filezilla' . $version, $this->getNeardConf());
     
         if (!file_exists($newConf) || !file_exists($neardConf)) {
             Util::logError('Neard config files not found for ' . $this->getName() . ' ' . $version);
@@ -211,10 +216,32 @@ class BinXlight
         }
     
         // bootstrap
-        Util::replaceDefine($neardCore->getBootstrapFilePath(), 'CURRENT_XLIGHT_VERSION', $version);
+        Util::replaceDefine($neardCore->getBootstrapFilePath(), 'CURRENT_FILEZILLA_VERSION', $version);
     
         // neard.conf
-        $neardConfig->replace(BinMysql::CFG_VERSION, $version);
+        $neardConfig->replace(BinFilezilla::CFG_VERSION, $version);
+    }
+    
+    public function existsSslCrt()
+    {
+        global $neardBs;
+    
+        $ppkPath = $neardBs->getSslPath() . '/' . self::SERVICE_NAME . '.ppk';
+        $pubPath = $neardBs->getSslPath() . '/' . self::SERVICE_NAME . '.pub';
+        $crtPath = $neardBs->getSslPath() . '/' . self::SERVICE_NAME . '.crt';
+    
+        return is_file($ppkPath) && is_file($pubPath) && is_file($crtPath);
+    }
+    
+    public function removeSslCrt()
+    {
+        global $neardBs;
+    
+        $ppkPath = $neardBs->getSslPath() . '/' . self::SERVICE_NAME . '.ppk';
+        $pubPath = $neardBs->getSslPath() . '/' . self::SERVICE_NAME . '.pub';
+        $crtPath = $neardBs->getSslPath() . '/' . self::SERVICE_NAME . '.crt';
+    
+        return @unlink($ppkPath) && @unlink($pubPath) && @unlink($crtPath);
     }
     
     public function getName()
@@ -242,6 +269,11 @@ class BinXlight
         return $this->port;
     }
     
+    public function getSslPort()
+    {
+        return $this->sslPort;
+    }
+    
     public function getLaunchStartup()
     {
         return $this->launchStartup;
@@ -257,24 +289,9 @@ class BinXlight
         return $this->currentPath;
     }
     
-    public function getLogError()
+    public function getLog()
     {
-        return $this->logError;
-    }
-    
-    public function getLogSession()
-    {
-        return $this->logSession;
-    }
-    
-    public function getLogStats()
-    {
-        return $this->logStats;
-    }
-    
-    public function getLogTransfer()
-    {
-        return $this->logTransfer;
+        return $this->log;
     }
     
     public function getExe()
@@ -282,19 +299,9 @@ class BinXlight
         return $this->exe;
     }
     
-    public function getConfOption()
+    public function getConf()
     {
-        return $this->confOption;
-    }
-    
-    public function getConfHosts()
-    {
-        return $this->confHosts;
-    }
-    
-    public function getConfUsers()
-    {
-        return $this->confUsers;
+        return $this->conf;
     }
     
     public function getNeardConf()

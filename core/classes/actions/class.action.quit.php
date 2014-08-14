@@ -37,9 +37,9 @@ class ActionQuit
             } elseif ($sName == BinMariadb::SERVICE_NAME) {
                 $name = $neardBins->getMariadb()->getName() . ' ' . $neardBins->getMariadb()->getVersion();
                 $port = $neardBins->getMariadb()->getPort();
-            } elseif ($sName == BinXlight::SERVICE_NAME) {
-                $name = $neardBins->getXlight()->getName() . ' ' . $neardBins->getXlight()->getVersion();
-                $port = $neardBins->getXlight()->getPort();
+            } elseif ($sName == BinFilezilla::SERVICE_NAME) {
+                $name = $neardBins->getFilezilla()->getName() . ' ' . $neardBins->getFilezilla()->getVersion();
+                $port = $neardBins->getFilezilla()->getPort();
             }
             $name .= ' (' . $service->getName() . ')';
             

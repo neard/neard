@@ -9,7 +9,7 @@ Neard is an Integrated Web Development Tools environment combining :
 * **MySQL**
 * **MariaDB**
 * **Node.js**
-* **Xlight**
+* **Filezilla**
 
 ### Applications
 
@@ -44,7 +44,7 @@ And many other features.
 
 Neard is [available on SourceForge](https://sourceforge.net/projects/neard/) :
 
-* Latest release : [Neard 1.0.9](https://sourceforge.net/projects/neard/files/Releases/1.0.9/neard-1.0.9.zip/download) (2014/07/14)
+* Latest release : [Neard 1.0.11](https://sourceforge.net/projects/neard/files/Releases/1.0.11/neard-1.0.11.zip/download) (2014/08/14)
 * [Patches](https://sourceforge.net/projects/neard/files/Patches/) : to migrate from older release to the latest.
 * [Addons](https://sourceforge.net/projects/neard/files/Addons/) : other versions of binaries (Apache, PHP, MYSQL, MariaDB, etc...).
 * [Tools](https://sourceforge.net/projects/neard/files/Tools/) : useful tools for Neard.

@@ -13,8 +13,8 @@ class ActionLaunchStartupService
                 $neardConfig->replace(BinMysql::CFG_LAUNCH_STARTUP, $args[1]);
             } elseif ($args[0] == $neardBins->getMariadb()->getName()) {
                 $neardConfig->replace(BinMariadb::CFG_LAUNCH_STARTUP, $args[1]);
-            } elseif ($args[0] == $neardBins->getXlight()->getName()) {
-                $neardConfig->replace(BinXlight::CFG_LAUNCH_STARTUP, $args[1]);
+            } elseif ($args[0] == $neardBins->getFilezilla()->getName()) {
+                $neardConfig->replace(BinFilezilla::CFG_LAUNCH_STARTUP, $args[1]);
             }
         }
     }

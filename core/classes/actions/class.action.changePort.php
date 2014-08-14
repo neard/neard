@@ -33,10 +33,10 @@ class ActionChangePort
                 $this->currentPort = CURRENT_MARIADB_PORT;
                 $this->bin = $neardBins->getMariadb();
                 $this->cntProcessActions = 6;
-            } elseif ($args[0] == $neardBins->getXlight()->getName()) {
-                $this->currentPort = CURRENT_XLIGHT_PORT;
-                $this->bin = $neardBins->getXlight();
-                $this->cntProcessActions = 5;
+            } elseif ($args[0] == $neardBins->getFilezilla()->getName()) {
+                $this->currentPort = CURRENT_FILEZILLA_PORT;
+                $this->bin = $neardBins->getFilezilla();
+                $this->cntProcessActions = 4;
             }
             
             $neardWinbinder->reset();

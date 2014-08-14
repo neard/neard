@@ -5,10 +5,15 @@
   </div>
 </div>
 <div class="row">
-  <div class="col-lg-4">
+  <div class="col-lg-6">
     <div class="list-group">
       <span class="list-group-item">
         <?php
+        if ($neardBins->getApache()->checkPort($neardBins->getApache()->getSslPort(), true)) {
+            ?><span style="float:right;font-size:12px;margin-left:2px;" class="label label-success"><?php echo sprintf($neardLang->getValue(Lang::HOMEPAGE_SERVICE_STARTED), $neardBins->getApache()->getSslPort()); ?> (SSL)</span><?php
+        } else {
+            ?><span style="float:right;font-size:12px;margin-left:2px;" class="label label-danger"><?php echo $neardLang->getValue(Lang::HOMEPAGE_SERVICE_STOPPED); ?></span><?php
+        }
         if ($neardBins->getApache()->checkPort($neardBins->getApache()->getPort())) {
             ?><span style="float:right;font-size:12px" class="label label-success"><?php echo sprintf($neardLang->getValue(Lang::HOMEPAGE_SERVICE_STARTED), $neardBins->getApache()->getPort()); ?></span><?php
         } else {

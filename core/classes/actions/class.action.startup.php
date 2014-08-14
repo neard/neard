@@ -233,9 +233,9 @@ class ActionStartup
                     $this->neardSplash->setImage(Splash::IMG_MARIADB);
                     $bin = $neardBins->getMariadb();
                     $syntaxCheckCmd = BinMariadb::CMD_SYNTAX_CHECK;
-                } elseif ($sName == BinXlight::SERVICE_NAME) {
-                    $this->neardSplash->setImage(Splash::IMG_XLIGHT);
-                    $bin = $neardBins->getXlight();
+                } elseif ($sName == BinFilezilla::SERVICE_NAME) {
+                    $this->neardSplash->setImage(Splash::IMG_FILEZILLA);
+                    $bin = $neardBins->getFilezilla();
                 }
             
                 $name = $bin->getName() . ' ' . $bin->getVersion() . ' (' . $service->getName() . ')';
@@ -263,8 +263,11 @@ class ActionStartup
                         }
                         
                         if ($sName == BinApache::SERVICE_NAME && !$neardBins->getApache()->existsSslCrt()) {
-                            $this->neardSplash->setTextLoading($neardLang->getValue(Lang::STARTUP_GEN_SSL_CRT_TEXT));
-                            Batch::genApacheCertificate();
+                            $this->neardSplash->setTextLoading(sprintf($neardLang->getValue(Lang::STARTUP_GEN_SSL_CRT_TEXT), 'localhost'));
+                            Batch::genSslCertificate('localhost');
+                        } elseif ($sName == BinFilezilla::SERVICE_NAME && !$neardBins->getFilezilla()->existsSslCrt()) {
+                            $this->neardSplash->setTextLoading(sprintf($neardLang->getValue(Lang::STARTUP_GEN_SSL_CRT_TEXT), $neardLang->getValue(Lang::FILEZILLA)));
+                            Batch::genSslCertificate(BinFilezilla::SERVICE_NAME);
                         }
             
                         $this->neardSplash->incrProgressBar();

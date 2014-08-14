@@ -197,7 +197,7 @@ class TplApp
         $tplPhp = TplAppPhp::process();
         $tplMysql = TplAppMysql::process();
         $tplMariadb = TplAppMariadb::process();
-        $tplXlight = TplAppXlight::process();
+        $tplFilezilla = TplAppFilezilla::process();
         
         $tplGit = TplAppGit::process();
         $tplSvn = TplAppSvn::process();
@@ -212,7 +212,8 @@ class TplApp
         return
             // Items
             '[Menu.Left]' . PHP_EOL .
-            TplAestan::getItemLink($neardLang->getValue(Lang::MENU_LOCALHOST), null, true) . PHP_EOL .
+            TplAestan::getItemLink($neardLang->getValue(Lang::MENU_LOCALHOST), 'http://localhost') . PHP_EOL .
+            TplAestan::getItemLink($neardLang->getValue(Lang::MENU_LOCALHOST) . ' (SSL)', 'https://localhost') . PHP_EOL .
             TplAestan::getItemExplore($neardLang->getValue(Lang::MENU_WWW_DIRECTORY), $neardBs->getWwwPath()) . PHP_EOL .
             
             //// Bins menus
@@ -222,7 +223,7 @@ class TplApp
             $tplPhp[self::SECTION_CALL] . PHP_EOL .
             $tplMysql[self::SECTION_CALL] . PHP_EOL .
             $tplMariadb[self::SECTION_CALL] . PHP_EOL .
-            $tplXlight[self::SECTION_CALL] . PHP_EOL .
+            $tplFilezilla[self::SECTION_CALL] . PHP_EOL .
             
             //// Git / SVN menus
             TplAestan::getItemSeparator() . PHP_EOL .
@@ -248,7 +249,7 @@ class TplApp
             PHP_EOL . $tplPhp[self::SECTION_CONTENT] .
             PHP_EOL . $tplMysql[self::SECTION_CONTENT] .
             PHP_EOL . $tplMariadb[self::SECTION_CONTENT] .
-            PHP_EOL . $tplXlight[self::SECTION_CONTENT] .
+            PHP_EOL . $tplFilezilla[self::SECTION_CONTENT] .
             PHP_EOL . $tplGit[self::SECTION_CONTENT] .
             PHP_EOL . $tplSvn[self::SECTION_CONTENT] .
             PHP_EOL . $tplHosts[self::SECTION_CONTENT] .

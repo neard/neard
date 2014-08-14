@@ -26,6 +26,7 @@ class Lang
     const LANG = 'lang';
     const LOGS_VERBOSE = 'logsVerbose';
     const MODULES = 'modules';
+    const NAME = 'name';
     const PAYPAL = 'paypal';
     const QUIT = 'quit';
     const READ_CHANGELOG = 'readChangelog';
@@ -37,6 +38,7 @@ class Lang
     const SSL = 'ssl';
     const STARTUP = 'startup';
     const STATUS = 'status';
+    const TARGET = 'target';
     const TOOLS = 'tools';
     const VERBOSE_DEBUG = 'verboseDebug';
     const VERBOSE_REPORT = 'verboseReport';
@@ -58,6 +60,7 @@ class Lang
     const MENU_EDIT_ALIAS = 'menuEditAlias';
     const MENU_EDIT_VHOST = 'menuEditVhost';
     const MENU_ERROR_LOGS = 'menuErrorLogs';
+    const MENU_GEN_SSL_CERTIFICATE = 'menuGenSslCertificate';
     const MENU_INSTALL_SERVICE = 'menuInstallService';
     const MENU_LAUNCH_STARTUP = 'menuLaunchStartup';
     const MENU_LAUNCH_STARTUP_SERVICE = 'menuLaunchStartupService';
@@ -81,12 +84,12 @@ class Lang
     
     // Bins
     const APACHE = 'apache';
+    const FILEZILLA = 'filezilla';
     const PHP = 'php';
     const PEAR = 'pear';
     const MYSQL = 'mysql';
     const MARIADB = 'mariadb';
     const NODEJS = 'nodejs';
-    const XLIGHT = 'xlight';
     
     // Apps
     const GITLIST = 'gitlist';
@@ -256,6 +259,12 @@ class Lang
     const CHECK_VERSION_AVAILABLE_TEXT = 'checkVersionAvailableText';
     const CHECK_VERSION_LATEST_TEXT = 'checkVersionLatestText';
     
+    // Action gen SSL certificate
+    const GENSSL_TITLE = 'genSslTitle';
+    const GENSSL_PATH = 'genSslPath';
+    const GENSSL_CREATED = 'genSslCreated';
+    const GENSSL_CREATED_ERROR = 'genSslCreatedError';
+    
     // Windows forms
     const BUTTON_OK = 'buttonOk';
     const BUTTON_DELETE = 'buttonDelete';
@@ -364,6 +373,7 @@ class Lang
             self::LANG,
             self::LOGS_VERBOSE,
             self::MODULES,
+            self::NAME,
             self::PAYPAL,
             self::QUIT,
             self::READ_CHANGELOG,
@@ -375,6 +385,7 @@ class Lang
             self::SSL,
             self::STARTUP,
             self::STATUS,
+            self::TARGET,
             self::TOOLS,
             self::VERBOSE_DEBUG,
             self::VERBOSE_REPORT,
@@ -396,6 +407,7 @@ class Lang
             self::MENU_EDIT_ALIAS,
             self::MENU_EDIT_VHOST,
             self::MENU_ERROR_LOGS,
+            self::MENU_GEN_SSL_CERTIFICATE,
             self::MENU_INSTALL_SERVICE,
             self::MENU_LAUNCH_STARTUP,
             self::MENU_LAUNCH_STARTUP_SERVICE,
@@ -419,12 +431,12 @@ class Lang
             
             // Bins
             self::APACHE,
+            self::FILEZILLA,
             self::PHP,
             self::PEAR,
             self::MYSQL,
             self::MARIADB,
             self::NODEJS,
-            self::XLIGHT,
             
             // Apps
             self::GITLIST,
@@ -593,6 +605,12 @@ class Lang
             self::CHECK_VERSION_TITLE,
             self::CHECK_VERSION_AVAILABLE_TEXT,
             self::CHECK_VERSION_LATEST_TEXT,
+                
+            // Action gen SSL certificate
+            self::GENSSL_TITLE,
+            self::GENSSL_PATH,
+            self::GENSSL_CREATED,
+            self::GENSSL_CREATED_ERROR,
             
             // Windows forms
             self::BUTTON_OK,
