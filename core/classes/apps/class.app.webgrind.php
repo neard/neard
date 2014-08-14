@@ -23,7 +23,7 @@ class AppWebgrind
         
         $this->rootPath = $rootPath;
         $this->currentPath = $rootPath . '/webgrind' . $this->version;
-        $this->conf = $neardConfig->getRaw(self::CFG_CONF);
+        $this->conf = $this->currentPath . '/' . $this->conf;
         
         if (!is_dir($this->currentPath)) {
             Util::logError(sprintf($neardLang->getValue(Lang::BIN_NOT_FOUND), $this->name . ' ' . $this->version, $this->currentPath));

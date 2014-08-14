@@ -125,6 +125,10 @@ class TplAppApache
                 Action::CHECK_PORT, array($neardBins->getApache()->getName(), $neardBins->getApache()->getPort()),
                 array(sprintf($neardLang->getValue(Lang::MENU_CHECK_PORT), $neardBins->getApache()->getPort()), TplAestan::GLYPH_LIGHT)
             ) . PHP_EOL .
+            TplApp::getActionRun(
+                Action::CHECK_PORT, array($neardBins->getApache()->getName(), $neardBins->getApache()->getSslPort(), true),
+                array(sprintf($neardLang->getValue(Lang::MENU_CHECK_PORT), $neardBins->getApache()->getSslPort()) . ' (SSL)', TplAestan::GLYPH_RED_LIGHT)
+            ) . PHP_EOL .
             $tplChangePort[TplApp::SECTION_CALL] . PHP_EOL .
             $tplLaunchStartup[TplApp::SECTION_CALL] . PHP_EOL;
         

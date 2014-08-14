@@ -52,11 +52,11 @@ class ActionSwitchVersion
                 $this->restart = false;
                 $this->service = null;
                 $this->changePort = false;
-            } elseif ($args[0] == $neardBins->getXlight()->getName()) {
-                $this->currentVersion = CURRENT_XLIGHT_VERSION;
-                $this->bin = $neardBins->getXlight();
+            } elseif ($args[0] == $neardBins->getFilezilla()->getName()) {
+                $this->currentVersion = CURRENT_FILEZILLA_VERSION;
+                $this->bin = $neardBins->getFilezilla();
                 $this->restart = false;
-                $this->service = $neardBins->getXlight()->getService();
+                $this->service = $neardBins->getFilezilla()->getService();
                 $this->changePort = true;
             }
             

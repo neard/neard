@@ -16,6 +16,7 @@ class Action
     const EDIT_ALIAS = 'editAlias';
     const EDIT_VHOST = 'editVhost';
     const EXEC = 'exec';
+    const GEN_SSL_CERTIFICATE = 'genSslCertificate';
     const LAUNCH_STARTUP = 'launchStartup';
     const LAUNCH_STARTUP_SERVICE = 'launchStartupService';
     const MANUAL_RESTART = 'manualRestart';

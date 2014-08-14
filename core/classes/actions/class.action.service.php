@@ -37,10 +37,10 @@ class ActionService
                 $name = $neardBins->getMariadb()->getName();
                 $service = $neardBins->getMariadb()->getService();
                 $port = $neardBins->getMariadb()->getPort();
-            } elseif ($sName == BinXlight::SERVICE_NAME) {
-                $name = $neardBins->getXlight()->getName();
-                $service = $neardBins->getXlight()->getService();
-                $port = $neardBins->getXlight()->getPort();
+            } elseif ($sName == BinFilezilla::SERVICE_NAME) {
+                $name = $neardBins->getFilezilla()->getName();
+                $service = $neardBins->getFilezilla()->getService();
+                $port = $neardBins->getFilezilla()->getPort();
             }
             
             if (!empty($port) && !empty($service) && $service instanceof Win32Service) {

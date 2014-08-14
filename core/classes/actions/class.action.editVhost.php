@@ -98,7 +98,7 @@ class ActionEditVhost
                 if ($neardBins->getApache()->removeSslCrt($this->initServerName) && @unlink($neardBs->getVhostsPath() . '/' . $this->initServerName . '.conf')) {
                     new ActionSwitchHost(array('127.0.0.1', $this->initServerName, ActionSwitchHost::SWITCH_OFF));
                 }
-                if (Batch::genApacheCertificate($serverName) && file_put_contents($neardBs->getVhostsPath() . '/' . $serverName . '.conf', $neardBins->getApache()->getVhostContent($serverName, $documentRoot)) !== false) {
+                if (Batch::genSslCertificate($serverName) && file_put_contents($neardBs->getVhostsPath() . '/' . $serverName . '.conf', $neardBins->getApache()->getVhostContent($serverName, $documentRoot)) !== false) {
                     $neardWinbinder->incrProgressBar($this->wbProgressBar);
                     
                     Util::addWindowsHost('127.0.0.1', $serverName);

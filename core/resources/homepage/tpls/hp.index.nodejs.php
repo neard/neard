@@ -5,7 +5,7 @@
   </div>
 </div>
 <div class="row">
-  <div class="col-lg-4">
+  <div class="col-lg-6">
     <div class="list-group">
       <span class="list-group-item">
         <?php foreach ($neardBins->getNodejs()->getVersionList() as $version) {

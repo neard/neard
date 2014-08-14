@@ -9,6 +9,7 @@ class BinApache
     const CFG_EXE = 'apacheExe';
     const CFG_CONF = 'apacheConf';
     const CFG_PORT = 'apachePort';
+    const CFG_SSL_PORT = 'apacheSslPort';
     const CFG_OPENSSL_EXE = 'apacheOpensslExe';
     const CFG_LAUNCH_STARTUP = 'apacheLaunchStartup';
     
@@ -27,6 +28,7 @@ class BinApache
     private $version;
     private $service;
     private $port;
+    private $sslPort;
     private $launchStartup;
     
     private $rootPath;
@@ -56,6 +58,7 @@ class BinApache
         $this->exe = $neardConfig->getRaw(self::CFG_EXE);
         $this->conf = $neardConfig->getRaw(self::CFG_CONF);
         $this->port = $neardConfig->getRaw(self::CFG_PORT);
+        $this->sslPort = $neardConfig->getRaw(self::CFG_SSL_PORT);
         $this->opensslExe = $neardConfig->getRaw(self::CFG_OPENSSL_EXE);
         $this->launchStartup = $neardConfig->getRaw(self::CFG_LAUNCH_STARTUP);
         
@@ -125,9 +128,7 @@ class BinApache
             // vhosts
             foreach ($this->getVhosts() as $vhost) {
                 Util::replaceInFile($neardBs->getVhostsPath() . '/' . $vhost . '.conf', array(
-                    '/ServerName\s+([a-zA-Z0-9.]+):(\d+)/' => 'ServerName {{1}}:' . $port,
-                    '/^NameVirtualHost\s+([a-zA-Z0-9.*]+):(\d+)/' => 'NameVirtualHost {{1}}:' . $port,
-                    '/^<VirtualHost\s+([a-zA-Z0-9.*]+):(\d+)>/' => '<VirtualHost {{1}}:' . $port . '>'
+                    '/^<VirtualHost\s+([a-zA-Z0-9.*]+):(\d+)>$/' => '<VirtualHost {{1}}:' . $port . '>$'
                 ));
             }
             $neardWinbinder->incrProgressBar($wbProgressBar);
@@ -145,9 +146,9 @@ class BinApache
         return $isPortInUse;
     }
     
-    public function checkPort($port, $showWindow = false)
+    public function checkPort($port, $ssl = false, $showWindow = false)
     {
-        global $neardLang, $neardWinbinder;
+        global $neardBs, $neardLang, $neardWinbinder;
         $boxTitle = sprintf($neardLang->getValue(Lang::CHECK_PORT_TITLE), $this->getName(), $port);
         
         if (!Util::isValidPort($port)) {
@@ -155,24 +156,20 @@ class BinApache
             return false;
         }
         
-        $fp = @fsockopen('127.0.0.1', $port);
-        $out = "GET / HTTP/1.1\r\nHost: 127.0.0.1\r\nConnection: Close\r\n\r\n";
-        if ($fp) {
-            fwrite($fp, $out);
-            while (!feof($fp)) {
-                $line = fgets($fp, 128);
-                if (preg_match('/Server: /',$line)) {
-                    Util::logDebug($this->getName() . ' port ' . $port . ' is used by: ' . $this->getName() . ' ' . str_replace('Server: ', '', trim($line)));
+        $headers = get_headers('http' . ($ssl ? 's' : '') . '://localhost:' . $port);
+        if (!empty($headers)) {
+            foreach ($headers as $row) {
+                if (Util::startWith($row, 'Server: ')) {
+                    Util::logDebug($this->getName() . ' port ' . $port . ' is used by: ' . $this->getName() . ' ' . str_replace('Server: ', '', trim($row)));
                     if ($showWindow) {
                         $neardWinbinder->messageBoxInfo(
-                            sprintf($neardLang->getValue(Lang::PORT_USED_BY), $port, str_replace('Server: ', '', trim($line))),
+                            sprintf($neardLang->getValue(Lang::PORT_USED_BY), $port, str_replace('Server: ', '', trim($row))),
                             $boxTitle
                         );
                     }
                     return true;
                 }
             }
-            fclose($fp);
             Util::logDebug($this->getName() . ' port ' . $port . ' is used by another application');
             if ($showWindow) {
                 $neardWinbinder->messageBoxWarning(
@@ -478,7 +475,7 @@ class BinApache
             $this->getRequiredContent() . PHP_EOL .
             '    </Directory>' . PHP_EOL .
             '</VirtualHost>' . PHP_EOL . PHP_EOL .
-            '<VirtualHost *:443>' . PHP_EOL .
+            '<VirtualHost *:' . $this->getSslPort() . '> #SSL' . PHP_EOL .
             '    DocumentRoot "' . $documentRoot . '"' . PHP_EOL .
             '    ServerName ' . $serverName . PHP_EOL .
             '    ServerAdmin webmaster@' . $serverName . PHP_EOL .
@@ -584,6 +581,11 @@ class BinApache
     public function getPort()
     {
         return $this->port;
+    }
+    
+    public function getSslPort()
+    {
+        return $this->sslPort;
     }
     
     public function getLaunchStartup()

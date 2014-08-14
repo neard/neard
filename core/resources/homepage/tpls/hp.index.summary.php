@@ -73,14 +73,14 @@
             <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardBins->getNodejs()->getVersion(); ?></span>
             <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::NODEJS); ?>
           </a>
-          <a class="list-group-item" href="#xlight">
+          <a class="list-group-item" href="#filezilla">
             <?php
-            if ($neardBins->getXlight()->checkPort($neardBins->getXlight()->getPort())) {
-                ?><span style="float:right;font-size:12px" class="label label-success"><?php echo $neardBins->getXlight()->getVersion(); ?></span><?php
+            if ($neardBins->getFilezilla()->checkPort($neardBins->getFilezilla()->getPort())) {
+                ?><span style="float:right;font-size:12px" class="label label-success"><?php echo $neardBins->getFilezilla()->getVersion(); ?></span><?php
             } else { 
-                ?><span style="float:right;font-size:12px" class="label label-danger"><?php echo $neardBins->getXlight()->getVersion(); ?></span><?php
+                ?><span style="float:right;font-size:12px" class="label label-danger"><?php echo $neardBins->getFilezilla()->getVersion(); ?></span><?php
             } ?>
-            <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::XLIGHT); ?>
+            <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::FILEZILLA); ?>
           </a>
         </div>
       </div>

@@ -627,20 +627,20 @@ class Util
     {
         global $neardBs, $neardCore, $neardBins, $neardApps, $neardTools;
         return array(
-            $neardBs->getAliasPath()                     => array(''),
-            $neardBs->getVhostsPath()                    => array(''),
-            $neardBs->getSslPath()                       => array('.cnf'),
-            $neardBins->getApache()->getRootPath()       => array('.ini', '.conf'),
-            $neardBins->getPhp()->getRootPath()          => array('.php', '.bat', '.ini', '.reg'),
-            $neardBins->getMysql()->getRootPath()        => array('my.ini'),
-            $neardBins->getMariadb()->getRootPath()      => array('my.ini'),
-            $neardBins->getNodejs()->getRootPath()       => array('.bat', 'npmrc'),
-            $neardBins->getXlight()->getRootPath()       => array('.hosts', '.option', '.rules', '.users'),
-            $neardApps->getWebsvn()->getRootPath()       => array('config.php'),
-            $neardApps->getGitlist()->getRootPath()      => array('config.ini'),
-            $neardTools->getConsole()->getRootPath()     => array('console.xml'),
-            $neardTools->getTccle()->getRootPath()       => array('.ini'),
-            $neardCore->getResourcesPath() . '/homepage' => array('.conf'),
+            $neardBs->getAliasPath()                        => array(''),
+            $neardBs->getVhostsPath()                       => array(''),
+            $neardBs->getSslPath()                          => array('.cnf'),
+            $neardBins->getApache()->getRootPath()          => array('.ini', '.conf'),
+            $neardBins->getPhp()->getRootPath()             => array('.php', '.bat', '.ini', '.reg'),
+            $neardBins->getMysql()->getRootPath()           => array('my.ini'),
+            $neardBins->getMariadb()->getRootPath()         => array('my.ini'),
+            $neardBins->getNodejs()->getRootPath()          => array('.bat', 'npmrc'),
+            $neardBins->getFilezilla()->getRootPath() => array('.xml'),
+            $neardApps->getWebsvn()->getRootPath()          => array('config.php'),
+            $neardApps->getGitlist()->getRootPath()         => array('config.ini'),
+            $neardTools->getConsole()->getRootPath()        => array('console.xml'),
+            $neardTools->getTccle()->getRootPath()          => array('.ini'),
+            $neardCore->getResourcesPath() . '/homepage'    => array('.conf'),
         );
     }
     
@@ -659,18 +659,20 @@ class Util
     
     public static function getLatestVersion()
     {
-        $rssContent = file_get_contents('http://sourceforge.net/api/file/index/project-id/2115941/path/Releases/mtime/desc/rss');
-        if ($rssContent !== false) {
-            $simpleXml = simplexml_load_string($rssContent);
-            if ($simpleXml !== false) {
-                $rss = json_decode(json_encode((array) $simpleXml), 1);
-                if ($rss !== false && isset($rss['channel']) && isset($rss['channel']['item']) && isset($rss['channel']['item'][0])) {
-                    $latestItem = explode('/', $rss['channel']['item'][0]['link']);
-                    if ($latestItem !== false) {
-                        return $latestItem[count($latestItem) - 2];
-                    }
-                }
-            }
+        global $neardBs;
+        
+        $remoteConfContent = file_get_contents('https://raw.githubusercontent.com/crazy-max/neard/master/neard.conf');
+        if (empty($remoteConfContent)) {
+            return null;
+        }
+        
+        $remoteConfPath = $neardBs->getTmpPath() . '/neard-latestversion.conf';
+        file_put_contents($remoteConfPath, $remoteConfContent);
+        $raw = parse_ini_file($remoteConfPath);
+        @unlink($remoteConfPath);
+        
+        if ($raw !== false && isset($raw[Config::CFG_APP_VERSION])) {
+            return $raw[Config::CFG_APP_VERSION];
         }
         
         return null;

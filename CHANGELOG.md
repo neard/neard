@@ -1,6 +1,22 @@
 # Changelog
 
-## 1.0.10 (2014/08/8)
+## 1.0.11 (2014/08/14)
+
+* Apache 2.4 not working (SSL issue) ([Issue #66](https://github.com/crazy-max/neard/issues/66))
+* Add option to check SSL port ([Issue #65](https://github.com/crazy-max/neard/issues/65))
+* Localhost SSL shortcut on menu ([Issue #64](https://github.com/crazy-max/neard/issues/64))
+* Change Xlight with Filezilla FTP Server ([Issue #63](https://github.com/crazy-max/neard/issues/63))
+* Bug checking latest release from Sourceforge ([Issue #62](https://github.com/crazy-max/neard/issues/62))
+* Add item menu to create SSL certificate ([Issue #60](https://github.com/crazy-max/neard/issues/60))
+* Error when XLight service start ([Issue #47](https://github.com/crazy-max/neard/issues/47))
+* Loading window while checking port
+* Filezilla started at launch
+* FTPS using Explicit SSL/TLS on Filezilla
+* Webgrind conf problem
+* Remove localhost SSL certificate from package
+* SSL status displayed on home page for Apache and Filezilla
+
+## 1.0.10 (2014/08/08)
 
 * Htaccess bug on homepage ([Issue #59](https://github.com/crazy-max/neard/issues/59))
 * Add HTTPS support ([Issue #58](https://github.com/crazy-max/neard/issues/58))

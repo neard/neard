@@ -4,6 +4,8 @@ class TplAppTools
 {
     const MENU = 'tools';
     
+    const ACTION_GEN_SSL_CERTIFICATE = 'genSslCertificate';
+    
     public static function process()
     {
         global $neardLang;
@@ -14,6 +16,12 @@ class TplAppTools
     public static function getMenuTools()
     {
         global $neardLang, $neardTools;
+        
+        $tplGenSslCertificate = TplApp::getActionMulti(
+            self::ACTION_GEN_SSL_CERTIFICATE, null,
+            array($neardLang->getValue(Lang::MENU_GEN_SSL_CERTIFICATE), TplAestan::GLYPH_SSL_CERTIFICATE),
+            false, get_called_class()
+        );
         
         return TplAestan::getItemConsole(
                 $neardLang->getValue(Lang::GIT),
@@ -39,7 +47,14 @@ class TplAppTools
                 $neardLang->getValue(Lang::WEBGRIND),
                 'webgrind/',
                 true
-            );
+            ) . PHP_EOL .
+            $tplGenSslCertificate[TplApp::SECTION_CALL] . PHP_EOL .
+            $tplGenSslCertificate[TplApp::SECTION_CONTENT];
+    }
+    
+    public static function getActionGenSslCertificate()
+    {
+        return TplApp::getActionRun(Action::GEN_SSL_CERTIFICATE);
     }
     
 }
