@@ -24,6 +24,7 @@ class Lang
     const HELP = 'help';
     const HOSTS = 'hosts';
     const LANG = 'lang';
+    const LOGS = 'logs';
     const LOGS_VERBOSE = 'logsVerbose';
     const MODULES = 'modules';
     const NAME = 'name';
@@ -101,16 +102,19 @@ class Lang
     // Tools
     const CONSOLE = 'console';
     const GIT = 'git';
-    const IMAGICK = 'imagick';
+    const IMAGEMAGICK = 'imagemagick';
+    const RUNFROMRPOCESS = 'runfromprocess';
+    const SETENV = 'setenv';
     const SUBLIMETEXT = 'sublimetext';
     const SVN = 'svn';
     const TCCLE = 'tccle';
     const XDC = 'xdc';
     
-    // Init
-    const BIN_NOT_FOUND = 'binNotFound';
-    const BIN_CONF_NOT_FOUND = 'binConfNotFound';
-    const BIN_EXE_NOT_FOUND = 'binExeNotFound';
+    // Errors
+    const ERROR_CONF_NOT_FOUND = 'errorConfNotFound';
+    const ERROR_EXE_NOT_FOUND = 'errorExeNotFound';
+    const ERROR_FILE_NOT_FOUND = 'errorFileNotFound';
+    const ERROR_INVALID_PARAMETER = 'errorInvalidParameter';
     
     // Action Switch version
     const SWITCH_VERSION_TITLE = 'switchVersionTitle';
@@ -195,6 +199,7 @@ class Lang
     const STARTUP_KILL_PHP_PROCS_TEXT = 'startupKillPhpProcsText';
     const STARTUP_REFRESH_HOSTNAME_TEXT = 'startupRefreshHostnameText';
     const STARTUP_CHECK_BROWSER_TEXT = 'startupCheckBrowserText';
+    const STARTUP_CLEAN_TMP_TEXT = 'startupCleanTmpText';
     const STARTUP_PURGE_LOGS_TEXT = 'startupPurgeLogsText';
     const STARTUP_REFRESH_ALIAS_TEXT = 'startupRefreshAliasText';
     const STARTUP_REFRESH_VHOSTS_TEXT = 'startupRefreshVhostsText';
@@ -286,6 +291,7 @@ class Lang
     const HOMEPAGE_POST_ISSUE = 'homepagePostIssue';
     const HOMEPAGE_DONATE_TEXT = 'homepageDonateText';
     const HOMEPAGE_PHPINFO_TEXT = 'homepagePhpinfoText';
+    const HOMEPAGE_APC_TEXT = 'homepageApcText';
     const HOMEPAGE_BACK_TEXT = 'homepageBackText';
     
     private $current;
@@ -371,6 +377,7 @@ class Lang
             self::HELP,
             self::HOSTS,
             self::LANG,
+            self::LOGS,
             self::LOGS_VERBOSE,
             self::MODULES,
             self::NAME,
@@ -449,15 +456,18 @@ class Lang
             self::CONSOLE,
             self::GIT,
             self::IMAGICK,
+            self::RUNFROMRPOCESS,
+            self::SETENV,
             self::SUBLIMETEXT,
             self::SVN,
             self::TCCLE,
             self::XDC,
             
-            // Init
-            self::BIN_NOT_FOUND,
-            self::BIN_CONF_NOT_FOUND,
-            self::BIN_EXE_NOT_FOUND,
+            // Errors
+            self::ERROR_CONF_NOT_FOUND,
+            self::ERROR_EXE_NOT_FOUND,
+            self::ERROR_FILE_NOT_FOUND,
+            self::ERROR_INVALID_PARAMETER,
             
             // Action Switch version
             self::SWITCH_VERSION_TITLE,
@@ -542,6 +552,7 @@ class Lang
             self::STARTUP_KILL_PHP_PROCS_TEXT,
             self::STARTUP_REFRESH_HOSTNAME_TEXT,
             self::STARTUP_CHECK_BROWSER_TEXT,
+            self::STARTUP_CLEAN_TMP_TEXT,
             self::STARTUP_PURGE_LOGS_TEXT,
             self::STARTUP_REFRESH_ALIAS_TEXT,
             self::STARTUP_REFRESH_VHOSTS_TEXT,
@@ -633,6 +644,7 @@ class Lang
             self::HOMEPAGE_POST_ISSUE,
             self::HOMEPAGE_DONATE_TEXT,
             self::HOMEPAGE_PHPINFO_TEXT,
+            self::HOMEPAGE_APC_TEXT,
             self::HOMEPAGE_BACK_TEXT,
         );
     }

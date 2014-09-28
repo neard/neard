@@ -2,24 +2,22 @@
 
 class Config
 {
-    const CFG_APP_LOGS_VERBOSE = 'appLogsVerbose';
-    const CFG_APP_PURGE_LOGS_ON_STARTUP = 'appPurgeLogsOnStartup';
+    const CFG_LOGS_VERBOSE = 'logsVerbose';
+    const CFG_PURGE_LOGS_ON_STARTUP = 'purgeLogsOnStartup';
     const CFG_LANG = 'lang';
     const CFG_TIMEZONE = 'timezone';
     const CFG_NOTEPAD = 'notepad';
+    const CFG_SCRIPTS_TIMEOUT = 'scriptsTimeout';
+    const CFG_SCRIPTS_DELETE = 'scriptsDelete';
     
-    const CFG_APP_VERSION = 'appVersion';
     const CFG_DEFAULT_LANG = 'defaultLang';
     const CFG_HOSTNAME = 'hostname';
     const CFG_BROWSER = 'browser';
-    const CFG_STATUS = 'status';
+    const CFG_ONLINE = 'online';
     const CFG_LAUNCH_STARTUP = 'launchStartup';
     
-    const STATUS_ONLINE = 'online';
-    const STATUS_OFFLINE = 'offline';
-    
-    const LAUNCH_STARTUP_ON = 'on';
-    const LAUNCH_STARTUP_OFF = 'off';
+    const ENABLED = 1;
+    const DISABLED = 0;
     
     const VERBOSE_SIMPLE = 0;
     const VERBOSE_REPORT = 1;
@@ -33,8 +31,10 @@ class Config
         
         $this->raw = parse_ini_file($neardBs->getConfigFilePath());
         if (!$neardBs->isBootstrap()) {
-            $this->raw[self::CFG_APP_LOGS_VERBOSE] = 0;
+            $this->raw[self::CFG_LOGS_VERBOSE] = 0;
         }
+        
+        date_default_timezone_set($this->getTimezone());
     }
     
     public function getRaw($key)
@@ -77,14 +77,14 @@ class Config
         return $this->raw[self::CFG_TIMEZONE];
     }
 
-    public function getStatus()
+    public function isOnline()
     {
-        return $this->raw[self::CFG_STATUS];
+        return $this->raw[self::CFG_ONLINE] == self::ENABLED;
     }
     
-    public function getLaunchStartup()
+    public function isLaunchStartup()
     {
-        return $this->raw[self::CFG_LAUNCH_STARTUP];
+        return $this->raw[self::CFG_LAUNCH_STARTUP] == self::ENABLED;
     }
 
     public function getBrowser()
@@ -96,25 +96,30 @@ class Config
     {
         return $this->raw[self::CFG_HOSTNAME];
     }
+    
+    public function getScriptsTimeout()
+    {
+        return intval($this->raw[self::CFG_SCRIPTS_TIMEOUT]);
+    }
+    
+    public function isScriptsDelete()
+    {
+        return intval($this->raw[self::CFG_SCRIPTS_DELETE]) == Config::ENABLED;
+    }
 
     public function getNotepad()
     {
         return $this->raw[self::CFG_NOTEPAD];
     }
 
-    public function getAppVersion()
+    public function getLogsVerbose()
     {
-        return $this->raw[self::CFG_APP_VERSION];
-    }
-
-    public function getAppLogsVerbose()
-    {
-        return intval($this->raw[self::CFG_APP_LOGS_VERBOSE]);
+        return intval($this->raw[self::CFG_LOGS_VERBOSE]);
     }
     
-    public function getAppPurgeLogsOnStartup()
+    public function isPurgeLogsOnStartup()
     {
-        return intval($this->raw[self::CFG_APP_PURGE_LOGS_ON_STARTUP]) == 1;
+        return intval($this->raw[self::CFG_PURGE_LOGS_ON_STARTUP]) == self::ENABLED;
     }
     
     public function getPaypalLink()

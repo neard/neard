@@ -2,8 +2,8 @@
 !.gitignore
 
 # Neard
-!launch.bat
 !neard.conf
+!launch.bat
 !node_modules
 node_modules/*
 !node_modules/npm

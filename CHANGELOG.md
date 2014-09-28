@@ -1,5 +1,34 @@
 # Changelog
 
+## 1.0.12 (2014/09/28)
+
+* Split bins, tools, apps configuration ([Issue #74](https://github.com/crazy-max/neard/issues/74))
+* Adding APC manager page ([Issue #73](https://github.com/crazy-max/neard/issues/73))
+* Adding PHP extensions version (if available) on homepage ([Issue #72](https://github.com/crazy-max/neard/issues/72))
+* Add logs menu ([Issue #71](https://github.com/crazy-max/neard/issues/71))
+* Launch Neard as an explorer.exe child process ([Issue #70](https://github.com/crazy-max/neard/issues/70))
+* Bug with APC configuration ([Issue #57](https://github.com/crazy-max/neard/issues/57) and [Issue #67](https://github.com/crazy-max/neard/issues/67))
+* Addons : PHP 5.3.29, PHP 5.4.31, PHP 5.5.16, PHP 5.6.0, Filezilla Server 0.9.47 ([Issue #34](https://github.com/crazy-max/neard/issues/34))
+* Avoid unlink and fsockopen errors
+* Adding default timeout for scripts execution (120s)
+* Change check port calls method
+* Bug hard link log for filezilla
+* Imagick core dll files splitted for each PHP version
+* Adding Winbinder specific log file (neard-winbinder.log)
+* Remove wget util
+* Refresh environment variables only for Environment registry subkey
+* Do not check Sublimetext updates
+* Use Win32_Process WMI method to get current process
+* Upgrade PEAR 1.9.5
+* Check SSL port on homepage only if main port available
+* Adding Imagick extension for PHP 5.5.x and 5.6.x
+* SVN and Git repositories configuration in repos.dat file
+* Bug with SVN and Git to seek repositories
+* Xdebug 2.2.5
+* Remove PHP 5.6.a3 addon
+* Add log separator
+* Bug timezone
+
 ## 1.0.11 (2014/08/14)
 
 * Apache 2.4 not working (SSL issue) ([Issue #66](https://github.com/crazy-max/neard/issues/66))

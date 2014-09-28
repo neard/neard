@@ -2,4 +2,6 @@
 !.gitignore
 
 # Neard
+!neard.conf
 !git-bash.bat
+!repos.dat

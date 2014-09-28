@@ -110,9 +110,9 @@ class TplAppApache
             false, get_called_class()
         );
         
-        $isLaunchStartup = $neardBins->getApache()->getLaunchStartup() == BinApache::LAUNCH_STARTUP_ON;
+        $isLaunchStartup = $neardBins->getApache()->isLaunchStartup();
         $tplLaunchStartup = TplApp::getActionMulti(
-            self::ACTION_LAUNCH_STARTUP, array($isLaunchStartup ? BinApache::LAUNCH_STARTUP_OFF : BinApache::LAUNCH_STARTUP_ON),
+            self::ACTION_LAUNCH_STARTUP, array($isLaunchStartup ? Config::DISABLED : Config::ENABLED),
             array($neardLang->getValue(Lang::MENU_LAUNCH_STARTUP_SERVICE), $isLaunchStartup ? TplAestan::GLYPH_CHECK : ''),
             false, get_called_class()
         );

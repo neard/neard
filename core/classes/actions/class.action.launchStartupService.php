@@ -4,17 +4,17 @@ class ActionLaunchStartupService
 {
     public function __construct($args)
     {
-        global $neardConfig, $neardBins;
+        global $neardBins;
         
         if (isset($args[0]) && !empty($args[0]) && isset($args[1]) && !empty($args[1])) {
             if ($args[0] == $neardBins->getApache()->getName()) {
-                $neardConfig->replace(BinApache::CFG_LAUNCH_STARTUP, $args[1]);
+                $neardBins->getApache()->setLaunchStartup($args[1]);
             } elseif ($args[0] == $neardBins->getMysql()->getName()) {
-                $neardConfig->replace(BinMysql::CFG_LAUNCH_STARTUP, $args[1]);
+                $neardBins->getMysql()->setLaunchStartup($args[1]);
             } elseif ($args[0] == $neardBins->getMariadb()->getName()) {
-                $neardConfig->replace(BinMariadb::CFG_LAUNCH_STARTUP, $args[1]);
+                $neardBins->getMariadb()->setLaunchStartup($args[1]);
             } elseif ($args[0] == $neardBins->getFilezilla()->getName()) {
-                $neardConfig->replace(BinFilezilla::CFG_LAUNCH_STARTUP, $args[1]);
+                $neardBins->getFilezilla()->setLaunchStartup($args[1]);
             }
         }
     }

@@ -13,12 +13,12 @@ class ActionAbout
     
     public function __construct($args)
     {
-        global $neardBs, $neardCore, $neardConfig, $neardLang, $neardBins, $neardWinbinder;
+        global $neardBs, $neardCore, $neardLang, $neardBins, $neardWinbinder;
         
         $neardWinbinder->reset();
         $this->wbWindow = $neardWinbinder->createAppWindow($neardLang->getValue(Lang::ABOUT_TITLE), 520, 260, WBC_NOTIFY, WBC_KEYDOWN | WBC_KEYUP);
         
-        $aboutText = sprintf($neardLang->getValue(Lang::ABOUT_TEXT),  APP_TITLE . ' ' . $neardConfig->getAppVersion(), APP_AUTHOR_NAME, APP_AUTHOR_EMAIL);
+        $aboutText = sprintf($neardLang->getValue(Lang::ABOUT_TEXT),  APP_TITLE . ' ' . $neardCore->getAppVersion(), APP_AUTHOR_NAME, APP_AUTHOR_EMAIL);
         $neardWinbinder->createLabel($this->wbWindow, $aboutText, 80, 20, 420, 120);
         
         $this->wbLinkHomepage = $neardWinbinder->createHyperLink($this->wbWindow, APP_GITHUB_HOME, 80, 145, 250, 20, WBC_LINES);

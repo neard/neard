@@ -4,11 +4,13 @@ class Tools
 {
     private $console;
     private $git;
+    private $imagemagick;
+    private $runfromprocess;
+    private $setenv;
+    private $sublimetext;
     private $svn;
     private $tccle;
-    private $sublimetext;
     private $xdc;
-    private $imagick;
     
     public function __construct()
     {
@@ -36,6 +38,38 @@ class Tools
         }
         return $this->git;
     }
+    
+    public function getImageMagick()
+    {
+        if ($this->imagemagick == null) {
+            $this->imagemagick = new ToolImagemagick($this->getRootPath('imagemagick'));
+        }
+        return $this->imagemagick;
+    }
+    
+    public function getRunFromProcess()
+    {
+        if ($this->runfromprocess == null) {
+            $this->runfromprocess = new ToolRunFromProcess($this->getRootPath('runfromprocess'));
+        }
+        return $this->runfromprocess;
+    }
+    
+    public function getSetenv()
+    {
+        if ($this->setenv == null) {
+            $this->setenv = new ToolSetenv($this->getRootPath('setenv'));
+        }
+        return $this->setenv;
+    }
+    
+    public function getSublimetext()
+    {
+        if ($this->sublimetext == null) {
+            $this->sublimetext = new ToolSublimetext($this->getRootPath('sublimetext'));
+        }
+        return $this->sublimetext;
+    }
 
     public function getSvn()
     {
@@ -53,28 +87,12 @@ class Tools
         return $this->tccle;
     }
     
-    public function getSublimetext()
-    {
-        if ($this->sublimetext == null) {
-            $this->sublimetext = new ToolSublimetext($this->getRootPath('sublimetext'));
-        }
-        return $this->sublimetext;
-    }
-    
     public function getXdc()
     {
         if ($this->xdc == null) {
             $this->xdc = new ToolXdc($this->getRootPath('xdc'));
         }
         return $this->xdc;
-    }
-
-    public function getImagick()
-    {
-        if ($this->imagick == null) {
-            $this->imagick = new ToolImagick($this->getRootPath('imagick'));
-        }
-        return $this->imagick;
     }
 
 }

@@ -84,9 +84,9 @@ class TplAppFilezilla
             false, get_called_class()
         );
         
-        $isLaunchStartup = $neardBins->getFilezilla()->getLaunchStartup() == BinFilezilla::LAUNCH_STARTUP_ON;
+        $isLaunchStartup = $neardBins->getFilezilla()->isLaunchStartup();
         $tplLaunchStartup = TplApp::getActionMulti(
-            self::ACTION_LAUNCH_STARTUP, array($isLaunchStartup ? BinFilezilla::LAUNCH_STARTUP_OFF : BinFilezilla::LAUNCH_STARTUP_ON),
+            self::ACTION_LAUNCH_STARTUP, array($isLaunchStartup ? Config::DISABLED : Config::ENABLED),
             array($neardLang->getValue(Lang::MENU_LAUNCH_STARTUP_SERVICE), $isLaunchStartup ? TplAestan::GLYPH_CHECK : ''),
             false, get_called_class()
         );

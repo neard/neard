@@ -15,14 +15,14 @@ class TplApp
     
     public static function process()
     {
-        global $neardConfig;
+        global $neardCore;
         
         return TplAestan::getSectionConfig() . PHP_EOL .
             self::getSectionServices() . PHP_EOL .
             TplAestan::getSectionMessages() . PHP_EOL .
             self::getSectionStartupAction() . PHP_EOL .
             TplAestan::getSectionMenuRightSettings() . PHP_EOL .
-            TplAestan::getSectionMenuLeftSettings(APP_TITLE . ' ' . $neardConfig->getAppVersion()) . PHP_EOL .
+            TplAestan::getSectionMenuLeftSettings(APP_TITLE . ' ' . $neardCore->getAppVersion()) . PHP_EOL .
             self::getSectionMenuRight() . PHP_EOL .
             self::getSectionMenuLeft() . PHP_EOL;
     }
@@ -202,12 +202,13 @@ class TplApp
         $tplGit = TplAppGit::process();
         $tplSvn = TplAppSvn::process();
         
+        $tplLogs = TplAppLogs::process();
         $tplHosts = TplAppHosts::process();
         $tplTools = TplAppTools::process();
         
         $tplServices = TplAppServices::process();
         
-        $tplStatus = TplAppStatus::process();
+        $tplOnline = TplAppOnline::process();
     
         return
             // Items
@@ -232,6 +233,7 @@ class TplApp
             
             //// Stuff menus
             TplAestan::getItemSeparator() . PHP_EOL .
+            $tplLogs[self::SECTION_CALL] . PHP_EOL .
             $tplHosts[self::SECTION_CALL] . PHP_EOL .
             $tplTools[self::SECTION_CALL] . PHP_EOL .
             
@@ -241,7 +243,7 @@ class TplApp
             
             //// Put online/offline
             TplAestan::getItemSeparator() . PHP_EOL .
-            $tplStatus[self::SECTION_CALL] . PHP_EOL .
+            $tplOnline[self::SECTION_CALL] . PHP_EOL .
             
             // Actions
             PHP_EOL . $tplNodejs[self::SECTION_CONTENT] .
@@ -252,9 +254,10 @@ class TplApp
             PHP_EOL . $tplFilezilla[self::SECTION_CONTENT] .
             PHP_EOL . $tplGit[self::SECTION_CONTENT] .
             PHP_EOL . $tplSvn[self::SECTION_CONTENT] .
+            PHP_EOL . $tplLogs[self::SECTION_CONTENT] .
             PHP_EOL . $tplHosts[self::SECTION_CONTENT] .
             PHP_EOL . $tplTools[self::SECTION_CONTENT] .
             PHP_EOL . $tplServices[self::SECTION_CONTENT] .
-            PHP_EOL . $tplStatus[self::SECTION_CONTENT];
+            PHP_EOL . $tplOnline[self::SECTION_CONTENT];
     }
 }

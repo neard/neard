@@ -1,2 +1,6 @@
 *
 !.gitignore
+
+# Neard
+!neard.conf
+!repos.dat

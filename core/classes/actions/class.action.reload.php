@@ -6,6 +6,10 @@ class ActionReload
     {
         global $neardBs, $neardCore, $neardConfig, $neardBins, $neardTools, $neardApps, $neardHomepage;
         
+        if (file_exists($neardCore->getExec())) {
+            return;
+        }
+        
         // Start loading
         Util::startLoading();
         
@@ -13,7 +17,7 @@ class ActionReload
         $neardConfig->replace(Config::CFG_HOSTNAME, gethostname());
         
         // Refresh launch startup
-        $neardConfig->replace(Config::CFG_LAUNCH_STARTUP, Util::isLaunchStartup() ? Config::LAUNCH_STARTUP_ON : Config::LAUNCH_STARTUP_OFF);
+        $neardConfig->replace(Config::CFG_LAUNCH_STARTUP, Util::isLaunchStartup() ? Config::ENABLED : Config::DISABLED);
         
         // Check browser
         $currentBrowser = $neardConfig->getBrowser();

@@ -4,16 +4,14 @@ class BinMariadb
 {
     const SERVICE_NAME = 'neardmariadb';
     
-    const CFG_VERSION = 'mariadbVersion';
-    const CFG_EXE = 'mariadbExe';
-    const CFG_CLI_EXE = 'mariadbCliExe';
-    const CFG_ADMIN = 'mariadbAdmin';
-    const CFG_CONF = 'mariadbConf';
-    const CFG_PORT = 'mariadbPort';
-    const CFG_LAUNCH_STARTUP = 'mariadbLaunchStartup';
+    const ROOT_CFG_VERSION = 'mariadbVersion';
+    const ROOT_CFG_LAUNCH_STARTUP = 'mariadbLaunchStartup';
     
-    const LAUNCH_STARTUP_ON = 'on';
-    const LAUNCH_STARTUP_OFF = 'off';
+    const LOCAL_CFG_EXE = 'mariadbExe';
+    const LOCAL_CFG_CLI_EXE = 'mariadbCliExe';
+    const LOCAL_CFG_ADMIN = 'mariadbAdmin';
+    const LOCAL_CFG_CONF = 'mariadbConf';
+    const LOCAL_CFG_PORT = 'mariadbPort';
     
     const CMD_VERSION = '--version';
     const CMD_VARIABLES = 'variables';
@@ -21,18 +19,22 @@ class BinMariadb
     
     private $name;
     private $version;
-    private $service;
-    private $port;
     private $launchStartup;
     
     private $rootPath;
     private $currentPath;
+    private $neardConf;
+    private $neardConfRaw;
+    
     private $errorLog;
+    
     private $exe;
+    private $conf;
+    private $port;
     private $cliExe;
     private $admin;
-    private $conf;
-    private $neardConf;
+    
+    private $service;
     
     public function __construct($rootPath)
     {
@@ -45,22 +47,46 @@ class BinMariadb
         global $neardBs, $neardConfig, $neardLang;
         
         $this->name = $neardLang->getValue(Lang::MARIADB);
-        $this->version = $neardConfig->getRaw(self::CFG_VERSION);
-        $this->exe = $neardConfig->getRaw(self::CFG_EXE);
-        $this->cliExe = $neardConfig->getRaw(self::CFG_CLI_EXE);
-        $this->admin = $neardConfig->getRaw(self::CFG_ADMIN);
-        $this->conf = $neardConfig->getRaw(self::CFG_CONF);
-        $this->port = $neardConfig->getRaw(self::CFG_PORT);
-        $this->launchStartup = $neardConfig->getRaw(self::CFG_LAUNCH_STARTUP);
+        $this->version = $neardConfig->getRaw(self::ROOT_CFG_VERSION);
+        $this->launchStartup = $neardConfig->getRaw(self::ROOT_CFG_LAUNCH_STARTUP) == Config::ENABLED;
         
         $this->rootPath = $rootPath == null ? $this->rootPath : $rootPath;
         $this->currentPath = $this->rootPath . '/mariadb' . $this->version;
-        $this->errorLog = $neardBs->getLogsPath() . '/mariadb.log';
-        $this->exe = $this->currentPath . '/' . $this->exe;
-        $this->cliExe = $this->currentPath . '/' . $this->cliExe;
-        $this->admin = $this->currentPath . '/' . $this->admin;
-        $this->conf = $this->currentPath . '/' . $this->conf;
         $this->neardConf = $this->currentPath . '/neard.conf';
+        
+        $this->errorLog = $neardBs->getLogsPath() . '/mariadb.log';
+
+        if (!is_dir($this->currentPath)) {
+            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_FILE_NOT_FOUND), $this->name . ' ' . $this->version, $this->currentPath));
+        }
+        if (!is_file($this->neardConf)) {
+            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_CONF_NOT_FOUND), $this->name . ' ' . $this->version, $this->neardConf));
+        }
+        
+        $this->neardConfRaw = parse_ini_file($this->neardConf);
+        if ($this->neardConfRaw !== false) {
+            $this->exe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_EXE];
+            $this->conf = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_CONF];
+            $this->port = $this->neardConfRaw[self::LOCAL_CFG_PORT];
+            $this->cliExe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_CLI_EXE];
+            $this->admin = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_ADMIN];
+        }
+        
+        if (!is_file($this->exe)) {
+            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_EXE_NOT_FOUND), $this->name . ' ' . $this->version, $this->exe));
+        }
+        if (!is_file($this->conf)) {
+            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_CONF_NOT_FOUND), $this->name . ' ' . $this->version, $this->conf));
+        }
+        if (!is_numeric($this->port) || $this->port <= 0) {
+            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_INVALID_PARAMETER), self::LOCAL_CFG_PORT, $this->port));
+        }
+        if (!is_file($this->cliExe)) {
+            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_EXE_NOT_FOUND), $this->name . ' ' . $this->version, $this->cliExe));
+        }
+        if (!is_file($this->admin)) {
+            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_EXE_NOT_FOUND), $this->name . ' ' . $this->version, $this->admin));
+        }
         
         $this->service = new Win32Service(self::SERVICE_NAME);
         $this->service->setDisplayName(APP_TITLE . ' ' . $this->getName() . ' ' . $this->version);
@@ -68,13 +94,6 @@ class BinMariadb
         $this->service->setParams(self::SERVICE_NAME);
         $this->service->setStartType(Win32Service::SERVICE_DEMAND_START);
         $this->service->setErrorControl(Win32Service::SERVER_ERROR_NORMAL);
-        
-        if (!is_dir($this->currentPath)) {
-            Util::logError(sprintf($neardLang->getValue(Lang::BIN_NOT_FOUND), $this->name . ' ' . $this->version, $this->currentPath));
-        }
-        if (!is_file($this->conf)) {
-            Util::logError(sprintf($neardLang->getValue(Lang::BIN_CONF_NOT_FOUND), $this->name . ' ' . $this->version, $this->conf));
-        }
     }
     
     public function __toString()
@@ -82,9 +101,26 @@ class BinMariadb
         return $this->getName();
     }
     
+    private function replace($key, $value)
+    {
+        $this->replaceAll(array($key => $value));
+    }
+    
+    private function replaceAll($params)
+    {
+        $content = file_get_contents($this->neardConf);
+    
+        foreach ($params as $key => $value) {
+            $content = preg_replace('|' . $key . ' = .*|', $key . ' = ' . '"' . $value.'"' , $content);
+            $this->neardConfRaw[$key] = $value;
+        }
+    
+        file_put_contents($this->neardConf, $content);
+    }
+    
     public function changePort($port, $checkUsed = false, $wbProgressBar = null)
     {
-        global $neardCore, $neardConfig, $neardBins, $neardApps, $neardWinbinder;
+        global $neardCore, $neardBins, $neardApps, $neardWinbinder;
         
         if (!Util::isValidPort($port)) {
             Util::logError($this->getName() . ' port not valid: ' . $port);
@@ -101,7 +137,7 @@ class BinMariadb
             $neardWinbinder->incrProgressBar($wbProgressBar);
     
             // neard.conf
-            $neardConfig->replace(BinMariadb::CFG_PORT, $port);
+            $this->setPort($port);
             $neardWinbinder->incrProgressBar($wbProgressBar);
     
             // config.inc.php (phpmyadmin)
@@ -201,13 +237,13 @@ class BinMariadb
     
     public function switchVersion($version, $showWindow = false)
     {
-        global $neardBs, $neardCore, $neardConfig, $neardLang, $neardBins, $neardWinbinder;
+        global $neardBs, $neardCore, $neardLang, $neardBins, $neardWinbinder;
         Util::logDebug('Switch MariaDB version to ' . $version);
         
         $boxTitle = sprintf($neardLang->getValue(Lang::SWITCH_VERSION_TITLE), $this->getName(), $version);
         
         $newConf = str_replace('mariadb' . $this->getVersion(), 'mariadb' . $version, $this->getConf());
-        $neardConf = str_replace('mariadb' . $this->getVersion(), 'mariadb' . $version, $this->getNeardConf());
+        $neardConf = str_replace('mariadb' . $this->getVersion(), 'mariadb' . $version, $this->neardConf);
         
         if (!file_exists($newConf) || !file_exists($neardConf)) {
             Util::logError('Neard config files not found for ' . $this->getName() . ' ' . $version);
@@ -221,7 +257,7 @@ class BinMariadb
         }
         
         $neardConfRaw = parse_ini_file($neardConf);
-        if ($neardConfRaw === false || !isset($neardConfRaw[self::CFG_VERSION]) || $neardConfRaw[self::CFG_VERSION] != $version) {
+        if ($neardConfRaw === false || !isset($neardConfRaw[self::ROOT_CFG_VERSION]) || $neardConfRaw[self::ROOT_CFG_VERSION] != $version) {
             Util::logError('Neard config file malformed for ' . $this->getName() . ' ' . $version);
             if ($showWindow) {
                 $neardWinbinder->messageBoxError(
@@ -236,7 +272,7 @@ class BinMariadb
         Util::replaceDefine($neardCore->getBootstrapFilePath(), 'CURRENT_MARIADB_VERSION', $version);
     
         // neard.conf
-        $neardConfig->replace(BinMariadb::CFG_VERSION, $version);
+        $this->setVersion($version);
     }
     
     public function getCmdLineOutput($cmd)
@@ -257,7 +293,7 @@ class BinMariadb
         }
     
         if (file_exists($this->getExe())) {
-            $tmpResult = Batch::exec('mariadbGetCmdLineOutput', '"' . $bin . '" ' . $cmd . ' ' . $outputFrom, 10);
+            $tmpResult = Batch::exec('mariadbGetCmdLineOutput', '"' . $bin . '" ' . $cmd . ' ' . $outputFrom);
             if ($tmpResult !== false && is_array($tmpResult)) {
                 $result['syntaxOk'] = !Util::contains(trim($tmpResult[count($tmpResult) - 1]), '[ERROR]');
                 for ($i = 0; $i < $removeLines; $i++) {
@@ -284,10 +320,57 @@ class BinMariadb
     {
         return $this->version;
     }
+    
+    public function setVersion($version)
+    {
+        global $neardConfig;
+        $neardConfig->replace(self::ROOT_CFG_VERSION, $version);
+    }
+
+    public function isLaunchStartup()
+    {
+        return $this->launchStartup;
+    }
+    
+    public function setLaunchStartup($enabled)
+    {
+        global $neardConfig;
+        $neardConfig->replace(self::ROOT_CFG_LAUNCH_STARTUP, $enabled);
+    }
+    
+    public function getRootPath()
+    {
+        return $this->rootPath;
+    }
+    
+    public function getCurrentPath()
+    {
+        return $this->currentPath;
+    }
+    
+    public function getErrorLog()
+    {
+        return $this->errorLog;
+    }
 
     public function getExe()
     {
         return $this->exe;
+    }
+    
+    public function getConf()
+    {
+        return $this->conf;
+    }
+    
+    public function getPort()
+    {
+        return $this->port;
+    }
+    
+    public function setPort($port)
+    {
+        return $this->replace(self::LOCAL_CFG_PORT, $port);
     }
     
     public function getCliExe()
@@ -300,44 +383,9 @@ class BinMariadb
         return $this->admin;
     }
 
-    public function getConf()
-    {
-        return $this->conf;
-    }
-
     public function getService()
     {
         return $this->service;
-    }
-    
-    public function getPort()
-    {
-        return $this->port;
-    }
-    
-    public function getLaunchStartup()
-    {
-        return $this->launchStartup;
-    }
-
-    public function getRootPath()
-    {
-        return $this->rootPath;
-    }
-
-    public function getCurrentPath()
-    {
-        return $this->currentPath;
-    }
-    
-    public function getErrorLog()
-    {
-        return $this->errorLog;
-    }
-    
-    public function getNeardConf()
-    {
-        return $this->neardConf;
     }
     
 }

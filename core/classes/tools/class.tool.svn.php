@@ -2,21 +2,30 @@
 
 class ToolSvn
 {
-    const CFG_VERSION = 'svnVersion';
-    const CFG_EXE = 'svnExe';
-    const CFG_ADMIN = 'svnAdmin';
-    const CFG_SERVER = 'svnServer';
-    const CFG_REPOS = 'svnRepos';
+    const ROOT_CFG_VERSION = 'svnVersion';
+    
+    const LOCAL_CFG_EXE = 'svnExe';
+    const LOCAL_CFG_ADMIN = 'svnAdmin';
+    const LOCAL_CFG_SERVER = 'svnServer';
+    
+    const REPOS_FILE = 'repos.dat';
+    const REPOS_CACHE_FILE = 'reposCache.dat';
     
     private $name;
     private $version;
-    private $server;
-    private $repos;
     
     private $rootPath;
     private $currentPath;
+    private $neardConf;
+    private $neardConfRaw;
+    
+    private $reposFile;
+    private $reposCacheFile;
+    private $repos;
+    
     private $exe;
     private $admin;
+    private $server;
     
     public function __construct($rootPath)
     {
@@ -24,57 +33,95 @@ class ToolSvn
         Util::logInitClass($this);
         
         $this->name = $neardLang->getValue(Lang::SVN);
-        $this->exe = $neardConfig->getRaw(self::CFG_EXE);
-        $this->admin = $neardConfig->getRaw(self::CFG_ADMIN);
-        $this->version = $neardConfig->getRaw(self::CFG_VERSION);
-        $this->server = $neardConfig->getRaw(self::CFG_SERVER);
-        $this->repos = $neardConfig->getRaw(self::CFG_REPOS);
+        $this->version = $neardConfig->getRaw(self::ROOT_CFG_VERSION);
         
         $this->rootPath = $rootPath;
         $this->currentPath = $rootPath . '/svn' . $this->version;
-        $this->exe = $this->currentPath . '/' . $this->exe;
-        $this->admin = $this->currentPath . '/' . $this->admin;
-        $this->server = $neardBs->getRootPath() . '/' . $this->server;
+        $this->neardConf = $this->currentPath . '/neard.conf';
+        $this->reposFile = $this->currentPath . '/' . self::REPOS_FILE;
+        $this->reposCacheFile = $this->currentPath . '/' . self::REPOS_CACHE_FILE;
         
         if (!is_dir($this->currentPath)) {
-            Util::logError(sprintf($neardLang->getValue(Lang::BIN_NOT_FOUND), $this->name . ' ' . $this->version, $this->currentPath));
+            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_FILE_NOT_FOUND), $this->name . ' ' . $this->version, $this->currentPath));
         }
-        if (!is_file($this->exe)) {
-            Util::logError(sprintf($neardLang->getValue(Lang::BIN_EXE_NOT_FOUND), $this->name . ' ' . $this->version, $this->exe));
+        if (!is_file($this->neardConf)) {
+            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_CONF_NOT_FOUND), $this->name . ' ' . $this->version, $this->neardConf));
         }
-        if (!is_file($this->admin)) {
-            Util::logError(sprintf($neardLang->getValue(Lang::BIN_EXE_NOT_FOUND), $this->name . ' ' . $this->version, $this->admin));
+        if (!is_file($this->reposFile)) {
+            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_CONF_NOT_FOUND), $this->name . ' ' . $this->version, $this->reposFile));
         }
         
-        if (!empty($this->repos)) {
+        $this->neardConfRaw = parse_ini_file($this->neardConf);
+        if ($this->neardConfRaw !== false) {
+            $this->exe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_EXE];
+            $this->admin = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_ADMIN];
+            $this->server = $neardBs->getRootPath() . '/' . $this->neardConfRaw[self::LOCAL_CFG_SERVER];
+        }
+        
+        if (!is_file($this->exe)) {
+            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_EXE_NOT_FOUND), $this->name . ' ' . $this->version, $this->exe));
+        }
+        if (!is_file($this->admin)) {
+            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_EXE_NOT_FOUND), $this->name . ' ' . $this->version, $this->admin));
+        }
+        if (!is_dir($this->server)) {
+            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_FILE_NOT_FOUND), $this->name . ' ' . $this->version, $this->server));
+        }
+        
+        if (is_file($this->reposFile)) {
+            $this->repos = explode(PHP_EOL, file_get_contents($this->reposFile));
             $rebuildRepos = array();
-            foreach ($this->getRepos() as $repo) {
+            foreach ($this->repos as $repo) {
+                $repo = trim($repo);
                 if (stripos($repo, ':') === false) {
-                    $repo = $this->currentPath . '/' . $repo;
+                    $repo = $neardBs->getRootPath() . '/' . $repo;
                 }
                 if (is_dir($repo)) {
                     $rebuildRepos[] = Util::formatUnixPath($repo);
+                } else {
+                    Util::logWarning($this->name . ' repository not found: ' . $repo);
                 }
             }
             $this->repos = $rebuildRepos;
         }
     }
     
+    public function __toString()
+    {
+        return $this->getName();
+    }
+    
+    private function replace($key, $value)
+    {
+        $this->replaceAll(array($key => $value));
+    }
+    
+    private function replaceAll($params)
+    {
+        $content = file_get_contents($this->neardConf);
+    
+        foreach ($params as $key => $value) {
+            $content = preg_replace('|' . $key . ' = .*|', $key . ' = ' . '"' . $value.'"' , $content);
+            $this->neardConfRaw[$key] = $value;
+        }
+    
+        file_put_contents($this->neardConf, $content);
+    }
+    
     public function findRepos($cache = true)
     {
         $result = array();
-        $reposCacheFile = $this->currentPath . '/reposCache.dat';
     
         if ($cache) {
-            if (file_exists($reposCacheFile)) {
-                $repos = file($reposCacheFile);
+            if (file_exists($this->reposCacheFile)) {
+                $repos = file($this->reposCacheFile);
                 foreach ($repos as $repo) {
                     array_push($result, trim($repo));
                 }
             }
         } else {
             if (!empty($this->repos)) {
-                foreach ($this->getRepos() as $repo) {
+                foreach ($this->repos as $repo) {
                     $foundRepos = Vbs::findReposVbs($repo, '.svn', 'entries');
                     if (!empty($foundRepos)) {
                         foreach ($foundRepos as $foundRepo) {
@@ -84,7 +131,7 @@ class ToolSvn
                 }
             }
             $strResult = implode(PHP_EOL, $result);
-            file_put_contents($reposCacheFile, $strResult);
+            file_put_contents($this->reposCacheFile, $strResult);
         }
     
         return $result;
@@ -105,24 +152,25 @@ class ToolSvn
         return $this->version;
     }
     
-    public function getServer()
+    public function setVersion($version)
     {
-        return $this->server;
+        global $neardConfig;
+        $neardConfig->replace(self::ROOT_CFG_VERSION, $version);
     }
-
-    public function getRepos()
-    {
-        return $this->repos;
-    }
-
+    
     public function getRootPath()
     {
         return $this->rootPath;
     }
-
+    
     public function getCurrentPath()
     {
         return $this->currentPath;
+    }
+    
+    public function getRepos()
+    {
+        return $this->repos;
     }
     
     public function getExe()
@@ -133,6 +181,11 @@ class ToolSvn
     public function getAdmin()
     {
         return $this->admin;
+    }
+    
+    public function getServer()
+    {
+        return $this->server;
     }
 
 }

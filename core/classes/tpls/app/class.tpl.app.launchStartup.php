@@ -10,7 +10,7 @@ class TplAppLaunchStartup
         
         $isLaunchStartup = Util::isLaunchStartup();
         return TplApp::getActionMulti(
-            self::ACTION, array($isLaunchStartup ? Config::LAUNCH_STARTUP_OFF : Config::LAUNCH_STARTUP_ON),
+            self::ACTION, array($isLaunchStartup ? Config::DISABLED : Config::ENABLED),
             array($neardLang->getValue(Lang::MENU_LAUNCH_STARTUP), $isLaunchStartup ? TplAestan::GLYPH_CHECK : ''),
             false, get_called_class()
         );

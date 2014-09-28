@@ -5,6 +5,10 @@
 .project
 .jsdtscope
 
+# Ant
+build.properties
+build.xml
+
 # Neard
 !alias
 alias/*

@@ -2,27 +2,31 @@
 
 class ToolConsole
 {
-    const CFG_VERSION = 'consoleVersion';
-    const CFG_EXE = 'consoleExe';
-    const CFG_CONF = 'consoleConf';
-    const CFG_SHELL = 'consoleShell';
-    const CFG_ROWS = 'consoleRows';
-    const CFG_COLS = 'consoleCols';
+    const ROOT_CFG_VERSION = 'consoleVersion';
+    
+    const LOCAL_CFG_EXE = 'consoleExe';
+    const LOCAL_CFG_CONF = 'consoleConf';
+    const LOCAL_CFG_SHELL = 'consoleShell';
+    const LOCAL_CFG_ROWS = 'consoleRows';
+    const LOCAL_CFG_COLS = 'consoleCols';
     
     const SHELL_CMD = 'cmd';
     const SHELL_POWERSHELL = 'powershell';
     
     private $name;
     private $version;
-    private $rows;
-    private $cols;
     
     private $rootPath;
     private $currentPath;
+    private $neardConf;
+    private $neardConfRaw;
+    
     private $exe;
     private $conf;
     private $shell;
     private $shellList;
+    private $rows;
+    private $cols;
     
     public function __construct($rootPath)
     {
@@ -30,41 +34,76 @@ class ToolConsole
         Util::logInitClass($this);
         
         $this->name = $neardLang->getValue(Lang::CONSOLE);
-        $this->version = $neardConfig->getRaw(self::CFG_VERSION);
-        $this->exe = $neardConfig->getRaw(self::CFG_EXE);
-        $this->conf = $neardConfig->getRaw(self::CFG_CONF);
-        $this->shell = $neardConfig->getRaw(self::CFG_SHELL);
-        $this->rows = intval($neardConfig->getRaw(self::CFG_ROWS));
-        $this->cols = intval($neardConfig->getRaw(self::CFG_COLS));
+        $this->version = $neardConfig->getRaw(self::ROOT_CFG_VERSION);
         
         $this->rootPath = $rootPath;
         $this->currentPath = $rootPath . '/console' . $this->version;
-        $this->exe = $this->currentPath . '/' . $this->exe;
-        $this->conf = $this->currentPath . '/' . $this->conf;
-        
-        // PowerShell path
-        $powerShellPath = $this->getPowerShell();
-        
-        // Shell list
-        $this->shellList[self::SHELL_CMD] = $this->getCmdShell();
-        $this->shellList[self::SHELL_POWERSHELL] = $powerShellPath;
-        
-        // Shell
-        if ($this->shell == self::SHELL_POWERSHELL && $powerShellPath !== false) {
-            $this->shell = $powerShellPath;
-        } else {
-            $this->shell = $this->getCmdShell();
-        }
+        $this->neardConf = $this->currentPath . '/neard.conf';
         
         if (!is_dir($this->currentPath)) {
-            Util::logError(sprintf($neardLang->getValue(Lang::BIN_NOT_FOUND), $this->name . ' ' . $this->version, $this->currentPath));
+            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_FILE_NOT_FOUND), $this->name . ' ' . $this->version, $this->currentPath));
         }
+        if (!is_file($this->neardConf)) {
+            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_CONF_NOT_FOUND), $this->name . ' ' . $this->version, $this->neardConf));
+        }
+        
+        $this->neardConfRaw = parse_ini_file($this->neardConf);
+        if ($this->neardConfRaw !== false) {
+            $this->exe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_EXE];
+            $this->conf = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_CONF];
+            $this->shell = $this->neardConfRaw[self::LOCAL_CFG_SHELL];
+            $this->rows = intval($this->neardConfRaw[self::LOCAL_CFG_ROWS]);
+            $this->cols = intval($this->neardConfRaw[self::LOCAL_CFG_COLS]);
+            
+            // PowerShell path
+            $powerShellPath = $this->getPowerShell();
+            
+            // Shell list
+            $this->shellList[self::SHELL_CMD] = $this->getCmdShell();
+            $this->shellList[self::SHELL_POWERSHELL] = $powerShellPath;
+            
+            // Shell
+            if ($this->shell == self::SHELL_POWERSHELL && $powerShellPath !== false) {
+                $this->shell = $powerShellPath;
+            } else {
+                $this->shell = $this->getCmdShell();
+            }
+        }
+        
         if (!is_file($this->exe)) {
-            Util::logError(sprintf($neardLang->getValue(Lang::BIN_EXE_NOT_FOUND), $this->name . ' ' . $this->version, $this->exe));
+            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_EXE_NOT_FOUND), $this->name . ' ' . $this->version, $this->exe));
         }
         if (!is_file($this->conf)) {
-            Util::logError(sprintf($neardLang->getValue(Lang::BIN_CONF_NOT_FOUND), $this->name . ' ' . $this->version, $this->conf));
+            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_CONF_NOT_FOUND), $this->name . ' ' . $this->version, $this->conf));
         }
+        if (!is_numeric($this->rows) || $this->rows <= 0) {
+            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_INVALID_PARAMETER), self::LOCAL_CFG_ROWS, $this->rows));
+        }
+        if (!is_numeric($this->cols) || $this->cols <= 0) {
+            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_INVALID_PARAMETER), self::LOCAL_CFG_COLS, $this->cols));
+        }
+    }
+    
+    public function __toString()
+    {
+        return $this->getName();
+    }
+    
+    private function replace($key, $value)
+    {
+        $this->replaceAll(array($key => $value));
+    }
+    
+    private function replaceAll($params)
+    {
+        $content = file_get_contents($this->neardConf);
+    
+        foreach ($params as $key => $value) {
+            $content = preg_replace('|' . $key . ' = .*|', $key . ' = ' . '"' . $value.'"' , $content);
+            $this->neardConfRaw[$key] = $value;
+        }
+    
+        file_put_contents($this->neardConf, $content);
     }
     
     public function getName()
@@ -82,6 +121,32 @@ class ToolConsole
         return $this->version;
     }
     
+    public function setVersion($version)
+    {
+        global $neardConfig;
+        $neardConfig->replace(self::ROOT_CFG_VERSION, $version);
+    }
+    
+    public function getRootPath()
+    {
+        return $this->rootPath;
+    }
+    
+    public function getCurrentPath()
+    {
+        return $this->currentPath;
+    }
+    
+    public function getExe()
+    {
+        return $this->exe;
+    }
+    
+    public function getConf()
+    {
+        return $this->conf;
+    }
+    
     public function getRows()
     {
         return $this->rows;
@@ -90,26 +155,6 @@ class ToolConsole
     public function getCols()
     {
         return $this->cols;
-    }
-
-    public function getRootPath()
-    {
-        return $this->rootPath;
-    }
-
-    public function getCurrentPath()
-    {
-        return $this->currentPath;
-    }
-
-    public function getExe()
-    {
-        return $this->exe;
-    }
-
-    public function getConf()
-    {
-        return $this->conf;
     }
     
     public function getShell()

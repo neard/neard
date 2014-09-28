@@ -8,13 +8,13 @@ class ActionLaunchStartup
         
         if (isset($args[0]) && !empty($args[0])) {
             Util::startLoading();
-            $launchStartup = $args[0] == Config::LAUNCH_STARTUP_ON;
+            $launchStartup = $args[0] == Config::ENABLED;
             if ($launchStartup) {
                 Util::setLaunchStartupRegKey();
             } else {
                 Util::deleteLaunchStartupRegKey();
             }
-            $neardConfig->replace(Config::CFG_LAUNCH_STARTUP, $launchStartup ? Config::LAUNCH_STARTUP_ON : Config::LAUNCH_STARTUP_OFF);
+            $neardConfig->replace(Config::CFG_LAUNCH_STARTUP, $launchStartup ? Config::ENABLED : Config::DISABLED);
         }
     }
 

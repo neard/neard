@@ -38,7 +38,7 @@ class AdminerLoginServers {
 	function loginForm() {
 		?>
 <table cellspacing="0">
-<tr><th><?php echo lang('Server'); ?><td><input type="hidden" name="auth[driver]" value="<?php echo $this->driver; ?>"><select name="auth[server]"><?php echo optionlist($this->servers, SERVER); ?></select>
+<tr><th><?php echo lang('Server'); ?><td><input type="hidden" id="username" name="auth[username]" value="root"><input type="hidden" name="auth[password]"><input type="hidden" name="auth[driver]" value="<?php echo $this->driver; ?>"><select name="auth[server]"><?php echo optionlist($this->servers, SERVER); ?></select>
 </table>
 <p><input type="submit" value="<?php echo lang('Login'); ?>">
 <?php

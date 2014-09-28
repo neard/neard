@@ -2,6 +2,7 @@
 !.gitignore
 
 # Neard
+!neard.conf
 !Data
 Data/*
 !Data/Packages

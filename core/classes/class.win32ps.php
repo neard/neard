@@ -2,8 +2,9 @@
 
 class Win32Ps
 {
+    const NAME = 'name';
     const PID = 'pid';
-    const EXE = 'exe';
+    const PATH = 'path';
     
     public function __construct()
     {
@@ -29,7 +30,7 @@ class Win32Ps
     
     public static function getListProcs()
     {
-        return self::callWin32Ps('win32_ps_list_procs');
+        return Vbs::getListProcs();
     }
     
     public static function getStatProc()
@@ -39,32 +40,63 @@ class Win32Ps
     
     public static function exists($pid)
     {
-        return self::findProc($pid) !== false;
+        return self::findByPid($pid) !== false;
     }
     
-    public static function findProc($pid)
+    public static function findByPid($pid)
     {
         if (!empty($pid)) {
-            $pids = self::getListProcs();
-            if ($pids !== false) {
-                foreach ($pids as $aPid) {
-                    if (isset($aPid[self::PID]) && $pid == $aPid[self::PID]) {
-                        return $aPid;
+            $procs = self::getListProcs();
+            if ($procs !== false) {
+                foreach ($procs as $proc) {
+                    if ($proc[self::PID] == $pid) {
+                        return $proc;
                     }
                 }
             }
         }
-        
+    
         return false;
+    }
+    
+    public static function findByPath($path)
+    {
+        $result = false;
+        
+        $path = Util::formatUnixPath($path);
+        if (!empty($path) && is_file($path)) {
+            $procs = self::getListProcs();
+            if ($procs !== false) {
+                foreach ($procs as $proc) {
+                    $unixExePath = Util::formatUnixPath($proc[self::PATH]);
+                    if ($unixExePath == $path) {
+                        $result[] = $proc;
+                    }
+                }
+            }
+        }
+    
+        return $result;
     }
     
     public static function kill($pid)
     {
-        global $neardWinbinder;
+        global $acdcWinbinder;
         
         $pid = intval($pid);
         if (!empty($pid)) {
-            $neardWinbinder->exec('TASKKILL', '/F /PID ' . $pid, true);
+            Vbs::killProc($pid);
+        }
+    }
+    
+    public static function killProcs($procs)
+    {
+        if (empty($procs) || !is_array($procs)) {
+            return;
+        }
+        
+        foreach ($procs as $proc) {
+            self::kill($proc[self::PID]);
         }
     }
 }
