@@ -9,12 +9,12 @@
     <div class="list-group">
       <span class="list-group-item">
         <?php
-        if ($neardBins->getFilezilla()->checkPort($neardBins->getFilezilla()->getSslPort(), true)) {
-            ?><span style="float:right;font-size:12px;margin-left:2px;" class="label label-success"><?php echo sprintf($neardLang->getValue(Lang::HOMEPAGE_SERVICE_STARTED), $neardBins->getFilezilla()->getSslPort()); ?> (SSL)</span><?php
-        } else {
-            ?><span style="float:right;font-size:12px;margin-left:2px;" class="label label-danger"><?php echo $neardLang->getValue(Lang::HOMEPAGE_SERVICE_STOPPED); ?></span><?php
-        }
         if ($neardBins->getFilezilla()->checkPort($neardBins->getFilezilla()->getPort())) {
+            if ($neardBins->getFilezilla()->checkPort($neardBins->getFilezilla()->getSslPort(), true)) {
+                ?><span style="float:right;font-size:12px;margin-left:2px;" class="label label-success"><?php echo sprintf($neardLang->getValue(Lang::HOMEPAGE_SERVICE_STARTED), $neardBins->getFilezilla()->getSslPort()); ?> (SSL)</span><?php
+            } else {
+                ?><span style="float:right;font-size:12px;margin-left:2px;" class="label label-danger"><?php echo $neardLang->getValue(Lang::HOMEPAGE_SERVICE_STOPPED); ?> (SSL)</span><?php
+            }
             ?><span style="float:right;font-size:12px" class="label label-success"><?php echo sprintf($neardLang->getValue(Lang::HOMEPAGE_SERVICE_STARTED), $neardBins->getFilezilla()->getPort()); ?></span><?php
         } else { 
             ?><span style="float:right;font-size:12px" class="label label-danger"><?php echo $neardLang->getValue(Lang::HOMEPAGE_SERVICE_STOPPED); ?></span><?php

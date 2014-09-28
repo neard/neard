@@ -2,6 +2,7 @@
 !.gitignore
 
 # Neard
+!neard.conf
 !config.ini
 !src
 src/*

@@ -216,7 +216,7 @@ class TplAestan
     
     public static function getSectionConfig()
     {
-        global $neardConfig;
+        global $neardCore;
         return '[Config]' . PHP_EOL .
             'ImageList=' . self::IMG_GLYPH_SPRITES . PHP_EOL .
             'ServiceCheckInterval=1' . PHP_EOL .
@@ -225,7 +225,7 @@ class TplAestan
             'TrayIconNoneRunning=' . self::GLYPH_SERVICE_NONE_RUNNING . PHP_EOL .
             'ID={' . strtolower(APP_TITLE) . '}' . PHP_EOL .
             'AboutHeader=' . APP_TITLE . PHP_EOL .
-            'AboutVersion=Version ' . $neardConfig->getAppVersion() . PHP_EOL;
+            'AboutVersion=Version ' . $neardCore->getAppVersion() . PHP_EOL;
     }
     
     public static function getSectionMenuRightSettings()

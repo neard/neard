@@ -108,7 +108,7 @@
 					</image>
 				</background>
 			</tab>
-			<tab title="PEAR 1.9.4" icon="icons/pear.ico" use_default_icon="0">
+			<tab title="PEAR " icon="icons/pear.ico" use_default_icon="0">
 				<console shell="&quot;C:\neard\tools\tccle\tccle13.06.77\tcc.exe&quot; @&quot;C:\neard\tools\tccle\tccle13.06.77\tcc.ini&quot; cls &amp; prompt [$e[1;31m$u@mycomputer$s$e[1;32m$p$e[0m]$s &amp; &quot;C:\neard\bin\php\php5.3.13\pear\pear.bat&quot; -V" init_dir="C:/neard/bin/php/php5.3.13/pear" run_as_user="0" user=""/>
 				<cursor style="0" r="255" g="255" b="255"/>
 				<background type="0" r="0" g="0" b="0">

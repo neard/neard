@@ -44,7 +44,7 @@ And many other features.
 
 Neard is [available on SourceForge](https://sourceforge.net/projects/neard/) :
 
-* Latest release : [Neard 1.0.11](https://sourceforge.net/projects/neard/files/Releases/1.0.11/neard-1.0.11.zip/download) (2014/08/14)
+* Latest release : [Neard 1.0.12](https://sourceforge.net/projects/neard/files/Releases/1.0.12/neard-1.0.12.zip/download) (2014/09/28)
 * [Patches](https://sourceforge.net/projects/neard/files/Patches/) : to migrate from older release to the latest.
 * [Addons](https://sourceforge.net/projects/neard/files/Addons/) : other versions of binaries (Apache, PHP, MYSQL, MariaDB, etc...).
 * [Tools](https://sourceforge.net/projects/neard/files/Tools/) : useful tools for Neard.
@@ -56,14 +56,16 @@ Stay up-to-date with the latest release of Neard by subscribe to [this feed](htt
 
 ## Configuration
 
-* Just extract the ZIP file where you want.
+* Use a good file archiver like [7zip](http://www.7-zip.org/) to avoid data corruption and extract the ZIP file where you want.
 
 Edit the configuration file ``neard.conf`` :
-* **appLogsVerbose** - Control the debug output (0=simple, 1=report, 2=debug). Default : ``0``
-* **appPurgeLogsOnStartup** - Purge logs from Neard logs folder (0=false, 1= true). Default ``0``
 * **lang** - Language (see core\langs folder for a complete list). Default : ``english``
 * **timezone** - The default timezone used by all date/time functions. Default : ``"Europe/Paris"``
 * **notepad** - The editor while opening files. Default : ``"notepad.exe"``
+* **logsVerbose** - Control the debug output (0=simple, 1=report, 2=debug). Default : ``0``
+* **purgeLogsOnStartup** - Purge logs from Neard logs folder (0=false, 1= true). Default ``0``
+* **scriptsTimeout** - The default timeout when VBS/Batch are executed. May vary depending on your system. Default : ``120``
+* **scriptsDelete** - Delete temporary scripts in core/tmp folder (0=false, 1= true). Default : ``1``
 
 ## Usage
 
@@ -84,10 +86,10 @@ Before [reporting an issue](https://github.com/crazy-max/neard/issues), please :
 * Tell me what is your operating system and platform (eg. Windows 7 64-bits).
 * Tell me your Neard version (eg. 1.0.0).
 * Close Neard.
-* Change this variable in the ``neard.conf`` file ``appLogsVerbose = 2``.
+* Change these variable in the ``neard.conf`` file to theses values : ``logsVerbose = 2`` and ``scriptsDelete = 0``.
 * Launch Neard and reproduce your problem.
 * Close Neard.
-* Zip the ``logs`` folder and a screenshot of your issue.
+* Zip the ``logs`` folder, the ``core/tmp`` folder and a screenshot of your issue.
 * Upload the zip file on a file hosting system like [Sendspace](https://www.sendspace.com/).
 * Add the link of the uploaded file to the issue.
 

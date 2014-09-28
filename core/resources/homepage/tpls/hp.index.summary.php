@@ -101,9 +101,9 @@
             <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardTools->getGit()->getVersion(); ?></span>
             <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::GIT); ?>
           </a>
-          <a class="list-group-item" href="#imagick">
-            <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardTools->getImagick()->getVersion(); ?></span>
-            <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::IMAGICK); ?>
+          <a class="list-group-item" href="#imagemagick">
+            <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardTools->getImageMagick()->getVersion(); ?></span>
+            <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::IMAGEMAGICK); ?>
           </a>
           <a class="list-group-item" href="#svn">
             <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardTools->getSvn()->getVersion(); ?></span>

@@ -18,13 +18,13 @@ class Apps
         global $neardBs;
         return $neardBs->getAppsPath() . '/' . $app;
     }
-
-    public function getPhpmyadmin()
+    
+    public function getAdminer()
     {
-        if ($this->phpmyadmin == null) {
-            $this->phpmyadmin = new AppPhpmyadmin($this->getRootPath('phpmyadmin'));
+        if ($this->adminer == null) {
+            $this->adminer = new AppAdminer($this->getRootPath('adminer'));
         }
-        return $this->phpmyadmin;
+        return $this->adminer;
     }
     
     public function getGitlist()
@@ -34,13 +34,13 @@ class Apps
         }
         return $this->gitlist;
     }
-    
-    public function getWebsvn()
+
+    public function getPhpmyadmin()
     {
-        if ($this->websvn == null) {
-            $this->websvn = new AppWebsvn($this->getRootPath('websvn'));
+        if ($this->phpmyadmin == null) {
+            $this->phpmyadmin = new AppPhpmyadmin($this->getRootPath('phpmyadmin'));
         }
-        return $this->websvn;
+        return $this->phpmyadmin;
     }
     
     public function getWebgrind()
@@ -51,12 +51,12 @@ class Apps
         return $this->webgrind;
     }
     
-    public function getAdminer()
+    public function getWebsvn()
     {
-        if ($this->adminer == null) {
-            $this->adminer = new AppAdminer($this->getRootPath('adminer'));
+        if ($this->websvn == null) {
+            $this->websvn = new AppWebsvn($this->getRootPath('websvn'));
         }
-        return $this->adminer;
+        return $this->websvn;
     }
     
 }

@@ -2,24 +2,27 @@
 
 class BinNodejs
 {
-    const CFG_VERSION = 'nodejsVersion';
-    const CFG_EXE = 'nodejsExe';
-    const CFG_VARS = 'nodejsVars';
-    const CFG_NPM = 'nodejsNpm';
-    const CFG_LAUNCH = 'nodejsLaunch';
-    const CFG_CONF = 'nodejsConf';
+    const ROOT_CFG_VERSION = 'nodejsVersion';
+    
+    const LOCAL_CFG_EXE = 'nodejsExe';
+    const LOCAL_CFG_VARS = 'nodejsVars';
+    const LOCAL_CFG_NPM = 'nodejsNpm';
+    const LOCAL_CFG_LAUNCH = 'nodejsLaunch';
+    const LOCAL_CFG_CONF = 'nodejsConf';
     
     private $name;
     private $version;
     
     private $rootPath;
     private $currentPath;
+    private $neardConf;
+    private $neardConfRaw;
+    
     private $exe;
+    private $conf;
     private $vars;
     private $npm;
     private $launch;
-    private $conf;
-    private $neardConf;
     
     public function __construct($rootPath)
     {
@@ -32,27 +35,42 @@ class BinNodejs
         global $neardBs, $neardConfig, $neardLang;
         
         $this->name = $neardLang->getValue(Lang::NODEJS);
-        $this->version = $neardConfig->getRaw(self::CFG_VERSION);
-        $this->exe = $neardConfig->getRaw(self::CFG_EXE);
-        $this->vars = $neardConfig->getRaw(self::CFG_VARS);
-        $this->npm = $neardConfig->getRaw(self::CFG_NPM);
-        $this->launch = $neardConfig->getRaw(self::CFG_LAUNCH);
-        $this->conf = $neardConfig->getRaw(self::CFG_CONF);
+        $this->version = $neardConfig->getRaw(self::ROOT_CFG_VERSION);
         
         $this->rootPath = $rootPath == null ? $this->rootPath : $rootPath;
         $this->currentPath = $this->rootPath . '/nodejs' . $this->version;
-        $this->exe = $this->currentPath . '/' . $this->exe;
-        $this->vars = $this->currentPath . '/' . $this->vars;
-        $this->npm = $this->currentPath . '/' . $this->npm;
-        $this->launch = $this->currentPath . '/' . $this->launch;
-        $this->conf = $this->currentPath . '/' . $this->conf;
         $this->neardConf = $this->currentPath . '/neard.conf';
         
         if (!is_dir($this->currentPath)) {
-            Util::logError(sprintf($neardLang->getValue(Lang::BIN_NOT_FOUND), $this->name . ' ' . $this->version, $this->currentPath));
+            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_FILE_NOT_FOUND), $this->name . ' ' . $this->version, $this->currentPath));
+        }
+        if (!is_file($this->neardConf)) {
+            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_CONF_NOT_FOUND), $this->name . ' ' . $this->version, $this->neardConf));
+        }
+        
+        $this->neardConfRaw = parse_ini_file($this->neardConf);
+        if ($this->neardConfRaw !== false) {
+            $this->exe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_EXE];
+            $this->conf = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_CONF];
+            $this->vars = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_VARS];
+            $this->npm = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_NPM];
+            $this->launch = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_LAUNCH];
+        }
+        
+        if (!is_file($this->exe)) {
+            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_EXE_NOT_FOUND), $this->name . ' ' . $this->version, $this->exe));
         }
         if (!is_file($this->conf)) {
-            Util::logError(sprintf($neardLang->getValue(Lang::BIN_CONF_NOT_FOUND), $this->name . ' ' . $this->version, $this->conf));
+            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_CONF_NOT_FOUND), $this->name . ' ' . $this->version, $this->conf));
+        }
+        if (!is_file($this->vars)) {
+            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_EXE_NOT_FOUND), $this->name . ' ' . $this->version, $this->vars));
+        }
+        if (!is_file($this->npm)) {
+            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_EXE_NOT_FOUND), $this->name . ' ' . $this->version, $this->npm));
+        }
+        if (!is_file($this->launch)) {
+            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_EXE_NOT_FOUND), $this->name . ' ' . $this->version, $this->launch));
         }
     }
     
@@ -61,15 +79,32 @@ class BinNodejs
         return $this->getName();
     }
     
+    private function replace($key, $value)
+    {
+        $this->replaceAll(array($key => $value));
+    }
+    
+    private function replaceAll($params)
+    {
+        $content = file_get_contents($this->neardConf);
+    
+        foreach ($params as $key => $value) {
+            $content = preg_replace('|' . $key . ' = .*|', $key . ' = ' . '"' . $value.'"' , $content);
+            $this->neardConfRaw[$key] = $value;
+        }
+    
+        file_put_contents($this->neardConf, $content);
+    }
+    
     public function switchVersion($version, $showWindow = false)
     {
-        global $neardBs, $neardCore, $neardConfig, $neardLang, $neardWinbinder;
+        global $neardBs, $neardCore, $neardLang, $neardWinbinder;
         Util::logDebug('Switch NodeJS version to ' . $version);
         
         $boxTitle = sprintf($neardLang->getValue(Lang::SWITCH_VERSION_TITLE), $this->getName(), $version);
         
         $newConf = str_replace('nodejs' . $this->getVersion(), 'nodejs' . $version, $this->getConf());
-        $neardConf = str_replace('nodejs' . $this->getVersion(), 'nodejs' . $version, $this->getNeardConf());
+        $neardConf = str_replace('nodejs' . $this->getVersion(), 'nodejs' . $version, $this->neardConf);
         
         if (!file_exists($newConf) || !file_exists($neardConf)) {
             Util::logError('Neard config files not found for ' . $this->getName() . ' ' . $version);
@@ -83,7 +118,7 @@ class BinNodejs
         }
         
         $neardConfRaw = parse_ini_file($neardConf);
-        if ($neardConfRaw === false || !isset($neardConfRaw[self::CFG_VERSION]) || $neardConfRaw[self::CFG_VERSION] != $version) {
+        if ($neardConfRaw === false || !isset($neardConfRaw[self::ROOT_CFG_VERSION]) || $neardConfRaw[self::ROOT_CFG_VERSION] != $version) {
             Util::logError('Neard config file malformed for ' . $this->getName() . ' ' . $version);
             if ($showWindow) {
                 $neardWinbinder->messageBoxError(
@@ -98,7 +133,7 @@ class BinNodejs
         Util::replaceDefine($neardCore->getBootstrapFilePath(), 'CURRENT_NODEJS_VERSION', $version);
     
         // neard.conf
-        $neardConfig->replace(BinNodejs::CFG_VERSION, $version);
+        $this->setVersion($version);
     }
     
     public function getName()
@@ -115,6 +150,12 @@ class BinNodejs
     {
         return $this->version;
     }
+    
+    public function setVersion($version)
+    {
+        global $neardConfig;
+        $neardConfig->replace(self::ROOT_CFG_VERSION, $version);
+    }
 
     public function getRootPath()
     {
@@ -129,6 +170,11 @@ class BinNodejs
     public function getExe()
     {
         return $this->exe;
+    }
+    
+    public function getConf()
+    {
+        return $this->conf;
     }
 
     public function getVars()
@@ -146,14 +192,4 @@ class BinNodejs
         return $this->launch;
     }
 
-    public function getConf()
-    {
-        return $this->conf;
-    }
-    
-    public function getNeardConf()
-    {
-        return $this->neardConf;
-    }
-    
 }

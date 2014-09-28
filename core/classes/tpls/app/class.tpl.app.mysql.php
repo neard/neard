@@ -96,9 +96,9 @@ class TplAppMysql
             false, get_called_class()
         );
         
-        $isLaunchStartup = $neardBins->getMysql()->getLaunchStartup() == BinMysql::LAUNCH_STARTUP_ON;
+        $isLaunchStartup = $neardBins->getMysql()->isLaunchStartup();
         $tplLaunchStartup = TplApp::getActionMulti(
-            self::ACTION_LAUNCH_STARTUP, array($isLaunchStartup ? BinMysql::LAUNCH_STARTUP_OFF : BinMysql::LAUNCH_STARTUP_ON),
+            self::ACTION_LAUNCH_STARTUP, array($isLaunchStartup ? Config::DISABLED : Config::ENABLED),
             array($neardLang->getValue(Lang::MENU_LAUNCH_STARTUP_SERVICE), $isLaunchStartup ? TplAestan::GLYPH_CHECK : ''),
             false, get_called_class()
         );

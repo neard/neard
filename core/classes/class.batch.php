@@ -18,7 +18,7 @@ class Batch
     
     public static function findExeByPid($pid)
     {
-        $result = self::exec('findExeByPid', 'TASKLIST /FO CSV /NH /FI "PID eq ' . $pid . '"', 2);
+        $result = self::exec('findExeByPid', 'TASKLIST /FO CSV /NH /FI "PID eq ' . $pid . '"', 5);
         if ($result !== false) {
             $expResult = explode('","', $result[0]);
             if (is_array($expResult) && count($expResult) > 2 && isset($expResult[0]) && !empty($expResult[0])) {
@@ -31,7 +31,7 @@ class Batch
     
     public static function isPortInUse($port)
     {
-        $result = self::exec('isPortInUse', 'NETSTAT -aon | FIND ":' . $port . '" | FIND "LISTENING"', 1);
+        $result = self::exec('isPortInUse', 'NETSTAT -aon | FIND ":' . $port . '" | FIND "LISTENING"', 2);
         if ($result !== false && isset($result[0]) && !empty($result[0])) {
             $expResult = explode(' ', preg_replace('/\s+/', ' ', $result[0]));
             $pid = intval($expResult[4]);
@@ -72,7 +72,7 @@ class Batch
     {
         global $neardBins;
         
-        $result = self::exec('getPearVersion', 'CMD /C "' . $neardBins->getPhp()->getPearExe() . '" -V', 2);
+        $result = self::exec('getPearVersion', 'CMD /C "' . $neardBins->getPhp()->getPearExe() . '" -V', 5);
         if (is_array($result)) {
             foreach ($result as $row) {
                 if (Util::startWith($row, 'PEAR Version:')) {
@@ -91,7 +91,7 @@ class Batch
     {
         global $neardTools;
     
-        $result = self::exec('getSvnVersion', 'CMD /C "' . $neardTools->getSvn()->getExe() . '" --version', 2);
+        $result = self::exec('getSvnVersion', 'CMD /C "' . $neardTools->getSvn()->getExe() . '" --version', 5);
         if (!empty($result) && is_array($result)) {
             $rebuildResult = array();
             foreach ($result as $row) {
@@ -103,36 +103,10 @@ class Batch
         return $result;
     }
     
-    public static function downloadWget($url, $genFile = true)
-    {
-        global $neardCore;
-    
-        $result = self::exec('wget',
-            '"' . $neardCore->getWgetExe() . '" -q --no-check-certificate -O - "' . $url . '"',
-            10, true, false, true, false
-        );
-        
-        if (!empty($result) && is_array($result)) {
-            array_pop($result);
-            array_pop($result);
-            array_pop($result);
-            $result = implode('', $result);
-        }
-        
-        if ($genFile && !empty($result)) {
-            $resultFile = self::getTmpFile('.tmp', 'wget');
-            file_put_contents($resultFile, $result);
-            return $resultFile;
-        }
-    
-        return $result;
-    }
-    
     public static function refreshEnvVars()
     {
-        global $neardBs, $neardCore;
-        
-        self::execStandalone('refreshEnvVars', 'SETX /M ' . Registry::APP_PATH_REG_ENTRY . ' "' . Util::formatWindowsPath($neardBs->getRootPath()) . '"');
+        global $neardBs, $neardTools;
+        self::execStandalone('refreshEnvVars', '"' . $neardTools->getSetenv()->getExe() . '" -a ' . Registry::APP_PATH_REG_ENTRY . ' "' . Util::formatWindowsPath($neardBs->getRootPath()) . '"');
     }
     
     public static function genSslCertificate($name, $destPath = null)
@@ -153,7 +127,7 @@ class Batch
         $cmdCreateCrt = $exe . ' req -x509 -nodes -sha1 -new -key ' . $pubPath . ' -out ' . $crtPath . ' -passin ' . $password . ' -subj ' . $subject . ' -config ' . $conf . PHP_EOL;
         self::exec('genCertificate', $cmdGeneratingKey . $cmdGeneratingPub . $cmdCreateCrt, 5);
         
-        $result = self::exec('checkCertificate', '@ECHO ON' . PHP_EOL . 'IF EXIST ' . $pubPath . ' IF EXIST ' . $crtPath . ' ECHO OK', 2);
+        $result = self::exec('checkCertificate', '@ECHO ON' . PHP_EOL . 'IF EXIST ' . $pubPath . ' IF EXIST ' . $crtPath . ' ECHO OK');
         return isset($result[0]) && $result[0] == 'OK';
     }
     
@@ -161,7 +135,7 @@ class Batch
     {
         global $neardBins;
         
-        self::exec('installFilezillaService', '"' . $neardBins->getFilezilla()->getExe() . '" /install', 10, false);
+        self::exec('installFilezillaService', '"' . $neardBins->getFilezilla()->getExe() . '" /install', true, false);
         return $neardBins->getFilezilla()->getService()->isInstalled();
     }
     
@@ -169,18 +143,18 @@ class Batch
     {
         global $neardBins;
     
-        self::exec('uninstallFilezillaService', '"' . $neardBins->getFilezilla()->getExe() . '" /uninstall', 10, false);
+        self::exec('uninstallFilezillaService', '"' . $neardBins->getFilezilla()->getExe() . '" /uninstall', true, false);
         return !$neardBins->getFilezilla()->getService()->isInstalled();
     }
     
     public static function execStandalone($basename, $content, $silent = true)
     {
-        return self::exec($basename, $content, 0, false, true, $silent);
+        return self::exec($basename, $content, false, false, true, $silent);
     }
     
-    public static function exec($basename, $content, $timeout, $catchOutput = true, $standalone = false, $silent = true, $rebuild = true)
+    public static function exec($basename, $content, $timeout = true, $catchOutput = true, $standalone = false, $silent = true, $rebuild = true)
     {
-        global $neardCore, $neardWinbinder;
+        global $neardConfig, $neardCore, $neardWinbinder;
         $result = false;
     
         $resultFile = self::getTmpFile('.tmp', $basename);
@@ -194,20 +168,19 @@ class Batch
         
         // Header
         $header = '@ECHO OFF' . PHP_EOL . PHP_EOL;
-            //'@SETLOCAL ENABLEEXTENSIONS ENABLEDELAYEDEXPANSION' . PHP_EOL . PHP_EOL;
         
         // Footer
-        //$footer = PHP_EOL . PHP_EOL . 'ENDLOCAL' .
         $footer = PHP_EOL . (!$standalone ? PHP_EOL . 'ECHO ' . self::END_PROCESS_STR . ' > "' . $checkFile . '"' : '') .
-            PHP_EOL . 'DEL /F "' . $scriptPath . '"';
+            ($neardConfig->isScriptsDelete() ? PHP_EOL . 'DEL /F "' . $scriptPath . '"' : '');
         
         // Process
         file_put_contents($scriptPath, $header . $content . $footer);
         $neardWinbinder->exec($scriptPath, null, $silent);
         
         if (!$standalone) {
+            $timeout = is_numeric($timeout) ? $timeout : ($timeout === true ? $neardConfig->getScriptsTimeout() : false);
             $maxtime = time() + $timeout;
-            $noTimeout = $timeout == 0;
+            $noTimeout = $timeout === false;
             while ($result === false || empty($result)) {
                 if (file_exists($checkFile)) {
                     $check = file($checkFile);
@@ -223,11 +196,15 @@ class Batch
                     break;
                 }
             }
-            @unlink($scriptPath);
+            if ($neardConfig->isScriptsDelete()) {
+                @unlink($scriptPath);
+            }
         }
         
-        @unlink($checkFile);
-        @unlink($resultFile);
+        if ($neardConfig->isScriptsDelete()) {
+            @unlink($checkFile);
+            @unlink($resultFile);
+        }
         
         self::writeLog('Exec:');
         self::writeLog('-> basename: ' . $basename);
@@ -249,7 +226,7 @@ class Batch
             }
             self::writeLog('-> result: ' . substr(implode(' \\\\ ', $result), 0, 2048));
         } else {
-            self::writeLog('-> result: NULL');
+            self::writeLog('-> result: N/A');
         }
         
         return $result;

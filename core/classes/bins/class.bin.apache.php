@@ -5,16 +5,14 @@ class BinApache
     const SERVICE_NAME = 'neardapache';
     const SERVICE_PARAMS = '-k runservice';
     
-    const CFG_VERSION = 'apacheVersion';
-    const CFG_EXE = 'apacheExe';
-    const CFG_CONF = 'apacheConf';
-    const CFG_PORT = 'apachePort';
-    const CFG_SSL_PORT = 'apacheSslPort';
-    const CFG_OPENSSL_EXE = 'apacheOpensslExe';
-    const CFG_LAUNCH_STARTUP = 'apacheLaunchStartup';
+    const ROOT_CFG_VERSION = 'apacheVersion';
+    const ROOT_CFG_LAUNCH_STARTUP = 'apacheLaunchStartup';
     
-    const LAUNCH_STARTUP_ON = 'on';
-    const LAUNCH_STARTUP_OFF = 'off';
+    const LOCAL_CFG_EXE = 'apacheExe';
+    const LOCAL_CFG_CONF = 'apacheConf';
+    const LOCAL_CFG_PORT = 'apachePort';
+    const LOCAL_CFG_SSL_PORT = 'apacheSslPort';
+    const LOCAL_CFG_OPENSSL_EXE = 'apacheOpensslExe';
     
     const CMD_VERSION_NUMBER = '-v';
     const CMD_COMPILE_SETTINGS = '-V';
@@ -26,22 +24,26 @@ class BinApache
     
     private $name;
     private $version;
-    private $service;
-    private $port;
-    private $sslPort;
     private $launchStartup;
     
     private $rootPath;
     private $currentPath;
+    private $neardConf;
+    private $neardConfRaw;
+    
     private $modulesPath;
     private $sslConf;
     private $accessLog;
     private $rewriteLog;
     private $errorLog;
+    
     private $exe;
     private $conf;
+    private $port;
+    private $sslPort;
     private $opensslExe;
-    private $neardConf;
+    
+    private $service;
     
     public function __construct($rootPath, $version=null)
     {
@@ -54,25 +56,53 @@ class BinApache
         global $neardBs, $neardConfig, $neardLang;
         
         $this->name = $neardLang->getValue(Lang::APACHE);
-        $this->version = $neardConfig->getRaw(self::CFG_VERSION);
-        $this->exe = $neardConfig->getRaw(self::CFG_EXE);
-        $this->conf = $neardConfig->getRaw(self::CFG_CONF);
-        $this->port = $neardConfig->getRaw(self::CFG_PORT);
-        $this->sslPort = $neardConfig->getRaw(self::CFG_SSL_PORT);
-        $this->opensslExe = $neardConfig->getRaw(self::CFG_OPENSSL_EXE);
-        $this->launchStartup = $neardConfig->getRaw(self::CFG_LAUNCH_STARTUP);
+        $this->version = $neardConfig->getRaw(self::ROOT_CFG_VERSION);
+        $this->launchStartup = $neardConfig->getRaw(self::ROOT_CFG_LAUNCH_STARTUP) == Config::ENABLED;
         
         $this->rootPath = $rootPath == null ? $this->rootPath : $rootPath;
         $this->currentPath = $this->rootPath . '/apache' . $this->version;
+        $this->neardConf = $this->currentPath . '/neard.conf';
+        
         $this->modulesPath = $this->currentPath . '/modules';
         $this->sslConf = $this->currentPath . '/conf/extra/httpd-ssl.conf';
         $this->accessLog = $neardBs->getLogsPath() . '/apache_access.log';
         $this->rewriteLog = $neardBs->getLogsPath() . '/apache_rewrite.log';
         $this->errorLog = $neardBs->getLogsPath() . '/apache_error.log';
-        $this->exe = $this->currentPath . '/' . $this->exe;
-        $this->conf = $this->currentPath . '/' . $this->conf;
-        $this->opensslExe = $this->currentPath . '/' . $this->opensslExe;
-        $this->neardConf = $this->currentPath . '/neard.conf';
+        
+        if (!is_dir($this->currentPath)) {
+            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_FILE_NOT_FOUND), $this->name . ' ' . $this->version, $this->currentPath));
+        }
+        if (!is_file($this->neardConf)) {
+            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_CONF_NOT_FOUND), $this->name . ' ' . $this->version, $this->neardConf));
+        }
+        if (!is_file($this->sslConf)) {
+            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_CONF_NOT_FOUND), $this->name . ' ' . $this->version, $this->sslConf));
+        }
+        
+        $this->neardConfRaw = parse_ini_file($this->neardConf);
+        if ($this->neardConfRaw !== false) {
+            $this->exe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_EXE];
+            $this->conf = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_CONF];
+            $this->port = $this->neardConfRaw[self::LOCAL_CFG_PORT];
+            $this->sslPort = $this->neardConfRaw[self::LOCAL_CFG_SSL_PORT];
+            $this->opensslExe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_OPENSSL_EXE];
+        }
+        
+        if (!is_file($this->exe)) {
+            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_EXE_NOT_FOUND), $this->name . ' ' . $this->version, $this->exe));
+        }
+        if (!is_file($this->conf)) {
+            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_CONF_NOT_FOUND), $this->name . ' ' . $this->version, $this->conf));
+        }
+        if (!is_numeric($this->port) || $this->port <= 0) {
+            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_INVALID_PARAMETER), self::LOCAL_CFG_PORT, $this->port));
+        }
+        if (!is_numeric($this->sslPort) || $this->sslPort <= 0) {
+            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_INVALID_PARAMETER), self::LOCAL_CFG_SSL_PORT, $this->sslPort));
+        }
+        if (!is_file($this->opensslExe)) {
+            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_EXE_NOT_FOUND), $this->name . ' ' . $this->version, $this->opensslExe));
+        }
         
         $this->service = new Win32Service(self::SERVICE_NAME);
         $this->service->setDisplayName(APP_TITLE . ' ' . $this->getName() . ' ' . $this->version);
@@ -80,13 +110,6 @@ class BinApache
         $this->service->setParams(self::SERVICE_PARAMS);
         $this->service->setStartType(Win32Service::SERVICE_DEMAND_START);
         $this->service->setErrorControl(Win32Service::SERVER_ERROR_NORMAL);
-        
-        if (!is_dir($this->currentPath)) {
-            Util::logError(sprintf($neardLang->getValue(Lang::BIN_NOT_FOUND), $this->name . ' ' . $this->version, $this->currentPath));
-        }
-        if (!is_file($this->conf)) {
-            Util::logError(sprintf($neardLang->getValue(Lang::BIN_CONF_NOT_FOUND), $this->name . ' ' . $this->version, $this->conf));
-        }
     }
     
     public function __toString()
@@ -94,9 +117,26 @@ class BinApache
         return $this->getName();
     }
     
+    private function replace($key, $value)
+    {
+        $this->replaceAll(array($key => $value));
+    }
+    
+    private function replaceAll($params)
+    {
+        $content = file_get_contents($this->neardConf);
+        
+        foreach ($params as $key => $value) {
+            $content = preg_replace('|' . $key . ' = .*|', $key . ' = ' . '"' . $value.'"' , $content);
+            $this->neardConfRaw[$key] = $value;
+        }
+    
+        file_put_contents($this->neardConf, $content);
+    }
+    
     public function changePort($port, $checkUsed = false, $wbProgressBar = null)
     {
-        global $neardBs, $neardCore, $neardConfig, $neardBins, $neardWinbinder;
+        global $neardBs, $neardCore, $neardBins, $neardWinbinder;
         
         if (!Util::isValidPort($port)) {
             Util::logError($this->getName() . ' port not valid: ' . $port);
@@ -113,7 +153,7 @@ class BinApache
             $neardWinbinder->incrProgressBar($wbProgressBar);
             
             // neard.conf
-            $neardConfig->replace(BinApache::CFG_PORT, $port);
+            $this->setPort($port);
             $neardWinbinder->incrProgressBar($wbProgressBar);
             
             // httpd.conf
@@ -156,7 +196,7 @@ class BinApache
             return false;
         }
         
-        $headers = get_headers('http' . ($ssl ? 's' : '') . '://localhost:' . $port);
+        $headers = Util::getApacheHeaders('http' . ($ssl ? 's' : '') . '://localhost:' . $port);
         if (!empty($headers)) {
             foreach ($headers as $row) {
                 if (Util::startWith($row, 'Server: ')) {
@@ -192,13 +232,13 @@ class BinApache
     
     public function switchVersion($version, $showWindow = false)
     {
-        global $neardBs, $neardCore, $neardConfig, $neardLang, $neardBins, $neardWinbinder;
+        global $neardBs, $neardCore, $neardLang, $neardBins, $neardWinbinder;
         Util::logDebug('Switch Apache version to ' . $version);
         
         $boxTitle = sprintf($neardLang->getValue(Lang::SWITCH_VERSION_TITLE), $this->getName(), $version);
         
         $apacheConf = str_replace('apache' . $this->getVersion(), 'apache' . $version, $this->getConf());
-        $neardConf = str_replace('apache' . $this->getVersion(), 'apache' . $version, $this->getNeardConf());
+        $neardConf = str_replace('apache' . $this->getVersion(), 'apache' . $version, $this->neardConf);
         $apachePhpModule = $neardBins->getPhp()->getApacheModule($version);
         
         if (!file_exists($apacheConf) || !file_exists($neardConf)) {
@@ -213,7 +253,7 @@ class BinApache
         }
         
         $neardConfRaw = parse_ini_file($neardConf);
-        if ($neardConfRaw === false || !isset($neardConfRaw[self::CFG_VERSION]) || $neardConfRaw[self::CFG_VERSION] != $version) {
+        if ($neardConfRaw === false || !isset($neardConfRaw[self::ROOT_CFG_VERSION]) || $neardConfRaw[self::ROOT_CFG_VERSION] != $version) {
             Util::logError('Neard config file malformed for ' . $this->getName() . ' ' . $version);
             if ($showWindow) {
                 $neardWinbinder->messageBoxError(
@@ -239,7 +279,7 @@ class BinApache
         Util::replaceDefine($neardCore->getBootstrapFilePath(), 'CURRENT_APACHE_VERSION', $version);
     
         // neard.conf
-        $neardConfig->replace(BinApache::CFG_VERSION, $version);
+        $this->setVersion($version);
         
         // php
         Util::replaceInFile($apacheConf, array(
@@ -398,7 +438,7 @@ class BinApache
         );
         
         if (file_exists($this->getExe())) {
-            $tmpResult = Batch::exec('apacheGetCmdLineOutput', '"' . $this->getExe() . '" ' . $cmd, 10);
+            $tmpResult = Batch::exec('apacheGetCmdLineOutput', '"' . $this->getExe() . '" ' . $cmd);
             if ($tmpResult !== false && is_array($tmpResult)) {
                 $result['syntaxOk'] = trim($tmpResult[count($tmpResult) - 1]) == 'Syntax OK';
                 if ($result['syntaxOk']) {
@@ -444,7 +484,8 @@ class BinApache
     
     public function getRequiredContent($version = null)
     {
-        return Util::isOnline() ? $this->getOnlineContent($version) : $this->getOfflineContent($version);
+        global $neardConfig;
+        return $neardConfig->isOnline() ? $this->getOnlineContent($version) : $this->getOfflineContent($version);
     }
     
     public function getAliasContent($name, $dest)
@@ -572,32 +613,29 @@ class BinApache
     {
         return $this->version;
     }
-
-    public function getService()
-    {
-        return $this->service;
-    }
-
-    public function getPort()
-    {
-        return $this->port;
-    }
     
-    public function getSslPort()
+    public function setVersion($version)
     {
-        return $this->sslPort;
+        global $neardConfig;
+        $neardConfig->replace(self::ROOT_CFG_VERSION, $version);
     }
-    
-    public function getLaunchStartup()
+
+    public function isLaunchStartup()
     {
         return $this->launchStartup;
+    }
+    
+    public function setLaunchStartup($enabled)
+    {
+        global $neardConfig;
+        $neardConfig->replace(self::ROOT_CFG_LAUNCH_STARTUP, $enabled);
     }
     
     public function getRootPath()
     {
         return $this->rootPath;
     }
-
+    
     public function getCurrentPath()
     {
         return $this->currentPath;
@@ -627,7 +665,7 @@ class BinApache
     {
         return $this->errorLog;
     }
-    
+
     public function getExe()
     {
         return $this->exe;
@@ -638,14 +676,34 @@ class BinApache
         return $this->conf;
     }
     
+    public function getPort()
+    {
+        return $this->port;
+    }
+    
+    public function setPort($port)
+    {
+        return $this->replace(self::LOCAL_CFG_PORT, $port);
+    }
+    
+    public function getSslPort()
+    {
+        return $this->sslPort;
+    }
+    
+    public function setSslPort($sslPort)
+    {
+        return $this->replace(self::LOCAL_CFG_SSL_PORT, $sslPort);
+    }
+    
     public function getOpensslExe()
     {
         return $this->opensslExe;
     }
     
-    public function getNeardConf()
+    public function getService()
     {
-        return $this->neardConf;
+        return $this->service;
     }
     
 }

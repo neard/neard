@@ -8,14 +8,14 @@ class ActionQuit
     
     public function __construct($args)
     {
-        global $neardConfig, $neardLang, $neardBins, $neardWinbinder;
+        global $neardCore, $neardLang, $neardBins, $neardWinbinder;
         
         // Start splash screen
         $this->neardSplash = new Splash();
         $this->neardSplash->init(
             $neardLang->getValue(Lang::QUIT),
             self::GAUGE_LOADING * count($neardBins->getServices()),
-            sprintf($neardLang->getValue(Lang::EXIT_LEAVING_TEXT), APP_TITLE . ' ' . $neardConfig->getAppVersion()),
+            sprintf($neardLang->getValue(Lang::EXIT_LEAVING_TEXT), APP_TITLE . ' ' . $neardCore->getAppVersion()),
             Splash::IMG_EXIT
         );
         

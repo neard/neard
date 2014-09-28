@@ -2,6 +2,7 @@
 
 class TplSublimetext
 {
+    const UPDATE_CHECK = 'false';
     const HOT_EXIT = 'false';
     const REMEMBER_OPEN_FILES = 'false';
     
@@ -48,6 +49,7 @@ class TplSublimetext
         $result = '// Settings in here override those in "Default/Preferences.sublime-settings",' . PHP_EOL;
         $result .= '// and are overridden in turn by file type specific settings.' . PHP_EOL;
         $result .= '{' . PHP_EOL;
+        $result .= '  "update_check": ' . self::UPDATE_CHECK . ',' . PHP_EOL;
         $result .= '  "hot_exit": ' . self::HOT_EXIT . ',' . PHP_EOL;
         $result .= '  "remember_open_files": ' . self::REMEMBER_OPEN_FILES . ',' . PHP_EOL;
         $result .= '  //"trim_trailing_white_space_on_save": true,' . PHP_EOL . PHP_EOL;

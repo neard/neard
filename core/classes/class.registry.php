@@ -5,6 +5,8 @@
 
 class Registry
 {
+    const END_PROCESS_STR = 'FINISHED!';
+    
     const HKEY_CLASSES_ROOT = 'HKCR';
     const HKEY_CURRENT_USER = 'HKCU';
     const HKEY_LOCAL_MACHINE = 'HKLM';
@@ -20,21 +22,24 @@ class Registry
     const REG_ERROR_SET = 'REG_ERROR_SET';
     const REG_NO_ERROR = 'REG_NO_ERROR';
     
+    const ENV_KEY = 'SYSTEM\CurrentControlSet\Control\Session Manager\Environment';
+    
     // App bins entry
-    const APP_BINS_REG_SUBKEY = 'SYSTEM\CurrentControlSet\Control\Session Manager\Environment';
     const APP_BINS_REG_ENTRY = 'NEARD_BINS';
     
     // App path entry
-    const APP_PATH_REG_SUBKEY = 'SYSTEM\CurrentControlSet\Control\Session Manager\Environment';
     const APP_PATH_REG_ENTRY = 'NEARD_PATH';
     
     // System path entry
-    const SYSPATH_REG_SUBKEY = 'SYSTEM\CurrentControlSet\Control\Session Manager\Environment';
     const SYSPATH_REG_ENTRY = 'Path';
     
     // Launch startup
     const STARTUP_REG_SUBKEY = 'SOFTWARE\Microsoft\Windows\CurrentVersion\Run';
     const STARTUP_REG_ENTRY = 'Neard';
+    
+    // Processor architecture
+    const PROCESSOR_REG_SUBKEY = 'HARDWARE\DESCRIPTION\System\CentralProcessor\0';
+    const PROCESSOR_REG_ENTRY = 'Identifier';
     
     private $latestError;
     
@@ -51,45 +56,58 @@ class Registry
         Util::logDebug($log, $neardBs->getRegistryLogFilePath());
     }
     
-    public function exists($key, $subkey, $entry)
+    public function exists($key, $subkey, $entry = null)
     {
-        global $neardCore, $neardLang;
+        global $neardCore;
         
         $basename = 'registryExists';
         $resultFile = Vbs::getResultFile($basename);
-        $this->latestError = null;
         
         $scriptContent = 'On Error Resume Next' . PHP_EOL;
         $scriptContent .= 'Err.Clear' . PHP_EOL . PHP_EOL;
         
-        $scriptContent .= 'Dim objShell, objFso, objFile, outFile, entryValue' . PHP_EOL . PHP_EOL;
+        $scriptContent .= 'Dim objShell, objFso, objFile, outFile, bExists' . PHP_EOL . PHP_EOL;
         
         $scriptContent .= 'outFile = "' . $resultFile . '"' . PHP_EOL;
         $scriptContent .= 'Set objShell = WScript.CreateObject("WScript.Shell")' . PHP_EOL;
         $scriptContent .= 'Set objFso = CreateObject("Scripting.FileSystemObject")' . PHP_EOL;
         $scriptContent .= 'Set objFile = objFso.CreateTextFile(outFile, True)' . PHP_EOL . PHP_EOL;
         
-        $scriptContent .= 'entryValue = objShell.RegRead("' . $key . '\\' . $subkey . '\\' . $entry . '")' . PHP_EOL;
+        $scriptContent .= 'strKey = "' . $key . '\\' . $subkey . '\\' . $entry . '"' . PHP_EOL;
+        $scriptContent .= 'entryValue = objShell.RegRead(strKey)' . PHP_EOL;
         $scriptContent .= 'If Err.Number <> 0 Then' . PHP_EOL;
-        $scriptContent .= '    objFile.Write "' . self::REG_ERROR_ENTRY . '" & Err.Number & ": " & Err.Description' . PHP_EOL;
+        $scriptContent .= '    If Right(strKey,1) = "\" Then' . PHP_EOL;
+        $scriptContent .= '        If Instr(1, Err.Description, ssig, 1) <> 0 Then' . PHP_EOL;
+        $scriptContent .= '            bExists = true' . PHP_EOL;
+        $scriptContent .= '        Else' . PHP_EOL;
+        $scriptContent .= '            bExists = false' . PHP_EOL;
+        $scriptContent .= '        End If' . PHP_EOL;
+        $scriptContent .= '    Else' . PHP_EOL;
+        $scriptContent .= '        bExists = false' . PHP_EOL;
+        $scriptContent .= '    End If' . PHP_EOL;
+        $scriptContent .= '    Err.Clear' . PHP_EOL;
         $scriptContent .= 'Else' . PHP_EOL;
-        $scriptContent .= '    objFile.Write "' . self::REG_NO_ERROR . '"' . PHP_EOL;
+        $scriptContent .= '    bExists = true' . PHP_EOL;
+        $scriptContent .= 'End If' . PHP_EOL . PHP_EOL;
+        
+        $scriptContent .= 'On Error Goto 0' . PHP_EOL;
+        $scriptContent .= 'If bExists = vbFalse Then' . PHP_EOL;
+        $scriptContent .= '    objFile.Write "0"' . PHP_EOL;
+        $scriptContent .= 'Else' . PHP_EOL;
+        $scriptContent .= '    objFile.Write "1"' . PHP_EOL;
         $scriptContent .= 'End If' . PHP_EOL;
         $scriptContent .= 'objFile.Close' . PHP_EOL;
         
-        $result = Vbs::exec($basename, $resultFile, $scriptContent, 10);
+        $result = Vbs::exec($basename, $resultFile, $scriptContent);
         $result = isset($result[0]) ? $result[0] : null;
+        
         $this->writeLog('Exists ' . $key . '\\' . $subkey . '\\' . $entry);
         $this->writeLog('-> result: ' . $result);
-        if ($result != self::REG_NO_ERROR) {
-            $this->latestError = $neardLang->getValue(Lang::ERROR) . ' ' . str_replace(self::REG_ERROR_ENTRY, '', $result);
-            return false;
-        }
         
-        return true;
+        return !empty($result) && intval($result) == 1;
     }
     
-    public function getValue($key, $subkey, $entry)
+    public function getValue($key, $subkey, $entry = null)
     {
         global $neardCore, $neardLang;
         
@@ -115,7 +133,7 @@ class Registry
         $scriptContent .= 'End If' . PHP_EOL;
         $scriptContent .= 'objFile.Close' . PHP_EOL;
         
-        $result = Vbs::exec($basename, $resultFile, $scriptContent, 10);
+        $result = Vbs::exec($basename, $resultFile, $scriptContent);
         $result = isset($result[0]) ? $result[0] : null;
         $this->writeLog('GetValue ' . $key . '\\' . $subkey . '\\' . $entry);
         $this->writeLog('-> result: ' . $result);
@@ -178,8 +196,10 @@ class Registry
         
         if (!empty($value)) {
             $scriptContent .= 'objRegistry.' . $type . ' HKEY, "' . $subkey . '", "' . $entry . '", newValue' . PHP_EOL;
-        } else {
+        } elseif (!empty($entry)) {
             $scriptContent .= 'objRegistry.' . $type . ' HKEY, "' . $subkey . '", "' . $entry . '"' . PHP_EOL;
+        } else {
+            $scriptContent .= 'objRegistry.' . $type . ' HKEY, "' . $subkey . '"' . PHP_EOL;
         }
         $scriptContent .= 'If Err.Number <> 0 Then' . PHP_EOL;
         $scriptContent .= '    objFile.Write "' . self::REG_ERROR_ENTRY . '" & Err.Number & ": " & Err.Description' . PHP_EOL;
@@ -197,9 +217,12 @@ class Registry
         $scriptContent .= 'End If' . PHP_EOL;
         $scriptContent .= 'objFile.Close' . PHP_EOL;
     
-        $result = Vbs::exec($basename, $resultFile, $scriptContent, 10);
+        $result = Vbs::exec($basename, $resultFile, $scriptContent);
         $result = isset($result[0]) ? $result[0] : null;
-        Batch::refreshEnvVars();
+        
+        if ($subkey == self::ENV_KEY) {
+            Batch::refreshEnvVars();
+        }
         
         $this->writeLog('SetValue ' . $strKey . '\\' . $subkey . '\\' . $entry);
         $this->writeLog('-> value: ' . $value);

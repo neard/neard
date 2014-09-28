@@ -78,6 +78,13 @@ class Bins
         }
         return $this->filezilla;
     }
+    
+    public function getLogsPath()
+    {
+        return array(
+            $this->getFilezilla()->getLogsPath(),
+        );
+    }
 
     public function getServices()
     {
@@ -93,16 +100,16 @@ class Bins
     {
         $result = array();
         
-        if ($this->getApache()->getLaunchStartup() == BinApache::LAUNCH_STARTUP_ON) {
+        if ($this->getApache()->isLaunchStartup()) {
             $result[BinApache::SERVICE_NAME] = $this->getApache()->getService();
         }
-        if ($this->getMysql()->getLaunchStartup() == BinMysql::LAUNCH_STARTUP_ON) {
+        if ($this->getMysql()->isLaunchStartup()) {
             $result[BinMysql::SERVICE_NAME] = $this->getMysql()->getService();
         }
-        if ($this->getMariadb()->getLaunchStartup() == BinMariadb::LAUNCH_STARTUP_ON) {
+        if ($this->getMariadb()->isLaunchStartup()) {
             $result[BinMariadb::SERVICE_NAME] = $this->getMariadb()->getService();
         }
-        if ($this->getFilezilla()->getLaunchStartup() == BinFilezilla::LAUNCH_STARTUP_ON) {
+        if ($this->getFilezilla()->isLaunchStartup()) {
             $result[BinFilezilla::SERVICE_NAME] = $this->getFilezilla()->getService();
         }
         

@@ -1,0 +1,10 @@
+*
+!.gitignore
+
+# Neard
+!neard.conf
+!config.php
+!index.php
+!plugins
+plugins/*
+!plugins/login-servers.php

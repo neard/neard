@@ -2,11 +2,12 @@
 
 class BinPhp
 {
-    const CFG_VERSION = 'phpVersion';
-    const CFG_CLI_EXE = 'phpCliExe';
-    const CFG_CLI_SILENT_EXE = 'phpCliSilentExe';
-    const CFG_CONF = 'phpConf';
-    const CFG_PEAR_EXE = 'phpPearExe';
+    const ROOT_CFG_VERSION = 'phpVersion';
+    
+    const LOCAL_CFG_CLI_EXE = 'phpCliExe';
+    const LOCAL_CFG_CLI_SILENT_EXE = 'phpCliSilentExe';
+    const LOCAL_CFG_CONF = 'phpConf';
+    const LOCAL_CFG_PEAR_EXE = 'phpPearExe';
     
     const INI_SHORT_OPEN_TAG = 'short_open_tag';
     const INI_ASP_TAGS = 'asp_tags';
@@ -78,15 +79,18 @@ class BinPhp
     
     private $rootPath;
     private $currentPath;
+    private $neardConf;
+    private $neardConfRaw;
+    
     private $extPath;
+    private $imagickPath;
+    private $pearPath;
+    private $apacheConf;
+    private $errorLog;
+    
     private $cliExe;
     private $cliSilentExe;
     private $conf;
-    private $apacheConf;
-    private $neardConf;
-    private $errorLog;
-    
-    private $pearPath;
     private $pearExe;
     
     public function __construct($rootPath)
@@ -100,30 +104,44 @@ class BinPhp
         global $neardBs, $neardConfig, $neardBins, $neardLang;
         
         $this->name = $neardLang->getValue(Lang::PHP);
-        $this->version = $neardConfig->getRaw(self::CFG_VERSION);
-        $this->cliExe = $neardConfig->getRaw(self::CFG_CLI_EXE);
-        $this->cliSilentExe = $neardConfig->getRaw(self::CFG_CLI_SILENT_EXE);
-        $this->conf = $neardConfig->getRaw(self::CFG_CONF);
-        $this->pearExe = $neardConfig->getRaw(self::CFG_PEAR_EXE);
+        $this->version = $neardConfig->getRaw(self::ROOT_CFG_VERSION);
         
         $this->rootPath = $rootPath == null ? $this->rootPath : $rootPath;
         $this->currentPath = $this->rootPath . '/php' . $this->version;
-        $this->extPath = $this->currentPath . '/ext';
-        $this->cliExe = $this->currentPath . '/' . $this->cliExe;
-        $this->cliSilentExe = $this->currentPath . '/' . $this->cliSilentExe;
-        $this->conf = $this->currentPath . '/' . $this->conf;
-        $this->apacheConf = $neardBins->getApache()->getCurrentPath() . '/' . $this->apacheConf;
         $this->neardConf = $this->currentPath . '/neard.conf';
+        
+        $this->extPath = $this->currentPath . '/ext';
+        $this->imagickPath = $this->currentPath . '/imagick';
+        $this->pearPath = $this->currentPath . '/pear';
+        $this->apacheConf = $neardBins->getApache()->getCurrentPath() . '/' . $this->apacheConf; //FIXME: Useful ?
         $this->errorLog = $neardBs->getLogsPath() . '/php_error.log';
         
-        $this->pearPath = $this->currentPath . '/pear';
-        $this->pearExe = $this->currentPath . '/' . $this->pearExe;
-        
         if (!is_dir($this->currentPath)) {
-            Util::logError(sprintf($neardLang->getValue(Lang::BIN_NOT_FOUND), $this->name . ' ' . $this->version, $this->currentPath));
+            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_FILE_NOT_FOUND), $this->name . ' ' . $this->version, $this->currentPath));
+        }
+        if (!is_file($this->neardConf)) {
+            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_CONF_NOT_FOUND), $this->name . ' ' . $this->version, $this->neardConf));
+        }
+        
+        $this->neardConfRaw = parse_ini_file($this->neardConf);
+        if ($this->neardConfRaw !== false) {
+            $this->cliExe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_CLI_EXE];
+            $this->cliSilentExe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_CLI_SILENT_EXE];
+            $this->conf = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_CONF];
+            $this->pearExe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_PEAR_EXE];
+        }
+        
+        if (!is_file($this->cliExe)) {
+            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_EXE_NOT_FOUND), $this->name . ' ' . $this->version, $this->cliExe));
+        }
+        if (!is_file($this->cliSilentExe)) {
+            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_EXE_NOT_FOUND), $this->name . ' ' . $this->version, $this->cliSilentExe));
         }
         if (!is_file($this->conf)) {
-            Util::logError(sprintf($neardLang->getValue(Lang::BIN_CONF_NOT_FOUND), $this->name . ' ' . $this->version, $this->conf));
+            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_CONF_NOT_FOUND), $this->name . ' ' . $this->version, $this->conf));
+        }
+        if (!is_file($this->pearExe)) {
+            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_EXE_NOT_FOUND), $this->name . ' ' . $this->version, $this->pearExe));
         }
     }
     
@@ -132,16 +150,33 @@ class BinPhp
         return $this->getName();
     }
     
+    private function replace($key, $value)
+    {
+        $this->replaceAll(array($key => $value));
+    }
+    
+    private function replaceAll($params)
+    {
+        $content = file_get_contents($this->neardConf);
+    
+        foreach ($params as $key => $value) {
+            $content = preg_replace('|' . $key . ' = .*|', $key . ' = ' . '"' . $value.'"' , $content);
+            $this->neardConfRaw[$key] = $value;
+        }
+    
+        file_put_contents($this->neardConf, $content);
+    }
+    
     public function switchVersion($version, $showWindow = false)
     {
-        global $neardBs, $neardCore, $neardConfig, $neardLang, $neardBins, $neardWinbinder;
+        global $neardBs, $neardCore, $neardLang, $neardBins, $neardWinbinder;
         Util::logDebug('Switch PHP version to ' . $version);
         
         $boxTitle = sprintf($neardLang->getValue(Lang::SWITCH_VERSION_TITLE), $this->getName(), $version);
         
         $phpPath = str_replace('php' . $this->getVersion(), 'php' . $version, $this->getCurrentPath());
         $phpConf = str_replace('php' . $this->getVersion(), 'php' . $version, $this->getConf());
-        $neardConf = str_replace('php' . $this->getVersion(), 'php' . $version, $this->getNeardConf());
+        $neardConf = str_replace('php' . $this->getVersion(), 'php' . $version, $this->neardConf);
         $apachePhpModule = $this->getApacheModule($neardBins->getApache()->getVersion(), $version);
         
         if (!file_exists($phpConf) || !file_exists($neardConf)) {
@@ -156,7 +191,7 @@ class BinPhp
         }
         
         $neardConfRaw = parse_ini_file($neardConf);
-        if ($neardConfRaw === false || !isset($neardConfRaw[self::CFG_VERSION]) || $neardConfRaw[self::CFG_VERSION] != $version) {
+        if ($neardConfRaw === false || !isset($neardConfRaw[self::ROOT_CFG_VERSION]) || $neardConfRaw[self::ROOT_CFG_VERSION] != $version) {
             Util::logError('Neard config file malformed for ' . $this->getName() . ' ' . $version);
             if ($showWindow) {
                 $neardWinbinder->messageBoxError(
@@ -182,7 +217,7 @@ class BinPhp
         util::replaceDefine($neardCore->getBootstrapFilePath(), 'CURRENT_PHP_VERSION', $version);
         
         // neard.conf
-        $neardConfig->replace(BinPhp::CFG_VERSION, $version);
+        $this->setVersion($version);
         
         // apache
         Util::replaceInFile($neardBins->getApache()->getConf(), array(
@@ -470,7 +505,7 @@ class BinPhp
         $phpVersion = $phpVersion == null ? $this->getVersion() : $phpVersion;
         
         $currentPath = str_replace('php' . $this->getVersion(), 'php' . $phpVersion, $this->getCurrentPath());
-        $neardConf = str_replace('php' . $this->getVersion(), 'php' . $phpVersion, $this->getNeardConf());
+        $neardConf = str_replace('php' . $this->getVersion(), 'php' . $phpVersion, $this->neardConf);
         
         if (in_array($phpVersion, $this->getVersionList()) && file_exists($neardConf)) {
             $apacheCpt = parse_ini_file($neardConf);
@@ -502,15 +537,11 @@ class BinPhp
     {
         return $this->version;
     }
-
-    public function getCliExe()
+    
+    public function setVersion($version)
     {
-        return $this->cliExe;
-    }
-
-    public function getCliSilentExe()
-    {
-        return $this->cliSilentExe;
+        global $neardConfig;
+        $neardConfig->replace(self::ROOT_CFG_VERSION, $version);
     }
 
     public function getRootPath()
@@ -527,15 +558,15 @@ class BinPhp
     {
         return $this->extPath;
     }
-
-    public function getConf()
+    
+    public function getImagickPath()
     {
-        return $this->conf;
+        return $this->imagickPath;
     }
     
-    public function getNeardConf()
+    public function getPearPath()
     {
-        return $this->neardConf;
+        return $this->pearPath;
     }
     
     public function getErrorLog()
@@ -543,9 +574,19 @@ class BinPhp
         return $this->errorLog;
     }
     
-    public function getPearPath()
+    public function getCliExe()
     {
-        return $this->pearPath;
+        return $this->cliExe;
+    }
+    
+    public function getCliSilentExe()
+    {
+        return $this->cliSilentExe;
+    }
+
+    public function getConf()
+    {
+        return $this->conf;
     }
     
     public function getPearExe()

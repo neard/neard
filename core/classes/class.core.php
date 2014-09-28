@@ -9,8 +9,9 @@ class Core
     const PHP_CLI_SILENT_EXE = 'php-win.exe';
     const PHP_CONF = 'php.ini';
     
+    const APP_VERSION = 'version.dat';
     const APP_PATHS = 'paths.dat';
-    const EXEC = 'exec';
+    const EXEC = 'exec.dat';
     const LOADING_PID = 'loading.pid';
     
     const SCRIPT_EXEC_SILENT_VBS = 'execSilent.vbs';
@@ -66,6 +67,19 @@ class Core
         return $neardBs->getCorePath($aetrayPath) . '/' . self::BOOTSTRAP_FILE;
     }
     
+    public function getAppVersion()
+    {
+        global $neardLang;
+        
+        $filePath = $this->getResourcesPath() . '/' . self::APP_VERSION;
+        if (!is_file($filePath)) {
+            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_CONF_NOT_FOUND), APP_TITLE, $filePath));
+            return null;
+        }
+        
+        return trim(file_get_contents($filePath));
+    }
+    
     public function getAppPaths($aetrayPath = false)
     {
         return $this->getResourcesPath($aetrayPath) . '/' . self::APP_PATHS;
@@ -99,11 +113,6 @@ class Core
     public function getPhpCliSilentExe($aetrayPath = false)
     {
         return $this->getPhpPath($aetrayPath) . '/' . self::PHP_CLI_SILENT_EXE;
-    }
-    
-    public function getWgetExe($aetrayPath = false)
-    {
-        return $this->getLibsPath($aetrayPath) . '/wget/wget.exe';
     }
 
 }

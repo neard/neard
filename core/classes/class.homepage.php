@@ -5,10 +5,17 @@ class Homepage
     const PAGE_INDEX = 'index';
     const PAGE_PHPINFO = 'phpinfo';
     
+    const PAGE_STDL_APC = 'apc.php';
+    
     private $page;
+    
     private $pageList = array(
         self::PAGE_INDEX,
         self::PAGE_PHPINFO,
+    );
+    
+    private $pageStdl = array(
+        self::PAGE_STDL_APC
     );
     
     public function __construct()
@@ -32,6 +39,10 @@ class Homepage
         if (!empty($page) && in_array($page, $this->pageList) && $page != self::PAGE_INDEX) {
             $request = '?p=' . $page;
         }
+        if (!empty($page) && in_array($page, $this->pageStdl)) {
+            $request = $page;
+        }
+        
         return $neardBs->getLocalUrl($request);
     }
     
@@ -43,8 +54,8 @@ class Homepage
     
     public function getResourcesUrl()
     {
-        global $neardBs, $neardConfig;
-        return $neardBs->getLocalUrl(md5(APP_TITLE . $neardConfig->getAppVersion()));
+        global $neardBs, $neardCore;
+        return $neardBs->getLocalUrl(md5(APP_TITLE . $neardCore->getAppVersion()));
     }
     
     public function getAliasFilePath()
@@ -54,10 +65,10 @@ class Homepage
     
     public function refreshAliasContent()
     {
-        global $neardConfig, $neardBins;
+        global $neardCore, $neardBins;
     
         $result = $neardBins->getApache()->getAliasContent(
-            md5(APP_TITLE . $neardConfig->getAppVersion()),
+            md5(APP_TITLE . $neardCore->getAppVersion()),
             $this->getPath());
         
         return file_put_contents($this->getAliasFilePath(), $result) !== false;

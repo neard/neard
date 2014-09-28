@@ -2,5 +2,6 @@
 !.gitignore
 
 # Neard
+!neard.conf
 !icons
 !console.xml

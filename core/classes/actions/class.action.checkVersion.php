@@ -16,11 +16,11 @@ class ActionCheckVersion
     
     public function __construct($args)
     {
-        global $neardCore, $neardConfig, $neardLang, $neardWinbinder;
+        global $neardCore, $neardLang, $neardWinbinder;
         
         if (!file_exists($neardCore->getExec())) {
             Util::startLoading();
-            $this->currentVersion = $neardConfig->getAppVersion();
+            $this->currentVersion = $neardCore->getAppVersion();
             $this->latestVersion =  Util::getLatestVersion();
             
             if ($this->latestVersion != null && version_compare($this->currentVersion, $this->latestVersion, '<')) {

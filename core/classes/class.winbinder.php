@@ -44,11 +44,17 @@ class WinBinder
     
     public function __construct()
     {
-        global $neardConfig;
+        global $neardCore;
         Util::logInitClass($this);
         
-        $this->defaultTitle = APP_TITLE . ' ' . $neardConfig->getAppVersion();
+        $this->defaultTitle = APP_TITLE . ' ' . $neardCore->getAppVersion();
         $this->reset();
+    }
+    
+    private static function writeLog($log)
+    {
+        global $neardBs;
+        Util::logDebug($log, $neardBs->getWinbinderLogFilePath());
     }
 
     public function reset()
@@ -184,13 +190,14 @@ class WinBinder
             $params = !empty($params) ? $silent . ' "' . $params . '"' : $silent;
         }
         
-        Util::logDebug('wb_exec: ' . $cmd . ' ' . $params);
+        $this->writeLog('exec: ' . $cmd . ' ' . $params);
         return $this->callWinBinder('wb_exec', array($cmd, $params));
     }
     
     public function findFile($filename)
     {
         $result = $this->callWinBinder('wb_find_file', array($filename));
+        $this->writeLog('findFile ' . $filename . ': ' . $result);
         return $result != $filename ? $result : false;
     }
     

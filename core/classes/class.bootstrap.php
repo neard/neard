@@ -24,6 +24,7 @@ class Bootstrap
         
         // External classes
         require_once $this->getCorePath() . '/classes/class.util.php';
+        Util::logSeparator();
         
         // Autoloader
         require_once $this->getCorePath() . '/classes/class.autoloader.php';
@@ -37,7 +38,6 @@ class Bootstrap
         self::loadBins();
         self::loadTools();
         self::loadApps();
-        self::loadTpls();
         self::loadWinbinder();
         self::loadRegistry();
         self::loadHomepage();
@@ -181,6 +181,11 @@ class Bootstrap
         return $this->getLogsPath($aetrayPath) . '/neard-vbs.log';
     }
     
+    public function getWinbinderLogFilePath($aetrayPath = false)
+    {
+        return $this->getLogsPath($aetrayPath) . '/neard-winbinder.log';
+    }
+    
     public function getHomepageFilePath($aetrayPath = false)
     {
         return $this->getWwwPath($aetrayPath) . '/index.php';
@@ -233,12 +238,6 @@ class Bootstrap
     {
         global $neardApps;
         $neardApps = new Apps();
-    }
-    
-    public static function loadTpls()
-    {
-        global $neardTpls;
-        $neardTpls = new Tpls();
     }
     
     public static function loadWinbinder()
@@ -303,7 +302,7 @@ class Bootstrap
         
         $trace = preg_replace('/^#0\s+Bootstrap::debugStringBacktrace[^\n]*\n/', '', $trace, 1);
         $trace = preg_replace('/^#1\s+Bootstrap->errorHandler[^\n]*\n/', '', $trace, 1);
-        $trace = preg_replace('/^#(\d+)/me', '\'  #\' . ($1 - 1)', $trace);
+        $trace = preg_replace_callback('/^#(\d+)/m', function($m) { return '  #' . ($m[1] - 1); }, $trace);
         return $trace;
     }
 }

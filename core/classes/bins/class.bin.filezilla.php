@@ -4,15 +4,13 @@ class BinFilezilla
 {
     const SERVICE_NAME = 'neardfilezilla';
     
-    const CFG_VERSION = 'filezillaVersion';
-    const CFG_EXE = 'filezillaExe';
-    const CFG_CONF = 'filezillaConf';
-    const CFG_PORT = 'filezillaPort';
-    const CFG_SSL_PORT = 'filezillaSslPort';
-    const CFG_LAUNCH_STARTUP = 'filezillaLaunchStartup';
+    const ROOT_CFG_VERSION = 'filezillaVersion';
+    const ROOT_CFG_LAUNCH_STARTUP = 'filezillaLaunchStartup';
     
-    const LAUNCH_STARTUP_ON = 'on';
-    const LAUNCH_STARTUP_OFF = 'off';
+    const LOCAL_CFG_EXE = 'filezillaExe';
+    const LOCAL_CFG_CONF = 'filezillaConf';
+    const LOCAL_CFG_PORT = 'filezillaPort';
+    const LOCAL_CFG_SSL_PORT = 'filezillaSslPort';
     
     const CFG_SERVER_PORT = 0;
     const CFG_WELCOME_MSG = 15;
@@ -23,18 +21,22 @@ class BinFilezilla
     
     private $name;
     private $version;
-    private $service;
-    private $port;
-    private $sslPort;
     private $launchStartup;
     
     private $rootPath;
     private $currentPath;
+    private $neardConf;
+    private $neardConfRaw;
+    
+    private $logsPath;
     private $log;
-    private $linkLog;
+    
     private $exe;
     private $conf;
-    private $neardConf;
+    private $port;
+    private $sslPort;
+    
+    private $service;
     
     public function __construct($rootPath, $version=null)
     {
@@ -47,43 +49,77 @@ class BinFilezilla
         global $neardBs, $neardConfig, $neardLang;
         
         $this->name = $neardLang->getValue(Lang::FILEZILLA);
-        $this->version = $neardConfig->getRaw(self::CFG_VERSION);
-        $this->exe = $neardConfig->getRaw(self::CFG_EXE);
-        $this->conf = $neardConfig->getRaw(self::CFG_CONF);
-        $this->port = $neardConfig->getRaw(self::CFG_PORT);
-        $this->sslPort = $neardConfig->getRaw(self::CFG_SSL_PORT);
-        $this->launchStartup = $neardConfig->getRaw(self::CFG_LAUNCH_STARTUP);
+        $this->version = $neardConfig->getRaw(self::ROOT_CFG_VERSION);
+        $this->launchStartup = $neardConfig->getRaw(self::ROOT_CFG_LAUNCH_STARTUP) == Config::ENABLED;
         
         $this->rootPath = $rootPath == null ? $this->rootPath : $rootPath;
         $this->currentPath = $this->rootPath . '/filezilla' . $this->version;
-        $this->log = $neardBs->getLogsPath() . '/filezilla.log';
-        $this->exe = $this->currentPath . '/' . $this->exe;
-        $this->conf = $this->currentPath . '/' . $this->conf;
         $this->neardConf = $this->currentPath . '/neard.conf';
+        
+        $this->logsPath = $this->currentPath . '/Logs';
+        $this->log = $neardBs->getLogsPath() . '/filezilla.log';
+        
+        if (!is_dir($this->currentPath)) {
+            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_FILE_NOT_FOUND), $this->name . ' ' . $this->version, $this->currentPath));
+        }
+        if (!is_file($this->neardConf)) {
+            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_CONF_NOT_FOUND), $this->name . ' ' . $this->version, $this->neardConf));
+        }
+        
+        // Create log hard link
+        $log = $this->logsPath . '/FileZilla Server.log';
+        if (!file_exists($this->log) && file_exists($log)) {
+            @link($log, $this->log);
+        }
+        
+        $this->neardConfRaw = parse_ini_file($this->neardConf);
+        if ($this->neardConfRaw !== false) {
+            $this->exe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_EXE];
+            $this->conf = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_CONF];
+            $this->port = $this->neardConfRaw[self::LOCAL_CFG_PORT];
+            $this->sslPort = $this->neardConfRaw[self::LOCAL_CFG_SSL_PORT];
+        }
+        
+        if (!is_file($this->exe)) {
+            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_EXE_NOT_FOUND), $this->name . ' ' . $this->version, $this->exe));
+        }
+        if (!is_file($this->conf)) {
+            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_CONF_NOT_FOUND), $this->name . ' ' . $this->version, $this->conf));
+        }
+        if (!is_numeric($this->port) || $this->port <= 0) {
+            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_INVALID_PARAMETER), self::LOCAL_CFG_PORT, $this->port));
+        }
+        if (!is_numeric($this->sslPort) || $this->sslPort <= 0) {
+            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_INVALID_PARAMETER), self::LOCAL_CFG_SSL_PORT, $this->sslPort));
+        }
         
         $this->service = new Win32Service(self::SERVICE_NAME);
         $this->service->setDisplayName(APP_TITLE . ' ' . $this->getName() . ' ' . $this->version);
         $this->service->setBinPath($this->exe);
         $this->service->setStartType(Win32Service::SERVICE_DEMAND_START);
         $this->service->setErrorControl(Win32Service::SERVER_ERROR_NORMAL);
-        
-        if (!is_dir($this->currentPath)) {
-            Util::logError(sprintf($neardLang->getValue(Lang::BIN_NOT_FOUND), $this->name . ' ' . $this->version, $this->currentPath));
-        }
-        if (!is_file($this->conf)) {
-            Util::logError(sprintf($neardLang->getValue(Lang::BIN_CONF_NOT_FOUND), $this->name . ' ' . $this->version, $this->conf));
-        }
-        
-        // Create log hard link
-        $log = $this->currentPath . '/Logs/FileZilla Server.log';
-        if (!file_exists($this->linkLog) && file_exists($log)) {
-            @link($log, $this->linkLog);
-        }
     }
     
     public function __toString()
     {
         return $this->getName();
+    }
+    
+    private function replace($key, $value)
+    {
+        $this->replaceAll(array($key => $value));
+    }
+    
+    private function replaceAll($params)
+    {
+        $content = file_get_contents($this->neardConf);
+    
+        foreach ($params as $key => $value) {
+            $content = preg_replace('|' . $key . ' = .*|', $key . ' = ' . '"' . $value.'"' , $content);
+            $this->neardConfRaw[$key] = $value;
+        }
+    
+        file_put_contents($this->neardConf, $content);
     }
     
     public function rebuildConf()
@@ -106,7 +142,7 @@ class BinFilezilla
     
     public function changePort($port, $checkUsed = false, $wbProgressBar = null)
     {
-        global $neardCore, $neardConfig, $neardBins, $neardApps, $neardWinbinder;
+        global $neardCore, $neardBins, $neardApps, $neardWinbinder;
         
         if (!Util::isValidPort($port)) {
             Util::logError($this->getName() . ' port not valid: ' . $port);
@@ -123,7 +159,7 @@ class BinFilezilla
             $neardWinbinder->incrProgressBar($wbProgressBar);
     
             // neard.conf
-            $neardConfig->replace(self::CFG_PORT, $port);
+            $this->setPort($port);
             $neardWinbinder->incrProgressBar($wbProgressBar);
     
             // FileZilla Server.xml
@@ -147,21 +183,18 @@ class BinFilezilla
             return false;
         }
         
-        $fp = fsockopen(($ssl ? 'ssl://' : '') . '127.0.0.1', $port, $errno, $errstr, 5);
-        if ($fp) {
-            $out = fgets($fp);
-            $expOut = explode(PHP_EOL, $out);
-            if ($expOut[0] == '220 ' . $this->getService()->getDisplayName()) {
-                Util::logDebug($this->getName() . ' port ' . $port . ' is used by: ' . str_replace('220 ', '', $expOut[0]));
+        $headers = Util::getHeaders('127.0.0.1', $port, $ssl);
+        if (!empty($headers)) {
+            if ($headers[0] == '220 ' . $this->getService()->getDisplayName()) {
+                Util::logDebug($this->getName() . ' port ' . $port . ' is used by: ' . str_replace('220 ', '', $headers[0]));
                 if ($showWindow) {
                     $neardWinbinder->messageBoxInfo(
-                        sprintf($neardLang->getValue(Lang::PORT_USED_BY), $port, str_replace('220 ', '', $expOut[0])),
+                        sprintf($neardLang->getValue(Lang::PORT_USED_BY), $port, str_replace('220 ', '', $headers[0])),
                         $boxTitle
                     );
                 }
                 return true;
             }
-            fclose($fp);
             Util::logDebug($this->getName() . ' port ' . $port . ' is used by another application');
             if ($showWindow) {
                 $neardWinbinder->messageBoxWarning(
@@ -184,13 +217,13 @@ class BinFilezilla
     
     public function switchVersion($version, $showWindow = false)
     {
-        global $neardBs, $neardCore, $neardConfig, $neardLang, $neardBins, $neardWinbinder;
+        global $neardBs, $neardCore, $neardLang, $neardBins, $neardWinbinder;
         Util::logDebug('Switch Filezilla Server version to ' . $version);
     
         $boxTitle = sprintf($neardLang->getValue(Lang::SWITCH_VERSION_TITLE), $this->getName(), $version);
     
         $newConf = str_replace('filezilla' . $this->getVersion(), 'filezilla' . $version, $this->getConf());
-        $neardConf = str_replace('filezilla' . $this->getVersion(), 'filezilla' . $version, $this->getNeardConf());
+        $neardConf = str_replace('filezilla' . $this->getVersion(), 'filezilla' . $version, $this->neardConf);
     
         if (!file_exists($newConf) || !file_exists($neardConf)) {
             Util::logError('Neard config files not found for ' . $this->getName() . ' ' . $version);
@@ -204,7 +237,7 @@ class BinFilezilla
         }
     
         $neardConfRaw = parse_ini_file($neardConf);
-        if ($neardConfRaw === false || !isset($neardConfRaw[self::CFG_VERSION]) || $neardConfRaw[self::CFG_VERSION] != $version) {
+        if ($neardConfRaw === false || !isset($neardConfRaw[self::ROOT_CFG_VERSION]) || $neardConfRaw[self::ROOT_CFG_VERSION] != $version) {
             Util::logError('Neard config file malformed for ' . $this->getName() . ' ' . $version);
             if ($showWindow) {
                 $neardWinbinder->messageBoxError(
@@ -219,7 +252,7 @@ class BinFilezilla
         Util::replaceDefine($neardCore->getBootstrapFilePath(), 'CURRENT_FILEZILLA_VERSION', $version);
     
         // neard.conf
-        $neardConfig->replace(BinFilezilla::CFG_VERSION, $version);
+        $this->setVersion($version);
     }
     
     public function existsSslCrt()
@@ -258,25 +291,22 @@ class BinFilezilla
     {
         return $this->version;
     }
-
-    public function getService()
-    {
-        return $this->service;
-    }
-
-    public function getPort()
-    {
-        return $this->port;
-    }
     
-    public function getSslPort()
+    public function setVersion($version)
     {
-        return $this->sslPort;
+        global $neardConfig;
+        $neardConfig->replace(self::ROOT_CFG_VERSION, $version);
     }
-    
-    public function getLaunchStartup()
+
+    public function isLaunchStartup()
     {
         return $this->launchStartup;
+    }
+    
+    public function setLaunchStartup($enabled)
+    {
+        global $neardConfig;
+        $neardConfig->replace(self::ROOT_CFG_LAUNCH_STARTUP, $enabled);
     }
     
     public function getRootPath()
@@ -287,6 +317,11 @@ class BinFilezilla
     public function getCurrentPath()
     {
         return $this->currentPath;
+    }
+    
+    public function getLogsPath()
+    {
+        return $this->logsPath;
     }
     
     public function getLog()
@@ -304,9 +339,29 @@ class BinFilezilla
         return $this->conf;
     }
     
-    public function getNeardConf()
+    public function getPort()
     {
-        return $this->neardConf;
+        return $this->port;
+    }
+    
+    public function setPort($port)
+    {
+        return $this->replace(self::LOCAL_CFG_PORT, $port);
+    }
+    
+    public function getSslPort()
+    {
+        return $this->sslPort;
+    }
+    
+    public function setSslPort($sslPort)
+    {
+        return $this->replace(self::LOCAL_CFG_SSL_PORT, $sslPort);
+    }
+    
+    public function getService()
+    {
+        return $this->service;
     }
     
 }

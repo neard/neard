@@ -1,6 +1,6 @@
 <?php
 
-$neardCurrentVersion = $neardConfig->getAppVersion();
+$neardCurrentVersion = $neardCore->getAppVersion();
 $neardLatestVersion =  Util::getLatestVersion();
 
 if ($neardLatestVersion != null && version_compare($neardCurrentVersion, $neardLatestVersion, '<')) {
@@ -24,7 +24,7 @@ if ($neardLatestVersion != null && version_compare($neardCurrentVersion, $neardL
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         <h4 class="modal-title" id="modal-changelog-title"><?php echo $neardLang->getValue(Lang::CHANGELOG); ?></h4>
       </div>
-      <div class="modal-body"><?php echo Util::getLatestChangelog(); ?></div>
+      <div class="modal-body"><?php echo Util::getLatestChangelog(true); ?></div>
     </div>
   </div>
 </div>

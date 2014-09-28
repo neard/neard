@@ -6,14 +6,14 @@ class ActionRestart
     
     public function __construct($args)
     {
-        global $neardBs, $neardCore, $neardConfig, $neardLang, $neardBins, $neardWinbinder;
+        global $neardBs, $neardCore, $neardLang, $neardTools, $neardWinbinder;
         
         // Start splash screen
         $neardSplash = new Splash();
         $neardSplash->init(
             $neardLang->getValue(Lang::RESTART),
             self::GAUGE_RESTART,
-            sprintf($neardLang->getValue(Lang::STARTUP_RESTARTING_TEXT), APP_TITLE . ' ' . $neardConfig->getAppVersion()),
+            sprintf($neardLang->getValue(Lang::STARTUP_RESTARTING_TEXT), APP_TITLE . ' ' . $neardCore->getAppVersion()),
             Splash::IMG_RESTART
         );
         
@@ -24,7 +24,7 @@ class ActionRestart
         
         $neardSplash->incrProgressBar();
         $neardWinbinder->destroyWindow($neardSplash->getWbWindow());
-        $neardWinbinder->exec($neardBs->getExeFilePath());
+        $neardWinbinder->exec($neardTools->getRunFromProcess()->getExe(), 'nomsg explorer.exe ' . Util::formatWindowsPath($neardBs->getExeFilePath()), false);
         $neardWinbinder->reset();
     }
     

@@ -27,6 +27,9 @@
       <a class="list-group-item" href="<?php echo $neardHomepage->getPageUrl(Homepage::PAGE_PHPINFO); ?>">
         <i class="fa fa-info-circle"></i> <?php echo $neardLang->getValue(Lang::HOMEPAGE_PHPINFO_TEXT); ?>
       </a>
+      <a class="list-group-item" target="_blank" href="<?php echo $neardHomepage->getPageUrl(Homepage::PAGE_STDL_APC); ?>">
+        <i class="fa fa-info-circle"></i> <?php echo $neardLang->getValue(Lang::HOMEPAGE_APC_TEXT); ?>
+      </a>
     </div>
   </div>
 </div>
@@ -39,7 +42,7 @@
   <div class="col-lg-12">
   <?php foreach($neardBins->getPhp()->getExtensionsFromConf() as $extName => $extStatus) {
     if ($extStatus == ActionSwitchPhpExtension::SWITCH_ON) {
-      ?><div class="col-lg-2" style="padding:3px;"><i class="fa fa-check-square-o"></i> <strong><?php echo $extName; ?></strong></div><?php
+      ?><div class="col-lg-2" style="padding:3px;"><i class="fa fa-check-square-o"></i> <strong><?php echo $extName . ' <sup>' . phpversion(substr($extName, 4)) . '</sup>'; ?></strong></div><?php
     } else {
       ?><div class="col-lg-2" style="padding:3px;"><i class="fa fa-square-o"></i> <?php echo $extName; ?></div><?php
     }

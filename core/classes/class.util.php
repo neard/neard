@@ -83,6 +83,16 @@ class Util
         return $randomString;
     }
     
+    public static function clearFolders($paths, $exclude = array())
+    {
+        $result = array();
+        foreach ($paths as $path) {
+            $result[$path] = self::clearFolder($path, $exclude);
+        }
+    
+        return $result;
+    }
+    
     public static function clearFolder($path, $exclude = array())
     {
         $result = array();
@@ -324,12 +334,6 @@ class Util
         }
     }
     
-    public static function isOnline()
-    {
-        global $neardConfig;
-        return $neardConfig->getStatus() == Config::STATUS_ONLINE;
-    }
-    
     public static function getVersionList($path)
     {
         $result = array();
@@ -360,7 +364,7 @@ class Util
         if ($fromRegistry) {
             $value = $neardRegistry->getValue(
                 Registry::HKEY_LOCAL_MACHINE,
-                Registry::APP_BINS_REG_SUBKEY,
+                Registry::ENV_KEY,
                 Registry::APP_BINS_REG_ENTRY
             );
             self::logDebug('App reg key from registry: ' . $value);
@@ -369,7 +373,8 @@ class Util
             $value = $neardBins->getApache()->getCurrentPath() . '/bin;';
             $value .= $neardBins->getPhp()->getCurrentPath() . ';';
             $value .= $neardBins->getPhp()->getPearPath() . ';';
-            $value .= $neardTools->getImagick()->getCurrentPath() . ';';
+            $value .= $neardBins->getPhp()->getImagickPath() . ';';
+            $value .= $neardTools->getImageMagick()->getCurrentPath() . ';';
             $value .= $neardTools->getSvn()->getCurrentPath() . '/bin;';
             $value .= $neardTools->getGit()->getCurrentPath() . '/bin;';
             $value = self::formatWindowsPath($value);
@@ -384,7 +389,7 @@ class Util
         global $neardRegistry;
         return $neardRegistry->setStringValue(
             Registry::HKEY_LOCAL_MACHINE,
-            Registry::APP_BINS_REG_SUBKEY,
+            Registry::ENV_KEY,
             Registry::APP_BINS_REG_ENTRY,
             $value
         );
@@ -395,7 +400,7 @@ class Util
         global $neardRegistry;
         return $neardRegistry->getValue(
             Registry::HKEY_LOCAL_MACHINE,
-            Registry::APP_PATH_REG_SUBKEY,
+            Registry::ENV_KEY,
             Registry::APP_PATH_REG_ENTRY
         );
     }
@@ -405,7 +410,7 @@ class Util
         global $neardRegistry;
         return $neardRegistry->setStringValue(
             Registry::HKEY_LOCAL_MACHINE,
-            Registry::APP_PATH_REG_SUBKEY,
+            Registry::ENV_KEY,
             Registry::APP_PATH_REG_ENTRY,
             $value
         );
@@ -416,7 +421,7 @@ class Util
         global $neardRegistry;
         return $neardRegistry->getValue(
             Registry::HKEY_LOCAL_MACHINE,
-            Registry::SYSPATH_REG_SUBKEY,
+            Registry::ENV_KEY,
             Registry::SYSPATH_REG_ENTRY
         );
     }
@@ -426,7 +431,7 @@ class Util
         global $neardRegistry;
         return $neardRegistry->setExpandStringValue(
             Registry::HKEY_LOCAL_MACHINE,
-            Registry::SYSPATH_REG_SUBKEY,
+            Registry::ENV_KEY,
             Registry::SYSPATH_REG_ENTRY,
             $value
         );
@@ -455,11 +460,21 @@ class Util
     
     public static function deleteLaunchStartupRegKey()
     {
-        global $neardBs, $neardRegistry;
+        global $neardRegistry;
         return $neardRegistry->deleteValue(
             Registry::HKEY_LOCAL_MACHINE,
             Registry::STARTUP_REG_SUBKEY,
             Registry::STARTUP_REG_ENTRY
+        );
+    }
+    
+    public static function getProcessorRegKey()
+    {
+        global $neardRegistry;
+        return $neardRegistry->getValue(
+            Registry::HKEY_LOCAL_MACHINE,
+            Registry::PROCESSOR_REG_SUBKEY,
+            Registry::PROCESSOR_REG_ENTRY
         );
     }
     
@@ -473,8 +488,8 @@ class Util
     
     private static function log($data, $type, $file = null)
     {
-        global $neardBs, $neardConfig;
-        $file = $file == null ? $neardBs->getLogFilePath() : $file;
+        global $neardBs, $neardCore, $neardConfig;
+        $file = $file == null ? ($type == self::LOG_ERROR ? $neardBs->getErrorLogFilePath() : $neardBs->getLogFilePath()) : $file;
         
         $verbose = array();
         $verbose[Config::VERBOSE_SIMPLE] = $type == self::LOG_ERROR || $type == self::LOG_WARNING;
@@ -482,20 +497,44 @@ class Util
         $verbose[Config::VERBOSE_DEBUG] = $verbose[Config::VERBOSE_REPORT] || $type == self::LOG_DEBUG;
         
         $writeLog = false;
-        if ($neardConfig->getAppLogsVerbose() == Config::VERBOSE_SIMPLE && $verbose[Config::VERBOSE_SIMPLE]) {
+        if ($neardConfig->getLogsVerbose() == Config::VERBOSE_SIMPLE && $verbose[Config::VERBOSE_SIMPLE]) {
             $writeLog = true;
-        } elseif ($neardConfig->getAppLogsVerbose() == Config::VERBOSE_REPORT && $verbose[Config::VERBOSE_REPORT]) {
+        } elseif ($neardConfig->getLogsVerbose() == Config::VERBOSE_REPORT && $verbose[Config::VERBOSE_REPORT]) {
             $writeLog = true;
-        } elseif ($neardConfig->getAppLogsVerbose() == Config::VERBOSE_DEBUG && $verbose[Config::VERBOSE_DEBUG]) {
+        } elseif ($neardConfig->getLogsVerbose() == Config::VERBOSE_DEBUG && $verbose[Config::VERBOSE_DEBUG]) {
             $writeLog = true;
         }
         
         if ($writeLog) {
             file_put_contents(
                 $file,
-                '[' . date('Y-m-d H:i:s', time()) . '] # ' . APP_TITLE . ' ' . $neardConfig->getAppVersion() . ' # ' . $type . ': ' . $data . PHP_EOL,
+                '[' . date('Y-m-d H:i:s', time()) . '] # ' . APP_TITLE . ' ' . $neardCore->getAppVersion() . ' # ' . $type . ': ' . $data . PHP_EOL,
                 FILE_APPEND
             );
+        }
+    }
+    
+    public static function logSeparator()
+    {
+        global $neardBs;
+        
+        $logs = array(
+            $neardBs->getLogFilePath(),
+            $neardBs->getErrorLogFilePath(),
+            $neardBs->getServicesLogFilePath(),
+            $neardBs->getRegistryLogFilePath(),
+            $neardBs->getStartupLogFilePath(),
+            $neardBs->getBatchLogFilePath(),
+            $neardBs->getVbsLogFilePath(),
+            $neardBs->getWinbinderLogFilePath(),
+        );
+        
+        $separator = '========================================================================================' . PHP_EOL;
+        foreach ($logs as $log) {
+            $logContent = @file_get_contents($log);
+            if ($logContent !== false && !self::endWith($logContent, $separator)) {
+                file_put_contents($log, $separator, FILE_APPEND);
+            }
         }
     }
     
@@ -617,7 +656,7 @@ class Util
         if (file_exists($neardCore->getLoadingPid())) {
             $pids = file($neardCore->getLoadingPid());
             foreach ($pids as $pid) {
-                Win32Ps::kill(trim($pid));
+                Win32Ps::kill($pid);
             }
             @unlink($neardCore->getLoadingPid());
         }
@@ -635,7 +674,7 @@ class Util
             $neardBins->getMysql()->getRootPath()           => array('my.ini'),
             $neardBins->getMariadb()->getRootPath()         => array('my.ini'),
             $neardBins->getNodejs()->getRootPath()          => array('.bat', 'npmrc'),
-            $neardBins->getFilezilla()->getRootPath() => array('.xml'),
+            $neardBins->getFilezilla()->getRootPath()       => array('.xml'),
             $neardApps->getWebsvn()->getRootPath()          => array('config.php'),
             $neardApps->getGitlist()->getRootPath()         => array('config.ini'),
             $neardTools->getConsole()->getRootPath()        => array('console.xml'),
@@ -644,10 +683,10 @@ class Util
         );
     }
     
-    public static function getFilesToScan()
+    public static function getFilesToScan($path = null)
     {
         $result = array();
-        $pathsToScan = self::getPathsToScan();
+        $pathsToScan = !empty($path) ? $path : self::getPathsToScan();
         foreach ($pathsToScan as $pathToScan => $toFind) {
             $findFiles = self::findFiles($pathToScan, $toFind);
             foreach ($findFiles as $findFile) {
@@ -661,21 +700,13 @@ class Util
     {
         global $neardBs;
         
-        $remoteConfContent = file_get_contents('https://raw.githubusercontent.com/crazy-max/neard/master/neard.conf');
-        if (empty($remoteConfContent)) {
+        $latestVersion = self::getRemoteFile('https://raw.githubusercontent.com/crazy-max/neard/master/core/resources/version.dat');
+        if (empty($latestVersion)) {
+            self::logError('Cannot retrieve latest version');
             return null;
         }
         
-        $remoteConfPath = $neardBs->getTmpPath() . '/neard-latestversion.conf';
-        file_put_contents($remoteConfPath, $remoteConfContent);
-        $raw = parse_ini_file($remoteConfPath);
-        @unlink($remoteConfPath);
-        
-        if ($raw !== false && isset($raw[Config::CFG_APP_VERSION])) {
-            return $raw[Config::CFG_APP_VERSION];
-        }
-        
-        return null;
+        return $latestVersion;
     }
     
     public static function getVersionUrl($version)
@@ -688,13 +719,14 @@ class Util
         return 'http://sourceforge.net/projects/neard/files/Patches/' . $oldVersion . '-' . $latestVersion . '/neard-' . $oldVersion . '-' . $latestVersion . '.zip/download';
     }
     
-    public static function getLatestChangelog()
+    public static function getLatestChangelog($markdown = false)
     {
-        $content = file_get_contents('http://sourceforge.net/projects/neard/files/CHANGELOG.md/download');
-        if ($content != false) {
-            return Markdown(preg_replace('/^.+\n.*\n/', '', $content));
+        $content = self::getRemoteFile('https://raw.githubusercontent.com/crazy-max/neard/master/CHANGELOG.md');
+        if (empty($content)) {
+            self::logError('Cannot retrieve latest CHANGELOG');
+            return null;
         }
-        return null;
+        return $markdown ? Markdown(preg_replace('/^.+\n.*\n/', '', $content)) : $content;
     }
     
     public static function getRemoteFilesize($url, $humanFileSize = true)
@@ -708,6 +740,8 @@ class Util
         curl_exec($ch);
         
         $size = curl_getinfo($ch, CURLINFO_CONTENT_LENGTH_DOWNLOAD);
+        curl_close($ch);
+        
         return $humanFileSize ? self::humanFileSize($size) : $size;
     }
     
@@ -723,5 +757,105 @@ class Util
             return number_format($size / (1 << 10), 2) . 'KB';
         }
         return number_format($size) . ' bytes';
+    }
+    
+    public static function is32BitsOs()
+    {
+        $processor = self::getProcessorRegKey();
+        return self::contains($processor, 'x86');
+    }
+    
+    public static function getApacheHeaders($url)
+    {
+        global $neardBs;
+        
+        $result = array();
+        $context = stream_context_create(array(
+            'ssl' => array(
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true,
+            )
+        ));
+        
+        $headerFile = Util::random() . '.php';
+        touch($neardBs->getWwwPath() . '/' . $headerFile);
+        
+        $fp = @fopen($url . '/' . $headerFile, 'r', false, $context);
+        if ($fp) {
+            $meta = stream_get_meta_data($fp);
+            $result = isset($meta['wrapper_data']) ? $meta['wrapper_data'] : $result;
+        }
+        fclose($fp);
+        
+        unlink($neardBs->getWwwPath() . '/' . $headerFile);
+        
+        if (!empty($result)) {
+            $rebuildResult = array();
+            foreach ($result as $row) {
+                $row = trim($row);
+                if (!empty($row)) {
+                    $rebuildResult[] = $row;
+                }
+            }
+            $result = $rebuildResult;
+            
+            self::logDebug('getApacheHeaders:');
+            foreach ($result as $header) {
+                self::logDebug('-> ' . $header);
+            }
+        }
+        
+        return $result;
+    }
+    
+    public static function getHeaders($host, $port, $ssl = false)
+    {
+        global $neardBs;
+        
+        $result = array();
+        $context = stream_context_create(array(
+            'ssl' => array(
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true,
+            )
+        ));
+        
+        $fp = @stream_socket_client(($ssl ? 'ssl://' : '') . $host . ':' . $port, $errno, $errstr, 5, STREAM_CLIENT_CONNECT, $context);
+        if ($fp) {
+            $out = fgets($fp);
+            $result = explode(PHP_EOL, $out);
+        }
+        fclose($fp);
+        
+        if (!empty($result)) {
+            $rebuildResult = array();
+            foreach ($result as $row) {
+                $row = trim($row);
+                if (!empty($row)) {
+                    $rebuildResult[] = $row;
+                }
+            }
+            $result = $rebuildResult;
+            
+            self::logDebug('getHeaders:');
+            foreach ($result as $header) {
+                self::logDebug('-> ' . $header);
+            }
+        }
+        
+        return $result;
+    }
+    
+    public static function getRemoteFile($url)
+    {
+        return @file_get_contents($url, false, stream_context_create(array(
+            'ssl' => array(
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true,
+            )
+        )));
     }
 }
