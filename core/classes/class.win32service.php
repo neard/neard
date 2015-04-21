@@ -225,11 +225,6 @@ class Win32Service
     {
         global $neardBs;
         
-        /*if (!empty($this->binPath)) {
-            $procs = Win32Ps::findByPath($this->getBinPath());
-            Win32Ps::killProcs($procs);
-        }*/
-        
         $stop = dechex($this->callWin32Service('win32_stop_service', $this->getName(), true));
         $this->writeLog('Stop service ' . $this->getName() . ': ' . $stop . ' (status: ' . $this->status() . ')');
     

@@ -3,6 +3,8 @@
 class Core
 {
     const BOOTSTRAP_FILE = 'bootstrap.php';
+    const PATH_WIN_PLACEHOLDER = '~NEARD_WIN_PATH~';
+    const PATH_LIN_PLACEHOLDER = '~NEARD_LIN_PATH~';
 
     const PHP_VERSION = '5.4.23';
     const PHP_CLI_EXE = 'php.exe';
@@ -10,11 +12,11 @@ class Core
     const PHP_CONF = 'php.ini';
     
     const APP_VERSION = 'version.dat';
-    const APP_PATHS = 'paths.dat';
+    const LAST_PATH = 'lastPath.dat';
     const EXEC = 'exec.dat';
     const LOADING_PID = 'loading.pid';
     
-    const SCRIPT_EXEC_SILENT_VBS = 'execSilent.vbs';
+    const SCRIPT_EXEC_SILENT = 'execSilent.vbs';
 
     private $langsPath;
     private $libsPath;
@@ -47,7 +49,8 @@ class Core
     
     public function getScriptsPath($aetrayPath = false)
     {
-        return $this->getResourcesPath($aetrayPath) . '/scripts';
+        global $neardBs;
+        return $neardBs->getCorePath($aetrayPath) . '/scripts';
     }
     
     public function getScript($type)
@@ -80,9 +83,14 @@ class Core
         return trim(file_get_contents($filePath));
     }
     
-    public function getAppPaths($aetrayPath = false)
+    public function getLastPath($aetrayPath = false)
     {
-        return $this->getResourcesPath($aetrayPath) . '/' . self::APP_PATHS;
+        return $this->getResourcesPath($aetrayPath) . '/' . self::LAST_PATH;
+    }
+    
+    public function getLastPathContent()
+    {
+    	return @file_get_contents($this->getLastPath());
     }
     
     public function getExec($aetrayPath = false)

@@ -2,24 +2,24 @@
 
 class ActionQuit
 {
-    private $neardSplash;
+    private $splash;
     
-    const GAUGE_LOADING = 1;
+    const GAUGE_PROCESSES = 1;
+    const GAUGE_OTHERS = 1;
     
     public function __construct($args)
     {
         global $neardCore, $neardLang, $neardBins, $neardWinbinder;
         
         // Start splash screen
-        $this->neardSplash = new Splash();
-        $this->neardSplash->init(
+        $this->splash = new Splash();
+        $this->splash->init(
             $neardLang->getValue(Lang::QUIT),
-            self::GAUGE_LOADING * count($neardBins->getServices()),
-            sprintf($neardLang->getValue(Lang::EXIT_LEAVING_TEXT), APP_TITLE . ' ' . $neardCore->getAppVersion()),
-            Splash::IMG_EXIT
+            self::GAUGE_PROCESSES * count($neardBins->getServices()) + self::GAUGE_OTHERS,
+            sprintf($neardLang->getValue(Lang::EXIT_LEAVING_TEXT), APP_TITLE . ' ' . $neardCore->getAppVersion())
         );
         
-        $neardWinbinder->setHandler($this->neardSplash->getWbWindow(), $this, 'processWindow', 2000);
+        $neardWinbinder->setHandler($this->splash->getWbWindow(), $this, 'processWindow', 2000);
         $neardWinbinder->mainLoop();
         $neardWinbinder->reset();
     }
@@ -43,10 +43,14 @@ class ActionQuit
             }
             $name .= ' (' . $service->getName() . ')';
             
-            $this->neardSplash->incrProgressBar();
-            $this->neardSplash->setTextLoading(sprintf($neardLang->getValue(Lang::EXIT_REMOVE_SERVICE_TEXT), $name));
+            $this->splash->incrProgressBar();
+            $this->splash->setTextLoading(sprintf($neardLang->getValue(Lang::EXIT_REMOVE_SERVICE_TEXT), $name));
             $service->delete();
         }
+        
+        $this->splash->incrProgressBar();
+        $this->splash->setTextLoading($neardLang->getValue(Lang::EXIT_STOP_OTHER_PROCESS_TEXT));
+        Win32Ps::killBins(true);
         
         $neardWinbinder->destroyWindow($window);
     }

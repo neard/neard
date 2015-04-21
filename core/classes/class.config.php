@@ -2,6 +2,7 @@
 
 class Config
 {
+    const CFG_MAX_LOGS_ARCHIVES = 'maxLogsArchives';
     const CFG_LOGS_VERBOSE = 'logsVerbose';
     const CFG_PURGE_LOGS_ON_STARTUP = 'purgeLogsOnStartup';
     const CFG_LANG = 'lang';
@@ -115,6 +116,11 @@ class Config
     public function getLogsVerbose()
     {
         return intval($this->raw[self::CFG_LOGS_VERBOSE]);
+    }
+    
+    public function getMaxLogsArchives()
+    {
+        return intval($this->raw[self::CFG_MAX_LOGS_ARCHIVES]);
     }
     
     public function isPurgeLogsOnStartup()

@@ -2,8 +2,8 @@
 
 class ActionLoading
 {
-    const WINDOW_WIDTH = 300;
-    const WINDOW_HEIGHT = 80;
+    const WINDOW_WIDTH = 340;
+    const WINDOW_HEIGHT = 65;
     const GAUGE = 20;
     
     private $wbWindow;
@@ -25,8 +25,8 @@ class ActionLoading
         
         $this->wbWindow = $neardWinbinder->createWindow(null, ToolDialog, null, $xPos, $yPos, self::WINDOW_WIDTH, self::WINDOW_HEIGHT, WBC_TOP, null);
         
-        $this->wbProgressBar = $neardWinbinder->createProgressBar($this->wbWindow, self::GAUGE, 0, 25, 295, 15);
-        $neardWinbinder->createLabel($this->wbWindow, $neardLang->getValue(Lang::LOADING), 2, 2, 295, null, WBC_LEFT);
+        $neardWinbinder->createLabel($this->wbWindow, $neardLang->getValue(Lang::LOADING), 42, 2, 295, null, WBC_LEFT);
+		$this->wbProgressBar = $neardWinbinder->createProgressBar($this->wbWindow, self::GAUGE, 42, 20, 290, 15);
         
         $neardWinbinder->setHandler($this->wbWindow, $this, 'processLoading', 10);
         $neardWinbinder->mainLoop();
@@ -34,10 +34,11 @@ class ActionLoading
     
     public function incrProgressBar($nb = 1)
     {
-        global $neardWinbinder;
+        global $neardCore, $neardWinbinder;
     
         for ($i = 0; $i < $nb; $i++) {
             $neardWinbinder->incrProgressBar($this->wbProgressBar);
+            $neardWinbinder->drawImage($this->wbWindow, $neardCore->getResourcesPath() . '/neard.bmp', 4, 2, 32, 32);
         }
     
         $neardWinbinder->wait();

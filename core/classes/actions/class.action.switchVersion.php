@@ -83,73 +83,67 @@ class ActionSwitchVersion
         if ($this->version == $this->currentVersion) {
             $neardWinbinder->messageBoxWarning(sprintf($neardLang->getValue(Lang::SWITCH_VERSION_SAME_ERROR), $this->bin->getName(), $this->version), $this->boxTitle);
             $neardWinbinder->destroyWindow($window);
-            $neardWinbinder->reset();
-            return;
         }
         
         $this->neardSplash->incrProgressBar();
-        if ($this->bin->switchVersion($this->version, true) !== false) {
-            // remove service
-            if ($this->service != null) {
-                $binName = $this->bin->getName() == $neardLang->getValue(Lang::PHP) ? $neardLang->getValue(Lang::APACHE) : $this->bin->getName();
-                $this->neardSplash->setTextLoading(sprintf($neardLang->getValue(Lang::REMOVE_SERVICE_TITLE), $binName));
-                $this->neardSplash->incrProgressBar();
-                $this->service->delete();
-            } else {
-                $this->neardSplash->incrProgressBar();
-            }
-            
-            // reload config
-            $this->neardSplash->setTextLoading($neardLang->getValue(Lang::SWITCH_VERSION_RELOAD_CONFIG));
-            $this->neardSplash->incrProgressBar();
-            Bootstrap::loadConfig();
-        
-            // reload bins
-            $this->neardSplash->setTextLoading($neardLang->getValue(Lang::SWITCH_VERSION_RELOAD_BINS));
-            $this->neardSplash->incrProgressBar();
-            $neardBins->reload();
-            
-            // change port
-            if ($this->changePort) {
-                $this->bin->reload();
-                $this->bin->changePort($this->bin->getPort());
-            }
-        
-            // restart
-            if ($this->restart) {
-                $this->neardSplash->setTextLoading(sprintf($neardLang->getValue(Lang::SWITCH_VERSION_REGISTRY), Registry::APP_BINS_REG_ENTRY));
-                $this->neardSplash->incrProgressBar(2);
-                Util::setAppBinsRegKey(Util::getAppBinsRegKey(false));
-        
-                $this->neardSplash->setTextLoading($neardLang->getValue(Lang::SWITCH_VERSION_RESET_SERVICES));
-                foreach ($neardBins->getServices() as $sName => $service) {
-                    $this->neardSplash->incrProgressBar();
-                    $service->delete();
-                }
-        
-                $neardWinbinder->messageBoxInfo(
-                    sprintf($neardLang->getValue(Lang::SWITCH_VERSION_OK_RESTART), $this->bin->getName(), $this->version, APP_TITLE),
-                    $this->boxTitle);
-        
-                $neardWinbinder->destroyWindow($window);
-                $neardWinbinder->reset();
-        
-                $neardCore->setExec(ActionExec::RESTART);
-            } else {
-                $this->neardSplash->incrProgressBar(self::GAUGE_SERVICES * count($neardBins->getServices()) + 1);
-                
-                $neardWinbinder->messageBoxInfo(
-                    sprintf($neardLang->getValue(Lang::SWITCH_VERSION_OK), $this->bin->getName(), $this->version),
-                    $this->boxTitle);
-        
-                $neardWinbinder->destroyWindow($window);
-                $neardWinbinder->reset();
-            }
-        } else {
+        if ($this->bin->switchVersion($this->version, true) === false) {
             $this->neardSplash->incrProgressBar(self::GAUGE_SERVICES * count($neardBins->getServices()) + self::GAUGE_OTHERS);
             $neardWinbinder->destroyWindow($window);
-            $neardWinbinder->reset();
         }
+        
+        // remove service
+        if ($this->service != null) {
+            $binName = $this->bin->getName() == $neardLang->getValue(Lang::PHP) ? $neardLang->getValue(Lang::APACHE) : $this->bin->getName();
+            $this->neardSplash->setTextLoading(sprintf($neardLang->getValue(Lang::REMOVE_SERVICE_TITLE), $binName));
+            $this->neardSplash->incrProgressBar();
+            $this->service->delete();
+        } else {
+            $this->neardSplash->incrProgressBar();
+        }
+        
+        // reload config
+        $this->neardSplash->setTextLoading($neardLang->getValue(Lang::SWITCH_VERSION_RELOAD_CONFIG));
+        $this->neardSplash->incrProgressBar();
+        Bootstrap::loadConfig();
+    
+        // reload bins
+        $this->neardSplash->setTextLoading($neardLang->getValue(Lang::SWITCH_VERSION_RELOAD_BINS));
+        $this->neardSplash->incrProgressBar();
+        $neardBins->reload();
+        
+        // change port
+        if ($this->changePort) {
+            $this->bin->reload();
+            $this->bin->changePort($this->bin->getPort());
+        }
+    
+        if (!$this->restart) {
+            $this->neardSplash->incrProgressBar(self::GAUGE_SERVICES * count($neardBins->getServices()) + 1);
+            
+            $neardWinbinder->messageBoxInfo(
+                sprintf($neardLang->getValue(Lang::SWITCH_VERSION_OK), $this->bin->getName(), $this->version),
+                $this->boxTitle);
+            
+            $neardWinbinder->destroyWindow($window);
+        }
+            
+        $this->neardSplash->setTextLoading(sprintf($neardLang->getValue(Lang::SWITCH_VERSION_REGISTRY), Registry::APP_BINS_REG_ENTRY));
+        $this->neardSplash->incrProgressBar(2);
+        Util::setAppBinsRegKey(Util::getAppBinsRegKey(false));
+
+        $this->neardSplash->setTextLoading($neardLang->getValue(Lang::SWITCH_VERSION_RESET_SERVICES));
+        foreach ($neardBins->getServices() as $sName => $service) {
+            $this->neardSplash->incrProgressBar();
+            $service->delete();
+        }
+
+        $neardWinbinder->messageBoxInfo(
+            sprintf($neardLang->getValue(Lang::SWITCH_VERSION_OK_RESTART), $this->bin->getName(), $this->version, APP_TITLE),
+            $this->boxTitle);
+        
+        $neardCore->setExec(ActionExec::RESTART);
+
+        $neardWinbinder->destroyWindow($window);
     }
     
 }

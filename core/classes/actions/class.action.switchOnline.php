@@ -6,9 +6,9 @@ class ActionSwitchOnline
     {
         global $neardConfig, $neardBins;
         
-        if (isset($args[0]) && !empty($args[0])) {
+        if (isset($args[0])) {
             Util::startLoading();
-            $putOnline = $args[0] == 1;
+            $putOnline = $args[0] == Config::ENABLED;
             
             $this->switchApache($putOnline);
             $this->switchAlias($putOnline);

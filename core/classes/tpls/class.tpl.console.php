@@ -17,42 +17,6 @@ class TplConsole
     public static function process()
     {
         global $neardConfig, $neardTools;
-        
-        //TODO: Use SimpleXML
-        /*$root = new SimpleXMLElement('<settings/>');
-        
-        $console = $root->addChild('console');
-        $console->addAttribute('change_refresh', '10');
-        $console->addAttribute('refresh', '100');
-        $console->addAttribute('rows', '25');
-        $console->addAttribute('columns', '95');
-        $console->addAttribute('buffer_rows', '2048');
-        $console->addAttribute('buffer_columns', '0');
-        $console->addAttribute('shell', '');
-        $console->addAttribute('init_dir', 'C:/neard');
-        $console->addAttribute('start_hidden', '0');
-        $console->addAttribute('save_size', '0');
-        
-        $colors = $console->addChild('colors');
-        
-        $color0 = $colors->addChild('color');
-        $color0->addAttribute('id', '0');
-        $color0->addAttribute('r', '0');
-        $color0->addAttribute('g', '0');
-        $color0->addAttribute('b', '0');
-        
-        $color1 = $colors->addChild('color');
-        $color1->addAttribute('id', '1');
-        $color1->addAttribute('r', '0');
-        $color1->addAttribute('g', '0');
-        $color1->addAttribute('b', '128');
-        
-        $dom = new DOMDocument('1.0');
-        $dom->preserveWhiteSpace = false;
-        $dom->formatOutput = true;
-        $dom->loadXML($root->asXML());
-        var_dump(trim($dom->saveXML()));*/
-        
         $result = '<?xml version="1.0"?>' . PHP_EOL . '<settings>' . PHP_EOL .
             self::getConsoleSection() . PHP_EOL .
             self::getAppearanceSection() . PHP_EOL .

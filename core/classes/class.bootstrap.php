@@ -5,6 +5,7 @@ class Bootstrap
     const ERROR_HANDLER = 'errorHandler';
     
     public $path;
+    private $procs;
     private $isBootstrap;
 
     public function __construct($rootPath)
@@ -41,6 +42,11 @@ class Bootstrap
         self::loadWinbinder();
         self::loadRegistry();
         self::loadHomepage();
+        
+        // Init
+        if ($this->isBootstrap) {
+            $this->procs = Win32Ps::getListProcs();
+        }
     }
     
     public function initErrorHandling()
@@ -57,6 +63,11 @@ class Bootstrap
         ini_set('error_log', null);
         ini_set('display_errors', '0');
         restore_error_handler();
+    }
+    
+    public function getProcs()
+    {
+        return $this->procs;
     }
     
     public function isBootstrap()
@@ -130,7 +141,7 @@ class Bootstrap
     {
         return $this->getRootPath($aetrayPath) . '/neard.exe';
     }
-
+    
     public function getConfigFilePath($aetrayPath = false)
     {
         return $this->getRootPath($aetrayPath) . '/neard.conf';
@@ -199,7 +210,8 @@ class Bootstrap
     public function getLocalUrl($request = null)
     {
         global $neardBins;
-        return (isset($_SERVER['HTTPS']) ? 'https://' : 'http://') . 'localhost' .
+        return (isset($_SERVER['HTTPS']) ? 'https://' : 'http://') .
+            (isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : 'localhost') .
             ($neardBins->getApache()->getPort() != 80 && !isset($_SERVER['HTTPS']) ? ':' . $neardBins->getApache()->getPort() : '') .
             (!empty($request) ? '/' . $request : '');
     }

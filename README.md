@@ -44,7 +44,7 @@ And many other features.
 
 Neard is [available on SourceForge](https://sourceforge.net/projects/neard/) :
 
-* Latest release : [Neard 1.0.12](https://sourceforge.net/projects/neard/files/Releases/1.0.12/neard-1.0.12.zip/download) (2014/09/28)
+* Latest release : [Neard 1.0.13](https://sourceforge.net/projects/neard/files/Releases/1.0.13/neard-1.0.13.zip/download) (2015/04/20)
 * [Patches](https://sourceforge.net/projects/neard/files/Patches/) : to migrate from older release to the latest.
 * [Addons](https://sourceforge.net/projects/neard/files/Addons/) : other versions of binaries (Apache, PHP, MYSQL, MariaDB, etc...).
 * [Tools](https://sourceforge.net/projects/neard/files/Tools/) : useful tools for Neard.
@@ -114,7 +114,7 @@ LGPL. See ``LICENSE`` for more details.
 ## Screenshots
 
 ### Startup screen
-![](https://raw.github.com/crazy-max/neard/master/core/resources/screenshots/neard-startup.png)
+![](https://raw.github.com/crazy-max/neard/master/core/resources/screenshots/neard-startup-min.png)
 
 ### Menu Left and Right
 ![](https://raw.github.com/crazy-max/neard/master/core/resources/screenshots/neard-menu1.png)  ![](https://raw.github.com/crazy-max/neard/master/core/resources/screenshots/neard-menu2.png)

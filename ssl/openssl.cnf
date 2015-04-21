@@ -2,7 +2,7 @@
 # OpenSSL configuration file.
 #
  
-dir					= C:/neard/ssl
+dir					= ~NEARD_LIN_PATH~/ssl
 oid_section			= new_oids
 
 [ new_oids ]

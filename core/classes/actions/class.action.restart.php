@@ -9,23 +9,21 @@ class ActionRestart
         global $neardBs, $neardCore, $neardLang, $neardTools, $neardWinbinder;
         
         // Start splash screen
-        $neardSplash = new Splash();
-        $neardSplash->init(
+        $splash = new Splash();
+        $splash->init(
             $neardLang->getValue(Lang::RESTART),
             self::GAUGE_RESTART,
-            sprintf($neardLang->getValue(Lang::STARTUP_RESTARTING_TEXT), APP_TITLE . ' ' . $neardCore->getAppVersion()),
-            Splash::IMG_RESTART
+            sprintf($neardLang->getValue(Lang::STARTUP_RESTARTING_TEXT), APP_TITLE . ' ' . $neardCore->getAppVersion())
         );
         
         for($i = 0; $i < self::GAUGE_RESTART; $i++) {
-            $neardSplash->incrProgressBar();
+            $splash->incrProgressBar();
             sleep(1);
         }
         
-        $neardSplash->incrProgressBar();
-        $neardWinbinder->destroyWindow($neardSplash->getWbWindow());
-        $neardWinbinder->exec($neardTools->getRunFromProcess()->getExe(), 'nomsg explorer.exe ' . Util::formatWindowsPath($neardBs->getExeFilePath()), false);
-        $neardWinbinder->reset();
+        $splash->incrProgressBar();
+        $neardWinbinder->exec($neardTools->getRunFromProcess()->getExe(), 'admin nomsg explorer.exe ' . Util::formatWindowsPath($neardBs->getExeFilePath()), false);
+        $neardWinbinder->destroyWindow($splash->getWbWindow());
     }
     
 }

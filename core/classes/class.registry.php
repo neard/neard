@@ -33,10 +33,6 @@ class Registry
     // System path entry
     const SYSPATH_REG_ENTRY = 'Path';
     
-    // Launch startup
-    const STARTUP_REG_SUBKEY = 'SOFTWARE\Microsoft\Windows\CurrentVersion\Run';
-    const STARTUP_REG_ENTRY = 'Neard';
-    
     // Processor architecture
     const PROCESSOR_REG_SUBKEY = 'HARDWARE\DESCRIPTION\System\CentralProcessor\0';
     const PROCESSOR_REG_ENTRY = 'Identifier';

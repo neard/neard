@@ -33,4 +33,6 @@ $neardAction = new Action();
 $neardAction->process();
 
 // Stop loading
-Util::stopLoading();
+if ($neardBs->isBootstrap()) {
+    Util::stopLoading();
+}

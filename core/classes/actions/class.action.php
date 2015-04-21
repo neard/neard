@@ -23,6 +23,7 @@ class Action
     const LOADING = 'loading';
     const QUIT = 'quit';
     const REFRESH_REPOS = 'refreshRepos';
+    const REFRESH_REPOS_STARTUP = 'refreshReposStartup';
     const RELOAD = 'reload';
     const RESTART = 'restart';
     const SERVICE = 'service';
@@ -33,8 +34,10 @@ class Action
     const SWITCH_LOGS_VERBOSE = 'switchLogsVerbose';
     const SWITCH_PHP_EXTENSION = 'switchPhpExtension';
     const SWITCH_PHP_PARAM = 'switchPhpParam';
-    const SWITCH_STATUS = 'switchStatus';
+    const SWITCH_ONLINE = 'switchOnline';
     const SWITCH_VERSION = 'switchVersion';
+    
+    const EXT = 'ext';
     
     private $current;
     
@@ -52,7 +55,7 @@ class Action
             $args = array();
             foreach ($_SERVER['argv'] as $key => $arg) {
                 if ($key > 1) {
-                    $args[] = base64_decode($arg);
+                    $args[] = $action == self::EXT ? $arg : base64_decode($arg);
                 }
             }
             
@@ -61,6 +64,15 @@ class Action
                 Util::logDebug('Start ' . $actionClass);
                 $this->current = new $actionClass($args);
             }
+        }
+    }
+    
+    public function call($actionName, $actionArgs = null)
+    {
+        $actionClass = 'Action' . ucfirst($actionName);
+        if (class_exists($actionClass)) {
+            Util::logDebug('Start ' . $actionClass);
+            new $actionClass($actionArgs);
         }
     }
 
