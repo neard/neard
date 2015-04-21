@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.0.13 (2015/04/20)
+
+* Launch on startup fails sometimes ([Issue #83](https://github.com/crazy-max/neard/issues/83))
+* Restarting Neard doesn't work ([Issue #82](https://github.com/crazy-max/neard/issues/82))
+* Installing Apache addon need manual configuration ([Issue #81](https://github.com/crazy-max/neard/issues/81))
+* Bug switching Online/Offline ([Issue #78](https://github.com/crazy-max/neard/issues/78))
+* Add option to scan SVN and Git repos on Startup ([Issue #75](https://github.com/crazy-max/neard/issues/75))
+* Review startup screen
+* Review process management
+* Adding APC configuration
+* Bug on local url
+* Add log archives
+
 ## 1.0.12 (2014/09/28)
 
 * Split bins, tools, apps configuration ([Issue #74](https://github.com/crazy-max/neard/issues/74))

@@ -74,6 +74,7 @@ class Lang
     const MENU_RESTART_SERVICE = 'menuRestartService';
     const MENU_RESTART_SERVICES = 'menuRestartServices';
     const MENU_REWRITE_LOGS = 'menuRewriteLogs';
+    const MENU_SCAN_REPOS_STARTUP = 'menuScanReposStartup';
     const MENU_SESSION_LOGS = 'menuSessionLogs';
     const MENU_START_SERVICE = 'menuStartService';
     const MENU_START_SERVICES = 'menuStartServices';
@@ -196,16 +197,18 @@ class Lang
     
     // Action Startup
     const STARTUP_STARTING_TEXT = 'startupStartingText';
-    const STARTUP_KILL_PHP_PROCS_TEXT = 'startupKillPhpProcsText';
+    const STARTUP_ROATION_LOGS_TEXT = 'startupRotationLogsText';
+    const STARTUP_KILL_OLD_PROCS_TEXT = 'startupKillOldProcsText';
     const STARTUP_REFRESH_HOSTNAME_TEXT = 'startupRefreshHostnameText';
     const STARTUP_CHECK_BROWSER_TEXT = 'startupCheckBrowserText';
     const STARTUP_CLEAN_TMP_TEXT = 'startupCleanTmpText';
+    const STARTUP_CLEAN_OLD_BEAHAVIORS_TEXT = 'startupCleanOldBehaviorsText';
     const STARTUP_PURGE_LOGS_TEXT = 'startupPurgeLogsText';
     const STARTUP_REFRESH_ALIAS_TEXT = 'startupRefreshAliasText';
     const STARTUP_REFRESH_VHOSTS_TEXT = 'startupRefreshVhostsText';
     const STARTUP_CHECK_PATH_TEXT = 'startupCheckPathText';
     const STARTUP_SCAN_FOLDERS_TEXT = 'startupScanFoldersText';
-    const STARTUP_CHANGE_OLD_PATHS_TEXT = 'startupChangeOldPathsText';
+    const STARTUP_CHANGE_OLD_PATH_TEXT = 'startupChangeOldPathText';
     const STARTUP_REGISTRY_TEXT = 'startupRegistryText';
     const STARTUP_REGISTRY_ERROR_TEXT = 'startupRegistryErrorText';
     const STARTUP_INSTALL_SERVICE_TEXT = 'startupInstallServiceText';
@@ -226,6 +229,7 @@ class Lang
     // Action Quit
     const EXIT_LEAVING_TEXT = 'exitLeavingText';
     const EXIT_REMOVE_SERVICE_TEXT = 'exitRemoveServiceText';
+    const EXIT_STOP_OTHER_PROCESS_TEXT = 'exitStopOtherProcessText';
     
     // Action Change browser
     const CHANGE_BROWSER_TITLE = 'changeBrowserTitle';
@@ -427,6 +431,7 @@ class Lang
             self::MENU_RESTART_SERVICE,
             self::MENU_RESTART_SERVICES,
             self::MENU_REWRITE_LOGS,
+            self::MENU_SCAN_REPOS_STARTUP,
             self::MENU_SESSION_LOGS,
             self::MENU_START_SERVICE,
             self::MENU_START_SERVICES,
@@ -455,7 +460,7 @@ class Lang
             // Tools
             self::CONSOLE,
             self::GIT,
-            self::IMAGICK,
+            self::IMAGEMAGICK,
             self::RUNFROMRPOCESS,
             self::SETENV,
             self::SUBLIMETEXT,
@@ -549,16 +554,18 @@ class Lang
             
             // Action Startup
             self::STARTUP_STARTING_TEXT,
-            self::STARTUP_KILL_PHP_PROCS_TEXT,
+            self::STARTUP_ROATION_LOGS_TEXT,
+            self::STARTUP_KILL_OLD_PROCS_TEXT,
             self::STARTUP_REFRESH_HOSTNAME_TEXT,
             self::STARTUP_CHECK_BROWSER_TEXT,
             self::STARTUP_CLEAN_TMP_TEXT,
+            self::STARTUP_CLEAN_OLD_BEAHAVIORS_TEXT,
             self::STARTUP_PURGE_LOGS_TEXT,
             self::STARTUP_REFRESH_ALIAS_TEXT,
             self::STARTUP_REFRESH_VHOSTS_TEXT,
             self::STARTUP_CHECK_PATH_TEXT,
             self::STARTUP_SCAN_FOLDERS_TEXT,
-            self::STARTUP_CHANGE_OLD_PATHS_TEXT,
+            self::STARTUP_CHANGE_OLD_PATH_TEXT,
             self::STARTUP_REGISTRY_TEXT,
             self::STARTUP_REGISTRY_ERROR_TEXT,
             self::STARTUP_INSTALL_SERVICE_TEXT,
@@ -579,6 +586,7 @@ class Lang
             // Action Quit
             self::EXIT_LEAVING_TEXT,
             self::EXIT_REMOVE_SERVICE_TEXT,
+            self::EXIT_STOP_OTHER_PROCESS_TEXT,
             
             // Action Change browser
             self::CHANGE_BROWSER_TITLE,

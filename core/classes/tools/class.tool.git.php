@@ -6,6 +6,7 @@ class ToolGit
     
     const LOCAL_CFG_EXE = 'gitExe';
     const LOCAL_CFG_BASH = 'gitBash';
+    const LOCAL_CFG_SCAN_STARTUP = 'gitScanStartup';
     
     const REPOS_FILE = 'repos.dat';
     const REPOS_CACHE_FILE = 'reposCache.dat';
@@ -24,6 +25,7 @@ class ToolGit
     
     private $exe;
     private $bash;
+    private $scanStartup;
     
     public function __construct($rootPath)
     {
@@ -53,6 +55,7 @@ class ToolGit
         if ($this->neardConfRaw !== false) {
             $this->exe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_EXE];
             $this->bash = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_BASH];
+            $this->scanStartup = $this->neardConfRaw[self::LOCAL_CFG_SCAN_STARTUP];
         }
         
         if (!is_file($this->exe)) {
@@ -177,4 +180,16 @@ class ToolGit
         return $this->bash;
     }
     
+    public function isScanStartup()
+    {
+        return $this->scanStartup == Config::ENABLED;
+    }
+    
+    public function setScanStartup($scanStartup)
+    {
+        $this->scanStartup = $scanStartup;
+        Util::replaceInFile($this->neardConf, array(
+            '/^' . self::LOCAL_CFG_SCAN_STARTUP . '/' => self::LOCAL_CFG_SCAN_STARTUP . ' = "' . $this->scanStartup . '"'
+        ));
+    }
 }

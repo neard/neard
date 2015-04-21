@@ -114,7 +114,8 @@ class WinBinder
     
     public function destroyWindow($window)
     {
-        return $this->callWinBinder('wb_destroy_window', array($window), true);
+        $this->callWinBinder('wb_destroy_window', array($window), true);
+        exit();
     }
     
     public function mainLoop()
@@ -146,7 +147,7 @@ class WinBinder
         return $this->callWinBinder('wb_draw_text', array($parent, $caption, $xPos, $yPos, $width, $height, $font));
     }
     
-    public function drawRect($parent, $xPos, $yPos, $width, $height, $color = 12632256, $filled = true)
+    public function drawRect($parent, $xPos, $yPos, $width, $height, $color = 15790320, $filled = true)
     {
         return $this->callWinBinder('wb_draw_rect', array($parent, $xPos, $yPos, $width, $height, $color, $filled));
     }
@@ -185,7 +186,7 @@ class WinBinder
         global $neardCore;
         
         if ($silent) {
-            $silent = '"' . $neardCore->getScript(Core::SCRIPT_EXEC_SILENT_VBS) . '" "' . $cmd . '"';
+            $silent = '"' . $neardCore->getScript(Core::SCRIPT_EXEC_SILENT) . '" "' . $cmd . '"';
             $cmd = 'wscript.exe';
             $params = !empty($params) ? $silent . ' "' . $params . '"' : $silent;
         }

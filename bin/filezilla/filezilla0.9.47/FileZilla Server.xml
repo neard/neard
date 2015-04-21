@@ -17,7 +17,7 @@
                 <Allowed/>
             </IpFilter>
             <Permissions>
-                <Permission Dir="C:\neard\www">
+                <Permission Dir="~NEARD_WIN_PATH~\www">
                     <Option Name="FileRead">1</Option>
                     <Option Name="FileWrite">1</Option>
                     <Option Name="FileDelete">1</Option>
@@ -81,8 +81,8 @@
         <Item name="Hide Welcome Message" type="numeric">0</Item>
         <Item name="Enable SSL" type="numeric">1</Item>
         <Item name="Allow explicit SSL" type="numeric">1</Item>
-        <Item name="SSL Key file" type="string">C:\neard\ssl\neardfilezilla.pub</Item>
-        <Item name="SSL Certificate file" type="string">C:\neard\ssl\neardfilezilla.crt</Item>
+        <Item name="SSL Key file" type="string">~NEARD_WIN_PATH~\ssl\neardfilezilla.pub</Item>
+        <Item name="SSL Certificate file" type="string">~NEARD_WIN_PATH~\ssl\neardfilezilla.crt</Item>
         <Item name="Implicit SSL ports" type="string">990</Item>
         <Item name="Force explicit SSL" type="numeric">0</Item>
         <Item name="Network Buffer Size" type="numeric">65536</Item>

@@ -437,37 +437,6 @@ class Util
         );
     }
     
-    public static function getLaunchStartupRegKey()
-    {
-        global $neardRegistry;
-        return $neardRegistry->getValue(
-            Registry::HKEY_LOCAL_MACHINE,
-            Registry::STARTUP_REG_SUBKEY,
-            Registry::STARTUP_REG_ENTRY
-        );
-    }
-    
-    public static function setLaunchStartupRegKey()
-    {
-        global $neardBs, $neardRegistry;
-        return $neardRegistry->setStringValue(
-            Registry::HKEY_LOCAL_MACHINE,
-            Registry::STARTUP_REG_SUBKEY,
-            Registry::STARTUP_REG_ENTRY,
-            '"' . self::formatWindowsPath($neardBs->getExeFilePath()) . '"'
-        );
-    }
-    
-    public static function deleteLaunchStartupRegKey()
-    {
-        global $neardRegistry;
-        return $neardRegistry->deleteValue(
-            Registry::HKEY_LOCAL_MACHINE,
-            Registry::STARTUP_REG_SUBKEY,
-            Registry::STARTUP_REG_ENTRY
-        );
-    }
-    
     public static function getProcessorRegKey()
     {
         global $neardRegistry;
@@ -478,12 +447,24 @@ class Util
         );
     }
     
+    public static function getStartupLnkPath()
+    {
+        return Vbs::getStartupPath(APP_TITLE . '.lnk');
+    }
+    
     public static function isLaunchStartup()
     {
-        global $neardBs;
-        $exe = '"' . self::formatWindowsPath($neardBs->getExeFilePath()) . '"';
-        $value = self::getLaunchStartupRegKey();
-        return !empty($value) && $value == $exe;
+        return file_exists(self::getStartupLnkPath());
+    }
+    
+    public static function enableLaunchStartup()
+    {
+        return Vbs::createShortcut(self::getStartupLnkPath());
+    }
+    
+    public static function disableLaunchStartup()
+    {
+        return @unlink(self::getStartupLnkPath());
     }
     
     private static function log($data, $type, $file = null)
@@ -610,21 +591,6 @@ class Util
     public static function formatUnixPath($path)
     {
         return str_replace('\\', '/', $path);
-    }
-    
-    public static function getAppPaths()
-    {
-        global $neardCore;
-        $result = array();
-        
-        if (file_exists($neardCore->getAppPaths())) {
-            $paths = file($neardCore->getAppPaths());
-            foreach ($paths as $path) {
-                $result[] = trim($path);
-            }
-        }
-        
-        return $result;
     }
     
     public static function imgToBase64($path)
@@ -827,7 +793,7 @@ class Util
             $out = fgets($fp);
             $result = explode(PHP_EOL, $out);
         }
-        fclose($fp);
+        @fclose($fp);
         
         if (!empty($result)) {
             $rebuildResult = array();

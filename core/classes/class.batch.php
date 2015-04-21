@@ -60,6 +60,7 @@ class Batch
             Util::logInfo('Exit App');
         }
         
+        Win32Ps::killBins();
         self::execStandalone($basename, $content);
     }
     

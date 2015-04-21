@@ -5,6 +5,11 @@ class Vbs
     const END_PROCESS_STR = 'FINISHED!';
     const STR_SEPARATOR = ' || ';
     
+    const DESKTOP_PATH = 'objShell.SpecialFolders("Desktop")';
+    const ALL_DESKTOP_PATH = 'objShell.SpecialFolders("AllUsersDesktop")';
+    const STARTUP_PATH = 'objShell.SpecialFolders("Startup")';
+    const ALL_STARTUP_PATH = 'objShell.SpecialFolders("AllUsersStartup")';
+    
     public function __construct()
     {
         
@@ -136,10 +141,11 @@ class Vbs
         return $result;
     }
     
-    public static function getListProcs()
+    public static function getListProcs($vbsKeys)
     {
         $basename = 'getListProcs';
         $resultFile = self::getResultFile($basename);
+        $sep = ' & "' . self::STR_SEPARATOR . '" & _';
     
         $content = 'Dim objFso, objResultFile, objWMIService' . PHP_EOL . PHP_EOL;
         $content .= 'Set objFso = CreateObject("scripting.filesystemobject")' . PHP_EOL;
@@ -147,26 +153,34 @@ class Vbs
         $content .= 'strComputer = "."' . PHP_EOL;
         $content .= 'Set objWMIService = GetObject("winmgmts:" & "{impersonationLevel=impersonate}!\\\\" & strComputer & "\root\cimv2")' . PHP_EOL;
         $content .= 'Set listProcess = objWMIService.ExecQuery ("SELECT * FROM Win32_Process")' . PHP_EOL;
-        $content .= 'For Each objProcess in listProcess' . PHP_EOL;
-        $content .= '    objResultFile.WriteLine(objProcess.Name & "' . self::STR_SEPARATOR . '" & objProcess.ProcessID & "' . self::STR_SEPARATOR . '" & objProcess.ExecutablePath)' . PHP_EOL;
+        $content .= 'For Each process in listProcess' . PHP_EOL;
+        
+        $content .= '    objResultFile.WriteLine(_' . PHP_EOL;
+        foreach ($vbsKeys as $vbsKey) {
+            $content .= '        process.' . $vbsKey . $sep . PHP_EOL;
+        }
+        $content = substr($content, 0, strlen($content) - strlen($sep) - 1) . ')' . PHP_EOL;
+        
         $content .= 'Next' . PHP_EOL;
+        $content .= 'objResultFile.WriteLine("' . self::END_PROCESS_STR . '")' . PHP_EOL;
         $content .= 'objResultFile.Close' . PHP_EOL;
-    
+        
         $result = self::exec($basename, $resultFile, $content);
         if (empty($result)) {
             return false;
         }
     
+        unset($result[array_search(self::END_PROCESS_STR, $result)]);
         if (is_array($result) && count($result) > 0) {
             $rebuildResult = array();
             foreach ($result as $row) {
-                $row = explode(self::STR_SEPARATOR, $row);
-                if (count($row) == 3 && !empty($row[2])) {
-                    $rebuildResult[] = array(
-                            Win32Ps::NAME => $row[0],
-                            Win32Ps::PID => $row[1],
-                            Win32Ps::PATH => $row[2],
-                    );
+                $row = explode(trim(self::STR_SEPARATOR), $row);
+                $processInfo = array();
+                foreach ($vbsKeys as $key => $vbsKey) {
+                    $processInfo[$vbsKey] = trim($row[$key]);
+                }
+                if (!empty($processInfo[Win32Ps::EXECUTABLE_PATH])) {
+                    $rebuildResult[] = $processInfo;
                 }
             }
             return $rebuildResult;
@@ -208,6 +222,63 @@ class Vbs
         }
     
         return true;
+    }
+    
+    private static function getSpecialPath($path)
+    {
+        $basename = 'getSpecialPath';
+        $resultFile = self::getResultFile($basename);
+    
+        $content = 'Dim objShell, objFso, objResultFile' . PHP_EOL . PHP_EOL;
+        $content .= 'Set objShell = Wscript.CreateObject("Wscript.Shell")' . PHP_EOL;
+        $content .= 'Set objFso = CreateObject("scripting.filesystemobject")' . PHP_EOL;
+        $content .= 'Set objResultFile = objFso.CreateTextFile("' . $resultFile . '", True)' . PHP_EOL . PHP_EOL;
+        $content .= 'objResultFile.WriteLine(' . $path . ')' . PHP_EOL;
+        $content .= 'objResultFile.Close' . PHP_EOL;
+    
+        $result = self::exec($basename, $resultFile, $content);
+        if (!empty($result) && is_array($result) && count($result) == 1) {
+            return Util::formatUnixPath($result[0]);
+        }
+    
+        return null;
+    }
+    
+    public static function getStartupPath($file = null)
+    {
+        return self::getSpecialPath(self::STARTUP_PATH) . ($file != null ? '/' . $file : '');
+    }
+    
+    public static function createShortcut($savePath)
+    {
+        global $neardBs, $neardCore;
+        $basename = 'createShortcut';
+        $resultFile = self::getResultFile($basename);
+        
+        $content = 'Dim objShell, objFso, objResultFile' . PHP_EOL . PHP_EOL;
+        $content .= 'Set objShell = Wscript.CreateObject("Wscript.Shell")' . PHP_EOL;
+        $content .= 'Set objFso = CreateObject("scripting.filesystemobject")' . PHP_EOL;
+        $content .= 'Set objResultFile = objFso.CreateTextFile("' . $resultFile . '", True)' . PHP_EOL . PHP_EOL;
+        $content .= 'Set objShortcut = objShell.CreateShortcut("' . $savePath . '")' . PHP_EOL;
+        $content .= 'objShortCut.TargetPath = "' . $neardBs->getExeFilePath() . '"' . PHP_EOL;
+        $content .= 'objShortCut.WorkingDirectory = "' . $neardBs->getRootPath() . '"' . PHP_EOL;
+        $content .= 'objShortCut.Description = "' . APP_TITLE . ' ' . $neardCore->getAppVersion() . '"' . PHP_EOL;
+        $content .= 'objShortCut.IconLocation = "' .  $neardCore->getResourcesPath() . '/neard.ico' . '"' . PHP_EOL;
+        $content .= 'objShortCut.Save' . PHP_EOL;
+        $content .= 'If Err.Number <> 0 Then' . PHP_EOL;
+        $content .= '    objResultFile.Write Err.Number & ": " & Err.Description' . PHP_EOL;
+        $content .= 'End If' . PHP_EOL;
+        $content .= 'objResultFile.Close' . PHP_EOL;
+        
+        $result = self::exec($basename, $resultFile, $content);
+        if (empty($result)) {
+            return true;
+        } elseif (isset($result[0])) {
+            Util::logError('createShortcut: ' . $result[0]);
+            return false;
+        }
+        
+        return false;
     }
     
     public static function getResultFile($basename)

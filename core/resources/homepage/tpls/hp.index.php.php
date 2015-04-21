@@ -27,9 +27,11 @@
       <a class="list-group-item" href="<?php echo $neardHomepage->getPageUrl(Homepage::PAGE_PHPINFO); ?>">
         <i class="fa fa-info-circle"></i> <?php echo $neardLang->getValue(Lang::HOMEPAGE_PHPINFO_TEXT); ?>
       </a>
+      <?php if (function_exists('apc_add') && function_exists('apc_exists')) { ?>
       <a class="list-group-item" target="_blank" href="<?php echo $neardHomepage->getPageUrl(Homepage::PAGE_STDL_APC); ?>">
         <i class="fa fa-info-circle"></i> <?php echo $neardLang->getValue(Lang::HOMEPAGE_APC_TEXT); ?>
       </a>
+      <?php } ?>
     </div>
   </div>
 </div>

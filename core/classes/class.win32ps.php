@@ -2,9 +2,11 @@
 
 class Win32Ps
 {
-    const NAME = 'name';
-    const PID = 'pid';
-    const PATH = 'path';
+    const NAME = 'Name';
+    const PROCESS_ID = 'ProcessID';
+    const EXECUTABLE_PATH = 'ExecutablePath';
+    const CAPTION = 'Caption';
+    const COMMAND_LINE = 'CommandLine';
     
     public function __construct()
     {
@@ -22,20 +24,40 @@ class Win32Ps
         return $result;
     }
     
+    public static function getKeys()
+    {
+        return array(
+            self::NAME,
+            self::PROCESS_ID,
+            self::EXECUTABLE_PATH,
+            self::CAPTION,
+            self::COMMAND_LINE
+        );
+    }
+    
     public static function getCurrentPid()
     {
         $procInfo = self::getStatProc();
-        return isset($procInfo[self::PID]) ? intval($procInfo[self::PID]) : 0;
+        return isset($procInfo[self::PROCESS_ID]) ? intval($procInfo[self::PROCESS_ID]) : 0;
     }
     
     public static function getListProcs()
     {
-        return Vbs::getListProcs();
+        return Vbs::getListProcs(self::getKeys());
     }
     
     public static function getStatProc()
     {
-        return self::callWin32Ps('win32_ps_stat_proc');
+        $statProc = self::callWin32Ps('win32_ps_stat_proc');
+        
+        if ($statProc !== false) {
+            return array(
+                self::PROCESS_ID => $statProc['pid'],
+                self::EXECUTABLE_PATH => $statProc['exe']
+            );
+        }
+        
+        return null;
     }
     
     public static function exists($pid)
@@ -49,7 +71,7 @@ class Win32Ps
             $procs = self::getListProcs();
             if ($procs !== false) {
                 foreach ($procs as $proc) {
-                    if ($proc[self::PID] == $pid) {
+                    if ($proc[self::PROCESS_ID] == $pid) {
                         return $proc;
                     }
                 }
@@ -61,42 +83,66 @@ class Win32Ps
     
     public static function findByPath($path)
     {
-        $result = false;
-        
         $path = Util::formatUnixPath($path);
         if (!empty($path) && is_file($path)) {
             $procs = self::getListProcs();
             if ($procs !== false) {
                 foreach ($procs as $proc) {
-                    $unixExePath = Util::formatUnixPath($proc[self::PATH]);
+                    $unixExePath = Util::formatUnixPath($proc[self::EXECUTABLE_PATH]);
                     if ($unixExePath == $path) {
-                        $result[] = $proc;
+                        return $proc;
                     }
                 }
             }
         }
     
-        return $result;
+        return false;
     }
     
     public static function kill($pid)
     {
-        global $acdcWinbinder;
-        
         $pid = intval($pid);
         if (!empty($pid)) {
             Vbs::killProc($pid);
         }
     }
     
-    public static function killProcs($procs)
+    public static function killBins($refreshProcs = false)
     {
-        if (empty($procs) || !is_array($procs)) {
-            return;
+        global $neardBs, $neardCore, $neardBins, $neardTools;
+        $killed = array();
+    
+        $procs = $neardBs->getProcs();
+        if ($refreshProcs) {
+            $procs = self::getListProcs();
         }
-        
-        foreach ($procs as $proc) {
-            self::kill($proc[self::PID]);
+    
+        if ($procs !== false) {
+            foreach ($procs as $proc) {
+                $unixExePath = Util::formatUnixPath($proc[self::EXECUTABLE_PATH]);
+                $unixExeName = strtoupper(basename($unixExePath));
+                $unixCommandPath = Util::formatUnixPath($proc[self::COMMAND_LINE]);
+    
+                // Not kill current PID (PHP)
+                if ($proc[self::PROCESS_ID] == self::getCurrentPid()) {
+                    continue;
+                }
+    
+                // Not kill Neard
+                if ($unixExePath == $neardBs->getExeFilePath()) {
+                    continue;
+                }
+    
+                // Not kill external process
+                if (!Util::startWith($unixExePath, $neardBs->getRootPath() . '/') && !Util::contains($unixCommandPath, $neardBs->getRootPath() . '/')) {
+                    continue;
+                }
+    
+                self::kill($proc[self::PROCESS_ID]);
+                $killed[] = $proc;
+            }
         }
+    
+        return $killed;
     }
 }

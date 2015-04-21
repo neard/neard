@@ -6,15 +6,15 @@ class ActionLaunchStartup
     {
         global $neardConfig, $neardRegistry;
         
-        if (isset($args[0]) && !empty($args[0])) {
+        if (isset($args[0])) {
             Util::startLoading();
             $launchStartup = $args[0] == Config::ENABLED;
             if ($launchStartup) {
-                Util::setLaunchStartupRegKey();
+                Util::enableLaunchStartup();
             } else {
-                Util::deleteLaunchStartupRegKey();
+                Util::disableLaunchStartup();
             }
-            $neardConfig->replace(Config::CFG_LAUNCH_STARTUP, $launchStartup ? Config::ENABLED : Config::DISABLED);
+            $neardConfig->replace(Config::CFG_LAUNCH_STARTUP, $args[0]);
         }
     }
 

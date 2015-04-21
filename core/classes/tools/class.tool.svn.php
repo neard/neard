@@ -7,6 +7,7 @@ class ToolSvn
     const LOCAL_CFG_EXE = 'svnExe';
     const LOCAL_CFG_ADMIN = 'svnAdmin';
     const LOCAL_CFG_SERVER = 'svnServer';
+    const LOCAL_CFG_SCAN_STARTUP = 'svnScanStartup';
     
     const REPOS_FILE = 'repos.dat';
     const REPOS_CACHE_FILE = 'reposCache.dat';
@@ -26,6 +27,7 @@ class ToolSvn
     private $exe;
     private $admin;
     private $server;
+    private $scanStartup;
     
     public function __construct($rootPath)
     {
@@ -56,6 +58,7 @@ class ToolSvn
             $this->exe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_EXE];
             $this->admin = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_ADMIN];
             $this->server = $neardBs->getRootPath() . '/' . $this->neardConfRaw[self::LOCAL_CFG_SERVER];
+            $this->scanStartup = $this->neardConfRaw[self::LOCAL_CFG_SCAN_STARTUP];
         }
         
         if (!is_file($this->exe)) {
@@ -187,5 +190,17 @@ class ToolSvn
     {
         return $this->server;
     }
-
+    
+    public function isScanStartup()
+    {
+        return $this->scanStartup == Config::ENABLED;
+    }
+    
+    public function setScanStartup($scanStartup)
+    {
+        $this->scanStartup = $scanStartup;
+        Util::replaceInFile($this->neardConf, array(
+            '/^' . self::LOCAL_CFG_SCAN_STARTUP . '/' => self::LOCAL_CFG_SCAN_STARTUP . ' = "' . $this->scanStartup . '"'
+        ));
+    }
 }
