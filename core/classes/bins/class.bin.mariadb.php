@@ -130,7 +130,7 @@ class BinMariadb
         $port = intval($port);
         $neardWinbinder->incrProgressBar($wbProgressBar);
         
-        $isPortInUse = Batch::isPortInUse($port);
+        $isPortInUse = Util::isPortInUse($port);
         if (!$checkUsed || $isPortInUse === false) {
             // bootstrap
             Util::replaceDefine($neardCore->getBootstrapFilePath(), 'CURRENT_MARIADB_PORT', intval($port));
@@ -177,7 +177,11 @@ class BinMariadb
         
         $fp = @fsockopen('127.0.0.1', $port, $errno, $errstr, 5);
         if ($fp) {
-            $dbLink = mysqli_connect('127.0.0.1:' . $port, 'root', '');
+            if (version_compare(phpversion(), '5.3') === -1) {
+                $dbLink = mysqli_connect('127.0.0.1', 'root', '', '', $port);
+            } else {
+                $dbLink = mysqli_connect('127.0.0.1:' . $port, 'root', '');
+            }
             $isMariadb = false;
             $version = false;
         

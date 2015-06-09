@@ -751,8 +751,8 @@ class Util
         if ($fp) {
             $meta = stream_get_meta_data($fp);
             $result = isset($meta['wrapper_data']) ? $meta['wrapper_data'] : $result;
+            fclose($fp);
         }
-        fclose($fp);
         
         unlink($neardBs->getWwwPath() . '/' . $headerFile);
         
@@ -823,5 +823,16 @@ class Util
                 'allow_self_signed' => true,
             )
         )));
+    }
+    
+    public static function isPortInUse($port)
+    {
+        $connection = @fsockopen('127.0.0.1', $port);
+        if (is_resource($connection)) {
+            fclose($connection);
+            $process = Batch::getProcessUsingPort($port);
+            return $process != null ? $process : 'N/A';
+        }
+        return false;
     }
 }

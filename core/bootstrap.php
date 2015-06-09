@@ -24,8 +24,8 @@ define('CURRENT_FILEZILLA_VERSION', '0.9.46');
 define('RETURN_TAB', '	');
 
 // Bootstrap
-require_once __DIR__ . '/classes/class.bootstrap.php';
-$neardBs = new Bootstrap(__DIR__);
+require_once dirname(__FILE__) . '/classes/class.bootstrap.php';
+$neardBs = new Bootstrap(dirname(__FILE__));
 $neardBs->register();
 
 // Process action

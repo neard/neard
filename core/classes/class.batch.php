@@ -29,20 +29,27 @@ class Batch
         return false;
     }
     
-    public static function isPortInUse($port)
+    public static function getProcessUsingPort($port)
     {
-        $result = self::exec('isPortInUse', 'NETSTAT -aon | FIND ":' . $port . '" | FIND "LISTENING"', 2);
-        if ($result !== false && isset($result[0]) && !empty($result[0])) {
-            $expResult = explode(' ', preg_replace('/\s+/', ' ', $result[0]));
-            $pid = intval($expResult[4]);
-            $exe = self::findExeByPid($pid);
-            if ($exe !== false) {
-                return $exe . ' (' . $pid . ')';
+        $result = self::exec('getProcessUsingPort', 'NETSTAT -aon', 4);
+        if ($result !== false) {
+            foreach ($result as $row) {
+                if (!Util::startWith($row, 'TCP')) {
+                    continue;
+                }
+                $rowExp = explode(' ', preg_replace('/\s+/', ' ', $row));
+                if (count($rowExp) == 5 && Util::endWith($rowExp[1], ':' . $port) && $rowExp[3] == 'LISTENING') {
+                    $pid = intval($rowExp[4]);
+                    $exe = self::findExeByPid($pid);
+                    if ($exe !== false) {
+                        return $exe . ' (' . $pid . ')';
+                    }
+                    return $pid;
+                }
             }
-            return $pid;
         }
-        
-        return false;
+    
+        return null;
     }
     
     public static function exitApp($restart = false)
@@ -123,10 +130,9 @@ class Batch
         $exe = '"' . $neardBins->getApache()->getOpensslExe() . '"';
         $conf = '"' . $neardBs->getSslConfPath() . '"';
         
-        $cmdGeneratingKey = $exe . ' genrsa -des3 -passout ' . $password . ' -out ' . $ppkPath . ' 2048 -noout -config ' . $conf . PHP_EOL;
-        $cmdGeneratingPub = $exe . ' rsa -in ' . $ppkPath . ' -passin ' . $password . ' -out ' . $pubPath . PHP_EOL;
-        $cmdCreateCrt = $exe . ' req -x509 -nodes -sha1 -new -key ' . $pubPath . ' -out ' . $crtPath . ' -passin ' . $password . ' -subj ' . $subject . ' -config ' . $conf . PHP_EOL;
-        self::exec('genCertificate', $cmdGeneratingKey . $cmdGeneratingPub . $cmdCreateCrt, 5);
+        self::exec('genSslKey', $exe . ' genrsa -des3 -passout ' . $password . ' -out ' . $ppkPath . ' 2048 -noout -config ' . $conf);
+        self::exec('genSslPub', $exe . ' rsa -in ' . $ppkPath . ' -passin ' . $password . ' -out ' . $pubPath);
+        self::exec('genSslCrt', $exe . ' req -x509 -nodes -sha1 -new -key ' . $pubPath . ' -out ' . $crtPath . ' -passin ' . $password . ' -subj ' . $subject . ' -config ' . $conf);
         
         $result = self::exec('checkCertificate', '@ECHO ON' . PHP_EOL . 'IF EXIST ' . $pubPath . ' IF EXIST ' . $crtPath . ' ECHO OK');
         return isset($result[0]) && $result[0] == 'OK';
@@ -171,8 +177,7 @@ class Batch
         $header = '@ECHO OFF' . PHP_EOL . PHP_EOL;
         
         // Footer
-        $footer = PHP_EOL . (!$standalone ? PHP_EOL . 'ECHO ' . self::END_PROCESS_STR . ' > "' . $checkFile . '"' : '') .
-            ($neardConfig->isScriptsDelete() ? PHP_EOL . 'DEL /F "' . $scriptPath . '"' : '');
+        $footer = PHP_EOL . (!$standalone ? PHP_EOL . 'ECHO ' . self::END_PROCESS_STR . ' > "' . $checkFile . '"' : '');
         
         // Process
         file_put_contents($scriptPath, $header . $content . $footer);
@@ -197,14 +202,6 @@ class Batch
                     break;
                 }
             }
-            if ($neardConfig->isScriptsDelete()) {
-                @unlink($scriptPath);
-            }
-        }
-        
-        if ($neardConfig->isScriptsDelete()) {
-            @unlink($checkFile);
-            @unlink($resultFile);
         }
         
         self::writeLog('Exec:');

@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.0.14 (2015/06/09)
+
+* Bug while archiving logs ([Issue #89](https://github.com/crazy-max/neard/issues/89))
+* Remove purge logs feature ([Issue #88](https://github.com/crazy-max/neard/issues/88))
+* System Idle Process block services ([Issue #87](https://github.com/crazy-max/neard/issues/87))
+* Increase timeout SSL certificate ([Issue #86](https://github.com/crazy-max/neard/issues/86))
+* Addons Apache : 2.2.29, 2.4.12 ([Issue #34](https://github.com/crazy-max/neard/issues/34))
+* Addons PHP : 5.2.17, 5.4.40, 5.5.24, 5.6.8 ([Issue #34](https://github.com/crazy-max/neard/issues/34))
+* Addon Filezilla Server : 0.9.52.1 ([Issue #34](https://github.com/crazy-max/neard/issues/34))
+* Addons MySQL : 5.5.44, 5.6.25 ([Issue #34](https://github.com/crazy-max/neard/issues/34))
+* Addons MariaDB : 5.5.43, 10.0.19 ([Issue #34](https://github.com/crazy-max/neard/issues/34))
+* Addons Node.js : 0.10.38, 0.11.16, 0.12.4 ([Issue #34](https://github.com/crazy-max/neard/issues/34))
+* Suitable for PHP 5.2
+
 ## 1.0.13 (2015/04/20)
 
 * Launch on startup fails sometimes ([Issue #83](https://github.com/crazy-max/neard/issues/83))

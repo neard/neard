@@ -120,7 +120,7 @@ class ActionService
             return;
         }
         
-        $isPortInUse = Batch::isPortInUse($port);
+        $isPortInUse = Util::isPortInUse($port);
         if ($isPortInUse === false) {
             if (!$service->isInstalled()) {
                 $service->create();

@@ -1,0 +1,11 @@
+*
+!.gitignore
+
+# Neard
+!neard.conf
+!conf
+conf/*
+!conf/httpd.conf
+!conf/extra
+conf/extra/*
+!conf/extra/httpd-ssl.conf

@@ -313,8 +313,7 @@ class Vbs
             'End If' . PHP_EOL .
             $randomObjFile . '.Write "' . self::END_PROCESS_STR . '"' . PHP_EOL .
             $randomObjFile . '.Close' . PHP_EOL .
-            $randomObjErrFile . '.Close' . PHP_EOL .
-            ($neardConfig->isScriptsDelete() ? $randomObjFso . '.DeleteFile("' . $scriptPath . '")' : '');
+            $randomObjErrFile . '.Close' . PHP_EOL;
     
         // Process
         file_put_contents($scriptPath, $header . $content . $footer);
@@ -339,13 +338,6 @@ class Vbs
         $err = file_get_contents($errFile);
         if (!empty($err)) {
             Util::logError('VBS error on ' . $basename . ': ' . $err);
-        }
-        
-        if ($neardConfig->isScriptsDelete()) {
-            @unlink($scriptPath);
-            @unlink($errFile);
-            @unlink($checkFile);
-            @unlink($resultFile);
         }
         
         self::writeLog('Exec ' . $basename . ':');
