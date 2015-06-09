@@ -142,7 +142,7 @@ Before [reporting an issue](https://github.com/crazy-max/neard/issues), please :
 * Tell me what is your operating system and platform (eg. Windows 7 64-bits).
 * Tell me your Neard version (eg. 1.0.0).
 * Close Neard.
-* Change these variable in the ``neard.conf`` file to theses values : ``logsVerbose = 2`` and ``scriptsDelete = 0``.
+* Change the ``logsVerbose`` variable to this value ``2`` in the ``neard.conf`` file.
 * Launch Neard and reproduce your problem.
 * Close Neard.
 * Zip the ``logs`` folder, the ``core/tmp`` folder and a screenshot of your issue.
