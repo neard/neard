@@ -4,12 +4,10 @@ class Config
 {
     const CFG_MAX_LOGS_ARCHIVES = 'maxLogsArchives';
     const CFG_LOGS_VERBOSE = 'logsVerbose';
-    const CFG_PURGE_LOGS_ON_STARTUP = 'purgeLogsOnStartup';
     const CFG_LANG = 'lang';
     const CFG_TIMEZONE = 'timezone';
     const CFG_NOTEPAD = 'notepad';
     const CFG_SCRIPTS_TIMEOUT = 'scriptsTimeout';
-    const CFG_SCRIPTS_DELETE = 'scriptsDelete';
     
     const CFG_DEFAULT_LANG = 'defaultLang';
     const CFG_HOSTNAME = 'hostname';
@@ -103,11 +101,6 @@ class Config
         return intval($this->raw[self::CFG_SCRIPTS_TIMEOUT]);
     }
     
-    public function isScriptsDelete()
-    {
-        return intval($this->raw[self::CFG_SCRIPTS_DELETE]) == Config::ENABLED;
-    }
-
     public function getNotepad()
     {
         return $this->raw[self::CFG_NOTEPAD];
@@ -121,11 +114,6 @@ class Config
     public function getMaxLogsArchives()
     {
         return intval($this->raw[self::CFG_MAX_LOGS_ARCHIVES]);
-    }
-    
-    public function isPurgeLogsOnStartup()
-    {
-        return intval($this->raw[self::CFG_PURGE_LOGS_ON_STARTUP]) == self::ENABLED;
     }
     
     public function getPaypalLink()

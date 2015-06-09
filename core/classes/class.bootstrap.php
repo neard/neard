@@ -306,7 +306,8 @@ class Bootstrap
         file_put_contents($this->getErrorLogFilePath(), $content, FILE_APPEND);
     }
     
-    private static function debugStringBacktrace() {
+    private static function debugStringBacktrace()
+    {
         ob_start();
         debug_print_backtrace();
         $trace = ob_get_contents();
@@ -314,7 +315,12 @@ class Bootstrap
         
         $trace = preg_replace('/^#0\s+Bootstrap::debugStringBacktrace[^\n]*\n/', '', $trace, 1);
         $trace = preg_replace('/^#1\s+Bootstrap->errorHandler[^\n]*\n/', '', $trace, 1);
-        $trace = preg_replace_callback('/^#(\d+)/m', function($m) { return '  #' . ($m[1] - 1); }, $trace);
+        $trace = preg_replace_callback('/^#(\d+)/m', 'debugStringPregReplace', $trace);
         return $trace;
     }
+}
+
+function debugStringPregReplace($match)
+{
+    return '  #' . ($match[1] - 1);
 }

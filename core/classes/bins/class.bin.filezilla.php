@@ -152,7 +152,7 @@ class BinFilezilla
         $port = intval($port);
         $neardWinbinder->incrProgressBar($wbProgressBar);
     
-        $isPortInUse = Batch::isPortInUse($port);
+        $isPortInUse = Util::isPortInUse($port);
         if (!$checkUsed || $isPortInUse === false) {
             // bootstrap
             Util::replaceDefine($neardCore->getBootstrapFilePath(), 'CURRENT_FILEZILLA_PORT', intval($port));

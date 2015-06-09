@@ -1,0 +1,12 @@
+*
+!.gitignore
+
+# Neard
+!neard.conf
+!php.ini
+!xdebug
+!pear
+pear/*
+!pear/pear.bat
+!pear/peardev.bat
+!pear/pecl.bat

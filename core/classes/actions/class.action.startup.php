@@ -51,7 +51,6 @@ class ActionStartup
         // Clean
         $this->cleanTmpFolders();
         $this->cleanOldBehaviors();
-        $this->purgeLogs();
         
         // List procs
         if ($neardBs->getProcs() !== false) {
@@ -78,7 +77,7 @@ class ActionStartup
         // Check Neard path
         $this->checkPath();
         $this->scanFolders();
-        $this->changeOldPath();
+        $this->changePath();
         $this->savePath();
         
         // Check NEARD_PATH, NEARD_BINS and System Path reg keys
@@ -121,9 +120,9 @@ class ActionStartup
     
     private function rotationLogs()
     {
-        global $neardBs, $neardCore, $neardConfig, $neardLang;
+        global $neardBs, $neardCore, $neardConfig, $neardLang, $neardBins;
     
-        $this->splash->setTextLoading($neardLang->getValue(Lang::STARTUP_ROATION_LOGS_TEXT));
+        $this->splash->setTextLoading($neardLang->getValue(Lang::STARTUP_ROTATION_LOGS_TEXT));
         $this->splash->incrProgressBar();
     
         $archivesPath = $neardBs->getLogsPath() . '/archives';
@@ -190,6 +189,10 @@ class ActionStartup
             copy($srcPath . '/' . $file, $archiveScriptsPath . '/' . $file);
         }
         closedir($handle);
+        
+        // Purge logs
+        Util::clearFolders($neardBins->getLogsPath(), array('placeholder'));
+        Util::clearFolder($neardBs->getLogsPath(), array('archives', 'placeholder'));
     }
     
     private function cleanTmpFolders()
@@ -219,20 +222,6 @@ class ActionStartup
             'SOFTWARE\Microsoft\Windows\CurrentVersion\Run',
             'Neard'
         );
-    }
-    
-    private function purgeLogs()
-    {
-        global $neardBs, $neardConfig, $neardLang, $neardBins;
-    
-        $this->splash->incrProgressBar();
-    
-        if ($neardConfig->isPurgeLogsOnStartup()) {
-            $this->splash->setTextLoading($neardLang->getValue(Lang::STARTUP_PURGE_LOGS_TEXT));
-            Util::clearFolders($neardBins->getLogsPath(), array('placeholder'));
-            Util::clearFolder($neardBs->getLogsPath(), array('placeholder'));
-            $this->writeLog('Purge logs');
-        }
     }
     
     private function killPhpInstances()
@@ -338,11 +327,11 @@ class ActionStartup
         $this->writeLog('Files to scan: ' . count($this->filesToScan));
     }
     
-    private function changeOldPath()
+    private function changePath()
     {
         global $neardCore, $neardLang;
         
-        $this->splash->setTextLoading(sprintf($neardLang->getValue(Lang::STARTUP_CHANGE_OLD_PATH_TEXT), $this->rootPath));
+        $this->splash->setTextLoading(sprintf($neardLang->getValue(Lang::STARTUP_CHANGE_PATH_TEXT), $this->rootPath));
         $this->splash->incrProgressBar();
         
         $unixOldPath = Util::formatUnixPath($neardCore->getLastPathContent());
@@ -520,7 +509,7 @@ class ActionStartup
                 }
         
                 if (!$serviceRestart) {
-                    $isPortInUse = Batch::isPortInUse($port);
+                    $isPortInUse = Util::isPortInUse($port);
                     if ($isPortInUse === false) {
                         $this->splash->incrProgressBar();
                         if (!$service->create()) {

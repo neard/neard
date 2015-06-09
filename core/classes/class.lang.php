@@ -197,18 +197,17 @@ class Lang
     
     // Action Startup
     const STARTUP_STARTING_TEXT = 'startupStartingText';
-    const STARTUP_ROATION_LOGS_TEXT = 'startupRotationLogsText';
+    const STARTUP_ROTATION_LOGS_TEXT = 'startupRotationLogsText';
     const STARTUP_KILL_OLD_PROCS_TEXT = 'startupKillOldProcsText';
     const STARTUP_REFRESH_HOSTNAME_TEXT = 'startupRefreshHostnameText';
     const STARTUP_CHECK_BROWSER_TEXT = 'startupCheckBrowserText';
     const STARTUP_CLEAN_TMP_TEXT = 'startupCleanTmpText';
     const STARTUP_CLEAN_OLD_BEAHAVIORS_TEXT = 'startupCleanOldBehaviorsText';
-    const STARTUP_PURGE_LOGS_TEXT = 'startupPurgeLogsText';
     const STARTUP_REFRESH_ALIAS_TEXT = 'startupRefreshAliasText';
     const STARTUP_REFRESH_VHOSTS_TEXT = 'startupRefreshVhostsText';
     const STARTUP_CHECK_PATH_TEXT = 'startupCheckPathText';
     const STARTUP_SCAN_FOLDERS_TEXT = 'startupScanFoldersText';
-    const STARTUP_CHANGE_OLD_PATH_TEXT = 'startupChangeOldPathText';
+    const STARTUP_CHANGE_PATH_TEXT = 'startupChangePathText';
     const STARTUP_REGISTRY_TEXT = 'startupRegistryText';
     const STARTUP_REGISTRY_ERROR_TEXT = 'startupRegistryErrorText';
     const STARTUP_INSTALL_SERVICE_TEXT = 'startupInstallServiceText';
@@ -554,18 +553,17 @@ class Lang
             
             // Action Startup
             self::STARTUP_STARTING_TEXT,
-            self::STARTUP_ROATION_LOGS_TEXT,
+            self::STARTUP_ROTATION_LOGS_TEXT,
             self::STARTUP_KILL_OLD_PROCS_TEXT,
             self::STARTUP_REFRESH_HOSTNAME_TEXT,
             self::STARTUP_CHECK_BROWSER_TEXT,
             self::STARTUP_CLEAN_TMP_TEXT,
             self::STARTUP_CLEAN_OLD_BEAHAVIORS_TEXT,
-            self::STARTUP_PURGE_LOGS_TEXT,
             self::STARTUP_REFRESH_ALIAS_TEXT,
             self::STARTUP_REFRESH_VHOSTS_TEXT,
             self::STARTUP_CHECK_PATH_TEXT,
             self::STARTUP_SCAN_FOLDERS_TEXT,
-            self::STARTUP_CHANGE_OLD_PATH_TEXT,
+            self::STARTUP_CHANGE_PATH_TEXT,
             self::STARTUP_REGISTRY_TEXT,
             self::STARTUP_REGISTRY_ERROR_TEXT,
             self::STARTUP_INSTALL_SERVICE_TEXT,

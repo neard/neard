@@ -146,7 +146,7 @@ class BinApache
         $port = intval($port);
         $neardWinbinder->incrProgressBar($wbProgressBar);
         
-        $isPortInUse = Batch::isPortInUse($port);
+        $isPortInUse = Util::isPortInUse($port);
         if (!$checkUsed || $isPortInUse === false) {
             // bootstrap
             Util::replaceDefine($neardCore->getBootstrapFilePath(), 'CURRENT_APACHE_PORT', intval($port));
