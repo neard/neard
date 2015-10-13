@@ -101,6 +101,7 @@ class Lang
     const ADMINER = 'adminer';
     
     // Tools
+    const COMPOSER = 'composer';
     const CONSOLE = 'console';
     const GIT = 'git';
     const IMAGEMAGICK = 'imagemagick';
@@ -457,6 +458,7 @@ class Lang
             self::ADMINER,
             
             // Tools
+            self::COMPOSER,
             self::CONSOLE,
             self::GIT,
             self::IMAGEMAGICK,

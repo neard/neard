@@ -22,7 +22,7 @@ class ActionRestart
         }
         
         $splash->incrProgressBar();
-        $neardWinbinder->exec($neardTools->getRunFromProcess()->getExe(), 'admin nomsg explorer.exe ' . Util::formatWindowsPath($neardBs->getExeFilePath()), false);
+        $neardWinbinder->exec($neardTools->getRunFromProcess()->getExe(), 'nomsg explorer.exe ' . Util::formatWindowsPath($neardBs->getExeFilePath()), false);
         $neardWinbinder->destroyWindow($splash->getWbWindow());
     }
     

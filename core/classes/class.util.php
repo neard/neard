@@ -374,6 +374,8 @@ class Util
             $value .= $neardBins->getPhp()->getCurrentPath() . ';';
             $value .= $neardBins->getPhp()->getPearPath() . ';';
             $value .= $neardBins->getPhp()->getImagickPath() . ';';
+            $value .= $neardBins->getNodejs()->getCurrentPath() . ';';
+            $value .= $neardTools->getComposer()->getCurrentPath() . ';';
             $value .= $neardTools->getImageMagick()->getCurrentPath() . ';';
             $value .= $neardTools->getSvn()->getCurrentPath() . '/bin;';
             $value .= $neardTools->getGit()->getCurrentPath() . '/bin;';

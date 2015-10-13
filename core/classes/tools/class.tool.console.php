@@ -238,4 +238,10 @@ class ToolConsole
         global $neardLang, $neardBins;
         return $neardLang->getValue(Lang::NODEJS) . ' ' . $neardBins->getNodejs()->getVersion();
     }
+    
+    public function getTabTitleComposer()
+    {
+        global $neardLang, $neardTools;
+        return $neardLang->getValue(Lang::COMPOSER) . ' ' . $neardTools->getComposer()->getVersion();
+    }
 }

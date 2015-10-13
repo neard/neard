@@ -2,6 +2,7 @@
 
 class Tools
 {
+    private $composer;
     private $console;
     private $git;
     private $imagemagick;
@@ -21,6 +22,14 @@ class Tools
     {
         global $neardBs;
         return $neardBs->getToolsPath() . '/' . $tool;
+    }
+    
+    public function getComposer()
+    {
+        if ($this->composer == null) {
+            $this->composer = new ToolComposer($this->getRootPath('composer'));
+        }
+        return $this->composer;
     }
 
     public function getConsole()

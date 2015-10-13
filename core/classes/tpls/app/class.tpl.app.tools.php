@@ -38,6 +38,11 @@ class TplAppTools
                 TplAestan::GLYPH_CONSOLE,
                 $neardTools->getConsole()->getTabTitlePear()
             ) . PHP_EOL .
+            TplAestan::getItemConsole(
+                $neardLang->getValue(Lang::COMPOSER),
+                TplAestan::GLYPH_CONSOLE,
+                $neardTools->getConsole()->getTabTitleComposer()
+            ) . PHP_EOL .
             TplAestan::getItemExe(
                 $neardLang->getValue(Lang::XDC),
                 $neardTools->getXdc()->getExe(),
