@@ -16,6 +16,7 @@ class ActionStartup
     public function __construct($args)
     {
         global $neardBs, $neardCore, $neardLang, $neardBins, $neardWinbinder;
+        $this->writeLog('Starting Neard...');
         
         // Init
         $this->splash = new Splash();

@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.0.15 (2015/10/13)
+
+* Error while switching php parameters ([Issue #97](https://github.com/crazy-max/neard/issues/97))
+* Zend extension not recognized on PHP 5.2.x ([Issue #96](https://github.com/crazy-max/neard/issues/96))
+* Add NodeJS to PATH ([Issue #95](https://github.com/crazy-max/neard/issues/95))
+* Increase input length ([Issue #91](https://github.com/crazy-max/neard/issues/91))
+* Add Composer in Neard tools ([Issue #80](https://github.com/crazy-max/neard/issues/80))
+* Addon PHP : 5.6.14 ([Issue #34](https://github.com/crazy-max/neard/issues/34))
+
 ## 1.0.14 (2015/06/09)
 
 * Bug while archiving logs ([Issue #89](https://github.com/crazy-max/neard/issues/89))

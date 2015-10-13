@@ -28,10 +28,10 @@ class ActionGenSslCertificate
         $this->wbWindow = $neardWinbinder->createAppWindow($neardLang->getValue(Lang::GENSSL_TITLE), 490, 160, WBC_NOTIFY, WBC_KEYDOWN | WBC_KEYUP);
         
         $this->wbLabelName = $neardWinbinder->createLabel($this->wbWindow, $neardLang->getValue(Lang::NAME) . ' :', 15, 15, 85, null, WBC_RIGHT);
-        $this->wbInputName = $neardWinbinder->createInputText($this->wbWindow, $initServerName, 105, 13, 150, null, 20);
+        $this->wbInputName = $neardWinbinder->createInputText($this->wbWindow, $initServerName, 105, 13, 150, null);
         
         $this->wbLabelDest = $neardWinbinder->createLabel($this->wbWindow, $neardLang->getValue(Lang::TARGET) . ' :', 15, 45, 85, null, WBC_RIGHT);
-        $this->wbInputDest = $neardWinbinder->createInputText($this->wbWindow, $initDocumentRoot, 105, 43, 190, null, 20, WBC_READONLY);
+        $this->wbInputDest = $neardWinbinder->createInputText($this->wbWindow, $initDocumentRoot, 105, 43, 190, null, null, WBC_READONLY);
         $this->wbBtnDest = $neardWinbinder->createButton($this->wbWindow, $neardLang->getValue(Lang::BUTTON_BROWSE), 300, 43, 110);
         
         $this->wbProgressBar = $neardWinbinder->createProgressBar($this->wbWindow, self::GAUGE_SAVE + 1, 15, 97, 275);

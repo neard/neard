@@ -39,10 +39,10 @@ class ActionEditAlias
                 $this->wbWindow = $neardWinbinder->createAppWindow(sprintf($neardLang->getValue(Lang::EDIT_ALIAS_TITLE), $this->initName), 490, 200, WBC_NOTIFY, WBC_KEYDOWN | WBC_KEYUP);
                 
                 $this->wbLabelName = $neardWinbinder->createLabel($this->wbWindow, $neardLang->getValue(Lang::ALIAS_NAME_LABEL) . ' :', 15, 15, 85, null, WBC_RIGHT);
-                $this->wbInputName = $neardWinbinder->createInputText($this->wbWindow, $this->initName, 105, 13, 150, null, 20);
+                $this->wbInputName = $neardWinbinder->createInputText($this->wbWindow, $this->initName, 105, 13, 150, null);
                 
                 $this->wbLabelDest = $neardWinbinder->createLabel($this->wbWindow, $neardLang->getValue(Lang::ALIAS_DEST_LABEL) . ' :', 15, 45, 85, null, WBC_RIGHT);
-                $this->wbInputDest = $neardWinbinder->createInputText($this->wbWindow, $initDest, 105, 43, 190, null, 20, WBC_READONLY);
+                $this->wbInputDest = $neardWinbinder->createInputText($this->wbWindow, $initDest, 105, 43, 190, null, null, WBC_READONLY);
                 $this->wbBtnDest = $neardWinbinder->createButton($this->wbWindow, $neardLang->getValue(Lang::BUTTON_BROWSE), 300, 43, 110);
                 
                 $this->wbLabelExp = $neardWinbinder->createLabel($this->wbWindow, sprintf($neardLang->getValue(Lang::ALIAS_EXP_LABEL), $apachePortUri, $this->initName, $initDest), 15, 80, 470, 50);

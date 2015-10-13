@@ -180,8 +180,8 @@ class TplAppPhp
         
         $switch = $enabled ? ActionSwitchPhpParam::SWITCH_OFF : ActionSwitchPhpParam::SWITCH_ON;
         return TplApp::getActionRun(Action::SWITCH_PHP_PARAM, array($setting, $switch)) . PHP_EOL .
-            TplAppReload::getActionReload() . PHP_EOL .
-            TplService::getActionRestart(BinApache::SERVICE_NAME) . PHP_EOL;
+            TplService::getActionRestart(BinApache::SERVICE_NAME) . PHP_EOL .
+            TplAppReload::getActionReload() . PHP_EOL;
     }
     
     public static function getMenuPhpExtensions()

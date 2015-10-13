@@ -8,6 +8,7 @@ class TplConsole
     const ICON_GIT = 'git.ico';
     const ICON_SVN = 'svn.ico';
     const ICON_NODEJS = 'nodejs.ico';
+    const ICON_COMPOSER = 'composer.ico';
     
     private function __construct()
     {
@@ -216,6 +217,7 @@ class TplConsole
                 self::getTabGitSection() . PHP_EOL .
                 self::getTabSvnSection() . PHP_EOL .
                 self::getTabNodejsSection() . PHP_EOL .
+                self::getTabComposerSection() . PHP_EOL .
             self::getIncrStr(1) . '</tabs>';
     }
     
@@ -328,6 +330,21 @@ class TplConsole
         return self::getTab(
             $neardTools->getConsole()->getTabTitleNodejs(),
             self::ICON_NODEJS,
+            Util::formatWindowsPath($shell),
+            $neardBs->getWwwPath()
+        );
+    }
+    
+    private static function getTabComposerSection()
+    {
+        global $neardBs, $neardTools;
+    
+        $shell = $neardTools->getConsole()->getCmdShell() . ' ' .
+            '&quot;' . $neardTools->getComposer()->getExe() . '&quot; -V';
+    
+        return self::getTab(
+            $neardTools->getConsole()->getTabTitleComposer(),
+            self::ICON_COMPOSER,
             Util::formatWindowsPath($shell),
             $neardBs->getWwwPath()
         );

@@ -4,17 +4,17 @@ Neard is an Integrated Web Development Tools environment combining :
 
 ### Major binaries
 
-* **Apache**
-* **PHP**
-* **MySQL**
-* **MariaDB**
-* **Node.js**
-* **Filezilla**
+* **Apache**, the world's most used web server software.
+* **PHP**, a server-side scripting language designed for web development.
+* **MySQL**, an open-source relational database management system.
+* **MariaDB**, a community-developed fork of the MySQL relational database management system intended to remain free under the GNU GPL.
+* **Node.js**, an open-source, cross-platform runtime environment for developing server-side web applications.
+* **Filezilla**, a FTP server application.
 
 ### Applications
 
 * **GitList**, an elegant and modern git repository viewer.
-* **phpMyAdmin** to handle the administration of MySQL over the Web.
+* **phpMyAdmin** to handle the administration of MySQL and MariaDB over the Web.
 * **Webgrind**, the Xdebug Profiling Web Frontend in PHP.
 * **WebSVN**, an Online subversion repository browser.
 * **Adminer** (formerly phpMinAdmin) is a full-featured database management tool written in PHP.
@@ -22,10 +22,12 @@ Neard is an Integrated Web Development Tools environment combining :
 ### Tools
 
 * A command prompt with **Console2** and **TCC/LE**.
-* **Git** support with **PortableGit**.
-* **Imagick** binaries.
-* **SVN** binaries.
+* **Git** support with **PortableGit**, a widely used version control system for software development.
+* **Imagick**, a free and open-source[2] software suite for displaying, converting, and editing raster image and vector image files.
+* **SVN**, a software versioning and revision control system.
 * **XDebugClient**, a simple frontend for XDebug.
+* **PEAR**, PHP Extension and Application Repository.
+* **Composer**, Dependency Manager for PHP.
 
 And many other features.
 
@@ -34,7 +36,7 @@ And many other features.
 * [WSH (Windows Script Host)](http://support.microsoft.com/kb/232211) : Open a command prompt and type ``wscript`` to check.
 * [SETX](http://technet.microsoft.com/en-us/library/cc755104.aspx) : Open a command prompt and type ``setx /?`` to check.
 * Be [Admin user](http://windows.microsoft.com/en-US/windows7/How-do-I-log-on-as-an-administrator).
-* Download and install the latests [Visual C++ Redistributables Packages (x86)](https://sourceforge.net/projects/neard/files/Tools/neard-vcredists-x86.exe/download).
+* Download and install the latests [Visual C++ Redistributables Packages (x86)](https://sourceforge.net/projects/neard/files/Tools/).
 
 ### Windows XP
 
@@ -44,7 +46,7 @@ And many other features.
 
 Neard is [available on SourceForge](https://sourceforge.net/projects/neard/) :
 
-* Latest release : [Neard 1.0.14](https://sourceforge.net/projects/neard/files/Releases/1.0.14/neard-1.0.14.zip/download) (2015/06/09)
+* Latest release : [Neard 1.0.15](https://sourceforge.net/projects/neard/files/Releases/1.0.15/neard-1.0.15.zip/download) (2015/10/13)
 * [Addons](https://sourceforge.net/projects/neard/files/Addons/) : other versions of binaries (Apache, PHP, MYSQL, MariaDB, etc...).
 * [Tools](https://sourceforge.net/projects/neard/files/Tools/) : useful tools for Neard.
 * [Archives](https://sourceforge.net/projects/neard/files/Releases/) : all releases.
@@ -91,7 +93,7 @@ Neard is [available on SourceForge](https://sourceforge.net/projects/neard/) :
 
 #### PHP
 
-* [PHP 5.2.17](https://sourceforge.net/projects/neard/files/Addons/php/5.2.17/neard-php-5.2.17-20150609.zip/download)
+* [PHP 5.2.17](https://sourceforge.net/projects/neard/files/Addons/php/5.2.17/neard-php-5.2.17-20151013.zip/download)
 * [PHP 5.3.13](https://sourceforge.net/projects/neard/files/Addons/php/5.3.13/neard-php-5.3.13-20150609.zip/download) (default)
 * [PHP 5.3.28](https://sourceforge.net/projects/neard/files/Addons/php/5.3.28/neard-php-5.3.28-20150609.zip/download)
 * [PHP 5.3.29](https://sourceforge.net/projects/neard/files/Addons/php/5.3.29/neard-php-5.3.29-20150609.zip/download)
@@ -105,6 +107,7 @@ Neard is [available on SourceForge](https://sourceforge.net/projects/neard/) :
 * [PHP 5.5.24](https://sourceforge.net/projects/neard/files/Addons/php/5.5.24/neard-php-5.5.24-20150609.zip/download)
 * [PHP 5.6.0](https://sourceforge.net/projects/neard/files/Addons/php/5.6.0/neard-php-5.6.0-20150609.zip/download)
 * [PHP 5.6.8](https://sourceforge.net/projects/neard/files/Addons/php/5.6.8/neard-php-5.6.8-20150609.zip/download)
+* [PHP 5.6.14](https://sourceforge.net/projects/neard/files/Addons/php/5.6.14/neard-php-5.6.14-20151013.zip/download)
 
 ### RSS feed
 
