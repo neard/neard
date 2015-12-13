@@ -1,37 +1,22 @@
 # Eclipse
-.settings
-.settings/*
-.buildpath
-.project
-.jsdtscope
+/.settings
+/.settings/*
+/.buildpath
+/.project
+/.jsdtscope
+/*.launch
 
 # Ant
-build.properties
-build.xml
+/build.properties
+/build.xml
 
 # Neard
-!alias
-alias/*
-!alias/gitlist.conf
-!alias/phpmyadmin.conf
-!alias/svn.conf
-!alias/webgrind.conf
-!alias/websvn.conf
-!logs
-logs/*
-!logs/placeholder
-!ssl
-ssl/*
-!ssl/openssl.cnf
-!svnrepos
-svnrepos/*
-!svnrepos/placeholder
-!tmp
-tmp/*
-!tmp/placeholder
-!tmp/cachegrind
-tmp/cachegrind/*
-!tmp/cachegrind/placeholder
-!vhosts
-vhosts/*
-!vhosts/placeholder
+/.dev
+/.dev/*
+/!alias
+/alias/*
+/!alias/gitlist.conf
+/!alias/phpmyadmin.conf
+/!alias/svn.conf
+/!alias/webgrind.conf
+/!alias/websvn.conf

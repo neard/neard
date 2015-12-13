@@ -34,8 +34,8 @@ class ActionReload
         // Process Console config 
         TplConsole::process();
         
-        // Process Sublimetext config
-        TplSublimetext::process();
+        // Process Notepad config
+        TplNotepad2::process();
         
         // Process Websvn config
         TplWebsvn::process();

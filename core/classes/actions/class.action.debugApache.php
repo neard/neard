@@ -30,10 +30,6 @@ class ActionDebugApache
             }
             $caption .= ' (' . $args[0] . ')';
             
-            if ($editor) {
-                Util::startLoading();
-            }
-            
             $debugOutput = $neardBins->getApache()->getCmdLineOutput($args[0]);
             
             if ($args[0] == BinApache::CMD_SYNTAX_CHECK) {
@@ -42,7 +38,7 @@ class ActionDebugApache
             }
             
             if ($editor) {
-                $neardTools->getSublimetext()->open($caption, $debugOutput['content']);
+                $neardTools->getNotepad2()->open($caption, $debugOutput['content']);
             } else {
                 if ($msgBoxError) {
                     $neardWinbinder->messageBoxError(

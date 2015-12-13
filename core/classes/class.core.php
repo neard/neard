@@ -26,7 +26,6 @@ class Core
         if (extension_loaded('winbinder')) {
             require_once $this->getLibsPath() . '/winbinder/winbinder.php';
         }
-        require_once $this->getLibsPath() . '/markdown/markdown.php';
     }
 
     public function getLangsPath($aetrayPath = false)

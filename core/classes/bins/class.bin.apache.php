@@ -71,12 +71,15 @@ class BinApache
         
         if (!is_dir($this->currentPath)) {
             Util::logError(sprintf($neardLang->getValue(Lang::ERROR_FILE_NOT_FOUND), $this->name . ' ' . $this->version, $this->currentPath));
+            return;
         }
         if (!is_file($this->neardConf)) {
             Util::logError(sprintf($neardLang->getValue(Lang::ERROR_CONF_NOT_FOUND), $this->name . ' ' . $this->version, $this->neardConf));
+            return;
         }
         if (!is_file($this->sslConf)) {
             Util::logError(sprintf($neardLang->getValue(Lang::ERROR_CONF_NOT_FOUND), $this->name . ' ' . $this->version, $this->sslConf));
+            return;
         }
         
         $this->neardConfRaw = parse_ini_file($this->neardConf);
@@ -90,18 +93,23 @@ class BinApache
         
         if (!is_file($this->exe)) {
             Util::logError(sprintf($neardLang->getValue(Lang::ERROR_EXE_NOT_FOUND), $this->name . ' ' . $this->version, $this->exe));
+            return;
         }
         if (!is_file($this->conf)) {
             Util::logError(sprintf($neardLang->getValue(Lang::ERROR_CONF_NOT_FOUND), $this->name . ' ' . $this->version, $this->conf));
+            return;
         }
         if (!is_numeric($this->port) || $this->port <= 0) {
             Util::logError(sprintf($neardLang->getValue(Lang::ERROR_INVALID_PARAMETER), self::LOCAL_CFG_PORT, $this->port));
+            return;
         }
         if (!is_numeric($this->sslPort) || $this->sslPort <= 0) {
             Util::logError(sprintf($neardLang->getValue(Lang::ERROR_INVALID_PARAMETER), self::LOCAL_CFG_SSL_PORT, $this->sslPort));
+            return;
         }
         if (!is_file($this->opensslExe)) {
             Util::logError(sprintf($neardLang->getValue(Lang::ERROR_EXE_NOT_FOUND), $this->name . ' ' . $this->version, $this->opensslExe));
+            return;
         }
         
         $this->service = new Win32Service(self::SERVICE_NAME);
@@ -239,6 +247,9 @@ class BinApache
         
         $apacheConf = str_replace('apache' . $this->getVersion(), 'apache' . $version, $this->getConf());
         $neardConf = str_replace('apache' . $this->getVersion(), 'apache' . $version, $this->neardConf);
+        
+        $tsDll = $neardBins->getPhp()->getTsDll();
+        $apachePhpModuleName = $tsDll !== false ? substr($tsDll, 0, 4) . '_module' : null;
         $apachePhpModule = $neardBins->getPhp()->getApacheModule($version);
         
         if (!file_exists($apacheConf) || !file_exists($neardConf)) {
@@ -264,7 +275,7 @@ class BinApache
             return false;
         }
         
-        if ($apachePhpModule === false) {
+        if ($tsDll === false || $apachePhpModule === false) {
             Util::logDebug($this->getName() . ' ' . $version . ' does not seem to be compatible with PHP ' . $neardBins->getPhp()->getVersion());
             if ($showWindow) {
                 $neardWinbinder->messageBoxError(
@@ -281,11 +292,11 @@ class BinApache
         // neard.conf
         $this->setVersion($version);
         
-        // php
+        // httpd.conf
         Util::replaceInFile($apacheConf, array(
             '/^PHPIniDir\s.*/' => 'PHPIniDir "' . $neardBins->getPhp()->getCurrentPath() . '"',
-            '/^(#?)LoadFile\s.*php5ts.dll.*/' => (!file_exists($neardBins->getPhp()->getCurrentPath() . '/php5ts.dll') ? '#' : '') . 'LoadFile "' . $neardBins->getPhp()->getCurrentPath() . '/php5ts.dll"',
-            '/^LoadModule\sphp5_module\s.*/' => 'LoadModule php5_module "' . $apachePhpModule . '"',
+            '/^#?LoadFile\s.*php.ts\.dll.*/' => (!file_exists($neardBins->getPhp()->getCurrentPath() . '/' . $tsDll) ? '#' : '') . 'LoadFile "' . $neardBins->getPhp()->getCurrentPath() . '/' . $tsDll . '"',
+            '/^LoadModule\sphp._module\s.*/' => 'LoadModule ' . $apachePhpModuleName . ' "' . $apachePhpModule . '"',
         ));
     }
     
@@ -308,7 +319,7 @@ class BinApache
             if (preg_match('/^(#)?LoadModule\s*([a-z0-9_-]+)\s*"?(.*)"?/i', $row, $modMatch)) {
                 $name = $modMatch[2];
                 $path = $modMatch[3];
-                if ($name != 'php5_module') {
+                if (!Util::startWith($name, 'php')) {
                     if ($modMatch[1] == '#') {
                         $result[$name] = ActionSwitchApacheModule::SWITCH_OFF;
                     } else {

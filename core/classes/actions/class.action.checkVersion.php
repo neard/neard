@@ -7,7 +7,6 @@ class ActionCheckVersion
     private $wbWindow;
     
     private $wbImage;
-    private $wbLinkPatch;
     private $wbLinkFull;
     private $wbBtnOk;
     
@@ -24,23 +23,18 @@ class ActionCheckVersion
             $this->latestVersion =  Util::getLatestVersion();
             
             if ($this->latestVersion != null && version_compare($this->currentVersion, $this->latestVersion, '<')) {
-                $labelPatchLink = $neardLang->getValue(Lang::DOWNLOAD) . ' Neard ' . $this->currentVersion . '-' . $this->latestVersion . ' Patch';
-                $labelPatchInfo = 'neard-' . $this->currentVersion . '-' . $this->latestVersion . '.zip (' . Util::getRemoteFilesize(Util::getPatchUrl($this->currentVersion, $this->latestVersion)) . ')';
-                $labelFullLink = $neardLang->getValue(Lang::DOWNLOAD) . ' Neard ' . $this->latestVersion . ' Full';
+                $labelFullLink = $neardLang->getValue(Lang::DOWNLOAD) . ' Neard ' . $this->latestVersion;
                 $labelFullInfo = 'neard-' . $this->latestVersion . '.zip (' . Util::getRemoteFilesize(Util::getVersionUrl($this->latestVersion)) . ')';
                 
                 $neardWinbinder->reset();
-                $this->wbWindow = $neardWinbinder->createAppWindow($neardLang->getValue(Lang::CHECK_VERSION_TITLE), 520, 200, WBC_NOTIFY, WBC_KEYDOWN | WBC_KEYUP);
+                $this->wbWindow = $neardWinbinder->createAppWindow($neardLang->getValue(Lang::CHECK_VERSION_TITLE), 410, 120, WBC_NOTIFY, WBC_KEYDOWN | WBC_KEYUP);
                 
-                $neardWinbinder->createLabel($this->wbWindow, $neardLang->getValue(Lang::CHECK_VERSION_AVAILABLE_TEXT), 80, 20, 420, 120);
+                $neardWinbinder->createLabel($this->wbWindow, $neardLang->getValue(Lang::CHECK_VERSION_AVAILABLE_TEXT), 80, 15, 420, 120);
     
-                $this->wbLinkPatch = $neardWinbinder->createHyperLink($this->wbWindow, $labelPatchLink, 80, 65, 210, 20, WBC_LINES);
-                $neardWinbinder->createLabel($this->wbWindow, $labelPatchInfo, 80, 82, 210, 20);
+                $this->wbLinkFull = $neardWinbinder->createHyperLink($this->wbWindow, $labelFullLink, 80, 40, 210, 20, WBC_LINES | WBC_RIGHT);
+                $neardWinbinder->createLabel($this->wbWindow, $labelFullInfo, 80, 57, 210, 20);
                 
-                $this->wbLinkFull = $neardWinbinder->createHyperLink($this->wbWindow, $labelFullLink, 300, 65, 210, 20, WBC_LINES | WBC_RIGHT);
-                $neardWinbinder->createLabel($this->wbWindow, $labelFullInfo, 300, 82, 210, 20);
-                
-                $this->wbBtnOk = $neardWinbinder->createButton($this->wbWindow, $neardLang->getValue(Lang::BUTTON_OK), 405, 132);
+                $this->wbBtnOk = $neardWinbinder->createButton($this->wbWindow, $neardLang->getValue(Lang::BUTTON_OK), 310, 55);
                 $this->wbImage = $neardWinbinder->drawImage($this->wbWindow, $neardCore->getResourcesPath() . '/about.bmp');
                 
                 Util::stopLoading();
@@ -61,9 +55,6 @@ class ActionCheckVersion
         global $neardConfig, $neardWinbinder;
     
         switch($id) {
-            case $this->wbLinkPatch[WinBinder::CTRL_ID]:
-                $neardWinbinder->exec($neardConfig->getBrowser(), Util::getPatchUrl($this->currentVersion, $this->latestVersion));
-                break;
             case $this->wbLinkFull[WinBinder::CTRL_ID]:
                 $neardWinbinder->exec($neardConfig->getBrowser(), Util::getVersionUrl($this->latestVersion));
                 break;

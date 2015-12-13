@@ -61,9 +61,11 @@ class BinFilezilla
         
         if (!is_dir($this->currentPath)) {
             Util::logError(sprintf($neardLang->getValue(Lang::ERROR_FILE_NOT_FOUND), $this->name . ' ' . $this->version, $this->currentPath));
+            return;
         }
         if (!is_file($this->neardConf)) {
             Util::logError(sprintf($neardLang->getValue(Lang::ERROR_CONF_NOT_FOUND), $this->name . ' ' . $this->version, $this->neardConf));
+            return;
         }
         
         // Create log hard link
@@ -82,15 +84,19 @@ class BinFilezilla
         
         if (!is_file($this->exe)) {
             Util::logError(sprintf($neardLang->getValue(Lang::ERROR_EXE_NOT_FOUND), $this->name . ' ' . $this->version, $this->exe));
+            return;
         }
         if (!is_file($this->conf)) {
             Util::logError(sprintf($neardLang->getValue(Lang::ERROR_CONF_NOT_FOUND), $this->name . ' ' . $this->version, $this->conf));
+            return;
         }
         if (!is_numeric($this->port) || $this->port <= 0) {
             Util::logError(sprintf($neardLang->getValue(Lang::ERROR_INVALID_PARAMETER), self::LOCAL_CFG_PORT, $this->port));
+            return;
         }
         if (!is_numeric($this->sslPort) || $this->sslPort <= 0) {
             Util::logError(sprintf($neardLang->getValue(Lang::ERROR_INVALID_PARAMETER), self::LOCAL_CFG_SSL_PORT, $this->sslPort));
+            return;
         }
         
         $this->service = new Win32Service(self::SERVICE_NAME);

@@ -20,10 +20,6 @@ class ActionDebugMysql
             }
             $caption .= ' (' . $args[0] . ')';
             
-            if ($editor) {
-                Util::startLoading();
-            }
-            
             $debugOutput = $neardBins->getMysql()->getCmdLineOutput($args[0]);
             
             if ($args[0] == BinMysql::CMD_SYNTAX_CHECK) {
@@ -32,7 +28,7 @@ class ActionDebugMysql
             }
             
             if ($editor) {
-                $neardTools->getSublimetext()->open($caption, $debugOutput['content']);
+                $neardTools->getNotepad2()->open($caption, $debugOutput['content']);
             } else {
                 if ($msgBoxError) {
                     $neardWinbinder->messageBoxError(

@@ -105,9 +105,8 @@ class Lang
     const CONSOLE = 'console';
     const GIT = 'git';
     const IMAGEMAGICK = 'imagemagick';
-    const RUNFROMRPOCESS = 'runfromprocess';
+    const NOTEPAD2 = 'notepad2';
     const SETENV = 'setenv';
-    const SUBLIMETEXT = 'sublimetext';
     const SVN = 'svn';
     const TCCLE = 'tccle';
     const XDC = 'xdc';
@@ -214,7 +213,6 @@ class Lang
     const STARTUP_INSTALL_SERVICE_TEXT = 'startupInstallServiceText';
     const STARTUP_START_SERVICE_TEXT = 'startupStartServiceText';
     const STARTUP_PREPARE_RESTART_TEXT = 'startupPrepareRestartText';
-    const STARTUP_RESTARTING_TEXT = 'startupRestartingText';
     const STARTUP_ERROR_TITLE = 'startupErrorTitle';
     const STARTUP_SERVICE_ERROR = 'startupServiceError';
     const STARTUP_PORT_ERROR = 'startupPortError';
@@ -274,6 +272,10 @@ class Lang
     const GENSSL_CREATED = 'genSslCreated';
     const GENSSL_CREATED_ERROR = 'genSslCreatedError';
     
+    // Action restart
+    const RESTART_TITLE = 'restartTitle';
+    const RESTART_TEXT = 'restartText';
+    
     // Windows forms
     const BUTTON_OK = 'buttonOk';
     const BUTTON_DELETE = 'buttonDelete';
@@ -298,65 +300,7 @@ class Lang
     const HOMEPAGE_APC_TEXT = 'homepageApcText';
     const HOMEPAGE_BACK_TEXT = 'homepageBackText';
     
-    private $current;
-    private $raw;
-    
-    public function __construct()
-    {
-        $this->load();
-    }
-
-    public function load()
-    {
-        global $neardCore, $neardConfig;
-        $this->raw = null;
-        
-        $this->current = $neardConfig->getDefaultLang();
-        if (!empty($this->current) && in_array($this->current, $this->getList())) {
-            $this->current = $neardConfig->getLang();
-        }
-        
-        $this->raw = parse_ini_file($neardCore->getLangsPath() . '/' . $this->current . '.lng');
-    }
-    
-    public function getCurrent()
-    {
-        return $this->current;
-    }
-    
-    public function getList()
-    {
-        global $neardCore;
-        $result = array();
-    
-        if ($handle = opendir($neardCore->getLangsPath())) {
-            while (false !== ($file = readdir($handle))) {
-                if ($file != "." && $file != ".." && Util::endWith($file, '.lng')) {
-                    $result[] = str_replace('.lng', '', $file);
-                }
-            }
-            closedir($handle);
-        }
-    
-        return $result;
-    }
-
-    public function getValue($key)
-    {
-        global $neardBs;
-       
-        if (!isset($this->raw[$key])) {
-            $content = '[' . date('Y-m-d H:i:s', time()) . '] ';
-            $content .= 'ERROR: Lang var missing ' . $key;
-            $content .= ' for ' . $this->current . ' language.' . PHP_EOL;
-            file_put_contents($neardBs->getErrorLogFilePath(), $content, FILE_APPEND);
-            return $key;
-        }
-        
-        return $this->raw[$key];
-    }
-    
-    public function getKeys()
+    public static function getKeys()
     {
         return array(
             // General
@@ -462,7 +406,6 @@ class Lang
             self::CONSOLE,
             self::GIT,
             self::IMAGEMAGICK,
-            self::RUNFROMRPOCESS,
             self::SETENV,
             self::SUBLIMETEXT,
             self::SVN,
@@ -571,7 +514,6 @@ class Lang
             self::STARTUP_INSTALL_SERVICE_TEXT,
             self::STARTUP_START_SERVICE_TEXT,
             self::STARTUP_PREPARE_RESTART_TEXT,
-            self::STARTUP_RESTARTING_TEXT,
             self::STARTUP_ERROR_TITLE,
             self::STARTUP_SERVICE_ERROR,
             self::STARTUP_PORT_ERROR,
@@ -620,7 +562,7 @@ class Lang
             // Action others...
             self::REGISTRY_SET_ERROR_TEXT,
             
-            // Action check version,
+            // Action check version
             self::CHECK_VERSION_TITLE,
             self::CHECK_VERSION_AVAILABLE_TEXT,
             self::CHECK_VERSION_LATEST_TEXT,
@@ -630,6 +572,8 @@ class Lang
             self::GENSSL_PATH,
             self::GENSSL_CREATED,
             self::GENSSL_CREATED_ERROR,
+            
+            // Action restart
             
             // Windows forms
             self::BUTTON_OK,
@@ -656,5 +600,4 @@ class Lang
             self::HOMEPAGE_BACK_TEXT,
         );
     }
-
 }

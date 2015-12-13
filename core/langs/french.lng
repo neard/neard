@@ -104,9 +104,8 @@ composer = "Composer"
 console = "Console"
 git = "Git"
 imagemagick = "ImageMagick"
-runfromprocess = "RunFromProcess"
+notepad2 = "Notepad2"
 setenv = "SetEnv"
-sublimetext = "Sublime Text"
 svn = "SVN"
 tccle = "TCC/LE"
 xdc = "XDebugClient"
@@ -272,6 +271,10 @@ genSslTitle = "Générer un certificat SSL"
 genSslPath = "Sélectionnez le répertoire cible :"
 genSslCreated = "Certificat SSL '%s' créé avec succès."
 genSslCreatedError = "Impossible de créer le certificat SSL."
+
+; Action Restart
+restartTitle = "Redémarrer"
+restartText = "Veuillez redémarrez %s pour appliquer les nouveaux paramètres..."
 
 ; Windows forms
 buttonOk = "OK"

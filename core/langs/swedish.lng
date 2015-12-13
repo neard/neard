@@ -104,9 +104,8 @@ composer = "Composer"
 console = "Console"
 git = "Git"
 imagemagick = "ImageMagick"
-runfromprocess = "RunFromProcess"
+notepad2 = "Notepad2"
 setenv = "SetEnv"
-sublimetext = "Sublime Text"
 svn = "SVN"
 tccle = "TCC/LE"
 xdc = "XDebugClient"
@@ -272,6 +271,10 @@ genSslTitle = "#Generate SSL certificate"
 genSslPath = "#Select the target folder :"
 genSslCreated = "#SSL certificate '%s' successfully created."
 genSslCreatedError = "#Unable to create SSL certificate."
+
+; Action Restart
+restartTitle = "#Restart"
+restartText = "#Please restart %s to apply new settings..."
 
 ; Windows forms
 buttonOk = "OK"

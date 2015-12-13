@@ -20,10 +20,6 @@ class ActionDebugMariadb
             }
             $caption .= ' (' . $args[0] . ')';
             
-            if ($editor) {
-                Util::startLoading();
-            }
-            
             $debugOutput = $neardBins->getMariadb()->getCmdLineOutput($args[0]);
             
             if ($args[0] == BinMariadb::CMD_SYNTAX_CHECK) {
@@ -32,7 +28,7 @@ class ActionDebugMariadb
             }
             
             if ($editor) {
-                $neardTools->getSublimetext()->open($caption, $debugOutput['content']);
+                $neardTools->getNotepad2()->open($caption, $debugOutput['content']);
             } else {
                 if ($msgBoxError) {
                     $neardWinbinder->messageBoxError(
