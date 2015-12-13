@@ -61,7 +61,7 @@ And many other features.
 To get notified about new updates, juste click on [Watch](https://github.com/crazy-max/neard/subscription) button on Neard repository.<br />
 You can watch Neard sub repositories to follow binaries updates.<br />
 
-I you just want to follow releases, you can subscribe to [Sibbell notifications platform](https://sibbell.com). 
+If you just want to follow releases, star the project and subscribe to [Sibbell notifications platform](https://sibbell.com). 
 
 ## Configuration
 
