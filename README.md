@@ -44,7 +44,7 @@ And many other features.
 
 ## Download
 
-* [Neard 1.0.15](https://github.com/crazy-max/neard/releases/download/v1.0.15/neard-1.0.15.zip) (2015/10/13)
+* [Neard 1.0.16](https://github.com/crazy-max/neard/releases/download/v1.0.16/neard-1.0.16.zip) (2015/12/13)
 * [Archives](https://github.com/crazy-max/neard/releases)
 
 ### Binaries
@@ -59,7 +59,7 @@ And many other features.
 ### Get notified on new updates / releases
 
 To get notified about new updates, juste click on [Watch](https://github.com/crazy-max/neard/subscription) button on Neard repository.<br />
-You can watch Neard sub repositories to follow binaries updates.<br /><br />
+You can watch Neard sub repositories to follow binaries updates.<br />
 
 I you just want to follow releases, you can subscribe to [Sibbell notifications platform](https://sibbell.com). 
 
