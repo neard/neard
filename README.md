@@ -23,7 +23,7 @@ Neard is an Integrated Web Development Tools environment combining :
 
 * A command prompt with **Console2** and **TCC/LE**.
 * **Git** support with **PortableGit**, a widely used version control system for software development.
-* **Imagick**, a free and open-source[2] software suite for displaying, converting, and editing raster image and vector image files.
+* **Imagick**, a free and open-source software suite for displaying, converting, and editing raster image and vector image files.
 * **SVN**, a software versioning and revision control system.
 * **XDebugClient**, a simple frontend for XDebug.
 * **PEAR**, PHP Extension and Application Repository.
@@ -36,7 +36,7 @@ And many other features.
 * [WSH (Windows Script Host)](http://support.microsoft.com/kb/232211) : Open a command prompt and type ``wscript`` to check.
 * [SETX](http://technet.microsoft.com/en-us/library/cc755104.aspx) : Open a command prompt and type ``setx /?`` to check.
 * Be [Admin user](http://windows.microsoft.com/en-US/windows7/How-do-I-log-on-as-an-administrator).
-* Download and install the latests [Visual C++ Redistributables Packages (x86)](https://sourceforge.net/projects/neard/files/Tools/).
+* Download and install the latests [Neard Visual C++ Redistributables Package](https://github.com/crazy-max/neard-misc#visual-c-redistributables-package).
 
 ### Windows XP
 
@@ -44,74 +44,24 @@ And many other features.
 
 ## Download
 
-Neard is [available on SourceForge](https://sourceforge.net/projects/neard/) :
+* [Neard 1.0.15](https://github.com/crazy-max/neard/releases/download/v1.0.15/neard-1.0.15.zip) (2015/10/13)
+* [Archives](https://github.com/crazy-max/neard/releases)
 
-* Latest release : [Neard 1.0.15](https://sourceforge.net/projects/neard/files/Releases/1.0.15/neard-1.0.15.zip/download) (2015/10/13)
-* [Addons](https://sourceforge.net/projects/neard/files/Addons/) : other versions of binaries (Apache, PHP, MYSQL, MariaDB, etc...).
-* [Tools](https://sourceforge.net/projects/neard/files/Tools/) : useful tools for Neard.
-* [Archives](https://sourceforge.net/projects/neard/files/Releases/) : all releases.
+### Binaries
 
-### Addons
+* Neard Apache repository : [neard-bin-apache](https://github.com/crazy-max/neard-bin-apache)
+* Neard Filezilla Server repository : [neard-bin-filezilla](https://github.com/crazy-max/neard-bin-filezilla)
+* Neard MariaDB repository : [neard-bin-mariadb](https://github.com/crazy-max/neard-bin-mariadb)
+* Neard MySQL repository : [neard-bin-mysql](https://github.com/crazy-max/neard-bin-mysql)
+* Neard Node.js repository : [neard-bin-nodejs](https://github.com/crazy-max/neard-bin-nodejs)
+* Neard PHP repository : [neard-bin-php](https://github.com/crazy-max/neard-bin-php)
 
-#### Apache
+### Get notified on new updates / releases
 
-* [Apache 2.2.22](https://sourceforge.net/projects/neard/files/Addons/apache/2.2.22/neard-apache-2.2.22-20150609.zip/download) (default)
-* [Apache 2.2.27](https://sourceforge.net/projects/neard/files/Addons/apache/2.2.27/neard-apache-2.2.27-20150609.zip/download)
-* [Apache 2.2.29](https://sourceforge.net/projects/neard/files/Addons/apache/2.2.29/neard-apache-2.2.29-20150609.zip/download)
-* [Apache 2.4.4](https://sourceforge.net/projects/neard/files/Addons/apache/2.4.4/neard-apache-2.4.4-20150609.zip/download)
-* [Apache 2.4.9](https://sourceforge.net/projects/neard/files/Addons/apache/2.4.9/neard-apache-2.4.9-20150609.zip/download)
-* [Apache 2.4.12](https://sourceforge.net/projects/neard/files/Addons/apache/2.4.12/neard-apache-2.4.12-20150609.zip/download)
+To get notified about new updates, juste click on [Watch](https://github.com/crazy-max/neard/subscription) button on Neard repository.<br />
+You can watch Neard sub repositories to follow binaries updates.<br /><br />
 
-#### Filezilla Server
-
-* [Filezilla Server 0.9.42](https://sourceforge.net/projects/neard/files/Addons/filezilla/0.9.42/neard-filezilla-0.9.42-20150609.zip/download) (suitable for Windows XP)
-* [Filezilla Server 0.9.46](https://sourceforge.net/projects/neard/files/Addons/filezilla/0.9.46/neard-filezilla-0.9.46-20150609.zip/download)
-* [Filezilla Server 0.9.47](https://sourceforge.net/projects/neard/files/Addons/filezilla/0.9.47/neard-filezilla-0.9.47-20150609.zip/download) (default)
-* [Filezilla Server 0.9.52.1](https://sourceforge.net/projects/neard/files/Addons/filezilla/0.9.52.1/neard-filezilla-0.9.52.1-20150609.zip/download)
-
-#### MariaDB
-
-* [MariaDB 5.5.34](https://sourceforge.net/projects/neard/files/Addons/mariadb/5.5.34/neard-mariadb-5.5.34-20150609.zip/download) (default)
-* [MariaDB 5.5.43](https://sourceforge.net/projects/neard/files/Addons/mariadb/5.5.43/neard-mariadb-5.5.43-20150609.zip/download)
-* [MariaDB 10.0.6](https://sourceforge.net/projects/neard/files/Addons/mariadb/10.0.6/neard-mariadb-10.0.6-20150609.zip/download)
-* [MariaDB 10.0.19](https://sourceforge.net/projects/neard/files/Addons/mariadb/10.0.19/neard-mariadb-10.0.19-20150609.zip/download)
-
-#### MySQL
-
-* [MySQL 5.5.24](https://sourceforge.net/projects/neard/files/Addons/mysql/5.5.24/neard-mysql-5.5.24-20150609.zip/download) (default)
-* [MySQL 5.5.44](https://sourceforge.net/projects/neard/files/Addons/mysql/5.5.44/neard-mysql-5.5.44-20150609.zip/download)
-* [MySQL 5.6.12](https://sourceforge.net/projects/neard/files/Addons/mysql/5.6.12/neard-mysql-5.6.12-20150609.zip/download)
-* [MySQL 5.6.25](https://sourceforge.net/projects/neard/files/Addons/mysql/5.6.25/neard-mysql-5.6.25-20150609.zip/download)
-
-#### Node.js
-
-* [Node.js 0.10.22](https://sourceforge.net/projects/neard/files/Addons/nodejs/0.10.22/neard-nodejs-0.10.22-20150609.zip/download) (default)
-* [Node.js 0.10.38](https://sourceforge.net/projects/neard/files/Addons/nodejs/0.10.38/neard-nodejs-0.10.38-20150609.zip/download)
-* [Node.js 0.11.9](https://sourceforge.net/projects/neard/files/Addons/nodejs/0.11.9/neard-nodejs-0.11.9-20150609.zip/download)
-* [Node.js 0.11.16](https://sourceforge.net/projects/neard/files/Addons/nodejs/0.11.16/neard-nodejs-0.11.16-20150609.zip/download)
-* [Node.js 0.12.4](https://sourceforge.net/projects/neard/files/Addons/nodejs/0.12.4/neard-nodejs-0.12.4-20150609.zip/download)
-
-#### PHP
-
-* [PHP 5.2.17](https://sourceforge.net/projects/neard/files/Addons/php/5.2.17/neard-php-5.2.17-20151013.zip/download)
-* [PHP 5.3.13](https://sourceforge.net/projects/neard/files/Addons/php/5.3.13/neard-php-5.3.13-20150609.zip/download) (default)
-* [PHP 5.3.28](https://sourceforge.net/projects/neard/files/Addons/php/5.3.28/neard-php-5.3.28-20150609.zip/download)
-* [PHP 5.3.29](https://sourceforge.net/projects/neard/files/Addons/php/5.3.29/neard-php-5.3.29-20150609.zip/download)
-* [PHP 5.4.16](https://sourceforge.net/projects/neard/files/Addons/php/5.4.16/neard-php-5.4.16-20150609.zip/download)
-* [PHP 5.4.30](https://sourceforge.net/projects/neard/files/Addons/php/5.4.30/neard-php-5.4.30-20150609.zip/download)
-* [PHP 5.4.31](https://sourceforge.net/projects/neard/files/Addons/php/5.4.31/neard-php-5.4.31-20150609.zip/download)
-* [PHP 5.4.40](https://sourceforge.net/projects/neard/files/Addons/php/5.4.40/neard-php-5.4.40-20150609.zip/download)
-* [PHP 5.5.10](https://sourceforge.net/projects/neard/files/Addons/php/5.5.10/neard-php-5.5.10-20150609.zip/download)
-* [PHP 5.5.14](https://sourceforge.net/projects/neard/files/Addons/php/5.5.14/neard-php-5.5.14-20150609.zip/download)
-* [PHP 5.5.16](https://sourceforge.net/projects/neard/files/Addons/php/5.5.16/neard-php-5.5.16-20150609.zip/download)
-* [PHP 5.5.24](https://sourceforge.net/projects/neard/files/Addons/php/5.5.24/neard-php-5.5.24-20150609.zip/download)
-* [PHP 5.6.0](https://sourceforge.net/projects/neard/files/Addons/php/5.6.0/neard-php-5.6.0-20150609.zip/download)
-* [PHP 5.6.8](https://sourceforge.net/projects/neard/files/Addons/php/5.6.8/neard-php-5.6.8-20150609.zip/download)
-* [PHP 5.6.14](https://sourceforge.net/projects/neard/files/Addons/php/5.6.14/neard-php-5.6.14-20151013.zip/download)
-
-### RSS feed
-
-Stay up-to-date with the latest release of Neard by subscribe to [this feed](https://sourceforge.net/api/file/index/project-id/2115941/path/Releases/mtime/desc/rss). 
+I you just want to follow releases, you can subscribe to [Sibbell notifications platform](https://sibbell.com). 
 
 ## Configuration
 

@@ -1,5 +1,6 @@
 # Diff
 
+* [1.0.15 ... 1.0.16](https://github.com/crazy-max/neard/compare/v1.0.15...v1.0.16?diff=split)
 * [1.0.14 ... 1.0.15](https://github.com/crazy-max/neard/compare/v1.0.14...v1.0.15?diff=split)
 * [1.0.13 ... 1.0.14](https://github.com/crazy-max/neard/compare/v1.0.13...v1.0.14?diff=split)
 * [1.0.12 ... 1.0.13](https://github.com/crazy-max/neard/compare/v1.0.12...v1.0.13?diff=split)

@@ -1,5 +1,21 @@
 # Changelog
 
+## 1.0.16 (2015/12/13)
+
+You have to download and install the latests [Neard Visual C++ Redistributables Package](https://github.com/crazy-max/neard-misc#visual-c-redistributables-package).
+
+* Add PHP 7 support ([Issue #103](https://github.com/crazy-max/neard/issues/103))
+* Manage tsdll since PHP 7
+* Manage E_DEPRECATED for PHP 7
+* Refresh aliases and vhosts on startup
+* Upgrade PHP Markdown
+* Replace placeholder with .gitignore files
+* Node.js 0.12.9
+* Create sub repositories on Github for binaries
+* Move binaries from Sourceforge to Github (see README.md)
+* Replace SublimeText with Notepad2
+* Remove RunFromProcess tool
+
 ## 1.0.15 (2015/10/13)
 
 * Error while switching php parameters ([Issue #97](https://github.com/crazy-max/neard/issues/97))

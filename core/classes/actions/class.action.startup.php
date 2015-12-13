@@ -74,6 +74,8 @@ class ActionStartup
         $this->refreshHostname();
         $this->checkLaunchStartup();
         $this->checkBrowser();
+        $this->refreshAliases();
+        $this->refreshVhosts();
         
         // Check Neard path
         $this->checkPath();
@@ -99,7 +101,7 @@ class ActionStartup
         }
         
         if ($this->restart) {
-            $this->writeLog('Restart App');
+            $this->writeLog('Neard have to be restarted');
             $this->splash->setTextLoading(sprintf(
                 $neardLang->getValue(Lang::STARTUP_PREPARE_RESTART_TEXT),
                 APP_TITLE . ' ' . $neardCore->getAppVersion())

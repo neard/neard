@@ -604,12 +604,12 @@ class Util
     
     public static function utf8ToCp1252($data)
     {
-        return iconv("UTF-8", "WINDOWS-1252", $data);
+        return iconv("UTF-8", "WINDOWS-1252//IGNORE", $data);
     }
     
     public static function cp1252ToUtf8($data)
     {
-        return iconv("WINDOWS-1252", "UTF-8", $data);
+        return iconv("WINDOWS-1252", "UTF-8//IGNORE", $data);
     }
     
     public static function startLoading()
@@ -638,7 +638,7 @@ class Util
             $neardBs->getVhostsPath()                       => array(''),
             $neardBs->getSslPath()                          => array('.cnf'),
             $neardBins->getApache()->getRootPath()          => array('.ini', '.conf'),
-            $neardBins->getPhp()->getRootPath()             => array('.php', '.bat', '.ini', '.reg'),
+            $neardBins->getPhp()->getRootPath()             => array('.php', '.bat', '.ini', '.reg', '.inc'),
             $neardBins->getMysql()->getRootPath()           => array('my.ini'),
             $neardBins->getMariadb()->getRootPath()         => array('my.ini'),
             $neardBins->getNodejs()->getRootPath()          => array('.bat', 'npmrc'),
@@ -679,16 +679,21 @@ class Util
     
     public static function getVersionUrl($version)
     {
-        return 'http://sourceforge.net/projects/neard/files/Releases/' . $version . '/neard-' . $version . '.zip/download';
-    }
-    
-    public static function getPatchUrl($oldVersion, $latestVersion)
-    {
-        return 'http://sourceforge.net/projects/neard/files/Patches/' . $oldVersion . '-' . $latestVersion . '/neard-' . $oldVersion . '-' . $latestVersion . '.zip/download';
+        return 'https://github.com/crazy-max/neard/releases/download/v' . $version . '/neard-' . $version . '.zip';
     }
     
     public static function getLatestChangelog($markdown = false)
     {
+        global $neardCore, $neardBins;
+        
+        if (version_compare($neardBins->getPhp()->getVersion(), '5.2.17', '>')) {
+            require_once $neardCore->getLibsPath() . '/markdown/1.5.0/MarkdownInterface.php';
+            require_once $neardCore->getLibsPath() . '/markdown/1.5.0/Markdown.php';
+            require_once $neardCore->getLibsPath() . '/markdown/1.5.0/MarkdownExtra.php';
+        } else {
+            require_once $neardCore->getLibsPath() . '/markdown/1.0.2/markdown.php';
+        }
+        
         $content = self::getRemoteFile('https://raw.githubusercontent.com/crazy-max/neard/master/CHANGELOG.md');
         if (empty($content)) {
             self::logError('Cannot retrieve latest CHANGELOG');
@@ -699,16 +704,12 @@ class Util
     
     public static function getRemoteFilesize($url, $humanFileSize = true)
     {
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_HEADER, true);
-        curl_setopt($ch, CURLOPT_NOBODY, true);
-        curl_exec($ch);
+        $size = 0;
         
-        $size = curl_getinfo($ch, CURLINFO_CONTENT_LENGTH_DOWNLOAD);
-        curl_close($ch);
+        $data = get_headers($url, true);
+        if (isset($data['Content-Length'])) {
+            $size = intval($data['Content-Length']);
+        }
         
         return $humanFileSize ? self::humanFileSize($size) : $size;
     }

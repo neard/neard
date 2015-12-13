@@ -1,9 +1,0 @@
-*
-!.gitignore
-
-# Neard
-!neard.conf
-!FileZilla Server.xml
-!Logs
-Logs/*
-!Logs/placeholder

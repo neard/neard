@@ -6,9 +6,8 @@ class Tools
     private $console;
     private $git;
     private $imagemagick;
-    private $runfromprocess;
+    private $notepad2;
     private $setenv;
-    private $sublimetext;
     private $svn;
     private $tccle;
     private $xdc;
@@ -56,12 +55,12 @@ class Tools
         return $this->imagemagick;
     }
     
-    public function getRunFromProcess()
+    public function getNotepad2()
     {
-        if ($this->runfromprocess == null) {
-            $this->runfromprocess = new ToolRunFromProcess($this->getRootPath('runfromprocess'));
+        if ($this->notepad2 == null) {
+            $this->notepad2 = new ToolNotepad2($this->getRootPath('notepad2'));
         }
-        return $this->runfromprocess;
+        return $this->notepad2;
     }
     
     public function getSetenv()
@@ -72,14 +71,6 @@ class Tools
         return $this->setenv;
     }
     
-    public function getSublimetext()
-    {
-        if ($this->sublimetext == null) {
-            $this->sublimetext = new ToolSublimetext($this->getRootPath('sublimetext'));
-        }
-        return $this->sublimetext;
-    }
-
     public function getSvn()
     {
         if ($this->svn == null) {

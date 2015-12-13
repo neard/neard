@@ -231,7 +231,7 @@ class Bootstrap
     public static function loadLang()
     {
         global $neardLang;
-        $neardLang = new Lang();
+        $neardLang = new LangProc();
     }
     
     public static function loadBins()
@@ -295,6 +295,7 @@ class Bootstrap
             E_USER_NOTICE       => 'E_USER_NOTICE',
             E_STRICT            => 'E_STRICT',
             E_RECOVERABLE_ERROR => 'E_RECOVERABLE_ERROR',
+            E_DEPRECATED        => 'E_DEPRECATED',
         );
     
         $content = '[' . date('Y-m-d H:i:s', time()) . '] ';

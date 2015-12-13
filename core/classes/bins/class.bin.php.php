@@ -121,9 +121,11 @@ class BinPhp
         
         if (!is_dir($this->currentPath)) {
             Util::logError(sprintf($neardLang->getValue(Lang::ERROR_FILE_NOT_FOUND), $this->name . ' ' . $this->version, $this->currentPath));
+            return;
         }
         if (!is_file($this->neardConf)) {
             Util::logError(sprintf($neardLang->getValue(Lang::ERROR_CONF_NOT_FOUND), $this->name . ' ' . $this->version, $this->neardConf));
+            return;
         }
         
         $this->neardConfRaw = parse_ini_file($this->neardConf);
@@ -180,6 +182,9 @@ class BinPhp
         $phpPath = str_replace('php' . $this->getVersion(), 'php' . $version, $this->getCurrentPath());
         $phpConf = str_replace('php' . $this->getVersion(), 'php' . $version, $this->getConf());
         $neardConf = str_replace('php' . $this->getVersion(), 'php' . $version, $this->neardConf);
+        
+        $tsDll = $this->getTsDll($version);
+        $apachePhpModuleName = $tsDll !== false ? substr($tsDll, 0, 4) . '_module' : null;
         $apachePhpModule = $this->getApacheModule($neardBins->getApache()->getVersion(), $version);
         
         if (!file_exists($phpConf) || !file_exists($neardConf)) {
@@ -205,7 +210,7 @@ class BinPhp
             return false;
         }
         
-        if ($apachePhpModule === false) {
+        if ($tsDll === false || $apachePhpModule === false) {
             Util::logDebug($this->getName() . ' ' . $version . ' does not seem to be compatible with Apache ' . $neardBins->getApache()->getVersion());
             if ($showWindow) {
                 $neardWinbinder->messageBoxError(
@@ -222,11 +227,11 @@ class BinPhp
         // neard.conf
         $this->setVersion($version);
         
-        // apache
+        // httpd.conf
         Util::replaceInFile($neardBins->getApache()->getConf(), array(
             '/^PHPIniDir\s.*/' => 'PHPIniDir "' . $phpPath . '"',
-            '/^(#?)LoadFile\s.*php5ts.dll.*/' => (!file_exists($phpPath . '/php5ts.dll') ? '#' : '') . 'LoadFile "' . $phpPath . '/php5ts.dll"',
-            '/^LoadModule\sphp5_module\s.*/' => 'LoadModule php5_module "' . $apachePhpModule . '"',
+            '/^#?LoadFile\s.*php.ts\.dll.*/' => (!file_exists($phpPath . '/' . $tsDll) ? '#' : '') . 'LoadFile "' . $phpPath . '/' . $tsDll . '"',
+            '/^LoadModule\sphp._module\s.*/' => 'LoadModule ' . $apachePhpModuleName . ' "' . $apachePhpModule . '"',
         ));
     }
     
@@ -527,6 +532,20 @@ class BinPhp
                     }
                 }
             }
+        }
+        
+        return false;
+    }
+    
+    public function getTsDll($phpVersion = null)
+    {
+        $phpVersion = $phpVersion == null ? $this->getVersion() : $phpVersion;
+        $currentPath = str_replace('php' . $this->getVersion(), 'php' . $phpVersion, $this->getCurrentPath());
+        
+        if (file_exists($currentPath . '/php5ts.dll')) {
+            return 'php5ts.dll';
+        } elseif (file_exists($currentPath . '/php7ts.dll')) {
+            return 'php7ts.dll';
         }
         
         return false;

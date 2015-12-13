@@ -150,7 +150,7 @@ class TplApp
         $tplLogsVerbose = TplAppLogsVerbose::process();
         $tplLaunchStartup = TplAppLaunchStartup::process();
         $tplExit = TplAppExit::process();
-        $tplRestart = TplAppRestart::process();
+        //$tplRestart = TplAppRestart::process();
         
         return
             // Items
@@ -175,7 +175,7 @@ class TplApp
             $tplLaunchStartup[self::SECTION_CALL] . PHP_EOL .
             
             TplAestan::getItemSeparator() . PHP_EOL .
-            $tplRestart[self::SECTION_CALL] . PHP_EOL .
+            //$tplRestart[self::SECTION_CALL] . PHP_EOL .
             $tplExit[self::SECTION_CALL] . PHP_EOL .
         
             // Actions
@@ -184,7 +184,7 @@ class TplApp
             PHP_EOL . $tplLang[self::SECTION_CONTENT] .
             PHP_EOL . $tplLogsVerbose[self::SECTION_CONTENT] .
             PHP_EOL . $tplLaunchStartup[self::SECTION_CONTENT] .
-            PHP_EOL . $tplRestart[self::SECTION_CONTENT] .
+            //PHP_EOL . $tplRestart[self::SECTION_CONTENT] .
             PHP_EOL . $tplExit[self::SECTION_CONTENT] . PHP_EOL;
     }
     
