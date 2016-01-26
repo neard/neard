@@ -15,7 +15,6 @@
 - [Configuration](#configuration)
 - [Usage](#usage)
 - [Changelog](#changelog)
-- [Get involved](#get-involved)
 - [Found a bug?](#found-a-bug)
 - [Donate](#donate)
 - [Contribute](#contribute)
@@ -121,10 +120,6 @@ Launch ``neard.exe``.
 
 See ``CHANGELOG.md`` and ``DIFF.md``.
 
-## Get involved
-
-Neard is open for everyone to contribute. Please give us some feedback and join the development!
-
 ## Found a bug?
 
 Please search for existing issues first and make sure to include all relevant information.
@@ -148,7 +143,7 @@ Thank you to everyone who has donated, it is much appreciated.
 
 ## Contribute
 
-You want to help me and participate in the development or the documentation? Just fork Neard and send me a pull request.
+Neard is open for everyone to contribute. Please give us some feedback and join the development!
 
 ### Translations
 
