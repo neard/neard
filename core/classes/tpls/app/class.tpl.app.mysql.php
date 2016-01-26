@@ -82,7 +82,6 @@ class TplAppMysql
             TplApp::getActionRun(Action::SWITCH_VERSION, array($neardBins->getMysql()->getName(), $version)) . PHP_EOL .
             TplService::getActionCreate(BinMysql::SERVICE_NAME) . PHP_EOL .
             TplService::getActionStart(BinMysql::SERVICE_NAME) . PHP_EOL .
-            TplAppReload::getActionReload() . PHP_EOL .
             TplApp::getActionExec() . PHP_EOL;
     }
     

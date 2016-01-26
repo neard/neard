@@ -62,7 +62,6 @@ class TplAppNodejs
         global $neardBs, $neardCore, $neardBins;
     
         return TplApp::getActionRun(Action::SWITCH_VERSION, array($neardBins->getNodejs()->getName(), $version)) . PHP_EOL .
-            TplAppReload::getActionReload() . PHP_EOL .
             TplApp::getActionExec() . PHP_EOL;
     }
     

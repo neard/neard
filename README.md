@@ -1,5 +1,41 @@
 # Neard
 
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+- [About](#about)
+  - [Major binaries](#major-binaries)
+  - [Applications](#applications)
+  - [Tools](#tools)
+- [Requirements](#requirements)
+  - [Windows XP](#windows-xp)
+- [Download](#download)
+  - [Binaries](#binaries)
+  - [Get notified on new updates / releases](#get-notified-on-new-updates--releases)
+- [Configuration](#configuration)
+- [Usage](#usage)
+- [Changelog](#changelog)
+- [Get involved](#get-involved)
+- [Found a bug?](#found-a-bug)
+- [Donate](#donate)
+- [Contribute](#contribute)
+  - [Translations](#translations)
+- [License](#license)
+- [Screenshots](#screenshots)
+  - [Startup screen](#startup-screen)
+  - [Menu Left and Right](#menu-left-and-right)
+  - [Homepage](#homepage)
+  - [Console](#console)
+  - [Change browser window](#change-browser-window)
+  - [Apache add alias window](#apache-add-alias-window)
+  - [Apache change port window](#apache-change-port-window)
+  - [Apache check port window](#apache-check-port-window)
+  - [About window](#about-window)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+## About
+
 Neard is an Integrated Web Development Tools environment combining :
 
 ### Major binaries
@@ -44,10 +80,11 @@ And many other features.
 
 ## Download
 
-* [Neard 1.0.16](https://github.com/crazy-max/neard/releases/download/v1.0.16/neard-1.0.16.zip) (2015/12/13)
-* [Archives](https://github.com/crazy-max/neard/releases)
+[![Neard 1.0.17](https://img.shields.io/badge/download-neard%201.0.17%20-brightgreen.svg)](https://github.com/crazy-max/neard/releases/download/v1.0.17/neard-1.0.17.zip)
 
 ### Binaries
+
+Neard offers several versions of the various binaries for download on other github repositories :
 
 * Neard Apache repository : [neard-bin-apache](https://github.com/crazy-max/neard-bin-apache)
 * Neard Filezilla Server repository : [neard-bin-filezilla](https://github.com/crazy-max/neard-bin-filezilla)
@@ -135,17 +172,17 @@ LGPL. See ``LICENSE`` for more details.
 ### Console
 ![](https://raw.github.com/crazy-max/neard/master/core/resources/screenshots/neard-console.png)
 
-### Change browser
+### Change browser window
 ![](https://raw.github.com/crazy-max/neard/master/core/resources/screenshots/neard-change-browser.png)
 
-### Apache add alias
+### Apache add alias window
 ![](https://raw.github.com/crazy-max/neard/master/core/resources/screenshots/neard-apache-add-alias.png)
 
-### Apache change port
+### Apache change port window
 ![](https://raw.github.com/crazy-max/neard/master/core/resources/screenshots/neard-apache-change-port.png)
 
-### Apache check port
+### Apache check port window
 ![](https://raw.github.com/crazy-max/neard/master/core/resources/screenshots/neard-apache-check-port.png)
 
-### About
+### About window
 ![](https://raw.github.com/crazy-max/neard/master/core/resources/screenshots/neard-about.png)

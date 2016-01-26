@@ -107,7 +107,6 @@ imagemagick = "ImageMagick"
 notepad2 = "Notepad2"
 setenv = "SetEnv"
 svn = "SVN"
-tccle = "TCC/LE"
 xdc = "XDebugClient"
 
 ; Errors

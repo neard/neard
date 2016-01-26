@@ -55,15 +55,21 @@ $cfg['Servers'][$i]['compress'] = false;
 $cfg['Servers'][$i]['extension'] = 'mysqli';
 $cfg['Servers'][$i]['AllowNoPassword'] = true;
 
-/**
+/*
  * End of servers configuration
  */
 
-/**
+/*
  * Directories for saving/loading files from server
  */
 $cfg['UploadDir'] = '';
 $cfg['SaveDir'] = '';
+
+/**
+ * Whether to display icons or text or both icons and text in table row
+ * action segment. Value can be either of 'icons', 'text' or 'both'.
+ */
+//$cfg['RowActionType'] = 'both';
 
 /**
  * Defines whether a user should be displayed a "show all (records)"
@@ -100,12 +106,6 @@ $cfg['SaveDir'] = '';
 //$cfg['DefaultLang'] = 'de';
 
 /**
- * default display direction (horizontal|vertical|horizontalflipped)
- */
-//$cfg['DefaultDisplay'] = 'vertical';
-
-
-/**
  * How many columns should be used for table display of a database?
  * (a value larger than 1 results in some information being hidden)
  * default = 1
@@ -127,6 +127,13 @@ $cfg['SaveDir'] = '';
  * default = 25
  */
 //$cfg['QueryHistoryMax'] = 100;
+
+/**
+ * Should error reporting be enabled for JavaScript errors
+ *
+ * default = 'ask'
+ */
+//$cfg['SendErrorReports'] = 'ask';
 
 /*
  * You can find more configuration options in the documentation

@@ -1,6 +1,0 @@
-*
-!.gitignore
-
-# Neard
-!neard.conf
-!tcc.ini

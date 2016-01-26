@@ -1,0 +1,6 @@
+@ECHO OFF
+
+SET PROMPT=[$e[1;31m$u@%COMPUTERNAME%$s$e[1;32m$p$e[0m]$s
+history /r "%~dp0logs\history.log"
+log /h /w "%~dp0logs\history.log"
+CLS

@@ -1,0 +1,33 @@
+@echo off
+rem  TCCHere.btm
+rem  This batch file adds the "TCC/LE prompt here" entry to Windows Explorer
+
+iff %_dosver ge 6.0 then
+    echo If you are running Windows 7, 2008, or Vista, you must first start a TCC 
+    echo session as an administrator (right click on the TCC icon and select "Run 
+    echo as administrator") and then run TCCHere.btm in that session.
+endiff
+
+echo.
+echo Do you want to add a "TCC/LE prompt here" entry to the Windows Explorer
+echos context (right click) menus for directories and drives [Y/N] ?
+inkey /k"yn[enter]" %%var
+
+if "%var" ne "y" quit
+
+echo %@regcreate["HKCR\Directory\Shell\TCCLE\command"] > nul
+echo %@regcreate["HKCR\Drive\Shell\TCCLE\command"] > nul
+
+iff %@regset["HKCR\Directory\Shell\TCCLE\",REG_SZ,TCC/LE prompt here] != 0 then
+    echo Cannot update registry key!
+    quit
+endiff
+
+echo %@regset["HKCR\Drive\Shell\TCCLE\",REG_SZ,TCC/LE prompt here] > nul
+
+echo %@regset["HKCR\Directory\Shell\TCCLE\command\",REG_SZ,"%_cmdspec" /k *cdd "%%L"] > nul
+echo %@regset["HKCR\Drive\Shell\TCCLE\command\",REG_SZ,"%_cmdspec" /k *cdd "%%L"] > nul
+
+echo.
+echo The Windows Explorer context menus have been updated.
+unset var

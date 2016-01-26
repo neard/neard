@@ -109,10 +109,6 @@
             <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardTools->getSvn()->getVersion(); ?></span>
             <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::SVN); ?>
           </a>
-          <a class="list-group-item" href="#tccle">
-            <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardTools->getTccle()->getVersion(); ?></span>
-            <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::TCCLE); ?>
-          </a>
           <a class="list-group-item" href="#xdc">
             <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardTools->getXdc()->getVersion(); ?></span>
             <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::XDC); ?>
@@ -133,7 +129,7 @@
             <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::GITLIST); ?>
           </a>
           <a class="list-group-item" href="#phpmyadmin">
-            <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardApps->getPhpmyadmin()->getVersion(); ?></span>
+            <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardApps->getPhpmyadmin()->getVersionsStr(); ?></span>
             <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::PHPMYADMIN); ?>
           </a>
           <a class="list-group-item" href="#webgrind">

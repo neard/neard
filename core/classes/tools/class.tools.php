@@ -9,7 +9,6 @@ class Tools
     private $notepad2;
     private $setenv;
     private $svn;
-    private $tccle;
     private $xdc;
     
     public function __construct()
@@ -77,14 +76,6 @@ class Tools
             $this->svn = new ToolSvn($this->getRootPath('svn'));
         }
         return $this->svn;
-    }
-    
-    public function getTccle()
-    {
-        if ($this->tccle == null) {
-            $this->tccle = new ToolTccle($this->getRootPath('tccle'));
-        }
-        return $this->tccle;
     }
     
     public function getXdc()

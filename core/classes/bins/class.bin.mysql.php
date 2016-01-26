@@ -148,9 +148,11 @@ class BinMysql
             $neardWinbinder->incrProgressBar($wbProgressBar);
             
             // config.inc.php (phpmyadmin)
-            Util::replaceInFile($neardApps->getPhpmyadmin()->getConf(), array(
-                '/^\$mysqlPort\s=\s(\d+)/' => '$mysqlPort = ' . $port . ';'
-            ));
+            foreach ($neardApps->getPhpmyadmin()->getConfs() as $pmaConf) {
+                Util::replaceInFile($pmaConf, array(
+                    '/^\$mysqlPort\s=\s(\d+)/' => '$mysqlPort = ' . $port . ';'
+                ));
+            }
             $neardWinbinder->incrProgressBar($wbProgressBar);
             
             // config.php (adminer)

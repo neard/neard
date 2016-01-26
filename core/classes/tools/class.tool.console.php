@@ -6,6 +6,7 @@ class ToolConsole
     
     const LOCAL_CFG_EXE = 'consoleExe';
     const LOCAL_CFG_CONF = 'consoleConf';
+    const LOCAL_CFG_TCCLE_EXE = 'consoleTccleExe';
     const LOCAL_CFG_SHELL = 'consoleShell';
     const LOCAL_CFG_ROWS = 'consoleRows';
     const LOCAL_CFG_COLS = 'consoleCols';
@@ -22,6 +23,7 @@ class ToolConsole
     private $neardConfRaw;
     
     private $exe;
+    private $tccleExe;
     private $conf;
     private $shell;
     private $shellList;
@@ -50,6 +52,7 @@ class ToolConsole
         $this->neardConfRaw = parse_ini_file($this->neardConf);
         if ($this->neardConfRaw !== false) {
             $this->exe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_EXE];
+            $this->tccleExe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_TCCLE_EXE];
             $this->conf = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_CONF];
             $this->shell = $this->neardConfRaw[self::LOCAL_CFG_SHELL];
             $this->rows = intval($this->neardConfRaw[self::LOCAL_CFG_ROWS]);
@@ -59,19 +62,22 @@ class ToolConsole
             $powerShellPath = $this->getPowerShell();
             
             // Shell list
-            $this->shellList[self::SHELL_CMD] = $this->getCmdShell();
+            $this->shellList[self::SHELL_CMD] = $this->tccleExe;
             $this->shellList[self::SHELL_POWERSHELL] = $powerShellPath;
             
             // Shell
             if ($this->shell == self::SHELL_POWERSHELL && $powerShellPath !== false) {
                 $this->shell = $powerShellPath;
             } else {
-                $this->shell = $this->getCmdShell();
+                $this->shell = $this->tccleExe;
             }
         }
         
         if (!is_file($this->exe)) {
             Util::logError(sprintf($neardLang->getValue(Lang::ERROR_EXE_NOT_FOUND), $this->name . ' ' . $this->version, $this->exe));
+        }
+        if (!is_file($this->tccleExe)) {
+            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_EXE_NOT_FOUND), $this->name . ' ' . $this->version, $this->tccleExe));
         }
         if (!is_file($this->conf)) {
             Util::logError(sprintf($neardLang->getValue(Lang::ERROR_CONF_NOT_FOUND), $this->name . ' ' . $this->version, $this->conf));
@@ -142,6 +148,11 @@ class ToolConsole
         return $this->exe;
     }
     
+    public function getTccleExe()
+    {
+        return $this->tccleExe;
+    }
+    
     public function getConf()
     {
         return $this->conf;
@@ -169,9 +180,7 @@ class ToolConsole
     
     public function getCmdShell()
     {
-        global $neardConfig, $neardTools;
-        // Customize prompt: http://jpsoft.com/help/prompt.htm
-        return '&quot;' . $neardTools->getTccle()->getExe() . '&quot; @&quot;' . $neardTools->getTccle()->getConf() . '&quot; cls &amp; prompt [$e[1;31m$u@' . $neardConfig->getHostname() . '$s$e[1;32m$p$e[0m]$s &amp;';
+        return '&quot;' . $this->getTccleExe() . '&quot;';
     }
     
     public function getPowerShell()

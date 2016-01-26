@@ -3,5 +3,15 @@
 
 # Neard
 !neard.conf
-!icons
+!icons/
+!icons/*
+!tccle/
+tccle/*
+!tccle/logs/
+!tccle/logs/*
+!tccle/logs/.gitignore
+!tccle/*.btm
+!tccle/tcmd.ini
+!tccle/tcmd.ini.nrd
 !console.xml
+!tccle.bat
