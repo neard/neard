@@ -148,9 +148,11 @@ class BinMariadb
             $neardWinbinder->incrProgressBar($wbProgressBar);
     
             // config.inc.php (phpmyadmin)
-            Util::replaceInFile($neardApps->getPhpmyadmin()->getConf(), array(
-                '/^\$mariadbPort\s=\s(\d+)/' => '$mariadbPort = ' . $port . ';'
-            ));
+            foreach ($neardApps->getPhpmyadmin()->getConfs() as $pmaConf) {
+                Util::replaceInFile($pmaConf, array(
+                    '/^\$mariadbPort\s=\s(\d+)/' => '$mariadbPort = ' . $port . ';'
+                ));
+            }
             $neardWinbinder->incrProgressBar($wbProgressBar);
             
             // config.php (adminer)

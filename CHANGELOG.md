@@ -1,5 +1,25 @@
 # Changelog
 
+## 1.0.17 (2016/01/26)
+
+* Retrieve latest version from CHANGELOG.md
+* Restart Neard when Node.js has been switched (environment variables)
+* Missplaced ActionReload
+* Upgrade phpMyAdmin to 4.0.10.12 / 4.4.15.2 / 4.5.3.1 ([Issue #107](https://github.com/crazy-max/neard/issues/107))
+* Add manifest inside neard.exe
+
+### Upgrade from previous release
+
+* Remove ``tccleVersion`` key in ``neard.conf``
+* Change ``phpmyadminVersion`` value to ``4`` in ``neard.conf``
+* Remove file ``neard.exe.manifest``
+* Remove file ``neard.exe.rc``
+* Remove / replace file ``alias/phpmyadmin.conf``
+* Remove / replace folder ``apps/phpmyadmin``
+* Remove / replace folder ``core``
+* Remove / replace folder ``tools/console``
+* Remove folder ``tools/tccle``
+
 ## 1.0.16 (2015/12/13)
 
 You have to download and install the latests [Neard Visual C++ Redistributables Package](https://github.com/crazy-max/neard-misc#visual-c-redistributables-package).

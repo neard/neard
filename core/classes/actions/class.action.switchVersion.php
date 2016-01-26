@@ -49,7 +49,7 @@ class ActionSwitchVersion
             } elseif ($args[0] == $neardBins->getNodejs()->getName()) {
                 $this->currentVersion = CURRENT_NODEJS_VERSION;
                 $this->bin = $neardBins->getNodejs();
-                $this->restart = false;
+                $this->restart = true;
                 $this->service = null;
                 $this->changePort = false;
             } elseif ($args[0] == $neardBins->getFilezilla()->getName()) {

@@ -645,8 +645,7 @@ class Util
             $neardBins->getFilezilla()->getRootPath()       => array('.xml'),
             $neardApps->getWebsvn()->getRootPath()          => array('config.php'),
             $neardApps->getGitlist()->getRootPath()         => array('config.ini'),
-            $neardTools->getConsole()->getRootPath()        => array('console.xml'),
-            $neardTools->getTccle()->getRootPath()          => array('.ini'),
+            $neardTools->getConsole()->getRootPath()        => array('console.xml', '.ini', '.btm'),
             $neardCore->getResourcesPath() . '/homepage'    => array('.conf'),
         );
     }
@@ -666,15 +665,22 @@ class Util
     
     public static function getLatestVersion()
     {
-        global $neardBs;
-        
-        $latestVersion = self::getRemoteFile('https://raw.githubusercontent.com/crazy-max/neard/master/core/resources/version.dat');
-        if (empty($latestVersion)) {
-            self::logError('Cannot retrieve latest version');
-            return null;
+        $changelog = self::getLatestChangelog();
+        if ($changelog != null) {
+            foreach(preg_split("/((\r?\n)|(\r\n?))/", $changelog) as $line){
+                if (!self::startWith(trim($line), '##')) {
+                    continue;
+                }
+                $lineExp = explode(' ', trim($line));
+                if (count($lineExp) != 3) {
+                    continue;
+                }
+                return trim($lineExp[1]);
+            }
         }
-        
-        return $latestVersion;
+    
+        self::logError('Cannot retrieve latest version');
+        return null;
     }
     
     public static function getVersionUrl($version)

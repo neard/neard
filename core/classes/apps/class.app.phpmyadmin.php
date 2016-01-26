@@ -4,6 +4,10 @@ class AppPhpmyadmin
 {
     const ROOT_CFG_VERSION = 'phpmyadminVersion';
     
+    const LOCAL_CFG_40 = 'phpmyadmin40';
+    const LOCAL_CFG_44 = 'phpmyadmin44';
+    const LOCAL_CFG_45 = 'phpmyadmin45';
+    
     const LOCAL_CFG_CONF = 'phpmyadminConf';
     
     private $name;
@@ -14,7 +18,8 @@ class AppPhpmyadmin
     private $neardConf;
     private $neardConfRaw;
     
-    private $conf;
+    private $versions;
+    private $confs;
     
     public function __construct($rootPath)
     {
@@ -35,13 +40,31 @@ class AppPhpmyadmin
             Util::logError(sprintf($neardLang->getValue(Lang::ERROR_CONF_NOT_FOUND), $this->name . ' ' . $this->version, $this->neardConf));
         }
         
+        $versions = array();
         $this->neardConfRaw = parse_ini_file($this->neardConf);
         if ($this->neardConfRaw !== false) {
-            $this->conf = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_CONF];
+            $versions['40'] = $this->neardConfRaw[self::LOCAL_CFG_40];
+            $versions['44'] = $this->neardConfRaw[self::LOCAL_CFG_44];
+            $versions['45'] = $this->neardConfRaw[self::LOCAL_CFG_45];
         }
         
-        if (!is_file($this->conf)) {
-            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_CONF_NOT_FOUND), $this->name . ' ' . $this->version, $this->conf));
+        foreach ($versions as $key => $version4) {
+            $neardConf4 = $this->currentPath . '/' . $version4 . '/neard.conf';
+            if (!is_file($neardConf4)) {
+                Util::logError(sprintf($neardLang->getValue(Lang::ERROR_CONF_NOT_FOUND), $this->name . ' ' . $this->version . ' / ' . $version4, $neardConf4));
+            }
+            $neardConfRaw4 = parse_ini_file($neardConf4);
+            if ($neardConfRaw4 !== false) {
+                $conf4 = $this->currentPath . '/' . $version4 . '/' . $neardConfRaw4[self::LOCAL_CFG_CONF];
+                if (!is_file($conf4)) {
+                    Util::logError(sprintf($neardLang->getValue(Lang::ERROR_CONF_NOT_FOUND), $this->name . ' ' . $this->version . ' / ' . $conf4));
+                } else {
+                    $this->versions[$key] = array(
+                        'version' => $version4,
+                        'conf' => $conf4
+                    );
+                }
+            }
         }
     }
     
@@ -82,6 +105,23 @@ class AppPhpmyadmin
         return $this->version;
     }
     
+    public function getVersions()
+    {
+        return $this->versions;
+    }
+    
+    public function getVersionsStr()
+    {
+        $result = '';
+        foreach ($this->versions as $version => $data) {
+            if (!empty($result)) {
+                $result .= ' / ';
+            }
+            $result .= $data['version'];
+        }
+        return $result;
+    }
+    
     public function setVersion($version)
     {
         global $neardConfig;
@@ -97,10 +137,18 @@ class AppPhpmyadmin
     {
         return $this->currentPath;
     }
+    
+    public function getConfs()
+    {
+        $result = array();
+        foreach ($this->versions as $version => $data) {
+            $result[] = $data['conf'];
+        }
+        return $result;
+    }
 
     public function getConf()
     {
         return $this->conf;
     }
-    
 }

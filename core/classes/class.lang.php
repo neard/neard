@@ -108,7 +108,6 @@ class Lang
     const NOTEPAD2 = 'notepad2';
     const SETENV = 'setenv';
     const SVN = 'svn';
-    const TCCLE = 'tccle';
     const XDC = 'xdc';
     
     // Errors
@@ -409,7 +408,6 @@ class Lang
             self::SETENV,
             self::SUBLIMETEXT,
             self::SVN,
-            self::TCCLE,
             self::XDC,
             
             // Errors

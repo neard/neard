@@ -174,7 +174,7 @@ class BinPhp
     
     public function switchVersion($version, $showWindow = false)
     {
-        global $neardBs, $neardCore, $neardLang, $neardBins, $neardWinbinder;
+        global $neardBs, $neardCore, $neardLang, $neardBins, $neardApps, $neardWinbinder;
         Util::logDebug('Switch PHP version to ' . $version);
         
         $boxTitle = sprintf($neardLang->getValue(Lang::SWITCH_VERSION_TITLE), $this->getName(), $version);
@@ -233,6 +233,22 @@ class BinPhp
             '/^#?LoadFile\s.*php.ts\.dll.*/' => (!file_exists($phpPath . '/' . $tsDll) ? '#' : '') . 'LoadFile "' . $phpPath . '/' . $tsDll . '"',
             '/^LoadModule\sphp._module\s.*/' => 'LoadModule ' . $apachePhpModuleName . ' "' . $apachePhpModule . '"',
         ));
+        
+        // phpmyadmin
+        $pmaAlias = $neardBs->getAliasPath() . '/phpmyadmin.conf';
+        if (is_file($pmaAlias)) {
+            $pmaVersions = $neardApps->getPhpmyadmin()->getVersions();
+            $pmaVersion = $pmaVersions['40']['version'];
+            if (version_compare($version, '5.5', '>=')) {
+                $pmaVersion = $pmaVersions['45']['version'];
+            } elseif (version_compare($version, '5.3.7', '>=')) {
+                $pmaVersion = $pmaVersions['44']['version'];
+            }
+            Util::replaceInFile($pmaAlias, array(
+                '/^Alias\s\/phpmyadmin\s.*/' => 'Alias /phpmyadmin "' . $neardApps->getPhpmyadmin()->getCurrentPath() . '/' . $pmaVersion . '/"',
+                '/^<Directory\s.*/' => '<Directory "' . $neardApps->getPhpmyadmin()->getCurrentPath() . '/' . $pmaVersion . '/">',
+            ));
+        }
     }
     
     public function getSettings()
