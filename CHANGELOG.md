@@ -45,6 +45,7 @@
 
 * Change `consoleVersion` value to `p2` in `neard.conf`
 * Change `gitVersion` value to `2.8.1` in `neard.conf`
+* Add line `hostseditorVersion = "1.1.0.0"` `gitVersion` in `neard.conf`
 * Change `imagemagickVersion` value to `6.9.3-8` in `neard.conf`
 * Change `svnVersion` value to `1.7.22` in `neard.conf`
 * Change `xdcVersion` value to `1.0b5` in `neard.conf`
