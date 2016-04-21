@@ -29,7 +29,6 @@ class Action
     const SERVICE = 'service';
     const STARTUP = 'startup';
     const SWITCH_APACHE_MODULE = 'switchApacheModule';
-    const SWITCH_HOST = 'switchHost';
     const SWITCH_LANG = 'switchLang';
     const SWITCH_LOGS_VERBOSE = 'switchLogsVerbose';
     const SWITCH_PHP_EXTENSION = 'switchPhpExtension';

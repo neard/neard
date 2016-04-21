@@ -19,6 +19,24 @@ class Apps
         return $neardBs->getAppsPath() . '/' . $app;
     }
     
+    public function update()
+    {
+        Util::logInfo('Update apps config');
+        foreach ($this->getAll() as $tool) {
+            $tool->update();
+        }
+    }
+    
+    public function getAll() {
+        return array(
+            $this->getAdminer(),
+            $this->getGitlist(),
+            $this->getPhpmyadmin(),
+            $this->getWebgrind(),
+            $this->getWebsvn(),
+        );
+    }
+    
     public function getAdminer()
     {
         if ($this->adminer == null) {

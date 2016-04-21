@@ -67,6 +67,28 @@ class AppAdminer
         file_put_contents($this->neardConf, $content);
     }
     
+    public function update($showWindow = false)
+    {
+        $this->updateConfig(null, $showWindow);
+    }
+    
+    private function updateConfig($version = null, $showWindow = false)
+    {
+        global $neardBs;
+        $version = $version == null ? $this->getVersion() : $version;
+        Util::logDebug('Update ' . $this->getName() . ' ' . $version . ' config...');
+    
+        $alias = $neardBs->getAliasPath() . '/adminer.conf';
+        if (is_file($alias)) {
+            Util::replaceInFile($alias, array(
+                '/^Alias\s\/adminer\s.*/' => 'Alias /adminer "' . $this->getCurrentPath() . '/"',
+                '/^<Directory\s.*/' => '<Directory "' . $this->getCurrentPath() . '/">',
+            ));
+        } else {
+            Util::logError($this->getName() . ' alias not found : ' . $alias);
+        }
+    }
+    
     public function getName()
     {
         return $this->name;

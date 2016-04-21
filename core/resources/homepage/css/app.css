@@ -7,6 +7,10 @@ body {
   padding: 60px 25px;
 }
 
+.no-display {
+  display: none;
+}
+
 .anchor {
   padding-top: 80px;
 }

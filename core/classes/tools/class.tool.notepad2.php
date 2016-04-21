@@ -73,13 +73,27 @@ class ToolNotepad2
         file_put_contents($this->neardConf, $content);
     }
     
+    public function update($showWindow = false)
+    {
+        $this->updateConfig(null, $showWindow);
+    }
+    
+    private function updateConfig($version = null, $showWindow = false)
+    {
+        global $neardBs, $neardCore, $neardLang, $neardBins, $neardTools, $neardWinbinder;
+        $version = $version == null ? $this->getVersion() : $version;
+        Util::logDebug('Update ' . $this->getName() . ' ' . $version . ' config...');
+    
+        //TODO: Update config
+    }
+    
     public function open($caption, $content)
     {
-        global $neardCore, $neardTools, $neardWinbinder;
+        global $neardBs, $neardWinbinder;
         
         TplNotepad2::process();
     
-        $folderPath = $this->getCurrentPath() . '/tmp/' . Util::random();
+        $folderPath = $neardBs->getTmpPath() . '/notepad2-' . Util::random();
         if (!is_dir($folderPath)) {
             mkdir($folderPath, 0777, true);
         }

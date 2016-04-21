@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="neard" basedir=".">
+    
+    <dirname property="project.basedir" file="${ant.file.neard}" />
+    <property name="root.dir" location="${project.basedir}/.." />
+    <property name="build.properties" value="${project.basedir}/build.properties" />
+    <property file="${build.properties}" />
+    
+    <!-- Neard dev -->
+    <property name="neard-dev.path" location="${root.dir}/neard-dev" />
+    <fail unless="neard-dev.path" message="Project 'neard-dev' not found in ${neard-dev.path}" />
+    <echo message="Neard dev found in ${neard-dev.path}" level="debug" /> 
+    
+    <!-- Import build-commons.xml -->
+    <import file="${neard-dev.path}/build/build-commons.xml" />
+    <!-- Import build-release.xml -->
+    <import file="${neard-dev.path}/build/build-release.xml" />
+    
+    <target name="check.lang" description="Check languages files" depends="init, load.lib">
+        <phpdev action="checklang" />
+    </target>
+    
+    <target name="release" depends="init, load.lib, build, compress" description="Release Neard" />
+    
+    <target name="build" depends="init, load.lib">
+        <var name="release.target" unset="true" />
+        <property name="release.target" value="${build.tmp.path}/${release.name}-${release.version}" />
+        <property name="release.dest" value="${build.release.path}/${release.name}-${release.version}" />
+        
+        <echo message="*** Release" />
+        <echo message="* Name    : ${release.name} " />
+        <echo message="* Version : ${release.version} " />
+        <echo message="* Format  : ${release.format} " />
+        
+        <!-- Clean -->
+        <delete dir="${release.target}" />
+        <mkdir dir="${build.release.path}" />
+        <mkdir dir="${release.target}/${release.name}" />
+        
+        <!-- Copy Neard -->
+        <copy todir="${release.target}/${release.name}">
+            <fileset dir="${project.basedir}" defaultexcludes="yes" excludes="
+                build.xml,
+                build.properties,
+                *.launch,
+                .dev/**,
+                .github/**,
+                core/tmp/*.*
+                logs/*.*,
+                ssl/*.crt,
+                ssl/*.ppk,
+                ssl/*.pub,
+                tmp/*.*"
+            />
+        </copy>
+        
+        <!-- Get bins -->
+        <getbundle releasesurl="${bin.apache.url}" version="${bin.apache.version}" dest="${release.target}/${release.name}/bin/apache" />
+        <getbundle releasesurl="${bin.filezilla.url}" version="${bin.filezilla.version}" dest="${release.target}/${release.name}/bin/filezilla" />
+        <getbundle releasesurl="${bin.mariadb.url}" version="${bin.mariadb.version}" dest="${release.target}/${release.name}/bin/mariadb" />
+        <getbundle releasesurl="${bin.mysql.url}" version="${bin.mysql.version}" dest="${release.target}/${release.name}/bin/mysql" />
+        <getbundle releasesurl="${bin.nodejs.url}" version="${bin.nodejs.version}" dest="${release.target}/${release.name}/bin/nodejs" />
+        <getbundle releasesurl="${bin.php.url}" version="${bin.php.version}" dest="${release.target}/${release.name}/bin/php" />
+        
+        <!-- Get apps -->
+        <getbundle releasesurl="${app.adminer.url}" version="${app.adminer.version}" dest="${release.target}/${release.name}/apps/adminer" />
+        <getbundle releasesurl="${app.gitlist.url}" version="${app.gitlist.version}" dest="${release.target}/${release.name}/apps/gitlist" />
+        <getbundle releasesurl="${app.phpmyadmin.url}" version="${app.phpmyadmin.version}" dest="${release.target}/${release.name}/apps/phpmyadmin" />
+        <getbundle releasesurl="${app.webgrind.url}" version="${app.webgrind.version}" dest="${release.target}/${release.name}/apps/webgrind" />
+        <getbundle releasesurl="${app.websvn.url}" version="${app.websvn.version}" dest="${release.target}/${release.name}/apps/websvn" />
+        
+        <!--  Get tools -->
+        <getbundle releasesurl="${tool.composer.url}" version="${tool.composer.version}" dest="${release.target}/${release.name}/tools/composer" />
+        <getbundle releasesurl="${tool.console.url}" version="${tool.console.version}" dest="${release.target}/${release.name}/tools/console" />
+        <getbundle releasesurl="${tool.git.url}" version="${tool.git.version}" dest="${release.target}/${release.name}/tools/git" />
+        <getbundle releasesurl="${tool.hostseditor.url}" version="${tool.hostseditor.version}" dest="${release.target}/${release.name}/tools/hostseditor" />
+        <getbundle releasesurl="${tool.imagemagick.url}" version="${tool.imagemagick.version}" dest="${release.target}/${release.name}/tools/imagemagick" />
+        <getbundle releasesurl="${tool.notepad2.url}" version="${tool.notepad2.version}" dest="${release.target}/${release.name}/tools/notepad2" />
+        <getbundle releasesurl="${tool.svn.url}" version="${tool.svn.version}" dest="${release.target}/${release.name}/tools/svn" />
+        <getbundle releasesurl="${tool.xdc.url}" version="${tool.xdc.version}" dest="${release.target}/${release.name}/tools/xdc" />
+        
+        <!-- Replacements -->
+        <copy file="${project.basedir}/neard.conf" tofile="${release.target}/${release.name}/neard.conf" overwrite="true">
+            <filterset>
+                <filter token="BIN_APACHE_VERSION" value="${bin.apache.version}"/>
+                <filter token="BIN_PHP_VERSION" value="${bin.php.version}"/>
+                <filter token="BIN_MYSQL_VERSION" value="${bin.mysql.version}"/>
+                <filter token="BIN_MARIADB_VERSION" value="${bin.mariadb.version}"/>
+                <filter token="BIN_NODEJS_VERSION" value="${bin.nodejs.version}"/>
+                <filter token="BIN_FILEZILLA_VERSION" value="${bin.filezilla.version}"/>
+                
+                <filter token="TOOL_COMPOSER_VERSION" value="${tool.composer.version}"/>
+                <filter token="TOOL_CONSOLE_VERSION" value="${tool.console.version}"/>
+                <filter token="TOOL_GIT_VERSION" value="${tool.git.version}"/>
+                <filter token="TOOL_HOSTSEDITOR_VERSION" value="${tool.hostseditor.version}"/>
+                <filter token="TOOL_IMAGEMAGICK_VERSION" value="${tool.imagemagick.version}"/>
+                <filter token="TOOL_NOTEPAD2_VERSION" value="${tool.notepad2.version}"/>
+                <filter token="TOOL_SVN_VERSION" value="${tool.svn.version}"/>
+                <filter token="TOOL_XDC_VERSION" value="${tool.xdc.version}"/>
+                
+                <filter token="APP_ADMINER_VERSION" value="${app.adminer.version}"/>
+                <filter token="APP_GITLIST_VERSION" value="${app.gitlist.version}"/>
+                <filter token="APP_PHPMYADMIN_VERSION" value="${app.phpmyadmin.version}"/>
+                <filter token="APP_WEBGRIND_VERSION" value="${app.webgrind.version}"/>
+                <filter token="APP_WEBSVN_VERSION" value="${app.websvn.version}"/>
+            </filterset>
+        </copy>
+        <copy file="${project.basedir}/neard.ini" tofile="${release.target}/${release.name}/neard.ini" overwrite="true">
+            <filterset>
+                <filter token="RELEASE_VERSION" value="${release.version}"/>
+            </filterset>
+        </copy>
+        <echo file="${release.target}/${release.name}/core/resources/version.dat" append="false">${release.version}</echo>
+    </target>
+    
+    <target name="compress">
+        <assertdir dir="${release.target}" />
+        <if>
+            <equals arg1="${release.format}" arg2="7z" />
+            <then>
+                <delete file="${release.dest}.7z" />
+                <echo message="Compressing ${release.name}${release.version} to ${release.dest}.7z..." />
+                <!--sevenz destfile="${release.dest}.7z">
+                    <sevenzfileset dir="${release.target}" prefix="${release.name}" />
+                </sevenz-->
+                <sevenzip src="${release.target}/*" dest="${release.dest}.7z" />
+            </then>
+            <else>
+                <echo message="Compressing ${release.name}${release.version} to ${release.dest}.zip..." />
+                <zip destfile="${release.dest}.zip" update="false">
+                    <zipfileset dir="${release.target}" />
+                </zip>
+            </else>
+        </if>
+    </target>
+    
+    <target name="launch" depends="build" description="Launch Neard">
+        <assertdir dir="${release.target}" />
+        <property name="build.launch.path" value="${build.path}/launch" />
+        
+        <delete dir="${build.launch.path}" />
+        <mkdir dir="${build.launch.path}" />
+        <move todir="${build.launch.path}">
+            <fileset dir="${release.target}/neard">
+                <include name="**"/>
+            </fileset>
+        </move>
+        
+        <echo message="Executing Neard. Please wait..." />
+        <exec executable="${build.launch.path}/neard.exe" />
+        <echo message="If the application needs to restart, you can execute neard.exe in : ${build.launch.path}" />
+    </target>
+</project>

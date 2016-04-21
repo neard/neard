@@ -11,7 +11,7 @@ class ActionStartup
     private $filesToScan;
     
     const GAUGE_SERVICES = 6;
-    const GAUGE_OTHERS = 17;
+    const GAUGE_OTHERS = 18;
     
     public function __construct($args)
     {
@@ -67,8 +67,8 @@ class ActionStartup
             }
         }
         
-        // Kill old PHP instances
-        $this->killPhpInstances();
+        // Kill old instances
+        $this->killOldInstances();
         
         // Prepare Neard
         $this->refreshHostname();
@@ -87,6 +87,9 @@ class ActionStartup
         $this->checkPathRegKey();
         $this->checkBinsRegKey();
         $this->checkSystemPathRegKey();
+        
+        // Update config
+        $this->updateConfig();
         
         // Install
         $this->installServices();
@@ -194,8 +197,8 @@ class ActionStartup
         closedir($handle);
         
         // Purge logs
-        Util::clearFolders($neardBins->getLogsPath(), array('placeholder'));
-        Util::clearFolder($neardBs->getLogsPath(), array('archives', 'placeholder'));
+        Util::clearFolders($neardBins->getLogsPath());
+        Util::clearFolder($neardBs->getLogsPath(), array('archives'));
     }
     
     private function cleanTmpFolders()
@@ -206,8 +209,8 @@ class ActionStartup
         $this->splash->incrProgressBar();
     
         $this->writeLog('Clear tmp folders');
-        Util::clearFolder($neardBs->getTmpPath(), array('placeholder'));
-        Util::clearFolder($neardCore->getTmpPath(), array('placeholder'));
+        Util::clearFolder($neardBs->getTmpPath(), array('cachegrind', 'npm-cache'));
+        Util::clearFolder($neardCore->getTmpPath());
     }
     
     private function cleanOldBehaviors()
@@ -227,14 +230,24 @@ class ActionStartup
         );
     }
     
-    private function killPhpInstances()
+    private function killOldInstances()
     {
-        global $neardCore, $neardLang;
+        global $neardCore, $neardBins, $neardLang;
     
         $this->splash->setTextLoading($neardLang->getValue(Lang::STARTUP_KILL_OLD_PROCS_TEXT));
         $this->splash->incrProgressBar();
-        $procsKilled = Win32Ps::killBins();
         
+        // Stop services
+        /*foreach ($neardBins->getServices() as $sName => $service) {
+            $serviceInfos = $service->infos();
+            if ($serviceInfos === false) {
+                continue;
+            }
+            $service->stop();
+        }*/
+        
+        // Stop third party procs
+        $procsKilled = Win32Ps::killBins();
         if (!empty($procsKilled)) {
             $this->writeLog('Procs killed:');
             $procsKilledSort = array();
@@ -411,6 +424,7 @@ class ActionStartup
                 $this->error .= sprintf($neardLang->getValue(Lang::STARTUP_REGISTRY_ERROR_TEXT), Registry::APP_PATH_REG_ENTRY);
                 $this->error .= PHP_EOL . $neardRegistry->getLatestError();
             } else {
+                $this->writeLog('Need restart: checkPathRegKey');
                 $this->restart = true;
             }
         }
@@ -435,6 +449,7 @@ class ActionStartup
                 $this->error .= sprintf($neardLang->getValue(Lang::STARTUP_REGISTRY_ERROR_TEXT), Registry::APP_BINS_REG_ENTRY);
                 $this->error .= PHP_EOL . $neardRegistry->getLatestError();
             } else {
+                $this->writeLog('Need restart: checkBinsRegKey');
                 $this->restart = true;
             }
         }
@@ -462,6 +477,7 @@ class ActionStartup
                 $this->error .= sprintf($neardLang->getValue(Lang::STARTUP_REGISTRY_ERROR_TEXT), Registry::SYSPATH_REG_ENTRY);
                 $this->error .= PHP_EOL . $neardRegistry->getLatestError();
             } else {
+                $this->writeLog('Need restart: checkSystemPathRegKey');
                 $this->restart = true;
             }
         } else {
@@ -469,6 +485,19 @@ class ActionStartup
             Util::setSysPathRegKey(str_replace('%' . Registry::APP_BINS_REG_ENTRY . '%', '', $currentSysPathRegKey));
             Util::setSysPathRegKey($currentSysPathRegKey);
         }
+    }
+    
+    private function updateConfig()
+    {
+        global $neardLang, $neardBins, $neardTools, $neardApps;
+        
+        $this->splash->setTextLoading($neardLang->getValue(Lang::STARTUP_UPDATE_CONFIG_TEXT));
+        $this->splash->incrProgressBar();
+        $this->writeLog('Update config');
+        
+        $neardBins->update();
+        $neardTools->update();
+        $neardApps->update();
     }
     
     private function installServices()
@@ -479,6 +508,8 @@ class ActionStartup
             foreach ($neardBins->getServicesStartup() as $sName => $service) {
                 $serviceError = '';
                 $serviceRestart = false;
+                $serviceAlreadyInstalled = false;
+                $serviceToRemove = false;
                 $startServiceTime = Util::getMicrotime();
         
                 $syntaxCheckCmd = null;
@@ -497,12 +528,28 @@ class ActionStartup
         
                 $name = $bin->getName() . ' ' . $bin->getVersion() . ' (' . $service->getName() . ')';
                 $port = $bin->getPort();
+                
+                $this->splash->incrProgressBar();
+                $this->splash->setTextLoading(sprintf($neardLang->getValue(Lang::STARTUP_CHECK_SERVICE_TEXT), $name));
+                $serviceInfos = $service->infos();
+                if ($serviceInfos !== false) {
+                    $serviceAlreadyInstalled = true;
+                    $this->writeLog($name . ' service already installed');
+                    foreach ($serviceInfos as $key => $value) {
+                        $this->writeLog('-> ' . $key . ': ' . $value);
+                    }
+                    $serviceGenPathName = $service->getBinPath() . ($service->getParams() ? ' ' . $service->getParams() : '');
+                    $serviceVbsPathName = str_replace('"', '', $serviceInfos[Win32Service::VBS_PATH_NAME]);
+                    if ($serviceGenPathName != $serviceVbsPathName) {
+                        $serviceToRemove = true;
+                        $this->writeLog($name . ' service has to be removed');
+                        $this->writeLog('-> serviceGenPathName: ' . $serviceGenPathName);
+                        $this->writeLog('-> serviceVbsPathName: ' . $serviceVbsPathName);
+                    }
+                }
         
                 $this->splash->incrProgressBar();
-                $this->splash->setTextLoading(sprintf($neardLang->getValue(Lang::STARTUP_INSTALL_SERVICE_TEXT), $name));
-        
-                $this->splash->incrProgressBar();
-                if (!$service->delete()) {
+                if ($serviceToRemove && !$service->delete()) {
                     $serviceRestart = true;
                 }
         
@@ -515,8 +562,11 @@ class ActionStartup
                     $isPortInUse = Util::isPortInUse($port);
                     if ($isPortInUse === false) {
                         $this->splash->incrProgressBar();
-                        if (!$service->create()) {
-                            $serviceError .= sprintf($neardLang->getValue(Lang::STARTUP_SERVICE_CREATE_ERROR), $service->getError());
+                        if (!$serviceAlreadyInstalled && !$serviceToRemove) {
+                            $this->splash->setTextLoading(sprintf($neardLang->getValue(Lang::STARTUP_INSTALL_SERVICE_TEXT), $name));
+                            if (!$service->create()) {
+                                $serviceError .= sprintf($neardLang->getValue(Lang::STARTUP_SERVICE_CREATE_ERROR), $service->getError());
+                            }
                         }
         
                         if ($sName == BinApache::SERVICE_NAME && !$neardBins->getApache()->existsSslCrt()) {
@@ -550,6 +600,7 @@ class ActionStartup
                         $this->splash->incrProgressBar(3);
                     }
                 } else {
+                    $this->writeLog('Need restart: installService ' . $bin->getName());
                     $this->restart = true;
                     $this->splash->incrProgressBar(3);
                 }

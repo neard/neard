@@ -77,11 +77,7 @@ class TplAppMariadb
     {
         global $neardBs, $neardCore, $neardBins;
     
-        return TplService::getActionDelete(BinMariadb::SERVICE_NAME) . PHP_EOL .
-            TplAestan::getActionServicesClose() . PHP_EOL .
-            TplApp::getActionRun(Action::SWITCH_VERSION, array($neardBins->getMariadb()->getName(), $version)) . PHP_EOL .
-            TplService::getActionCreate(BinMariadb::SERVICE_NAME) . PHP_EOL .
-            TplService::getActionStart(BinMariadb::SERVICE_NAME) . PHP_EOL .
+        return TplApp::getActionRun(Action::SWITCH_VERSION, array($neardBins->getMariadb()->getName(), $version)) . PHP_EOL .
             TplApp::getActionExec() . PHP_EOL;
     }
     

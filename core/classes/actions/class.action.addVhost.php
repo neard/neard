@@ -17,13 +17,13 @@ class ActionAddVhost
     private $wbBtnSave;
     private $wbBtnCancel;
     
-    const GAUGE_SAVE = 3;
+    const GAUGE_SAVE = 2;
     
     public function __construct($args)
     {
         global $neardBs, $neardConfig, $neardLang, $neardBins, $neardWinbinder;
         
-        $initServerName = 'test.com';
+        $initServerName = 'test.local';
         $initDocumentRoot = Util::formatWindowsPath($neardBs->getWwwPath()) . '\\' . $initServerName;
 
         $neardWinbinder->reset();
@@ -76,6 +76,14 @@ class ActionAddVhost
                 $neardWinbinder->setProgressBarMax($this->wbProgressBar, self::GAUGE_SAVE + 1);
                 $neardWinbinder->incrProgressBar($this->wbProgressBar);
                 
+                if (!Util::isValidDomainName($serverName)) {
+                    $neardWinbinder->messageBoxError(
+                        sprintf($neardLang->getValue(Lang::VHOST_NOT_VALID_DOMAIN), $serverName),
+                        $neardLang->getValue(Lang::ADD_VHOST_TITLE));
+                    $neardWinbinder->resetProgressBar($this->wbProgressBar);
+                    break;
+                }
+                
                 if (is_file($neardBs->getVhostsPath() . '/' . $serverName . '.conf')) {
                     $neardWinbinder->messageBoxError(
                         sprintf($neardLang->getValue(Lang::VHOST_ALREADY_EXISTS), $serverName),
@@ -85,9 +93,6 @@ class ActionAddVhost
                 }
                 
                 if (Batch::genSslCertificate($serverName) && file_put_contents($neardBs->getVhostsPath() . '/' . $serverName . '.conf',  $neardBins->getApache()->getVhostContent($serverName, $documentRoot)) !== false) {
-                    $neardWinbinder->incrProgressBar($this->wbProgressBar);
-                    
-                    Util::addWindowsHost('127.0.0.1', $serverName);
                     $neardWinbinder->incrProgressBar($this->wbProgressBar);
                     
                     $neardBins->getApache()->getService()->restart();

@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row summary">
   <div class="col-lg-4">
     <div class="list-group">
       <div class="list-group-item" style="min-height:150px">
@@ -24,7 +24,7 @@
         <h4 class="list-group-item-heading"><?php echo $neardLang->getValue(Lang::DONATE); ?></h4>
         <div class="list-group-item-text">
           <p><?php echo $neardLang->getValue(Lang::HOMEPAGE_DONATE_TEXT); ?></p>
-          <p><a target="_blank" href="<?php echo $neardConfig->getPaypalLink(); ?>" class="btn btn-primary" role="button"><img style="padding-right:5px" src="<?php echo Util::imgToBase64($neardHomepage->getPath() . '/img/btn-paypal.png'); ?>" /> <?php echo sprintf($neardLang->getValue(Lang::DONATE_VIA), $neardLang->getValue(Lang::PAYPAL)); ?></a></p>
+          <p><a target="_blank" href="<?php echo $neardConfig->getPaypalLink(); ?>" class="btn btn-primary" role="button"><img style="padding-right:5px" src="<?php echo $neardHomepage->getResourcesUrl() . '/img/btn-paypal.png'; ?>" /> <?php echo sprintf($neardLang->getValue(Lang::DONATE_VIA), $neardLang->getValue(Lang::PAYPAL)); ?></a></p>
         </div>
       </div>
     </div>
@@ -38,49 +38,29 @@
       </div>
       <div class="panel-body">
         <div class="list-group" style="margin-bottom:0;">
-          <a class="list-group-item" href="#apache">
-            <?php
-            if ($neardBins->getApache()->checkPort($neardBins->getApache()->getPort())) {
-                ?><span style="float:right;font-size:12px" class="label label-success"><?php echo $neardBins->getApache()->getVersion(); ?></span><?php
-            } else { 
-                ?><span style="float:right;font-size:12px" class="label label-danger"><?php echo $neardBins->getApache()->getVersion(); ?></span><?php
-            } ?>
+          <a class="list-group-item summary-binapache" href="#apache">
+            <span class="loader" style="float:right"><img src="<?php echo $neardHomepage->getResourcesUrl() . '/img/loader.gif'; ?>" /></span>
             <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::APACHE); ?>
           </a>
-          <a class="list-group-item" href="#php">
-            <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardBins->getPhp()->getVersion(); ?></span>
-            <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::PHP); ?>
+          <a class="list-group-item summary-binfilezilla" href="#filezilla">
+            <span class="loader" style="float:right"><img src="<?php echo $neardHomepage->getResourcesUrl() . '/img/loader.gif'; ?>" /></span>
+            <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::FILEZILLA); ?>
           </a>
-          <a class="list-group-item" href="#mysql">
-            <?php
-            if ($neardBins->getMysql()->checkPort($neardBins->getMysql()->getPort())) {
-                ?><span style="float:right;font-size:12px" class="label label-success"><?php echo $neardBins->getMysql()->getVersion(); ?></span><?php
-            } else { 
-                ?><span style="float:right;font-size:12px" class="label label-danger"><?php echo $neardBins->getMysql()->getVersion(); ?></span><?php
-            } ?>
-            <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::MYSQL); ?>
-          </a>
-          <a class="list-group-item" href="#mariadb">
-            <?php
-            if ($neardBins->getMariadb()->checkPort($neardBins->getMariadb()->getPort())) {
-                ?><span style="float:right;font-size:12px" class="label label-success"><?php echo $neardBins->getMariadb()->getVersion(); ?></span><?php
-            } else { 
-                ?><span style="float:right;font-size:12px" class="label label-danger"><?php echo $neardBins->getMariadb()->getVersion(); ?></span><?php
-            } ?>
+          <a class="list-group-item summary-binmariadb" href="#mariadb">
+            <span class="loader" style="float:right"><img src="<?php echo $neardHomepage->getResourcesUrl() . '/img/loader.gif'; ?>" /></span>
             <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::MARIADB); ?>
           </a>
-          <a class="list-group-item" href="#nodejs">
-            <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardBins->getNodejs()->getVersion(); ?></span>
+          <a class="list-group-item summary-binmysql" href="#mysql">
+            <span class="loader" style="float:right"><img src="<?php echo $neardHomepage->getResourcesUrl() . '/img/loader.gif'; ?>" /></span>
+            <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::MYSQL); ?>
+          </a>
+          <a class="list-group-item summary-binnodejs" href="#nodejs">
+            <span class="loader" style="float:right"><img src="<?php echo $neardHomepage->getResourcesUrl() . '/img/loader.gif'; ?>" /></span>
             <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::NODEJS); ?>
           </a>
-          <a class="list-group-item" href="#filezilla">
-            <?php
-            if ($neardBins->getFilezilla()->checkPort($neardBins->getFilezilla()->getPort())) {
-                ?><span style="float:right;font-size:12px" class="label label-success"><?php echo $neardBins->getFilezilla()->getVersion(); ?></span><?php
-            } else { 
-                ?><span style="float:right;font-size:12px" class="label label-danger"><?php echo $neardBins->getFilezilla()->getVersion(); ?></span><?php
-            } ?>
-            <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::FILEZILLA); ?>
+          <a class="list-group-item summary-binphp" href="#php">
+            <span class="loader" style="float:right"><img src="<?php echo $neardHomepage->getResourcesUrl() . '/img/loader.gif'; ?>" /></span>
+            <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::PHP); ?>
           </a>
         </div>
       </div>
@@ -93,23 +73,27 @@
       </div>
       <div class="panel-body">
         <div class="list-group" style="margin-bottom:0;">
-          <a class="list-group-item" href="#console">
+          <a class="list-group-item" href="#">
             <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardTools->getConsole()->getVersion(); ?></span>
             <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::CONSOLE); ?>
           </a>
-          <a class="list-group-item" href="#git">
+          <a class="list-group-item" href="#">
             <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardTools->getGit()->getVersion(); ?></span>
             <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::GIT); ?>
           </a>
-          <a class="list-group-item" href="#imagemagick">
+          <a class="list-group-item" href="#">
+            <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardTools->getHostsEditor()->getVersion(); ?></span>
+            <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::HOSTSEDITOR); ?>
+          </a>
+          <a class="list-group-item" href="#">
             <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardTools->getImageMagick()->getVersion(); ?></span>
             <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::IMAGEMAGICK); ?>
           </a>
-          <a class="list-group-item" href="#svn">
+          <a class="list-group-item" href="#">
             <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardTools->getSvn()->getVersion(); ?></span>
             <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::SVN); ?>
           </a>
-          <a class="list-group-item" href="#xdc">
+          <a class="list-group-item" href="#">
             <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardTools->getXdc()->getVersion(); ?></span>
             <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::XDC); ?>
           </a>
@@ -124,25 +108,25 @@
       </div>
       <div class="panel-body">
         <div class="list-group" style="margin-bottom:0;">
-          <a class="list-group-item" href="#gitlist">
+          <a class="list-group-item" href="/adminer" target="_blank">
+            <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardApps->getAdminer()->getVersion(); ?></span>
+            <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::ADMINER); ?>
+          </a>
+          <a class="list-group-item" href="/gitlist" target="_blank">
             <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardApps->getGitlist()->getVersion(); ?></span>
             <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::GITLIST); ?>
           </a>
-          <a class="list-group-item" href="#phpmyadmin">
-            <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardApps->getPhpmyadmin()->getVersionsStr(); ?></span>
+          <a class="list-group-item" href="/phpmyadmin" target="_blank">
+            <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardApps->getPhpmyadmin()->getVersion() . ' (' . $neardApps->getPhpmyadmin()->getVersionsStr() . ')'; ?></span>
             <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::PHPMYADMIN); ?>
           </a>
-          <a class="list-group-item" href="#webgrind">
+          <a class="list-group-item" href="/webgrind" target="_blank">
             <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardApps->getWebgrind()->getVersion(); ?></span>
             <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::WEBGRIND); ?>
           </a>
-          <a class="list-group-item" href="#websvn">
+          <a class="list-group-item" href="/websvn" target="_blank">
             <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardApps->getWebsvn()->getVersion(); ?></span>
             <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::WEBSVN); ?>
-          </a>
-          <a class="list-group-item" href="#adminer">
-            <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardApps->getAdminer()->getVersion(); ?></span>
-            <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::ADMINER); ?>
           </a>
         </div>
       </div>

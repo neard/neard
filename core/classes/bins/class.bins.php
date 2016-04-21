@@ -23,12 +23,28 @@ class Bins
     public function reload()
     {
         Util::logInfo('Reload bins');
-        $this->getApache()->reload();
-        $this->getPhp()->reload();
-        $this->getMysql()->reload();
-        $this->getMariadb()->reload();
-        $this->getNodejs()->reload();
-        $this->getFilezilla()->reload();
+        foreach ($this->getAll() as $bin) {
+            $bin->reload();
+        }
+    }
+    
+    public function update()
+    {
+        Util::logInfo('Update bins config');
+        foreach ($this->getAll() as $bin) {
+            $bin->update();
+        }
+    }
+    
+    public function getAll() {
+        return array(
+            $this->getApache(),
+            $this->getPhp(),
+            $this->getMysql(),
+            $this->getMariadb(),
+            $this->getNodejs(),
+            $this->getFilezilla(),
+        );
     }
 
     public function getApache()

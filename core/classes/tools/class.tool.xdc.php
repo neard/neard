@@ -67,6 +67,20 @@ class ToolXdc
         file_put_contents($this->neardConf, $content);
     }
     
+    public function update($showWindow = false)
+    {
+        $this->updateConfig(null, $showWindow);
+    }
+    
+    private function updateConfig($version = null, $showWindow = false)
+    {
+        global $neardBs, $neardCore, $neardLang, $neardBins, $neardTools, $neardWinbinder;
+        $version = $version == null ? $this->getVersion() : $version;
+        Util::logDebug('Update ' . $this->getName() . ' ' . $version . ' config...');
+    
+        //TODO: Update config
+    }
+    
     public function getName()
     {
         return $this->name;

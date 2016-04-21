@@ -1,8 +1,0 @@
-*
-!.gitignore
-
-# Neard
-!neard.conf
-!include
-include/*
-!include/config.php

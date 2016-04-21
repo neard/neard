@@ -1,3 +1,0 @@
-@ECHO OFF
-
-history > "%~dp0logs\history.log"

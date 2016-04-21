@@ -223,15 +223,27 @@ class BinFilezilla
     
     public function switchVersion($version, $showWindow = false)
     {
-        global $neardBs, $neardCore, $neardLang, $neardBins, $neardWinbinder;
         Util::logDebug('Switch Filezilla Server version to ' . $version);
+        $this->updateConfig($version, $showWindow);
+    }
     
+    public function update($showWindow = false)
+    {
+        $this->updateConfig(null, $showWindow);
+    }
+    
+    private function updateConfig($version = null, $showWindow = false)
+    {
+        global $neardBs, $neardCore, $neardLang, $neardBins, $neardWinbinder;
+        $version = $version == null ? $this->getVersion() : $version;
+        Util::logDebug('Update Filezilla Server ' . $version . ' config...');
+        
         $boxTitle = sprintf($neardLang->getValue(Lang::SWITCH_VERSION_TITLE), $this->getName(), $version);
     
-        $newConf = str_replace('filezilla' . $this->getVersion(), 'filezilla' . $version, $this->getConf());
+        $conf = str_replace('filezilla' . $this->getVersion(), 'filezilla' . $version, $this->getConf());
         $neardConf = str_replace('filezilla' . $this->getVersion(), 'filezilla' . $version, $this->neardConf);
     
-        if (!file_exists($newConf) || !file_exists($neardConf)) {
+        if (!file_exists($conf) || !file_exists($neardConf)) {
             Util::logError('Neard config files not found for ' . $this->getName() . ' ' . $version);
             if ($showWindow) {
                 $neardWinbinder->messageBoxError(

@@ -61,7 +61,7 @@ class TplApp
         }
         
         $result = 'Action: run; ' .
-            'FileName: "' . $neardCore->getPhpCliSilentExe(true) . '"; ' .
+            'FileName: "' . $neardCore->getPhpExe(true) . '"; ' .
             'Parameters: "' . Core::BOOTSTRAP_FILE . ' ' . $action . $argImp . '"; ' .
             'WorkingDir: "' . $neardBs->getCorePath(true) . '"';
         
@@ -161,7 +161,7 @@ class TplApp
                 array(ActionCheckVersion::DISPLAY_OK),
                 array($neardLang->getValue(Lang::MENU_CHECK_UPDATE), TplAestan::GLYPH_UPDATE)
             ) . PHP_EOL .
-            TplAestan::getItemLink($neardLang->getValue(Lang::HELP), APP_GITHUB_HOME) . PHP_EOL .
+            TplAestan::getItemLink($neardLang->getValue(Lang::HELP), APP_GITHUB_HOME . '#neard') . PHP_EOL .
             
             TplAestan::getItemSeparator() . PHP_EOL .
             $tplReload[self::SECTION_CALL] . PHP_EOL .
@@ -203,7 +203,6 @@ class TplApp
         $tplSvn = TplAppSvn::process();
         
         $tplLogs = TplAppLogs::process();
-        $tplHosts = TplAppHosts::process();
         $tplTools = TplAppTools::process();
         
         $tplServices = TplAppServices::process();
@@ -234,7 +233,6 @@ class TplApp
             //// Stuff menus
             TplAestan::getItemSeparator() . PHP_EOL .
             $tplLogs[self::SECTION_CALL] . PHP_EOL .
-            $tplHosts[self::SECTION_CALL] . PHP_EOL .
             $tplTools[self::SECTION_CALL] . PHP_EOL .
             
             //// Services
@@ -255,7 +253,6 @@ class TplApp
             PHP_EOL . $tplGit[self::SECTION_CONTENT] .
             PHP_EOL . $tplSvn[self::SECTION_CONTENT] .
             PHP_EOL . $tplLogs[self::SECTION_CONTENT] .
-            PHP_EOL . $tplHosts[self::SECTION_CONTENT] .
             PHP_EOL . $tplTools[self::SECTION_CONTENT] .
             PHP_EOL . $tplServices[self::SECTION_CONTENT] .
             PHP_EOL . $tplOnline[self::SECTION_CONTENT];

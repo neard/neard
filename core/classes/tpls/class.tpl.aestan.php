@@ -36,6 +36,9 @@ class TplAestan
     const GLYPH_RESTART = 34;
     const GLYPH_SSL_CERTIFICATE = 35;
     const GLYPH_RED_LIGHT = 36;
+    const GLYPH_COMPOSER = 37;
+    const GLYPH_PEAR = 38;
+    const GLYPH_HOSTSEDITOR = 39;
     
     const SERVICE_START = 'startresume';
     const SERVICE_STOP = 'stop';
