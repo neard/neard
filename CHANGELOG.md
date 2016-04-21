@@ -22,6 +22,7 @@
 * New MySQL binary bundle : [5.5.49-r2, 5.6.30-r2](https://github.com/crazy-max/neard-bin-mysql/releases/tag/r2) ([Issue #119] (https://github.com/crazy-max/neard/issues/119))
 * New Node.js binary bundle : [0.12.13-r3, 4.4.3-r3, 5.10.1-r3](https://github.com/crazy-max/neard-bin-nodejs/releases/tag/r3) ([Issue #119](https://github.com/crazy-max/neard/issues/119))
 * New PHP binary bundle : [5.5.34-r6, 5.6.20-36, 7.0.5-r6](https://github.com/crazy-max/neard-bin-php/releases/tag/r6) ([Issue #119](https://github.com/crazy-max/neard/issues/119))
+* Add Ant build ([Issue #54](https://github.com/crazy-max/neard/issues/54))
 * Upgrade Composer tool to version 1.0.0 (2016/04/05)
 * Upgrade Console tool to pack 2 (Console 2.00.148 and TCC/LE 14.0.0.9)
 * Upgrade Git tool to version 2.8.1
@@ -39,7 +40,6 @@
 * Remove internal hosts management
 * HTTP headers now retrieved via cURL if available
 * Disable auto CRLF on Git and add LF eol in global config
-* Add Ant build
 
 ### Upgrade from previous release
 
