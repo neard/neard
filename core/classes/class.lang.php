@@ -22,7 +22,6 @@ class Lang
     const EXTENSIONS = 'extensions';
     const GITHUB = 'github';
     const HELP = 'help';
-    const HOSTS = 'hosts';
     const LANG = 'lang';
     const LOGS = 'logs';
     const LOGS_VERBOSE = 'logsVerbose';
@@ -47,7 +46,6 @@ class Lang
     const VERSION = 'version';
     const VERSIONS = 'versions';
     const VIRTUAL_HOSTS = 'virtualHosts';
-    const WINDOWS_HOSTS = 'windowsHosts';
     
     // Menu
     const MENU_ABOUT = 'menuAbout';
@@ -104,9 +102,9 @@ class Lang
     const COMPOSER = 'composer';
     const CONSOLE = 'console';
     const GIT = 'git';
+    const HOSTSEDITOR = 'hostseditor';
     const IMAGEMAGICK = 'imagemagick';
     const NOTEPAD2 = 'notepad2';
-    const SETENV = 'setenv';
     const SVN = 'svn';
     const XDC = 'xdc';
     
@@ -166,6 +164,7 @@ class Lang
     const ALIAS_DEST_LABEL = 'aliasDestLabel';
     const ALIAS_EXP_LABEL = 'aliasExpLabel';
     const ALIAS_DEST_PATH = 'aliasDestPath';
+    const ALIAS_NOT_VALID_ALPHA = 'aliasNotValidAlpha';
     const ALIAS_ALREADY_EXISTS = 'aliasAlreadyExists';
     const ALIAS_CREATED = 'aliasCreated';
     const ALIAS_CREATED_ERROR = 'aliasCreatedError';
@@ -183,6 +182,7 @@ class Lang
     const VHOST_DOCUMENT_ROOT_LABEL = 'vhostDocumentRootLabel';
     const VHOST_EXP_LABEL = 'vhostExpLabel';
     const VHOST_DOC_ROOT_PATH = 'vhostDocRootPath';
+    const VHOST_NOT_VALID_DOMAIN = 'vhostNotValidDomain';
     const VHOST_ALREADY_EXISTS = 'vhostAlreadyExists';
     const VHOST_CREATED = 'vhostCreated';
     const VHOST_CREATED_ERROR = 'vhostCreatedError';
@@ -209,6 +209,8 @@ class Lang
     const STARTUP_CHANGE_PATH_TEXT = 'startupChangePathText';
     const STARTUP_REGISTRY_TEXT = 'startupRegistryText';
     const STARTUP_REGISTRY_ERROR_TEXT = 'startupRegistryErrorText';
+    const STARTUP_UPDATE_CONFIG_TEXT = 'startupUpdateConfigText';
+    const STARTUP_CHECK_SERVICE_TEXT = 'startupCheckServiceText';
     const STARTUP_INSTALL_SERVICE_TEXT = 'startupInstallServiceText';
     const STARTUP_START_SERVICE_TEXT = 'startupStartServiceText';
     const STARTUP_PREPARE_RESTART_TEXT = 'startupPrepareRestartText';
@@ -263,6 +265,7 @@ class Lang
     // Action check version
     const CHECK_VERSION_TITLE = 'checkVersionTitle';
     const CHECK_VERSION_AVAILABLE_TEXT = 'checkVersionAvailableText';
+    const CHECK_VERSION_CHANGELOG_TEXT = 'checkVersionChangelogText';
     const CHECK_VERSION_LATEST_TEXT = 'checkVersionLatestText';
     
     // Action gen SSL certificate
@@ -322,7 +325,6 @@ class Lang
             self::EXTENSIONS,
             self::GITHUB,
             self::HELP,
-            self::HOSTS,
             self::LANG,
             self::LOGS,
             self::LOGS_VERBOSE,
@@ -347,7 +349,6 @@ class Lang
             self::VERSION,
             self::VERSIONS,
             self::VIRTUAL_HOSTS,
-            self::WINDOWS_HOSTS,
             
             // Menu
             self::MENU_ABOUT,
@@ -404,9 +405,9 @@ class Lang
             self::COMPOSER,
             self::CONSOLE,
             self::GIT,
+            self::HOSTSEDITOR,
             self::IMAGEMAGICK,
-            self::SETENV,
-            self::SUBLIMETEXT,
+            self::NOTEPAD2,
             self::SVN,
             self::XDC,
             
@@ -466,6 +467,7 @@ class Lang
             self::ALIAS_DEST_LABEL,
             self::ALIAS_EXP_LABEL,
             self::ALIAS_DEST_PATH,
+            self::ALIAS_NOT_VALID_ALPHA,
             self::ALIAS_ALREADY_EXISTS,
             self::ALIAS_CREATED,
             self::ALIAS_CREATED_ERROR,
@@ -483,6 +485,7 @@ class Lang
             self::VHOST_DOCUMENT_ROOT_LABEL,
             self::VHOST_EXP_LABEL,
             self::VHOST_DOC_ROOT_PATH,
+            self::VHOST_NOT_VALID_DOMAIN,
             self::VHOST_ALREADY_EXISTS,
             self::VHOST_CREATED,
             self::VHOST_CREATED_ERROR,
@@ -509,6 +512,8 @@ class Lang
             self::STARTUP_CHANGE_PATH_TEXT,
             self::STARTUP_REGISTRY_TEXT,
             self::STARTUP_REGISTRY_ERROR_TEXT,
+            self::STARTUP_UPDATE_CONFIG_TEXT,
+            self::STARTUP_CHECK_SERVICE_TEXT,
             self::STARTUP_INSTALL_SERVICE_TEXT,
             self::STARTUP_START_SERVICE_TEXT,
             self::STARTUP_PREPARE_RESTART_TEXT,
@@ -563,6 +568,7 @@ class Lang
             // Action check version
             self::CHECK_VERSION_TITLE,
             self::CHECK_VERSION_AVAILABLE_TEXT,
+            self::CHECK_VERSION_CHANGELOG_TEXT,
             self::CHECK_VERSION_LATEST_TEXT,
                 
             // Action gen SSL certificate

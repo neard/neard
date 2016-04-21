@@ -4,9 +4,9 @@ class AppPhpmyadmin
 {
     const ROOT_CFG_VERSION = 'phpmyadminVersion';
     
-    const LOCAL_CFG_40 = 'phpmyadmin40';
-    const LOCAL_CFG_44 = 'phpmyadmin44';
-    const LOCAL_CFG_45 = 'phpmyadmin45';
+    const LOCAL_CFG_PHP52 = 'php52';
+    const LOCAL_CFG_PHP53 = 'php53';
+    const LOCAL_CFG_PHP55 = 'php55';
     
     const LOCAL_CFG_CONF = 'phpmyadminConf';
     
@@ -43,25 +43,25 @@ class AppPhpmyadmin
         $versions = array();
         $this->neardConfRaw = parse_ini_file($this->neardConf);
         if ($this->neardConfRaw !== false) {
-            $versions['40'] = $this->neardConfRaw[self::LOCAL_CFG_40];
-            $versions['44'] = $this->neardConfRaw[self::LOCAL_CFG_44];
-            $versions['45'] = $this->neardConfRaw[self::LOCAL_CFG_45];
+            $versions[self::LOCAL_CFG_PHP52] = $this->neardConfRaw[self::LOCAL_CFG_PHP52];
+            $versions[self::LOCAL_CFG_PHP53] = $this->neardConfRaw[self::LOCAL_CFG_PHP53];
+            $versions[self::LOCAL_CFG_PHP55] = $this->neardConfRaw[self::LOCAL_CFG_PHP55];
         }
         
-        foreach ($versions as $key => $version4) {
-            $neardConf4 = $this->currentPath . '/' . $version4 . '/neard.conf';
-            if (!is_file($neardConf4)) {
-                Util::logError(sprintf($neardLang->getValue(Lang::ERROR_CONF_NOT_FOUND), $this->name . ' ' . $this->version . ' / ' . $version4, $neardConf4));
+        foreach ($versions as $key => $versionSub) {
+            $neardConfSub = $this->currentPath . '/' . $versionSub . '/neard.conf';
+            if (!is_file($neardConfSub)) {
+                Util::logError(sprintf($neardLang->getValue(Lang::ERROR_CONF_NOT_FOUND), $this->name . ' ' . $this->version . ' / ' . $versionSub, $neardConfSub));
             }
-            $neardConfRaw4 = parse_ini_file($neardConf4);
-            if ($neardConfRaw4 !== false) {
-                $conf4 = $this->currentPath . '/' . $version4 . '/' . $neardConfRaw4[self::LOCAL_CFG_CONF];
-                if (!is_file($conf4)) {
-                    Util::logError(sprintf($neardLang->getValue(Lang::ERROR_CONF_NOT_FOUND), $this->name . ' ' . $this->version . ' / ' . $conf4));
+            $neardConfRawSub = parse_ini_file($neardConfSub);
+            if ($neardConfRawSub !== false) {
+                $confSub = $this->currentPath . '/' . $versionSub . '/' . $neardConfRawSub[self::LOCAL_CFG_CONF];
+                if (!is_file($confSub)) {
+                    Util::logError(sprintf($neardLang->getValue(Lang::ERROR_CONF_NOT_FOUND), $this->name . ' ' . $this->version . ' / ' . $confSub));
                 } else {
                     $this->versions[$key] = array(
-                        'version' => $version4,
-                        'conf' => $conf4
+                        'version' => $versionSub,
+                        'conf' => $confSub
                     );
                 }
             }
@@ -88,6 +88,29 @@ class AppPhpmyadmin
         }
     
         file_put_contents($this->neardConf, $content);
+    }
+    
+    public function update($showWindow = false)
+    {
+        $this->updateConfig(null, $showWindow);
+    }
+    
+    private function updateConfig($version = null, $showWindow = false)
+    {
+        global $neardBs, $neardBins;
+        $version = $version == null ? $this->getVersion() : $version;
+        Util::logDebug('Update ' . $this->getName() . ' ' . $version . ' config...');
+    
+        $alias = $neardBs->getAliasPath() . '/phpmyadmin.conf';
+        if (is_file($alias)) {
+            $version = $this->getVersionCompatPhp();
+            Util::replaceInFile($alias, array(
+                '/^Alias\s\/phpmyadmin\s.*/' => 'Alias /phpmyadmin "' . $this->getCurrentPath() . '/' . $version . '/"',
+                '/^<Directory\s.*/' => '<Directory "' . $this->getCurrentPath() . '/' . $version . '/">',
+            ));
+        } else {
+            Util::logError($this->getName() . ' alias not found : ' . $alias);
+        }
     }
     
     public function getName()
@@ -120,6 +143,22 @@ class AppPhpmyadmin
             $result .= $data['version'];
         }
         return $result;
+    }
+    
+    public function getVersionCompatPhp($phpVersion = null)
+    {
+        global $neardBins;
+        
+        $phpVersion = empty($phpVersion) ? $neardBins->getPhp()->getVersion() : $phpVersion;
+        $versions = $this->getVersions();
+        $version = $versions[self::LOCAL_CFG_PHP52]['version'];
+        if (version_compare($phpVersion, '5.5', '>=')) {
+            $version = $versions[self::LOCAL_CFG_PHP55]['version'];
+        } elseif (version_compare($phpVersion, '5.3.7', '>=')) {
+            $version = $versions[self::LOCAL_CFG_PHP53]['version'];
+        }
+        
+        return $version;
     }
     
     public function setVersion($version)

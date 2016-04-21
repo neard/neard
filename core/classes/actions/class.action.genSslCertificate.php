@@ -21,7 +21,7 @@ class ActionGenSslCertificate
     {
         global $neardBs, $neardConfig, $neardLang, $neardBins, $neardWinbinder;
         
-        $initServerName = 'test';
+        $initServerName = 'test.local';
         $initDocumentRoot = Util::formatWindowsPath($neardBs->getSslPath());
 
         $neardWinbinder->reset();

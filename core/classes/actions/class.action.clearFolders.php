@@ -6,8 +6,8 @@ class ActionClearFolders
     {
         global $neardBs, $neardCore;
         
-        Util::clearFolder($neardBs->getTmpPath(), array('placeholder', 'cachegrind'));
-        Util::clearFolder($neardCore->getTmpPath(), array('placeholder'));
+        Util::clearFolder($neardBs->getTmpPath(), array('cachegrind', 'npm-cache'));
+        Util::clearFolder($neardCore->getTmpPath());
     }
 
 }

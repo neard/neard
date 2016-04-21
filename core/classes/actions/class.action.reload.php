@@ -25,9 +25,6 @@ class ActionReload
             $neardConfig->replace(Config::CFG_BROWSER, Vbs::getDefaultBrowser());
         }
         
-        // Rebuild hosts file
-        Util::refactorWindowsHosts();
-        
         // Process neard.ini
         file_put_contents($neardBs->getIniFilePath(), Util::utf8ToCp1252(TplApp::process()));
         
@@ -48,6 +45,9 @@ class ActionReload
         
         // Rebuild alias homepage
         $neardHomepage->refreshAliasContent();
+        
+        // Rebuild _commons.js
+        $neardHomepage->refreshCommonsJsContent();
     }
 
 }

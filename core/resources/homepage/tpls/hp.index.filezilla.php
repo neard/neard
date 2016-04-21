@@ -1,34 +1,19 @@
 <a class="anchor" name="filezilla"></a>
 <div class="row">
   <div class="col-lg-12">
-    <h1><img src="<?php echo Util::imgToBase64($neardHomepage->getPath() . '/img/filezilla.png'); ?>" /> Filezilla <small></small></h1>
+    <h1><img src="<?php echo $neardHomepage->getResourcesUrl() . '/img/filezilla.png'; ?>" /> Filezilla <small></small></h1>
   </div>
 </div>
 <div class="row">
   <div class="col-lg-6">
     <div class="list-group">
-      <span class="list-group-item">
-        <?php
-        if ($neardBins->getFilezilla()->checkPort($neardBins->getFilezilla()->getPort())) {
-            if ($neardBins->getFilezilla()->checkPort($neardBins->getFilezilla()->getSslPort(), true)) {
-                ?><span style="float:right;font-size:12px;margin-left:2px;" class="label label-success"><?php echo sprintf($neardLang->getValue(Lang::HOMEPAGE_SERVICE_STARTED), $neardBins->getFilezilla()->getSslPort()); ?> (SSL)</span><?php
-            } else {
-                ?><span style="float:right;font-size:12px;margin-left:2px;" class="label label-danger"><?php echo $neardLang->getValue(Lang::HOMEPAGE_SERVICE_STOPPED); ?> (SSL)</span><?php
-            }
-            ?><span style="float:right;font-size:12px" class="label label-success"><?php echo sprintf($neardLang->getValue(Lang::HOMEPAGE_SERVICE_STARTED), $neardBins->getFilezilla()->getPort()); ?></span><?php
-        } else { 
-            ?><span style="float:right;font-size:12px" class="label label-danger"><?php echo $neardLang->getValue(Lang::HOMEPAGE_SERVICE_STOPPED); ?></span><?php
-        } ?>
+      <span class="list-group-item filezilla-checkport">
+        <span class="loader" style="float:right"><img src="<?php echo $neardHomepage->getResourcesUrl() . '/img/loader.gif'; ?>" /></span>
         <i class="fa fa-bar-chart-o"></i> <?php echo $neardLang->getValue(Lang::STATUS); ?>
       </span>
-      <span class="list-group-item">
-        <?php foreach ($neardBins->getFilezilla()->getVersionList() as $version) {
-            if ($version != $neardBins->getFilezilla()->getVersion()) {
-                ?><span style="float:right;font-size:12px;margin-left:2px;" class="label label-default"><?php echo $version; ?></span><?php
-            }
-        } ?>
-        <span style="float:right;font-size:12px;margin-left:2px;" class="label label-primary"><?php echo $neardBins->getFilezilla()->getVersion(); ?></span>
-        <i class="fa fa-puzzle-piece"></i> <?php echo $neardLang->getValue(Lang::VERSION); ?>
+      <span class="list-group-item filezilla-versions">
+        <span class="loader" style="float:right"><img src="<?php echo $neardHomepage->getResourcesUrl() . '/img/loader.gif'; ?>" /></span>
+        <i class="fa fa-puzzle-piece"></i> <?php echo $neardLang->getValue(Lang::VERSIONS); ?>
       </span>
     </div>
   </div>

@@ -89,6 +89,14 @@ class ActionEditAlias
                 $neardWinbinder->setProgressBarMax($this->wbProgressBar, self::GAUGE_SAVE + 1);
                 $neardWinbinder->incrProgressBar($this->wbProgressBar);
                 
+                if (!ctype_alnum($aliasName)) {
+                    $neardWinbinder->messageBoxError(
+                        sprintf($neardLang->getValue(Lang::ALIAS_NOT_VALID_ALPHA), $aliasName),
+                        $neardLang->getValue(Lang::ADD_ALIAS_TITLE));
+                    $neardWinbinder->resetProgressBar($this->wbProgressBar);
+                    break;
+                }
+                
                 if ($aliasName != $this->initName && is_file($neardBs->getAliasPath() . '/' . $aliasName . '.conf')) {
                     $neardWinbinder->messageBoxError(
                         sprintf($neardLang->getValue(Lang::ALIAS_ALREADY_EXISTS), $aliasName),

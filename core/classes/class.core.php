@@ -7,9 +7,11 @@ class Core
     const PATH_LIN_PLACEHOLDER = '~NEARD_LIN_PATH~';
 
     const PHP_VERSION = '5.4.23';
-    const PHP_CLI_EXE = 'php.exe';
-    const PHP_CLI_SILENT_EXE = 'php-win.exe';
+    const PHP_EXE = 'php-win.exe';
     const PHP_CONF = 'php.ini';
+    
+    const SETENV_VERSION = '1.09';
+    const SETENV_EXE = 'SetEnv.exe';
     
     const APP_VERSION = 'version.dat';
     const LAST_PATH = 'lastPath.dat';
@@ -117,9 +119,18 @@ class Core
         return $this->getLibsPath($aetrayPath) . '/php';
     }
 
-    public function getPhpCliSilentExe($aetrayPath = false)
+    public function getPhpExe($aetrayPath = false)
     {
-        return $this->getPhpPath($aetrayPath) . '/' . self::PHP_CLI_SILENT_EXE;
+        return $this->getPhpPath($aetrayPath) . '/' . self::PHP_EXE;
     }
-
+    
+    public function getSetEnvPath($aetrayPath = false)
+    {
+        return $this->getLibsPath($aetrayPath) . '/setenv';
+    }
+    
+    public function getSetEnvExe($aetrayPath = false)
+    {
+        return $this->getSetEnvPath($aetrayPath) . '/' . self::SETENV_EXE;
+    }
 }

@@ -204,7 +204,7 @@ class BinApache
             return false;
         }
         
-        $headers = Util::getApacheHeaders('http' . ($ssl ? 's' : '') . '://localhost:' . $port);
+        $headers = Util::getHttpHeaders('http' . ($ssl ? 's' : '') . '://localhost:' . $port);
         if (!empty($headers)) {
             foreach ($headers as $row) {
                 if (Util::startWith($row, 'Server: ')) {
@@ -240,19 +240,32 @@ class BinApache
     
     public function switchVersion($version, $showWindow = false)
     {
-        global $neardBs, $neardCore, $neardLang, $neardBins, $neardWinbinder;
         Util::logDebug('Switch Apache version to ' . $version);
+        $this->updateConfig($version, $showWindow);
+    }
+    
+    public function update($showWindow = false)
+    {
+        $this->updateConfig(null, $showWindow);
+    }
+    
+    private function updateConfig($version = null, $showWindow = false)
+    {
+        global $neardBs, $neardCore, $neardLang, $neardBins, $neardTools, $neardWinbinder;
+        $version = $version == null ? $this->getVersion() : $version;
+        $shortVersion = substr(str_replace('.', '', $version), 0, 2);
+        Util::logDebug('Update Apache ' . $version . ' config...');
         
         $boxTitle = sprintf($neardLang->getValue(Lang::SWITCH_VERSION_TITLE), $this->getName(), $version);
         
-        $apacheConf = str_replace('apache' . $this->getVersion(), 'apache' . $version, $this->getConf());
+        $conf = str_replace('apache' . $this->getVersion(), 'apache' . $version, $this->getConf());
         $neardConf = str_replace('apache' . $this->getVersion(), 'apache' . $version, $this->neardConf);
         
         $tsDll = $neardBins->getPhp()->getTsDll();
         $apachePhpModuleName = $tsDll !== false ? substr($tsDll, 0, 4) . '_module' : null;
         $apachePhpModule = $neardBins->getPhp()->getApacheModule($version);
         
-        if (!file_exists($apacheConf) || !file_exists($neardConf)) {
+        if (!file_exists($conf) || !file_exists($neardConf)) {
             Util::logError('Neard config files not found for ' . $this->getName() . ' ' . $version);
             if ($showWindow) {
                 $neardWinbinder->messageBoxError(
@@ -288,15 +301,24 @@ class BinApache
         
         // bootstrap
         Util::replaceDefine($neardCore->getBootstrapFilePath(), 'CURRENT_APACHE_VERSION', $version);
-    
+        
         // neard.conf
         $this->setVersion($version);
         
-        // httpd.conf
-        Util::replaceInFile($apacheConf, array(
+        // httpd.conf php module
+        Util::replaceInFile($conf, array(
             '/^PHPIniDir\s.*/' => 'PHPIniDir "' . $neardBins->getPhp()->getCurrentPath() . '"',
             '/^#?LoadFile\s.*php.ts\.dll.*/' => (!file_exists($neardBins->getPhp()->getCurrentPath() . '/' . $tsDll) ? '#' : '') . 'LoadFile "' . $neardBins->getPhp()->getCurrentPath() . '/' . $tsDll . '"',
             '/^LoadModule\sphp._module\s.*/' => 'LoadModule ' . $apachePhpModuleName . ' "' . $apachePhpModule . '"',
+        ));
+        
+        // httpd.conf svn module
+        $svnModulePath = $neardTools->getSvn()->getCurrentPath() . '/modules/apache' . $shortVersion;
+        Util::replaceInFile($conf, array(
+            '/^LoadModule\sauthz_svn_module\s*/' => 'LoadModule authz_svn_module "' . $svnModulePath . '/mod_authz_svn.so"',
+            '/^LoadModule\sdav_svn_module\s*/' => 'LoadModule dav_svn_module "' . $svnModulePath . '/mod_dav_svn.so"',
+            '/^#LoadModule\sauthz_svn_module\s*/' => '#LoadModule authz_svn_module "' . $svnModulePath . '/mod_authz_svn.so"',
+            '/^#LoadModule\sdav_svn_module\s*/' => '#LoadModule dav_svn_module "' . $svnModulePath . '/mod_dav_svn.so"',
         ));
     }
     
@@ -348,16 +370,19 @@ class BinApache
     {
         $result = array();
         
-        if ($handle = opendir($this->getModulesPath())) {
-            while (false !== ($file = readdir($handle))) {
-                if ($file != "." && $file != ".." && Util::startWith($file, 'mod_') && (Util::endWith($file, '.so') || Util::endWith($file, '.dll'))) {
-                    $name = str_replace(array('mod_', '.so', '.dll'), '', $file) . '_module';
-                    $result[$name] = ActionSwitchApacheModule::SWITCH_OFF;
-                }
-            }
-            closedir($handle);
+        $handle = @opendir($this->getModulesPath());
+        if (!$handle) {
+            return $result;
         }
         
+        while (false !== ($file = readdir($handle))) {
+            if ($file != "." && $file != ".." && Util::startWith($file, 'mod_') && (Util::endWith($file, '.so') || Util::endWith($file, '.dll'))) {
+                $name = str_replace(array('mod_', '.so', '.dll'), '', $file) . '_module';
+                $result[$name] = ActionSwitchApacheModule::SWITCH_OFF;
+            }
+        }
+        
+        closedir($handle);
         ksort($result);
         return $result;
     }
@@ -367,15 +392,18 @@ class BinApache
         global $neardBs;
         $result = array();
         
-        if ($handle = opendir($neardBs->getAliasPath())) {
-            while (false !== ($file = readdir($handle))) {
-                if ($file != "." && $file != ".." && Util::endWith($file, '.conf')) {
-                    $result[] = str_replace('.conf', '', $file);
-                }
-            }
-            closedir($handle);
+        $handle = @opendir($neardBs->getAliasPath());
+        if (!$handle) {
+            return $result;
         }
         
+        while (false !== ($file = readdir($handle))) {
+            if ($file != "." && $file != ".." && Util::endWith($file, '.conf')) {
+                $result[] = str_replace('.conf', '', $file);
+            }
+        }
+        
+        closedir($handle);
         ksort($result);
         return $result;
     }
@@ -384,16 +412,19 @@ class BinApache
     {
         global $neardBs;
         $result = array();
-    
-        if ($handle = opendir($neardBs->getVhostsPath())) {
-            while (false !== ($file = readdir($handle))) {
-                if ($file != "." && $file != ".." && Util::endWith($file, '.conf')) {
-                    $result[] = str_replace('.conf', '', $file);
-                }
-            }
-            closedir($handle);
+        
+        $handle = @opendir($neardBs->getVhostsPath());
+        if (!$handle) {
+            return $result;
         }
     
+        while (false !== ($file = readdir($handle))) {
+            if ($file != "." && $file != ".." && Util::endWith($file, '.conf')) {
+                $result[] = str_replace('.conf', '', $file);
+            }
+        }
+        
+        closedir($handle);
         ksort($result);
         return $result;
     }
@@ -427,16 +458,19 @@ class BinApache
     {
         global $neardBs;
         $result = array();
-    
-        if ($handle = opendir($neardBs->getWwwPath())) {
-            while (false !== ($file = readdir($handle))) {
-                if ($file != "." && $file != ".." && is_dir($neardBs->getWwwPath() . '/' . $file)) {
-                    $result[] = $file;
-                }
-            }
-            closedir($handle);
+        
+        $handle = @opendir($neardBs->getWwwPath());
+        if (!$handle) {
+            return $result;
         }
     
+        while (false !== ($file = readdir($handle))) {
+            if ($file != "." && $file != ".." && is_dir($neardBs->getWwwPath() . '/' . $file)) {
+                $result[] = $file;
+            }
+        }
+        
+        closedir($handle);
         ksort($result);
         return $result;
     }

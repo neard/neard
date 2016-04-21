@@ -52,15 +52,16 @@ class Homepage
         return $neardCore->getResourcesPath(false) . '/homepage';
     }
     
+    public function getResourcesPath()
+    {
+        global $neardCore;
+        return md5(APP_TITLE . $neardCore->getAppVersion());
+    }
+    
     public function getResourcesUrl()
     {
         global $neardBs, $neardCore;
-        return $neardBs->getLocalUrl(md5(APP_TITLE . $neardCore->getAppVersion()));
-    }
-    
-    public function getAliasFilePath()
-    {
-        return $this->getPath() . '/alias.conf';
+        return $neardBs->getLocalUrl($this->getResourcesPath());
     }
     
     public function refreshAliasContent()
@@ -68,10 +69,18 @@ class Homepage
         global $neardCore, $neardBins;
     
         $result = $neardBins->getApache()->getAliasContent(
-            md5(APP_TITLE . $neardCore->getAppVersion()),
+            $this->getResourcesPath(),
             $this->getPath());
         
-        return file_put_contents($this->getAliasFilePath(), $result) !== false;
+        return file_put_contents($this->getPath() . '/alias.conf', $result) !== false;
     }
-
+    
+    public function refreshCommonsJsContent()
+    {
+        global $neardCore;
+        
+        Util::replaceInFile($this->getPath() . '/js/_commons.js', array(
+            '/^\s\surl:.*/' => '  url: "' . $this->getResourcesPath() . '/ajax.php"',
+        ));
+    }
 }

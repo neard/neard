@@ -296,10 +296,16 @@ class TplConsole
     private static function getTabGitSection()
     {
         global $neardBs, $neardTools;
+        
+        $gitShell = $neardTools->getGit()->getBash();
+        if (Util::endWith($neardTools->getGit()->getBash(), '.exe')) {
+            $gitShell = $neardTools->getGit()->getCurrentPath() . '/bin/sh.exe';
+        }
+        
         return self::getTab(
             $neardTools->getConsole()->getTabTitleGit(),
             self::ICON_GIT,
-            Util::formatWindowsPath('&quot;' . $neardTools->getGit()->getBash() . '&quot;'),
+            Util::formatWindowsPath('&quot;' . $gitShell . '&quot;'),
             $neardBs->getWwwPath()
         );
     }

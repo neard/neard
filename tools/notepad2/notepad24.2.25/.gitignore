@@ -1,7 +1,0 @@
-*
-!.gitignore
-
-# Neard
-!neard.conf
-!Notepad2.ini
-!Notepad2.ini.nrd

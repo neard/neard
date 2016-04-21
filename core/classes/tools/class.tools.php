@@ -5,9 +5,9 @@ class Tools
     private $composer;
     private $console;
     private $git;
+    private $hostseditor;
     private $imagemagick;
     private $notepad2;
-    private $setenv;
     private $svn;
     private $xdc;
     
@@ -20,6 +20,27 @@ class Tools
     {
         global $neardBs;
         return $neardBs->getToolsPath() . '/' . $tool;
+    }
+    
+    public function update()
+    {
+        Util::logInfo('Update tools config');
+        foreach ($this->getAll() as $tool) {
+            $tool->update();
+        }
+    }
+    
+    public function getAll() {
+        return array(
+            $this->getComposer(),
+            $this->getConsole(),
+            $this->getGit(),
+            $this->getHostsEditor(),
+            $this->getImageMagick(),
+            $this->getNotepad2(),
+            $this->getSvn(),
+            $this->getXdc(),
+        );
     }
     
     public function getComposer()
@@ -46,6 +67,14 @@ class Tools
         return $this->git;
     }
     
+    public function getHostsEditor()
+    {
+        if ($this->hostseditor == null) {
+            $this->hostseditor = new ToolHostsEditor($this->getRootPath('hostseditor'));
+        }
+        return $this->hostseditor;
+    }
+    
     public function getImageMagick()
     {
         if ($this->imagemagick == null) {
@@ -60,14 +89,6 @@ class Tools
             $this->notepad2 = new ToolNotepad2($this->getRootPath('notepad2'));
         }
         return $this->notepad2;
-    }
-    
-    public function getSetenv()
-    {
-        if ($this->setenv == null) {
-            $this->setenv = new ToolSetenv($this->getRootPath('setenv'));
-        }
-        return $this->setenv;
     }
     
     public function getSvn()

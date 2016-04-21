@@ -1,5 +1,67 @@
 # Changelog
 
+## 1.0.18 (2016/04/21)
+
+* Bug while checking port on MariaDB / MySQL ([Issue #130](https://github.com/crazy-max/neard/issues/130))
+* Add HostsEditor tool for editing windows Hosts file ([Issue #129](https://github.com/crazy-max/neard/issues/129))
+* Load homepage with ajax requests ([Issue #128](https://github.com/crazy-max/neard/issues/128))
+* Generate self-signed certificates with SHA256 digest ([Issue #127](https://github.com/crazy-max/neard/issues/127))
+* Move SetEnv tool to core ([Issue #126](https://github.com/crazy-max/neard/issues/126))
+* Change Notepad2 temporary folder location ([Issue #125](https://github.com/crazy-max/neard/issues/125))
+* Update SVN Apache module path on fly ([Issue #124](https://github.com/crazy-max/neard/issues/124))
+* Update config files on startup (apps, bins, tools) ([Issue #123](https://github.com/crazy-max/neard/issues/123))
+* Skip npm-cache clear on startup ([Issue #122](https://github.com/crazy-max/neard/issues/122))
+* Always need a restart to run Neard ([Issue #118](https://github.com/crazy-max/neard/issues/118))
+* Check valid domain name when adding vhost ([Issue #117](https://github.com/crazy-max/neard/issues/117))
+* Add aliases doesn't work with quote or accented letters or special letters ([Issue #116](https://github.com/crazy-max/neard/issues/116))
+* Add Hungarian language ([Issue #112](https://github.com/crazy-max/neard/issues/112))
+* Some chars are not handled by Aestan Tray Menu ([Issue #112](https://github.com/crazy-max/neard/issues/112))
+* New Apache binary bundle : [2.4.20-r2](https://github.com/crazy-max/neard-bin-apache/releases/tag/r2) ([Issue #119](https://github.com/crazy-max/neard/issues/119))
+* New Filezilla Server binary bundle : [0.9.56.1-r2](https://github.com/crazy-max/neard-bin-filezilla/releases/tag/r2) ([Issue #119](https://github.com/crazy-max/neard/issues/119))
+* New MariaDB binary bundle : [5.5.48-r2, 10.0.24-r2, 10.1.13-r2](https://github.com/crazy-max/neard-bin-mariadb/releases/tag/r2) ([Issue #119](https://github.com/crazy-max/neard/issues/119))
+* New MySQL binary bundle : [5.5.49-r2, 5.6.30-r2](https://github.com/crazy-max/neard-bin-mysql/releases/tag/r2) ([Issue #119] (https://github.com/crazy-max/neard/issues/119))
+* New Node.js binary bundle : [0.12.13-r3, 4.4.3-r3, 5.10.1-r3](https://github.com/crazy-max/neard-bin-nodejs/releases/tag/r3) ([Issue #119](https://github.com/crazy-max/neard/issues/119))
+* New PHP binary bundle : [5.5.34-r6, 5.6.20-36, 7.0.5-r6](https://github.com/crazy-max/neard-bin-php/releases/tag/r6) ([Issue #119](https://github.com/crazy-max/neard/issues/119))
+* Upgrade Composer tool to version 1.0.0 (2016/04/05)
+* Upgrade Console tool to pack 2 (Console 2.00.148 and TCC/LE 14.0.0.9)
+* Upgrade Git tool to version 2.8.1
+* Upgrade SVN tool to version 1.7.22
+* Upgrade XDebugClient tool to version 1.0b5
+* Upgrade Adminer app to version 4.2.4
+* Upgrade Gitlist app to version 0.5.0
+* Upgrade phpMyAdmin app to pack 2 (4.0.10.15, 4.4.15.5, 4.6.0)
+* Upgrade Webgrind app to version 1.1
+* Review phpMyAdmin implementation
+* Display changelog link in new release dialog
+* Create sub repositories on Github for apps and tools (see 'Download' section in README.md)
+* Neard is now compressed with 7z format
+* Use resources url instead of base64 data
+* Remove internal hosts management
+* HTTP headers now retrieved via cURL if available
+* Disable auto CRLF on Git and add LF eol in global config
+* Add Ant build
+
+### Upgrade from previous release
+
+* Change `consoleVersion` value to `p2` in `neard.conf`
+* Change `gitVersion` value to `2.8.1` in `neard.conf`
+* Change `imagemagickVersion` value to `6.9.3-8` in `neard.conf`
+* Change `svnVersion` value to `1.7.22` in `neard.conf`
+* Change `xdcVersion` value to `1.0b5` in `neard.conf`
+* Change `adminerVersion` value to `4.2.4` in `neard.conf`
+* Change `gitlistVersion` value to `0.5.0` in `neard.conf`
+* Change `phpmyadminVersion` value to `4p2` in `neard.conf`
+* Change `webgrindVersion` value to `1.1` in `neard.conf`
+* Remove `setenvVersion` key in `neard.conf`
+* Remove then replace file `alias/adminer.conf`
+* Remove then replace file `alias/gitlist.conf`
+* Remove then replace file `alias/phpmyadmin.conf`
+* Remove then replace file `alias/webgrind.conf`
+* Remove then replace folder `apps`
+* Remove then replace folder `core`
+* Remove then replace folder `tools`
+* Remove then replace file `sprites.dat`
+
 ## 1.0.17 (2016/01/26)
 
 * Retrieve latest version from CHANGELOG.md
@@ -10,15 +72,15 @@
 
 ### Upgrade from previous release
 
-* Remove ``tccleVersion`` key in ``neard.conf``
-* Change ``phpmyadminVersion`` value to ``4`` in ``neard.conf``
-* Remove file ``neard.exe.manifest``
-* Remove file ``neard.exe.rc``
-* Remove / replace file ``alias/phpmyadmin.conf``
-* Remove / replace folder ``apps/phpmyadmin``
-* Remove / replace folder ``core``
-* Remove / replace folder ``tools/console``
-* Remove folder ``tools/tccle``
+* Remove `tccleVersion` key in `neard.conf`
+* Change `phpmyadminVersion` value to `4` in `neard.conf`
+* Remove then replace file `alias/phpmyadmin.conf`
+* Remove then replace folder `apps/phpmyadmin`
+* Remove then replace folder `core`
+* Remove then replace folder `tools/console`
+* Remove folder `tools/tccle`
+* Remove file `neard.exe.manifest`
+* Remove file `neard.exe.rc`
 
 ## 1.0.16 (2015/12/13)
 
@@ -121,9 +183,9 @@ You have to download and install the latests [Neard Visual C++ Redistributables 
 
 * Htaccess bug on homepage ([Issue #59](https://github.com/crazy-max/neard/issues/59))
 * Add HTTPS support ([Issue #58](https://github.com/crazy-max/neard/issues/58))
-* SSL requests are written in ``*_sslreq.log`` files
+* SSL requests are written in `*_sslreq.log` files
 * Edit vhost window title bug
-* Localhost apache logs are moved in ``apache_*.log`` files
+* Localhost apache logs are moved in `apache_*.log` files
 
 ## 1.0.9 (2014/07/14)
 

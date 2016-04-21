@@ -54,6 +54,12 @@ class Win32Service
     const PENDING_TIMEOUT = 10;
     const SLEEP_TIME = 500000;
     
+    const VBS_NAME = 'Name';
+    const VBS_DISPLAY_NAME = 'DisplayName';
+    const VBS_DESCRIPTION = 'Description';
+    const VBS_PATH_NAME = 'PathName';
+    const VBS_STATE = 'State';
+    
     private $name;
     private $displayName;
     private $binPath;
@@ -73,6 +79,17 @@ class Win32Service
     {
         global $neardBs;
         Util::logDebug($log, $neardBs->getServicesLogFilePath());
+    }
+    
+    public static function getVbsKeys()
+    {
+        return array(
+            self::VBS_NAME,
+            self::VBS_DISPLAY_NAME,
+            self::VBS_DESCRIPTION,
+            self::VBS_PATH_NAME,
+            self::VBS_STATE
+        );
     }
 
     private function callWin32Service($function, $param, $checkError = false)
@@ -179,6 +196,8 @@ class Win32Service
         
         if ($this->getName() == BinFilezilla::SERVICE_NAME) {
             $neardBins->getFilezilla()->rebuildConf();
+        } elseif ($this->getName() == BinMysql::SERVICE_NAME) {
+            $neardBins->getMysql()->initData();
         }
         
         $start = dechex($this->callWin32Service('win32_start_service', $this->getName(), true));
@@ -243,6 +262,11 @@ class Win32Service
             return $this->start();
         }
         return false;
+    }
+    
+    public function infos()
+    {
+        return Vbs::getServiceInfos($this->getName());
     }
 
     public function isInstalled()

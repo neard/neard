@@ -6,17 +6,14 @@
 /.jsdtscope
 /*.launch
 
-# Ant
-/build.properties
-/build.xml
-
 # Neard
 /.dev
 /.dev/*
-/!alias
+/alias
 /alias/*
-/!alias/gitlist.conf
-/!alias/phpmyadmin.conf
-/!alias/svn.conf
-/!alias/webgrind.conf
-/!alias/websvn.conf
+!/alias/adminer.conf
+!/alias/gitlist.conf
+!/alias/phpmyadmin.conf
+!/alias/svn.conf
+!/alias/webgrind.conf
+!/alias/websvn.conf

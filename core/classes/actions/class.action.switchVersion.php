@@ -37,13 +37,13 @@ class ActionSwitchVersion
             } elseif ($args[0] == $neardBins->getMysql()->getName()) {
                 $this->currentVersion = CURRENT_MYSQL_VERSION;
                 $this->bin = $neardBins->getMysql();
-                $this->restart = false;
+                $this->restart = true;
                 $this->service = $neardBins->getMysql()->getService();
                 $this->changePort = true;
             } elseif ($args[0] == $neardBins->getMariadb()->getName()) {
                 $this->currentVersion = CURRENT_MARIADB_VERSION;
                 $this->bin = $neardBins->getMariadb();
-                $this->restart = false;
+                $this->restart = true;
                 $this->service = $neardBins->getMariadb()->getService();
                 $this->changePort = true;
             } elseif ($args[0] == $neardBins->getNodejs()->getName()) {
@@ -55,7 +55,7 @@ class ActionSwitchVersion
             } elseif ($args[0] == $neardBins->getFilezilla()->getName()) {
                 $this->currentVersion = CURRENT_FILEZILLA_VERSION;
                 $this->bin = $neardBins->getFilezilla();
-                $this->restart = false;
+                $this->restart = true;
                 $this->service = $neardBins->getFilezilla()->getService();
                 $this->changePort = true;
             }

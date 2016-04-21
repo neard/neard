@@ -21,7 +21,7 @@ class ActionEditVhost
     private $wbBtnCancel;
     
     const GAUGE_SAVE = 3;
-    const GAUGE_DELETE = 3;
+    const GAUGE_DELETE = 2;
     
     public function __construct($args)
     {
@@ -88,6 +88,14 @@ class ActionEditVhost
                 $neardWinbinder->setProgressBarMax($this->wbProgressBar, self::GAUGE_SAVE + 1);
                 $neardWinbinder->incrProgressBar($this->wbProgressBar);
                 
+                if (!Util::isValidDomainName($serverName)) {
+                    $neardWinbinder->messageBoxError(
+                        sprintf($neardLang->getValue(Lang::VHOST_NOT_VALID_DOMAIN), $serverName),
+                        $neardLang->getValue(Lang::ADD_VHOST_TITLE));
+                    $neardWinbinder->resetProgressBar($this->wbProgressBar);
+                    break;
+                }
+                
                 if ($serverName != $this->initServerName && is_file($neardBs->getVhostsPath() . '/' . $serverName . '.conf')) {
                     $neardWinbinder->messageBoxError(
                         sprintf($neardLang->getValue(Lang::VHOST_ALREADY_EXISTS), $serverName),
@@ -95,13 +103,12 @@ class ActionEditVhost
                     $neardWinbinder->resetProgressBar($this->wbProgressBar);
                     break;
                 }
-                if ($neardBins->getApache()->removeSslCrt($this->initServerName) && @unlink($neardBs->getVhostsPath() . '/' . $this->initServerName . '.conf')) {
-                    new ActionSwitchHost(array('127.0.0.1', $this->initServerName, ActionSwitchHost::SWITCH_OFF));
-                }
+                
+                // Remove old vhost
+                $neardBins->getApache()->removeSslCrt($this->initServerName);
+                @unlink($neardBs->getVhostsPath() . '/' . $this->initServerName . '.conf');
+                
                 if (Batch::genSslCertificate($serverName) && file_put_contents($neardBs->getVhostsPath() . '/' . $serverName . '.conf', $neardBins->getApache()->getVhostContent($serverName, $documentRoot)) !== false) {
-                    $neardWinbinder->incrProgressBar($this->wbProgressBar);
-                    
-                    Util::addWindowsHost('127.0.0.1', $serverName);
                     $neardWinbinder->incrProgressBar($this->wbProgressBar);
                     
                     $neardBins->getApache()->getService()->restart();
@@ -130,9 +137,6 @@ class ActionEditVhost
                 
                 if ($confirm) {
                     if ($neardBins->getApache()->removeSslCrt($this->initServerName) && @unlink($neardBs->getVhostsPath() . '/' . $this->initServerName . '.conf')) {
-                        $neardWinbinder->incrProgressBar($this->wbProgressBar);
-                        
-                        new ActionSwitchHost(array('127.0.0.1', $this->initServerName, ActionSwitchHost::SWITCH_OFF));
                         $neardWinbinder->incrProgressBar($this->wbProgressBar);
                         
                         $neardBins->getApache()->getService()->restart();

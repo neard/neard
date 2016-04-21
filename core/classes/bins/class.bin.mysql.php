@@ -204,13 +204,16 @@ class BinMysql
             if ($dbLink) {
                 $result = mysqli_query($dbLink, 'SHOW VARIABLES');
                 if ($result) {
-                    while ($row = mysqli_fetch_array($result, MYSQLI_NUM)) {
+                    while (false !== ($row = mysqli_fetch_array($result, MYSQLI_NUM))) {
                         if ($row[0] == 'version') {
                             $version = explode("-", $row[1]);
                             $version = count($version) > 1 ? $version[0] : $row[1];
                         }
                         if ($row[0] == 'version_comment' && Util::startWith(strtolower($row[1]), 'mysql')) {
                             $isMysql = true;
+                        }
+                        if ($isMysql && $version !== false) {
+                            break;
                         }
                     }
                     if (!$isMysql) {
@@ -257,15 +260,27 @@ class BinMysql
     
     public function switchVersion($version, $showWindow = false)
     {
-        global $neardBs, $neardCore, $neardLang, $neardBins, $neardWinbinder;
         Util::logDebug('Switch MySQL version to ' . $version);
+        $this->updateConfig($version, $showWindow);
+    }
+    
+    public function update($showWindow = false)
+    {
+        $this->updateConfig(null, $showWindow);
+    }
+    
+    private function updateConfig($version = null, $showWindow = false)
+    {
+        global $neardBs, $neardCore, $neardLang, $neardBins, $neardWinbinder;
+        $version = $version == null ? $this->getVersion() : $version;
+        Util::logDebug('Update MySQL ' . $version . ' config...');
         
         $boxTitle = sprintf($neardLang->getValue(Lang::SWITCH_VERSION_TITLE), $this->getName(), $version);
         
-        $newConf = str_replace('mysql' . $this->getVersion(), 'mysql' . $version, $this->getConf());
+        $conf = str_replace('mysql' . $this->getVersion(), 'mysql' . $version, $this->getConf());
         $neardConf = str_replace('mysql' . $this->getVersion(), 'mysql' . $version, $this->neardConf);
         
-        if (!file_exists($newConf) || !file_exists($neardConf)) {
+        if (!file_exists($conf) || !file_exists($neardConf)) {
             Util::logError('Neard config files not found for ' . $this->getName() . ' ' . $version);
             if ($showWindow) {
                 $neardWinbinder->messageBoxError(
@@ -290,9 +305,21 @@ class BinMysql
         
         // bootstrap
         Util::replaceDefine($neardCore->getBootstrapFilePath(), 'CURRENT_MYSQL_VERSION', $version);
-    
+        
         // neard.conf
         $this->setVersion($version);
+    }
+    
+    public function initData() {
+        if (version_compare($this->getVersion(), '5.7.0', '<')) {
+            return;
+        }
+        
+        if (file_exists($this->getCurrentPath() . '/data')) {
+            return;
+        }
+        
+        Batch::initializeMysql();
     }
     
     public function getCmdLineOutput($cmd)
@@ -326,7 +353,7 @@ class BinMysql
         return $result;
     }
     
-public function getName()
+    public function getName()
     {
         return $this->name;
     }

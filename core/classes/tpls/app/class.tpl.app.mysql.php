@@ -77,11 +77,7 @@ class TplAppMysql
     {
         global $neardBs, $neardCore, $neardBins;
     
-        return TplService::getActionDelete(BinMysql::SERVICE_NAME) . PHP_EOL .
-            TplAestan::getActionServicesClose() . PHP_EOL .
-            TplApp::getActionRun(Action::SWITCH_VERSION, array($neardBins->getMysql()->getName(), $version)) . PHP_EOL .
-            TplService::getActionCreate(BinMysql::SERVICE_NAME) . PHP_EOL .
-            TplService::getActionStart(BinMysql::SERVICE_NAME) . PHP_EOL .
+        return TplApp::getActionRun(Action::SWITCH_VERSION, array($neardBins->getMysql()->getName(), $version)) . PHP_EOL .
             TplApp::getActionExec() . PHP_EOL;
     }
     

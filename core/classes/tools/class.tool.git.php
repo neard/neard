@@ -105,6 +105,25 @@ class ToolGit
         file_put_contents($this->neardConf, $content);
     }
     
+    public function update($showWindow = false)
+    {
+        $this->updateConfig(null, $showWindow);
+    }
+    
+    private function updateConfig($version = null, $showWindow = false)
+    {
+        global $neardWinbinder;
+        $version = $version == null ? $this->getVersion() : $version;
+        Util::logDebug('Update ' . $this->getName() . ' ' . $version . ' config...');
+    
+        if (file_exists($this->getCurrentPath() . '/post-install.bat')) {
+            $neardWinbinder->exec($this->getBash(), '--no-needs-console --hide --no-cd --command=' . $this->getCurrentPath() . '/post-install.bat', true);
+        }
+        
+        $neardWinbinder->exec($this->getExe(), 'config --global core.autocrlf false', true);
+        $neardWinbinder->exec($this->getExe(), 'config --global core.eol lf', true);
+    }
+    
     public function findRepos($cache = true)
     {
         $result = array();

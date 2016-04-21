@@ -175,6 +175,9 @@ class Vbs
             $rebuildResult = array();
             foreach ($result as $row) {
                 $row = explode(trim(self::STR_SEPARATOR), $row);
+                if (count($row) != count($vbsKeys)) {
+                    continue;
+                }
                 $processInfo = array();
                 foreach ($vbsKeys as $key => $vbsKey) {
                     $processInfo[$vbsKey] = trim($row[$key]);
@@ -278,6 +281,52 @@ class Vbs
             return false;
         }
         
+        return false;
+    }
+    
+    public static function getServiceInfos($serviceName)
+    {
+        $basename = 'getServiceInfos';
+        $resultFile = self::getResultFile($basename);
+        $sep = ' & "' . self::STR_SEPARATOR . '" & _';
+        $vbsKeys = Win32Service::getVbsKeys();
+    
+        $content = 'Dim objFso, objResultFile, objWMIService' . PHP_EOL . PHP_EOL;
+        $content .= 'Set objFso = CreateObject("scripting.filesystemobject")' . PHP_EOL;
+        $content .= 'Set objResultFile = objFso.CreateTextFile("' . $resultFile . '", True)' . PHP_EOL;
+        $content .= 'strComputer = "."' . PHP_EOL;
+        $content .= 'Set objWMIService = GetObject("winmgmts:" & "{impersonationLevel=impersonate}!\\\\" & strComputer & "\root\cimv2")' . PHP_EOL;
+        $content .= 'Set listServices = objWMIService.ExecQuery ("SELECT * FROM Win32_Service WHERE Name=\'' . $serviceName . '\'")' . PHP_EOL;
+        $content .= 'For Each service in listServices' . PHP_EOL;
+    
+        $content .= '    objResultFile.WriteLine(_' . PHP_EOL;
+        foreach ($vbsKeys as $vbsKey) {
+            $content .= '        service.' . $vbsKey . $sep . PHP_EOL;
+        }
+        $content = substr($content, 0, strlen($content) - strlen($sep) - 1) . ')' . PHP_EOL;
+    
+        $content .= 'Next' . PHP_EOL;
+        $content .= 'objResultFile.WriteLine("' . self::END_PROCESS_STR . '")' . PHP_EOL;
+        $content .= 'objResultFile.Close' . PHP_EOL;
+    
+        $result = self::exec($basename, $resultFile, $content);
+        if (empty($result)) {
+            return false;
+        }
+    
+        unset($result[array_search(self::END_PROCESS_STR, $result)]);
+        if (is_array($result) && count($result) == 1) {
+            $rebuildResult = array();
+            $row = explode(trim(self::STR_SEPARATOR), $result[0]);
+            if (count($row) != count($vbsKeys)) {
+                return false;
+            }
+            foreach ($vbsKeys as $key => $vbsKey) {
+                $rebuildResult[$vbsKey] = trim($row[$key]);
+            }
+            return $rebuildResult;
+        }
+    
         return false;
     }
     

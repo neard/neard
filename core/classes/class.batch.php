@@ -61,7 +61,7 @@ class Batch
         if ($restart) {
             $basename = 'restartApp';
             Util::logInfo('Restart App');
-            $content .= '"' . $neardCore->getPhpCliSilentExe() . '" "' . Core::BOOTSTRAP_FILE . '" "' . Action::RESTART . '"' . PHP_EOL;
+            $content .= '"' . $neardCore->getPhpExe() . '" "' . Core::BOOTSTRAP_FILE . '" "' . Action::RESTART . '"' . PHP_EOL;
         } else {
             $basename = 'exitApp';
             Util::logInfo('Exit App');
@@ -113,8 +113,8 @@ class Batch
     
     public static function refreshEnvVars()
     {
-        global $neardBs, $neardTools;
-        self::execStandalone('refreshEnvVars', '"' . $neardTools->getSetenv()->getExe() . '" -a ' . Registry::APP_PATH_REG_ENTRY . ' "' . Util::formatWindowsPath($neardBs->getRootPath()) . '"');
+        global $neardBs, $neardCore;
+        self::execStandalone('refreshEnvVars', '"' . $neardCore->getSetEnvExe() . '" -a ' . Registry::APP_PATH_REG_ENTRY . ' "' . Util::formatWindowsPath($neardBs->getRootPath()) . '"');
     }
     
     public static function genSslCertificate($name, $destPath = null)
@@ -132,7 +132,7 @@ class Batch
         
         self::exec('genSslKey', $exe . ' genrsa -des3 -passout ' . $password . ' -out ' . $ppkPath . ' 2048 -noout -config ' . $conf);
         self::exec('genSslPub', $exe . ' rsa -in ' . $ppkPath . ' -passin ' . $password . ' -out ' . $pubPath);
-        self::exec('genSslCrt', $exe . ' req -x509 -nodes -sha1 -new -key ' . $pubPath . ' -out ' . $crtPath . ' -passin ' . $password . ' -subj ' . $subject . ' -config ' . $conf);
+        self::exec('genSslCrt', $exe . ' req -x509 -nodes -sha256 -new -key ' . $pubPath . ' -out ' . $crtPath . ' -passin ' . $password . ' -subj ' . $subject . ' -config ' . $conf);
         
         $result = self::exec('checkCertificate', '@ECHO ON' . PHP_EOL . 'IF EXIST ' . $pubPath . ' IF EXIST ' . $crtPath . ' ECHO OK');
         return isset($result[0]) && $result[0] == 'OK';
@@ -152,6 +152,12 @@ class Batch
     
         self::exec('uninstallFilezillaService', '"' . $neardBins->getFilezilla()->getExe() . '" /uninstall', true, false);
         return !$neardBins->getFilezilla()->getService()->isInstalled();
+    }
+    
+    public static function initializeMysql()
+    {
+        global $neardBins;
+        self::exec('initializeMysql', 'CMD /C "' . $neardBins->getMysql()->getCurrentPath() . '/init.bat"', 15);
     }
     
     public static function execStandalone($basename, $content, $silent = true)

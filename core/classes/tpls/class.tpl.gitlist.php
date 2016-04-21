@@ -16,14 +16,9 @@ class TplGitlist
         
         $foundRepos = $neardTools->getGit()->findRepos(true);
         if (!empty($foundRepos)) {
-            // Repositories
             $refactorRepos = array();
             foreach ($foundRepos as $repo) {
-                /*$repo = dirname($repo);
-                 if (!in_array($repo, $refactorRepos)) {
-                $refactorRepos[] = $repo;*/
                 $result .= 'repositories[] = \'' . Util::formatUnixPath($repo) . '\'' . PHP_EOL;
-                //}
             }
         } else {
             $result .= 'repositories[] = \'\'' . PHP_EOL;

@@ -100,15 +100,27 @@ class BinNodejs
     
     public function switchVersion($version, $showWindow = false)
     {
-        global $neardBs, $neardCore, $neardLang, $neardWinbinder;
         Util::logDebug('Switch NodeJS version to ' . $version);
+        $this->updateConfig($version, $showWindow);
+    }
+    
+    public function update($showWindow = false)
+    {
+        $this->updateConfig(null, $showWindow);
+    }
+    
+    private function updateConfig($version = null, $showWindow = false)
+    {
+        global $neardBs, $neardCore, $neardLang, $neardWinbinder;
+        $version = $version == null ? $this->getVersion() : $version;
+        Util::logDebug('Update NodeJS ' . $version . ' config...');
         
         $boxTitle = sprintf($neardLang->getValue(Lang::SWITCH_VERSION_TITLE), $this->getName(), $version);
         
-        $newConf = str_replace('nodejs' . $this->getVersion(), 'nodejs' . $version, $this->getConf());
+        $conf = str_replace('nodejs' . $this->getVersion(), 'nodejs' . $version, $this->getConf());
         $neardConf = str_replace('nodejs' . $this->getVersion(), 'nodejs' . $version, $this->neardConf);
         
-        if (!file_exists($newConf) || !file_exists($neardConf)) {
+        if (!file_exists($conf) || !file_exists($neardConf)) {
             Util::logError('Neard config files not found for ' . $this->getName() . ' ' . $version);
             if ($showWindow) {
                 $neardWinbinder->messageBoxError(
@@ -130,10 +142,10 @@ class BinNodejs
             }
             return false;
         }
-    
+        
         // bootstrap
         Util::replaceDefine($neardCore->getBootstrapFilePath(), 'CURRENT_NODEJS_VERSION', $version);
-    
+        
         // neard.conf
         $this->setVersion($version);
     }

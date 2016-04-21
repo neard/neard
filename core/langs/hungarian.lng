@@ -1,0 +1,303 @@
+; Author: jmos
+;
+
+; General
+allRunningHint = "Szervizek futnak"
+someRunningHint = "%n szervíz fut a %t-ből"
+noneRunningHint = "Nem fut szervíz a %t-ből"
+
+; Single
+about = "Névjegy"
+aliases = "Alias"
+apps = "Alkalmazás"
+bins = "Bináris"
+changelog = "Változás napló"
+debug = "Hibakeresés"
+donate = "Adományok"
+donateVia = "Adománya %s keresztül"
+download = "Letölt"
+error = "Hiba"
+executable = "Végrehajtható"
+extensions = "Bővítmény"
+github = "Git-hub"
+help = "Segítség"
+lang = "Nyelv"
+logs = "Naplók"
+logsVerbose = "Bővített napló"
+modules = "Modulok"
+name = "Név"
+paypal = "Paypal"
+quit = "Kilép"
+readChangelog = "A %s legutobbi módosítás%s"
+reload = "Újra tölt"
+repos = "programtár"
+restart = "Újraindítás"
+service = "Szerviz"
+settings = "Beállítások"
+ssl = "SSL"
+startup = "Elindítás"
+status = "Státusz"
+target = "Cél"
+tools = "Eszközök"
+verboseDebug = "Hibakeresés"
+verboseReport = "Riport"
+verboseSimple = "Szimpla"
+version = "Verzió"
+versions = "Verziók"
+virtualHosts = "Virtuális hosztok"
+
+; Menu
+menuAbout = "Névjegy..."
+menuAccessLogs = "Forgalmi napló"
+menuAddAlias = "Új alias"
+menuAddVhost = "Új virtuális hoszt"
+menuChangePort = "Port váltás"
+menuCheckPort = "Port %s ellenörzés"
+menuCheckUpdate = "Frissítés ellenörzés"
+menuClearFolders = "Temp mappa üritése"
+menuEditAlias = "%s szerkesztése"
+menuEditVhost = "%s szerkesztése"
+menuErrorLogs = "Hiba naplók"
+menuGenSslCertificate = "SSL tanusítvány készítés"
+menuInstallService = "Szerviz telepítés"
+menuLaunchStartup = "Indítás a Windows indulásakor"
+menuLaunchStartupService = "Automatikus indítás"
+menuLocalhost = "Lokális gép"
+menuLogs = "Naplók"
+menuPutOffline = "Offline állapotba"
+menuPutOnline = "Online állapotba"
+menuRefreshRepos = "Programtár frissítés"
+menuRemoveService = "Szervíz eltávolítása"
+menuRestartService = "Szervíz újra inditása"
+menuRestartServices = "Minden szervíz újraindítása"
+menuRewriteLogs = "Átírás napló"
+menuScanReposStartup = "Programtár vizsgálat induláskor"
+menuSessionLogs = "Munkamenet napló"
+menuStartService = "Szervíz indítása"
+menuStartServices = "Minden szervíz indítása"
+menuStatsLogs = "Státusz napló"
+menuStopService = "Szerviz leállítása"
+menuStopServices = "Minden szerviz leállítása"
+menuTransferLogs = "Átviteli napló"
+menuWwwDirectory = "www mappa"
+
+; Bins
+apache = "Apache"
+filezilla = "Filezilla"
+mariadb = "MariaDB"
+mysql = "MySQL"
+nodejs = "Node.js"
+pear = "PEAR"
+php = "PHP"
+
+; Apps
+adminer = "Adminer"
+gitlist = "GitList"
+phpmyadmin = "phpMyAdmin"
+webgrind = "Webgrind"
+websvn = "WebSVN"
+
+; Tools
+composer = "Composer"
+console = "Console"
+git = "Git"
+hostseditor = "HostsEditor"
+imagemagick = "ImageMagick"
+notepad2 = "Notepad2"
+svn = "SVN"
+xdc = "XDebugClient"
+
+; Errors
+errorConfNotFound = "A %s konfiguraciós file nincs a %s -ban"
+errorExeNotFound = "A %s végrehajtható file nincs a %s -ban"
+errorFileNotFound = "A %s  file nincs a %s -ban"
+errorInvalidParameter = "Hibás paraméter '%s' : %s"
+
+; Action Switch version
+switchVersionTitle = "Verzió %s váltás %s"
+switchVersionReloadConfig = "Konfig újra töltés"
+switchVersionReloadBins = "Binárisok újratöltése"
+switchVersionRegistry = " %s regisztrációs kulcs visszaállítása"
+switchVersionResetServices = "minden szervíz visszaállítása"
+switchVersionSameError = "Már állítva van %s  %s"
+switchVersionOk = "A %s verzió sikeresen cserélve %s-re"
+switchVersionOkRestart = "A %s verzió sikeresen cserélve %s-re@nl@Nyomj OK-t a %s újraindításához"
+apacheIncpt = "Úgy tűnik az Apaache %s verzió nem fér össze a PHP %s verzióval"
+phpIncpt = "Úgy tűnik aPHP %s verzió nem fér össze az Apache %s verzióval"
+neardConfNotFoundError = "Near konfig file nincs meg a %s részére"
+neardConfMalformedError = "Neard konfig formátum hibás a %s részére"
+
+; Action Switch version
+switchPhpSettingTitle = "PHP beállítás váltás"
+switchPhpSettingNotFound = "PHP %s beállítás nincs a PHP %s konfig file-ban"
+
+; Action Check port
+checkPortTitle = "Port %s ellenörzés %s"
+portUsedBy = "%s portot használja %s"
+portNotUsed = "%s port nincs használva"
+portNotUsedBy = "%s porttot más alkalmazás használja"
+portUsedByAnotherDbms = "%s porttot más DBMS használja"
+portChanged = "Port %s sikeresen %s-re váltva"
+
+; Action Install service
+installServiceTitle = "%s szervíz telepítése"
+serviceAlreadyInstalled = "%s szervíz már telepítve van"
+serviceInstalled = "A %s szervíz sikeresen telepítve.@nl@Név: %s@nl@Port: %s"
+serviceInstallError = "Hiba történt %s szerviz telepítése közben."
+
+; Action Remove service
+removeServiceTitle = "%s szervíz eltávolítása"
+serviceNotExist = "A %s szervíz nem létezik"
+serviceRemoved = "A %s szerviz sikeresen eltávolítva"
+serviceRemoveError = "Hiba történt %s szerviz eltávolítása közben."
+
+; Action Delete alias
+deleteAliasTitle = "Alias törlése"
+deleteAlias = "Törölni akarja a %s aliast?"
+aliasRemoved = "Alias %s sikresen törölve"
+aliasRemoveError = "Nem sikerült törölni az aliast a konfig file-ből:@nl@%s"
+
+; Action Add/Edit alias
+addAliasTitle = "Alias hozzáadása"
+aliasNameLabel = "Név"
+aliasDestLabel = "Cél"
+aliasExpLabel = "Az alias elérhető http://localhost%s/%s?@nl@ és %s re mutat"
+aliasDestPath = "Alias cél könyvtár kiválasztása"
+aliasNotValidAlpha = "#Alias name '%s' is not a valid alphanumeric string."
+aliasAlreadyExists = "Alias %s már létezik"
+aliasCreated = "Alias %s sikeresen létrehozva@nl@Url: http://localhost%s/%s/@nl@Path: %s"
+aliasCreatedError = "Alias konfig file nem hozható létre"
+editAliasTitle = "%s alias szerkesztése"
+
+; Action Delete vhost
+deleteVhostTitle = "Virtualis hoszt törlése"
+deleteVhost = "Biztos törölni akarja a %s virtuális hosztot?"
+vhostRemoved = "Virtualis hoszt %s sikeresen törölve"
+vhostRemoveError = "Virtualis hoszt konfig file-t nem sikerült törölni @nl@%s"
+
+; Action Add/Edit vhost
+addVhostTitle = "Virtuális hoszt hozzáadása"
+vhostServerNameLabel = "Server neve"
+vhostDocumentRootLabel = "Dokumentum gyökér"
+vhostExpLabel = "A virtualis hoszt http://%s/ @nl@ és %s re mutat"
+vhostDocRootPath = "A virtualis hoszt dokumentum gyökerének kiválasztása"
+vhostNotValidDomain = "#The server name '%s' is not a valid domain name."
+vhostAlreadyExists = "Virtuális hoszt '%s' már létezik"
+vhostCreated = "#Virtual host '%s' successfully created.@nl@Do not forget to add the domain name to your hosts file (via HostsEditor tool).@nl@@nl@Url: http://%s/@nl@Path: %s"
+vhostCreatedError = "Virtuális hoszt konfig file nem hozható létre"
+editVhostTitle = "Virtuális hoszt %s szerkesztése"
+
+; Action Change port
+changePortTitle = "%s port cseréje"
+changePortCurrentLabel = "A portot %s : %s már használja"
+changePortNewLabel = "Új port"
+changePortSameError = "Ez ugyanaz a port amit most használ"
+
+; Action Change port
+tartupStartingText = "%s inditása Kérem várjon"
+startupRotationLogsText = "Napló arhiválás"
+startupKillOldProcsText = "Régi folyamat leállítása"
+startupRefreshHostnameText = "Hosztnév újítása"
+startupCheckBrowserText = "Böngésző ellenőrzés"
+startupCleanTmpText = "Ideglenes file-ok törlése"
+startupCleanOldBehaviorsText = "Elavult sajátosságok eltávolítása"
+startupRefreshAliasText = "Aliasok frissítése"
+startupRefreshVhostsText = "Virtuális hosztok frissítése"
+startupCheckPathText = "Útvonal ellenőrzés"
+startupScanFoldersText = "Mappa ellenőrzés"
+startupChangePathText = "%s útvonal változtatás"
+startupRegistryText = "%s regisztrációs kulcs ellenőrzése"
+startupRegistryErrorText = "Hiba %s regisztrácios kulcs beállításánál"
+startupUpdateConfigText = "#Update configuration"
+startupCheckServiceText = "#Checking %s service"
+startupInstallServiceText = "%s szervíz telepítése"
+startupStartServiceText = "%s szervíz inditása"
+startupPrepareRestartText = "%s újraindításának előkészítése"
+startupRestartingText = "%s újra indítása Kérem várjon"
+startupErrorTitle = "Indítási hiba"
+startupServiceError = "%s szerviz nem lett telepítve"
+startupPortError = "- Port érvénytelen:  %s"
+startupServiceCreateError = "- Szerviz %s nem lett létrehozva"
+startupServiceStartError = " Szerviz %s nem lett elindítva"
+startupServiceSyntaxError = "- Konfigurációs hiba: %s"
+startupServicePortError = "- Port %s használja a %s alkalmazás"
+startupRefreshGitReposText = "Git programtár frissítése"
+startupRefreshSvnReposText = "SVN programtár frissítése"
+startupGenSslCrtText = "SSL bizonyítvány készítése"
+
+; Action Quit
+exitLeavingText = "Kilépés %s"
+exitRemoveServiceText = "%s szervíz eltávolítása"
+exitStopOtherProcessText = "Külsö procesz leállítása"
+
+; Action Change browser
+changeBrowserTitle = "Böngésző változtatás"
+changeBrowserExpLabel = "Böngésző választás"
+changeBrowserOtherLabel = "Más"
+changeBrowserOk = "Böngésző sikeresen beállítva:@nl@%s"
+
+; Action About
+aboutTitle = "Névjegy..."
+aboutText = "%s@nl@Copyright(C) 2014 %s <%s>@nl@@nl@Neard is free software; you can redistribute it and/or modify it@nl@under the terms of the GNU LESSER GENERAL PUBLIC LICENSE.@nl@For more information, visit the website :"
+
+; Action Debug Apache
+debugApacheVersionNumber = "Verzió szám:"
+debugApacheCompileSettings = "Fordítási beállítások"
+debugApacheCompiledModules = "Fordított modulok"
+debugApacheConfigDirectives = "Konfigurációs beállítások"
+debugApacheVhostsSettings = "Virtuális hoszt beállítások"
+debugApacheLoadedModules = "Betöltött modulok"
+debugApacheSyntaxCheck = "Konfiguráció szintaktikai ellenörzése"
+
+; Action Debug MySQL
+debugMysqlVersion = "Verzió"
+debugMysqlVariables = "Változók"
+debugMysqlSyntaxCheck = "Konfiguráció szintaktikai ellenörzése"
+
+; Action Debug MariaDB
+debugMariadbVersion = "Verzió"
+debugMariadbVariables = "Változók"
+debugMariadbSyntaxCheck = "Konfiguráció szintaktikai ellenörzése"
+
+; Action others...
+registrySetErrorText = "Regisztri érték hiba : %s"
+
+; Action check version
+checkVersionTitle = "Verzió ellenőrzés"
+checkVersionAvailableText = "Új verzió elérhető"
+checkVersionChangelogText = "#Before updating please read the changelog : "
+checkVersionLatestText = "Ez a Neard legútóbbi verziója"
+
+; Action gen SSL certificate
+genSslTitle = "SSL tanusítvány készítés"
+genSslPath = "Cél könyvtár kiválasztása"
+genSslCreated = "SSL tanusítvány '%s' sikeresen létrehozva"
+genSslCreatedError = "SSL tanusítvány nem lett létrehozva"
+
+; Action Restart
+restartTitle = "Újraindítás"
+restartText = "%s ujraindítása az új beállításokhoz"
+
+; Windows forms
+buttonOk = "OK"
+buttonDelete = "Törlés"
+buttonSave = "Mentés"
+buttonFinish = "Befejez"
+buttonCancel = "Mágse"
+buttonNext = "Követk. >"
+buttonBack = "< Előző"
+buttonBrowse = "Böngészés"
+loading = "Töltődik"
+
+; Homepage
+homepageOfficialWebsite = "Hivatalos oldal"
+homepageServiceStarted = "%s porton elindult"
+homepageServiceStopped = "leállt"
+homepageAboutText = "Neard is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version."
+homepageQuestionsTitle = "Kérdések ?"
+homepageQuestionsText = "Ha hibát talál, vagy ötlete van a Neard-del kapcsolatban, a GitHubon kéretik jelezni" 
+homepagePostIssue = "Probléma jelzése"
+homepageDonateText = "Nagyon sok időt töltöttem ezzel a projektel, lehetőség van az adományra. Köszönöm mindenkinek aki adományozott nagyra értékelem" 
+homepagePhpinfoText = "phpinfo() megtekintése"
+homepageApcText = "APC kezelő"
+homepageBackText = "Vissza a kezdőlapra"

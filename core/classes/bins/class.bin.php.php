@@ -174,20 +174,33 @@ class BinPhp
     
     public function switchVersion($version, $showWindow = false)
     {
-        global $neardBs, $neardCore, $neardLang, $neardBins, $neardApps, $neardWinbinder;
         Util::logDebug('Switch PHP version to ' . $version);
+        $this->updateConfig($version, $showWindow);
+    }
+    
+    public function update($showWindow = false)
+    {
+        $this->updateConfig(null, $showWindow);
+    }
+    
+    private function updateConfig($version = null, $showWindow = false)
+    {
+        global $neardBs, $neardCore, $neardLang, $neardBins, $neardTools, $neardApps, $neardWinbinder;
+        $version = $version == null ? $this->getVersion() : $version;
+        Util::logDebug('Update PHP ' . $version . ' config...');
         
         $boxTitle = sprintf($neardLang->getValue(Lang::SWITCH_VERSION_TITLE), $this->getName(), $version);
         
         $phpPath = str_replace('php' . $this->getVersion(), 'php' . $version, $this->getCurrentPath());
-        $phpConf = str_replace('php' . $this->getVersion(), 'php' . $version, $this->getConf());
+        $conf = str_replace('php' . $this->getVersion(), 'php' . $version, $this->getConf());
         $neardConf = str_replace('php' . $this->getVersion(), 'php' . $version, $this->neardConf);
         
         $tsDll = $this->getTsDll($version);
+        $apacheShortVersion = substr(str_replace('.', '', $neardBins->getApache()->getVersion()), 0, 2);
         $apachePhpModuleName = $tsDll !== false ? substr($tsDll, 0, 4) . '_module' : null;
         $apachePhpModule = $this->getApacheModule($neardBins->getApache()->getVersion(), $version);
         
-        if (!file_exists($phpConf) || !file_exists($neardConf)) {
+        if (!file_exists($conf) || !file_exists($neardConf)) {
             Util::logError('Neard config files not found for ' . $this->getName() . ' ' . $version);
             if ($showWindow) {
                 $neardWinbinder->messageBoxError(
@@ -227,28 +240,24 @@ class BinPhp
         // neard.conf
         $this->setVersion($version);
         
-        // httpd.conf
+        // httpd.conf php module
         Util::replaceInFile($neardBins->getApache()->getConf(), array(
             '/^PHPIniDir\s.*/' => 'PHPIniDir "' . $phpPath . '"',
             '/^#?LoadFile\s.*php.ts\.dll.*/' => (!file_exists($phpPath . '/' . $tsDll) ? '#' : '') . 'LoadFile "' . $phpPath . '/' . $tsDll . '"',
             '/^LoadModule\sphp._module\s.*/' => 'LoadModule ' . $apachePhpModuleName . ' "' . $apachePhpModule . '"',
         ));
         
+        // httpd.conf svn module
+        $svnModulePath = $neardTools->getSvn()->getCurrentPath() . '/modules/apache' . $apacheShortVersion;
+        Util::replaceInFile($neardBins->getApache()->getConf(), array(
+            '/^LoadModule\s.*authz_svn_module\s.*/' => 'LoadModule authz_svn_module "' . $svnModulePath . '/mod_authz_svn.so"',
+            '/^LoadModule\s.*dav_svn_module\s.*/' => 'LoadModule dav_svn_module "' . $svnModulePath . '/mod_dav_svn.so"',
+            '/^#LoadModule\s.*authz_svn_module\s.*/' => '#LoadModule authz_svn_module "' . $svnModulePath . '/mod_authz_svn.so"',
+            '/^#LoadModule\s.*dav_svn_module\s.*/' => '#LoadModule dav_svn_module "' . $svnModulePath . '/mod_dav_svn.so"',
+        ));
+        
         // phpmyadmin
-        $pmaAlias = $neardBs->getAliasPath() . '/phpmyadmin.conf';
-        if (is_file($pmaAlias)) {
-            $pmaVersions = $neardApps->getPhpmyadmin()->getVersions();
-            $pmaVersion = $pmaVersions['40']['version'];
-            if (version_compare($version, '5.5', '>=')) {
-                $pmaVersion = $pmaVersions['45']['version'];
-            } elseif (version_compare($version, '5.3.7', '>=')) {
-                $pmaVersion = $pmaVersions['44']['version'];
-            }
-            Util::replaceInFile($pmaAlias, array(
-                '/^Alias\s\/phpmyadmin\s.*/' => 'Alias /phpmyadmin "' . $neardApps->getPhpmyadmin()->getCurrentPath() . '/' . $pmaVersion . '/"',
-                '/^<Directory\s.*/' => '<Directory "' . $neardApps->getPhpmyadmin()->getCurrentPath() . '/' . $pmaVersion . '/">',
-            ));
-        }
+        $neardApps->getPhpmyadmin()->update();
     }
     
     public function getSettings()
@@ -515,16 +524,19 @@ class BinPhp
     {
         $result = array();
         
-        if ($handle = opendir($this->getExtPath())) {
-            while (false !== ($file = readdir($handle))) {
-                if ($file != "." && $file != ".." && Util::endWith($file, '.dll')) {
-                    $name = str_replace('.dll', '', $file);
-                    $result[$name] = ActionSwitchPhpExtension::SWITCH_OFF;
-                }
-            }
-            closedir($handle);
+        $handle = @opendir($this->getExtPath());
+        if (!$handle) {
+            return $result;
         }
         
+        while (false !== ($file = readdir($handle))) {
+            if ($file != "." && $file != ".." && Util::endWith($file, '.dll')) {
+                $name = str_replace('.dll', '', $file);
+                $result[$name] = ActionSwitchPhpExtension::SWITCH_OFF;
+            }
+        }
+        
+        closedir($handle);
         ksort($result);
         return $result;
     }

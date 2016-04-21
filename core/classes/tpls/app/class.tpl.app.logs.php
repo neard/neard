@@ -16,14 +16,19 @@ class TplAppLogs
         global $neardBs;
         
         $files = array();
-        if ($handle = opendir($neardBs->getLogsPath())) {
-            while (false !== ($file = readdir($handle))) {
-                if ($file != "." && $file != ".." && Util::endWith($file, '.log')) {
-                    $files[] = $file;
-                }
-            }
-            closedir($handle);
+        
+        $handle = @opendir($neardBs->getLogsPath());
+        if (!$handle) {
+            return '';
         }
+        
+        while (false !== ($file = readdir($handle))) {
+            if ($file != "." && $file != ".." && Util::endWith($file, '.log')) {
+                $files[] = $file;
+            }
+        }
+        
+        closedir($handle);
         ksort($files);
         
         $result = '';

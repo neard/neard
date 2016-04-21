@@ -43,9 +43,6 @@ class ActionAddAlias
         $this->wbBtnSave = $neardWinbinder->createButton($this->wbWindow, $neardLang->getValue(Lang::BUTTON_SAVE), 300, 132);
         $this->wbBtnCancel = $neardWinbinder->createButton($this->wbWindow, $neardLang->getValue(Lang::BUTTON_CANCEL), 387, 132);
         
-        /*$text   = " This is test 3 on two lines\n Sunken Label";
-        $label3 = wb_create_control($this->wbWindow, EditBox, $text,  5, 60, 300, 200, 103, WBC_MULTILINE);*/
-        
         $neardWinbinder->setHandler($this->wbWindow, $this, 'processWindow');
         $neardWinbinder->mainLoop();
         $neardWinbinder->reset();
@@ -80,6 +77,14 @@ class ActionAddAlias
             case $this->wbBtnSave[WinBinder::CTRL_ID]:
                 $neardWinbinder->setProgressBarMax($this->wbProgressBar, self::GAUGE_SAVE + 1);
                 $neardWinbinder->incrProgressBar($this->wbProgressBar);
+                
+                if (!ctype_alnum($aliasName)) {
+                    $neardWinbinder->messageBoxError(
+                        sprintf($neardLang->getValue(Lang::ALIAS_NOT_VALID_ALPHA), $aliasName),
+                        $neardLang->getValue(Lang::ADD_ALIAS_TITLE));
+                    $neardWinbinder->resetProgressBar($this->wbProgressBar);
+                    break;
+                }
                 
                 if (is_file($neardBs->getAliasPath() . '/' . $aliasName . '.conf')) {
                     $neardWinbinder->messageBoxError(

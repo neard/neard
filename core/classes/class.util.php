@@ -7,37 +7,58 @@ class Util
     const LOG_INFO = 'INFO';
     const LOG_DEBUG = 'DEBUG';
     
-    public static function cleanArgv($key, $type = 'string')
+    public static function cleanArgv($name, $type = 'text')
     {
         if (isset($_SERVER['argv'])) {
-            if ($type == 'string') {
-                return (isset($_SERVER['argv'][$key]) && !empty($_SERVER['argv'][$key])) ? trim($_SERVER['argv'][$key]) : '';
+            if ($type == 'text') {
+                return (isset($_SERVER['argv'][$name]) && !empty($_SERVER['argv'][$name])) ? trim($_SERVER['argv'][$name]) : '';
             } elseif ($type == 'numeric') {
-                return (isset($_SERVER['argv'][$key]) && is_numeric($_SERVER['argv'][$key])) ? intval($_SERVER['argv'][$key]) : '';
+                return (isset($_SERVER['argv'][$name]) && is_numeric($_SERVER['argv'][$name])) ? intval($_SERVER['argv'][$name]) : '';
             } elseif ($type == 'boolean') {
-                return (isset($_SERVER['argv'][$key])) ? true : false;
+                return (isset($_SERVER['argv'][$name])) ? true : false;
             } elseif ($type == 'array') {
-                return (isset($_SERVER['argv'][$key]) && is_array($_SERVER['argv'][$key])) ? $_SERVER['argv'][$key] : array();
+                return (isset($_SERVER['argv'][$name]) && is_array($_SERVER['argv'][$name])) ? $_SERVER['argv'][$name] : array();
             }
         }
         
         return false;
     }
     
-    public static function cleanGetVar($key, $type = 'string')
+    public static function cleanGetVar($name, $type = 'text')
     {
-        if (is_string($key)) {
-            if ($type == 'string') {
-                return (isset($_GET[$key]) && !empty($_GET[$key])) ? stripslashes($_GET[$key]) : '';
+        if (is_string($name)) {
+            if ($type == 'text') {
+                return (isset($_GET[$name]) && !empty($_GET[$name])) ? stripslashes($_GET[$name]) : '';
             } elseif ($type == 'numeric') {
-                return (isset($_GET[$key]) && is_numeric($_GET[$key])) ? intval($_GET[$key]) : '';
+                return (isset($_GET[$name]) && is_numeric($_GET[$name])) ? intval($_GET[$name]) : '';
             } elseif ($type == 'boolean') {
-                return (isset($_GET[$key])) ? true : false;
+                return (isset($_GET[$name])) ? true : false;
             } elseif ($type == 'array') {
-                return (isset($_GET[$key]) && is_array($_GET[$key])) ? $_GET[$key] : array();
+                return (isset($_GET[$name]) && is_array($_GET[$name])) ? $_GET[$name] : array();
             }
         }
     
+        return false;
+    }
+    
+    public static function cleanPostVar($name, $type = 'text')
+    {
+        if (is_string($name)) {
+            if ($type == 'text') {
+                return (isset($_POST[$name]) && !empty($_POST[$name])) ? stripslashes(trim($_POST[$name])) : '';
+            } elseif ($type == 'number') {
+                return (isset($_POST[$name]) && is_numeric($_POST[$name])) ? intval($_POST[$name]) : '';
+            } elseif ($type == 'float') {
+                return (isset($_POST[$name]) && is_numeric($_POST[$name])) ? floatval($_POST[$name]) : '';
+            } elseif ($type == 'boolean') {
+                return (isset($_POST[$name])) ? true : false;
+            } elseif ($type == 'array') {
+                return (isset($_POST[$name]) && is_array($_POST[$name])) ? $_POST[$name] : array();
+            } elseif ($type == 'content') {
+                return (isset($_POST[$name]) && !empty($_POST[$name])) ? trim($_POST[$name]) : '';
+            }
+        }
+        
         return false;
     }
     
@@ -104,7 +125,7 @@ class Util
             return;
         }
         
-        while ($file = readdir($handle)) {
+        while (false !== ($file = readdir($handle))) {
             if ($file == '.' || $file == '..' || in_array($file, $exclude)) {
                 continue;
             }
@@ -156,7 +177,7 @@ class Util
             return false;
         }
         
-        while ($file = readdir($handle)) {
+        while (false !== ($file = readdir($handle))) {
             if ($file == '.' || $file == '..') {
                 continue;
             }
@@ -184,7 +205,7 @@ class Util
             return $result;
         }
         
-        while ($file = readdir($handle)) {
+        while (false !== ($file = readdir($handle))) {
             if ($file == '.' || $file == '..') {
                 continue;
             }
@@ -245,55 +266,6 @@ class Util
         return $result;
     }
     
-    public static function refactorWindowsHosts()
-    {
-        $header = '# Copyright (c) 1993-2006 Microsoft Corp.' . PHP_EOL;
-        $header .= '#' . PHP_EOL;
-        $header .= '# This is a sample HOSTS file used by Microsoft TCP/IP for Windows.' . PHP_EOL;
-        $header .= '#' . PHP_EOL;
-        $header .= '# This file contains the mappings of IP addresses to host names. Each' . PHP_EOL;
-        $header .= '# entry should be kept on an individual line. The IP address should' . PHP_EOL;
-        $header .= '# be placed in the first column followed by the corresponding host name.' . PHP_EOL;
-        $header .= '# The IP address and the host name should be separated by at least one' . PHP_EOL;
-        $header .= '# space.' . PHP_EOL . '#' . PHP_EOL;
-        $header .= '# Additionally, comments (such as these) may be inserted on individual' . PHP_EOL;
-        $header .= '# lines or following the machine name denoted by a \'#\' symbol.' . PHP_EOL . PHP_EOL;
-        
-        $hosts = self::getWindowsHosts();
-        if (!empty($hosts)) {
-            $enabledHosts = '## Enabled' . PHP_EOL;
-            $disabledHosts = '## Disabled' . PHP_EOL;
-            foreach($hosts as $host) {
-                if ($host['enabled']) {
-                    $enabledHosts .= str_pad($host['ip'], 20) . $host['domain'] . PHP_EOL;
-                } else {
-                    $disabledHosts .= '# ' . str_pad($host['ip'], 18) . $host['domain'] . PHP_EOL;
-                }
-            }
-            file_put_contents(HOSTS_FILE, $header . $enabledHosts . PHP_EOL . $disabledHosts);
-        }
-    }
-    
-    public static function addWindowsHost($ip, $domain)
-    {
-        $alreadyExists = false;
-        $hosts = self::getWindowsHosts();
-        if (!empty($hosts)) {
-            foreach($hosts as $host) {
-                if ($host['ip'] == $ip && $host['domain'] == $domain) {
-                    if (!$host['enabled']) {
-                        new ActionSwitchHost(array($ip, $domain, ActionSwitchHost::SWITCH_ON));
-                    }
-                    $alreadyExists = true;
-                    break;
-                }
-            }
-        }
-        if (!$alreadyExists && file_put_contents(HOSTS_FILE, PHP_EOL . $ip . ' ' . $domain, FILE_APPEND)) {
-            self::refactorWindowsHosts();
-        }
-    }
-    
     public static function replaceDefine($path, $var, $value)
     {
         self::replaceInFile($path, array(
@@ -338,16 +310,19 @@ class Util
     {
         $result = array();
         
-        if ($handle = opendir($path)) {
-            while (false !== ($file = readdir($handle))) {
-                $filePath = $path . '/' . $file;
-                if ($file != "." && $file != ".." && is_dir($filePath)) {
-                    $result[] = str_replace(basename($path), '', $file);
-                }
-            }
-            closedir($handle);
+        $handle = @opendir($path);
+        if (!$handle) {
+            return false;
         }
         
+        while (false !== ($file = readdir($handle))) {
+            $filePath = $path . '/' . $file;
+            if ($file != "." && $file != ".." && is_dir($filePath)) {
+                $result[] = str_replace(basename($path), '', $file);
+            }
+        }
+        
+        closedir($handle);
         return $result;
     }
     
@@ -563,7 +538,7 @@ class Util
             return $result;
         }
         
-        while ($folder = readdir($handle)) {
+        while (false !== ($folder = readdir($handle))) {
             if ($folder == '.' || $folder == '..') {
                 continue;
             }
@@ -615,7 +590,7 @@ class Util
     public static function startLoading()
     {
         global $neardCore, $neardWinbinder;
-        $neardWinbinder->exec($neardCore->getPhpCliSilentExe(), Core::BOOTSTRAP_FILE . ' ' . Action::LOADING);
+        $neardWinbinder->exec($neardCore->getPhpExe(), Core::BOOTSTRAP_FILE . ' ' . Action::LOADING);
     }
     
     public static function stopLoading()
@@ -685,7 +660,7 @@ class Util
     
     public static function getVersionUrl($version)
     {
-        return 'https://github.com/crazy-max/neard/releases/download/v' . $version . '/neard-' . $version . '.zip';
+        return 'https://github.com/crazy-max/neard/releases/download/v' . $version . '/neard-' . $version . '.7z';
     }
     
     public static function getLatestChangelog($markdown = false)
@@ -706,6 +681,11 @@ class Util
             return null;
         }
         return $markdown ? Markdown(preg_replace('/^.+\n.*\n/', '', $content)) : $content;
+    }
+    
+    public static function getLatestChangelogLink()
+    {
+        return 'https://github.com/crazy-max/neard/blob/master/CHANGELOG.md';
     }
     
     public static function getRemoteFilesize($url, $humanFileSize = true)
@@ -740,30 +720,18 @@ class Util
         return self::contains($processor, 'x86');
     }
     
-    public static function getApacheHeaders($url)
+    public static function getHttpHeaders($url)
     {
-        global $neardBs;
+        global $neardCore, $neardHomepage;
         
         $result = array();
-        $context = stream_context_create(array(
-            'ssl' => array(
-                'verify_peer' => false,
-                'verify_peer_name' => false,
-                'allow_self_signed' => true,
-            )
-        ));
+        $pingUrl = $url . '/' . $neardHomepage->getResourcesPath() . '/ping.php';
         
-        $headerFile = Util::random() . '.php';
-        touch($neardBs->getWwwPath() . '/' . $headerFile);
-        
-        $fp = @fopen($url . '/' . $headerFile, 'r', false, $context);
-        if ($fp) {
-            $meta = stream_get_meta_data($fp);
-            $result = isset($meta['wrapper_data']) ? $meta['wrapper_data'] : $result;
-            fclose($fp);
+        if (function_exists('curl_version')) {
+            $result = self::getCurlHttpHeaders($pingUrl);
+        } else {
+            $result = self::getFopenHttpHeaders($pingUrl);
         }
-        
-        unlink($neardBs->getWwwPath() . '/' . $headerFile);
         
         if (!empty($result)) {
             $rebuildResult = array();
@@ -775,13 +743,59 @@ class Util
             }
             $result = $rebuildResult;
             
-            self::logDebug('getApacheHeaders:');
+            self::logDebug('getHttpHeaders:');
             foreach ($result as $header) {
                 self::logDebug('-> ' . $header);
             }
         }
         
         return $result;
+    }
+    
+    public static function getFopenHttpHeaders($url)
+    {
+        $result = array();
+        
+        $context = stream_context_create(array(
+            'ssl' => array(
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true,
+            )
+        ));
+        
+        $fp = @fopen($url, 'r', false, $context);
+        if ($fp) {
+            $meta = stream_get_meta_data($fp);
+            $result = isset($meta['wrapper_data']) ? $meta['wrapper_data'] : $result;
+            fclose($fp);
+        }
+        
+        return $result;
+    }
+    
+    public static function getCurlHttpHeaders($url)
+    {
+        $result = array();
+        
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_VERBOSE, true);
+        curl_setopt($ch, CURLOPT_HEADER, true);
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        
+        $response = @curl_exec($ch);
+        if (empty($response)) {
+            return $result;
+        }
+
+        list($headerStr, $bodyStr) = explode("\r\n\r\n", $response, 2);
+        if (empty($headerStr)) {
+            return $result;
+        }
+        
+        return explode("\n", $headerStr);
     }
     
     public static function getHeaders($host, $port, $ssl = false)
@@ -825,13 +839,20 @@ class Util
     
     public static function getRemoteFile($url)
     {
-        return @file_get_contents($url, false, stream_context_create(array(
+        /*return @file_get_contents($url, false, stream_context_create(array(
             'ssl' => array(
                 'verify_peer' => false,
                 'verify_peer_name' => false,
                 'allow_self_signed' => true,
             )
-        )));
+        )));*/
+        
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        return @curl_exec($ch);
     }
     
     public static function isPortInUse($port)
@@ -843,5 +864,17 @@ class Util
             return $process != null ? $process : 'N/A';
         }
         return false;
+    }
+    
+    public static function isValidDomainName($domainName)
+    {
+        return preg_match('/^([a-z\d](-*[a-z\d])*)(\.([a-z\d](-*[a-z\d])*))*$/i', $domainName)
+            && preg_match('/^.{1,253}$/', $domainName)
+            && preg_match('/^[^\.]{1,63}(\.[^\.]{1,63})*$/', $domainName);
+    }
+    
+    public static function isAlphanumeric($string)
+    {
+        return ctype_alnum($string);
     }
 }
