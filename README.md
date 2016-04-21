@@ -181,7 +181,7 @@ LGPL. See `LICENSE` for more details.
 ![](https://raw.github.com/crazy-max/neard/master/core/resources/screenshots/neard-console-20160421.png)
 
 ### Generate SSL certificate
-![](https://raw.github.com/crazy-max/neard/master/core/resources/screenshots/neard-change-gen-ssl-20160421.png)  ![](https://raw.github.com/crazy-max/neard/master/core/resources/screenshots/neard-change-gen-ssl-files-20160421.png)
+![](https://raw.github.com/crazy-max/neard/master/core/resources/screenshots/neard-gen-ssl-20160421.png)  ![](https://raw.github.com/crazy-max/neard/master/core/resources/screenshots/neard-gen-ssl-files-20160421.png)
 
 ### Change browser
 ![](https://raw.github.com/crazy-max/neard/master/core/resources/screenshots/neard-change-browser-20160421.png)

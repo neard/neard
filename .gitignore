@@ -9,11 +9,3 @@
 # Neard
 /.dev
 /.dev/*
-/alias
-/alias/*
-!/alias/adminer.conf
-!/alias/gitlist.conf
-!/alias/phpmyadmin.conf
-!/alias/svn.conf
-!/alias/webgrind.conf
-!/alias/websvn.conf
