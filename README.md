@@ -175,7 +175,7 @@ LGPL. See `LICENSE` for more details.
 ![](https://raw.github.com/crazy-max/neard/master/core/resources/screenshots/neard-menu1-20140814.png)  ![](https://raw.github.com/crazy-max/neard/master/core/resources/screenshots/neard-menu2-20140814.png)
 
 ### Homepage
-![](https://raw.github.com/crazy-max/neard/master/core/resources/screenshots/neard-homepage-20160421.png)
+![](https://raw.github.com/crazy-max/neard/master/core/resources/screenshots/neard-homepage-20160422.png)
 
 ### Console
 ![](https://raw.github.com/crazy-max/neard/master/core/resources/screenshots/neard-console-20160421.png)
