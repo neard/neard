@@ -26,7 +26,7 @@
 
 ## About
 
-Neard is an Integrated Web Development Tools environment combining :
+Neard is a portable WAMP software stack involving :
 
 ### Binaries
 
