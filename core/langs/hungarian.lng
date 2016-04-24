@@ -104,6 +104,7 @@ git = "Git"
 hostseditor = "HostsEditor"
 imagemagick = "ImageMagick"
 notepad2 = "Notepad2"
+phpunit = "PHPUnit"
 svn = "SVN"
 xdc = "XDebugClient"
 
@@ -194,7 +195,7 @@ changePortNewLabel = "Új port"
 changePortSameError = "Ez ugyanaz a port amit most használ"
 
 ; Action Change port
-tartupStartingText = "%s inditása Kérem várjon"
+startupStartingText = "%s inditása Kérem várjon"
 startupRotationLogsText = "Napló arhiválás"
 startupKillOldProcsText = "Régi folyamat leállítása"
 startupRefreshHostnameText = "Hosztnév újítása"

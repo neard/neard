@@ -8,6 +8,7 @@ class Tools
     private $hostseditor;
     private $imagemagick;
     private $notepad2;
+    private $phpunit;
     private $svn;
     private $xdc;
     
@@ -38,6 +39,7 @@ class Tools
             $this->getHostsEditor(),
             $this->getImageMagick(),
             $this->getNotepad2(),
+            $this->getPhpUnit(),
             $this->getSvn(),
             $this->getXdc(),
         );
@@ -89,6 +91,14 @@ class Tools
             $this->notepad2 = new ToolNotepad2($this->getRootPath('notepad2'));
         }
         return $this->notepad2;
+    }
+    
+    public function getPhpUnit()
+    {
+        if ($this->phpunit == null) {
+            $this->phpunit = new ToolPhpUnit($this->getRootPath('phpunit'));
+        }
+        return $this->phpunit;
     }
     
     public function getSvn()

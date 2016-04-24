@@ -50,8 +50,9 @@ Neard is a portable WAMP software stack involving :
 * **Composer**, Dependency Manager for PHP.
 * **Console2** + **TCC/LE**, Multi command prompt including PEAR, MySQL / MariaDB, Git, SVN, Node.js and Composer views.
 * **Git**, a widely used version control system for software development.
-* **HostsEditor**, is a small application for editing windows Hosts file.
+* **HostsEditor**, a small application for editing windows Hosts file.
 * **ImageMagick**, a free and open-source software suite for displaying, converting, and editing raster image and vector image files.
+* **PHPUnit**, a programmer-oriented testing framework for PHP. It is an instance of the xUnit architecture for unit testing frameworks.
 * **SVN**, a software versioning and revision control system.
 * **XDebugClient**, a simple frontend for XDebug.
 
@@ -93,6 +94,7 @@ Neard offers several versions of the various binaries, applications and tools fo
 * Neard HostsEditor repository : [neard-tool-hostseditor](https://github.com/crazy-max/neard-tool-hostseditor)
 * Neard ImageMagick repository : [neard-tool-imagemagick](https://github.com/crazy-max/neard-tool-imagemagick)
 * Neard Notepad2 repository : [neard-tool-notepad2](https://github.com/crazy-max/neard-tool-notepad2)
+* Neard PHPUnit repository : [neard-tool-phpunit](https://github.com/crazy-max/neard-tool-phpunit)
 * Neard SVN repository : [neard-tool-svn](https://github.com/crazy-max/neard-tool-svn)
 
 #### Applications repos

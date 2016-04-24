@@ -76,6 +76,7 @@
         <getbundle releasesurl="${tool.hostseditor.url}" version="${tool.hostseditor.version}" dest="${release.target}/${release.name}/tools/hostseditor" />
         <getbundle releasesurl="${tool.imagemagick.url}" version="${tool.imagemagick.version}" dest="${release.target}/${release.name}/tools/imagemagick" />
         <getbundle releasesurl="${tool.notepad2.url}" version="${tool.notepad2.version}" dest="${release.target}/${release.name}/tools/notepad2" />
+        <getbundle releasesurl="${tool.phpunit.url}" version="${tool.phpunit.version}" dest="${release.target}/${release.name}/tools/phpunit" />
         <getbundle releasesurl="${tool.svn.url}" version="${tool.svn.version}" dest="${release.target}/${release.name}/tools/svn" />
         <getbundle releasesurl="${tool.xdc.url}" version="${tool.xdc.version}" dest="${release.target}/${release.name}/tools/xdc" />
         
@@ -95,6 +96,7 @@
                 <filter token="TOOL_HOSTSEDITOR_VERSION" value="${tool.hostseditor.version}"/>
                 <filter token="TOOL_IMAGEMAGICK_VERSION" value="${tool.imagemagick.version}"/>
                 <filter token="TOOL_NOTEPAD2_VERSION" value="${tool.notepad2.version}"/>
+                <filter token="TOOL_PHPUNIT_VERSION" value="${tool.phpunit.version}"/>
                 <filter token="TOOL_SVN_VERSION" value="${tool.svn.version}"/>
                 <filter token="TOOL_XDC_VERSION" value="${tool.xdc.version}"/>
                 

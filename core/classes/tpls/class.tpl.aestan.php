@@ -39,6 +39,7 @@ class TplAestan
     const GLYPH_COMPOSER = 37;
     const GLYPH_PEAR = 38;
     const GLYPH_HOSTSEDITOR = 39;
+    const GLYPH_PHPUNIT = 40;
     
     const SERVICE_START = 'startresume';
     const SERVICE_STOP = 'stop';
