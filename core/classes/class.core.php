@@ -48,6 +48,12 @@ class Core
         return $neardBs->getCorePath($aetrayPath) . '/resources';
     }
     
+    public function getIconsPath($aetrayPath = false)
+    {
+        global $neardCore;
+        return $neardCore->getResourcesPath($aetrayPath) . '/icons';
+    }
+    
     public function getScriptsPath($aetrayPath = false)
     {
         global $neardBs;

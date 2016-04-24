@@ -104,6 +104,7 @@ git = "Git"
 hostseditor = "HostsEditor"
 imagemagick = "ImageMagick"
 notepad2 = "Notepad2"
+phpunit = "PHPUnit"
 svn = "SVN"
 xdc = "XDebugClient"
 

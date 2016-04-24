@@ -9,6 +9,7 @@ class TplConsole
     const ICON_SVN = 'svn.ico';
     const ICON_NODEJS = 'nodejs.ico';
     const ICON_COMPOSER = 'composer.ico';
+    const ICON_PHPUNIT = 'phpunit.ico';
     
     private function __construct()
     {
@@ -218,6 +219,7 @@ class TplConsole
                 self::getTabSvnSection() . PHP_EOL .
                 self::getTabNodejsSection() . PHP_EOL .
                 self::getTabComposerSection() . PHP_EOL .
+                self::getTabPhpUnitSection() . PHP_EOL .
             self::getIncrStr(1) . '</tabs>';
     }
     
@@ -356,9 +358,25 @@ class TplConsole
         );
     }
     
+    private static function getTabPhpUnitSection()
+    {
+        global $neardBs, $neardTools;
+    
+        $shell = $neardTools->getConsole()->getCmdShell() . ' ' .
+            '&quot;' . $neardTools->getPhpUnit()->getExe() . '&quot; -V';
+    
+        return self::getTab(
+            $neardTools->getConsole()->getTabTitlePhpUnit(),
+            self::ICON_PHPUNIT,
+            Util::formatWindowsPath($shell),
+            $neardBs->getWwwPath()
+        );
+    }
+    
     private static function getTab($title, $icon, $shell, $initDir)
     {
-        return self::getIncrStr(2) . '<tab title="' . $title . '" icon="icons/' . $icon . '" use_default_icon="0">' . PHP_EOL .
+        global $neardCore;
+        return self::getIncrStr(2) . '<tab title="' . $title . '" icon="' . $neardCore->getIconsPath(false) . '/' . $icon . '" use_default_icon="0">' . PHP_EOL .
                 self::getIncrStr(3) . '<console shell="' . $shell . '" init_dir="' . $initDir . '" run_as_user="0" user=""/>' . PHP_EOL .
                 self::getIncrStr(3) . '<cursor style="0" r="255" g="255" b="255"/>' . PHP_EOL .
                 self::getIncrStr(3) . '<background type="0" r="0" g="0" b="0">' . PHP_EOL .

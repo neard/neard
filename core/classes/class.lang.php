@@ -105,6 +105,7 @@ class Lang
     const HOSTSEDITOR = 'hostseditor';
     const IMAGEMAGICK = 'imagemagick';
     const NOTEPAD2 = 'notepad2';
+    const PHPUNIT = 'phpunit';
     const SVN = 'svn';
     const XDC = 'xdc';
     
@@ -408,6 +409,7 @@ class Lang
             self::HOSTSEDITOR,
             self::IMAGEMAGICK,
             self::NOTEPAD2,
+            self::PHPUNIT,
             self::SVN,
             self::XDC,
             

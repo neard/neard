@@ -44,6 +44,11 @@ class TplAppTools
                 $neardTools->getConsole()->getTabTitlePear()
             ) . PHP_EOL .
             TplAestan::getItemConsole(
+                $neardLang->getValue(Lang::PHPUNIT),
+                TplAestan::GLYPH_PHPUNIT,
+                $neardTools->getConsole()->getTabTitlePhpUnit()
+            ) . PHP_EOL .
+            TplAestan::getItemConsole(
                 $neardLang->getValue(Lang::SVN),
                 TplAestan::GLYPH_SVN,
                 $neardTools->getConsole()->getTabTitleSvn()

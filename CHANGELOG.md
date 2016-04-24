@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.0.19 (2016/04/21)
+
+* Add PHPUnit tool : [4.8.24-r1, 5.3.2-r1](https://github.com/crazy-max/neard-bin-apache/releases/tag/r2) ([Issue #121](https://github.com/crazy-max/neard/issues/121))
+* Begin Wiki documentation ([Issue #31](https://github.com/crazy-max/neard/issues/31))
+* Move Console icons to core resources
+* Upgrade Console tool to pack 2 release 3
+
+### Upgrade from previous release
+
+* Add line `phpunitVersion = "4.8.24"` after `notepad2Version` in `neard.conf`
+* Copy folder `tools\phpunit`
+* Remove then replace folder `core`
+* Remove then replace folder `tools\console2`
+* Remove then replace file `sprites.dat`
+
 ## 1.0.18 (2016/04/21)
 
 * Bug while checking port on MariaDB / MySQL ([Issue #130](https://github.com/crazy-max/neard/issues/130))
