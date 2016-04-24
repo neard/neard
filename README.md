@@ -170,35 +170,4 @@ LGPL. See `LICENSE` for more details.
 
 ## Screenshots
 
-### Startup screen
-![](https://raw.github.com/crazy-max/neard/master/core/resources/screenshots/neard-startup-min-20160421.png)
-
-### Menu Left and Right
-![](https://raw.github.com/crazy-max/neard/master/core/resources/screenshots/neard-menu1-20140814.png)  ![](https://raw.github.com/crazy-max/neard/master/core/resources/screenshots/neard-menu2-20140814.png)
-
-### Homepage
-![](https://raw.github.com/crazy-max/neard/master/core/resources/screenshots/neard-homepage-20160422.png)
-
-### Console
-![](https://raw.github.com/crazy-max/neard/master/core/resources/screenshots/neard-console-20160421.png)
-
-### Generate SSL certificate
-![](https://raw.github.com/crazy-max/neard/master/core/resources/screenshots/neard-gen-ssl-20160421.png)  ![](https://raw.github.com/crazy-max/neard/master/core/resources/screenshots/neard-gen-ssl-files-20160421.png)
-
-### Change browser
-![](https://raw.github.com/crazy-max/neard/master/core/resources/screenshots/neard-change-browser-20160421.png)
-
-### Apache add alias
-![](https://raw.github.com/crazy-max/neard/master/core/resources/screenshots/neard-apache-add-alias-20160421.png)
-
-### Apache add vhost
-![](https://raw.github.com/crazy-max/neard/master/core/resources/screenshots/neard-apache-add-vhost-20160421.png)
-
-### Apache change port
-![](https://raw.github.com/crazy-max/neard/master/core/resources/screenshots/neard-apache-change-port-20160421.png)
-
-### Apache check port
-![](https://raw.github.com/crazy-max/neard/master/core/resources/screenshots/neard-apache-check-port-20160421.png)
-
-### About
-![](https://raw.github.com/crazy-max/neard/master/core/resources/screenshots/neard-about-20160421.png)
+See [Screenshots Wiki page](https://github.com/crazy-max/neard/wiki/Screenshots).
