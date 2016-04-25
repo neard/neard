@@ -241,12 +241,12 @@ class BinApache
     public function switchVersion($version, $showWindow = false)
     {
         Util::logDebug('Switch Apache version to ' . $version);
-        $this->updateConfig($version, $showWindow);
+        return $this->updateConfig($version, $showWindow);
     }
     
     public function update($showWindow = false)
     {
-        $this->updateConfig(null, $showWindow);
+        return $this->updateConfig(null, $showWindow);
     }
     
     private function updateConfig($version = null, $showWindow = false)
@@ -320,6 +320,8 @@ class BinApache
             '/^#LoadModule\sauthz_svn_module\s*/' => '#LoadModule authz_svn_module "' . $svnModulePath . '/mod_authz_svn.so"',
             '/^#LoadModule\sdav_svn_module\s*/' => '#LoadModule dav_svn_module "' . $svnModulePath . '/mod_dav_svn.so"',
         ));
+        
+        return true;
     }
     
     public function getModules()
