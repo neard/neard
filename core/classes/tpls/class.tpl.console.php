@@ -363,7 +363,7 @@ class TplConsole
         global $neardBs, $neardTools;
     
         $shell = $neardTools->getConsole()->getCmdShell() . ' ' .
-            '&quot;' . $neardTools->getPhpUnit()->getExe() . '&quot; -V';
+            '&quot;' . $neardTools->getPhpUnit()->getExe() . '&quot; --version';
     
         return self::getTab(
             $neardTools->getConsole()->getTabTitlePhpUnit(),
