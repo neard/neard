@@ -261,12 +261,12 @@ class BinMysql
     public function switchVersion($version, $showWindow = false)
     {
         Util::logDebug('Switch MySQL version to ' . $version);
-        $this->updateConfig($version, $showWindow);
+        return $this->updateConfig($version, $showWindow);
     }
     
     public function update($showWindow = false)
     {
-        $this->updateConfig(null, $showWindow);
+        return $this->updateConfig(null, $showWindow);
     }
     
     private function updateConfig($version = null, $showWindow = false)
@@ -308,6 +308,8 @@ class BinMysql
         
         // neard.conf
         $this->setVersion($version);
+        
+        return true;
     }
     
     public function initData() {
