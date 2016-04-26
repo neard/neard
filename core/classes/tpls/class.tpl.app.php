@@ -167,7 +167,6 @@ class TplApp
             $tplReload[self::SECTION_CALL] . PHP_EOL .
             TplAppClearFolders::process() . PHP_EOL .
             $tplBrowser[self::SECTION_CALL] . PHP_EOL .
-            TplAestan::getItemConsole($neardLang->getValue(Lang::CONSOLE), TplAestan::GLYPH_CONSOLE) . PHP_EOL .
             
             TplAestan::getItemSeparator() . PHP_EOL .
             $tplLang[self::SECTION_CALL] . PHP_EOL .
@@ -199,10 +198,8 @@ class TplApp
         $tplMariadb = TplAppMariadb::process();
         $tplFilezilla = TplAppFilezilla::process();
         
-        $tplGit = TplAppGit::process();
-        $tplSvn = TplAppSvn::process();
-        
         $tplLogs = TplAppLogs::process();
+        $tplApps = TplAppApps::process();
         $tplTools = TplAppTools::process();
         
         $tplServices = TplAppServices::process();
@@ -225,15 +222,11 @@ class TplApp
             $tplMariadb[self::SECTION_CALL] . PHP_EOL .
             $tplFilezilla[self::SECTION_CALL] . PHP_EOL .
             
-            //// Git / SVN menus
-            TplAestan::getItemSeparator() . PHP_EOL .
-            $tplGit[self::SECTION_CALL] . PHP_EOL .
-            $tplSvn[self::SECTION_CALL] . PHP_EOL .
-            
             //// Stuff menus
             TplAestan::getItemSeparator() . PHP_EOL .
             $tplLogs[self::SECTION_CALL] . PHP_EOL .
             $tplTools[self::SECTION_CALL] . PHP_EOL .
+            $tplApps[self::SECTION_CALL] . PHP_EOL .
             
             //// Services
             TplAestan::getItemSeparator() . PHP_EOL .
@@ -250,10 +243,9 @@ class TplApp
             PHP_EOL . $tplMysql[self::SECTION_CONTENT] .
             PHP_EOL . $tplMariadb[self::SECTION_CONTENT] .
             PHP_EOL . $tplFilezilla[self::SECTION_CONTENT] .
-            PHP_EOL . $tplGit[self::SECTION_CONTENT] .
-            PHP_EOL . $tplSvn[self::SECTION_CONTENT] .
             PHP_EOL . $tplLogs[self::SECTION_CONTENT] .
             PHP_EOL . $tplTools[self::SECTION_CONTENT] .
+            PHP_EOL . $tplApps[self::SECTION_CONTENT] .
             PHP_EOL . $tplServices[self::SECTION_CONTENT] .
             PHP_EOL . $tplOnline[self::SECTION_CONTENT];
     }

@@ -34,12 +34,16 @@ class TplAppSvn
             false, get_called_class()
         );
         
-        return
+        return TplAestan::getItemConsole(
+                $neardLang->getValue(Lang::SVN_CONSOLE),
+                TplAestan::GLYPH_SVN,
+                $neardTools->getConsole()->getTabTitleSvn()
+            ) . PHP_EOL .
+            TplAestan::getItemSeparator() . PHP_EOL .
         
             // Items
             (!$emptyRepos ? $tplRepos[TplApp::SECTION_CALL] . PHP_EOL : '') .
             $tplRefreshRepos[TplApp::SECTION_CALL] . PHP_EOL .
-            TplAestan::getItemLink($neardLang->getValue(Lang::WEBSVN), 'websvn/', true) . PHP_EOL .
             $tplRefreshReposStartup[TplApp::SECTION_CALL] . PHP_EOL .
             
             // Actions

@@ -34,12 +34,16 @@ class TplAppGit
             false, get_called_class()
         );
         
-        return
+        return TplAestan::getItemConsole(
+                $neardLang->getValue(Lang::GIT_CONSOLE),
+                TplAestan::GLYPH_GIT,
+                $neardTools->getConsole()->getTabTitleGit()
+            ) . PHP_EOL .
+            TplAestan::getItemSeparator() . PHP_EOL .
         
             // Items
             (!$emptyRepos ? $tplRepos[TplApp::SECTION_CALL] . PHP_EOL : '') .
             $tplRefreshRepos[TplApp::SECTION_CALL] . PHP_EOL .
-            TplAestan::getItemLink($neardLang->getValue(Lang::GITLIST), 'gitlist/', true) . PHP_EOL .
             $tplRefreshReposStartup[TplApp::SECTION_CALL] . PHP_EOL .
             
             // Actions
