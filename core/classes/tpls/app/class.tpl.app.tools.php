@@ -17,26 +17,36 @@ class TplAppTools
     {
         global $neardLang, $neardTools;
         
+        $tplGit = TplAppGit::process();
+        $tplSvn = TplAppSvn::process();
+        
         $tplGenSslCertificate = TplApp::getActionMulti(
             self::ACTION_GEN_SSL_CERTIFICATE, null,
             array($neardLang->getValue(Lang::MENU_GEN_SSL_CERTIFICATE), TplAestan::GLYPH_SSL_CERTIFICATE),
             false, get_called_class()
         );
         
-        return TplAestan::getItemConsole(
+        return $tplGit[TplApp::SECTION_CALL] . PHP_EOL .
+            $tplSvn[TplApp::SECTION_CALL] . PHP_EOL .
+            TplAestan::getItemConsole(
                 $neardLang->getValue(Lang::COMPOSER),
                 TplAestan::GLYPH_COMPOSER,
                 $neardTools->getConsole()->getTabTitleComposer()
-            ) . PHP_EOL .
-            TplAestan::getItemConsole(
-                $neardLang->getValue(Lang::GIT),
-                TplAestan::GLYPH_GIT,
-                $neardTools->getConsole()->getTabTitleGit()
             ) . PHP_EOL .
             TplAestan::getItemExe(
                 $neardLang->getValue(Lang::HOSTSEDITOR),
                 $neardTools->getHostsEditor()->getExe(),
                 TplAestan::GLYPH_HOSTSEDITOR
+            ) . PHP_EOL .
+            TplAestan::getItemExe(
+                $neardLang->getValue(Lang::IMAGEMAGICK),
+                $neardTools->getImageMagick()->getExe(),
+                TplAestan::GLYPH_IMAGEMAGICK
+            ) . PHP_EOL .
+            TplAestan::getItemExe(
+                $neardLang->getValue(Lang::NOTEPAD2),
+                $neardTools->getNotepad2()->getExe(),
+                TplAestan::GLYPH_NOTEPAD2
             ) . PHP_EOL .
             TplAestan::getItemConsole(
                 $neardLang->getValue(Lang::PEAR),
@@ -48,28 +58,23 @@ class TplAppTools
                 TplAestan::GLYPH_PHPUNIT,
                 $neardTools->getConsole()->getTabTitlePhpUnit()
             ) . PHP_EOL .
+            
+            TplAestan::getItemSeparator() . PHP_EOL .
+            
             TplAestan::getItemConsole(
-                $neardLang->getValue(Lang::SVN),
-                TplAestan::GLYPH_SVN,
-                $neardTools->getConsole()->getTabTitleSvn()
-            ) . PHP_EOL .
-            TplAestan::getItemLink(
-                $neardLang->getValue(Lang::WEBGRIND),
-                'webgrind/',
-                true
-            ) . PHP_EOL .
-            TplAestan::getItemExe(
-                $neardLang->getValue(Lang::XDC),
-                $neardTools->getXdc()->getExe(),
+                $neardLang->getValue(Lang::CONSOLE),
                 TplAestan::GLYPH_CONSOLE
             ) . PHP_EOL .
             $tplGenSslCertificate[TplApp::SECTION_CALL] . PHP_EOL .
-            $tplGenSslCertificate[TplApp::SECTION_CONTENT];
+            
+            // Actions
+            PHP_EOL . $tplGit[TplApp::SECTION_CONTENT] .
+            PHP_EOL . $tplSvn[TplApp::SECTION_CONTENT] .
+            PHP_EOL . $tplGenSslCertificate[TplApp::SECTION_CONTENT];
     }
     
     public static function getActionGenSslCertificate()
     {
         return TplApp::getActionRun(Action::GEN_SSL_CERTIFICATE);
     }
-    
 }

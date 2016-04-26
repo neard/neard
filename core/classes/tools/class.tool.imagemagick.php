@@ -4,6 +4,8 @@ class ToolImagemagick
 {
     const ROOT_CFG_VERSION = 'imagemagickVersion';
     
+    const LOCAL_CFG_EXE = 'imagemagickExe';
+    
     private $name;
     private $version;
     
@@ -11,6 +13,8 @@ class ToolImagemagick
     private $currentPath;
     private $neardConf;
     private $neardConfRaw;
+    
+    private $exe;
     
     public function __construct($rootPath)
     {
@@ -29,6 +33,15 @@ class ToolImagemagick
         }
         if (!is_file($this->neardConf)) {
             Util::logError(sprintf($neardLang->getValue(Lang::ERROR_CONF_NOT_FOUND), $this->name . ' ' . $this->version, $this->neardConf));
+        }
+        
+        $this->neardConfRaw = parse_ini_file($this->neardConf);
+        if ($this->neardConfRaw !== false) {
+            $this->exe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_EXE];
+        }
+        
+        if (!is_file($this->exe)) {
+            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_EXE_NOT_FOUND), $this->name . ' ' . $this->version, $this->exe));
         }
     }
     
@@ -98,5 +111,9 @@ class ToolImagemagick
     {
         return $this->currentPath;
     }
-
+    
+    public function getExe()
+    {
+        return $this->exe;
+    }
 }

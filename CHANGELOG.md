@@ -7,6 +7,7 @@
 * Move Console icons to core resources
 * Upgrade Console tool to pack 2 release 3
 * Retrieve latest version from wiki page `latestVersion.md` instead of `CHANGELOG.md`
+* New menu organization
 
 ### Upgrade from previous release
 

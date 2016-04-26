@@ -20,6 +20,7 @@ class Lang
     const ERROR = 'error';
     const EXECUTABLE = 'executable';
     const EXTENSIONS = 'extensions';
+    const GIT_CONSOLE = 'gitConsole';
     const GITHUB = 'github';
     const HELP = 'help';
     const LANG = 'lang';
@@ -38,6 +39,7 @@ class Lang
     const SSL = 'ssl';
     const STARTUP = 'startup';
     const STATUS = 'status';
+    const SVN_CONSOLE = 'svnConsole';
     const TARGET = 'target';
     const TOOLS = 'tools';
     const VERBOSE_DEBUG = 'verboseDebug';
@@ -324,6 +326,7 @@ class Lang
             self::ERROR,
             self::EXECUTABLE,
             self::EXTENSIONS,
+            self::GIT_CONSOLE,
             self::GITHUB,
             self::HELP,
             self::LANG,
@@ -342,6 +345,7 @@ class Lang
             self::SSL,
             self::STARTUP,
             self::STATUS,
+            self::SVN_CONSOLE,
             self::TARGET,
             self::TOOLS,
             self::VERBOSE_DEBUG,
