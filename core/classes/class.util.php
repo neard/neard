@@ -641,22 +641,12 @@ class Util
     
     public static function getLatestVersion()
     {
-        $changelog = self::getLatestChangelog();
-        if ($changelog != null) {
-            foreach(preg_split("/((\r?\n)|(\r\n?))/", $changelog) as $line){
-                if (!self::startWith(trim($line), '##')) {
-                    continue;
-                }
-                $lineExp = explode(' ', trim($line));
-                if (count($lineExp) != 3) {
-                    continue;
-                }
-                return trim($lineExp[1]);
-            }
+        $result = self::getRemoteFile('https://raw.githubusercontent.com/wiki/crazy-max/neard/latestVersion.md');
+        if (empty($result)) {
+            self::logError('Cannot retrieve latest version');
+            return null;
         }
-    
-        self::logError('Cannot retrieve latest version');
-        return null;
+        return $result;
     }
     
     public static function getVersionUrl($version)
