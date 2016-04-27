@@ -4,6 +4,7 @@ class Tools
 {
     private $composer;
     private $console;
+    private $drush;
     private $git;
     private $hostseditor;
     private $imagemagick;
@@ -35,6 +36,7 @@ class Tools
         return array(
             $this->getComposer(),
             $this->getConsole(),
+            $this->getDrush(),
             $this->getGit(),
             $this->getHostsEditor(),
             $this->getImageMagick(),
@@ -59,6 +61,14 @@ class Tools
             $this->console = new ToolConsole($this->getRootPath('console'));
         }
         return $this->console;
+    }
+    
+    public function getDrush()
+    {
+        if ($this->drush == null) {
+            $this->drush = new ToolDrush($this->getRootPath('drush'));
+        }
+        return $this->drush;
     }
 
     public function getGit()

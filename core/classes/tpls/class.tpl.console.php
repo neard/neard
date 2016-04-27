@@ -10,6 +10,7 @@ class TplConsole
     const ICON_NODEJS = 'nodejs.ico';
     const ICON_COMPOSER = 'composer.ico';
     const ICON_PHPUNIT = 'phpunit.ico';
+    const ICON_DRUSH = 'drush.ico';
     
     private function __construct()
     {
@@ -220,6 +221,7 @@ class TplConsole
                 self::getTabNodejsSection() . PHP_EOL .
                 self::getTabComposerSection() . PHP_EOL .
                 self::getTabPhpUnitSection() . PHP_EOL .
+                self::getTabDrushSection() . PHP_EOL .
             self::getIncrStr(1) . '</tabs>';
     }
     
@@ -368,6 +370,21 @@ class TplConsole
         return self::getTab(
             $neardTools->getConsole()->getTabTitlePhpUnit(),
             self::ICON_PHPUNIT,
+            Util::formatWindowsPath($shell),
+            $neardBs->getWwwPath()
+        );
+    }
+    
+    private static function getTabDrushSection()
+    {
+        global $neardBs, $neardTools;
+    
+        $shell = $neardTools->getConsole()->getCmdShell() . ' ' .
+            '&quot;' . $neardTools->getDrush()->getExe() . '&quot; version';
+    
+        return self::getTab(
+            $neardTools->getConsole()->getTabTitleDrush(),
+            self::ICON_DRUSH,
             Util::formatWindowsPath($shell),
             $neardBs->getWwwPath()
         );

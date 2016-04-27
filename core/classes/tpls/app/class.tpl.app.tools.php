@@ -33,6 +33,11 @@ class TplAppTools
                 TplAestan::GLYPH_COMPOSER,
                 $neardTools->getConsole()->getTabTitleComposer()
             ) . PHP_EOL .
+            TplAestan::getItemConsole(
+                $neardLang->getValue(Lang::DRUSH),
+                TplAestan::GLYPH_DRUSH,
+                $neardTools->getConsole()->getTabTitleDrush()
+            ) . PHP_EOL .
             TplAestan::getItemExe(
                 $neardLang->getValue(Lang::HOSTSEDITOR),
                 $neardTools->getHostsEditor()->getExe(),

@@ -27,44 +27,45 @@ Neard is a portable WAMP software stack involving :
 
 ### Binaries
 
-* **Apache**, the world's most used web server software.
-* **Filezilla**, a FTP server application.
-* **MariaDB**, a community-developed fork of the MySQL relational database management system intended to remain free under the GNU GPL.
-* **MySQL**, an open-source relational database management system.
-* **Node.js**, an open-source, cross-platform runtime environment for developing server-side web applications.
-* **PHP**, a server-side scripting language designed for web development including PEAR and extra extensions.
+* **[Apache](../../wiki/binApache)**, the world's most used web server software.
+* **[Filezilla](../../wiki/binFilezilla)**, a FTP server application.
+* **[MariaDB](../../wiki/binMariaDB)**, a community-developed fork of the MySQL relational database management system intended to remain free under the GNU GPL.
+* **[MySQL](../../wiki/binMySQL)**, an open-source relational database management system.
+* **[Node.js](../../wiki/binNode.js)**, an open-source, cross-platform runtime environment for developing server-side web applications.
+* **[PHP](../../wiki/binPHP)**, a server-side scripting language designed for web development including PEAR and extra extensions.
 
 ### Applications
 
-* **Adminer** (formerly phpMinAdmin) is a full-featured database management tool written in PHP.
-* **GitList**, an elegant and modern git repository viewer.
-* **phpMyAdmin** to handle the administration of MySQL and MariaDB over the Web.
-* **Webgrind**, the Xdebug Profiling Web Frontend in PHP.
-* **WebSVN**, an Online subversion repository browser.
+* **[Adminer](../../wiki/appAdminer)**, (formerly phpMinAdmin) is a full-featured database management tool written in PHP.
+* **[GitList](../../wiki/appGitList)**, an elegant and modern git repository viewer.
+* **[phpMyAdmin](../../wiki/appPhpMyAdmin)**, to handle the administration of MySQL and MariaDB over the Web.
+* **[Webgrind](../../wiki/appWebgrind)**, the Xdebug Profiling Web Frontend in PHP.
+* **[WebSVN](../../wiki/appWebSVN)**, an Online subversion repository browser.
 
 ### Tools
 
-* **Composer**, Dependency Manager for PHP.
-* **Console2** + **TCC/LE**, Multi command prompt including PEAR, MySQL / MariaDB, Git, SVN, Node.js and Composer views.
-* **Git**, a widely used version control system for software development.
-* **HostsEditor**, a small application for editing windows Hosts file.
-* **ImageMagick**, a free and open-source software suite for displaying, converting, and editing raster image and vector image files.
-* **PHPUnit**, a programmer-oriented testing framework for PHP. It is an instance of the xUnit architecture for unit testing frameworks.
-* **SVN**, a software versioning and revision control system.
-* **XDebugClient**, a simple frontend for XDebug.
+* **[Composer](../../wiki/toolComposer)**, Dependency Manager for PHP.
+* **[Console](../../wiki/toolConsole)**, a multi command prompt with TCC/LE including MySQL / MariaDB, Git, SVN, Node.js and many others views.
+* **[Drush](../../wiki/toolDrush)**, a command line shell and scripting interface for Drupal.
+* **[Git](../../wiki/toolGit)**, a widely used version control system for software development.
+* **[HostsEditor](../../wiki/toolHostsEditor)**, a small application for editing windows Hosts file.
+* **[ImageMagick](../../wiki/toolImageMagick)**, a free and open-source software suite for displaying, converting, and editing raster image and vector image files.
+* **[PHPUnit](../../wiki/toolPHPUnit)**, a programmer-oriented testing framework for PHP. It is an instance of the xUnit architecture for unit testing frameworks.
+* **[SVN](../../wiki/toolSVN)**, a software versioning and revision control system.
+* **[XDebugClient](../../wiki/toolXDebugClient)**, a simple frontend for XDebug.
 
 And many other features.
 
 ## Download
 
-Before installing Neard, read the [Requirements Wiki page](https://github.com/crazy-max/neard/wiki/Requirements).
+Before installing Neard, read the [Requirements Wiki page](../../wiki/Requirements).
 
-[![Neard 1.0.18](https://img.shields.io/badge/download-neard%201.0.18-brightgreen.svg)](https://github.com/crazy-max/neard/releases/download/v1.0.18/neard-1.0.18.7z)
+[![Neard 1.0.19(https://img.shields.io/badge/download-neard%201.0.19-brightgreen.svg)](https://github.com/crazy-max/neard/releases/download/v1.0.19/neard-1.0.19.7z)
 
 ### Additionals downloads (binaries, tools, applications)
 
 Neard offers several versions of the various binaries, applications and tools for download on github subrepositories.<br />
-You can find the download links on the [Wiki](https://github.com/crazy-max/neard/wiki).
+You can find the download links on the [Wiki](../../wiki).
 
 ### Get notified on new updates / releases
 
@@ -94,12 +95,13 @@ See `CHANGELOG.md` and `DIFF.md`.
 
 ## Found a bug?
 
-See [Reporting an issue Wiki page](https://github.com/crazy-max/neard/wiki/Reporting-an-issue).
+See [Reporting an issue Wiki page](../../wiki/Reporting-an-issue).
 
 ## Contribute
 
-Neard is open for everyone to contribute. Please give me some feedback and join the development!<br />
-If you want to translate Neard in your language, read the [Translations Wiki page](https://github.com/crazy-max/neard/wiki/Translations).
+Neard is open for everyone to contribute. You can contribute to [binaries](../../wiki/Binaries#contribute), [tools](../../wiki/Tools#contribute) and [applications](../../wiki/Applications#contribute) too.<br />
+If you want to translate Neard in your language, read the [Translations Wiki page](../../wiki/Translations).<br />
+Give me some feedback and join the development!
 
 ## Donate
 

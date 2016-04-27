@@ -351,6 +351,7 @@ class Util
             $value .= $neardBins->getPhp()->getImagickPath() . ';';
             $value .= $neardBins->getNodejs()->getCurrentPath() . ';';
             $value .= $neardTools->getComposer()->getCurrentPath() . ';';
+            $value .= $neardTools->getDrush()->getCurrentPath() . ';';
             $value .= $neardTools->getImageMagick()->getCurrentPath() . ';';
             $value .= $neardTools->getPhpUnit()->getCurrentPath() . ';';
             $value .= $neardTools->getSvn()->getCurrentPath() . '/bin;';
