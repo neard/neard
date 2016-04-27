@@ -72,6 +72,7 @@
         <!--  Get tools -->
         <getbundle releasesurl="${tool.composer.url}" version="${tool.composer.version}" dest="${release.target}/${release.name}/tools/composer" />
         <getbundle releasesurl="${tool.console.url}" version="${tool.console.version}" dest="${release.target}/${release.name}/tools/console" />
+        <getbundle releasesurl="${tool.drush.url}" version="${tool.drush.version}" dest="${release.target}/${release.name}/tools/drush" />
         <getbundle releasesurl="${tool.git.url}" version="${tool.git.version}" dest="${release.target}/${release.name}/tools/git" />
         <getbundle releasesurl="${tool.hostseditor.url}" version="${tool.hostseditor.version}" dest="${release.target}/${release.name}/tools/hostseditor" />
         <getbundle releasesurl="${tool.imagemagick.url}" version="${tool.imagemagick.version}" dest="${release.target}/${release.name}/tools/imagemagick" />
@@ -92,6 +93,7 @@
                 
                 <filter token="TOOL_COMPOSER_VERSION" value="${tool.composer.version}"/>
                 <filter token="TOOL_CONSOLE_VERSION" value="${tool.console.version}"/>
+                <filter token="TOOL_DRUSH_VERSION" value="${tool.drush.version}"/>
                 <filter token="TOOL_GIT_VERSION" value="${tool.git.version}"/>
                 <filter token="TOOL_HOSTSEDITOR_VERSION" value="${tool.hostseditor.version}"/>
                 <filter token="TOOL_IMAGEMAGICK_VERSION" value="${tool.imagemagick.version}"/>

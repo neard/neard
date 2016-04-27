@@ -103,6 +103,7 @@ class Lang
     // Tools
     const COMPOSER = 'composer';
     const CONSOLE = 'console';
+    const DRUSH = 'drush';
     const GIT = 'git';
     const HOSTSEDITOR = 'hostseditor';
     const IMAGEMAGICK = 'imagemagick';
@@ -409,6 +410,7 @@ class Lang
             // Tools
             self::COMPOSER,
             self::CONSOLE,
+            self::DRUSH,
             self::GIT,
             self::HOSTSEDITOR,
             self::IMAGEMAGICK,

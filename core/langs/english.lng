@@ -102,6 +102,7 @@ websvn = "WebSVN"
 ; Tools
 composer = "Composer"
 console = "Console"
+drush = "Drush"
 git = "Git"
 hostseditor = "HostsEditor"
 imagemagick = "ImageMagick"
