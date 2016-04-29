@@ -624,6 +624,8 @@ class Util
             $neardApps->getWebsvn()->getRootPath()          => array('config.php'),
             $neardApps->getGitlist()->getRootPath()         => array('config.ini'),
             $neardTools->getConsole()->getRootPath()        => array('console.xml', '.ini', '.btm'),
+            $neardTools->getDrush()->getRootPath()          => array('drush.bat'),
+            $neardTools->getWpCli()->getRootPath()          => array('wp.bat'),
             $neardCore->getResourcesPath() . '/homepage'    => array('.conf'),
         );
     }
