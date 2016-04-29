@@ -110,6 +110,7 @@ class Lang
     const NOTEPAD2 = 'notepad2';
     const PHPUNIT = 'phpunit';
     const SVN = 'svn';
+    const WPCLI = 'wpcli';
     const XDC = 'xdc';
     
     // Errors
@@ -417,6 +418,7 @@ class Lang
             self::NOTEPAD2,
             self::PHPUNIT,
             self::SVN,
+            self::WPCLI,
             self::XDC,
             
             // Errors

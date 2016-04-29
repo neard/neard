@@ -11,6 +11,7 @@ class Tools
     private $notepad2;
     private $phpunit;
     private $svn;
+    private $wpcli;
     private $xdc;
     
     public function __construct()
@@ -43,6 +44,7 @@ class Tools
             $this->getNotepad2(),
             $this->getPhpUnit(),
             $this->getSvn(),
+            $this->getWpCli(),
             $this->getXdc(),
         );
     }
@@ -117,6 +119,14 @@ class Tools
             $this->svn = new ToolSvn($this->getRootPath('svn'));
         }
         return $this->svn;
+    }
+    
+    public function getWpCli()
+    {
+        if ($this->wpcli == null) {
+            $this->wpcli = new ToolWpCli($this->getRootPath('wpcli'));
+        }
+        return $this->wpcli;
     }
     
     public function getXdc()

@@ -63,6 +63,11 @@ class TplAppTools
                 TplAestan::GLYPH_PHPUNIT,
                 $neardTools->getConsole()->getTabTitlePhpUnit()
             ) . PHP_EOL .
+            TplAestan::getItemConsole(
+                $neardLang->getValue(Lang::WPCLI),
+                TplAestan::GLYPH_WPCLI,
+                $neardTools->getConsole()->getTabTitleWpCli()
+            ) . PHP_EOL .
             TplAestan::getItemExe(
                 $neardLang->getValue(Lang::XDC),
                 $neardTools->getXdc()->getExe(),
