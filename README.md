@@ -52,6 +52,7 @@ Neard is a portable WAMP software stack involving :
 * **[ImageMagick](../../wiki/toolImageMagick)**, a free and open-source software suite for displaying, converting, and editing raster image and vector image files.
 * **[PHPUnit](../../wiki/toolPHPUnit)**, a programmer-oriented testing framework for PHP. It is an instance of the xUnit architecture for unit testing frameworks.
 * **[SVN](../../wiki/toolSVN)**, a software versioning and revision control system.
+* **[WP-CLI](../../wiki/toolWP-CLI)**, a command line interface for WordPress.
 * **[XDebugClient](../../wiki/toolXDebugClient)**, a simple frontend for XDebug.
 
 And many other features.

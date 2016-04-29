@@ -109,6 +109,7 @@ imagemagick = "ImageMagick"
 notepad2 = "Notepad2"
 phpunit = "PHPUnit"
 svn = "SVN"
+wpcli = "WP-CLI"
 xdc = "XDebugClient"
 
 ; Errors

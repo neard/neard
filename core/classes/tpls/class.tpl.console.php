@@ -11,6 +11,7 @@ class TplConsole
     const ICON_COMPOSER = 'composer.ico';
     const ICON_PHPUNIT = 'phpunit.ico';
     const ICON_DRUSH = 'drush.ico';
+    const ICON_WPCLI = 'wpcli.ico';
     
     private function __construct()
     {
@@ -222,6 +223,7 @@ class TplConsole
                 self::getTabComposerSection() . PHP_EOL .
                 self::getTabPhpUnitSection() . PHP_EOL .
                 self::getTabDrushSection() . PHP_EOL .
+                self::getTabWpCliSection() . PHP_EOL .
             self::getIncrStr(1) . '</tabs>';
     }
     
@@ -385,6 +387,21 @@ class TplConsole
         return self::getTab(
             $neardTools->getConsole()->getTabTitleDrush(),
             self::ICON_DRUSH,
+            Util::formatWindowsPath($shell),
+            $neardBs->getWwwPath()
+        );
+    }
+    
+    private static function getTabWpCliSection()
+    {
+        global $neardBs, $neardTools;
+    
+        $shell = $neardTools->getConsole()->getCmdShell() . ' ' .
+            '&quot;' . $neardTools->getWpCli()->getExe() . '&quot; --info';
+    
+        return self::getTab(
+            $neardTools->getConsole()->getTabTitleWpCli(),
+            self::ICON_WPCLI,
             Util::formatWindowsPath($shell),
             $neardBs->getWwwPath()
         );

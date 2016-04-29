@@ -43,6 +43,7 @@ class TplAestan
     const GLYPH_IMAGEMAGICK = 41;
     const GLYPH_NOTEPAD2 = 42;
     const GLYPH_DRUSH = 43;
+    const GLYPH_WPCLI = 44;
     
     const SERVICE_START = 'startresume';
     const SERVICE_STOP = 'stop';

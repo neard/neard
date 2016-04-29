@@ -352,10 +352,11 @@ class Util
             $value .= $neardBins->getNodejs()->getCurrentPath() . ';';
             $value .= $neardTools->getComposer()->getCurrentPath() . ';';
             $value .= $neardTools->getDrush()->getCurrentPath() . ';';
+            $value .= $neardTools->getGit()->getCurrentPath() . '/bin;';
             $value .= $neardTools->getImageMagick()->getCurrentPath() . ';';
             $value .= $neardTools->getPhpUnit()->getCurrentPath() . ';';
             $value .= $neardTools->getSvn()->getCurrentPath() . '/bin;';
-            $value .= $neardTools->getGit()->getCurrentPath() . '/bin;';
+            $value .= $neardTools->getWpCli()->getCurrentPath() . ';';
             $value = self::formatWindowsPath($value);
             self::logDebug('Generated app reg key: ' . $value);
         }

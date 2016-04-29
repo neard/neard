@@ -279,4 +279,10 @@ class ToolConsole
         global $neardLang, $neardTools;
         return $neardLang->getValue(Lang::DRUSH) . ' ' . $neardTools->getDrush()->getVersion();
     }
+    
+    public function getTabTitleWpCli()
+    {
+        global $neardLang, $neardTools;
+        return $neardLang->getValue(Lang::WPCLI) . ' ' . $neardTools->getWpCli()->getVersion();
+    }
 }
