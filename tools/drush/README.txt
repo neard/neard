@@ -1,2 +1,2 @@
 Place Drush tool releases here.
-Download : https://github.com/crazy-max/neard-tool-drush
+Documentation and downloads : https://github.com/crazy-max/neard/wiki/toolDrush

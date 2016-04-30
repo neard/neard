@@ -1,2 +1,2 @@
 Place ImageMagick tool releases here.
-Download : https://github.com/crazy-max/neard-tool-imagemagick
+Documentation and downloads : https://github.com/crazy-max/neard/wiki/toolImageMagick

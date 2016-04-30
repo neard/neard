@@ -1,2 +1,2 @@
 Place PHPUnit tool releases here.
-Download : https://github.com/crazy-max/neard-tool-phpunit
+Documentation and downloads : https://github.com/crazy-max/neard/wiki/toolPHPUnit

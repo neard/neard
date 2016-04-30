@@ -1,2 +1,2 @@
 Place XDebugClient tool releases here.
-Download : https://github.com/crazy-max/neard-tool-xdc
+Documentation and downloads : https://github.com/crazy-max/neard/wiki/toolXDebugClient

@@ -1,2 +1,2 @@
 Place PHP binary releases here.
-Download : https://github.com/crazy-max/neard-bin-php
+Documentation and downloads : https://github.com/crazy-max/neard/wiki/binPHP

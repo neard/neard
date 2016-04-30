@@ -1,2 +1,2 @@
 Place Notepad2 tool releases here.
-Download : https://github.com/crazy-max/neard-tool-notepad2
+Documentation and downloads : https://github.com/crazy-max/neard/wiki/toolNotepad2

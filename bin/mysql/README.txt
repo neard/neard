@@ -1,2 +1,2 @@
 Place MySQL binary releases here.
-Download : https://github.com/crazy-max/neard-bin-mysql
+Documentation and downloads : https://github.com/crazy-max/neard/wiki/binMySQL

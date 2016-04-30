@@ -1,2 +1,2 @@
 Place Gitlist app releases here.
-Download : https://github.com/crazy-max/neard-app-gitlist
+Documentation and downloads : https://github.com/crazy-max/neard/wiki/appGitlist
