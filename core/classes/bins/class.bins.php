@@ -39,11 +39,11 @@ class Bins
     public function getAll() {
         return array(
             $this->getApache(),
-            $this->getPhp(),
-            $this->getMysql(),
-            $this->getMariadb(),
-            $this->getNodejs(),
             $this->getFilezilla(),
+            $this->getMariadb(),
+            $this->getMysql(),
+            $this->getPhp(),
+            $this->getNodejs(),
         );
     }
 

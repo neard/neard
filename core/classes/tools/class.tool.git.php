@@ -105,16 +105,16 @@ class ToolGit
         file_put_contents($this->neardConf, $content);
     }
     
-    public function update($showWindow = false)
+    public function update($sub = 0, $showWindow = false)
     {
-        $this->updateConfig(null, $showWindow);
+        return $this->updateConfig(null, $sub, $showWindow);
     }
     
-    private function updateConfig($version = null, $showWindow = false)
+    private function updateConfig($version = null, $sub = 0, $showWindow = false)
     {
         global $neardWinbinder;
-        $version = $version == null ? $this->getVersion() : $version;
-        Util::logDebug('Update ' . $this->getName() . ' ' . $version . ' config...');
+        $version = $version == null ? $this->version : $version;
+        Util::logDebug(($sub > 0 ? str_repeat(' ', 2 * $sub) : '') . 'Update ' . $this->name . ' ' . $version . ' config...');
     
         if (file_exists($this->getCurrentPath() . '/post-install.bat')) {
             $neardWinbinder->exec($this->getBash(), '--no-needs-console --hide --no-cd --command=' . $this->getCurrentPath() . '/post-install.bat', true);
@@ -171,6 +171,7 @@ class ToolGit
     public function setVersion($version)
     {
         global $neardConfig;
+        $this->version = $version;
         $neardConfig->replace(self::ROOT_CFG_VERSION, $version);
     }
     

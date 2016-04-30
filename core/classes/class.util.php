@@ -502,7 +502,7 @@ class Util
     
     public static function logInitClass($classInstance)
     {
-        self::logInfo('Init ' . get_class($classInstance));
+        self::logTrace('Init ' . get_class($classInstance));
     }
     
     public static function getPowerShellPath()

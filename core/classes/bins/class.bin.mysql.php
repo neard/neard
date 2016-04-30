@@ -131,12 +131,6 @@ class BinMysql
             $content = preg_replace('|' . $key . ' = .*|', $key . ' = ' . '"' . $value.'"' , $content);
             $this->neardConfRaw[$key] = $value;
             switch($key) {
-                case self::ROOT_CFG_VERSION:
-                    $this->version = $value;
-                    break;
-                case self::ROOT_CFG_LAUNCH_STARTUP:
-                    $this->launchStartup = $value;
-                    break;
                 case self::LOCAL_CFG_PORT:
                     $this->port = $value;
                     break;
@@ -166,24 +160,8 @@ class BinMysql
         
         $isPortInUse = Util::isPortInUse($port);
         if (!$checkUsed || $isPortInUse === false) {
-            // bootstrap
-            Util::replaceDefine($neardCore->getBootstrapFilePath(), 'CURRENT_MYSQL_PORT', intval($port));
-            $neardWinbinder->incrProgressBar($wbProgressBar);
-            
             // neard.conf
             $this->setPort($port);
-            $neardWinbinder->incrProgressBar($wbProgressBar);
-            
-            // phpmyadmin
-            $neardApps->getPhpmyadmin()->update();
-            $neardWinbinder->incrProgressBar($wbProgressBar);
-            
-            // adminer
-            $neardApps->getAdminer()->update();
-            $neardWinbinder->incrProgressBar($wbProgressBar);
-            
-            // php
-            $neardBins->getPhp()->update();
             $neardWinbinder->incrProgressBar($wbProgressBar);
             
             // conf
@@ -328,13 +306,9 @@ class BinMysql
         $neardWinbinder->incrProgressBar($wbProgressBar);
         $this->setRootPwd($newPwd);
         
-        // phpmyadmin
+        // conf
+        $this->update();
         $neardWinbinder->incrProgressBar($wbProgressBar);
-        $neardApps->getPhpmyadmin()->update();
-        
-        // adminer
-        $neardWinbinder->incrProgressBar($wbProgressBar);
-        $neardApps->getAdminer()->update();
         
         return true;
     }
@@ -369,20 +343,20 @@ class BinMysql
     
     public function switchVersion($version, $showWindow = false)
     {
-        Util::logDebug('Switch MySQL version to ' . $version);
-        return $this->updateConfig($version, $showWindow);
+        Util::logDebug('Switch ' . $this->name . ' version to ' . $version);
+        return $this->updateConfig($version, 0, $showWindow);
     }
     
-    public function update($showWindow = false)
+    public function update($sub = 0, $showWindow = false)
     {
-        return $this->updateConfig(null, $showWindow);
+        return $this->updateConfig(null, $sub, $showWindow);
     }
     
-    private function updateConfig($version = null, $showWindow = false)
+    private function updateConfig($version = null, $sub = 0, $showWindow = false)
     {
-        global $neardBs, $neardCore, $neardLang, $neardBins, $neardWinbinder;
-        $version = $version == null ? $this->getVersion() : $version;
-        Util::logDebug('Update MySQL ' . $version . ' config...');
+        global $neardBs, $neardCore, $neardLang, $neardBins, $neardApps, $neardWinbinder;
+        $version = $version == null ? $this->version : $version;
+        Util::logDebug(($sub > 0 ? str_repeat(' ', 2 * $sub) : '') . 'Update ' . $this->name . ' ' . $version . ' config...');
         
         $boxTitle = sprintf($neardLang->getValue(Lang::SWITCH_VERSION_TITLE), $this->getName(), $version);
         
@@ -412,16 +386,26 @@ class BinMysql
             return false;
         }
         
+        // bootstrap
+        Util::replaceDefine($neardCore->getBootstrapFilePath(), 'CURRENT_MYSQL_VERSION', $version);
+        Util::replaceDefine($neardCore->getBootstrapFilePath(), 'CURRENT_MYSQL_PORT', intval($this->port));
+        
+        // neard.conf
+        $this->setVersion($version);
+        
         // conf
         Util::replaceInFile($this->getConf(), array(
             '/^port(.*?)=(.*?)(\d+)/' => 'port = ' . $this->port
         ));
         
-        // bootstrap
-        Util::replaceDefine($neardCore->getBootstrapFilePath(), 'CURRENT_MYSQL_VERSION', $version);
+        // phpmyadmin
+        $neardApps->getPhpmyadmin()->update($sub + 1);
         
-        // neard.conf
-        $this->setVersion($version);
+        // adminer
+        $neardApps->getAdminer()->update($sub + 1);
+        
+        // php
+        $neardBins->getPhp()->update($sub + 1);
         
         return true;
     }
@@ -487,6 +471,7 @@ class BinMysql
     public function setVersion($version)
     {
         global $neardConfig;
+        $this->version = $version;
         $neardConfig->replace(self::ROOT_CFG_VERSION, $version);
     }
 
@@ -498,6 +483,7 @@ class BinMysql
     public function setLaunchStartup($enabled)
     {
         global $neardConfig;
+        $this->launchStartup = $enabled == Config::ENABLED;
         $neardConfig->replace(self::ROOT_CFG_LAUNCH_STARTUP, $enabled);
     }
     

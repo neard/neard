@@ -29,10 +29,10 @@ class ActionChangeDbRootPwd
         
         if (isset($args[0]) && !empty($args[0])) {
             $this->bin = $neardBins->getMysql();
-            $this->cntProcessActions = 12;
+            $this->cntProcessActions = 11;
             if ($args[0] == $neardBins->getMariadb()->getName()) {
                 $this->bin = $neardBins->getMariadb();
-                $this->cntProcessActions = 12;
+                $this->cntProcessActions = 11;
             }
             
             $neardWinbinder->reset();
