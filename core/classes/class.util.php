@@ -238,34 +238,6 @@ class Util
         return is_numeric($port) && ($port > 0 || $port <= 65535);
     }
     
-    public static function getWindowsHosts()
-    {
-        $result = array();
-        
-        if (file_exists(HOSTS_FILE)) {
-            $hostsFile = file(HOSTS_FILE);
-            foreach($hostsFile as $key => $row) {
-                $newRow = trim(preg_replace('/\s+/', ' ', $row));
-                $expRow = explode(' ', $newRow);
-                if (trim($expRow[0]) == '#' && isset($expRow[1]) && self::isValidIp($expRow[1]) && isset($expRow[2])) {
-                    $result[] = array(
-                        'enabled' => false,
-                        'ip'      => $expRow[1],
-                        'domain'  => $expRow[2],
-                    );
-                } elseif (isset($expRow[0]) && isset($expRow[1]) && self::isValidIp($expRow[0])) {
-                    $result[] = array(
-                        'enabled' => true,
-                        'ip'      => $expRow[0],
-                        'domain'  => $expRow[1],
-                    );
-                }
-            }
-        }
-        
-        return $result;
-    }
-    
     public static function replaceDefine($path, $var, $value)
     {
         self::replaceInFile($path, array(
@@ -655,7 +627,7 @@ class Util
     
     public static function getVersionUrl($version)
     {
-        return 'https://github.com/crazy-max/neard/releases/download/v' . $version . '/neard-' . $version . '.7z';
+        return APP_GITHUB_HOME . '/releases/download/v' . $version . '/neard-' . $version . '.7z';
     }
     
     public static function getLatestChangelog($markdown = false)
@@ -680,7 +652,7 @@ class Util
     
     public static function getLatestChangelogLink()
     {
-        return 'https://github.com/crazy-max/neard/blob/master/CHANGELOG.md';
+        return APP_GITHUB_HOME . '/blob/master/CHANGELOG.md';
     }
     
     public static function getRemoteFilesize($url, $humanFileSize = true)
