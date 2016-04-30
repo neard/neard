@@ -100,20 +100,20 @@ class BinNodejs
     
     public function switchVersion($version, $showWindow = false)
     {
-        Util::logDebug('Switch NodeJS version to ' . $version);
-        return $this->updateConfig($version, $showWindow);
+        Util::logDebug('Switch ' . $this->name . ' version to ' . $version);
+        return $this->updateConfig($version, 0, $showWindow);
     }
     
-    public function update($showWindow = false)
+    public function update($sub = 0, $showWindow = false)
     {
-        return $this->updateConfig(null, $showWindow);
+        return $this->updateConfig(null, $sub, $showWindow);
     }
     
-    private function updateConfig($version = null, $showWindow = false)
+    private function updateConfig($version = null, $sub = 0, $showWindow = false)
     {
-        global $neardBs, $neardCore, $neardLang, $neardWinbinder;
-        $version = $version == null ? $this->getVersion() : $version;
-        Util::logDebug('Update NodeJS ' . $version . ' config...');
+        global $neardBs, $neardCore, $neardLang, $neardBins, $neardApps, $neardWinbinder;
+        $version = $version == null ? $this->version : $version;
+        Util::logDebug(($sub > 0 ? str_repeat(' ', 2 * $sub) : '') . 'Update ' . $this->name . ' ' . $version . ' config...');
         
         $boxTitle = sprintf($neardLang->getValue(Lang::SWITCH_VERSION_TITLE), $this->getName(), $version);
         
@@ -170,6 +170,7 @@ class BinNodejs
     public function setVersion($version)
     {
         global $neardConfig;
+        $this->version = $version;
         $neardConfig->replace(self::ROOT_CFG_VERSION, $version);
     }
 

@@ -232,7 +232,6 @@ class Lang
     const STARTUP_PREPARE_RESTART_TEXT = 'startupPrepareRestartText';
     const STARTUP_ERROR_TITLE = 'startupErrorTitle';
     const STARTUP_SERVICE_ERROR = 'startupServiceError';
-    const STARTUP_PORT_ERROR = 'startupPortError';
     const STARTUP_SERVICE_CREATE_ERROR = 'startupServiceCreateError';
     const STARTUP_SERVICE_START_ERROR = 'startupServiceStartError';
     const STARTUP_SERVICE_SYNTAX_ERROR = 'startupServiceSyntaxError';
@@ -551,7 +550,6 @@ class Lang
             self::STARTUP_PREPARE_RESTART_TEXT,
             self::STARTUP_ERROR_TITLE,
             self::STARTUP_SERVICE_ERROR,
-            self::STARTUP_PORT_ERROR,
             self::STARTUP_SERVICE_CREATE_ERROR,
             self::STARTUP_SERVICE_START_ERROR,
             self::STARTUP_SERVICE_SYNTAX_ERROR,

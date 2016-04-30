@@ -174,20 +174,20 @@ class BinPhp
     
     public function switchVersion($version, $showWindow = false)
     {
-        Util::logDebug('Switch PHP version to ' . $version);
-        return $this->updateConfig($version, $showWindow);
+        Util::logDebug('Switch ' . $this->name . ' version to ' . $version);
+        return $this->updateConfig($version, 0, $showWindow);
     }
     
-    public function update($showWindow = false)
+    public function update($sub = 0, $showWindow = false)
     {
-        return $this->updateConfig(null, $showWindow);
+        return $this->updateConfig(null, $sub, $showWindow);
     }
     
-    private function updateConfig($version = null, $showWindow = false)
+    private function updateConfig($version = null, $sub = 0, $showWindow = false)
     {
         global $neardBs, $neardCore, $neardLang, $neardBins, $neardTools, $neardApps, $neardWinbinder;
-        $version = $version == null ? $this->getVersion() : $version;
-        Util::logDebug('Update PHP ' . $version . ' config...');
+        $version = $version == null ? $this->version : $version;
+        Util::logDebug(($sub > 0 ? str_repeat(' ', 2 * $sub) : '') . 'Update ' . $this->name . ' ' . $version . ' config...');
         
         $boxTitle = sprintf($neardLang->getValue(Lang::SWITCH_VERSION_TITLE), $this->getName(), $version);
         
@@ -246,24 +246,11 @@ class BinPhp
             '/^mysqli.default_port\s=\s(\d+)/' => 'mysqli.default_port = ' . $neardBins->getMysql()->getPort()
         ));
         
-        // httpd.conf php module
-        Util::replaceInFile($neardBins->getApache()->getConf(), array(
-            '/^PHPIniDir\s.*/' => 'PHPIniDir "' . $phpPath . '"',
-            '/^#?LoadFile\s.*php.ts\.dll.*/' => (!file_exists($phpPath . '/' . $tsDll) ? '#' : '') . 'LoadFile "' . $phpPath . '/' . $tsDll . '"',
-            '/^LoadModule\sphp._module\s.*/' => 'LoadModule ' . $apachePhpModuleName . ' "' . $apachePhpModule . '"',
-        ));
-        
-        // httpd.conf svn module
-        $svnModulePath = $neardTools->getSvn()->getCurrentPath() . '/modules/apache' . $apacheShortVersion;
-        Util::replaceInFile($neardBins->getApache()->getConf(), array(
-            '/^LoadModule\s.*authz_svn_module\s.*/' => 'LoadModule authz_svn_module "' . $svnModulePath . '/mod_authz_svn.so"',
-            '/^LoadModule\s.*dav_svn_module\s.*/' => 'LoadModule dav_svn_module "' . $svnModulePath . '/mod_dav_svn.so"',
-            '/^#LoadModule\s.*authz_svn_module\s.*/' => '#LoadModule authz_svn_module "' . $svnModulePath . '/mod_authz_svn.so"',
-            '/^#LoadModule\s.*dav_svn_module\s.*/' => '#LoadModule dav_svn_module "' . $svnModulePath . '/mod_dav_svn.so"',
-        ));
+        // apache
+        $neardBins->getApache()->update($sub + 1);
         
         // phpmyadmin
-        $neardApps->getPhpmyadmin()->update();
+        $neardApps->getPhpmyadmin()->update($sub + 1);
         
         return true;
     }
@@ -605,6 +592,7 @@ class BinPhp
     public function setVersion($version)
     {
         global $neardConfig;
+        $this->version = $version;
         $neardConfig->replace(self::ROOT_CFG_VERSION, $version);
     }
 

@@ -137,6 +137,14 @@ class BinApache
         foreach ($params as $key => $value) {
             $content = preg_replace('|' . $key . ' = .*|', $key . ' = ' . '"' . $value.'"' , $content);
             $this->neardConfRaw[$key] = $value;
+            switch($key) {
+                case self::LOCAL_CFG_PORT:
+                    $this->port = $value;
+                    break;
+                case self::LOCAL_CFG_SSL_PORT:
+                    $this->sslPort = $value;
+                    break;
+            }
         }
     
         file_put_contents($this->neardConf, $content);
@@ -156,35 +164,12 @@ class BinApache
         
         $isPortInUse = Util::isPortInUse($port);
         if (!$checkUsed || $isPortInUse === false) {
-            // bootstrap
-            Util::replaceDefine($neardCore->getBootstrapFilePath(), 'CURRENT_APACHE_PORT', intval($port));
-            $neardWinbinder->incrProgressBar($wbProgressBar);
-            
             // neard.conf
             $this->setPort($port);
             $neardWinbinder->incrProgressBar($wbProgressBar);
             
-            // httpd.conf
-            Util::replaceInFile($this->getConf(), array(
-                '/^Listen\s(\d+)/' => 'Listen ' . $port,
-                '/^ServerName\s+([a-zA-Z0-9.]+):(\d+)/' => 'ServerName {{1}}:' . $port,
-                '/^NameVirtualHost\s+([a-zA-Z0-9.*]+):(\d+)/' => 'NameVirtualHost {{1}}:' . $port,
-                '/^<VirtualHost\s+([a-zA-Z0-9.*]+):(\d+)>/' => '<VirtualHost {{1}}:' . $port . '>'
-            ));
-            $neardWinbinder->incrProgressBar($wbProgressBar);
-            
-            // vhosts
-            foreach ($this->getVhosts() as $vhost) {
-                Util::replaceInFile($neardBs->getVhostsPath() . '/' . $vhost . '.conf', array(
-                    '/^<VirtualHost\s+([a-zA-Z0-9.*]+):(\d+)>$/' => '<VirtualHost {{1}}:' . $port . '>$'
-                ));
-            }
-            $neardWinbinder->incrProgressBar($wbProgressBar);
-            
-            // .htaccess
-            Util::replaceInFile($neardBs->getWwwPath() . '/.htaccess', array(
-                '/(.*)http:\/\/localhost(.*)/' => '{{1}}http://localhost' . ($port != 80 ? ':' . $port : '') . '/$1 [QSA,R=301,L]',
-            ));
+            // conf
+            $this->update();
             $neardWinbinder->incrProgressBar($wbProgressBar);
             
             return true;
@@ -240,21 +225,21 @@ class BinApache
     
     public function switchVersion($version, $showWindow = false)
     {
-        Util::logDebug('Switch Apache version to ' . $version);
-        return $this->updateConfig($version, $showWindow);
+        Util::logDebug('Switch ' . $this->name . ' version to ' . $version);
+        return $this->updateConfig($version, 0, $showWindow);
     }
     
-    public function update($showWindow = false)
+    public function update($sub = 0, $showWindow = false)
     {
-        return $this->updateConfig(null, $showWindow);
+        return $this->updateConfig(null, $sub, $showWindow);
     }
     
-    private function updateConfig($version = null, $showWindow = false)
+    private function updateConfig($version = null, $sub = 0, $showWindow = false)
     {
         global $neardBs, $neardCore, $neardLang, $neardBins, $neardTools, $neardWinbinder;
-        $version = $version == null ? $this->getVersion() : $version;
+        $version = $version == null ? $this->version : $version;
         $shortVersion = substr(str_replace('.', '', $version), 0, 2);
-        Util::logDebug('Update Apache ' . $version . ' config...');
+        Util::logDebug(($sub > 0 ? str_repeat(' ', 2 * $sub) : '') . 'Update ' . $this->name . ' ' . $version . ' config...');
         
         $boxTitle = sprintf($neardLang->getValue(Lang::SWITCH_VERSION_TITLE), $this->getName(), $version);
         
@@ -301,24 +286,42 @@ class BinApache
         
         // bootstrap
         Util::replaceDefine($neardCore->getBootstrapFilePath(), 'CURRENT_APACHE_VERSION', $version);
+        Util::replaceDefine($neardCore->getBootstrapFilePath(), 'CURRENT_APACHE_PORT', intval($this->port));
         
         // neard.conf
         $this->setVersion($version);
         
-        // httpd.conf php module
+        // conf
+        $svnModulePath = $neardTools->getSvn()->getCurrentPath() . '/modules/apache' . $shortVersion;
         Util::replaceInFile($conf, array(
+            // PHP module
             '/^PHPIniDir\s.*/' => 'PHPIniDir "' . $neardBins->getPhp()->getCurrentPath() . '"',
             '/^#?LoadFile\s.*php.ts\.dll.*/' => (!file_exists($neardBins->getPhp()->getCurrentPath() . '/' . $tsDll) ? '#' : '') . 'LoadFile "' . $neardBins->getPhp()->getCurrentPath() . '/' . $tsDll . '"',
             '/^LoadModule\sphp._module\s.*/' => 'LoadModule ' . $apachePhpModuleName . ' "' . $apachePhpModule . '"',
-        ));
-        
-        // httpd.conf svn module
-        $svnModulePath = $neardTools->getSvn()->getCurrentPath() . '/modules/apache' . $shortVersion;
-        Util::replaceInFile($conf, array(
+            
+            // SVN module
             '/^LoadModule\sauthz_svn_module\s*/' => 'LoadModule authz_svn_module "' . $svnModulePath . '/mod_authz_svn.so"',
             '/^LoadModule\sdav_svn_module\s*/' => 'LoadModule dav_svn_module "' . $svnModulePath . '/mod_dav_svn.so"',
             '/^#LoadModule\sauthz_svn_module\s*/' => '#LoadModule authz_svn_module "' . $svnModulePath . '/mod_authz_svn.so"',
             '/^#LoadModule\sdav_svn_module\s*/' => '#LoadModule dav_svn_module "' . $svnModulePath . '/mod_dav_svn.so"',
+            
+            // Port
+            '/^Listen\s(\d+)/' => 'Listen ' . $this->port,
+            '/^ServerName\s+([a-zA-Z0-9.]+):(\d+)/' => 'ServerName {{1}}:' . $this->port,
+            '/^NameVirtualHost\s+([a-zA-Z0-9.*]+):(\d+)/' => 'NameVirtualHost {{1}}:' . $this->port,
+            '/^<VirtualHost\s+([a-zA-Z0-9.*]+):(\d+)>/' => '<VirtualHost {{1}}:' . $this->port . '>'
+        ));
+    
+        // vhosts
+        foreach ($this->getVhosts() as $vhost) {
+            Util::replaceInFile($neardBs->getVhostsPath() . '/' . $vhost . '.conf', array(
+                '/^<VirtualHost\s+([a-zA-Z0-9.*]+):(\d+)>$/' => '<VirtualHost {{1}}:' . $this->port . '>$'
+            ));
+        }
+    
+        // www .htaccess
+        Util::replaceInFile($neardBs->getWwwPath() . '/.htaccess', array(
+            '/(.*)http:\/\/localhost(.*)/' => '{{1}}http://localhost' . ($this->port != 80 ? ':' . $this->port : '') . '/$1 [QSA,R=301,L]',
         ));
         
         return true;
@@ -664,6 +667,7 @@ class BinApache
     public function setVersion($version)
     {
         global $neardConfig;
+        $this->version = $version;
         $neardConfig->replace(self::ROOT_CFG_VERSION, $version);
     }
 
@@ -675,6 +679,7 @@ class BinApache
     public function setLaunchStartup($enabled)
     {
         global $neardConfig;
+        $this->launchStartup = $enabled == Config::ENABLED;
         $neardConfig->replace(self::ROOT_CFG_LAUNCH_STARTUP, $enabled);
     }
     

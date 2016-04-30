@@ -10,7 +10,7 @@ class ActionStartup
     private $rootPath;
     private $filesToScan;
     
-    const GAUGE_SERVICES = 6;
+    const GAUGE_SERVICES = 5;
     const GAUGE_OTHERS = 18;
     
     public function __construct($args)
@@ -551,11 +551,6 @@ class ActionStartup
                 $this->splash->incrProgressBar();
                 if ($serviceToRemove && !$service->delete()) {
                     $serviceRestart = true;
-                }
-        
-                $this->splash->incrProgressBar();
-                if ($bin->changePort($port) !== true) {
-                    $serviceError .= sprintf($neardLang->getValue(Lang::STARTUP_PORT_ERROR), $port);
                 }
         
                 if (!$serviceRestart) {

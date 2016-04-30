@@ -24,19 +24,19 @@ class ActionChangePort
         if (isset($args[0]) && !empty($args[0])) {
             $this->currentPort = CURRENT_APACHE_PORT;
             $this->bin = $neardBins->getApache();
-            $this->cntProcessActions = 6;
+            $this->cntProcessActions = 3;
             if ($args[0] == $neardBins->getMysql()->getName()) {
                 $this->currentPort = CURRENT_MYSQL_PORT;
                 $this->bin = $neardBins->getMysql();
-                $this->cntProcessActions = 7;
+                $this->cntProcessActions = 3;
             } elseif ($args[0] == $neardBins->getMariadb()->getName()) {
                 $this->currentPort = CURRENT_MARIADB_PORT;
                 $this->bin = $neardBins->getMariadb();
-                $this->cntProcessActions = 6;
+                $this->cntProcessActions = 3;
             } elseif ($args[0] == $neardBins->getFilezilla()->getName()) {
                 $this->currentPort = CURRENT_FILEZILLA_PORT;
                 $this->bin = $neardBins->getFilezilla();
-                $this->cntProcessActions = 4;
+                $this->cntProcessActions = 3;
             }
             
             $neardWinbinder->reset();

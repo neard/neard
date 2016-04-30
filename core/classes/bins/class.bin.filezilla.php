@@ -123,6 +123,14 @@ class BinFilezilla
         foreach ($params as $key => $value) {
             $content = preg_replace('|' . $key . ' = .*|', $key . ' = ' . '"' . $value.'"' , $content);
             $this->neardConfRaw[$key] = $value;
+            switch($key) {
+                case self::LOCAL_CFG_PORT:
+                    $this->port = $value;
+                    break;
+                case self::LOCAL_CFG_SSL_PORT:
+                    $this->sslPort = $value;
+                    break;
+            }
         }
     
         file_put_contents($this->neardConf, $content);
@@ -131,6 +139,7 @@ class BinFilezilla
     public function rebuildConf()
     {
         $this->setConf(array(
+            self::CFG_SERVER_PORT => $this->port,
             self::CFG_SERVICE_NAME => $this->service->getName(),
             self::CFG_WELCOME_MSG => $this->service->getDisplayName(),
             self::CFG_SERVICE_DISPLAY_NAME => $this->service->getDisplayName()
@@ -160,18 +169,14 @@ class BinFilezilla
     
         $isPortInUse = Util::isPortInUse($port);
         if (!$checkUsed || $isPortInUse === false) {
-            // bootstrap
-            Util::replaceDefine($neardCore->getBootstrapFilePath(), 'CURRENT_FILEZILLA_PORT', intval($port));
-            $neardWinbinder->incrProgressBar($wbProgressBar);
-    
             // neard.conf
             $this->setPort($port);
             $neardWinbinder->incrProgressBar($wbProgressBar);
-    
-            // FileZilla Server.xml
-            $this->setConf(array(self::CFG_SERVER_PORT => $port));
+            
+            // conf
+            $this->update();
             $neardWinbinder->incrProgressBar($wbProgressBar);
-
+    
             return true;
         }
     
@@ -223,20 +228,20 @@ class BinFilezilla
     
     public function switchVersion($version, $showWindow = false)
     {
-        Util::logDebug('Switch Filezilla Server version to ' . $version);
-        return $this->updateConfig($version, $showWindow);
+        Util::logDebug('Switch ' . $this->name . ' version to ' . $version);
+        return $this->updateConfig($version, 0, $showWindow);
     }
     
-    public function update($showWindow = false)
+    public function update($sub = 0, $showWindow = false)
     {
-        return $this->updateConfig(null, $showWindow);
+        return $this->updateConfig(null, $sub, $showWindow);
     }
     
-    private function updateConfig($version = null, $showWindow = false)
+    private function updateConfig($version = null, $sub = 0, $showWindow = false)
     {
-        global $neardBs, $neardCore, $neardLang, $neardBins, $neardWinbinder;
-        $version = $version == null ? $this->getVersion() : $version;
-        Util::logDebug('Update Filezilla Server ' . $version . ' config...');
+        global $neardBs, $neardCore, $neardLang, $neardBins, $neardApps, $neardWinbinder;
+        $version = $version == null ? $this->version : $version;
+        Util::logDebug(($sub > 0 ? str_repeat(' ', 2 * $sub) : '') . 'Update ' . $this->name . ' ' . $version . ' config...');
         
         $boxTitle = sprintf($neardLang->getValue(Lang::SWITCH_VERSION_TITLE), $this->getName(), $version);
     
@@ -268,9 +273,13 @@ class BinFilezilla
     
         // bootstrap
         Util::replaceDefine($neardCore->getBootstrapFilePath(), 'CURRENT_FILEZILLA_VERSION', $version);
+        Util::replaceDefine($neardCore->getBootstrapFilePath(), 'CURRENT_FILEZILLA_PORT', intval($this->port));
     
         // neard.conf
         $this->setVersion($version);
+        
+        // conf
+        $this->rebuildConf();
         
         return true;
     }
@@ -315,6 +324,7 @@ class BinFilezilla
     public function setVersion($version)
     {
         global $neardConfig;
+        $this->version = $version;
         $neardConfig->replace(self::ROOT_CFG_VERSION, $version);
     }
 
@@ -326,6 +336,7 @@ class BinFilezilla
     public function setLaunchStartup($enabled)
     {
         global $neardConfig;
+        $this->launchStartup = $enabled == Config::ENABLED;
         $neardConfig->replace(self::ROOT_CFG_LAUNCH_STARTUP, $enabled);
     }
     
