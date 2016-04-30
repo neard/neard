@@ -386,10 +386,6 @@ class BinMariadb
             return false;
         }
         
-        // bootstrap
-        Util::replaceDefine($neardCore->getBootstrapFilePath(), 'CURRENT_MARIADB_VERSION', $version);
-        Util::replaceDefine($neardCore->getBootstrapFilePath(), 'CURRENT_MARIADB_PORT', intval($this->port));
-        
         // neard.conf
         $this->setVersion($version);
         

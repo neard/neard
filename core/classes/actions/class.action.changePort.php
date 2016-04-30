@@ -2,8 +2,8 @@
 
 class ActionChangePort
 {
-    private $currentPort;
     private $bin;
+    private $currentPort;
     private $cntProcessActions;
     
     private $wbWindow;
@@ -22,20 +22,20 @@ class ActionChangePort
         global $neardLang, $neardBins, $neardWinbinder;
         
         if (isset($args[0]) && !empty($args[0])) {
-            $this->currentPort = CURRENT_APACHE_PORT;
             $this->bin = $neardBins->getApache();
+            $this->currentPort = $neardBins->getApache()->getPort();
             $this->cntProcessActions = 3;
             if ($args[0] == $neardBins->getMysql()->getName()) {
-                $this->currentPort = CURRENT_MYSQL_PORT;
                 $this->bin = $neardBins->getMysql();
+                $this->currentPort = $neardBins->getMysql()->getPort();
                 $this->cntProcessActions = 3;
             } elseif ($args[0] == $neardBins->getMariadb()->getName()) {
-                $this->currentPort = CURRENT_MARIADB_PORT;
                 $this->bin = $neardBins->getMariadb();
+                $this->currentPort = $neardBins->getMariadb()->getPort();
                 $this->cntProcessActions = 3;
             } elseif ($args[0] == $neardBins->getFilezilla()->getName()) {
-                $this->currentPort = CURRENT_FILEZILLA_PORT;
                 $this->bin = $neardBins->getFilezilla();
+                $this->currentPort = $neardBins->getFilezilla()->getPort();
                 $this->cntProcessActions = 3;
             }
             

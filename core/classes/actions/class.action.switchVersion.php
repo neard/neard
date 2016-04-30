@@ -5,8 +5,8 @@ class ActionSwitchVersion
     private $neardSplash;
     
     private $version;
-    private $currentVersion;
     private $bin;
+    private $currentVersion;
     private $restart;
     private $service;
     private $changePort;
@@ -23,38 +23,38 @@ class ActionSwitchVersion
             $this->version = $args[1];
             
             if ($args[0] == $neardBins->getApache()->getName()) {
-                $this->currentVersion = CURRENT_APACHE_VERSION;
                 $this->bin = $neardBins->getApache();
+                $this->currentVersion = $neardBins->getApache()->getVersion();
                 $this->restart = true;
                 $this->service = $neardBins->getApache()->getService();
                 $this->changePort = true;
             } elseif ($args[0] == $neardBins->getPhp()->getName()) {
-                $this->currentVersion = CURRENT_PHP_VERSION;
                 $this->bin = $neardBins->getPhp();
+                $this->currentVersion = $neardBins->getPhp()->getVersion();
                 $this->restart = true;
                 $this->service = $neardBins->getApache()->getService();
                 $this->changePort = false;
             } elseif ($args[0] == $neardBins->getMysql()->getName()) {
-                $this->currentVersion = CURRENT_MYSQL_VERSION;
                 $this->bin = $neardBins->getMysql();
+                $this->currentVersion = $neardBins->getMysql()->getVersion();
                 $this->restart = true;
                 $this->service = $neardBins->getMysql()->getService();
                 $this->changePort = true;
             } elseif ($args[0] == $neardBins->getMariadb()->getName()) {
-                $this->currentVersion = CURRENT_MARIADB_VERSION;
                 $this->bin = $neardBins->getMariadb();
+                $this->currentVersion = $neardBins->getMariadb()->getVersion();
                 $this->restart = true;
                 $this->service = $neardBins->getMariadb()->getService();
                 $this->changePort = true;
             } elseif ($args[0] == $neardBins->getNodejs()->getName()) {
-                $this->currentVersion = CURRENT_NODEJS_VERSION;
                 $this->bin = $neardBins->getNodejs();
+                $this->currentVersion = $neardBins->getNodejs()->getVersion();
                 $this->restart = true;
                 $this->service = null;
                 $this->changePort = false;
             } elseif ($args[0] == $neardBins->getFilezilla()->getName()) {
-                $this->currentVersion = CURRENT_FILEZILLA_VERSION;
                 $this->bin = $neardBins->getFilezilla();
+                $this->currentVersion = $neardBins->getFilezilla()->getVersion();
                 $this->restart = true;
                 $this->service = $neardBins->getFilezilla()->getService();
                 $this->changePort = true;
