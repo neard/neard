@@ -79,6 +79,7 @@
         <getbundle releasesurl="${tool.notepad2.url}" version="${tool.notepad2.version}" dest="${release.target}/${release.name}/tools/notepad2" />
         <getbundle releasesurl="${tool.phpunit.url}" version="${tool.phpunit.version}" dest="${release.target}/${release.name}/tools/phpunit" />
         <getbundle releasesurl="${tool.svn.url}" version="${tool.svn.version}" dest="${release.target}/${release.name}/tools/svn" />
+        <getbundle releasesurl="${tool.wpcli.url}" version="${tool.wpcli.version}" dest="${release.target}/${release.name}/tools/wpcli" />
         <getbundle releasesurl="${tool.xdc.url}" version="${tool.xdc.version}" dest="${release.target}/${release.name}/tools/xdc" />
         
         <!-- Replacements -->
@@ -100,6 +101,7 @@
                 <filter token="TOOL_NOTEPAD2_VERSION" value="${tool.notepad2.version}"/>
                 <filter token="TOOL_PHPUNIT_VERSION" value="${tool.phpunit.version}"/>
                 <filter token="TOOL_SVN_VERSION" value="${tool.svn.version}"/>
+                <filter token="TOOL_WPCLI_VERSION" value="${tool.wpcli.version}"/>
                 <filter token="TOOL_XDC_VERSION" value="${tool.xdc.version}"/>
                 
                 <filter token="APP_ADMINER_VERSION" value="${app.adminer.version}"/>
