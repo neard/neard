@@ -111,6 +111,14 @@ class AppPhpmyadmin
         } else {
             Util::logError($this->getName() . ' alias not found : ' . $alias);
         }
+        
+        foreach ($this->getConfs() as $pmaConf) {
+            Util::replaceInFile($pmaConf, array(
+                '/^\$mysqlPort\s=\s(\d+)/' => '$mysqlPort = ' . $neardBins->getMysql()->getPort() . ';',
+                '/^\$mysqlRootUser\s=\s/' => '$mysqlRootUser = \'' . $neardBins->getMysql()->getRootUser() . '\';',
+                '/^\$mysqlRootPwd\s=\s/' => '$mysqlRootPwd = \'' . $neardBins->getMysql()->getRootPwd() . '\';'
+            ));
+        }
     }
     
     public function getName()

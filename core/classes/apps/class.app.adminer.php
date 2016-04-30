@@ -74,7 +74,7 @@ class AppAdminer
     
     private function updateConfig($version = null, $showWindow = false)
     {
-        global $neardBs;
+        global $neardBs, $neardBins;
         $version = $version == null ? $this->getVersion() : $version;
         Util::logDebug('Update ' . $this->getName() . ' ' . $version . ' config...');
     
@@ -87,6 +87,12 @@ class AppAdminer
         } else {
             Util::logError($this->getName() . ' alias not found : ' . $alias);
         }
+        
+        Util::replaceInFile($this->getConf(), array(
+            '/^\$mysqlPort\s=\s(\d+)/' => '$mysqlPort = ' . $neardBins->getMysql()->getPort() . ';',
+            '/^\$mysqlRootUser\s=\s/' => '$mysqlRootUser = \'' . $neardBins->getMysql()->getRootUser() . '\';',
+            '/^\$mysqlRootPwd\s=\s/' => '$mysqlRootPwd = \'' . $neardBins->getMysql()->getRootPwd() . '\';'
+        ));
     }
     
     public function getName()

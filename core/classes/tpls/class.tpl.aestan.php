@@ -44,6 +44,7 @@ class TplAestan
     const GLYPH_NOTEPAD2 = 42;
     const GLYPH_DRUSH = 43;
     const GLYPH_WPCLI = 44;
+    const GLYPH_PASSWORD = 45;
     
     const SERVICE_START = 'startresume';
     const SERVICE_STOP = 'stop';

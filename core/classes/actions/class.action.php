@@ -6,6 +6,7 @@ class Action
     const ADD_ALIAS = 'addAlias';
     const ADD_VHOST = 'addVhost';
     const CHANGE_BROWSER = 'changeBrowser';
+    const CHANGE_DB_ROOT_PWD = 'changeDbRootPwd';
     const CHANGE_PORT = 'changePort';
     const CHECK_PORT = 'checkPort';
     const CHECK_VERSION = 'checkVersion';

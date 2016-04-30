@@ -54,6 +54,7 @@ menuAccessLogs = "Åtkomstloggar"
 menuAddAlias = "Lägg till ett alias"
 menuAddVhost = "Lägg till en virtuell värd"
 menuChangePort = "Ändra port"
+menuChangeRootPwd = "#Change root password"
 menuCheckPort = "Kontrollera port %s"
 menuCheckUpdate = "Sök efter uppdatering"
 menuClearFolders = "Radera temporära filer"
@@ -197,6 +198,15 @@ changePortTitle = "Ändrar port för %s"
 changePortCurrentLabel = "Faktisk port som används av %s : %s"
 changePortNewLabel = "Ny port"
 changePortSameError = "Detta är samma port som faktiskt används."
+
+; Action Change database root password
+changeDbRootPwdTitle = "#Change %s root password"
+changeDbRootPwdCurrentpwdLabel = "#Current password"
+changeDbRootPwdNewpwd1Label = "#New password"
+changeDbRootPwdNewpwd2Label = "#Confirm new password"
+changeDbRootPwdNotsameError = "#Passwords that you entered are not identical to each other"
+changeDbRootPwdIncorrectError = "#%s error: %s"
+changeDbRootPwdText = "#Root password changed successfully!"
 
 ; Action Startup
 startupStartingText = "Startar %s. Var vänlig vänta"
