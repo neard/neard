@@ -45,6 +45,7 @@ class Lang
     const VERBOSE_DEBUG = 'verboseDebug';
     const VERBOSE_REPORT = 'verboseReport';
     const VERBOSE_SIMPLE = 'verboseSimple';
+    const VERBOSE_TRACE = 'verboseTrace';
     const VERSION = 'version';
     const VERSIONS = 'versions';
     const VIRTUAL_HOSTS = 'virtualHosts';
@@ -363,6 +364,7 @@ class Lang
             self::VERBOSE_DEBUG,
             self::VERBOSE_REPORT,
             self::VERBOSE_SIMPLE,
+            self::VERBOSE_TRACE,
             self::VERSION,
             self::VERSIONS,
             self::VIRTUAL_HOSTS,
