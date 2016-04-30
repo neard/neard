@@ -54,6 +54,7 @@ menuAccessLogs = "Logs d'accès"
 menuAddAlias = "Ajouter un alias"
 menuAddVhost = "Ajouter un virtual host"
 menuChangePort = "Changer de port"
+menuChangeRootPwd = "Changer le mot de passe root"
 menuCheckPort = "Vérifier le port %s"
 menuCheckUpdate = "Vérifier les mises à jour"
 menuClearFolders = "Nettoyer les répertoires temporaires"
@@ -192,11 +193,20 @@ vhostCreated = "Virtual host '%s' créé avec succès.@nl@N'oubliez pas d'ajoute
 vhostCreatedError = "Impossible de créer le fichier de configuration du virtual host."
 editVhostTitle = "Modifier le virtual host %s"
 
-: Action Change port
+; Action Change port
 changePortTitle = "Modifier le port de %s"
 changePortCurrentLabel = "Port actuellement utilisé par %s : %s"
 changePortNewLabel = "Nouveau port"
 changePortSameError = "Ce port est celui actuellement utilisé."
+
+; Action Change database root password
+changeDbRootPwdTitle = "Changer le mot de passe root %s"
+changeDbRootPwdCurrentpwdLabel = "Mot de passe actuel"
+changeDbRootPwdNewpwd1Label = "Nouveau mot de passe"
+changeDbRootPwdNewpwd2Label = "Confirmer le nouveau mot de passe"
+changeDbRootPwdNotsameError = "Les mots de passe que vous avez saisis ne sont pas identiques"
+changeDbRootPwdIncorrectError = "Erreur %s: %s"
+changeDbRootPwdText = "Mot de passe root changé avec succès!"
 
 ; Action Startup
 startupStartingText = "Démarrage de %s. Veuillez patienter"

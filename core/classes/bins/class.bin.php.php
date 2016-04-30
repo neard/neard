@@ -240,6 +240,12 @@ class BinPhp
         // neard.conf
         $this->setVersion($version);
         
+        // conf
+        Util::replaceInFile($this->getConf(), array(
+            '/^mysql.default_port\s=\s(\d+)/' => 'mysql.default_port = ' . $neardBins->getMysql()->getPort(),
+            '/^mysqli.default_port\s=\s(\d+)/' => 'mysqli.default_port = ' . $neardBins->getMysql()->getPort()
+        ));
+        
         // httpd.conf php module
         Util::replaceInFile($neardBins->getApache()->getConf(), array(
             '/^PHPIniDir\s.*/' => 'PHPIniDir "' . $phpPath . '"',

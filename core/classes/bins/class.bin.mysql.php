@@ -12,6 +12,8 @@ class BinMysql
     const LOCAL_CFG_ADMIN = 'mysqlAdmin';
     const LOCAL_CFG_CONF = 'mysqlConf';
     const LOCAL_CFG_PORT = 'mysqlPort';
+    const LOCAL_CFG_ROOT_USER = 'mysqlRootUser';
+    const LOCAL_CFG_ROOT_PWD = 'mysqlRootPwd';
     
     const CMD_VERSION = '--version';
     const CMD_VARIABLES = 'variables';
@@ -31,6 +33,8 @@ class BinMysql
     private $exe;
     private $conf;
     private $port;
+    private $rootUser;
+    private $rootPwd;
     private $cliExe;
     private $admin;
     
@@ -70,6 +74,8 @@ class BinMysql
             $this->exe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_EXE];
             $this->conf = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_CONF];
             $this->port = $this->neardConfRaw[self::LOCAL_CFG_PORT];
+            $this->rootUser = isset($this->neardConfRaw[self::LOCAL_CFG_ROOT_USER]) ? $this->neardConfRaw[self::LOCAL_CFG_ROOT_USER] : 'root';
+            $this->rootPwd = isset($this->neardConfRaw[self::LOCAL_CFG_ROOT_PWD]) ? $this->neardConfRaw[self::LOCAL_CFG_ROOT_PWD] : '';
             $this->cliExe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_CLI_EXE];
             $this->admin = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_ADMIN];
         }
@@ -84,6 +90,10 @@ class BinMysql
         }
         if (!is_numeric($this->port) || $this->port <= 0) {
             Util::logError(sprintf($neardLang->getValue(Lang::ERROR_INVALID_PARAMETER), self::LOCAL_CFG_PORT, $this->port));
+            return;
+        }
+        if (empty($this->rootUser)) {
+            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_INVALID_PARAMETER), self::LOCAL_CFG_ROOT_USER, $this->rootUser));
             return;
         }
         if (!is_file($this->cliExe)) {
@@ -120,6 +130,23 @@ class BinMysql
         foreach ($params as $key => $value) {
             $content = preg_replace('|' . $key . ' = .*|', $key . ' = ' . '"' . $value.'"' , $content);
             $this->neardConfRaw[$key] = $value;
+            switch($key) {
+                case self::ROOT_CFG_VERSION:
+                    $this->version = $value;
+                    break;
+                case self::ROOT_CFG_LAUNCH_STARTUP:
+                    $this->launchStartup = $value;
+                    break;
+                case self::LOCAL_CFG_PORT:
+                    $this->port = $value;
+                    break;
+                case self::LOCAL_CFG_ROOT_USER:
+                    $this->rootUser = $value;
+                    break;
+                case self::LOCAL_CFG_ROOT_PWD:
+                    $this->rootPwd = $value;
+                    break;
+            }
         }
     
         file_put_contents($this->neardConf, $content);
@@ -147,31 +174,20 @@ class BinMysql
             $this->setPort($port);
             $neardWinbinder->incrProgressBar($wbProgressBar);
             
-            // config.inc.php (phpmyadmin)
-            foreach ($neardApps->getPhpmyadmin()->getConfs() as $pmaConf) {
-                Util::replaceInFile($pmaConf, array(
-                    '/^\$mysqlPort\s=\s(\d+)/' => '$mysqlPort = ' . $port . ';'
-                ));
-            }
+            // phpmyadmin
+            $neardApps->getPhpmyadmin()->update();
             $neardWinbinder->incrProgressBar($wbProgressBar);
             
-            // config.php (adminer)
-            Util::replaceInFile($neardApps->getAdminer()->getConf(), array(
-                '/^\$mysqlPort\s=\s(\d+)/' => '$mysqlPort = ' . $port . ';'
-            ));
+            // adminer
+            $neardApps->getAdminer()->update();
             $neardWinbinder->incrProgressBar($wbProgressBar);
             
-            // php.ini
-            Util::replaceInFile($neardBins->getPhp()->getConf(), array(
-                '/^mysql.default_port\s=\s(\d+)/' => 'mysql.default_port = ' . $port,
-                '/^mysqli.default_port\s=\s(\d+)/' => 'mysqli.default_port = ' . $port
-            ));
+            // php
+            $neardBins->getPhp()->update();
             $neardWinbinder->incrProgressBar($wbProgressBar);
             
-            // my.ini
-            Util::replaceInFile($this->getConf(), array(
-                '/^port(.*?)=(.*?)(\d+)/' => 'port = ' . $port
-            ));
+            // conf
+            $this->update();
             $neardWinbinder->incrProgressBar($wbProgressBar);
             
             return true;
@@ -194,9 +210,9 @@ class BinMysql
         $fp = @fsockopen('127.0.0.1', $port, $errno, $errstr, 5);
         if ($fp) {
             if (version_compare(phpversion(), '5.3') === -1) {
-                $dbLink = mysqli_connect('127.0.0.1', 'root', '', '', $port);
+                $dbLink = mysqli_connect('127.0.0.1', $this->rootUser, $this->rootPwd, '', $port);
             } else {
-                $dbLink = mysqli_connect('127.0.0.1:' . $port, 'root', '');
+                $dbLink = mysqli_connect('127.0.0.1:' . $port, $this->rootUser, $this->rootPwd);
             }
             $isMysql = false;
             $version = false;
@@ -258,6 +274,99 @@ class BinMysql
         return false;
     }
     
+    public function changeRootPassword($currentPwd, $newPwd, $wbProgressBar = null)
+    {
+        global $neardLang, $neardApps, $neardWinbinder;
+        $error = null;
+        
+        $neardWinbinder->incrProgressBar($wbProgressBar);
+        if (version_compare(phpversion(), '5.3') === -1) {
+            $dbLink = @mysqli_connect('127.0.0.1', $this->rootUser, $currentPwd, '', $this->port);
+        } else {
+            $dbLink = @mysqli_connect('127.0.0.1:' . $this->port, $this->rootUser, $currentPwd);
+        }
+        if (!$dbLink) {
+            $error = mysqli_connect_error();
+        }
+            
+        $neardWinbinder->incrProgressBar($wbProgressBar);
+        $stmt = @mysqli_prepare($dbLink, 'UPDATE mysql.user SET Password=PASSWORD(?) WHERE User=?');
+        if (empty($error) && $stmt === false) {
+            $error = mysqli_error($dbLink);
+        }
+        
+        $neardWinbinder->incrProgressBar($wbProgressBar);
+        if (empty($error) && !@mysqli_stmt_bind_param($stmt, 'ss', $newPwd, $this->rootUser)) {
+            $error = mysqli_stmt_error($stmt);
+        }
+        
+        $neardWinbinder->incrProgressBar($wbProgressBar);
+        if (empty($error) && !@mysqli_stmt_execute($stmt)) {
+            $error = mysqli_stmt_error($stmt);
+        }
+        
+        $neardWinbinder->incrProgressBar($wbProgressBar);
+        if ($stmt !== false) {
+            mysqli_stmt_close($stmt);
+        }
+        
+        $neardWinbinder->incrProgressBar($wbProgressBar);
+        if (empty($error) && @mysqli_query($dbLink, "FLUSH PRIVILEGES") === false) {
+            $error = mysqli_error($dbLink);
+        }
+        
+        $neardWinbinder->incrProgressBar($wbProgressBar);
+        if ($dbLink) {
+            mysqli_close($dbLink);
+        }
+        
+        if (!empty($error)) {
+            return $error;
+        }
+        
+        // neard.conf
+        $neardWinbinder->incrProgressBar($wbProgressBar);
+        $this->setRootPwd($newPwd);
+        
+        // phpmyadmin
+        $neardWinbinder->incrProgressBar($wbProgressBar);
+        $neardApps->getPhpmyadmin()->update();
+        
+        // adminer
+        $neardWinbinder->incrProgressBar($wbProgressBar);
+        $neardApps->getAdminer()->update();
+        
+        return true;
+    }
+    
+    public function checkRootPassword($currentPwd = null, $wbProgressBar = null)
+    {
+        global $neardLang, $neardWinbinder;
+        $currentPwd = $currentPwd == null ? $this->rootPwd : $currentPwd;
+        $error = null;
+        
+        $neardWinbinder->incrProgressBar($wbProgressBar);
+        if (version_compare(phpversion(), '5.3') === -1) {
+            $dbLink = @mysqli_connect('127.0.0.1', $this->rootUser, $currentPwd, '', $this->port);
+        } else {
+            $dbLink = @mysqli_connect('127.0.0.1:' . $this->port, $this->rootUser, $currentPwd);
+        }
+        if (!$dbLink) {
+            $error = mysqli_connect_error();
+        }
+        
+        $neardWinbinder->incrProgressBar($wbProgressBar);
+        if ($dbLink) {
+            mysqli_close($dbLink);
+        }
+        
+        if (!empty($error)) {
+            return $error;
+        }
+        
+        return true;
+    }
+    
     public function switchVersion($version, $showWindow = false)
     {
         Util::logDebug('Switch MySQL version to ' . $version);
@@ -302,6 +411,11 @@ class BinMysql
             }
             return false;
         }
+        
+        // conf
+        Util::replaceInFile($this->getConf(), array(
+            '/^port(.*?)=(.*?)(\d+)/' => 'port = ' . $this->port
+        ));
         
         // bootstrap
         Util::replaceDefine($neardCore->getBootstrapFilePath(), 'CURRENT_MYSQL_VERSION', $version);
@@ -422,6 +536,26 @@ class BinMysql
         return $this->replace(self::LOCAL_CFG_PORT, $port);
     }
     
+    public function getRootUser()
+    {
+        return $this->rootUser;
+    }
+
+    public function setRootUser($rootUser)
+    {
+        return $this->replace(self::LOCAL_CFG_ROOT_USER, $rootUser);
+    }
+    
+    public function getRootPwd()
+    {
+        return $this->rootPwd;
+    }
+
+    public function setRootPwd($rootPwd)
+    {
+        return $this->replace(self::LOCAL_CFG_ROOT_PWD, $rootPwd);
+    }
+
     public function getCliExe()
     {
         return $this->cliExe;

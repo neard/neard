@@ -55,6 +55,7 @@ class Lang
     const MENU_ADD_ALIAS = 'menuAddAlias';
     const MENU_ADD_VHOST = 'menuAddVhost';
     const MENU_CHANGE_PORT = 'menuChangePort';
+    const MENU_CHANGE_ROOT_PWD = 'menuChangeRootPwd';
     const MENU_CHECK_PORT = 'menuCheckPort';
     const MENU_CHECK_UPDATE = 'menuCheckUpdate';
     const MENU_CLEAR_FOLDERS = 'menuClearFolders';
@@ -198,6 +199,15 @@ class Lang
     const CHANGE_PORT_CURRENT_LABEL = 'changePortCurrentLabel';
     const CHANGE_PORT_NEW_LABEL = 'changePortNewLabel';
     const CHANGE_PORT_SAME_ERROR = 'changePortSameError';
+    
+    // Action Change database root password
+    const CHANGE_DB_ROOT_PWD_TITLE = 'changeDbRootPwdTitle';
+    const CHANGE_DB_ROOT_PWD_CURRENTPWD_LABEL = 'changeDbRootPwdCurrentpwdLabel';
+    const CHANGE_DB_ROOT_PWD_NEWPWD1_LABEL = 'changeDbRootPwdNewpwd1Label';
+    const CHANGE_DB_ROOT_PWD_NEWPWD2_LABEL = 'changeDbRootPwdNewpwd2Label';
+    const CHANGE_DB_ROOT_PWD_NOTSAME_ERROR = 'changeDbRootPwdNotsameError';
+    const CHANGE_DB_ROOT_PWD_INCORRECT_ERROR = 'changeDbRootPwdIncorrectError';
+    const CHANGE_DB_ROOT_PWD_TEXT = 'changeDbRootPwdText';
     
     // Action Startup
     const STARTUP_STARTING_TEXT = 'startupStartingText';
@@ -363,6 +373,7 @@ class Lang
             self::MENU_ADD_ALIAS,
             self::MENU_ADD_VHOST,
             self::MENU_CHANGE_PORT,
+            self::MENU_CHANGE_ROOT_PWD,
             self::MENU_CHECK_PORT,
             self::MENU_CHECK_UPDATE,
             self::MENU_CLEAR_FOLDERS,
@@ -506,6 +517,15 @@ class Lang
             self::CHANGE_PORT_CURRENT_LABEL,
             self::CHANGE_PORT_NEW_LABEL,
             self::CHANGE_PORT_SAME_ERROR,
+            
+            // Action Change database root password
+            self::CHANGE_DB_ROOT_PWD_TITLE,
+            self::CHANGE_DB_ROOT_PWD_CURRENTPWD_LABEL,
+            self::CHANGE_DB_ROOT_PWD_NEWPWD1_LABEL,
+            self::CHANGE_DB_ROOT_PWD_NEWPWD2_LABEL,
+            self::CHANGE_DB_ROOT_PWD_NOTSAME_ERROR,
+            self::CHANGE_DB_ROOT_PWD_INCORRECT_ERROR,
+            self::CHANGE_DB_ROOT_PWD_TEXT,
             
             // Action Startup
             self::STARTUP_STARTING_TEXT,

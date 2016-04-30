@@ -9,6 +9,7 @@ class TplAppMysql
     
     const ACTION_SWITCH_VERSION = 'switchMysqlVersion';
     const ACTION_CHANGE_PORT = 'changeMysqlPort';
+    const ACTION_CHANGE_ROOT_PWD = 'changeMysqlRootPwd';
     const ACTION_INSTALL_SERVICE = 'installMysqlService';
     const ACTION_REMOVE_SERVICE = 'removeMysqlService';
     const ACTION_LAUNCH_STARTUP = 'launchStartupMysql';
@@ -34,8 +35,6 @@ class TplAppMysql
             $tplVersions[TplApp::SECTION_CALL] . PHP_EOL .
             $tplService[TplApp::SECTION_CALL] . PHP_EOL .
             $tplDebug[TplApp::SECTION_CALL] . PHP_EOL .
-            TplAestan::getItemLink($neardLang->getValue(Lang::PHPMYADMIN), 'phpmyadmin/', true) . PHP_EOL .
-            TplAestan::getItemLink($neardLang->getValue(Lang::ADMINER), 'adminer/?server=127.0.0.1%3A' . $neardBins->getMysql()->getPort() . '&username=', true) . PHP_EOL .
             TplAestan::getItemConsole(
                 $neardLang->getValue(Lang::CONSOLE),
                 TplAestan::GLYPH_CONSOLE,
@@ -98,6 +97,8 @@ class TplAppMysql
             false, get_called_class()
         );
         
+        $isInstalled = $neardBins->getMysql()->getService()->isInstalled();
+        
         $result = TplAestan::getItemActionServiceStart($neardBins->getMysql()->getService()->getName()) . PHP_EOL .
             TplAestan::getItemActionServiceStop($neardBins->getMysql()->getService()->getName()) . PHP_EOL .
             TplAestan::getItemActionServiceRestart($neardBins->getMysql()->getService()->getName()) . PHP_EOL .
@@ -106,10 +107,20 @@ class TplAppMysql
                 Action::CHECK_PORT, array($neardBins->getMysql()->getName(), $neardBins->getMysql()->getPort()),
                 array(sprintf($neardLang->getValue(Lang::MENU_CHECK_PORT), $neardBins->getMysql()->getPort()), TplAestan::GLYPH_LIGHT)
             ) . PHP_EOL .
-            $tplChangePort[TplApp::SECTION_CALL] . PHP_EOL .
-            $tplLaunchStartup[TplApp::SECTION_CALL] . PHP_EOL;
+            $tplChangePort[TplApp::SECTION_CALL] . PHP_EOL;
         
-        $isInstalled = $neardBins->getMysql()->getService()->isInstalled();
+        if ($isInstalled) {
+            $tplChangeRootPwd = TplApp::getActionMulti(
+                self::ACTION_CHANGE_ROOT_PWD, null,
+                array($neardLang->getValue(Lang::MENU_CHANGE_ROOT_PWD), TplAestan::GLYPH_PASSWORD),
+                !$isInstalled, get_called_class()
+            );
+            
+            $result .= $tplChangeRootPwd[TplApp::SECTION_CALL] . PHP_EOL;
+        }
+        
+        $result .= $tplLaunchStartup[TplApp::SECTION_CALL] . PHP_EOL;
+        
         if (!$isInstalled) {
             $tplInstallService = TplApp::getActionMulti(
                 self::ACTION_INSTALL_SERVICE, null,
@@ -131,6 +142,7 @@ class TplAppMysql
         }
         
         $result .= $tplChangePort[TplApp::SECTION_CONTENT] . PHP_EOL .
+            $tplChangeRootPwd[TplApp::SECTION_CONTENT] . PHP_EOL .
             $tplLaunchStartup[TplApp::SECTION_CONTENT] . PHP_EOL;
     
         return $result;
@@ -159,6 +171,14 @@ class TplAppMysql
         global $neardLang, $neardBins;
     
         return TplApp::getActionRun(Action::CHANGE_PORT, array($neardBins->getMysql()->getName())) . PHP_EOL .
+            TplAppReload::getActionReload();
+    }
+    
+    public static function getActionChangeMysqlRootPwd()
+    {
+        global $neardLang, $neardBins;
+    
+        return TplApp::getActionRun(Action::CHANGE_DB_ROOT_PWD, array($neardBins->getMysql()->getName())) . PHP_EOL .
             TplAppReload::getActionReload();
     }
     

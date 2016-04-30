@@ -54,6 +54,7 @@ menuAccessLogs = "Forgalmi napló"
 menuAddAlias = "Új alias"
 menuAddVhost = "Új virtuális hoszt"
 menuChangePort = "Port váltás"
+menuChangeRootPwd = "#Change root password"
 menuCheckPort = "Port %s ellenörzés"
 menuCheckUpdate = "Frissítés ellenörzés"
 menuClearFolders = "Temp mappa üritése"
@@ -197,6 +198,15 @@ changePortTitle = "%s port cseréje"
 changePortCurrentLabel = "A portot %s : %s már használja"
 changePortNewLabel = "Új port"
 changePortSameError = "Ez ugyanaz a port amit most használ"
+
+; Action Change database root password
+changeDbRootPwdTitle = "#Change %s root password"
+changeDbRootPwdCurrentpwdLabel = "#Current password"
+changeDbRootPwdNewpwd1Label = "#New password"
+changeDbRootPwdNewpwd2Label = "#Confirm new password"
+changeDbRootPwdNotsameError = "#Passwords that you entered are not identical to each other"
+changeDbRootPwdIncorrectError = "#%s error: %s"
+changeDbRootPwdText = "#Root password changed successfully!"
 
 ; Action Change port
 startupStartingText = "%s inditása Kérem várjon"
