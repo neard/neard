@@ -1,2 +1,2 @@
 Place SVN tool releases here.
-Download : https://github.com/crazy-max/neard-tool-svn
+Documentation and downloads : https://github.com/crazy-max/neard/wiki/toolSVN

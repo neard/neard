@@ -1,2 +1,2 @@
 Place Composer tool releases here.
-Download : https://github.com/crazy-max/neard-tool-composer
+Documentation and downloads : https://github.com/crazy-max/neard/wiki/toolComposer

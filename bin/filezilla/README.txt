@@ -1,2 +1,2 @@
 Place Filezilla Server binary releases here.
-Download : https://github.com/crazy-max/neard-bin-filezilla
+Documentation and downloads : https://github.com/crazy-max/neard/wiki/binFilezilla

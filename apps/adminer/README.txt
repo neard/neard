@@ -1,2 +1,2 @@
 Place Adminer app releases here.
-Download : https://github.com/crazy-max/neard-app-adminer
+Documentation and downloads : https://github.com/crazy-max/neard/wiki/appAdminer
