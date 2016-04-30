@@ -234,9 +234,6 @@ class BinPhp
             return false;
         }
         
-        // bootstrap
-        util::replaceDefine($neardCore->getBootstrapFilePath(), 'CURRENT_PHP_VERSION', $version);
-        
         // neard.conf
         $this->setVersion($version);
         

@@ -284,10 +284,6 @@ class BinApache
             return false;
         }
         
-        // bootstrap
-        Util::replaceDefine($neardCore->getBootstrapFilePath(), 'CURRENT_APACHE_VERSION', $version);
-        Util::replaceDefine($neardCore->getBootstrapFilePath(), 'CURRENT_APACHE_PORT', intval($this->port));
-        
         // neard.conf
         $this->setVersion($version);
         

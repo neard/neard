@@ -386,10 +386,6 @@ class BinMysql
             return false;
         }
         
-        // bootstrap
-        Util::replaceDefine($neardCore->getBootstrapFilePath(), 'CURRENT_MYSQL_VERSION', $version);
-        Util::replaceDefine($neardCore->getBootstrapFilePath(), 'CURRENT_MYSQL_PORT', intval($this->port));
-        
         // neard.conf
         $this->setVersion($version);
         

@@ -143,9 +143,6 @@ class BinNodejs
             return false;
         }
         
-        // bootstrap
-        Util::replaceDefine($neardCore->getBootstrapFilePath(), 'CURRENT_NODEJS_VERSION', $version);
-        
         // neard.conf
         $this->setVersion($version);
         

@@ -271,10 +271,6 @@ class BinFilezilla
             return false;
         }
     
-        // bootstrap
-        Util::replaceDefine($neardCore->getBootstrapFilePath(), 'CURRENT_FILEZILLA_VERSION', $version);
-        Util::replaceDefine($neardCore->getBootstrapFilePath(), 'CURRENT_FILEZILLA_PORT', intval($this->port));
-    
         // neard.conf
         $this->setVersion($version);
         
