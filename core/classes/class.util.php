@@ -6,6 +6,7 @@ class Util
     const LOG_WARNING = 'WARNING';
     const LOG_INFO = 'INFO';
     const LOG_DEBUG = 'DEBUG';
+    const LOG_TRACE = 'TRACE';
     
     public static function cleanArgv($name, $type = 'text')
     {
@@ -260,10 +261,10 @@ class Util
                                 $replace = str_replace('{{' . $paramsMatch . '}}', $matches[$paramsMatch], $replace);
                             }
                         }
-                        self::logDebug('Replace in file ' . $path . ' :');
-                        self::logDebug('## line_num: ' . trim($nb));
-                        self::logDebug('## old: ' . trim($line));
-                        self::logDebug('## new: ' . trim($replace));
+                        self::logTrace('Replace in file ' . $path . ' :');
+                        self::logTrace('## line_num: ' . trim($nb));
+                        self::logTrace('## old: ' . trim($line));
+                        self::logTrace('## new: ' . trim($replace));
                         fwrite($fp, $replace . PHP_EOL);
                         
                         $replaceDone = true;
@@ -428,6 +429,7 @@ class Util
         $verbose[Config::VERBOSE_SIMPLE] = $type == self::LOG_ERROR || $type == self::LOG_WARNING;
         $verbose[Config::VERBOSE_REPORT] = $verbose[Config::VERBOSE_SIMPLE] || $type == self::LOG_INFO;
         $verbose[Config::VERBOSE_DEBUG] = $verbose[Config::VERBOSE_REPORT] || $type == self::LOG_DEBUG;
+        $verbose[Config::VERBOSE_TRACE] = $verbose[Config::VERBOSE_DEBUG] || $type == self::LOG_TRACE;
         
         $writeLog = false;
         if ($neardConfig->getLogsVerbose() == Config::VERBOSE_SIMPLE && $verbose[Config::VERBOSE_SIMPLE]) {
@@ -435,6 +437,8 @@ class Util
         } elseif ($neardConfig->getLogsVerbose() == Config::VERBOSE_REPORT && $verbose[Config::VERBOSE_REPORT]) {
             $writeLog = true;
         } elseif ($neardConfig->getLogsVerbose() == Config::VERBOSE_DEBUG && $verbose[Config::VERBOSE_DEBUG]) {
+            $writeLog = true;
+        } elseif ($neardConfig->getLogsVerbose() == Config::VERBOSE_TRACE && $verbose[Config::VERBOSE_TRACE]) {
             $writeLog = true;
         }
         
@@ -469,6 +473,11 @@ class Util
                 file_put_contents($log, $separator, FILE_APPEND);
             }
         }
+    }
+    
+    public static function logTrace($data, $file = null)
+    {
+        self::log($data, self::LOG_TRACE, $file);
     }
     
     public static function logDebug($data, $file = null)

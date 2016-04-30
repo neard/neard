@@ -21,6 +21,7 @@ class Config
     const VERBOSE_SIMPLE = 0;
     const VERBOSE_REPORT = 1;
     const VERBOSE_DEBUG = 2;
+    const VERBOSE_TRACE = 3;
     
     private $raw;
     
@@ -50,10 +51,10 @@ class Config
     {
         global $neardBs;
         
-        Util::logDebug('Replace config:');
+        Util::logTrace('Replace config:');
         $content = file_get_contents($neardBs->getConfigFilePath());
         foreach ($params as $key => $value) {
-            Util::logDebug('## ' . $key . ': ' . $value);
+            Util::logTrace('## ' . $key . ': ' . $value);
             $content = preg_replace('|' . $key . ' = .*|', $key . ' = ' . '"' . $value.'"' , $content);
             $this->raw[$key] = $value;
         }

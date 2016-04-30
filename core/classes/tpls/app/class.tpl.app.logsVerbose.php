@@ -22,6 +22,7 @@ class TplAppLogsVerbose
             Config::VERBOSE_SIMPLE => $neardLang->getValue(Lang::VERBOSE_SIMPLE),
             Config::VERBOSE_REPORT => $neardLang->getValue(Lang::VERBOSE_REPORT),
             Config::VERBOSE_DEBUG  => $neardLang->getValue(Lang::VERBOSE_DEBUG),
+            Config::VERBOSE_TRACE  => $neardLang->getValue(Lang::VERBOSE_TRACE),
         );
         
         foreach ($verboses as $verbose => $caption) {
