@@ -109,6 +109,7 @@ class TplAppMysql
             ) . PHP_EOL .
             $tplChangePort[TplApp::SECTION_CALL] . PHP_EOL;
         
+        $tplChangeRootPwd = null;
         if ($isInstalled) {
             $tplChangeRootPwd = TplApp::getActionMulti(
                 self::ACTION_CHANGE_ROOT_PWD, null,
@@ -142,9 +143,9 @@ class TplAppMysql
         }
         
         $result .= $tplChangePort[TplApp::SECTION_CONTENT] . PHP_EOL .
-            $tplChangeRootPwd[TplApp::SECTION_CONTENT] . PHP_EOL .
+            ($tplChangeRootPwd != null ? $tplChangeRootPwd[TplApp::SECTION_CONTENT] . PHP_EOL : '') .
             $tplLaunchStartup[TplApp::SECTION_CONTENT] . PHP_EOL;
-    
+        
         return $result;
     }
     
