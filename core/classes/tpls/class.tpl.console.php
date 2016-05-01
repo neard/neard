@@ -9,6 +9,7 @@ class TplConsole
     const ICON_SVN = 'svn.ico';
     const ICON_NODEJS = 'nodejs.ico';
     const ICON_COMPOSER = 'composer.ico';
+    const ICON_PHPMETRICS = 'phpmetrics.ico';
     const ICON_PHPUNIT = 'phpunit.ico';
     const ICON_DRUSH = 'drush.ico';
     const ICON_WPCLI = 'wpcli.ico';
@@ -221,6 +222,7 @@ class TplConsole
                 self::getTabSvnSection() . PHP_EOL .
                 self::getTabNodejsSection() . PHP_EOL .
                 self::getTabComposerSection() . PHP_EOL .
+                self::getTabPhpMetricsSection() . PHP_EOL .
                 self::getTabPhpUnitSection() . PHP_EOL .
                 self::getTabDrushSection() . PHP_EOL .
                 self::getTabWpCliSection() . PHP_EOL .
@@ -357,6 +359,21 @@ class TplConsole
         return self::getTab(
             $neardTools->getConsole()->getTabTitleComposer(),
             self::ICON_COMPOSER,
+            Util::formatWindowsPath($shell),
+            $neardBs->getWwwPath()
+        );
+    }
+    
+    private static function getTabPhpMetricsSection()
+    {
+        global $neardBs, $neardTools;
+    
+        $shell = $neardTools->getConsole()->getCmdShell() . ' ' .
+            '&quot;' . $neardTools->getPhpMetrics()->getExe() . '&quot; --version';
+    
+        return self::getTab(
+            $neardTools->getConsole()->getTabTitlePhpMetrics(),
+            self::ICON_PHPMETRICS,
             Util::formatWindowsPath($shell),
             $neardBs->getWwwPath()
         );
