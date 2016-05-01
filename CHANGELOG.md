@@ -2,21 +2,41 @@
 
 ## 1.0.19 (2016/04/21)
 
+* Add menu item to change MySQL and MariaDB root password ([Issue #134](https://github.com/crazy-max/neard/issues/134))
+* Add PhpMetrics tool : [1.0.1-r1, 1.1.1-r1, 1.9.2-r1](https://github.com/crazy-max/neard-tool-phpmetrics/releases/tag/r1) ([Issue #121](https://github.com/crazy-max/neard/issues/121))
 * Add WP-CLI tool : [0.12.1-r1, 0.13.0-r1, 0.14.1-r1, 0.15.1-r1, 0.16.0-r1, 0.17.2-r1, 0.18.1-r1, 0.19.3-r1, 0.20.4-r1, 0.21.1-r1, 0.22.0-r1, 0.23.1-r1](https://github.com/crazy-max/neard-tool-wpcli/releases/tag/r1) ([Issue #121](https://github.com/crazy-max/neard/issues/121))
 * Add Drush tool : [5.9.0-r1, 6.7.0-r1, 7.3.0-r1, 8.1.0-r1](https://github.com/crazy-max/neard-tool-drush/releases/tag/r1) ([Issue #121](https://github.com/crazy-max/neard/issues/121))
 * Add PHPUnit tool : [4.8.24-r1, 5.3.2-r1](https://github.com/crazy-max/neard-tool-phpunit/releases/tag/r1) ([Issue #121](https://github.com/crazy-max/neard/issues/121))
 * Create Wiki documentation ([Issue #31](https://github.com/crazy-max/neard/issues/31))
 * Move Console icons to core resources
 * Upgrade Console tool to pack 2 release 3
+* No return value while switching version
 * Retrieve latest version from wiki page `latestVersion.md` instead of `CHANGELOG.md`
 * New menu organization
+* Change binaries summary order on homepage
+* Add log trace type
+* Improve startup performances
+* Review config update procs
+* Remove useless constants
+* Bug while changing port (service not restarted)
+* 
 
 ### Upgrade from previous release
 
+* Add line `drushVersion = "7.3.0"` after `consoleVersion` in `neard.conf`
 * Add line `phpunitVersion = "4.8.24"` after `notepad2Version` in `neard.conf`
-* Copy folder `tools\phpunit`
+* Add line `phpmetricsVersion = "1.0.1"` after `phpunitVersion` in `neard.conf`
+* Add line `wpcliVersion = "0.20.4"` after `svnVersion` in `neard.conf`
+* Remove then replace folder `apps\adminer`
+* Remove then replace folder `apps\phpmyadmin`
 * Remove then replace folder `core`
 * Remove then replace folder `tools\console2`
+* Copy folder `tools\drush`
+* Copy folder `tools\phpunit`
+* Copy folder `tools\phpmetrics`
+* Copy folder `tools\wpcli`
+* Copy folder `tmp\drush`
+* Copy folder `tmp\wp-cli`
 * Remove then replace file `sprites.dat`
 
 ## 1.0.18 (2016/04/21)
