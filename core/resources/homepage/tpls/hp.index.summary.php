@@ -74,8 +74,16 @@
       <div class="panel-body">
         <div class="list-group" style="margin-bottom:0;">
           <a class="list-group-item" href="#">
+            <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardTools->getComposer()->getVersion(); ?></span>
+            <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::COMPOSER); ?>
+          </a>
+          <a class="list-group-item" href="#">
             <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardTools->getConsole()->getVersion(); ?></span>
             <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::CONSOLE); ?>
+          </a>
+          <a class="list-group-item" href="#">
+            <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardTools->getDrush()->getVersion(); ?></span>
+            <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::DRUSH); ?>
           </a>
           <a class="list-group-item" href="#">
             <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardTools->getGit()->getVersion(); ?></span>
@@ -90,8 +98,24 @@
             <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::IMAGEMAGICK); ?>
           </a>
           <a class="list-group-item" href="#">
+            <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardTools->getNotepad2()->getVersion(); ?></span>
+            <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::NOTEPAD2); ?>
+          </a>
+          <a class="list-group-item" href="#">
+            <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardTools->getPhpMetrics()->getVersion(); ?></span>
+            <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::PHPMETRICS); ?>
+          </a>
+          <a class="list-group-item" href="#">
+            <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardTools->getPhpUnit()->getVersion(); ?></span>
+            <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::PHPUNIT); ?>
+          </a>
+          <a class="list-group-item" href="#">
             <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardTools->getSvn()->getVersion(); ?></span>
             <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::SVN); ?>
+          </a>
+          <a class="list-group-item" href="#">
+            <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardTools->getWpCli()->getVersion(); ?></span>
+            <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::WPCLI); ?>
           </a>
           <a class="list-group-item" href="#">
             <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardTools->getXdc()->getVersion(); ?></span>
