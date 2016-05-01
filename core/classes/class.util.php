@@ -327,6 +327,7 @@ class Util
             $value .= $neardTools->getDrush()->getCurrentPath() . ';';
             $value .= $neardTools->getGit()->getCurrentPath() . '/bin;';
             $value .= $neardTools->getImageMagick()->getCurrentPath() . ';';
+            $value .= $neardTools->getPhpMetrics()->getCurrentPath() . ';';
             $value .= $neardTools->getPhpUnit()->getCurrentPath() . ';';
             $value .= $neardTools->getSvn()->getCurrentPath() . '/bin;';
             $value .= $neardTools->getWpCli()->getCurrentPath() . ';';

@@ -268,6 +268,12 @@ class ToolConsole
         return $neardLang->getValue(Lang::COMPOSER) . ' ' . $neardTools->getComposer()->getVersion();
     }
     
+    public function getTabTitlePhpMetrics()
+    {
+        global $neardLang, $neardTools;
+        return $neardLang->getValue(Lang::PHPMETRICS) . ' ' . $neardTools->getPhpMetrics()->getVersion();
+    }
+    
     public function getTabTitlePhpUnit()
     {
         global $neardLang, $neardTools;

@@ -9,6 +9,7 @@ class Tools
     private $hostseditor;
     private $imagemagick;
     private $notepad2;
+    private $phpmetrics;
     private $phpunit;
     private $svn;
     private $wpcli;
@@ -42,6 +43,7 @@ class Tools
             $this->getHostsEditor(),
             $this->getImageMagick(),
             $this->getNotepad2(),
+            $this->getPhpMetrics(),
             $this->getPhpUnit(),
             $this->getSvn(),
             $this->getWpCli(),
@@ -103,6 +105,14 @@ class Tools
             $this->notepad2 = new ToolNotepad2($this->getRootPath('notepad2'));
         }
         return $this->notepad2;
+    }
+    
+    public function getPhpMetrics()
+    {
+        if ($this->phpmetrics == null) {
+            $this->phpmetrics = new ToolPhpMetrics($this->getRootPath('phpmetrics'));
+        }
+        return $this->phpmetrics;
     }
     
     public function getPhpUnit()

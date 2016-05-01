@@ -45,6 +45,7 @@ class TplAestan
     const GLYPH_DRUSH = 43;
     const GLYPH_WPCLI = 44;
     const GLYPH_PASSWORD = 45;
+    const GLYPH_PHPMETRICS = 46;
     
     const SERVICE_START = 'startresume';
     const SERVICE_STOP = 'stop';
