@@ -88,6 +88,7 @@ menuWwwDirectory = "Répertoire www"
 ; Bins
 apache = "Apache"
 filezilla = "Filezilla"
+mailhog = "MailHog"
 mariadb = "MariaDB"
 mysql = "MySQL"
 nodejs = "Node.js"

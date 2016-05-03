@@ -197,6 +197,11 @@ class Bootstrap
         return $this->getLogsPath($aetrayPath) . '/neard-winbinder.log';
     }
     
+    public function getNssmLogFilePath($aetrayPath = false)
+    {
+        return $this->getLogsPath($aetrayPath) . '/neard-nssm.log';
+    }
+    
     public function getHomepageFilePath($aetrayPath = false)
     {
         return $this->getWwwPath($aetrayPath) . '/index.php';

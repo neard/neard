@@ -16,6 +16,8 @@ class ActionCheckPort
                 $bin = $neardBins->getMariadb()->checkPort($args[1], true);
             } elseif ($args[0] == $neardBins->getFilezilla()->getName()) {
                 $bin = $neardBins->getFilezilla()->checkPort($args[1], $ssl, true);
+            } elseif ($args[0] == $neardBins->getMailhog()->getName()) {
+                $bin = $neardBins->getMailhog()->checkPort($args[1], true);
             }
         }
     }

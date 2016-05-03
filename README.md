@@ -1,4 +1,4 @@
-# Neard
+# Neard [![Download](https://img.shields.io/badge/download-1.0.19-brightgreen.svg)](https://github.com/crazy-max/neard/releases/download/v1.0.19/neard-1.0.19.7z) [![Donate Paypal](https://img.shields.io/badge/donate-paypal-blue.svg)](https://www.paypal.me/crazyws) [![Gitter](https://badges.gitter.im/crazy-max/neard.svg)](https://gitter.im/crazy-max/neard?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -13,22 +13,21 @@
   - [Get notified on new updates / releases](#get-notified-on-new-updates--releases)
 - [Installation and configuration](#installation-and-configuration)
 - [Usage](#usage)
-- [Changelog](#changelog)
-- [Found a bug?](#found-a-bug)
-- [Contribute](#contribute)
-- [Donate](#donate)
 - [License](#license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## About
 
-Neard is a portable WAMP software stack involving :
+**Neard** is a portable WAMP software stack involving useful binaries, tools and applications for [your web development]((../../wiki/Screenshots)).<br />
+It is open for everyone to contribute. You can contribute to [binaries](../../wiki/Binaries#contribute), [tools](../../wiki/Tools#contribute), [applications](../../wiki/Applications#contribute) and [translations](../../wiki/Translations) too.<br />
+If you've got a problem do not forget to read the [Reporting an issue Wiki page](../../wiki/Reporting-an-issue).
 
 ### Binaries
 
 * **[Apache](../../wiki/binApache)**, the world's most used web server software.
 * **[Filezilla](../../wiki/binFilezilla)**, a FTP server application.
+* **[MailHog](../../wiki/binMailHog)**, a Web and API based SMTP testing.
 * **[MariaDB](../../wiki/binMariaDB)**, a community-developed fork of the MySQL relational database management system intended to remain free under the GNU GPL.
 * **[MySQL](../../wiki/binMySQL)**, an open-source relational database management system.
 * **[Node.js](../../wiki/binNode.js)**, an open-source, cross-platform runtime environment for developing server-side web applications.
@@ -59,9 +58,7 @@ And many other features.
 
 ## Download
 
-Before installing Neard, read the [Requirements Wiki page](../../wiki/Requirements).
-
-[![Neard 1.0.19(https://img.shields.io/badge/download-neard%201.0.19-brightgreen.svg)](https://github.com/crazy-max/neard/releases/download/v1.0.19/neard-1.0.19.7z)
+Before [downloading](https://github.com/crazy-max/neard/releases/download/v1.0.19/neard-1.0.19.7z) and installing Neard, read the [Requirements Wiki page](../../wiki/Requirements).
 
 ### Additionals downloads (binaries, tools, applications)
 
@@ -90,27 +87,8 @@ Then edit the configuration file `neard.conf` :
 
 Launch `neard.exe`.
 
-## Changelog
-
-See `CHANGELOG.md` and `DIFF.md`.
-
-## Found a bug?
-
-See [Reporting an issue Wiki page](../../wiki/Reporting-an-issue).
-
-## Contribute
-
-Neard is open for everyone to contribute. You can contribute to [binaries](../../wiki/Binaries#contribute), [tools](../../wiki/Tools#contribute) and [applications](../../wiki/Applications#contribute) too.<br />
-If you want to translate Neard in your language, read the [Translations Wiki page](../../wiki/Translations).<br />
-Give me some feedback and join the development!
-
-## Donate
-
-I have put in a lot of time to this project and appreciate donations.<br />
-You can use the [Paypal donate link](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=4H86AJZ6M865A&item_name=Neard&no_note=0&cn=Message%20%3a&no_shipping=1&rm=1&return=https%3A%2F%2Fgithub.com%2Fcrazy-max%2Fneard&cancel_return=https%3A%2F%2Fgithub.com%2Fcrazy-max%2Fneard&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted).
-
-Thank you to everyone who has donated, it is much appreciated.
-
 ## License
 
 LGPL. See `LICENSE` for more details.
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/crazy-max/neard/trend.png)](https://bitdeli.com/free "Bitdeli Badge")

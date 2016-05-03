@@ -66,6 +66,8 @@ class Win32Service
     private $params;
     private $startType;
     private $errorControl;
+    private $nssm;
+    
     private $latestStatus;
     private $latestError;
     
@@ -135,7 +137,9 @@ class Win32Service
     {
         global $neardBs, $neardBins;
         
-        if ($this->getName() == BinFilezilla::SERVICE_NAME) {
+        if ($this->getNssm() instanceof Nssm) {
+            return $this->getNssm()->create();
+        } elseif ($this->getName() == BinFilezilla::SERVICE_NAME) {
             $neardBins->getFilezilla()->rebuildConf();
             return Batch::installFilezillaService();
         }
@@ -170,7 +174,7 @@ class Win32Service
 
     public function delete()
     {
-        global $neardBs;
+        global $neardBs, $neardBins;
         
         $this->stop();
         
@@ -190,6 +194,15 @@ class Win32Service
         return true;
     }
     
+    public function reset()
+    {
+        if ($this->delete()) {
+            usleep(self::SLEEP_TIME);
+            return $this->create();
+        }
+        return false;
+    }
+    
     public function start()
     {
         global $neardBs, $neardBins;
@@ -198,6 +211,8 @@ class Win32Service
             $neardBins->getFilezilla()->rebuildConf();
         } elseif ($this->getName() == BinMysql::SERVICE_NAME) {
             $neardBins->getMysql()->initData();
+        } elseif ($this->getName() == BinMailhog::SERVICE_NAME) {
+            $neardBins->getMailhog()->rebuildConf();
         }
         
         $start = dechex($this->callWin32Service('win32_start_service', $this->getName(), true));
@@ -266,6 +281,10 @@ class Win32Service
     
     public function infos()
     {
+        if ($this->getNssm() instanceof Nssm) {
+            return $this->getNssm()->infos();
+        }
+        
         return Vbs::getServiceInfos($this->getName());
     }
 
@@ -517,6 +536,20 @@ class Win32Service
 
     public function setErrorControl($errorControl) {
         $this->errorControl = $errorControl;
+    }
+    
+    public function getNssm() {
+        return $this->nssm;
+    }
+    
+    public function setNssm($nssm) {
+        if ($nssm instanceof Nssm) {
+            $this->setDisplayName($nssm->getDisplayName());
+            $this->setBinPath($nssm->getBinPath());
+            $this->setParams($nssm->getParams());
+            $this->setStartType($nssm->getStart());
+            $this->nssm = $nssm;
+        }
     }
     
     public function getLatestStatus() {

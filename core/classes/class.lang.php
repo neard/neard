@@ -92,6 +92,7 @@ class Lang
     const PHP = 'php';
     const PEAR = 'pear';
     const MYSQL = 'mysql';
+    const MAILHOG = 'mailhog';
     const MARIADB = 'mariadb';
     const NODEJS = 'nodejs';
     
@@ -411,6 +412,7 @@ class Lang
             self::PHP,
             self::PEAR,
             self::MYSQL,
+            self::MAILHOG,
             self::MARIADB,
             self::NODEJS,
             
