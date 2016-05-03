@@ -13,6 +13,9 @@ class Core
     const SETENV_VERSION = '1.09';
     const SETENV_EXE = 'SetEnv.exe';
     
+    const NSSM_VERSION = '2.24';
+    const NSSM_EXE = 'nssm.exe';
+    
     const APP_VERSION = 'version.dat';
     const LAST_PATH = 'lastPath.dat';
     const EXEC = 'exec.dat';
@@ -138,5 +141,15 @@ class Core
     public function getSetEnvExe($aetrayPath = false)
     {
         return $this->getSetEnvPath($aetrayPath) . '/' . self::SETENV_EXE;
+    }
+    
+    public function getNssmPath($aetrayPath = false)
+    {
+        return $this->getLibsPath($aetrayPath) . '/nssm';
+    }
+    
+    public function getNssmExe($aetrayPath = false)
+    {
+        return $this->getNssmPath($aetrayPath) . '/' . self::NSSM_EXE;
     }
 }

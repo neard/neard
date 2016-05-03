@@ -37,6 +37,10 @@ class ActionChangePort
                 $this->bin = $neardBins->getFilezilla();
                 $this->currentPort = $neardBins->getFilezilla()->getPort();
                 $this->cntProcessActions = 3;
+            } elseif ($args[0] == $neardBins->getMailhog()->getName()) {
+                $this->bin = $neardBins->getMailhog();
+                $this->currentPort = $neardBins->getMailhog()->getSmtpPort();
+                $this->cntProcessActions = 3;
             }
             
             $neardWinbinder->reset();

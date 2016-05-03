@@ -209,7 +209,7 @@ class ActionStartup
         $this->splash->incrProgressBar();
     
         $this->writeLog('Clear tmp folders');
-        Util::clearFolder($neardBs->getTmpPath(), array('cachegrind', 'npm-cache', 'drush', 'wp-cli'));
+        Util::clearFolder($neardBs->getTmpPath(), array('cachegrind', 'npm-cache', 'drush', 'wp-cli', 'mailhog'));
         Util::clearFolder($neardCore->getTmpPath());
     }
     
@@ -513,21 +513,28 @@ class ActionStartup
                 $startServiceTime = Util::getMicrotime();
         
                 $syntaxCheckCmd = null;
-                if ($sName == BinApache::SERVICE_NAME) {
+                $port = 0;
+                if ($sName == BinMailhog::SERVICE_NAME) {
+                    $bin = $neardBins->getMailhog();
+                    $port = $neardBins->getMailhog()->getSmtpPort();
+                } elseif ($sName == BinApache::SERVICE_NAME) {
                     $bin = $neardBins->getApache();
+                    $port = $neardBins->getApache()->getPort();
                     $syntaxCheckCmd = BinApache::CMD_SYNTAX_CHECK;
                 } elseif ($sName == BinMysql::SERVICE_NAME) {
                     $bin = $neardBins->getMysql();
+                    $port = $neardBins->getMysql()->getPort();
                     $syntaxCheckCmd = BinMysql::CMD_SYNTAX_CHECK;
                 } elseif ($sName == BinMariadb::SERVICE_NAME) {
                     $bin = $neardBins->getMariadb();
+                    $port = $neardBins->getMariadb()->getPort();
                     $syntaxCheckCmd = BinMariadb::CMD_SYNTAX_CHECK;
                 } elseif ($sName == BinFilezilla::SERVICE_NAME) {
                     $bin = $neardBins->getFilezilla();
+                    $port = $neardBins->getFilezilla()->getPort();
                 }
-        
+                
                 $name = $bin->getName() . ' ' . $bin->getVersion() . ' (' . $service->getName() . ')';
-                $port = $bin->getPort();
                 
                 $this->splash->incrProgressBar();
                 $this->splash->setTextLoading(sprintf($neardLang->getValue(Lang::STARTUP_CHECK_SERVICE_TEXT), $name));
@@ -538,8 +545,8 @@ class ActionStartup
                     foreach ($serviceInfos as $key => $value) {
                         $this->writeLog('-> ' . $key . ': ' . $value);
                     }
-                    $serviceGenPathName = $service->getBinPath() . ($service->getParams() ? ' ' . $service->getParams() : '');
-                    $serviceVbsPathName = str_replace('"', '', $serviceInfos[Win32Service::VBS_PATH_NAME]);
+                    $serviceGenPathName = trim(str_replace('"', '', $service->getBinPath() . ($service->getParams() ? ' ' . $service->getParams() : '')));
+                    $serviceVbsPathName = trim(str_replace('"', '', $serviceInfos[Win32Service::VBS_PATH_NAME]));
                     if ($serviceGenPathName != $serviceVbsPathName) {
                         $serviceToRemove = true;
                         $this->writeLog($name . ' service has to be removed');

@@ -2,6 +2,7 @@
 
 class Bins
 {
+    private $mailhog;
     private $apache;
     private $php;
     private $mysql;
@@ -38,6 +39,7 @@ class Bins
     
     public function getAll() {
         return array(
+            $this->getMailhog(),
             $this->getApache(),
             $this->getFilezilla(),
             $this->getMariadb(),
@@ -45,6 +47,14 @@ class Bins
             $this->getPhp(),
             $this->getNodejs(),
         );
+    }
+    
+    public function getMailhog()
+    {
+        if ($this->mailhog == null) {
+            $this->mailhog = new BinMailhog($this->getRootPath('mailhog'));
+        }
+        return $this->mailhog;
     }
 
     public function getApache()
@@ -105,6 +115,7 @@ class Bins
     public function getServices()
     {
         return array(
+            BinMailhog::SERVICE_NAME => $this->getMailhog()->getService(),
             BinApache::SERVICE_NAME => $this->getApache()->getService(),
             BinMysql::SERVICE_NAME => $this->getMysql()->getService(),
             BinMariadb::SERVICE_NAME => $this->getMariadb()->getService(),
@@ -116,6 +127,9 @@ class Bins
     {
         $result = array();
         
+        if ($this->getMailhog()->isLaunchStartup()) {
+            $result[BinMailhog::SERVICE_NAME] = $this->getMailhog()->getService();
+        }
         if ($this->getApache()->isLaunchStartup()) {
             $result[BinApache::SERVICE_NAME] = $this->getApache()->getService();
         }

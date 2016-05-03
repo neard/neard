@@ -34,6 +34,9 @@ class ActionQuit
             if ($sName == BinMysql::SERVICE_NAME) {
                 $name = $neardBins->getMysql()->getName() . ' ' . $neardBins->getMysql()->getVersion();
                 $port = $neardBins->getMysql()->getPort();
+            } elseif ($sName == BinMailhog::SERVICE_NAME) {
+                $name = $neardBins->getMailhog()->getName() . ' ' . $neardBins->getMailhog()->getVersion();
+                $port = $neardBins->getMailhog()->getSmtpPort();
             } elseif ($sName == BinMariadb::SERVICE_NAME) {
                 $name = $neardBins->getMariadb()->getName() . ' ' . $neardBins->getMariadb()->getVersion();
                 $port = $neardBins->getMariadb()->getPort();
