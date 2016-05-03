@@ -2,7 +2,7 @@
 
 ## 1.0.19 (2016/04/21)
 
-* Add MailHog binary : [0.2.0-r1](https://github.com/crazy-max/neard-bin-mailhog/releases/tag/r1) ([Issue #119](https://github.com/crazy-max/neard/issues/119))
+* Add MailHog binary : [0.2.0-r1](https://github.com/crazy-max/neard-bin-mailhog/releases/tag/r1) ([Issue #32](https://github.com/crazy-max/neard/issues/32), [Issue #119](https://github.com/crazy-max/neard/issues/119))
 * Add menu item to change MySQL and MariaDB root password ([Issue #134](https://github.com/crazy-max/neard/issues/134))
 * Add PhpMetrics tool : [1.0.1-r1, 1.1.1-r1, 1.9.2-r1](https://github.com/crazy-max/neard-tool-phpmetrics/releases/tag/r1) ([Issue #121](https://github.com/crazy-max/neard/issues/121))
 * Add WP-CLI tool : [0.12.1-r1, 0.13.0-r1, 0.14.1-r1, 0.15.1-r1, 0.16.0-r1, 0.17.2-r1, 0.18.1-r1, 0.19.3-r1, 0.20.4-r1, 0.21.1-r1, 0.22.0-r1, 0.23.1-r1](https://github.com/crazy-max/neard-tool-wpcli/releases/tag/r1) ([Issue #121](https://github.com/crazy-max/neard/issues/121))
@@ -43,6 +43,7 @@
 * Copy folder `tools\phpmetrics`
 * Copy folder `tools\wpcli`
 * Copy folder `tmp\drush`
+* Copy folder `tmp\mailhog`
 * Copy folder `tmp\wp-cli`
 * Remove then replace file `sprites.dat`
 
