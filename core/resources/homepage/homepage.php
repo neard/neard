@@ -46,6 +46,6 @@
     $('.navbar-nav a[title]').tooltip({ html: true, placement: 'bottom' });
     $('a[title]').tooltip({ html: true });
     </script>
-    
+    <?php var_dump(get_declared_classes()); ?>
   </body>
 </html>

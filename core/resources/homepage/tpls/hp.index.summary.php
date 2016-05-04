@@ -24,7 +24,7 @@
         <h4 class="list-group-item-heading"><?php echo $neardLang->getValue(Lang::DONATE); ?></h4>
         <div class="list-group-item-text">
           <p><?php echo $neardLang->getValue(Lang::HOMEPAGE_DONATE_TEXT); ?></p>
-          <p><a target="_blank" href="<?php echo $neardConfig->getPaypalLink(); ?>" class="btn btn-primary" role="button"><img style="padding-right:5px" src="<?php echo $neardHomepage->getResourcesUrl() . '/img/btn-paypal.png'; ?>" /> <?php echo sprintf($neardLang->getValue(Lang::DONATE_VIA), $neardLang->getValue(Lang::PAYPAL)); ?></a></p>
+          <p><a target="_blank" href="<?php echo $neardConfig->getPaypalLink(); ?>" class="btn btn-primary" role="button"><img style="padding-right:5px" src="<?php echo $neardHomepage->getResourcesPath() . '/img/btn-paypal.png'; ?>" /> <?php echo sprintf($neardLang->getValue(Lang::DONATE_VIA), $neardLang->getValue(Lang::PAYPAL)); ?></a></p>
         </div>
       </div>
     </div>
@@ -39,27 +39,27 @@
       <div class="panel-body">
         <div class="list-group" style="margin-bottom:0;">
           <a class="list-group-item summary-binapache" href="#apache">
-            <span class="loader" style="float:right"><img src="<?php echo $neardHomepage->getResourcesUrl() . '/img/loader.gif'; ?>" /></span>
+            <span class="loader" style="float:right"><img src="<?php echo $neardHomepage->getResourcesPath() . '/img/loader.gif'; ?>" /></span>
             <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::APACHE); ?>
           </a>
           <a class="list-group-item summary-binphp" href="#php">
-            <span class="loader" style="float:right"><img src="<?php echo $neardHomepage->getResourcesUrl() . '/img/loader.gif'; ?>" /></span>
+            <span class="loader" style="float:right"><img src="<?php echo $neardHomepage->getResourcesPath() . '/img/loader.gif'; ?>" /></span>
             <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::PHP); ?>
           </a>
           <a class="list-group-item summary-binmysql" href="#mysql">
-            <span class="loader" style="float:right"><img src="<?php echo $neardHomepage->getResourcesUrl() . '/img/loader.gif'; ?>" /></span>
+            <span class="loader" style="float:right"><img src="<?php echo $neardHomepage->getResourcesPath() . '/img/loader.gif'; ?>" /></span>
             <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::MYSQL); ?>
           </a>
           <a class="list-group-item summary-binmariadb" href="#mariadb">
-            <span class="loader" style="float:right"><img src="<?php echo $neardHomepage->getResourcesUrl() . '/img/loader.gif'; ?>" /></span>
+            <span class="loader" style="float:right"><img src="<?php echo $neardHomepage->getResourcesPath() . '/img/loader.gif'; ?>" /></span>
             <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::MARIADB); ?>
           </a>
           <a class="list-group-item summary-binnodejs" href="#nodejs">
-            <span class="loader" style="float:right"><img src="<?php echo $neardHomepage->getResourcesUrl() . '/img/loader.gif'; ?>" /></span>
+            <span class="loader" style="float:right"><img src="<?php echo $neardHomepage->getResourcesPath() . '/img/loader.gif'; ?>" /></span>
             <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::NODEJS); ?>
           </a>
           <a class="list-group-item summary-binfilezilla" href="#filezilla">
-            <span class="loader" style="float:right"><img src="<?php echo $neardHomepage->getResourcesUrl() . '/img/loader.gif'; ?>" /></span>
+            <span class="loader" style="float:right"><img src="<?php echo $neardHomepage->getResourcesPath() . '/img/loader.gif'; ?>" /></span>
             <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::FILEZILLA); ?>
           </a>
         </div>

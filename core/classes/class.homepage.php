@@ -31,19 +31,23 @@ class Homepage
         return $this->page;
     }
     
-    public function getPageUrl($page)
+    public function getPageQuery($query)
+    {
+        $request = '';
+        if (!empty($page) && in_array($query, $this->pageList) && $query != self::PAGE_INDEX) {
+            $request = '?p=' . $query;
+        }
+        if (!empty($page) && in_array($query, $this->pageStdl)) {
+            $request = $query;
+        }
+    
+        return $request;
+    }
+    
+    public function getPageUrl($query)
     {
         global $neardBs;
-        
-        $request = '';
-        if (!empty($page) && in_array($page, $this->pageList) && $page != self::PAGE_INDEX) {
-            $request = '?p=' . $page;
-        }
-        if (!empty($page) && in_array($page, $this->pageStdl)) {
-            $request = $page;
-        }
-        
-        return $neardBs->getLocalUrl($request);
+        return $neardBs->getLocalUrl($this->getPageQuery($query));
     }
     
     public function getPath()

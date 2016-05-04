@@ -19,7 +19,7 @@
   #phpinfo hr {}
 </style>
 
-<a href="<?php echo $neardHomepage->getPageUrl(Homepage::PAGE_INDEX); ?>" class="btn btn-primary" role="button"><i class="fa fa-arrow-circle-left"></i> <?php echo $neardLang->getValue(Lang::HOMEPAGE_BACK_TEXT); ?></a>
+<a href="<?php echo $neardHomepage->getPageQuery(Homepage::PAGE_INDEX); ?>" class="btn btn-primary" role="button"><i class="fa fa-arrow-circle-left"></i> <?php echo $neardLang->getValue(Lang::HOMEPAGE_BACK_TEXT); ?></a>
 
 <div id="phpinfo"><?php
 
