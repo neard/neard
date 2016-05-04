@@ -644,20 +644,25 @@ class Util
     {
         global $neardCore, $neardBins;
         
-        if (version_compare($neardBins->getPhp()->getVersion(), '5.2.17', '>')) {
-            require_once $neardCore->getLibsPath() . '/markdown/1.5.0/MarkdownInterface.php';
-            require_once $neardCore->getLibsPath() . '/markdown/1.5.0/Markdown.php';
-            require_once $neardCore->getLibsPath() . '/markdown/1.5.0/MarkdownExtra.php';
-        } else {
-            require_once $neardCore->getLibsPath() . '/markdown/1.0.2/markdown.php';
-        }
-        
         $content = self::getRemoteFile('https://raw.githubusercontent.com/crazy-max/neard/master/CHANGELOG.md');
         if (empty($content)) {
             self::logError('Cannot retrieve latest CHANGELOG');
             return null;
         }
-        return $markdown ? Markdown(preg_replace('/^.+\n.*\n/', '', $content)) : $content;
+        
+        if ($markdown) {
+            if (version_compare($neardBins->getPhp()->getVersion(), '5.2.17', '>')) {
+                require_once $neardCore->getLibsPath() . '/markdown/1.6.0/MarkdownInterface.php';
+                require_once $neardCore->getLibsPath() . '/markdown/1.6.0/Markdown.php';
+                require_once $neardCore->getLibsPath() . '/markdown/1.6.0/MarkdownExtra.php';
+                $content = Michelf\MarkDownExtra::defaultTransform($content);
+            } else {
+                require_once $neardCore->getLibsPath() . '/markdown/1.0.2/markdown.php';
+                $content = Markdown(preg_replace('/^.+\n.*\n/', '', $content));
+            }
+        }
+        
+        return $content;
     }
     
     public static function getLatestChangelogLink()
