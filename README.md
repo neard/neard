@@ -23,6 +23,8 @@
 It is open for everyone to contribute. You can contribute to [binaries](../../wiki/Binaries#contribute), [tools](../../wiki/Tools#contribute), [applications](../../wiki/Applications#contribute) and [translations](../../wiki/Translations) too.<br />
 If you've got a problem do not forget to read the [Reporting an issue Wiki page](../../wiki/Reporting-an-issue).
 
+![](../../wiki/screenshots/neard-menu1-20160505.png)  ![](../../wiki/screenshots/neard-menu2-20160505.png)
+
 ### Binaries
 
 * **[Apache](../../wiki/binApache)**, the world's most used web server software.
@@ -44,7 +46,7 @@ If you've got a problem do not forget to read the [Reporting an issue Wiki page]
 ### Tools
 
 * **[Composer](../../wiki/toolComposer)**, Dependency Manager for PHP.
-* **[Console](../../wiki/toolConsole)**, a multi command prompt with TCC/LE including MySQL / MariaDB, Git, SVN, Node.js and many others views.
+* **[Console](../../wiki/toolConsole)**, a multi command prompt with TCC/LE and ANSICON including MySQL / MariaDB, Git, SVN, Node.js and many others views.
 * **[Drush](../../wiki/toolDrush)**, a command line shell and scripting interface for Drupal.
 * **[Git](../../wiki/toolGit)**, a widely used version control system for software development.
 * **[HostsEditor](../../wiki/toolHostsEditor)**, a small application for editing windows Hosts file.
@@ -78,10 +80,10 @@ Then edit the configuration file `neard.conf` :
 * **lang** - Language (see `neard\core\langs` folder for a complete list). Default : `english`
 * **timezone** - The default timezone used by all date/time functions. Default : `"Europe/Paris"`
 * **notepad** - The editor while opening files. Default : `"notepad.exe"`
-* **logsVerbose** - Control the debug output (0=simple, 1=report, 2=debug). Default : `0`
+* **logsVerbose** - Control the log output verbose (0=simple, 1=report, 2=debug, 3=trace). Default : `0`
 * **purgeLogsOnStartup** - Purge logs from Neard logs folder (0=false, 1= true). Default `0`
 * **scriptsTimeout** - The default timeout when VBS/Batch are executed. May vary depending on your system. Default : `120`
-* **scriptsDelete** - Delete temporary scripts in core/tmp folder (0=false, 1= true). Default : `1`
+* **scriptsDelete** - Delete temporary scripts in core/tmp folder on startup (0=false, 1= true). Default : `1`
 
 ## Usage
 
