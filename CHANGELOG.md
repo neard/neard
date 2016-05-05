@@ -40,6 +40,8 @@
 * Remove then replace folder `apps\gitlist`
 * Remove then replace folder `apps\phpmyadmin`
 * Copy folder `bin\mailhog`
+* Add line `mariadbRootUser = "root"` and `mariadbRootPwd = ""` after `mariadbPort = "3307"` in `bin\mariadb\mariadbx.x.x\neard.conf`
+* Add line `mysqlRootUser = "root"` and `mysqlRootPwd = ""` after `mysqlPort = "3307"` in `bin\mysql\mysqlx.x.x\neard.conf`
 * Remove then replace folder `core`
 * Remove then replace folder `tools\console`
 * Copy folder `tools\drush`
