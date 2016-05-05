@@ -1,4 +1,4 @@
-# Neard [![Download](https://img.shields.io/badge/download-1.0.19-brightgreen.svg)](https://github.com/crazy-max/neard/releases/download/v1.0.19/neard-1.0.19.7z) [![Donate Paypal](https://img.shields.io/badge/donate-paypal-blue.svg)](https://www.paypal.me/crazyws) [![Gitter](https://badges.gitter.im/crazy-max/neard.svg)](https://gitter.im/crazy-max/neard?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+# Neard [![Download](https://img.shields.io/badge/download-1.0.19-brightgreen.svg)](https://github.com/crazy-max/neard/releases/download/v1.0.19/neard-1.0.19.7z) [![Donate Paypal](https://img.shields.io/badge/donate-paypal-blue.svg)](https://www.paypal.me/crazyws)
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
