@@ -60,7 +60,7 @@ And many other features.
 
 ## Download
 
-Before [downloading](https://github.com/crazy-max/neard/releases/download/v1.0.19/neard-1.0.19.7z) and installing Neard, read the [Requirements Wiki page](../../wiki/Requirements).
+Before [downloading](https://github.com/crazy-max/neard/releases/download/v1.0.19/neard-1.0.19.7z) Neard, read the [Requirements Wiki page](../../wiki/Requirements).
 
 ### Additionals downloads (binaries, tools, applications)
 
