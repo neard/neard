@@ -92,5 +92,3 @@ Launch `neard.exe`.
 ## License
 
 LGPL. See `LICENSE` for more details.
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/crazy-max/neard/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
