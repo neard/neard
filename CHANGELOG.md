@@ -41,7 +41,7 @@
 * Remove then replace folder `apps\phpmyadmin`
 * Copy folder `bin\mailhog`
 * Remove then replace folder `core`
-* Remove then replace folder `tools\console2`
+* Remove then replace folder `tools\console`
 * Copy folder `tools\drush`
 * Copy folder `tools\phpunit`
 * Copy folder `tools\phpmetrics`
