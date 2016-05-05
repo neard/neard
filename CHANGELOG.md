@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.0.19 (2016/04/21)
+## 1.0.19 (2016/05/05)
 
 * Bug while loading latest changelog from homepage ([Issue #135](https://github.com/crazy-max/neard/issues/135))
 * Add MailHog binary : [0.2.0-r1](https://github.com/crazy-max/neard-bin-mailhog/releases/tag/r1) ([Issue #32](https://github.com/crazy-max/neard/issues/32), [Issue #119](https://github.com/crazy-max/neard/issues/119))
