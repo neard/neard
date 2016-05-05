@@ -83,6 +83,12 @@ table.tablesorter thead tr th:hover {
   width: 70%;
 }
 
+/* Summary panel body */
+.panel-summary {
+  height: 195px;
+  overflow: auto;
+}
+
 /* Edit Below to Customize Widths > 768px */
 @media (min-width:768px) {
 

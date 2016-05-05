@@ -10,6 +10,7 @@
 * Add Drush tool : [5.9.0-r1, 6.7.0-r1, 7.3.0-r1, 8.1.0-r1](https://github.com/crazy-max/neard-tool-drush/releases/tag/r1) ([Issue #121](https://github.com/crazy-max/neard/issues/121))
 * Add PHPUnit tool : [4.8.24-r1, 5.3.2-r1](https://github.com/crazy-max/neard-tool-phpunit/releases/tag/r1) ([Issue #121](https://github.com/crazy-max/neard/issues/121))
 * Create Wiki documentation ([Issue #31](https://github.com/crazy-max/neard/issues/31))
+* Wrong RewriteBase on GitList 0.5.0-r2
 * Upgrade PHP Markdown
 * Add NSSM lib required for MailHog
 * Add reference to IMDisplay.exe in ImageMagick neard.conf
@@ -36,6 +37,7 @@
 * Add line `phpmetricsVersion = "1.0.1"` after `phpunitVersion` in `neard.conf`
 * Add line `wpcliVersion = "0.20.4"` after `svnVersion` in `neard.conf`
 * Remove then replace folder `apps\adminer`
+* Remove then replace folder `apps\gitlist`
 * Remove then replace folder `apps\phpmyadmin`
 * Copy folder `bin\mailhog`
 * Remove then replace folder `core`

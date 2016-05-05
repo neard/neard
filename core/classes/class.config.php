@@ -116,20 +116,4 @@ class Config
     {
         return intval($this->raw[self::CFG_MAX_LOGS_ARCHIVES]);
     }
-    
-    public function getPaypalLink()
-    {
-        return 'https://www.paypal.com/cgi-bin/webscr' .
-            '?cmd=_donations' .
-            '&business=4H86AJZ6M865A' .
-            '&item_name=' . urlencode(APP_TITLE) .
-            '&no_note=0' .
-            '&cn=Message%20%3a' .
-            '&no_shipping=1' .
-            '&rm=1' .
-            '&return=' . urlencode(APP_GITHUB_HOME) .
-            '&cancel_return=' . urlencode(APP_GITHUB_HOME) .
-            '&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted';
-    }
-    
 }

@@ -11,6 +11,9 @@ $(document).ready(function() {
         $('.summary-binfilezilla').prepend(data.binfilezilla);
         $('.summary-binfilezilla').find('.loader').remove();
         
+        $('.summary-binmailhog').prepend(data.binmailhog);
+        $('.summary-binmailhog').find('.loader').remove();
+        
         $('.summary-binmariadb').prepend(data.binmariadb);
         $('.summary-binmariadb').find('.loader').remove();
         

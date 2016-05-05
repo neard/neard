@@ -41,7 +41,7 @@ class ActionAbout
                 $neardWinbinder->exec($neardConfig->getBrowser(), APP_GITHUB_HOME);
                 break;
             case $this->wbLinkDonate[WinBinder::CTRL_ID]:
-                $neardWinbinder->exec($neardConfig->getBrowser(), $neardConfig->getPaypalLink());
+                $neardWinbinder->exec($neardConfig->getBrowser(), APP_DONATE_URL);
                 break;
             case IDCLOSE:
             case $this->wbBtnOk[WinBinder::CTRL_ID]:

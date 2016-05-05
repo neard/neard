@@ -3,6 +3,7 @@
 $result = array(
     'binapache' => '',
     'binfilezilla' => '',
+    'binmailhog' => '',
     'binmariadb' => '',
     'binmysql' => '',
     'binnodejs' => '',
@@ -38,6 +39,16 @@ if ($neardBins->getFilezilla()->checkPort($filezillaPort)) {
 }
 
 $result['binfilezilla'] = '<span style="float:right;font-size:12px" class="label ' . $filezillaLabel . '">' . $neardBins->getFilezilla()->getVersion() . '</span>';
+
+// Bin MailHog
+$mailhogPort = $neardBins->getMailhog()->getSmtpPort();
+$mailhogLabel = 'label-danger';
+
+if ($neardBins->getMailhog()->checkPort($mailhogPort)) {
+    $mailhogLabel = 'label-success';
+}
+
+$result['binmailhog'] = '<span style="float:right;font-size:12px" class="label ' . $mailhogLabel . '">' . $neardBins->getMailhog()->getVersion() . '</span>';
 
 // Bin MariaDB
 $mariadbPort = $neardBins->getMariadb()->getPort();
