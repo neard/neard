@@ -43,6 +43,7 @@
 * Remove then replace folder `core`
 * Remove then replace folder `tools\console`
 * Copy folder `tools\drush`
+* Remove then replace folder `tools\imagemagick`
 * Copy folder `tools\phpunit`
 * Copy folder `tools\phpmetrics`
 * Copy folder `tools\wpcli`
