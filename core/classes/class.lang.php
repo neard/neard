@@ -24,6 +24,7 @@ class Lang
     const GITHUB = 'github';
     const HELP = 'help';
     const LANG = 'lang';
+    const LICENSE = 'license';
     const LOGS = 'logs';
     const LOGS_VERBOSE = 'logsVerbose';
     const MODULES = 'modules';
@@ -310,13 +311,14 @@ class Lang
     const HOMEPAGE_OFFICIAL_WEBSITE = 'homepageOfficialWebsite';
     const HOMEPAGE_SERVICE_STARTED = 'homepageServiceStarted';
     const HOMEPAGE_SERVICE_STOPPED = 'homepageServiceStopped';
-    const HOMEPAGE_ABOUT_TEXT = 'homepageAboutText';
+    const HOMEPAGE_ABOUT_HTML = 'homepageAboutHtml';
+    const HOMEPAGE_LICENSE_TEXT = 'homepageLicenseText';
     const HOMEPAGE_QUESTIONS_TITLE = 'homepageQuestionsTitle';
     const HOMEPAGE_QUESTIONS_TEXT = 'homepageQuestionsText';
     const HOMEPAGE_POST_ISSUE = 'homepagePostIssue';
-    const HOMEPAGE_DONATE_TEXT = 'homepageDonateText';
     const HOMEPAGE_PHPINFO_TEXT = 'homepagePhpinfoText';
     const HOMEPAGE_APC_TEXT = 'homepageApcText';
+    const HOMEPAGE_MAILHOG_TEXT = 'homepageMailhogText';
     const HOMEPAGE_BACK_TEXT = 'homepageBackText';
     
     public static function getKeys()
@@ -344,6 +346,7 @@ class Lang
             self::GITHUB,
             self::HELP,
             self::LANG,
+            self::LICENSE,
             self::LOGS,
             self::LOGS_VERBOSE,
             self::MODULES,
@@ -628,13 +631,14 @@ class Lang
             self::HOMEPAGE_OFFICIAL_WEBSITE,
             self::HOMEPAGE_SERVICE_STARTED,
             self::HOMEPAGE_SERVICE_STOPPED,
-            self::HOMEPAGE_ABOUT_TEXT,
+            self::HOMEPAGE_ABOUT_HTML,
+            self::HOMEPAGE_LICENSE_TEXT,
             self::HOMEPAGE_QUESTIONS_TITLE,
             self::HOMEPAGE_QUESTIONS_TEXT,
             self::HOMEPAGE_POST_ISSUE,
-            self::HOMEPAGE_DONATE_TEXT,
             self::HOMEPAGE_PHPINFO_TEXT,
             self::HOMEPAGE_APC_TEXT,
+            self::HOMEPAGE_MAILHOG_TEXT,
             self::HOMEPAGE_BACK_TEXT,
         );
     }

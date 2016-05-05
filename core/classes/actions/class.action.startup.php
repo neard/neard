@@ -16,7 +16,7 @@ class ActionStartup
     public function __construct($args)
     {
         global $neardBs, $neardCore, $neardLang, $neardBins, $neardWinbinder;
-        $this->writeLog('Starting Neard...');
+        $this->writeLog('Starting ' . APP_TITLE . '...');
         
         // Init
         $this->splash = new Splash();
@@ -70,14 +70,14 @@ class ActionStartup
         // Kill old instances
         $this->killOldInstances();
         
-        // Prepare Neard
+        // Prepare app
         $this->refreshHostname();
         $this->checkLaunchStartup();
         $this->checkBrowser();
         $this->refreshAliases();
         $this->refreshVhosts();
         
-        // Check Neard path
+        // Check app path
         $this->checkPath();
         $this->scanFolders();
         $this->changePath();
@@ -104,7 +104,7 @@ class ActionStartup
         }
         
         if ($this->restart) {
-            $this->writeLog('Neard have to be restarted');
+            $this->writeLog(APP_TITLE . ' have to be restarted');
             $this->splash->setTextLoading(sprintf(
                 $neardLang->getValue(Lang::STARTUP_PREPARE_RESTART_TEXT),
                 APP_TITLE . ' ' . $neardCore->getAppVersion())
@@ -222,11 +222,11 @@ class ActionStartup
         $this->splash->setTextLoading($neardLang->getValue(Lang::STARTUP_CLEAN_OLD_BEAHAVIORS_TEXT));
         $this->splash->incrProgressBar();
         
-        // Neard >= 1.0.13
+        // App >= 1.0.13
         $neardRegistry->deleteValue(
             Registry::HKEY_LOCAL_MACHINE,
             'SOFTWARE\Microsoft\Windows\CurrentVersion\Run',
-            'Neard'
+            APP_TITLE
         );
     }
     

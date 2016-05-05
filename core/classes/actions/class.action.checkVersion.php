@@ -24,7 +24,7 @@ class ActionCheckVersion
             $this->latestVersion =  Util::getLatestVersion();
             
             if ($this->latestVersion != null && version_compare($this->currentVersion, $this->latestVersion, '<')) {
-                $labelFullLink = $neardLang->getValue(Lang::DOWNLOAD) . ' Neard ' . $this->latestVersion;
+                $labelFullLink = $neardLang->getValue(Lang::DOWNLOAD) . ' ' . APP_TITLE . ' ' . $this->latestVersion;
                 $labelFullInfo = 'neard-' . $this->latestVersion . '.7z (' . Util::getRemoteFilesize(Util::getVersionUrl($this->latestVersion)) . ')';
                 
                 $neardWinbinder->reset();

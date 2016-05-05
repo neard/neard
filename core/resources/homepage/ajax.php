@@ -7,6 +7,7 @@ $procs = array(
     'latestversion',
     'apache',
     'filezilla',
+    'mailhog',
     'mariadb',
     'mysql',
     'nodejs',
