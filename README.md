@@ -51,8 +51,8 @@ If you've got a problem do not forget to read the [Reporting an issue Wiki page]
 * **[Git](../../wiki/toolGit)**, a widely used version control system for software development.
 * **[HostsEditor](../../wiki/toolHostsEditor)**, a small application for editing windows Hosts file.
 * **[ImageMagick](../../wiki/toolImageMagick)**, a free and open-source software suite to manipulate image files.
-* **[PhpMetrics](../../wiki/toolPhpMetrics)**, a programmer-oriented testing framework for PHP. It is an instance of the xUnit architecture for unit testing frameworks.
-* **[PHPUnit](../../wiki/toolPHPUnit)**, gives metrics about PHP project and classes.
+* **[PhpMetrics](../../wiki/toolPhpMetrics)**, gives metrics about PHP project and classes.
+* **[PHPUnit](../../wiki/toolPHPUnit)**, a programmer-oriented testing framework for PHP.
 * **[SVN](../../wiki/toolSVN)**, a software versioning and revision control system.
 * **[WP-CLI](../../wiki/toolWP-CLI)**, a command line interface for WordPress.
 * **[XDebugClient](../../wiki/toolXDebugClient)**, a simple frontend for XDebug.
