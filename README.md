@@ -30,7 +30,7 @@ If you've got a problem do not forget to read the [Reporting an issue Wiki page]
 * **[Apache](../../wiki/binApache)**, the world's most used web server software.
 * **[Filezilla](../../wiki/binFilezilla)**, a FTP server application.
 * **[MailHog](../../wiki/binMailHog)**, a Web and API based SMTP testing.
-* **[MariaDB](../../wiki/binMariaDB)**, a community-developed fork of the MySQL relational database management system intended to remain free under the GNU GPL.
+* **[MariaDB](../../wiki/binMariaDB)**, a community-developed fork of the MySQL relational database management system.
 * **[MySQL](../../wiki/binMySQL)**, an open-source relational database management system.
 * **[Node.js](../../wiki/binNode.js)**, an open-source, cross-platform runtime environment for developing server-side web applications.
 * **[PHP](../../wiki/binPHP)**, a server-side scripting language designed for web development including PEAR and extra extensions.
@@ -46,12 +46,13 @@ If you've got a problem do not forget to read the [Reporting an issue Wiki page]
 ### Tools
 
 * **[Composer](../../wiki/toolComposer)**, Dependency Manager for PHP.
-* **[Console](../../wiki/toolConsole)**, a multi command prompt with TCC/LE and ANSICON including MySQL / MariaDB, Git, SVN, Node.js and many others views.
+* **[Console](../../wiki/toolConsole)**, a multi command prompt with TCC/LE and ANSICON.
 * **[Drush](../../wiki/toolDrush)**, a command line shell and scripting interface for Drupal.
 * **[Git](../../wiki/toolGit)**, a widely used version control system for software development.
 * **[HostsEditor](../../wiki/toolHostsEditor)**, a small application for editing windows Hosts file.
-* **[ImageMagick](../../wiki/toolImageMagick)**, a free and open-source software suite for displaying, converting, and editing raster image and vector image files.
-* **[PHPUnit](../../wiki/toolPHPUnit)**, a programmer-oriented testing framework for PHP. It is an instance of the xUnit architecture for unit testing frameworks.
+* **[ImageMagick](../../wiki/toolImageMagick)**, a free and open-source software suite to manipulate image files.
+* **[PhpMetrics](../../wiki/toolPhpMetrics)**, a programmer-oriented testing framework for PHP. It is an instance of the xUnit architecture for unit testing frameworks.
+* **[PHPUnit](../../wiki/toolPHPUnit)**, gives metrics about PHP project and classes.
 * **[SVN](../../wiki/toolSVN)**, a software versioning and revision control system.
 * **[WP-CLI](../../wiki/toolWP-CLI)**, a command line interface for WordPress.
 * **[XDebugClient](../../wiki/toolXDebugClient)**, a simple frontend for XDebug.
