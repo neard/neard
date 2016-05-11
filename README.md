@@ -9,8 +9,7 @@
   - [Applications](#applications)
   - [Tools](#tools)
 - [Download](#download)
-  - [Additionals downloads (binaries, tools, applications)](#additionals-downloads-binaries-tools-applications)
-  - [Get notified on new updates / releases](#get-notified-on-new-updates--releases)
+  - [Binaries, tools, applications)](#binaries-tools-applications)
 - [Installation and configuration](#installation-and-configuration)
 - [Usage](#usage)
 - [License](#license)
@@ -21,6 +20,7 @@
 
 **Neard** is a portable WAMP software stack involving useful binaries, tools and applications for [your web development](../../wiki/Screenshots).<br />
 It is open for everyone to contribute. You can contribute to [binaries](../../wiki/Binaries#contribute), [tools](../../wiki/Tools#contribute), [applications](../../wiki/Applications#contribute) and [translations](../../wiki/Translations) too.<br />
+To be notified of new releases subscribe to this [Atom feed](https://github.com/crazy-max/neard/releases.atom).<br />
 If you've got a problem do not forget to read the [Reporting an issue Wiki page](../../wiki/Reporting-an-issue).
 
 ![](../../wiki/screenshots/neard-menu1-20160505.png)  ![](../../wiki/screenshots/neard-menu2-20160505.png)
@@ -63,16 +63,10 @@ And many other features.
 
 Before [downloading](https://github.com/crazy-max/neard/releases/download/v1.0.19/neard-1.0.19.7z) Neard, read the [Requirements Wiki page](../../wiki/Requirements).
 
-### Additionals downloads (binaries, tools, applications)
+### Binaries, tools, applications
 
 Neard offers several versions of the various binaries, applications and tools for download on github subrepositories.<br />
 You can find the download links on the [Wiki](../../wiki).
-
-### Get notified on new updates / releases
-
-To get notified about new updates :
-* Click on [Watch](https://github.com/crazy-max/neard/subscription) button on Neard repository. You can watch Neard subrepositories too to follow bundles updates if you want.
-* If you just want to follow releases, star the project and subscribe to [Sibbell notifications platform](https://sibbell.com).
 
 ## Installation and configuration
 
