@@ -2,6 +2,7 @@
 
 ## 1.0.20 (2016/05/16)
 
+* Bug with homepage queries
 * Migrate from Notepad2 to Notepad2-mod
 
 ## 1.0.19 (2016/05/05)

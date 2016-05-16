@@ -34,7 +34,7 @@ class Homepage
     public function getPageQuery($query)
     {
         $request = '';
-        if (!empty($page) && in_array($query, $this->pageList) && $query != self::PAGE_INDEX) {
+        if (!empty($query) && in_array($query, $this->pageList) && $query != self::PAGE_INDEX) {
             $request = '?p=' . $query;
         }
         if (!empty($page) && in_array($query, $this->pageStdl)) {
