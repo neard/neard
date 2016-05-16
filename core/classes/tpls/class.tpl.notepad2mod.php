@@ -1,6 +1,6 @@
 <?php
 
-class TplNotepad2
+class TplNotepad2Mod
 {
     private function __construct()
     {
@@ -10,6 +10,6 @@ class TplNotepad2
     public static function process()
     {
         global $neardTools;
-        copy($neardTools->getNotepad2()->getConf() . '.nrd', $neardTools->getNotepad2()->getConf());
+        copy($neardTools->getNotepad2Mod()->getConf() . '.nrd', $neardTools->getNotepad2Mod()->getConf());
     }
 }

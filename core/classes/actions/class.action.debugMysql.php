@@ -28,7 +28,7 @@ class ActionDebugMysql
             }
             
             if ($editor) {
-                $neardTools->getNotepad2()->open($caption, $debugOutput['content']);
+                $neardTools->getNotepad2Mod()->open($caption, $debugOutput['content']);
             } else {
                 if ($msgBoxError) {
                     $neardWinbinder->messageBoxError(

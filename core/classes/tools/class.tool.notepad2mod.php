@@ -1,11 +1,11 @@
 <?php
 
-class ToolNotepad2
+class ToolNotepad2Mod
 {
-    const ROOT_CFG_VERSION = 'notepad2Version';
+    const ROOT_CFG_VERSION = 'notepad2modVersion';
     
-    const LOCAL_CFG_EXE = 'notepad2Exe';
-    const LOCAL_CFG_CONF = 'notepad2Conf';
+    const LOCAL_CFG_EXE = 'notepad2modExe';
+    const LOCAL_CFG_CONF = 'notepad2modConf';
     
     private $name;
     private $version;
@@ -23,11 +23,11 @@ class ToolNotepad2
         global $neardBs, $neardConfig, $neardLang;
         Util::logInitClass($this);
         
-        $this->name = $neardLang->getValue(Lang::NOTEPAD2);
+        $this->name = $neardLang->getValue(Lang::NOTEPAD2MOD);
         $this->version = $neardConfig->getRaw(self::ROOT_CFG_VERSION);
         
         $this->rootPath = $rootPath;
-        $this->currentPath = $rootPath . '/notepad2' . $this->version;
+        $this->currentPath = $rootPath . '/notepad2mod' . $this->version;
         $this->neardConf = $this->currentPath . '/neard.conf';
         
         if (!is_dir($this->currentPath)) {
@@ -90,9 +90,9 @@ class ToolNotepad2
     {
         global $neardBs, $neardWinbinder;
         
-        TplNotepad2::process();
+        TplNotepad2Mod::process();
     
-        $folderPath = $neardBs->getTmpPath() . '/notepad2-' . Util::random();
+        $folderPath = $neardBs->getTmpPath() . '/notepad2mod-' . Util::random();
         if (!is_dir($folderPath)) {
             mkdir($folderPath, 0777, true);
         }

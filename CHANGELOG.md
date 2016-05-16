@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.20 (2016/05/16)
+
+* Migrate from Notepad2 to Notepad2-mod
+
 ## 1.0.19 (2016/05/05)
 
 * Bug while loading latest changelog from homepage ([Issue #135](https://github.com/crazy-max/neard/issues/135))

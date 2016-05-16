@@ -32,7 +32,7 @@ class ActionReload
         TplConsole::process();
         
         // Process Notepad config
-        TplNotepad2::process();
+        TplNotepad2Mod::process();
         
         // Process Websvn config
         TplWebsvn::process();

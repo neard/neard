@@ -99,8 +99,8 @@
             <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::IMAGEMAGICK); ?>
           </a>
           <a class="list-group-item" href="#">
-            <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardTools->getNotepad2()->getVersion(); ?></span>
-            <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::NOTEPAD2); ?>
+            <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardTools->getNotepad2Mod()->getVersion(); ?></span>
+            <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::NOTEPAD2MOD); ?>
           </a>
           <a class="list-group-item" href="#">
             <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardTools->getPhpMetrics()->getVersion(); ?></span>
