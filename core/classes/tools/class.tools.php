@@ -8,7 +8,7 @@ class Tools
     private $git;
     private $hostseditor;
     private $imagemagick;
-    private $notepad2;
+    private $notepad2mod;
     private $phpmetrics;
     private $phpunit;
     private $svn;
@@ -42,7 +42,7 @@ class Tools
             $this->getGit(),
             $this->getHostsEditor(),
             $this->getImageMagick(),
-            $this->getNotepad2(),
+            $this->getNotepad2Mod(),
             $this->getPhpMetrics(),
             $this->getPhpUnit(),
             $this->getSvn(),
@@ -99,12 +99,12 @@ class Tools
         return $this->imagemagick;
     }
     
-    public function getNotepad2()
+    public function getNotepad2Mod()
     {
-        if ($this->notepad2 == null) {
-            $this->notepad2 = new ToolNotepad2($this->getRootPath('notepad2'));
+        if ($this->notepad2mod == null) {
+            $this->notepad2mod = new ToolNotepad2Mod($this->getRootPath('notepad2mod'));
         }
-        return $this->notepad2;
+        return $this->notepad2mod;
     }
     
     public function getPhpMetrics()

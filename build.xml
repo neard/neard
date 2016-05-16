@@ -77,7 +77,7 @@
         <getbundle releasesurl="${tool.git.url}" version="${tool.git.version}" dest="${release.target}/${release.name}/tools/git" />
         <getbundle releasesurl="${tool.hostseditor.url}" version="${tool.hostseditor.version}" dest="${release.target}/${release.name}/tools/hostseditor" />
         <getbundle releasesurl="${tool.imagemagick.url}" version="${tool.imagemagick.version}" dest="${release.target}/${release.name}/tools/imagemagick" />
-        <getbundle releasesurl="${tool.notepad2.url}" version="${tool.notepad2.version}" dest="${release.target}/${release.name}/tools/notepad2" />
+        <getbundle releasesurl="${tool.notepad2mod.url}" version="${tool.notepad2mod.version}" dest="${release.target}/${release.name}/tools/notepad2mod" />
         <getbundle releasesurl="${tool.phpmetrics.url}" version="${tool.phpmetrics.version}" dest="${release.target}/${release.name}/tools/phpmetrics" />
         <getbundle releasesurl="${tool.phpunit.url}" version="${tool.phpunit.version}" dest="${release.target}/${release.name}/tools/phpunit" />
         <getbundle releasesurl="${tool.svn.url}" version="${tool.svn.version}" dest="${release.target}/${release.name}/tools/svn" />
@@ -101,7 +101,7 @@
                 <filter token="TOOL_GIT_VERSION" value="${tool.git.version}"/>
                 <filter token="TOOL_HOSTSEDITOR_VERSION" value="${tool.hostseditor.version}"/>
                 <filter token="TOOL_IMAGEMAGICK_VERSION" value="${tool.imagemagick.version}"/>
-                <filter token="TOOL_NOTEPAD2_VERSION" value="${tool.notepad2.version}"/>
+                <filter token="TOOL_NOTEPAD2MOD_VERSION" value="${tool.notepad2mod.version}"/>
                 <filter token="TOOL_PHPMETRICS_VERSION" value="${tool.phpmetrics.version}"/>
                 <filter token="TOOL_PHPUNIT_VERSION" value="${tool.phpunit.version}"/>
                 <filter token="TOOL_SVN_VERSION" value="${tool.svn.version}"/>

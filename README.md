@@ -51,6 +51,7 @@ If you've got a problem do not forget to read the [Reporting an issue Wiki page]
 * **[Git](../../wiki/toolGit)**, a widely used version control system for software development.
 * **[HostsEditor](../../wiki/toolHostsEditor)**, a small application for editing windows Hosts file.
 * **[ImageMagick](../../wiki/toolImageMagick)**, a free and open-source software suite to manipulate image files.
+* **[Notepad2-mod](../../wiki/toolNotepad2-mod)**, a fork of Notepad2 text editor with syntax highlighting.
 * **[PhpMetrics](../../wiki/toolPhpMetrics)**, gives metrics about PHP project and classes.
 * **[PHPUnit](../../wiki/toolPHPUnit)**, a programmer-oriented testing framework for PHP.
 * **[SVN](../../wiki/toolSVN)**, a software versioning and revision control system.
@@ -86,4 +87,5 @@ Launch `neard.exe`.
 
 ## License
 
-LGPL. See `LICENSE` for more details.
+LGPL. See `LICENSE` for more details.<br />
+Icon credit to [David Vignoni](http://www.icon-king.com/).
