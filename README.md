@@ -20,7 +20,7 @@
 
 **Neard** is a portable WAMP software stack involving useful binaries, tools and applications for [your web development](../../wiki/Screenshots).<br />
 It is open for everyone to contribute. You can contribute to [binaries](../../wiki/Binaries#contribute), [tools](../../wiki/Tools#contribute), [applications](../../wiki/Applications#contribute) and [translations](../../wiki/Translations) too.<br />
-To be notified of new releases subscribe to this [Atom feed](https://github.com/crazy-max/neard/releases.atom).<br />
+To be notified of new releases, Star the project or subscribe to this [Atom feed](https://github.com/crazy-max/neard/releases.atom).<br />
 If you've got a problem do not forget to read the [Reporting an issue Wiki page](../../wiki/Reporting-an-issue).
 
 ![](../../wiki/screenshots/neard-menu1-20160505.png)  ![](../../wiki/screenshots/neard-menu2-20160505.png)
