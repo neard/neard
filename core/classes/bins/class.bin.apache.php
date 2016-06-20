@@ -562,6 +562,7 @@ class BinApache
             $this->getRequiredContent() . PHP_EOL .
             '    </Directory>' . PHP_EOL .
             '</VirtualHost>' . PHP_EOL . PHP_EOL .
+            '<IfModule ssl_module>' . PHP_EOL .
             '<VirtualHost *:' . $this->getSslPort() . '> #SSL' . PHP_EOL .
             '    DocumentRoot "' . $documentRoot . '"' . PHP_EOL .
             '    ServerName ' . $serverName . PHP_EOL .
@@ -582,6 +583,7 @@ class BinApache
             $this->getRequiredContent() . PHP_EOL .
             '    </Directory>' . PHP_EOL .
             '</VirtualHost>' . PHP_EOL;
+            '</IfModule>' . PHP_EOL;
     }
     
     public function refreshAlias($putOnline)
