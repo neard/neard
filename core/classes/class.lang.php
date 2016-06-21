@@ -17,6 +17,7 @@ class Lang
     const DONATE = 'donate';
     const DONATE_VIA = 'donateVia';
     const DOWNLOAD = 'download';
+    const DOWNLOAD_MORE = 'downloadMore';
     const ERROR = 'error';
     const EXECUTABLE = 'executable';
     const EXTENSIONS = 'extensions';
@@ -339,6 +340,7 @@ class Lang
             self::DONATE,
             self::DONATE_VIA,
             self::DOWNLOAD,
+            self::DOWNLOAD_MORE,
             self::ERROR,
             self::EXECUTABLE,
             self::EXTENSIONS,
