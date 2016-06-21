@@ -10,6 +10,8 @@ $result = array(
     'binphp' => '',
 );
 
+$dlMoreTpl = '<a href="' . APP_GITHUB_HOME . '/wiki/%s#latest" target="_blank" title="' . $neardLang->getValue(Lang::DOWNLOAD_MORE) . '"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>';
+
 // Bin Apache
 $apachePort = $neardBins->getApache()->getPort();
 $apacheSslPort = $neardBins->getApache()->getSslPort();
@@ -23,7 +25,8 @@ if ($neardBins->getApache()->checkPort($apachePort)) {
     }
 }
 
-$result['binapache'] = '<span style="float:right;font-size:12px" class="label ' . $apacheLabel . '">' . $neardBins->getApache()->getVersion() . '</span>';
+$result['binapache'] = sprintf($dlMoreTpl, 'binApache');
+$result['binapache'] .= '<span style="float:right;font-size:12px" class="label ' . $apacheLabel . '">' . $neardBins->getApache()->getVersion() . '</span>';
 
 // Bin Filezilla
 $filezillaPort = $neardBins->getFilezilla()->getPort();
@@ -38,7 +41,8 @@ if ($neardBins->getFilezilla()->checkPort($filezillaPort)) {
     }
 }
 
-$result['binfilezilla'] = '<span style="float:right;font-size:12px" class="label ' . $filezillaLabel . '">' . $neardBins->getFilezilla()->getVersion() . '</span>';
+$result['binfilezilla'] = sprintf($dlMoreTpl, 'binFilezilla');
+$result['binfilezilla'] .= '<span style="float:right;font-size:12px" class="label ' . $filezillaLabel . '">' . $neardBins->getFilezilla()->getVersion() . '</span>';
 
 // Bin MailHog
 $mailhogPort = $neardBins->getMailhog()->getSmtpPort();
@@ -48,7 +52,8 @@ if ($neardBins->getMailhog()->checkPort($mailhogPort)) {
     $mailhogLabel = 'label-success';
 }
 
-$result['binmailhog'] = '<span style="float:right;font-size:12px" class="label ' . $mailhogLabel . '">' . $neardBins->getMailhog()->getVersion() . '</span>';
+$result['binmailhog'] = sprintf($dlMoreTpl, 'binMailHog');
+$result['binmailhog'] .= '<span style="float:right;font-size:12px" class="label ' . $mailhogLabel . '">' . $neardBins->getMailhog()->getVersion() . '</span>';
 
 // Bin MariaDB
 $mariadbPort = $neardBins->getMariadb()->getPort();
@@ -58,7 +63,8 @@ if ($neardBins->getMariadb()->checkPort($mariadbPort)) {
     $mariadbLabel = 'label-success';
 }
 
-$result['binmariadb'] = '<span style="float:right;font-size:12px" class="label ' . $mariadbLabel . '">' . $neardBins->getMariadb()->getVersion() . '</span>';
+$result['binmariadb'] = sprintf($dlMoreTpl, 'binMariaDB');
+$result['binmariadb'] .= '<span style="float:right;font-size:12px" class="label ' . $mariadbLabel . '">' . $neardBins->getMariadb()->getVersion() . '</span>';
 
 // Bin MySQL
 $mysqlPort = $neardBins->getMysql()->getPort();
@@ -68,12 +74,15 @@ if ($neardBins->getMysql()->checkPort($mysqlPort)) {
     $mysqlLabel = 'label-success';
 }
 
-$result['binmysql'] = '<span style="float:right;font-size:12px" class="label ' . $mysqlLabel . '">' . $neardBins->getMysql()->getVersion() . '</span>';
+$result['binmysql'] = sprintf($dlMoreTpl, 'binMySQL');
+$result['binmysql'] .= '<span style="float:right;font-size:12px" class="label ' . $mysqlLabel . '">' . $neardBins->getMysql()->getVersion() . '</span>';
 
 // Bin Node.js
-$result['binnodejs'] = '<span style="float:right;font-size:12px" class="label label-primary">' . $neardBins->getNodejs()->getVersion() . '</span>';
+$result['binnodejs'] = sprintf($dlMoreTpl, 'binNode.js');
+$result['binnodejs'] .= '<span style="float:right;font-size:12px" class="label label-primary">' . $neardBins->getNodejs()->getVersion() . '</span>';
 
 // Bin PHP
-$result['binphp'] = '<span style="float:right;font-size:12px" class="label label-primary">' . $neardBins->getPhp()->getVersion() . '</span>';
+$result['binphp'] = sprintf($dlMoreTpl, 'binPHP');
+$result['binphp'] .= '<span style="float:right;font-size:12px" class="label label-primary">' . $neardBins->getPhp()->getVersion() . '</span>';
 
 echo json_encode($result);

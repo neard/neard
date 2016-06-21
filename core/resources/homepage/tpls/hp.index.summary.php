@@ -35,34 +35,34 @@
       </div>
       <div class="panel-body panel-summary">
         <div class="list-group" style="margin-bottom:0;">
-          <a class="list-group-item summary-binapache" href="#apache">
+          <span class="list-group-item summary-binapache">
             <span class="loader" style="float:right"><img src="<?php echo $neardHomepage->getResourcesPath() . '/img/loader.gif'; ?>" /></span>
-            <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::APACHE); ?>
-          </a>
-          <a class="list-group-item summary-binphp" href="#php">
+            <a href="#apache"><?php echo $neardLang->getValue(Lang::APACHE); ?></a>
+          </span>
+          <span class="list-group-item summary-binphp">
             <span class="loader" style="float:right"><img src="<?php echo $neardHomepage->getResourcesPath() . '/img/loader.gif'; ?>" /></span>
-            <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::PHP); ?>
-          </a>
-          <a class="list-group-item summary-binmysql" href="#mysql">
+            <a href="#php"><?php echo $neardLang->getValue(Lang::PHP); ?></a>
+          </span>
+          <span class="list-group-item summary-binmysql">
             <span class="loader" style="float:right"><img src="<?php echo $neardHomepage->getResourcesPath() . '/img/loader.gif'; ?>" /></span>
-            <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::MYSQL); ?>
-          </a>
-          <a class="list-group-item summary-binmariadb" href="#mariadb">
+            <a href="#mysql"><?php echo $neardLang->getValue(Lang::MYSQL); ?></a>
+          </span>
+          <span class="list-group-item summary-binmariadb">
             <span class="loader" style="float:right"><img src="<?php echo $neardHomepage->getResourcesPath() . '/img/loader.gif'; ?>" /></span>
-            <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::MARIADB); ?>
-          </a>
-          <a class="list-group-item summary-binnodejs" href="#nodejs">
+            <a href="#mariadb"><?php echo $neardLang->getValue(Lang::MARIADB); ?></a>
+          </span>
+          <span class="list-group-item summary-binnodejs">
             <span class="loader" style="float:right"><img src="<?php echo $neardHomepage->getResourcesPath() . '/img/loader.gif'; ?>" /></span>
-            <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::NODEJS); ?>
-          </a>
-          <a class="list-group-item summary-binmailhog" href="#mailhog">
+            <a href="#nodejs"><?php echo $neardLang->getValue(Lang::NODEJS); ?></a>
+          </span>
+          <span class="list-group-item summary-binmailhog">
             <span class="loader" style="float:right"><img src="<?php echo $neardHomepage->getResourcesPath() . '/img/loader.gif'; ?>" /></span>
-            <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::MAILHOG); ?>
-          </a>
-          <a class="list-group-item summary-binfilezilla" href="#filezilla">
+            <a href="#mailhog"><?php echo $neardLang->getValue(Lang::MAILHOG); ?></a>
+          </span>
+          <span class="list-group-item summary-binfilezilla">
             <span class="loader" style="float:right"><img src="<?php echo $neardHomepage->getResourcesPath() . '/img/loader.gif'; ?>" /></span>
-            <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::FILEZILLA); ?>
-          </a>
+            <a href="#filezilla"><?php echo $neardLang->getValue(Lang::FILEZILLA); ?></a>
+          </span>
         </div>
       </div>
     </div>
@@ -74,54 +74,66 @@
       </div>
       <div class="panel-body panel-summary">
         <div class="list-group" style="margin-bottom:0;">
-          <a class="list-group-item" href="#">
+          <span class="list-group-item">
+            <a href="<?php echo APP_GITHUB_HOME; ?>/wiki/toolComposer#latest" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
             <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardTools->getComposer()->getVersion(); ?></span>
-            <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::COMPOSER); ?>
-          </a>
-          <a class="list-group-item" href="#">
+            <span><?php echo $neardLang->getValue(Lang::COMPOSER); ?></span>
+          </span>
+          <span class="list-group-item">
+            <a href="<?php echo APP_GITHUB_HOME; ?>/wiki/toolConsole#latest" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
             <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardTools->getConsole()->getVersion(); ?></span>
-            <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::CONSOLE); ?>
-          </a>
-          <a class="list-group-item" href="#">
+            <span><?php echo $neardLang->getValue(Lang::CONSOLE); ?></span>
+          </span>
+          <span class="list-group-item">
+            <a href="<?php echo APP_GITHUB_HOME; ?>/wiki/toolDrush#latest" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
             <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardTools->getDrush()->getVersion(); ?></span>
-            <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::DRUSH); ?>
-          </a>
-          <a class="list-group-item" href="#">
+            <span><?php echo $neardLang->getValue(Lang::DRUSH); ?></span>
+          </span>
+          <span class="list-group-item">
+            <a href="<?php echo APP_GITHUB_HOME; ?>/wiki/toolGit#latest" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
             <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardTools->getGit()->getVersion(); ?></span>
-            <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::GIT); ?>
-          </a>
-          <a class="list-group-item" href="#">
+            <span><?php echo $neardLang->getValue(Lang::GIT); ?></span>
+          </span>
+          <span class="list-group-item">
+            <a href="<?php echo APP_GITHUB_HOME; ?>/wiki/toolHostsEditor#latest" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
             <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardTools->getHostsEditor()->getVersion(); ?></span>
-            <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::HOSTSEDITOR); ?>
-          </a>
-          <a class="list-group-item" href="#">
+            <span><?php echo $neardLang->getValue(Lang::HOSTSEDITOR); ?></span>
+          </span>
+          <span class="list-group-item">
+            <a href="<?php echo APP_GITHUB_HOME; ?>/wiki/toolImageMagick#latest" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
             <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardTools->getImageMagick()->getVersion(); ?></span>
-            <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::IMAGEMAGICK); ?>
-          </a>
-          <a class="list-group-item" href="#">
+            <span><?php echo $neardLang->getValue(Lang::IMAGEMAGICK); ?></span>
+          </span>
+          <span class="list-group-item">
+            <a href="<?php echo APP_GITHUB_HOME; ?>/wiki/toolNotepad2-mod#latest" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
             <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardTools->getNotepad2Mod()->getVersion(); ?></span>
-            <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::NOTEPAD2MOD); ?>
-          </a>
-          <a class="list-group-item" href="#">
+            <span><?php echo $neardLang->getValue(Lang::NOTEPAD2MOD); ?></span>
+          </span>
+          <span class="list-group-item">
+            <a href="<?php echo APP_GITHUB_HOME; ?>/wiki/toolPhpMetrics#latest" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
             <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardTools->getPhpMetrics()->getVersion(); ?></span>
-            <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::PHPMETRICS); ?>
-          </a>
-          <a class="list-group-item" href="#">
+            <span><?php echo $neardLang->getValue(Lang::PHPMETRICS); ?></span>
+          </span>
+          <span class="list-group-item">
+            <a href="<?php echo APP_GITHUB_HOME; ?>/wiki/toolPHPUnit#latest" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
             <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardTools->getPhpUnit()->getVersion(); ?></span>
-            <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::PHPUNIT); ?>
-          </a>
-          <a class="list-group-item" href="#">
+            <span><?php echo $neardLang->getValue(Lang::PHPUNIT); ?></span>
+          </span>
+          <span class="list-group-item">
+            <a href="<?php echo APP_GITHUB_HOME; ?>/wiki/toolSVN#latest" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
             <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardTools->getSvn()->getVersion(); ?></span>
-            <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::SVN); ?>
-          </a>
-          <a class="list-group-item" href="#">
+            <span><?php echo $neardLang->getValue(Lang::SVN); ?></span>
+          </span>
+          <span class="list-group-item">
+            <a href="<?php echo APP_GITHUB_HOME; ?>/wiki/toolWP-CLI#latest" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
             <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardTools->getWpCli()->getVersion(); ?></span>
-            <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::WPCLI); ?>
-          </a>
-          <a class="list-group-item" href="#">
+            <span><?php echo $neardLang->getValue(Lang::WPCLI); ?></span>
+          </span>
+          <span class="list-group-item">
+            <a href="<?php echo APP_GITHUB_HOME; ?>/wiki/toolXDebugClient#latest" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
             <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardTools->getXdc()->getVersion(); ?></span>
-            <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::XDC); ?>
-          </a>
+            <span><?php echo $neardLang->getValue(Lang::XDC); ?></span>
+          </span>
         </div>
       </div>
     </div>
@@ -133,26 +145,31 @@
       </div>
       <div class="panel-body panel-summary">
         <div class="list-group" style="margin-bottom:0;">
-          <a class="list-group-item" href="adminer" target="_blank">
+          <span class="list-group-item">
+            <a href="<?php echo APP_GITHUB_HOME; ?>/wiki/appAdminer#latest" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
             <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardApps->getAdminer()->getVersion(); ?></span>
-            <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::ADMINER); ?>
-          </a>
-          <a class="list-group-item" href="gitlist" target="_blank">
+            <a href="adminer" target="_blank"><?php echo $neardLang->getValue(Lang::ADMINER); ?></a>
+          </span>
+          <span class="list-group-item">
+            <a href="<?php echo APP_GITHUB_HOME; ?>/wiki/appGitList#latest" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
             <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardApps->getGitlist()->getVersion(); ?></span>
-            <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::GITLIST); ?>
-          </a>
-          <a class="list-group-item" href="phpmyadmin" target="_blank">
+            <a href="gitlist" target="_blank"><?php echo $neardLang->getValue(Lang::GITLIST); ?></a>
+          </span>
+          <span class="list-group-item">
+            <a href="<?php echo APP_GITHUB_HOME; ?>/wiki/appPhpMyAdmin#latest" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
             <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardApps->getPhpmyadmin()->getVersion() . ' (' . $neardApps->getPhpmyadmin()->getVersionsStr() . ')'; ?></span>
-            <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::PHPMYADMIN); ?>
-          </a>
-          <a class="list-group-item" href="webgrind" target="_blank">
+            <a href="phpmyadmin" target="_blank"><?php echo $neardLang->getValue(Lang::PHPMYADMIN); ?></a>
+          </span>
+          <span class="list-group-item">
+            <a href="<?php echo APP_GITHUB_HOME; ?>/wiki/appWebgrind#latest" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
             <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardApps->getWebgrind()->getVersion(); ?></span>
-            <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::WEBGRIND); ?>
-          </a>
-          <a class="list-group-item" href="websvn" target="_blank">
+            <a href="webgrind" target="_blank"><?php echo $neardLang->getValue(Lang::WEBGRIND); ?></a>
+          </span>
+          <span class="list-group-item">
+            <a href="<?php echo APP_GITHUB_HOME; ?>/wiki/appWebSVN#latest" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
             <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardApps->getWebsvn()->getVersion(); ?></span>
-            <i class="fa fa-angle-right"></i> <?php echo $neardLang->getValue(Lang::WEBSVN); ?>
-          </a>
+            <a href="websvn" target="_blank"><?php echo $neardLang->getValue(Lang::WEBSVN); ?></a>
+          </span>
         </div>
       </div>
     </div>

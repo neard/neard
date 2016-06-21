@@ -3,6 +3,7 @@
 ## 1.0.20 (2016/05/16)
 
 * Bug with homepage queries
+* Add download links for binaries / tools / apps on homepage
 * Migrate from Notepad2 to Notepad2-mod
 
 ## 1.0.19 (2016/05/05)

@@ -33,8 +33,8 @@
           <li><a href="<?php echo $neardBs->getLocalUrl(); ?>"><img alt="<?php echo APP_TITLE . ' ' . $neardCore->getAppVersion(); ?>" src="<?php echo $neardHomepage->getResourcesPath() . '/img/logo.png'; ?>" /></a></li>
         </ul>
         <ul style="margin-right:0;" class="nav navbar-nav navbar-right">
-          <li><a title="<?php echo $neardLang->getValue(Lang::GITHUB); ?>" target="_blank" href="<?php echo APP_GITHUB_HOME; ?>"><img src="<?php echo $neardHomepage->getResourcesPath() . '/img/github.png'; ?>" /></a></li>
-          <li><a title="<?php echo $neardLang->getValue(Lang::DONATE); ?>" target="_blank" href="<?php echo APP_DONATE_URL; ?>"><img src="<?php echo $neardHomepage->getResourcesPath() . '/img/heart.png'; ?>" /></a></li>
+          <li><a class="addtooltip" title="<?php echo $neardLang->getValue(Lang::GITHUB); ?>" target="_blank" href="<?php echo APP_GITHUB_HOME; ?>"><img src="<?php echo $neardHomepage->getResourcesPath() . '/img/github.png'; ?>" /></a></li>
+          <li><a class="addtooltip" title="<?php echo $neardLang->getValue(Lang::DONATE); ?>" target="_blank" href="<?php echo APP_DONATE_URL; ?>"><img src="<?php echo $neardHomepage->getResourcesPath() . '/img/heart.png'; ?>" /></a></li>
         </ul>
       </div>
     </nav>
@@ -45,8 +45,8 @@
     </div>
     
     <script type="text/javascript">
-    $('.navbar-nav a[title]').tooltip({ html: true, placement: 'bottom' });
-    $('a[title]').tooltip({ html: true });
+    $('.navbar-nav a.addtooltip[title]').tooltip({ html: true, placement: 'bottom' });
+    $('a.addtooltip[title]').tooltip({ html: true });
     </script>
     
   </body>
