@@ -37,7 +37,7 @@ class Homepage
         if (!empty($query) && in_array($query, $this->pageList) && $query != self::PAGE_INDEX) {
             $request = '?p=' . $query;
         }
-        if (!empty($page) && in_array($query, $this->pageStdl)) {
+        if (!empty($query) && in_array($query, $this->pageStdl)) {
             $request = $query;
         }
     
