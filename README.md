@@ -1,4 +1,4 @@
-# Neard [![Download](https://img.shields.io/badge/download-1.0.19-brightgreen.svg)](https://github.com/crazy-max/neard/releases/download/v1.0.19/neard-1.0.19.7z) [![Donate Paypal](https://img.shields.io/badge/donate-paypal-blue.svg)](https://www.paypal.me/crazyws)
+# Neard [![Download](https://img.shields.io/badge/download-1.0.20-brightgreen.svg)](https://github.com/crazy-max/neard/releases/download/v1.0.20/neard-1.0.20.7z) [![Donate Paypal](https://img.shields.io/badge/donate-paypal-blue.svg)](https://www.paypal.me/crazyws)
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -9,8 +9,10 @@
   - [Applications](#applications)
   - [Tools](#tools)
 - [Download](#download)
-  - [Binaries, tools, applications)](#binaries-tools-applications)
-- [Installation and configuration](#installation-and-configuration)
+  - [Binaries, tools, applications](#binaries-tools-applications)
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Upgrade](#upgrade)
 - [Usage](#usage)
 - [License](#license)
 
@@ -69,10 +71,13 @@ Before [downloading](https://github.com/crazy-max/neard/releases/download/v1.0.1
 Neard offers several versions of the various binaries, applications and tools for download on github subrepositories.<br />
 You can find the download links on the [Wiki](../../wiki).
 
-## Installation and configuration
+## Installation
 
 Use a file archiver that supports [7z format](http://www.7-zip.org/7z.html) like [7zip](http://www.7-zip.org/) and extract the archive where you want.<br />
-Then edit the configuration file `neard.conf` :
+
+## Configuration
+
+Before starting NEard, edit the configuration file `neard.conf` :
 * **lang** - Language (see `neard\core\langs` folder for a complete list). Default : `english`
 * **timezone** - The default timezone used by all date/time functions. Default : `"Europe/Paris"`
 * **notepad** - The editor while opening files. Default : `"notepad.exe"`
@@ -80,6 +85,10 @@ Then edit the configuration file `neard.conf` :
 * **purgeLogsOnStartup** - Purge logs from Neard logs folder (0=false, 1= true). Default `0`
 * **scriptsTimeout** - The default timeout when VBS/Batch are executed. May vary depending on your system. Default : `120`
 * **scriptsDelete** - Delete temporary scripts in core/tmp folder on startup (0=false, 1= true). Default : `1`
+
+## Upgrade
+
+All instructions to upgrade from a previous release are added in the [CHANGELOG.md](https://github.com/crazy-max/neard/blob/master/CHANGELOG.md).
 
 ## Usage
 

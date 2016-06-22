@@ -1,10 +1,35 @@
 # Changelog
 
-## 1.0.20 (2016/05/16)
+## 1.0.20 (2016/06/22)
 
-* Bug with homepage queries
+* Bug with homepage queries ([Issue #139](https://github.com/crazy-max/neard/issues/139))
+* Add Administration button for FileZilla Server Interface ([Issue #138](https://github.com/crazy-max/neard/issues/138))
 * Add download links for binaries / tools / apps on homepage
 * Migrate from Notepad2 to Notepad2-mod
+* Update Composer to 1.1.2
+* Update Git to 2.9.0
+* Update ImageMagick to 6.9.3-10
+* Update PHPUnit to 4.8.26
+* Update Adminer to 4.2.5
+* Update phpMyAdmin to 4p3
+* Update Webgrind to 1.3.1
+
+### Upgrade from previous release
+
+* **required** : Remove then replace folder `bin\filezilla`
+* **required** : Remove line starting with `notepad2Version =` in `neard.conf`
+* **required** : Add line `notepad2modVersion = "4.2.25.980"` after `imagemagickVersion` in `neard.conf`
+* **required** : Copy folder `tools\notepad2mod`
+* **required** : Remove folder `tools\notepad2`
+* **required** : Remove then replace folder `core`
+* **required** : Remove then replace file `sprites.dat`
+* *optional* : Change `composerVersion` value to `1.1.2` in `neard.conf` and copy folder `tools\composer\composer1.1.2`
+* *optional* : Change `gitVersion` value to `2.9.0` in `neard.conf` and copy folder `tools\git\git2.9.0`
+* *optional* : Change `imagemagickVersion` value to `6.9.3-10` in `neard.conf` and copy folder `tools\imagemagick\imagemagick6.9.3-10`
+* *optional* : Change `phpunitVersion` value to `4.8.26` in `neard.conf` and copy folder `tools\phpunit\phpunit4.8.26`
+* *optional* : Change `adminerVersion` value to `4.2.5` in `neard.conf` and copy folder `apps\adminer\adminer4.2.5`
+* *optional* : Change `phpmyadminVersion` value to `4p3` in `neard.conf` and copy folder `apps\phpmyadmin\phpmyadmin4p3`
+* *optional* : Change `webgrindVersion` value to `1.3.1` in `neard.conf` and copy folder `apps\webgrind\webgrind1.3.1`
 
 ## 1.0.19 (2016/05/05)
 
