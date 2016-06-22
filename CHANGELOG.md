@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.0.20 (2016/06/22)
+## 1.0.20 (2016/06/23)
 
 * Bug with homepage queries ([Issue #139](https://github.com/crazy-max/neard/issues/139))
 * Add Administration button for FileZilla Server Interface ([Issue #138](https://github.com/crazy-max/neard/issues/138))
