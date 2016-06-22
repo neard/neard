@@ -9,6 +9,7 @@ class Lang
     
     // Single
     const ABOUT = 'about';
+    const ADMINISTRATION = 'administration';
     const ALIASES = 'aliases';
     const APPS = 'apps';
     const BINS = 'bins';
@@ -332,6 +333,7 @@ class Lang
             
             // Single
             self::ABOUT,
+            self::ADMINISTRATION,
             self::ALIASES,
             self::APPS,
             self::BINS,
