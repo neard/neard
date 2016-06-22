@@ -31,6 +31,11 @@ class TplAppFilezilla
             // Items
             $tplVersions[TplApp::SECTION_CALL] . PHP_EOL .
             $tplService[TplApp::SECTION_CALL] . PHP_EOL .
+            TplAestan::getItemExe(
+                $neardLang->getValue(Lang::ADMINISTRATION),
+                $neardBins->getFilezilla()->getItfExe(),
+                TplAestan::GLYPH_FILEZILLA
+            ) . PHP_EOL .
             TplAestan::getItemNotepad($neardLang->getValue(Lang::MENU_LOGS), $neardBins->getFilezilla()->getLog()) . PHP_EOL .
             
             // Actions

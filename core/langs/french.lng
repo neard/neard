@@ -8,6 +8,7 @@ noneRunningHint = "Les %t services sont éteints"
 
 ; Single
 about = "À propos..."
+administration = "Administration"
 aliases = "Alias"
 apps = "Applications"
 bins = "Binaires"

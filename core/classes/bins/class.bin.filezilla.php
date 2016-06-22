@@ -8,7 +8,9 @@ class BinFilezilla
     const ROOT_CFG_LAUNCH_STARTUP = 'filezillaLaunchStartup';
     
     const LOCAL_CFG_EXE = 'filezillaExe';
+    const LOCAL_CFG_ITF_EXE = 'filezillaItfExe';
     const LOCAL_CFG_CONF = 'filezillaConf';
+    const LOCAL_CFG_ITF_CONF = 'filezillaItfConf';
     const LOCAL_CFG_PORT = 'filezillaPort';
     const LOCAL_CFG_SSL_PORT = 'filezillaSslPort';
     
@@ -32,7 +34,10 @@ class BinFilezilla
     private $log;
     
     private $exe;
+    private $itfExe;
     private $conf;
+    private $itfConf;
+    private $localItfConf;
     private $port;
     private $sslPort;
     
@@ -74,10 +79,14 @@ class BinFilezilla
             @link($log, $this->log);
         }
         
+        $appData = Util::formatUnixPath(getenv('APPDATA'));
         $this->neardConfRaw = parse_ini_file($this->neardConf);
         if ($this->neardConfRaw !== false) {
             $this->exe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_EXE];
+            $this->itfExe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_ITF_EXE];
             $this->conf = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_CONF];
+            $this->itfConf = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_ITF_CONF];
+            $this->localItfConf = $appData . '/FileZilla Server/' . $this->neardConfRaw[self::LOCAL_CFG_ITF_CONF];
             $this->port = $this->neardConfRaw[self::LOCAL_CFG_PORT];
             $this->sslPort = $this->neardConfRaw[self::LOCAL_CFG_SSL_PORT];
         }
@@ -97,6 +106,14 @@ class BinFilezilla
         if (!is_numeric($this->sslPort) || $this->sslPort <= 0) {
             Util::logError(sprintf($neardLang->getValue(Lang::ERROR_INVALID_PARAMETER), self::LOCAL_CFG_SSL_PORT, $this->sslPort));
             return;
+        }
+        if (!file_exists($this->localItfConf)) {
+            if (!is_dir(dirname($this->localItfConf))) {
+                Util::logDebug('Create folder ' . dirname($this->localItfConf));
+                @mkdir(dirname($this->localItfConf), 0777);
+            }
+            Util::logDebug('Write ' . $this->neardConfRaw[self::LOCAL_CFG_ITF_CONF] . ' to ' . $this->localItfConf);
+            @copy($this->itfConf, $this->localItfConf);
         }
         
         $this->service = new Win32Service(self::SERVICE_NAME);
@@ -361,9 +378,19 @@ class BinFilezilla
         return $this->exe;
     }
     
+    public function getItfExe()
+    {
+        return $this->itfExe;
+    }
+    
     public function getConf()
     {
         return $this->conf;
+    }
+    
+    public function getItfConf()
+    {
+        return $this->itfConf;
     }
     
     public function getPort()

@@ -8,6 +8,7 @@ noneRunningHint = "None of %t services running"
 
 ; Single
 about = "About"
+administration = "Administration"
 aliases = "Aliases"
 apps = "Applications"
 bins = "Binaries"
