@@ -15,9 +15,9 @@
         <span class="loader" style="float:right"><img src="<?php echo $neardHomepage->getResourcesPath() . '/img/loader.gif'; ?>" /></span>
         <i class="fa fa-puzzle-piece"></i> <?php echo $neardLang->getValue(Lang::VERSIONS); ?>
       </span>
-      <a class="list-group-item" target="_blank" href="<?php echo $neardBs->getLocalUrl() . ':' . $neardBins->getMailhog()->getUiPort(); ?>">
-        <i class="fa fa-info-circle"></i> <?php echo $neardLang->getValue(Lang::HOMEPAGE_MAILHOG_TEXT); ?>
-      </a>
+      <span class="list-group-item">
+        <i class="fa fa-info-circle"></i> <a href="<?php echo $neardBs->getLocalUrl() . ':' . $neardBins->getMailhog()->getUiPort(); ?>" target="_blank"><?php echo $neardLang->getValue(Lang::HOMEPAGE_MAILHOG_TEXT); ?></a>
+      </span>
     </div>
   </div>
 </div>
