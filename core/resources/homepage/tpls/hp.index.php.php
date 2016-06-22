@@ -19,13 +19,13 @@
         <span class="loader" style="float:right"><img src="<?php echo $neardHomepage->getResourcesPath() . '/img/loader.gif'; ?>" /></span>
         <i class="fa fa-puzzle-piece"></i> <?php echo $neardLang->getValue(Lang::PEAR); ?>
       </span>
-      <a class="list-group-item" href="<?php echo $neardHomepage->getPageQuery(Homepage::PAGE_PHPINFO); ?>">
-        <i class="fa fa-info-circle"></i> <?php echo $neardLang->getValue(Lang::HOMEPAGE_PHPINFO_TEXT); ?>
-      </a>
+      <span class="list-group-item">
+        <i class="fa fa-info-circle"></i> <a href="<?php echo $neardHomepage->getPageQuery(Homepage::PAGE_PHPINFO); ?>"><?php echo $neardLang->getValue(Lang::HOMEPAGE_PHPINFO_TEXT); ?></a>
+      </span>
       <?php if (function_exists('apc_add') && function_exists('apc_exists')) { ?>
-      <a class="list-group-item" target="_blank" href="<?php echo $neardHomepage->getPageQuery(Homepage::PAGE_STDL_APC); ?>">
-        <i class="fa fa-info-circle"></i> <?php echo $neardLang->getValue(Lang::HOMEPAGE_APC_TEXT); ?>
-      </a>
+      <span class="list-group-item">
+        <i class="fa fa-info-circle"></i> <a href="<?php echo $neardHomepage->getPageQuery(Homepage::PAGE_STDL_APC); ?>" target="_blank"><?php echo $neardLang->getValue(Lang::HOMEPAGE_APC_TEXT); ?></a>
+      </span>
       <?php } ?>
     </div>
   </div>
