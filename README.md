@@ -77,7 +77,7 @@ Use a file archiver that supports [7z format](http://www.7-zip.org/7z.html) like
 
 ## Configuration
 
-Before starting NEard, edit the configuration file `neard.conf` :
+Before starting Neard, edit the configuration file `neard.conf` :
 * **lang** - Language (see `neard\core\langs` folder for a complete list). Default : `english`
 * **timezone** - The default timezone used by all date/time functions. Default : `"Europe/Paris"`
 * **notepad** - The editor while opening files. Default : `"notepad.exe"`
