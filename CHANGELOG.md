@@ -16,7 +16,7 @@
 
 ### Upgrade from previous release
 
-* **required** : Remove then replace folder `bin\filezilla`
+* **required** : Remove then replace folder `bin\filezilla` (or download a compatible version of your choice)
 * **required** : Remove line starting with `notepad2Version =` in `neard.conf`
 * **required** : Add line `notepad2modVersion = "4.2.25.980"` after `imagemagickVersion` in `neard.conf`
 * **required** : Copy folder `tools\notepad2mod`
