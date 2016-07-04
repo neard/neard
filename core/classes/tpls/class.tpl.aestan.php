@@ -22,8 +22,8 @@ class TplAestan
     const GLYPH_EXIT = 20;
     const GLYPH_ABOUT = 21;
     const GLYPH_SERVICES_RESTART = 22;
-    const GLYPH_SERVICES_START = 23;
-    const GLYPH_SERVICES_STOP = 24;
+    const GLYPH_SERVICES_STOP = 23;
+    const GLYPH_SERVICES_START = 24;
     const GLYPH_LIGHT = 25;
     const GLYPH_GIT = 26;
     const GLYPH_SVN = 27;
