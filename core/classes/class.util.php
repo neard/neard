@@ -655,7 +655,7 @@ class Util
                 require_once $neardCore->getLibsPath() . '/markdown/1.6.0/MarkdownInterface.php';
                 require_once $neardCore->getLibsPath() . '/markdown/1.6.0/Markdown.php';
                 require_once $neardCore->getLibsPath() . '/markdown/1.6.0/MarkdownExtra.php';
-                $content = Michelf\MarkDownExtra::defaultTransform($content);
+                $content = call_user_func_array(array('Michelf\\MarkDownExtra', 'defaultTransform'), array($content));
             } else {
                 require_once $neardCore->getLibsPath() . '/markdown/1.0.2/markdown.php';
                 $content = Markdown(preg_replace('/^.+\n.*\n/', '', $content));
