@@ -286,6 +286,10 @@ class Bootstrap
         $errfile = Util::formatUnixPath($errfile);
         $errfile = str_replace($this->getRootPath(), '', $errfile);
         
+        if (!defined('E_DEPRECATED')) {
+            define('E_DEPRECATED', 8192);
+        }
+        
         $errNames = array(
             E_ERROR             => 'E_ERROR',
             E_WARNING           => 'E_WARNING',
