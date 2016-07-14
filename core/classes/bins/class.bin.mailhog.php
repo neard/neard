@@ -22,6 +22,8 @@ class BinMailhog
     private $neardConf;
     private $neardConfRaw;
     
+    private $log;
+    
     private $exe;
     private $apiPort;
     private $uiPort;
@@ -48,6 +50,8 @@ class BinMailhog
         $this->currentPath = $this->rootPath . '/mailhog' . $this->version;
         $this->neardConf = $this->currentPath . '/neard.conf';
         $this->mailPath = $neardBs->getTmpPath() . '/mailhog';
+        
+        $this->log = $neardBs->getLogsPath() . '/mailhog.log';
         
         if (!is_dir($this->currentPath)) {
             Util::logError(sprintf($neardLang->getValue(Lang::ERROR_FILE_NOT_FOUND), $this->name . ' ' . $this->version, $this->currentPath));
@@ -311,6 +315,11 @@ class BinMailhog
     public function getCurrentPath()
     {
         return $this->currentPath;
+    }
+    
+    public function getLog()
+    {
+        return $this->log;
     }
     
     public function getExe()
