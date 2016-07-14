@@ -3,6 +3,7 @@
 class Bins
 {
     private $mailhog;
+    private $memcached;
     private $apache;
     private $php;
     private $mysql;
@@ -40,6 +41,7 @@ class Bins
     public function getAll() {
         return array(
             $this->getMailhog(),
+            $this->getMemcached(),
             $this->getApache(),
             $this->getFilezilla(),
             $this->getMariadb(),
@@ -55,6 +57,14 @@ class Bins
             $this->mailhog = new BinMailhog($this->getRootPath('mailhog'));
         }
         return $this->mailhog;
+    }
+    
+    public function getMemcached()
+    {
+        if ($this->memcached == null) {
+            $this->memcached = new BinMemcached($this->getRootPath('memcached'));
+        }
+        return $this->memcached;
     }
 
     public function getApache()
@@ -116,6 +126,7 @@ class Bins
     {
         return array(
             BinMailhog::SERVICE_NAME => $this->getMailhog()->getService(),
+            BinMemcached::SERVICE_NAME => $this->getMemcached()->getService(),
             BinApache::SERVICE_NAME => $this->getApache()->getService(),
             BinMysql::SERVICE_NAME => $this->getMysql()->getService(),
             BinMariadb::SERVICE_NAME => $this->getMariadb()->getService(),
@@ -129,6 +140,9 @@ class Bins
         
         if ($this->getMailhog()->isLaunchStartup()) {
             $result[BinMailhog::SERVICE_NAME] = $this->getMailhog()->getService();
+        }
+        if ($this->getMemcached()->isLaunchStartup()) {
+            $result[BinMemcached::SERVICE_NAME] = $this->getMemcached()->getService();
         }
         if ($this->getApache()->isLaunchStartup()) {
             $result[BinApache::SERVICE_NAME] = $this->getApache()->getService();

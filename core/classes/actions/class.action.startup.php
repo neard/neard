@@ -517,6 +517,9 @@ class ActionStartup
                 if ($sName == BinMailhog::SERVICE_NAME) {
                     $bin = $neardBins->getMailhog();
                     $port = $neardBins->getMailhog()->getSmtpPort();
+                } elseif ($sName == BinMemcached::SERVICE_NAME) {
+                    $bin = $neardBins->getMemcached();
+                    $port = $neardBins->getMemcached()->getPort();
                 } elseif ($sName == BinApache::SERVICE_NAME) {
                     $bin = $neardBins->getApache();
                     $port = $neardBins->getApache()->getPort();

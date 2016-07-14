@@ -197,6 +197,7 @@ class TplApp
         $tplMysql = TplAppMysql::process();
         $tplMariadb = TplAppMariadb::process();
         $tplMailhog = TplAppMailhog::process();
+        $tplMemcached = TplAppMemcached::process();
         $tplFilezilla = TplAppFilezilla::process();
         
         $tplLogs = TplAppLogs::process();
@@ -222,6 +223,7 @@ class TplApp
             $tplMysql[self::SECTION_CALL] . PHP_EOL .
             $tplMariadb[self::SECTION_CALL] . PHP_EOL .
             $tplMailhog[self::SECTION_CALL] . PHP_EOL .
+            $tplMemcached[self::SECTION_CALL] . PHP_EOL .
             $tplFilezilla[self::SECTION_CALL] . PHP_EOL .
             
             //// Stuff menus
@@ -245,6 +247,7 @@ class TplApp
             PHP_EOL . $tplMysql[self::SECTION_CONTENT] .
             PHP_EOL . $tplMariadb[self::SECTION_CONTENT] .
             PHP_EOL . $tplMailhog[self::SECTION_CONTENT] .
+            PHP_EOL . $tplMemcached[self::SECTION_CONTENT] .
             PHP_EOL . $tplFilezilla[self::SECTION_CONTENT] .
             PHP_EOL . $tplLogs[self::SECTION_CONTENT] .
             PHP_EOL . $tplTools[self::SECTION_CONTENT] .

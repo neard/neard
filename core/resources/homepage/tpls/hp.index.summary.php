@@ -59,6 +59,10 @@
             <span class="loader" style="float:right"><img src="<?php echo $neardHomepage->getResourcesPath() . '/img/loader.gif'; ?>" /></span>
             <a href="#mailhog"><?php echo $neardLang->getValue(Lang::MAILHOG); ?></a>
           </span>
+          <span class="list-group-item summary-binmemcached">
+            <span class="loader" style="float:right"><img src="<?php echo $neardHomepage->getResourcesPath() . '/img/loader.gif'; ?>" /></span>
+            <a href="#memcached"><?php echo $neardLang->getValue(Lang::MEMCACHED); ?></a>
+          </span>
           <span class="list-group-item summary-binfilezilla">
             <span class="loader" style="float:right"><img src="<?php echo $neardHomepage->getResourcesPath() . '/img/loader.gif'; ?>" /></span>
             <a href="#filezilla"><?php echo $neardLang->getValue(Lang::FILEZILLA); ?></a>

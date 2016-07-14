@@ -5,6 +5,7 @@ $result = array(
     'binfilezilla' => '',
     'binmailhog' => '',
     'binmariadb' => '',
+    'binmemcached' => '',
     'binmysql' => '',
     'binnodejs' => '',
     'binphp' => '',
@@ -65,6 +66,17 @@ if ($neardBins->getMariadb()->checkPort($mariadbPort)) {
 
 $result['binmariadb'] = sprintf($dlMoreTpl, 'binMariaDB');
 $result['binmariadb'] .= '<span style="float:right;font-size:12px" class="label ' . $mariadbLabel . '">' . $neardBins->getMariadb()->getVersion() . '</span>';
+
+// Bin Memcached
+$memcachedPort = $neardBins->getMemcached()->getPort();
+$memcachedLabel = 'label-danger';
+
+if ($neardBins->getMemcached()->checkPort($memcachedPort)) {
+    $memcachedLabel = 'label-success';
+}
+
+$result['binmemcached'] = sprintf($dlMoreTpl, 'binMemcached');
+$result['binmemcached'] .= '<span style="float:right;font-size:12px" class="label ' . $memcachedLabel . '">' . $neardBins->getMemcached()->getVersion() . '</span>';
 
 // Bin MySQL
 $mysqlPort = $neardBins->getMysql()->getPort();

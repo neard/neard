@@ -18,6 +18,8 @@ class ActionCheckPort
                 $bin = $neardBins->getFilezilla()->checkPort($args[1], $ssl, true);
             } elseif ($args[0] == $neardBins->getMailhog()->getName()) {
                 $bin = $neardBins->getMailhog()->checkPort($args[1], true);
+            } elseif ($args[0] == $neardBins->getMemcached()->getName()) {
+                $bin = $neardBins->getMemcached()->checkPort($args[1], true);
             }
         }
     }
