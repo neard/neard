@@ -231,7 +231,7 @@ class BinMemcached
     
     private function updateConfig($version = null, $sub = 0, $showWindow = false)
     {
-        global $neardBs, $neardCore, $neardLang, $neardBins, $neardTools, $neardWinbinder;
+        global $neardBs, $neardCore, $neardLang, $neardBins, $neardApps, $neardWinbinder;
         $version = $version == null ? $this->version : $version;
         $shortVersion = substr(str_replace('.', '', $version), 0, 2);
         Util::logDebug(($sub > 0 ? str_repeat(' ', 2 * $sub) : '') . 'Update ' . $this->name . ' ' . $version . ' config...');
@@ -264,6 +264,9 @@ class BinMemcached
         
         // neard.conf
         $this->setVersion($version);
+        
+        // phpmemadmin
+        $neardApps->getPhpmemadmin()->update($sub + 1);
         
         return true;
     }
