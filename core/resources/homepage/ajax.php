@@ -8,6 +8,7 @@ $procs = array(
     'apache',
     'filezilla',
     'mailhog',
+    'memcached',
     'mariadb',
     'mysql',
     'nodejs',

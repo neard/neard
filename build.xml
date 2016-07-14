@@ -59,6 +59,7 @@
         <getbundle releasesurl="${bin.filezilla.url}" version="${bin.filezilla.version}" dest="${release.target}/${release.name}/bin/filezilla" />
         <getbundle releasesurl="${bin.mailhog.url}" version="${bin.mailhog.version}" dest="${release.target}/${release.name}/bin/mailhog" />
         <getbundle releasesurl="${bin.mariadb.url}" version="${bin.mariadb.version}" dest="${release.target}/${release.name}/bin/mariadb" />
+        <getbundle releasesurl="${bin.memcached.url}" version="${bin.memcached.version}" dest="${release.target}/${release.name}/bin/memcached" />
         <getbundle releasesurl="${bin.mysql.url}" version="${bin.mysql.version}" dest="${release.target}/${release.name}/bin/mysql" />
         <getbundle releasesurl="${bin.nodejs.url}" version="${bin.nodejs.version}" dest="${release.target}/${release.name}/bin/nodejs" />
         <getbundle releasesurl="${bin.php.url}" version="${bin.php.version}" dest="${release.target}/${release.name}/bin/php" />
@@ -94,6 +95,7 @@
                 <filter token="BIN_NODEJS_VERSION" value="${bin.nodejs.version}"/>
                 <filter token="BIN_FILEZILLA_VERSION" value="${bin.filezilla.version}"/>
                 <filter token="BIN_MAILHOG_VERSION" value="${bin.mailhog.version}"/>
+                <filter token="BIN_MEMCACHED_VERSION" value="${bin.memcached.version}"/>
                 
                 <filter token="TOOL_COMPOSER_VERSION" value="${tool.composer.version}"/>
                 <filter token="TOOL_CONSOLE_VERSION" value="${tool.console.version}"/>

@@ -40,6 +40,9 @@ class ActionQuit
             } elseif ($sName == BinMariadb::SERVICE_NAME) {
                 $name = $neardBins->getMariadb()->getName() . ' ' . $neardBins->getMariadb()->getVersion();
                 $port = $neardBins->getMariadb()->getPort();
+            } elseif ($sName == BinMemcached::SERVICE_NAME) {
+                $name = $neardBins->getMemcached()->getName() . ' ' . $neardBins->getMemcached()->getVersion();
+                $port = $neardBins->getMemcached()->getPort();
             } elseif ($sName == BinFilezilla::SERVICE_NAME) {
                 $name = $neardBins->getFilezilla()->getName() . ' ' . $neardBins->getFilezilla()->getVersion();
                 $port = $neardBins->getFilezilla()->getPort();

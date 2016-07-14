@@ -213,6 +213,8 @@ class Win32Service
             $neardBins->getMysql()->initData();
         } elseif ($this->getName() == BinMailhog::SERVICE_NAME) {
             $neardBins->getMailhog()->rebuildConf();
+        } elseif ($this->getName() == BinMemcached::SERVICE_NAME) {
+            $neardBins->getMemcached()->rebuildConf();
         }
         
         $start = dechex($this->callWin32Service('win32_start_service', $this->getName(), true));

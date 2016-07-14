@@ -41,6 +41,10 @@ class ActionChangePort
                 $this->bin = $neardBins->getMailhog();
                 $this->currentPort = $neardBins->getMailhog()->getSmtpPort();
                 $this->cntProcessActions = 3;
+            } elseif ($args[0] == $neardBins->getMemcached()->getName()) {
+                $this->bin = $neardBins->getMemcached();
+                $this->currentPort = $neardBins->getMemcached()->getPort();
+                $this->cntProcessActions = 3;
             }
             
             $neardWinbinder->reset();

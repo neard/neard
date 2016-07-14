@@ -17,6 +17,9 @@ $(document).ready(function() {
         $('.summary-binmariadb').prepend(data.binmariadb);
         $('.summary-binmariadb').find('.loader').remove();
         
+        $('.summary-binmemcached').prepend(data.binmemcached);
+        $('.summary-binmemcached').find('.loader').remove();
+        
         $('.summary-binmysql').prepend(data.binmysql);
         $('.summary-binmysql').find('.loader').remove();
         

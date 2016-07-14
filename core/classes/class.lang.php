@@ -94,9 +94,10 @@ class Lang
     const FILEZILLA = 'filezilla';
     const PHP = 'php';
     const PEAR = 'pear';
-    const MYSQL = 'mysql';
+    const MEMCACHED = 'memcached';
     const MAILHOG = 'mailhog';
     const MARIADB = 'mariadb';
+    const MYSQL = 'mysql';
     const NODEJS = 'nodejs';
     
     // Apps
@@ -418,9 +419,10 @@ class Lang
             self::FILEZILLA,
             self::PHP,
             self::PEAR,
-            self::MYSQL,
+            self::MEMCACHED,
             self::MAILHOG,
             self::MARIADB,
+            self::MYSQL,
             self::NODEJS,
             
             // Apps

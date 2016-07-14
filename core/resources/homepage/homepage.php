@@ -16,6 +16,7 @@
     <script src="<?php echo $neardHomepage->getResourcesPath(); ?>/js/filezilla.js"></script>
     <script src="<?php echo $neardHomepage->getResourcesPath(); ?>/js/mailhog.js"></script>
     <script src="<?php echo $neardHomepage->getResourcesPath(); ?>/js/mariadb.js"></script>
+    <script src="<?php echo $neardHomepage->getResourcesPath(); ?>/js/memcached.js"></script>
     <script src="<?php echo $neardHomepage->getResourcesPath(); ?>/js/mysql.js"></script>
     <script src="<?php echo $neardHomepage->getResourcesPath(); ?>/js/nodejs.js"></script>
     <script src="<?php echo $neardHomepage->getResourcesPath(); ?>/js/php.js"></script>

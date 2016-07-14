@@ -29,6 +29,10 @@ class ActionService
                 $name = $neardBins->getMailhog()->getName();
                 $service = $neardBins->getMailhog()->getService();
                 $port = $neardBins->getMailhog()->getSmtpPort();
+            } elseif ($sName == BinMemcached::SERVICE_NAME) {
+                $name = $neardBins->getMemcached()->getName();
+                $service = $neardBins->getMemcached()->getService();
+                $port = $neardBins->getMemcached()->getPort();
             } elseif ($sName == BinApache::SERVICE_NAME) {
                 $name = $neardBins->getApache()->getName();
                 $service = $neardBins->getApache()->getService();
