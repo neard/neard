@@ -102,6 +102,7 @@ php = "PHP"
 ; Apps
 adminer = "Adminer"
 gitlist = "GitList"
+phpmemadmin = "phpMemAdmin"
 phpmyadmin = "phpMyAdmin"
 webgrind = "Webgrind"
 websvn = "WebSVN"

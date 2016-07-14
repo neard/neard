@@ -160,6 +160,11 @@
             <a href="gitlist" target="_blank"><?php echo $neardLang->getValue(Lang::GITLIST); ?></a>
           </span>
           <span class="list-group-item">
+            <a href="<?php echo APP_GITHUB_HOME; ?>/wiki/appPhpMemAdmin#latest" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
+            <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardApps->getPhpmemadmin()->getVersion(); ?></span>
+            <a href="phpmemadmin" target="_blank"><?php echo $neardLang->getValue(Lang::PHPMEMADMIN); ?></a>
+          </span>
+          <span class="list-group-item">
             <a href="<?php echo APP_GITHUB_HOME; ?>/wiki/appPhpMyAdmin#latest" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
             <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardApps->getPhpmyadmin()->getVersion() . ' (' . $neardApps->getPhpmyadmin()->getVersionsStr() . ')'; ?></span>
             <a href="phpmyadmin" target="_blank"><?php echo $neardLang->getValue(Lang::PHPMYADMIN); ?></a>

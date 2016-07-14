@@ -106,6 +106,7 @@ class Lang
     const WEBGRIND = 'webgrind';
     const WEBSVN = 'websvn';
     const ADMINER = 'adminer';
+    const PHPMEMADMIN = 'phpmemadmin';
     
     // Tools
     const COMPOSER = 'composer';
@@ -431,6 +432,7 @@ class Lang
             self::WEBGRIND,
             self::WEBSVN,
             self::ADMINER,
+            self::PHPMEMADMIN,
             
             // Tools
             self::COMPOSER,
