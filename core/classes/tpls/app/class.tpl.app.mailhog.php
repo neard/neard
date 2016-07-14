@@ -30,13 +30,14 @@ class TplAppMailhog
         
             // Items
             $tplVersions[TplApp::SECTION_CALL] . PHP_EOL .
-            $tplService[TplApp::SECTION_CALL] . PHP_EOL . PHP_EOL .
+            $tplService[TplApp::SECTION_CALL] . PHP_EOL .
             TplAestan::getItemExe(
                 $neardLang->getValue(Lang::MAILHOG),
                 $neardConfig->getBrowser(),
                 TplAestan::GLYPH_WEB_PAGE,
                 $neardBs->getLocalUrl() . ':' . $neardBins->getMailhog()->getUiPort()
             ) . PHP_EOL .
+            TplAestan::getItemNotepad($neardLang->getValue(Lang::MENU_LOGS), $neardBins->getMailhog()->getLog()) . PHP_EOL . PHP_EOL .
             
             // Actions
             $tplVersions[TplApp::SECTION_CONTENT] . PHP_EOL .
