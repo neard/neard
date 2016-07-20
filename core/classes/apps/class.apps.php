@@ -7,6 +7,7 @@ class Apps
     private $websvn;
     private $webgrind;
     private $adminer;
+    private $phpmemadmin;
     
     public function __construct()
     {
@@ -31,6 +32,7 @@ class Apps
         return array(
             $this->getAdminer(),
             $this->getGitlist(),
+            $this->getPhpmemadmin(),
             $this->getPhpmyadmin(),
             $this->getWebgrind(),
             $this->getWebsvn(),
@@ -51,6 +53,14 @@ class Apps
             $this->gitlist = new AppGitlist($this->getRootPath('gitlist'));
         }
         return $this->gitlist;
+    }
+    
+    public function getPhpmemadmin()
+    {
+        if ($this->phpmemadmin == null) {
+            $this->phpmemadmin = new AppPhpmemadmin($this->getRootPath('phpmemadmin'));
+        }
+        return $this->phpmemadmin;
     }
 
     public function getPhpmyadmin()
