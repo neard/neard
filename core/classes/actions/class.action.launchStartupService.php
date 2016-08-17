@@ -15,6 +15,8 @@ class ActionLaunchStartupService
                 $neardBins->getMariadb()->setLaunchStartup($args[1]);
             } elseif ($args[0] == $neardBins->getFilezilla()->getName()) {
                 $neardBins->getFilezilla()->setLaunchStartup($args[1]);
+            } elseif ($args[0] == $neardBins->getMailhog()->getName()) {
+                $neardBins->getMailhog()->setLaunchStartup($args[1]);
             }
         }
     }
