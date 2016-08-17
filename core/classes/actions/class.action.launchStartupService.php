@@ -17,6 +17,8 @@ class ActionLaunchStartupService
                 $neardBins->getFilezilla()->setLaunchStartup($args[1]);
             } elseif ($args[0] == $neardBins->getMailhog()->getName()) {
                 $neardBins->getMailhog()->setLaunchStartup($args[1]);
+            } elseif ($args[0] == $neardBins->getMemcached()->getName()) {
+                $neardBins->getMemcached()->setLaunchStartup($args[1]);
             }
         }
     }
