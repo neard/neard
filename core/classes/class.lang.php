@@ -99,6 +99,7 @@ class Lang
     const MARIADB = 'mariadb';
     const MYSQL = 'mysql';
     const NODEJS = 'nodejs';
+    const POSTGRESQL = 'postgresql';
     
     // Apps
     const GITLIST = 'gitlist';
@@ -281,6 +282,9 @@ class Lang
     const DEBUG_MARIADB_VARIABLES = 'debugMariadbVariables';
     const DEBUG_MARIADB_SYNTAX_CHECK = 'debugMariadbSyntaxCheck';
     
+    // Action Debug PostgreSQL
+    const DEBUG_POSTGRESQL_VERSION = 'debugPostgresqlVersion';
+    
     // Action others...
     const REGISTRY_SET_ERROR_TEXT = 'registrySetErrorText';
     
@@ -425,6 +429,7 @@ class Lang
             self::MARIADB,
             self::MYSQL,
             self::NODEJS,
+            self::POSTGRESQL,
             
             // Apps
             self::GITLIST,
@@ -606,6 +611,9 @@ class Lang
             self::DEBUG_MARIADB_VERSION,
             self::DEBUG_MARIADB_VARIABLES,
             self::DEBUG_MARIADB_SYNTAX_CHECK,
+            
+            // Action Debug PostgreSQL
+            self::DEBUG_POSTGRESQL_VERSION,
             
             // Action others...
             self::REGISTRY_SET_ERROR_TEXT,

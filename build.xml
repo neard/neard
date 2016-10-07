@@ -59,6 +59,7 @@
         <getbundle releasesurl="${bin.filezilla.url}" version="${bin.filezilla.version}" dest="${release.target}/${release.name}/bin/filezilla" />
         <getbundle releasesurl="${bin.mailhog.url}" version="${bin.mailhog.version}" dest="${release.target}/${release.name}/bin/mailhog" />
         <getbundle releasesurl="${bin.mariadb.url}" version="${bin.mariadb.version}" dest="${release.target}/${release.name}/bin/mariadb" />
+        <getbundle releasesurl="${bin.postgresql.url}" version="${bin.postgresql.version}" dest="${release.target}/${release.name}/bin/postgresql" />
         <getbundle releasesurl="${bin.memcached.url}" version="${bin.memcached.version}" dest="${release.target}/${release.name}/bin/memcached" />
         <getbundle releasesurl="${bin.mysql.url}" version="${bin.mysql.version}" dest="${release.target}/${release.name}/bin/mysql" />
         <getbundle releasesurl="${bin.nodejs.url}" version="${bin.nodejs.version}" dest="${release.target}/${release.name}/bin/nodejs" />
@@ -93,6 +94,7 @@
                 <filter token="BIN_PHP_VERSION" value="${bin.php.version}"/>
                 <filter token="BIN_MYSQL_VERSION" value="${bin.mysql.version}"/>
                 <filter token="BIN_MARIADB_VERSION" value="${bin.mariadb.version}"/>
+                <filter token="BIN_POSTGRESQL_VERSION" value="${bin.postgresql.version}"/>
                 <filter token="BIN_NODEJS_VERSION" value="${bin.nodejs.version}"/>
                 <filter token="BIN_FILEZILLA_VERSION" value="${bin.filezilla.version}"/>
                 <filter token="BIN_MAILHOG_VERSION" value="${bin.mailhog.version}"/>

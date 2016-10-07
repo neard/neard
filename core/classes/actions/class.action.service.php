@@ -45,6 +45,10 @@ class ActionService
                 $name = $neardBins->getMariadb()->getName();
                 $service = $neardBins->getMariadb()->getService();
                 $port = $neardBins->getMariadb()->getPort();
+            } elseif ($sName == BinPostgresql::SERVICE_NAME) {
+                $name = $neardBins->getPostgresql()->getName();
+                $service = $neardBins->getPostgresql()->getService();
+                $port = $neardBins->getPostgresql()->getPort();
             } elseif ($sName == BinFilezilla::SERVICE_NAME) {
                 $name = $neardBins->getFilezilla()->getName();
                 $service = $neardBins->getFilezilla()->getService();

@@ -143,7 +143,14 @@ class Batch
         global $neardBins;
         
         self::exec('installFilezillaService', '"' . $neardBins->getFilezilla()->getExe() . '" /install', true, false);
-        return $neardBins->getFilezilla()->getService()->isInstalled();
+        
+        if (!$neardBins->getFilezilla()->getService()->isInstalled()) {
+            return false;
+        }
+        
+        self::setServiceDescription(BinFilezilla::SERVICE_NAME, $neardBins->getFilezilla()->getService()->getDisplayName());
+        
+        return true;
     }
     
     public static function uninstallFilezillaService()
@@ -158,6 +165,60 @@ class Batch
     {
         global $neardBins;
         self::exec('initializeMysql', 'CMD /C "' . $neardBins->getMysql()->getCurrentPath() . '/init.bat"', 15);
+    }
+    
+    public static function installPostgresqlService()
+    {
+        global $neardCore, $neardBins;
+        
+        $cmd = '"' . Util::formatWindowsPath($neardBins->getPostgresql()->getCtlExe()) . '" register -N "' . BinPostgresql::SERVICE_NAME . '"';
+        $cmd .= ' -U "NT AUTHORITY\NetworkService" -D "' . Util::formatWindowsPath($neardBins->getPostgresql()->getCurrentPath()) . '\\data"';
+        $cmd .= ' -l "' . Util::formatWindowsPath($neardBins->getPostgresql()->getErrorLog()) . '" -w';
+        self::exec('installPostgresqlService', $cmd, true, false);
+        
+        if (!$neardBins->getPostgresql()->getService()->isInstalled()) {
+            return false;
+        }
+        
+        self::setServiceDisplayName(BinPostgresql::SERVICE_NAME, $neardBins->getPostgresql()->getService()->getDisplayName());
+        self::setServiceDescription(BinPostgresql::SERVICE_NAME, $neardBins->getPostgresql()->getService()->getDisplayName());
+        self::setServiceStartType(BinPostgresql::SERVICE_NAME, "demand");
+        
+        return true;
+    }
+    
+    public static function uninstallPostgresqlService()
+    {
+        global $neardBins;
+        
+        $cmd = '"' . $neardBins->getPostgresql()->getCtlExe() . '" unregister -N "' . BinPostgresql::SERVICE_NAME . '"';
+        $cmd .= ' -l "' . Util::formatWindowsPath($neardBins->getPostgresql()->getErrorLog()) . '" -w';
+        self::exec('uninstallPostgresqlService', $cmd, true, false);
+        return !$neardBins->getPostgresql()->getService()->isInstalled();
+    }
+    
+    public static function initializePostgresql()
+    {
+        global $neardBins;
+        self::exec('initializePostgresql', 'CMD /C "' . $neardBins->getPostgresql()->getCurrentPath() . '/init.bat"', 15);
+    }
+    
+    public static function setServiceDisplayName($serviceName, $displayName)
+    {
+        $cmd = 'sc config ' . $serviceName . ' DisplayName= "' . $displayName . '"';
+        self::exec('setServiceDisplayName', $cmd, true, false);
+    }
+    
+    public static function setServiceDescription($serviceName, $desc)
+    {
+        $cmd = 'sc description ' . $serviceName . ' "' . $desc . '"';
+        self::exec('setServiceDescription', $cmd, true, false);
+    }
+    
+    public static function setServiceStartType($serviceName, $startType)
+    {
+        $cmd = 'sc config ' . $serviceName . ' start= ' . $startType;
+        self::exec('setServiceStartType', $cmd, true, false);
     }
     
     public static function execStandalone($basename, $content, $silent = true)

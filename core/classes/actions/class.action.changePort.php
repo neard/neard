@@ -33,6 +33,10 @@ class ActionChangePort
                 $this->bin = $neardBins->getMariadb();
                 $this->currentPort = $neardBins->getMariadb()->getPort();
                 $this->cntProcessActions = 3;
+            } elseif ($args[0] == $neardBins->getPostgresql()->getName()) {
+                $this->bin = $neardBins->getPostgresql();
+                $this->currentPort = $neardBins->getPostgresql()->getPort();
+                $this->cntProcessActions = 3;
             } elseif ($args[0] == $neardBins->getFilezilla()->getName()) {
                 $this->bin = $neardBins->getFilezilla();
                 $this->currentPort = $neardBins->getFilezilla()->getPort();

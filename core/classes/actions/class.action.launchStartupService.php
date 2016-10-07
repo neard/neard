@@ -13,6 +13,8 @@ class ActionLaunchStartupService
                 $neardBins->getMysql()->setLaunchStartup($args[1]);
             } elseif ($args[0] == $neardBins->getMariadb()->getName()) {
                 $neardBins->getMariadb()->setLaunchStartup($args[1]);
+            } elseif ($args[0] == $neardBins->getPostgresql()->getName()) {
+                $neardBins->getPostgresql()->setLaunchStartup($args[1]);
             } elseif ($args[0] == $neardBins->getFilezilla()->getName()) {
                 $neardBins->getFilezilla()->setLaunchStartup($args[1]);
             } elseif ($args[0] == $neardBins->getMailhog()->getName()) {

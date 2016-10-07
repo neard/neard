@@ -142,6 +142,10 @@ class Win32Service
         } elseif ($this->getName() == BinFilezilla::SERVICE_NAME) {
             $neardBins->getFilezilla()->rebuildConf();
             return Batch::installFilezillaService();
+        } elseif ($this->getName() == BinPostgresql::SERVICE_NAME) {
+            $neardBins->getPostgresql()->rebuildConf();
+            $neardBins->getPostgresql()->initData();
+            return Batch::installPostgresqlService();
         }
         
         $create = dechex($this->callWin32Service('win32_create_service', array(
@@ -176,10 +180,16 @@ class Win32Service
     {
         global $neardBs, $neardBins;
         
+        if (!$this->isInstalled()) {
+            return true;
+        }
+        
         $this->stop();
         
         if ($this->getName() == BinFilezilla::SERVICE_NAME) {
             return Batch::uninstallFilezillaService();
+        } elseif ($this->getName() == BinPostgresql::SERVICE_NAME) {
+            return Batch::uninstallPostgresqlService();
         }
         
         $delete = dechex($this->callWin32Service('win32_delete_service', $this->getName(), true));

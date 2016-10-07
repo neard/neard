@@ -218,6 +218,7 @@ class TplConsole
                 self::getTabPearSection() . PHP_EOL .
                 self::getTabMysqlSection() . PHP_EOL .
                 self::getTabMariadbSection() . PHP_EOL .
+                self::getTabPostgresqlSection() . PHP_EOL .
                 self::getTabGitSection() . PHP_EOL .
                 self::getTabSvnSection() . PHP_EOL .
                 self::getTabNodejsSection() . PHP_EOL .
@@ -298,6 +299,22 @@ class TplConsole
             self::ICON_DB,
             Util::formatWindowsPath($shell),
             $neardBins->getMariadb()->getCurrentPath()
+        );
+    }
+    
+    private static function getTabPostgresqlSection()
+    {
+        global $neardCore, $neardBins, $neardTools;
+    
+        $shell = $neardTools->getConsole()->getCmdShell() . ' ' .
+            '&quot;' . $neardBins->getPostgresql()->getCliExe() . '&quot; -U ' .
+            $neardBins->getPostgresql()->getRootUser() . ' -d postgres';
+    
+        return self::getTab(
+            $neardTools->getConsole()->getTabTitlePostgresql(),
+            self::ICON_DB,
+            Util::formatWindowsPath($shell),
+            $neardBins->getPostgresql()->getCurrentPath()
         );
     }
     

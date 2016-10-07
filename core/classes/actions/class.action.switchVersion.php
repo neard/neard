@@ -46,6 +46,12 @@ class ActionSwitchVersion
                 $this->restart = true;
                 $this->service = $neardBins->getMariadb()->getService();
                 $this->changePort = true;
+            } elseif ($args[0] == $neardBins->getPostgresql()->getName()) {
+                $this->bin = $neardBins->getPostgresql();
+                $this->currentVersion = $neardBins->getPostgresql()->getVersion();
+                $this->restart = true;
+                $this->service = $neardBins->getPostgresql()->getService();
+                $this->changePort = true;
             } elseif ($args[0] == $neardBins->getNodejs()->getName()) {
                 $this->bin = $neardBins->getNodejs();
                 $this->currentVersion = $neardBins->getNodejs()->getVersion();

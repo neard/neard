@@ -532,6 +532,9 @@ class ActionStartup
                     $bin = $neardBins->getMariadb();
                     $port = $neardBins->getMariadb()->getPort();
                     $syntaxCheckCmd = BinMariadb::CMD_SYNTAX_CHECK;
+                } elseif ($sName == BinPostgresql::SERVICE_NAME) {
+                    $bin = $neardBins->getPostgresql();
+                    $port = $neardBins->getPostgresql()->getPort();
                 } elseif ($sName == BinFilezilla::SERVICE_NAME) {
                     $bin = $neardBins->getFilezilla();
                     $port = $neardBins->getFilezilla()->getPort();

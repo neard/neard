@@ -98,6 +98,7 @@ mysql = "MySQL"
 nodejs = "Node.js"
 pear = "PEAR"
 php = "PHP"
+postgresql = "PostgreSQL"
 
 ; Apps
 adminer = "Adminer"
@@ -280,6 +281,9 @@ debugMysqlSyntaxCheck = "Konfiguráció szintaktikai ellenörzése"
 debugMariadbVersion = "Verzió"
 debugMariadbVariables = "Változók"
 debugMariadbSyntaxCheck = "Konfiguráció szintaktikai ellenörzése"
+
+; Action Debug PostgreSQL
+debugPostgresqlVersion = "Verzió"
 
 ; Action others...
 registrySetErrorText = "Regisztri érték hiba : %s"

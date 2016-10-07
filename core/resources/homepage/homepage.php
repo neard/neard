@@ -20,6 +20,7 @@
     <script src="<?php echo $neardHomepage->getResourcesPath(); ?>/js/mysql.js"></script>
     <script src="<?php echo $neardHomepage->getResourcesPath(); ?>/js/nodejs.js"></script>
     <script src="<?php echo $neardHomepage->getResourcesPath(); ?>/js/php.js"></script>
+    <script src="<?php echo $neardHomepage->getResourcesPath(); ?>/js/postgresql.js"></script>
     <link href="<?php echo $neardHomepage->getResourcesPath(); ?>/libs/bootstrap/bootstrap.min.css" rel="stylesheet">
     <link href="<?php echo $neardHomepage->getResourcesPath(); ?>/libs/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <link href="<?php echo $neardHomepage->getResourcesPath(); ?>/css/app.css" rel="stylesheet">

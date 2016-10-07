@@ -13,6 +13,7 @@ $procs = array(
     'mysql',
     'nodejs',
     'php',
+    'postgresql',
 );
 
 $proc = Util::cleanPostVar('proc');
