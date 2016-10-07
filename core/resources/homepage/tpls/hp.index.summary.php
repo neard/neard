@@ -51,6 +51,10 @@
             <span class="loader" style="float:right"><img src="<?php echo $neardHomepage->getResourcesPath() . '/img/loader.gif'; ?>" /></span>
             <a href="#mariadb"><?php echo $neardLang->getValue(Lang::MARIADB); ?></a>
           </span>
+          <span class="list-group-item summary-binpostgresql">
+            <span class="loader" style="float:right"><img src="<?php echo $neardHomepage->getResourcesPath() . '/img/loader.gif'; ?>" /></span>
+            <a href="#postgresql"><?php echo $neardLang->getValue(Lang::POSTGRESQL); ?></a>
+          </span>
           <span class="list-group-item summary-binnodejs">
             <span class="loader" style="float:right"><img src="<?php echo $neardHomepage->getResourcesPath() . '/img/loader.gif'; ?>" /></span>
             <a href="#nodejs"><?php echo $neardLang->getValue(Lang::NODEJS); ?></a>

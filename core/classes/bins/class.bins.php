@@ -8,6 +8,7 @@ class Bins
     private $php;
     private $mysql;
     private $mariadb;
+    private $postgresql;
     private $nodejs;
     private $filezilla;
     
@@ -45,6 +46,7 @@ class Bins
             $this->getApache(),
             $this->getFilezilla(),
             $this->getMariadb(),
+            $this->getPostgresql(),
             $this->getMysql(),
             $this->getPhp(),
             $this->getNodejs(),
@@ -98,6 +100,14 @@ class Bins
         }
         return $this->mariadb;
     }
+    
+    public function getPostgresql()
+    {
+        if ($this->postgresql == null) {
+            $this->postgresql = new BinPostgresql($this->getRootPath('postgresql'));
+        }
+        return $this->postgresql;
+    }
 
     public function getNodejs()
     {
@@ -130,6 +140,7 @@ class Bins
             BinApache::SERVICE_NAME => $this->getApache()->getService(),
             BinMysql::SERVICE_NAME => $this->getMysql()->getService(),
             BinMariadb::SERVICE_NAME => $this->getMariadb()->getService(),
+            BinPostgresql::SERVICE_NAME => $this->getPostgresql()->getService(),
             BinFilezilla::SERVICE_NAME => $this->getFilezilla()->getService(),
         );
     }
@@ -152,6 +163,9 @@ class Bins
         }
         if ($this->getMariadb()->isLaunchStartup()) {
             $result[BinMariadb::SERVICE_NAME] = $this->getMariadb()->getService();
+        }
+        if ($this->getPostgresql()->isLaunchStartup()) {
+            $result[BinPostgresql::SERVICE_NAME] = $this->getPostgresql()->getService();
         }
         if ($this->getFilezilla()->isLaunchStartup()) {
             $result[BinFilezilla::SERVICE_NAME] = $this->getFilezilla()->getService();

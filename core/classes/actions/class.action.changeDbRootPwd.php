@@ -33,6 +33,9 @@ class ActionChangeDbRootPwd
             if ($args[0] == $neardBins->getMariadb()->getName()) {
                 $this->bin = $neardBins->getMariadb();
                 $this->cntProcessActions = 11;
+            } elseif ($args[0] == $neardBins->getPostgresql()->getName()) {
+                $this->bin = $neardBins->getPostgresql();
+                $this->cntProcessActions = 10;
             }
             
             $neardWinbinder->reset();

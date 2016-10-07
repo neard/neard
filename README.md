@@ -1,4 +1,8 @@
-# Neard [![Download](https://img.shields.io/badge/download-1.0.20-brightgreen.svg)](https://github.com/crazy-max/neard/releases/download/v1.0.20/neard-1.0.20.7z) [![Donate Paypal](https://img.shields.io/badge/donate-paypal-blue.svg)](https://www.paypal.me/crazyws)
+[![GitHub release](https://img.shields.io/github/release/crazy-max/neard.svg?style=flat-square)](https://github.com/crazy-max/neard/releases)
+![Total downloads](https://img.shields.io/github/downloads/crazy-max/neard/total.svg?style=flat-square)
+[![Donate Paypal](https://img.shields.io/badge/donate-paypal-blue.svg?style=flat-square)](https://www.paypal.me/crazyws)
+
+# Neard
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -21,7 +25,7 @@
 ## About
 
 **Neard** is a portable WAMP software stack involving useful binaries, tools and applications for [your web development](../../wiki/Screenshots).<br />
-It is open for everyone to contribute. You can contribute to [binaries](../../wiki/Binaries#contribute), [tools](../../wiki/Tools#contribute), [applications](../../wiki/Applications#contribute) and [translations](../../wiki/Translations) too.<br />
+It is open for everyone to contribute. You can contribute to [binaries, tools, application](../../wiki/Contribute) and [translations](../../wiki/Translations) too.<br />
 To be notified of new releases, Star the project or subscribe to this [Atom feed](https://github.com/crazy-max/neard/releases.atom).<br />
 If you've got a problem do not forget to read the [Reporting an issue Wiki page](../../wiki/Reporting-an-issue).
 
@@ -37,6 +41,7 @@ If you've got a problem do not forget to read the [Reporting an issue Wiki page]
 * **[MySQL](../../wiki/binMySQL)**, an open-source relational database management system.
 * **[Node.js](../../wiki/binNode.js)**, an open-source, cross-platform runtime environment for developing server-side web applications.
 * **[PHP](../../wiki/binPHP)**, a server-side scripting language designed for web development including PEAR and extra extensions.
+* **[PostgreSQL](../../wiki/binPostgreSQL)**, an object-relational database management system (ORDBMS) with an emphasis on extensibility and standards-compliance.
 
 ### Applications
 
@@ -65,7 +70,10 @@ And many other features.
 
 ## Download
 
-Before [downloading](https://github.com/crazy-max/neard/releases/download/v1.0.20/neard-1.0.20.7z) Neard, read the [Requirements Wiki page](../../wiki/Requirements).
+First, read the [Requirements Wiki page](../../wiki/Requirements).<br />
+Then go to the [releases page](https://github.com/crazy-max/neard/releases) and download one of the available archive formats :
+* `neard-x.x.xx.7z`
+* `neard-x.x.xx.zip`
 
 ### Binaries, tools, applications
 
@@ -74,7 +82,7 @@ You can find the download links on the [Wiki](../../wiki).
 
 ## Installation
 
-Use a file archiver that supports [7z format](http://www.7-zip.org/7z.html) like [7zip](http://www.7-zip.org/) and extract the archive where you want.<br />
+Use a file archiver that supports [7z format](http://www.7-zip.org/7z.html) like [7zip](http://www.7-zip.org/) and extract the archive where you want.
 
 ## Configuration
 

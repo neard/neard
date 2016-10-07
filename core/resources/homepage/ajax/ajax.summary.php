@@ -5,8 +5,9 @@ $result = array(
     'binfilezilla' => '',
     'binmailhog' => '',
     'binmariadb' => '',
-    'binmemcached' => '',
     'binmysql' => '',
+    'binpostgresql' => '',
+    'binmemcached' => '',
     'binnodejs' => '',
     'binphp' => '',
 );
@@ -67,17 +68,6 @@ if ($neardBins->getMariadb()->checkPort($mariadbPort)) {
 $result['binmariadb'] = sprintf($dlMoreTpl, 'binMariaDB');
 $result['binmariadb'] .= '<span style="float:right;font-size:12px" class="label ' . $mariadbLabel . '">' . $neardBins->getMariadb()->getVersion() . '</span>';
 
-// Bin Memcached
-$memcachedPort = $neardBins->getMemcached()->getPort();
-$memcachedLabel = 'label-danger';
-
-if ($neardBins->getMemcached()->checkPort($memcachedPort)) {
-    $memcachedLabel = 'label-success';
-}
-
-$result['binmemcached'] = sprintf($dlMoreTpl, 'binMemcached');
-$result['binmemcached'] .= '<span style="float:right;font-size:12px" class="label ' . $memcachedLabel . '">' . $neardBins->getMemcached()->getVersion() . '</span>';
-
 // Bin MySQL
 $mysqlPort = $neardBins->getMysql()->getPort();
 $mysqlLabel = 'label-danger';
@@ -88,6 +78,28 @@ if ($neardBins->getMysql()->checkPort($mysqlPort)) {
 
 $result['binmysql'] = sprintf($dlMoreTpl, 'binMySQL');
 $result['binmysql'] .= '<span style="float:right;font-size:12px" class="label ' . $mysqlLabel . '">' . $neardBins->getMysql()->getVersion() . '</span>';
+
+// Bin PostgreSQL
+$postgresqlPort = $neardBins->getPostgresql()->getPort();
+$postgresqlLabel = 'label-danger';
+
+if ($neardBins->getPostgresql()->checkPort($postgresqlPort)) {
+    $postgresqlLabel = 'label-success';
+}
+
+$result['binpostgresql'] = sprintf($dlMoreTpl, 'binPostgreSQL');
+$result['binpostgresql'] .= '<span style="float:right;font-size:12px" class="label ' . $postgresqlLabel . '">' . $neardBins->getPostgresql()->getVersion() . '</span>';
+
+// Bin Memcached
+$memcachedPort = $neardBins->getMemcached()->getPort();
+$memcachedLabel = 'label-danger';
+
+if ($neardBins->getMemcached()->checkPort($memcachedPort)) {
+    $memcachedLabel = 'label-success';
+}
+
+$result['binmemcached'] = sprintf($dlMoreTpl, 'binMemcached');
+$result['binmemcached'] .= '<span style="float:right;font-size:12px" class="label ' . $memcachedLabel . '">' . $neardBins->getMemcached()->getVersion() . '</span>';
 
 // Bin Node.js
 $result['binnodejs'] = sprintf($dlMoreTpl, 'binNode.js');

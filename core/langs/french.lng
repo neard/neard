@@ -98,6 +98,7 @@ mysql = "MySQL"
 nodejs = "Node.js"
 pear = "PEAR"
 php = "PHP"
+postgresql = "PostgreSQL"
 
 ; Apps
 adminer = "Adminer"
@@ -280,6 +281,9 @@ debugMysqlSyntaxCheck = "Vérifier la syntaxe de la configuration"
 debugMariadbVersion = "Version"
 debugMariadbVariables = "Variables"
 debugMariadbSyntaxCheck = "Vérifier la syntaxe de la configuration"
+
+; Action Debug PostgreSQL
+debugPostgresqlVersion = "Version"
 
 ; Action others...
 registrySetErrorText = "Valeur de clé de registre incorrecte : %s"

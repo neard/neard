@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.21 (2016/08/19)
+
+
+
 ## 1.0.20 (2016/06/23)
 
 * Bug with homepage queries ([Issue #139](https://github.com/crazy-max/neard/issues/139))

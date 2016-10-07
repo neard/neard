@@ -46,9 +46,9 @@ class Vbs
         return isset($result[0]) && is_numeric($result[0]) ? intval($result[0]) : false;
     }
     
-    public static function findReposVbs($startPath, $findFolder, $checkFileIns)
+    public static function findRepos($startPath, $findFolder, $checkFileIns)
     {
-        $basename = 'findReposVbs';
+        $basename = 'findRepos';
         $resultFile = self::getResultFile($basename);
     
         $content = 'Dim objFso, objFile' . PHP_EOL . PHP_EOL;
