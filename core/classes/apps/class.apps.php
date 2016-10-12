@@ -8,6 +8,7 @@ class Apps
     private $webgrind;
     private $adminer;
     private $phpmemadmin;
+    private $phppgadmin;
     
     public function __construct()
     {
@@ -34,6 +35,7 @@ class Apps
             $this->getGitlist(),
             $this->getPhpmemadmin(),
             $this->getPhpmyadmin(),
+            $this->getPhppgadmin(),
             $this->getWebgrind(),
             $this->getWebsvn(),
         );
@@ -69,6 +71,14 @@ class Apps
             $this->phpmyadmin = new AppPhpmyadmin($this->getRootPath('phpmyadmin'));
         }
         return $this->phpmyadmin;
+    }
+    
+    public function getPhppgadmin()
+    {
+        if ($this->phppgadmin == null) {
+            $this->phppgadmin = new AppPhppgadmin($this->getRootPath('phppgadmin'));
+        }
+        return $this->phppgadmin;
     }
     
     public function getWebgrind()

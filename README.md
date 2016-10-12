@@ -48,6 +48,7 @@ If you've got a problem do not forget to read the [Reporting an issue Wiki page]
 * **[Adminer](../../wiki/appAdminer)**, (formerly phpMinAdmin) is a full-featured database management tool written in PHP.
 * **[GitList](../../wiki/appGitList)**, an elegant and modern git repository viewer.
 * **[phpMyAdmin](../../wiki/appPhpMyAdmin)**, to handle the administration of MySQL and MariaDB over the Web.
+* **[phpPgAdmin](../../wiki/appPhpPgAdmin)**, a web-based administration tool for PostgreSQL.
 * **[Webgrind](../../wiki/appWebgrind)**, the Xdebug Profiling Web Frontend in PHP.
 * **[WebSVN](../../wiki/appWebSVN)**, an Online subversion repository browser.
 

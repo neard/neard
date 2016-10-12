@@ -105,6 +105,7 @@ adminer = "Adminer"
 gitlist = "GitList"
 phpmemadmin = "phpMemAdmin"
 phpmyadmin = "phpMyAdmin"
+phppgadmin = "phpPgAdmin"
 webgrind = "Webgrind"
 websvn = "WebSVN"
 
