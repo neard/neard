@@ -108,6 +108,7 @@ class Lang
     const WEBSVN = 'websvn';
     const ADMINER = 'adminer';
     const PHPMEMADMIN = 'phpmemadmin';
+    const PHPPGADMIN = 'phppgadmin';
     
     // Tools
     const COMPOSER = 'composer';
@@ -438,6 +439,7 @@ class Lang
             self::WEBSVN,
             self::ADMINER,
             self::PHPMEMADMIN,
+            self::PHPPGADMIN,
             
             // Tools
             self::COMPOSER,

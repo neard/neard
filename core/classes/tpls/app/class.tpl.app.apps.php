@@ -36,6 +36,11 @@ class TplAppApps
                 true
             ) . PHP_EOL .
             TplAestan::getItemLink(
+                $neardLang->getValue(Lang::PHPPGADMIN),
+                'phppgadmin/',
+                true
+                ) . PHP_EOL .
+            TplAestan::getItemLink(
                 $neardLang->getValue(Lang::WEBGRIND),
                 'webgrind/',
                 true

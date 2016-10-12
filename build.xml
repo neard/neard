@@ -70,6 +70,7 @@
         <getbundle releasesurl="${app.gitlist.url}" version="${app.gitlist.version}" dest="${release.target}/${release.name}/apps/gitlist" />
         <getbundle releasesurl="${app.phpmemadmin.url}" version="${app.phpmemadmin.version}" dest="${release.target}/${release.name}/apps/phpmemadmin" />
         <getbundle releasesurl="${app.phpmyadmin.url}" version="${app.phpmyadmin.version}" dest="${release.target}/${release.name}/apps/phpmyadmin" />
+        <getbundle releasesurl="${app.phppgadmin.url}" version="${app.phppgadmin.version}" dest="${release.target}/${release.name}/apps/phppgadmin" />
         <getbundle releasesurl="${app.webgrind.url}" version="${app.webgrind.version}" dest="${release.target}/${release.name}/apps/webgrind" />
         <getbundle releasesurl="${app.websvn.url}" version="${app.websvn.version}" dest="${release.target}/${release.name}/apps/websvn" />
         
@@ -117,6 +118,7 @@
                 <filter token="APP_GITLIST_VERSION" value="${app.gitlist.version}"/>
                 <filter token="APP_PHPMEMADMIN_VERSION" value="${app.phpmemadmin.version}"/>
                 <filter token="APP_PHPMYADMIN_VERSION" value="${app.phpmyadmin.version}"/>
+                <filter token="APP_PHPPGADMIN_VERSION" value="${app.phppgadmin.version}"/>
                 <filter token="APP_WEBGRIND_VERSION" value="${app.webgrind.version}"/>
                 <filter token="APP_WEBSVN_VERSION" value="${app.websvn.version}"/>
             </filterset>

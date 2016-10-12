@@ -9,6 +9,8 @@ class BinPostgresql
     
     const LOCAL_CFG_CTL_EXE = 'postgresqlCtlExe';
     const LOCAL_CFG_CLI_EXE = 'postgresqlCliExe';
+    const LOCAL_CFG_DUMP_EXE = 'postgresqlDumpExe';
+    const LOCAL_CFG_DUMP_ALL_EXE = 'postgresqlDumpAllExe';
     const LOCAL_CFG_CONF = 'postgresqlConf';
     const LOCAL_CFG_HBA_CONF = 'postgresqlUserConf';
     const LOCAL_CFG_ALT_CONF = 'postgresqlAltConf';
@@ -32,6 +34,8 @@ class BinPostgresql
     
     private $ctlExe;
     private $cliExe;
+    private $dumpExe;
+    private $dumpAllExe;
     private $conf;
     private $hbaConf;
     private $altConf;
@@ -75,6 +79,8 @@ class BinPostgresql
         if ($this->neardConfRaw !== false) {
             $this->ctlExe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_CTL_EXE];
             $this->cliExe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_CLI_EXE];
+            $this->dumpExe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_DUMP_EXE];
+            $this->dumpAllExe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_DUMP_ALL_EXE];
             $this->conf = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_CONF];
             $this->hbaConf = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_HBA_CONF];
             $this->altConf = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_ALT_CONF];
@@ -103,6 +109,14 @@ class BinPostgresql
         }
         if (!is_file($this->cliExe)) {
             Util::logError(sprintf($neardLang->getValue(Lang::ERROR_EXE_NOT_FOUND), $this->name . ' ' . $this->version, $this->cliExe));
+            return;
+        }
+        if (!is_file($this->dumpExe)) {
+            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_EXE_NOT_FOUND), $this->name . ' ' . $this->version, $this->dumpExe));
+            return;
+        }
+        if (!is_file($this->dumpAllExe)) {
+            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_EXE_NOT_FOUND), $this->name . ' ' . $this->version, $this->dumpAllExe));
             return;
         }
         if (!is_file($this->conf)) {
@@ -369,10 +383,11 @@ class BinPostgresql
             '/^port(.*?)=(.*?)(\d+)/' => 'port = ' . $this->port
         ));
         
+        // phppgadmin
+        $neardApps->getPhppgadmin()->update($sub + 1);
+        
         // adminer
         $neardApps->getAdminer()->update($sub + 1);
-        
-        //TODO: Add phpPgAdmin"
         
         return true;
     }
@@ -467,6 +482,16 @@ class BinPostgresql
     public function getCliExe()
     {
         return $this->cliExe;
+    }
+    
+    public function getDumpExe()
+    {
+        return $this->dumpExe;
+    }
+    
+    public function getDumpAllExe()
+    {
+        return $this->dumpAllExe;
     }
     
     public function getConf()
