@@ -21,7 +21,7 @@ class AppWebsvn
         global $neardBs, $neardConfig, $neardLang;
         Util::logInitClass($this);
         
-        $this->name = $neardLang->getValue(Lang::PHPMYADMIN);
+        $this->name = $neardLang->getValue(Lang::WEBSVN);
         $this->version = $neardConfig->getRaw(self::ROOT_CFG_VERSION);
         
         $this->rootPath = $rootPath;
