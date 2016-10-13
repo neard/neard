@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.0.21 (2016/10/12)
+## 1.0.21 (2016/10/13)
 
 * Add phpPgAdmin app
 * Update about window
@@ -21,6 +21,7 @@
 
 ### Upgrade from previous release
 
+* **required** : Download and install the latests [Neard Visual C++ Redistributables Package](https://github.com/crazy-max/neard-misc#visual-c-redistributables-package)
 * **required** : Remove then replace folder `apps\adminer`
 * **required** : Copy folder `apps\phpmemadmin`
 * **required** : Copy folder `apps\phppgadmin`
