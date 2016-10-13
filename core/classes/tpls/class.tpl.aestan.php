@@ -92,7 +92,7 @@ class TplAestan
         );
     }
     
-    public static function getItemLink($caption, $link, $local = false)
+    public static function getItemLink($caption, $link, $local = false, $glyph = self::GLYPH_WEB_PAGE)
     {
         global $neardBs, $neardConfig;
         
@@ -103,7 +103,7 @@ class TplAestan
         return self::getItemExe(
             $caption,
             $neardConfig->getBrowser(),
-            self::GLYPH_WEB_PAGE,
+            $glyph,
             $link
         );
     }

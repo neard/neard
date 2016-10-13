@@ -52,6 +52,7 @@ class Lang
     const VERSION = 'version';
     const VERSIONS = 'versions';
     const VIRTUAL_HOSTS = 'virtualHosts';
+    const WEBSITE = 'website';
     
     // Menu
     const MENU_ABOUT = 'menuAbout';
@@ -383,6 +384,7 @@ class Lang
             self::VERSION,
             self::VERSIONS,
             self::VIRTUAL_HOSTS,
+            self::WEBSITE,
             
             // Menu
             self::MENU_ABOUT,

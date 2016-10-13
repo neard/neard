@@ -51,6 +51,7 @@ verboseTrace = "Trace"
 version = "Version"
 versions = "Versions"
 virtualHosts = "Virtual Hosts"
+website = "Website"
 
 ; Menu
 menuAbout = "About..."
@@ -262,7 +263,7 @@ changeBrowserOk = "Browser changed successfully to:@nl@%s"
 
 ; Action About
 aboutTitle = "About..."
-aboutText = "%s@nl@Copyright(C) 2014 %s <%s>@nl@@nl@Neard is free software; you can redistribute it and/or modify it@nl@under the terms of the GNU LESSER GENERAL PUBLIC LICENSE.@nl@For more information, visit the website :"
+aboutText = "%s@nl@Copyright(C) 2014-%s %s <%s>@nl@@nl@Neard is free software; you can redistribute it and/or modify it@nl@under the terms of the GNU LESSER GENERAL PUBLIC LICENSE."
 
 ; Action Debug Apache
 debugApacheVersionNumber = "Version number"
