@@ -47,6 +47,7 @@ If you've got a problem do not forget to read the [Reporting an issue Wiki page]
 
 * **[Adminer](../../wiki/appAdminer)**, (formerly phpMinAdmin) is a full-featured database management tool written in PHP.
 * **[GitList](../../wiki/appGitList)**, an elegant and modern git repository viewer.
+* **[phpMemAdmin](../../wiki/appPhpMemAdmin)**, to handle the administration of Memcached over the web.
 * **[phpMyAdmin](../../wiki/appPhpMyAdmin)**, to handle the administration of MySQL and MariaDB over the Web.
 * **[phpPgAdmin](../../wiki/appPhpPgAdmin)**, a web-based administration tool for PostgreSQL.
 * **[Webgrind](../../wiki/appWebgrind)**, the Xdebug Profiling Web Frontend in PHP.
@@ -72,7 +73,7 @@ And many other features.
 ## Download
 
 First, read the [Requirements Wiki page](../../wiki/Requirements).<br />
-Then go to the [releases page](https://github.com/crazy-max/neard/releases) and download one of the available archive formats :
+Then go to the [releases page](https://github.com/crazy-max/neard/releases) and download one of the available archive :
 * `neard-x.x.xx.7z`
 * `neard-x.x.xx.zip`
 

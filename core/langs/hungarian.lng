@@ -51,6 +51,7 @@ verboseTrace = "Nyomkövet"
 version = "Verzió"
 versions = "Verziók"
 virtualHosts = "Virtuális hosztok"
+website = "Weboldal"
 
 ; Menu
 menuAbout = "Névjegy..."
@@ -262,7 +263,7 @@ changeBrowserOk = "Böngésző sikeresen beállítva:@nl@%s"
 
 ; Action About
 aboutTitle = "Névjegy..."
-aboutText = "%s@nl@Copyright(C) 2014 %s <%s>@nl@@nl@Neard is free software; you can redistribute it and/or modify it@nl@under the terms of the GNU LESSER GENERAL PUBLIC LICENSE.@nl@For more information, visit the website :"
+aboutText = "%s@nl@Copyright(C) 2014-%s %s <%s>@nl@@nl@Neard is free software; you can redistribute it and/or modify it@nl@under the terms of the GNU LESSER GENERAL PUBLIC LICENSE."
 
 ; Action Debug Apache
 debugApacheVersionNumber = "Verzió szám:"

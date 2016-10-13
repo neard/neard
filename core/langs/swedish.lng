@@ -51,6 +51,7 @@ verboseTrace = "#Trace"
 version = "Version"
 versions = "Versioner"
 virtualHosts = "Virtuella Värdar"
+website = "Webbsajt"
 
 ; Menu
 menuAbout = "Om..."
@@ -262,7 +263,7 @@ changeBrowserOk = "Webbläsare byttes framgångsrikt till:@nl@%s"
 
 ; Action About
 aboutTitle = "Om..."
-aboutText = "%s@nl@Copyright(C) 2014 %s <%s>@nl@@nl@Neard är en kostnadsfri mjukvara; du får återdistribuera den och/eller modifiera@nl@den under villkoren av GNU LESSER GENERAL PUBLIC LICENSE.@nl@För mer information, besök webbplatsen :"
+aboutText = "%s@nl@Copyright(C) 2014-%s %s <%s>@nl@@nl@Neard is free software; you can redistribute it and/or modify it@nl@under the terms of the GNU LESSER GENERAL PUBLIC LICENSE."
 
 ; Action Debug Apache
 debugApacheVersionNumber = "Versions-nummer"

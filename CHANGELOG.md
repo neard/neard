@@ -1,8 +1,40 @@
 # Changelog
 
-## 1.0.21 (2016/08/19)
+## 1.0.21 (2016/10/12)
 
+* Add phpPgAdmin app
+* Update about window
+* Misspelled on WebSVN class
+* Add PostgreSQL binary (Issue #143)
+* Update Adminer conf for PostgreSQL
+* Change service displayName, description and startType after creation
+* Do not remove service if not installed on exit
+* Implement launch on startup for Memcached
+* Launch on startup option for Mailhog not implemented (Issue #149)
+* Add phpMemAdmin application (Issue #145)
+* Add MailHog log menu item
+* Add Memcached binary (Issue #145)
+* Bug with ASCII char on PHP 5.2
+* sprintf bug on PHP 5.2
+* E_DEPRECATED not defined on PHP 5.2
+* Start and stop services icons reversed (Issue #141)
 
+### Upgrade from previous release
+
+* **required** : Remove then replace folder `apps\adminer`
+* **required** : Copy folder `apps\phpmemadmin`
+* **required** : Copy folder `apps\phppgadmin`
+* **required** : Copy file `alias\phpmemadmin.conf`
+* **required** : Copy file `alias\phppgadmin.conf`
+* **required** : Copy folder `bin\memcached`
+* **required** : Copy folder `bin\postgresql`
+* **required** : Remove then replace folder `core`
+* **required** : Add line `postgresqlVersion = "9.4.8"` after `mariadbLaunchStartup` in `neard.conf`
+* **required** : Add line `postgresqlLaunchStartup = "1"` after `postgresqlVersion` in `neard.conf`
+* **required** : Add line `memcachedVersion = "1.4.5"` after `mailhogLaunchStartup` in `neard.conf`
+* **required** : Add line `memcachedLaunchStartup = "1"` after `memcachedVersion` in `neard.conf`
+* **required** : Add line `phpmemadminVersion = "0.3.1"` after `gitlistVersion` in `neard.conf`
+* **required** : Add line `phppgadminVersion = "5.2"` after `phpmyadminVersion` in `neard.conf`
 
 ## 1.0.20 (2016/06/23)
 

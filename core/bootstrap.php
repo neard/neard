@@ -2,6 +2,7 @@
 
 define('APP_TITLE', 'Neard');
 define('APP_GITHUB_HOME', 'https://github.com/crazy-max/neard');
+define('APP_GITHUB_ANCHOR', '#neard');
 define('APP_GITHUB_ISSUES', APP_GITHUB_HOME . '/issues');
 define('APP_AUTHOR_NAME', 'Cr@zy');
 define('APP_AUTHOR_EMAIL', 'webmaster@crazyws.fr');
