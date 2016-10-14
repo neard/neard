@@ -150,7 +150,7 @@ class ActionService
                     sprintf($neardLang->getValue(Lang::SERVICE_ALREADY_INSTALLED), $name),
                     $boxTitle);
             }
-        } else if($neardBins->getApache()->getService()->isRunning()) {
+        } else if($service->isRunning()) {
             $neardWinbinder->messageBoxWarning(
                 sprintf($neardLang->getValue(Lang::SERVICE_ALREADY_INSTALLED), $name),
                 $boxTitle);
