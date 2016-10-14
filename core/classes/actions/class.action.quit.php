@@ -29,11 +29,6 @@ class ActionQuit
         global $neardBs, $neardCore, $neardConfig, $neardBins, $neardLang, $neardWinbinder;
         
         foreach ($neardBins->getServices() as $sName => $service) {
-            $this->splash->incrProgressBar();
-            if (!$service->isInstalled()) {
-                continue;
-            }
-            
             $name = $neardBins->getApache()->getName() . ' ' . $neardBins->getApache()->getVersion();
             $port = $neardBins->getApache()->getPort();
             if ($sName == BinMysql::SERVICE_NAME) {
@@ -60,6 +55,7 @@ class ActionQuit
             }
             $name .= ' (' . $service->getName() . ')';
             
+            $this->splash->incrProgressBar();
             $this->splash->setTextLoading(sprintf($neardLang->getValue(Lang::EXIT_REMOVE_SERVICE_TEXT), $name));
             $service->delete();
         }
