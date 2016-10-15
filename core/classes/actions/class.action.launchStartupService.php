@@ -6,7 +6,7 @@ class ActionLaunchStartupService
     {
         global $neardBins;
         
-        if (isset($args[0]) && !empty($args[0]) && isset($args[1]) && !empty($args[1])) {
+        if (isset($args[0]) && !empty($args[0]) && isset($args[1])) {
             if ($args[0] == $neardBins->getApache()->getName()) {
                 $neardBins->getApache()->setLaunchStartup($args[1]);
             } elseif ($args[0] == $neardBins->getMysql()->getName()) {
