@@ -24,50 +24,54 @@ class ActionService
             $name = '';
             $service = '';
             $port = 0;
+            $syntaxCheckCmd = null;
             
             if ($sName == BinMailhog::SERVICE_NAME) {
-                $name = $neardBins->getMailhog()->getName();
-                $service = $neardBins->getMailhog()->getService();
-                $port = $neardBins->getMailhog()->getSmtpPort();
+                $bin = $neardBins->getMailhog();
+                $port = $bin->getSmtpPort();
             } elseif ($sName == BinMemcached::SERVICE_NAME) {
-                $name = $neardBins->getMemcached()->getName();
-                $service = $neardBins->getMemcached()->getService();
-                $port = $neardBins->getMemcached()->getPort();
+                $bin = $neardBins->getMemcached();
+                $port = $bin->getPort();
             } elseif ($sName == BinApache::SERVICE_NAME) {
-                $name = $neardBins->getApache()->getName();
-                $service = $neardBins->getApache()->getService();
-                $port = $neardBins->getApache()->getPort();
+                $bin = $neardBins->getApache();
+                $port = $bin->getPort();
+                $syntaxCheckCmd = BinApache::CMD_SYNTAX_CHECK;
             } elseif ($sName == BinMysql::SERVICE_NAME) {
-                $name = $neardBins->getMysql()->getName();
-                $service = $neardBins->getMysql()->getService();
-                $port = $neardBins->getMysql()->getPort();
+                $bin = $neardBins->getMysql();
+                $port = $bin->getPort();
+                $syntaxCheckCmd = BinMysql::CMD_SYNTAX_CHECK;
             } elseif ($sName == BinMariadb::SERVICE_NAME) {
-                $name = $neardBins->getMariadb()->getName();
-                $service = $neardBins->getMariadb()->getService();
-                $port = $neardBins->getMariadb()->getPort();
+                $bin = $neardBins->getMailhog();
+                $port = $bin->getPort();
+                $syntaxCheckCmd = BinMariadb::CMD_SYNTAX_CHECK;
             } elseif ($sName == BinPostgresql::SERVICE_NAME) {
-                $name = $neardBins->getPostgresql()->getName();
-                $service = $neardBins->getPostgresql()->getService();
-                $port = $neardBins->getPostgresql()->getPort();
+                $bin = $neardBins->getPostgresql();
+                $port = $bin->getPort();
             } elseif ($sName == BinFilezilla::SERVICE_NAME) {
-                $name = $neardBins->getFilezilla()->getName();
-                $service = $neardBins->getFilezilla()->getService();
-                $port = $neardBins->getFilezilla()->getPort();
+                $bin = $neardBins->getFilezilla();
+                $port = $bin->getPort();
             }
             
-            if (!empty($port) && !empty($service) && $service instanceof Win32Service) {
+            $name = $bin->getName();
+            $service = $bin->getService();
+            
+            if (!empty($service) && $service instanceof Win32Service) {
                 if ($args[1] == self::CREATE) {
                     $this->create($service);
                 } elseif ($args[1] == self::DELETE) {
                     $this->delete($service);
                 } elseif ($args[1] == self::START) {
-                    $this->start($service);
+                    $this->start($bin, $syntaxCheckCmd);
                 } elseif ($args[1] == self::STOP) {
                     $this->stop($service);
                 } elseif ($args[1] == self::RESTART) {
-                    $this->restart($service);
+                    $this->restart($bin, $syntaxCheckCmd);
                 } elseif ($args[1] == self::INSTALL) {
-                    $this->install($service, $port, $name);
+                    if (!empty($port)) {
+                        $this->install($bin, $port, $syntaxCheckCmd);
+                    }
+                } elseif ($args[1] == self::REMOVE) {
+                    $this->remove($service, $name);
                 } elseif ($args[1] == self::REMOVE) {
                     $this->remove($service, $name);
                 }
@@ -79,113 +83,38 @@ class ActionService
     
     private function create($service)
     {
-        if (!($service instanceof Win32Service)) {
-            Util::logError('$service not an instance of Win32Service');
-            return;
-        }
         $service->create();
     }
     
     private function delete($service)
     {
-        if (!($service instanceof Win32Service)) {
-            Util::logError('$service not an instance of Win32Service');
-            return;
-        }
         $service->delete();
     }
     
-    private function start($service)
+    private function start($bin, $syntaxCheckCmd)
     {
-        if (!($service instanceof Win32Service)) {
-            Util::logError('$service not an instance of Win32Service');
-            return;
-        }
-        $service->start();
+        Util::startService($bin, $syntaxCheckCmd, true);
     }
     
     private function stop($service)
     {
-        if (!($service instanceof Win32Service)) {
-            Util::logError('$service not an instance of Win32Service');
-            return;
-        }
         $service->stop();
     }
     
-    private function restart($service)
+    private function restart($bin, $syntaxCheckCmd)
     {
-        if (!($service instanceof Win32Service)) {
-            Util::logError('$service not an instance of Win32Service');
-            return;
+        if ($service->stop()) {
+            $this->start($bin, $syntaxCheckCmd);
         }
-        $service->restart();
     }
     
-    private function install($service, $port, $name)
+    private function install($bin, $port, $syntaxCheckCmd)
     {
-        global $neardBs, $neardLang, $neardBins, $neardWinbinder;
-        $boxTitle = sprintf($neardLang->getValue(Lang::INSTALL_SERVICE_TITLE), $name);
-        
-        if (!($service instanceof Win32Service)) {
-            Util::logError('$service not an instance of Win32Service');
-            return;
-        }
-        
-        $isPortInUse = Util::isPortInUse($port);
-        if ($isPortInUse === false) {
-            if (!$service->isInstalled()) {
-                $service->create();
-                if ($service->start()) {
-                    $neardWinbinder->messageBoxInfo(
-                        sprintf($neardLang->getValue(Lang::SERVICE_INSTALLED), $name, $service->getName(), $port),
-                        $boxTitle);
-                } else {
-                    $neardWinbinder->messageBoxError(
-                        sprintf($neardLang->getValue(Lang::SERVICE_INSTALL_ERROR), $name),
-                        $boxTitle);
-                }
-            } else {
-                $neardWinbinder->messageBoxWarning(
-                    sprintf($neardLang->getValue(Lang::SERVICE_ALREADY_INSTALLED), $name),
-                    $boxTitle);
-            }
-        } else if($service->isRunning()) {
-            $neardWinbinder->messageBoxWarning(
-                sprintf($neardLang->getValue(Lang::SERVICE_ALREADY_INSTALLED), $name),
-                $boxTitle);
-        } else {
-            $neardWinbinder->messageBoxError(
-                sprintf($neardLang->getValue(Lang::PORT_NOT_USED_BY), $port, $isPortInUse),
-                $boxTitle);
-        }
+        Util::installService($bin, $port, $syntaxCheckCmd, true);
     }
     
     private function remove($service, $name)
     {
-        global $neardBs, $neardLang, $neardBins, $neardWinbinder;
-        $boxTitle = sprintf($neardLang->getValue(Lang::REMOVE_SERVICE_TITLE), $name);
-    
-        if (!($service instanceof Win32Service)) {
-            Util::logError('$service not an instance of Win32Service');
-            return;
-        }
-        
-        if ($service->isInstalled()) {
-            if ($service->delete()) {
-                $neardWinbinder->messageBoxInfo(
-                    sprintf($neardLang->getValue(Lang::SERVICE_REMOVED), $name),
-                    $boxTitle);
-            } else {
-                $neardWinbinder->messageBoxError(
-                    sprintf($neardLang->getValue(Lang::SERVICE_REMOVE_ERROR), $name),
-                    $boxTitle);
-            }
-        } else {
-            $neardWinbinder->messageBoxWarning(
-                sprintf($neardLang->getValue(Lang::SERVICE_NOT_EXIST), $name),
-                $boxTitle);
-        }
+        Util::removeService($service, $name);
     }
-    
 }

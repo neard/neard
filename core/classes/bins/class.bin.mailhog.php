@@ -5,8 +5,8 @@ class BinMailhog
     const SERVICE_NAME = 'neardmailhog';
     const SERVICE_PARAMS = '-hostname localhost -api-bind-addr 127.0.0.1:%d -ui-bind-addr 127.0.0.1:%d -smtp-bind-addr 127.0.0.1:%d -storage maildir -maildir-path "%s"';
     
+    const ROOT_CFG_ENABLE = 'mailhogEnable';
     const ROOT_CFG_VERSION = 'mailhogVersion';
-    const ROOT_CFG_LAUNCH_STARTUP = 'mailhogLaunchStartup';
     
     const LOCAL_CFG_EXE = 'mailhogExe';
     const LOCAL_CFG_API_PORT = 'mailhogApiPort';
@@ -15,12 +15,13 @@ class BinMailhog
     
     private $name;
     private $version;
-    private $launchStartup;
+    private $service;
     
     private $rootPath;
     private $currentPath;
     private $neardConf;
     private $neardConfRaw;
+    private $enable;
     
     private $log;
     
@@ -29,8 +30,6 @@ class BinMailhog
     private $uiPort;
     private $smtpPort;
     private $mailPath;
-    
-    private $service;
     
     public function __construct($rootPath, $version=null)
     {
@@ -44,15 +43,28 @@ class BinMailhog
         
         $this->name = $neardLang->getValue(Lang::MAILHOG);
         $this->version = $neardConfig->getRaw(self::ROOT_CFG_VERSION);
-        $this->launchStartup = $neardConfig->getRaw(self::ROOT_CFG_LAUNCH_STARTUP) == Config::ENABLED;
+        $this->service = new Win32Service(self::SERVICE_NAME);
         
         $this->rootPath = $rootPath == null ? $this->rootPath : $rootPath;
         $this->currentPath = $this->rootPath . '/mailhog' . $this->version;
         $this->neardConf = $this->currentPath . '/neard.conf';
-        $this->mailPath = $neardBs->getTmpPath() . '/mailhog';
+        $this->enable = $neardConfig->getRaw(self::ROOT_CFG_ENABLE) == Config::ENABLED && is_dir($this->currentPath);
         
+        $this->mailPath = $neardBs->getTmpPath() . '/mailhog';
         $this->log = $neardBs->getLogsPath() . '/mailhog.log';
         
+        $this->neardConfRaw = @parse_ini_file($this->neardConf);
+        if ($this->neardConfRaw !== false) {
+            $this->exe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_EXE];
+            $this->apiPort = intval($this->neardConfRaw[self::LOCAL_CFG_API_PORT]);
+            $this->uiPort = intval($this->neardConfRaw[self::LOCAL_CFG_UI_PORT]);
+            $this->smtpPort = intval($this->neardConfRaw[self::LOCAL_CFG_SMTP_PORT]);
+        }
+        
+        if (!$this->enable) {
+            Util::logInfo($this->name . ' is not enabled!');
+            return;
+        }
         if (!is_dir($this->currentPath)) {
             Util::logError(sprintf($neardLang->getValue(Lang::ERROR_FILE_NOT_FOUND), $this->name . ' ' . $this->version, $this->currentPath));
             return;
@@ -61,15 +73,6 @@ class BinMailhog
             Util::logError(sprintf($neardLang->getValue(Lang::ERROR_CONF_NOT_FOUND), $this->name . ' ' . $this->version, $this->neardConf));
             return;
         }
-        
-        $this->neardConfRaw = parse_ini_file($this->neardConf);
-        if ($this->neardConfRaw !== false) {
-            $this->exe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_EXE];
-            $this->apiPort = intval($this->neardConfRaw[self::LOCAL_CFG_API_PORT]);
-            $this->uiPort = intval($this->neardConfRaw[self::LOCAL_CFG_UI_PORT]);
-            $this->smtpPort = intval($this->neardConfRaw[self::LOCAL_CFG_SMTP_PORT]);
-        }
-        
         if (!is_file($this->exe)) {
             Util::logError(sprintf($neardLang->getValue(Lang::ERROR_EXE_NOT_FOUND), $this->name . ' ' . $this->version, $this->exe));
             return;
@@ -94,7 +97,6 @@ class BinMailhog
         $nssm->setStart(Nssm::SERVICE_DEMAND_START);
         $nssm->setLogsPath($neardBs->getLogsPath() . '/mailhog.log');
         
-        $this->service = new Win32Service(self::SERVICE_NAME);
         $this->service->setNssm($nssm);
     }
     
@@ -295,16 +297,9 @@ class BinMailhog
         $neardConfig->replace(self::ROOT_CFG_VERSION, $version);
     }
 
-    public function isLaunchStartup()
+    public function getService()
     {
-        return $this->launchStartup;
-    }
-    
-    public function setLaunchStartup($enabled)
-    {
-        global $neardConfig;
-        $this->launchStartup = $enabled == Config::ENABLED;
-        $neardConfig->replace(self::ROOT_CFG_LAUNCH_STARTUP, $enabled);
+        return $this->service;
     }
     
     public function getRootPath()
@@ -315,6 +310,39 @@ class BinMailhog
     public function getCurrentPath()
     {
         return $this->currentPath;
+    }
+    
+    public function isEnable()
+    {
+        return $this->enable;
+    }
+    
+    public function setEnable($enabled, $showWindow = false)
+    {
+        global $neardConfig, $neardBins, $neardLang, $neardWinbinder;
+        $boxTitle = sprintf($neardLang->getValue(Lang::ENABLE_TITLE), $this->getName());
+    
+        if ($enabled == Config::ENABLED && !is_dir($this->currentPath)) {
+            Util::logDebug($this->getName() . ' cannot be enabled because bundle ' . $this->getVersion() . ' does not exist in ' . $this->currentPath);
+            if ($showWindow) {
+                $neardWinbinder->messageBoxError(
+                    sprintf($neardLang->getValue(Lang::ENABLE_BUNDLE_NOT_EXIST), $this->getName(), $this->getVersion(), $this->currentPath),
+                    sprintf($neardLang->getValue(Lang::ENABLE_TITLE), $this->getName())
+                );
+            }
+            $enabled = Config::DISABLED;
+        }
+    
+        Util::logInfo($this->getName() . ' switched to ' . ($enabled == Config::ENABLED ? 'enabled' : 'disabled'));
+        $this->enable = $enabled == Config::ENABLED;
+        $neardConfig->replace(self::ROOT_CFG_ENABLE, $enabled);
+    
+        $this->reload();
+        if ($this->enable) {
+            Util::installService($this, $port, null, $showWindow);
+        } else {
+            Util::removeService($this->service, $this->name, $showWindow);
+        }
     }
     
     public function getLog()
@@ -360,10 +388,5 @@ class BinMailhog
     public function getMailPath()
     {
         return $this->mailPath;
-    }
-    
-    public function getService()
-    {
-        return $this->service;
     }
 }

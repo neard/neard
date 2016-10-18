@@ -7,38 +7,68 @@ class TplAppPhp
     const MENU_SETTINGS = 'phpSettings';
     const MENU_EXTENSIONS = 'phpExtensions';
     
+    const ACTION_ENABLE = 'enablePhp';
     const ACTION_SWITCH_VERSION = 'switchPhpVersion';
     const ACTION_SWITCH_SETTING = 'switchPhpSetting';
     const ACTION_SWITCH_EXTENSION = 'switchPhpExtension';
     
     public static function process()
     {
-        global $neardLang;
-        
-        return TplApp::getMenu($neardLang->getValue(Lang::PHP), self::MENU, get_called_class());
+        global $neardLang, $neardBins;
+    
+        return TplApp::getMenuEnable($neardLang->getValue(Lang::PHP), self::MENU, get_called_class(), $neardBins->getPhp()->isEnable());
     }
     
     public static function getMenuPhp()
     {
         global $neardBins, $neardLang;
+        $resultItems = $resultActions = '';
         
-        $tplVersions = TplApp::getMenu($neardLang->getValue(Lang::VERSIONS), self::MENU_VERSIONS, get_called_class());
-        $tplSettings = TplApp::getMenu($neardLang->getValue(Lang::SETTINGS), self::MENU_SETTINGS, get_called_class());
-        $tplExtensions = TplApp::getMenu($neardLang->getValue(Lang::EXTENSIONS), self::MENU_EXTENSIONS, get_called_class());
+        $isEnabled = $neardBins->getPhp()->isEnable();
         
-        return
-        
-            // Items
-            $tplVersions[TplApp::SECTION_CALL] . PHP_EOL .
-            $tplSettings[TplApp::SECTION_CALL] . PHP_EOL .
-            $tplExtensions[TplApp::SECTION_CALL] . PHP_EOL .
-            TplAestan::getItemNotepad(basename($neardBins->getPhp()->getConf()), $neardBins->getPhp()->getConf()) . PHP_EOL .
-            TplAestan::getItemNotepad($neardLang->getValue(Lang::MENU_ERROR_LOGS), $neardBins->getPhp()->getErrorLog()) . PHP_EOL . PHP_EOL .
-            
-            // Actions
-            $tplVersions[TplApp::SECTION_CONTENT] . PHP_EOL . PHP_EOL .
-            $tplSettings[TplApp::SECTION_CONTENT] .
-            $tplExtensions[TplApp::SECTION_CONTENT];
+        // Download
+        $resultItems .= TplAestan::getItemLink(
+            $neardLang->getValue(Lang::DOWNLOAD_MORE),
+            APP_GITHUB_HOME . '/wiki/binPhp#latest',
+            false,
+            TplAestan::GLYPH_BROWSER
+        ) . PHP_EOL;
+    
+        // Enable
+        $tplEnable = TplApp::getActionMulti(
+            self::ACTION_ENABLE, array($isEnabled ? Config::DISABLED : Config::ENABLED),
+            array($neardLang->getValue(Lang::MENU_ENABLE), $isEnabled ? TplAestan::GLYPH_CHECK : ''),
+            false, get_called_class()
+        );
+        $resultItems .= $tplEnable[TplApp::SECTION_CALL] . PHP_EOL;
+        $resultActions .= $tplEnable[TplApp::SECTION_CONTENT] . PHP_EOL;
+    
+        if ($isEnabled) {
+            $resultItems .= TplAestan::getItemSeparator() . PHP_EOL;
+    
+            // Versions
+            $tplVersions = TplApp::getMenu($neardLang->getValue(Lang::VERSIONS), self::MENU_VERSIONS, get_called_class());
+            $resultItems .= $tplVersions[TplApp::SECTION_CALL] . PHP_EOL;
+            $resultActions .= $tplVersions[TplApp::SECTION_CONTENT] . PHP_EOL;
+    
+            // Settings
+            $tplSettings = TplApp::getMenu($neardLang->getValue(Lang::SETTINGS), self::MENU_SETTINGS, get_called_class());
+            $resultItems .= $tplSettings[TplApp::SECTION_CALL] . PHP_EOL;
+            $resultActions .= $tplSettings[TplApp::SECTION_CONTENT] . PHP_EOL;
+    
+            // Extensions
+            $tplExtensions = TplApp::getMenu($neardLang->getValue(Lang::EXTENSIONS), self::MENU_EXTENSIONS, get_called_class());
+            $resultItems .= $tplExtensions[TplApp::SECTION_CALL] . PHP_EOL;
+            $resultActions .= $tplExtensions[TplApp::SECTION_CONTENT];
+    
+            // Conf
+            $resultItems .= TplAestan::getItemNotepad(basename($neardBins->getPhp()->getConf()), $neardBins->getPhp()->getConf()) . PHP_EOL;
+
+            // Errors log
+            $resultItems .= TplAestan::getItemNotepad($neardLang->getValue(Lang::MENU_ERROR_LOGS), $neardBins->getPhp()->getErrorLog()) . PHP_EOL;
+        }
+    
+        return $resultItems . PHP_EOL . $resultActions;
     }
     
     public static function getMenuPhpVersions()
@@ -70,6 +100,14 @@ class TplAppPhp
         }
         
         return $items . $actions;
+    }
+    
+    public static function getActionEnablePhp($enable)
+    {
+        global $neardBins;
+    
+        return TplApp::getActionRun(Action::ENABLE, array($neardBins->getPhp()->getName(), $enable)) . PHP_EOL .
+            TplAppReload::getActionReload();
     }
     
     public static function getActionSwitchPhpVersion($version)

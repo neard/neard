@@ -10,11 +10,16 @@ $port = $neardBins->getMariadb()->getPort();
 
 $textServiceStarted = $neardLang->getValue(Lang::HOMEPAGE_SERVICE_STARTED);
 $textServiceStopped = $neardLang->getValue(Lang::HOMEPAGE_SERVICE_STOPPED);
+$textDisabled = $neardLang->getValue(Lang::DISABLED);
 
-if ($neardBins->getMariadb()->checkPort($port)) {
-    $result['checkport'] .= '<span style="float:right;font-size:12px" class="label label-success">' . sprintf($textServiceStarted, $port) . '</span>';
+if ($neardBins->getMariadb()->isEnable()) {
+    if ($neardBins->getMariadb()->checkPort($port)) {
+        $result['checkport'] .= '<span style="float:right;font-size:12px" class="label label-success">' . sprintf($textServiceStarted, $port) . '</span>';
+    } else {
+        $result['checkport'] .= '<span style="float:right;font-size:12px" class="label label-danger">' . $textServiceStopped . '</span>';
+    }
 } else {
-    $result['checkport'] .= '<span style="float:right;font-size:12px" class="label label-danger">' . $textServiceStopped . '</span>';
+    $result['checkport'] = '<span style="float:right;font-size:12px" class="label label-default">' . $textDisabled . '</span>';
 }
 
 // Versions

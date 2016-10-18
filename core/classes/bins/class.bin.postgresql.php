@@ -4,8 +4,8 @@ class BinPostgresql
 {
     const SERVICE_NAME = 'neardpostgresql';
     
+    const ROOT_CFG_ENABLE = 'postgresqlEnable';
     const ROOT_CFG_VERSION = 'postgresqlVersion';
-    const ROOT_CFG_LAUNCH_STARTUP = 'postgresqlLaunchStartup';
     
     const LOCAL_CFG_CTL_EXE = 'postgresqlCtlExe';
     const LOCAL_CFG_CLI_EXE = 'postgresqlCliExe';
@@ -23,12 +23,13 @@ class BinPostgresql
     
     private $name;
     private $version;
-    private $launchStartup;
+    private $service;
     
     private $rootPath;
     private $currentPath;
     private $neardConf;
     private $neardConfRaw;
+    private $enable;
     
     private $errorLog;
     
@@ -44,8 +45,6 @@ class BinPostgresql
     private $rootUser;
     private $rootPwd;
     
-    private $service;
-    
     public function __construct($rootPath)
     {
         Util::logInitClass($this);
@@ -58,24 +57,16 @@ class BinPostgresql
         
         $this->name = $neardLang->getValue(Lang::POSTGRESQL);
         $this->version = $neardConfig->getRaw(self::ROOT_CFG_VERSION);
-        $this->launchStartup = $neardConfig->getRaw(self::ROOT_CFG_LAUNCH_STARTUP) == Config::ENABLED;
+        $this->service = new Win32Service(self::SERVICE_NAME);
         
         $this->rootPath = $rootPath == null ? $this->rootPath : $rootPath;
         $this->currentPath = $this->rootPath . '/postgresql' . $this->version;
         $this->neardConf = $this->currentPath . '/neard.conf';
+        $this->enable = $neardConfig->getRaw(self::ROOT_CFG_ENABLE) == Config::ENABLED && is_dir($this->currentPath);
         
         $this->errorLog = $neardBs->getLogsPath() . '/postgresql.log';
 
-        if (!is_dir($this->currentPath)) {
-            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_FILE_NOT_FOUND), $this->name . ' ' . $this->version, $this->currentPath));
-            return;
-        }
-        if (!is_file($this->neardConf)) {
-            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_CONF_NOT_FOUND), $this->name . ' ' . $this->version, $this->neardConf));
-            return;
-        }
-        
-        $this->neardConfRaw = parse_ini_file($this->neardConf);
+        $this->neardConfRaw = @parse_ini_file($this->neardConf);
         if ($this->neardConfRaw !== false) {
             $this->ctlExe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_CTL_EXE];
             $this->cliExe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_CLI_EXE];
@@ -90,18 +81,24 @@ class BinPostgresql
             $this->rootPwd = isset($this->neardConfRaw[self::LOCAL_CFG_ROOT_PWD]) ? $this->neardConfRaw[self::LOCAL_CFG_ROOT_PWD] : '';
         }
         
+        if (!$this->enable) {
+            Util::logInfo($this->name . ' is not enabled!');
+            return;
+        }
+        if (!is_dir($this->currentPath)) {
+            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_FILE_NOT_FOUND), $this->name . ' ' . $this->version, $this->currentPath));
+            return;
+        }
+        if (!is_file($this->neardConf)) {
+            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_CONF_NOT_FOUND), $this->name . ' ' . $this->version, $this->neardConf));
+            return;
+        }
         if (!file_exists($this->conf)) {
             $this->conf = $this->altConf;
         }
         if (!file_exists($this->hbaConf)) {
             $this->hbaConf = $this->altHbaConf;
         }
-        
-        $this->service = new Win32Service(self::SERVICE_NAME);
-        $this->service->setDisplayName(APP_TITLE . ' ' . $this->getName() . ' ' . $this->version);
-        $this->service->setBinPath($this->ctlExe);
-        $this->service->setStartType(Win32Service::SERVICE_DEMAND_START);
-        $this->service->setErrorControl(Win32Service::SERVER_ERROR_NORMAL);
         
         if (!is_file($this->ctlExe)) {
             Util::logError(sprintf($neardLang->getValue(Lang::ERROR_EXE_NOT_FOUND), $this->name . ' ' . $this->version, $this->ctlExe));
@@ -135,6 +132,11 @@ class BinPostgresql
             Util::logError(sprintf($neardLang->getValue(Lang::ERROR_INVALID_PARAMETER), self::LOCAL_CFG_ROOT_USER, $this->rootUser));
             return;
         }
+        
+        $this->service->setDisplayName(APP_TITLE . ' ' . $this->getName() . ' ' . $this->version);
+        $this->service->setBinPath($this->ctlExe);
+        $this->service->setStartType(Win32Service::SERVICE_DEMAND_START);
+        $this->service->setErrorControl(Win32Service::SERVER_ERROR_NORMAL);
     }
     
     public function __toString()
@@ -447,16 +449,9 @@ class BinPostgresql
         $neardConfig->replace(self::ROOT_CFG_VERSION, $version);
     }
 
-    public function isLaunchStartup()
+    public function getService()
     {
-        return $this->launchStartup;
-    }
-    
-    public function setLaunchStartup($enabled)
-    {
-        global $neardConfig;
-        $this->launchStartup = $enabled == Config::ENABLED;
-        $neardConfig->replace(self::ROOT_CFG_LAUNCH_STARTUP, $enabled);
+        return $this->service;
     }
     
     public function getRootPath()
@@ -467,6 +462,39 @@ class BinPostgresql
     public function getCurrentPath()
     {
         return $this->currentPath;
+    }
+    
+    public function isEnable()
+    {
+        return $this->enable;
+    }
+    
+    public function setEnable($enabled, $showWindow = false)
+    {
+        global $neardConfig, $neardBins, $neardLang, $neardWinbinder;
+        $boxTitle = sprintf($neardLang->getValue(Lang::ENABLE_TITLE), $this->getName());
+    
+        if ($enabled == Config::ENABLED && !is_dir($this->currentPath)) {
+            Util::logDebug($this->getName() . ' cannot be enabled because bundle ' . $this->getVersion() . ' does not exist in ' . $this->currentPath);
+            if ($showWindow) {
+                $neardWinbinder->messageBoxError(
+                    sprintf($neardLang->getValue(Lang::ENABLE_BUNDLE_NOT_EXIST), $this->getName(), $this->getVersion(), $this->currentPath),
+                    sprintf($neardLang->getValue(Lang::ENABLE_TITLE), $this->getName())
+                );
+            }
+            $enabled = Config::DISABLED;
+        }
+    
+        Util::logInfo($this->getName() . ' switched to ' . ($enabled == Config::ENABLED ? 'enabled' : 'disabled'));
+        $this->enable = $enabled == Config::ENABLED;
+        $neardConfig->replace(self::ROOT_CFG_ENABLE, $enabled);
+        
+        $this->reload();
+        if ($this->enable) {
+            Util::installService($this, $port, null, $showWindow);
+        } else {
+            Util::removeService($this->service, $this->name, $showWindow);
+        }
     }
     
     public function getErrorLog()
@@ -533,10 +561,4 @@ class BinPostgresql
     {
         return $this->replace(self::LOCAL_CFG_ROOT_PWD, $rootPwd);
     }
-
-    public function getService()
-    {
-        return $this->service;
-    }
-    
 }

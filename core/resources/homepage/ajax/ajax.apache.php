@@ -18,16 +18,21 @@ $sslPort = $neardBins->getApache()->getSslPort();
 
 $textServiceStarted = $neardLang->getValue(Lang::HOMEPAGE_SERVICE_STARTED);
 $textServiceStopped = $neardLang->getValue(Lang::HOMEPAGE_SERVICE_STOPPED);
+$textDisabled = $neardLang->getValue(Lang::DISABLED);
 
-if ($neardBins->getApache()->checkPort($sslPort, true)) {
-    $result['checkport'] .= '<span style="float:right;font-size:12px;margin-left:2px;" class="label label-success">' . sprintf($textServiceStarted, $sslPort) . ' (SSL)</span>';
+if ($neardBins->getApache()->isEnable()) {
+    if ($neardBins->getApache()->checkPort($sslPort, true)) {
+        $result['checkport'] .= '<span style="float:right;font-size:12px;margin-left:2px;" class="label label-success">' . sprintf($textServiceStarted, $sslPort) . ' (SSL)</span>';
+    } else {
+        $result['checkport'] .= '<span style="float:right;font-size:12px;margin-left:2px;" class="label label-danger">' . $textServiceStopped . ' (SSL)</span>';
+    }
+    if ($neardBins->getApache()->checkPort($port)) {
+        $result['checkport'] .= '<span style="float:right;font-size:12px" class="label label-success">' . sprintf($textServiceStarted, $port) . '</span>';
+    } else {
+        $result['checkport'] .= '<span style="float:right;font-size:12px" class="label label-danger">' . $textServiceStopped . '</span>';
+    }
 } else {
-    $result['checkport'] .= '<span style="float:right;font-size:12px;margin-left:2px;" class="label label-danger">' . $textServiceStopped . ' (SSL)</span>';
-}
-if ($neardBins->getApache()->checkPort($port)) {
-    $result['checkport'] .= '<span style="float:right;font-size:12px" class="label label-success">' . sprintf($textServiceStarted, $port) . '</span>';
-} else {
-    $result['checkport'] .= '<span style="float:right;font-size:12px" class="label label-danger">' . $textServiceStopped . '</span>';
+    $result['checkport'] = '<span style="float:right;font-size:12px" class="label label-default">' . $textDisabled . '</span>';
 }
 
 // Versions

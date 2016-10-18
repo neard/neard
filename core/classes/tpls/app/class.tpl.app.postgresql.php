@@ -7,46 +7,77 @@ class TplAppPostgresql
     const MENU_SERVICE = 'postgresqlService';
     const MENU_DEBUG = 'postgresqlDebug';
     
+    const ACTION_ENABLE = 'enablePostgresql';
     const ACTION_SWITCH_VERSION = 'switchPostgresqlVersion';
     const ACTION_CHANGE_PORT = 'changePostgresqlPort';
     const ACTION_CHANGE_ROOT_PWD = 'changePostgresqlRootPwd';
     const ACTION_INSTALL_SERVICE = 'installPostgresqlService';
     const ACTION_REMOVE_SERVICE = 'removePostgresqlService';
-    const ACTION_LAUNCH_STARTUP = 'launchStartupPostgresql';
     
     public static function process()
     {
-        global $neardLang;
+        global $neardLang, $neardBins;
         
-        return TplApp::getMenu($neardLang->getValue(Lang::POSTGRESQL), self::MENU, get_called_class());
+        return TplApp::getMenuEnable($neardLang->getValue(Lang::POSTGRESQL), self::MENU, get_called_class(), $neardBins->getPostgresql()->isEnable());
     }
     
     public static function getMenuPostgresql()
     {
         global $neardBins, $neardLang, $neardTools;
+        $resultItems = $resultActions = '';
         
-        $tplVersions = TplApp::getMenu($neardLang->getValue(Lang::VERSIONS), self::MENU_VERSIONS, get_called_class());
-        $tplService = TplApp::getMenu($neardLang->getValue(Lang::SERVICE), self::MENU_SERVICE, get_called_class());
-        $tplDebug = TplApp::getMenu($neardLang->getValue(Lang::DEBUG), self::MENU_DEBUG, get_called_class());
+        $isEnabled = $neardBins->getPostgresql()->isEnable();
         
-        return
+        // Download
+        $resultItems .= TplAestan::getItemLink(
+            $neardLang->getValue(Lang::DOWNLOAD_MORE),
+            APP_GITHUB_HOME . '/wiki/binPostgreSQL#latest',
+            false,
+            TplAestan::GLYPH_BROWSER
+        ) . PHP_EOL;
         
-            // Items
-            $tplVersions[TplApp::SECTION_CALL] . PHP_EOL .
-            $tplService[TplApp::SECTION_CALL] . PHP_EOL .
-            $tplDebug[TplApp::SECTION_CALL] . PHP_EOL .
-            TplAestan::getItemConsole(
+        // Enable
+        $tplEnable = TplApp::getActionMulti(
+            self::ACTION_ENABLE, array($isEnabled ? Config::DISABLED : Config::ENABLED),
+            array($neardLang->getValue(Lang::MENU_ENABLE), $isEnabled ? TplAestan::GLYPH_CHECK : ''),
+            false, get_called_class()
+        );
+        $resultItems .= $tplEnable[TplApp::SECTION_CALL] . PHP_EOL;
+        $resultActions .= $tplEnable[TplApp::SECTION_CONTENT] . PHP_EOL;
+        
+        if ($isEnabled) {
+            $resultItems .= TplAestan::getItemSeparator() . PHP_EOL;
+            
+            // Versions
+            $tplVersions = TplApp::getMenu($neardLang->getValue(Lang::VERSIONS), self::MENU_VERSIONS, get_called_class());
+            $resultItems .= $tplVersions[TplApp::SECTION_CALL] . PHP_EOL;
+            $resultActions .= $tplVersions[TplApp::SECTION_CONTENT] . PHP_EOL;
+            
+            // Service
+            $tplService = TplApp::getMenu($neardLang->getValue(Lang::SERVICE), self::MENU_SERVICE, get_called_class());
+            $resultItems .= $tplService[TplApp::SECTION_CALL] . PHP_EOL;
+            $resultActions .= $tplService[TplApp::SECTION_CONTENT] . PHP_EOL;
+            
+            // Debug
+            $tplDebug = TplApp::getMenu($neardLang->getValue(Lang::DEBUG), self::MENU_DEBUG, get_called_class());
+            $resultItems .= $tplDebug[TplApp::SECTION_CALL] . PHP_EOL;
+            $resultActions .= $tplDebug[TplApp::SECTION_CONTENT];
+            
+            // Console
+            $resultItems .= TplAestan::getItemConsole(
                 $neardLang->getValue(Lang::CONSOLE),
                 TplAestan::GLYPH_CONSOLE,
                 $neardTools->getConsole()->getTabTitlePostgresql()
-            ) . PHP_EOL .
-            TplAestan::getItemNotepad(basename($neardBins->getPostgresql()->getConf()), $neardBins->getPostgresql()->getConf()) . PHP_EOL .
-            TplAestan::getItemNotepad($neardLang->getValue(Lang::MENU_ERROR_LOGS), $neardBins->getPostgresql()->getErrorLog()) . PHP_EOL . PHP_EOL .
+            ) . PHP_EOL;
             
-            // Actions
-            $tplVersions[TplApp::SECTION_CONTENT] . PHP_EOL .
-            $tplService[TplApp::SECTION_CONTENT] . PHP_EOL .
-            $tplDebug[TplApp::SECTION_CONTENT];
+            // Conf
+            $resultItems .= TplAestan::getItemNotepad(basename($neardBins->getPostgresql()->getConf()), $neardBins->getPostgresql()->getConf()) . PHP_EOL;
+            
+            // Errors log
+            $resultItems .= TplAestan::getItemNotepad($neardLang->getValue(Lang::MENU_ERROR_LOGS), $neardBins->getPostgresql()->getErrorLog()) . PHP_EOL;
+        }
+        
+        return $resultItems . PHP_EOL . $resultActions;
     }
     
     public static function getMenuPostgresqlVersions()
@@ -72,6 +103,14 @@ class TplAppPostgresql
         return $items . $actions;
     }
     
+    public static function getActionEnablePostgresql($enable)
+    {
+        global $neardBins;
+    
+        return TplApp::getActionRun(Action::ENABLE, array($neardBins->getPostgresql()->getName(), $enable)) . PHP_EOL .
+            TplAppReload::getActionReload();
+    }
+    
     public static function getActionSwitchPostgresqlVersion($version)
     {
         global $neardBs, $neardCore, $neardBins;
@@ -87,13 +126,6 @@ class TplAppPostgresql
         $tplChangePort = TplApp::getActionMulti(
             self::ACTION_CHANGE_PORT, null,
             array($neardLang->getValue(Lang::MENU_CHANGE_PORT), TplAestan::GLYPH_NETWORK),
-            false, get_called_class()
-        );
-        
-        $isLaunchStartup = $neardBins->getPostgresql()->isLaunchStartup();
-        $tplLaunchStartup = TplApp::getActionMulti(
-            self::ACTION_LAUNCH_STARTUP, array($isLaunchStartup ? Config::DISABLED : Config::ENABLED),
-            array($neardLang->getValue(Lang::MENU_LAUNCH_STARTUP_SERVICE), $isLaunchStartup ? TplAestan::GLYPH_CHECK : ''),
             false, get_called_class()
         );
         
@@ -120,8 +152,6 @@ class TplAppPostgresql
             $result .= $tplChangeRootPwd[TplApp::SECTION_CALL] . PHP_EOL;
         }
         
-        $result .= $tplLaunchStartup[TplApp::SECTION_CALL] . PHP_EOL;
-        
         if (!$isInstalled) {
             $tplInstallService = TplApp::getActionMulti(
                 self::ACTION_INSTALL_SERVICE, null,
@@ -143,8 +173,7 @@ class TplAppPostgresql
         }
         
         $result .= $tplChangePort[TplApp::SECTION_CONTENT] . PHP_EOL .
-            ($tplChangeRootPwd != null ? $tplChangeRootPwd[TplApp::SECTION_CONTENT] . PHP_EOL : '') .
-            $tplLaunchStartup[TplApp::SECTION_CONTENT] . PHP_EOL;
+            ($tplChangeRootPwd != null ? $tplChangeRootPwd[TplApp::SECTION_CONTENT] . PHP_EOL : '');
     
         return $result;
     }
@@ -186,13 +215,4 @@ class TplAppPostgresql
         return TplApp::getActionRun(Action::SERVICE, array(BinPostgresql::SERVICE_NAME, ActionService::REMOVE)) . PHP_EOL .
             TplAppReload::getActionReload();
     }
-    
-    public static function getActionLaunchStartupPostgresql($launchStartup)
-    {
-        global $neardBins;
-    
-        return TplApp::getActionRun(Action::LAUNCH_STARTUP_SERVICE, array($neardBins->getPostgresql()->getName(), $launchStartup)) . PHP_EOL .
-            TplAppReload::getActionReload();
-    }
-    
 }

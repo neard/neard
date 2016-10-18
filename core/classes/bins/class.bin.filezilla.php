@@ -4,8 +4,8 @@ class BinFilezilla
 {
     const SERVICE_NAME = 'neardfilezilla';
     
+    const ROOT_CFG_ENABLE = 'filezillaEnable';
     const ROOT_CFG_VERSION = 'filezillaVersion';
-    const ROOT_CFG_LAUNCH_STARTUP = 'filezillaLaunchStartup';
     
     const LOCAL_CFG_EXE = 'filezillaExe';
     const LOCAL_CFG_ITF_EXE = 'filezillaItfExe';
@@ -23,12 +23,13 @@ class BinFilezilla
     
     private $name;
     private $version;
-    private $launchStartup;
+    private $service;
     
     private $rootPath;
     private $currentPath;
     private $neardConf;
     private $neardConfRaw;
+    private $enable;
     
     private $logsPath;
     private $log;
@@ -40,8 +41,6 @@ class BinFilezilla
     private $localItfConf;
     private $port;
     private $sslPort;
-    
-    private $service;
     
     public function __construct($rootPath, $version=null)
     {
@@ -55,15 +54,32 @@ class BinFilezilla
         
         $this->name = $neardLang->getValue(Lang::FILEZILLA);
         $this->version = $neardConfig->getRaw(self::ROOT_CFG_VERSION);
-        $this->launchStartup = $neardConfig->getRaw(self::ROOT_CFG_LAUNCH_STARTUP) == Config::ENABLED;
+        $this->service = new Win32Service(self::SERVICE_NAME);
         
         $this->rootPath = $rootPath == null ? $this->rootPath : $rootPath;
         $this->currentPath = $this->rootPath . '/filezilla' . $this->version;
         $this->neardConf = $this->currentPath . '/neard.conf';
+        $this->enable = $neardConfig->getRaw(self::ROOT_CFG_ENABLE) == Config::ENABLED && is_dir($this->currentPath);
         
         $this->logsPath = $this->currentPath . '/Logs';
         $this->log = $neardBs->getLogsPath() . '/filezilla.log';
         
+        $appData = Util::formatUnixPath(getenv('APPDATA'));
+        $this->neardConfRaw = @parse_ini_file($this->neardConf);
+        if ($this->neardConfRaw !== false) {
+            $this->exe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_EXE];
+            $this->itfExe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_ITF_EXE];
+            $this->conf = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_CONF];
+            $this->itfConf = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_ITF_CONF];
+            $this->localItfConf = $appData . '/FileZilla Server/' . $this->neardConfRaw[self::LOCAL_CFG_ITF_CONF];
+            $this->port = $this->neardConfRaw[self::LOCAL_CFG_PORT];
+            $this->sslPort = $this->neardConfRaw[self::LOCAL_CFG_SSL_PORT];
+        }
+        
+        if (!$this->enable) {
+            Util::logInfo($this->name . ' is not enabled!');
+            return;
+        }
         if (!is_dir($this->currentPath)) {
             Util::logError(sprintf($neardLang->getValue(Lang::ERROR_FILE_NOT_FOUND), $this->name . ' ' . $this->version, $this->currentPath));
             return;
@@ -77,18 +93,6 @@ class BinFilezilla
         $log = $this->logsPath . '/FileZilla Server.log';
         if (!file_exists($this->log) && file_exists($log)) {
             @link($log, $this->log);
-        }
-        
-        $appData = Util::formatUnixPath(getenv('APPDATA'));
-        $this->neardConfRaw = parse_ini_file($this->neardConf);
-        if ($this->neardConfRaw !== false) {
-            $this->exe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_EXE];
-            $this->itfExe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_ITF_EXE];
-            $this->conf = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_CONF];
-            $this->itfConf = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_ITF_CONF];
-            $this->localItfConf = $appData . '/FileZilla Server/' . $this->neardConfRaw[self::LOCAL_CFG_ITF_CONF];
-            $this->port = $this->neardConfRaw[self::LOCAL_CFG_PORT];
-            $this->sslPort = $this->neardConfRaw[self::LOCAL_CFG_SSL_PORT];
         }
         
         if (!is_file($this->exe)) {
@@ -116,7 +120,6 @@ class BinFilezilla
             @copy($this->itfConf, $this->localItfConf);
         }
         
-        $this->service = new Win32Service(self::SERVICE_NAME);
         $this->service->setDisplayName(APP_TITLE . ' ' . $this->getName() . ' ' . $this->version);
         $this->service->setBinPath($this->exe);
         $this->service->setStartType(Win32Service::SERVICE_DEMAND_START);
@@ -341,16 +344,9 @@ class BinFilezilla
         $neardConfig->replace(self::ROOT_CFG_VERSION, $version);
     }
 
-    public function isLaunchStartup()
+    public function getService()
     {
-        return $this->launchStartup;
-    }
-    
-    public function setLaunchStartup($enabled)
-    {
-        global $neardConfig;
-        $this->launchStartup = $enabled == Config::ENABLED;
-        $neardConfig->replace(self::ROOT_CFG_LAUNCH_STARTUP, $enabled);
+        return $this->service;
     }
     
     public function getRootPath()
@@ -361,6 +357,39 @@ class BinFilezilla
     public function getCurrentPath()
     {
         return $this->currentPath;
+    }
+    
+    public function isEnable()
+    {
+        return $this->enable;
+    }
+    
+    public function setEnable($enabled, $showWindow = false)
+    {
+        global $neardConfig, $neardBins, $neardLang, $neardWinbinder;
+        $boxTitle = sprintf($neardLang->getValue(Lang::ENABLE_TITLE), $this->getName());
+    
+        if ($enabled == Config::ENABLED && !is_dir($this->currentPath)) {
+            Util::logDebug($this->getName() . ' cannot be enabled because bundle ' . $this->getVersion() . ' does not exist in ' . $this->currentPath);
+            if ($showWindow) {
+                $neardWinbinder->messageBoxError(
+                    sprintf($neardLang->getValue(Lang::ENABLE_BUNDLE_NOT_EXIST), $this->getName(), $this->getVersion(), $this->currentPath),
+                    sprintf($neardLang->getValue(Lang::ENABLE_TITLE), $this->getName())
+                );
+            }
+            $enabled = Config::DISABLED;
+        }
+    
+        Util::logInfo($this->getName() . ' switched to ' . ($enabled == Config::ENABLED ? 'enabled' : 'disabled'));
+        $this->enable = $enabled == Config::ENABLED;
+        $neardConfig->replace(self::ROOT_CFG_ENABLE, $enabled);
+    
+        $this->reload();
+        if ($this->enable) {
+            Util::installService($this, $port, null, $showWindow);
+        } else {
+            Util::removeService($this->service, $this->name, $showWindow);
+        }
     }
     
     public function getLogsPath()
@@ -412,10 +441,4 @@ class BinFilezilla
     {
         return $this->replace(self::LOCAL_CFG_SSL_PORT, $sslPort);
     }
-    
-    public function getService()
-    {
-        return $this->service;
-    }
-    
 }

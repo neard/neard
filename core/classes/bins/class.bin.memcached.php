@@ -5,8 +5,8 @@ class BinMemcached
     const SERVICE_NAME = 'neardmemcached';
     const SERVICE_PARAMS = '-m %d -p %d -U 0 -vv';
     
+    const ROOT_CFG_ENABLE = 'memcachedEnable';
     const ROOT_CFG_VERSION = 'memcachedVersion';
-    const ROOT_CFG_LAUNCH_STARTUP = 'memcachedLaunchStartup';
     
     const LOCAL_CFG_EXE = 'memcachedExe';
     const LOCAL_CFG_MEMORY = 'memcachedMemory';
@@ -14,20 +14,19 @@ class BinMemcached
     
     private $name;
     private $version;
-    private $launchStartup;
+    private $service;
     
     private $rootPath;
     private $currentPath;
     private $neardConf;
     private $neardConfRaw;
+    private $enable;
     
     private $log;
     
     private $exe;
     private $memory;
     private $port;
-    
-    private $service;
     
     public function __construct($rootPath, $version=null)
     {
@@ -41,14 +40,26 @@ class BinMemcached
         
         $this->name = $neardLang->getValue(Lang::MEMCACHED);
         $this->version = $neardConfig->getRaw(self::ROOT_CFG_VERSION);
-        $this->launchStartup = $neardConfig->getRaw(self::ROOT_CFG_LAUNCH_STARTUP) == Config::ENABLED;
+        $this->service = new Win32Service(self::SERVICE_NAME);
         
         $this->rootPath = $rootPath == null ? $this->rootPath : $rootPath;
         $this->currentPath = $this->rootPath . '/memcached' . $this->version;
         $this->neardConf = $this->currentPath . '/neard.conf';
+        $this->enable = $neardConfig->getRaw(self::ROOT_CFG_ENABLE) == Config::ENABLED && is_dir($this->currentPath);
         
         $this->log = $neardBs->getLogsPath() . '/memcached.log';
         
+        $this->neardConfRaw = @parse_ini_file($this->neardConf);
+        if ($this->neardConfRaw !== false) {
+            $this->exe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_EXE];
+            $this->memory = intval($this->neardConfRaw[self::LOCAL_CFG_MEMORY]);
+            $this->port = intval($this->neardConfRaw[self::LOCAL_CFG_PORT]);
+        }
+        
+        if (!$this->enable) {
+            Util::logInfo($this->name . ' is not enabled!');
+            return;
+        }
         if (!is_dir($this->currentPath)) {
             Util::logError(sprintf($neardLang->getValue(Lang::ERROR_FILE_NOT_FOUND), $this->name . ' ' . $this->version, $this->currentPath));
             return;
@@ -57,14 +68,6 @@ class BinMemcached
             Util::logError(sprintf($neardLang->getValue(Lang::ERROR_CONF_NOT_FOUND), $this->name . ' ' . $this->version, $this->neardConf));
             return;
         }
-        
-        $this->neardConfRaw = parse_ini_file($this->neardConf);
-        if ($this->neardConfRaw !== false) {
-            $this->exe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_EXE];
-            $this->memory = intval($this->neardConfRaw[self::LOCAL_CFG_MEMORY]);
-            $this->port = intval($this->neardConfRaw[self::LOCAL_CFG_PORT]);
-        }
-        
         if (!is_file($this->exe)) {
             Util::logError(sprintf($neardLang->getValue(Lang::ERROR_EXE_NOT_FOUND), $this->name . ' ' . $this->version, $this->exe));
             return;
@@ -85,7 +88,6 @@ class BinMemcached
         $nssm->setStart(Nssm::SERVICE_DEMAND_START);
         $nssm->setLogsPath($neardBs->getLogsPath() . '/memcached.log');
         
-        $this->service = new Win32Service(self::SERVICE_NAME);
         $this->service->setNssm($nssm);
     }
     
@@ -293,16 +295,9 @@ class BinMemcached
         $neardConfig->replace(self::ROOT_CFG_VERSION, $version);
     }
 
-    public function isLaunchStartup()
+    public function getService()
     {
-        return $this->launchStartup;
-    }
-    
-    public function setLaunchStartup($enabled)
-    {
-        global $neardConfig;
-        $this->launchStartup = $enabled == Config::ENABLED;
-        $neardConfig->replace(self::ROOT_CFG_LAUNCH_STARTUP, $enabled);
+        return $this->service;
     }
     
     public function getRootPath()
@@ -313,6 +308,39 @@ class BinMemcached
     public function getCurrentPath()
     {
         return $this->currentPath;
+    }
+    
+    public function isEnable()
+    {
+        return $this->enable;
+    }
+    
+    public function setEnable($enabled, $showWindow = false)
+    {
+        global $neardConfig, $neardBins, $neardLang, $neardWinbinder;
+        $boxTitle = sprintf($neardLang->getValue(Lang::ENABLE_TITLE), $this->getName());
+    
+        if ($enabled == Config::ENABLED && !is_dir($this->currentPath)) {
+            Util::logDebug($this->getName() . ' cannot be enabled because bundle ' . $this->getVersion() . ' does not exist in ' . $this->currentPath);
+            if ($showWindow) {
+                $neardWinbinder->messageBoxError(
+                    sprintf($neardLang->getValue(Lang::ENABLE_BUNDLE_NOT_EXIST), $this->getName(), $this->getVersion(), $this->currentPath),
+                    sprintf($neardLang->getValue(Lang::ENABLE_TITLE), $this->getName())
+                );
+            }
+            $enabled = Config::DISABLED;
+        }
+    
+        Util::logInfo($this->getName() . ' switched to ' . ($enabled == Config::ENABLED ? 'enabled' : 'disabled'));
+        $this->enable = $enabled == Config::ENABLED;
+        $neardConfig->replace(self::ROOT_CFG_ENABLE, $enabled);
+    
+        $this->reload();
+        if ($this->enable) {
+            Util::installService($this, $port, null, $showWindow);
+        } else {
+            Util::removeService($this->service, $this->name, $showWindow);
+        }
     }
     
     public function getLog()
@@ -343,10 +371,5 @@ class BinMemcached
     public function setPort($port)
     {
         return $this->replace(self::LOCAL_CFG_PORT, $port);
-    }
-    
-    public function getService()
-    {
-        return $this->service;
     }
 }

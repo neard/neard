@@ -17,15 +17,20 @@ $dlMoreTpl = '<a href="' . APP_GITHUB_HOME . '/wiki/%s#latest" target="_blank" t
 // Bin Apache
 $apachePort = $neardBins->getApache()->getPort();
 $apacheSslPort = $neardBins->getApache()->getSslPort();
-$apacheLabel = 'label-danger';
+$apacheLabel = 'label-default';
 
-if ($neardBins->getApache()->checkPort($apachePort)) {
-    if ($neardBins->getApache()->checkPort($apacheSslPort, true)) {
-        $apacheLabel = 'label-success';
-    } else {
-        $apacheLabel = 'label-warning';
+if ($neardBins->getApache()->isEnable()) {
+    $apacheLabel = 'label-danger';
+    if ($neardBins->getApache()->checkPort($apachePort)) {
+        if ($neardBins->getApache()->checkPort($apacheSslPort, true)) {
+            $apacheLabel = 'label-success';
+        } else {
+            $apacheLabel = 'label-warning';
+        }
     }
 }
+
+
 
 $result['binapache'] = sprintf($dlMoreTpl, 'binApache');
 $result['binapache'] .= '<span style="float:right;font-size:12px" class="label ' . $apacheLabel . '">' . $neardBins->getApache()->getVersion() . '</span>';
@@ -33,13 +38,16 @@ $result['binapache'] .= '<span style="float:right;font-size:12px" class="label '
 // Bin Filezilla
 $filezillaPort = $neardBins->getFilezilla()->getPort();
 $filezillaSslPort = $neardBins->getFilezilla()->getSslPort();
-$filezillaLabel = 'label-danger';
+$filezillaLabel = 'label-default';
 
-if ($neardBins->getFilezilla()->checkPort($filezillaPort)) {
-    if ($neardBins->getFilezilla()->checkPort($filezillaSslPort, true)) {
-        $filezillaLabel = 'label-success';
-    } else {
-        $filezillaLabel = 'label-warning';
+if ($neardBins->getFilezilla()->isEnable()) {
+    $filezillaLabel = 'label-danger';
+    if ($neardBins->getFilezilla()->checkPort($filezillaPort)) {
+        if ($neardBins->getFilezilla()->checkPort($filezillaSslPort, true)) {
+            $filezillaLabel = 'label-success';
+        } else {
+            $filezillaLabel = 'label-warning';
+        }
     }
 }
 
@@ -48,10 +56,13 @@ $result['binfilezilla'] .= '<span style="float:right;font-size:12px" class="labe
 
 // Bin MailHog
 $mailhogPort = $neardBins->getMailhog()->getSmtpPort();
-$mailhogLabel = 'label-danger';
+$mailhogLabel = 'label-default';
 
-if ($neardBins->getMailhog()->checkPort($mailhogPort)) {
-    $mailhogLabel = 'label-success';
+if ($neardBins->getMailhog()->isEnable()) {
+    $mailhogLabel = 'label-danger';
+    if ($neardBins->getMailhog()->checkPort($mailhogPort)) {
+        $mailhogLabel = 'label-success';
+    }
 }
 
 $result['binmailhog'] = sprintf($dlMoreTpl, 'binMailHog');
@@ -59,10 +70,13 @@ $result['binmailhog'] .= '<span style="float:right;font-size:12px" class="label 
 
 // Bin MariaDB
 $mariadbPort = $neardBins->getMariadb()->getPort();
-$mariadbLabel = 'label-danger';
+$mariadbLabel = 'label-default';
 
-if ($neardBins->getMariadb()->checkPort($mariadbPort)) {
-    $mariadbLabel = 'label-success';
+if ($neardBins->getMariadb()->isEnable()) {
+    $mariadbLabel = 'label-danger';
+    if ($neardBins->getMariadb()->checkPort($mariadbPort)) {
+        $mariadbLabel = 'label-success';
+    }
 }
 
 $result['binmariadb'] = sprintf($dlMoreTpl, 'binMariaDB');
@@ -70,10 +84,13 @@ $result['binmariadb'] .= '<span style="float:right;font-size:12px" class="label 
 
 // Bin MySQL
 $mysqlPort = $neardBins->getMysql()->getPort();
-$mysqlLabel = 'label-danger';
+$mysqlLabel = 'label-default';
 
-if ($neardBins->getMysql()->checkPort($mysqlPort)) {
-    $mysqlLabel = 'label-success';
+if ($neardBins->getMysql()->isEnable()) {
+    $mysqlLabel = 'label-danger';
+    if ($neardBins->getMysql()->checkPort($mysqlPort)) {
+        $mysqlLabel = 'label-success';
+    }
 }
 
 $result['binmysql'] = sprintf($dlMoreTpl, 'binMySQL');
@@ -81,10 +98,13 @@ $result['binmysql'] .= '<span style="float:right;font-size:12px" class="label ' 
 
 // Bin PostgreSQL
 $postgresqlPort = $neardBins->getPostgresql()->getPort();
-$postgresqlLabel = 'label-danger';
+$postgresqlLabel = 'label-default';
 
-if ($neardBins->getPostgresql()->checkPort($postgresqlPort)) {
-    $postgresqlLabel = 'label-success';
+if ($neardBins->getPostgresql()->isEnable()) {
+    $postgresqlLabel = 'label-danger';
+    if ($neardBins->getPostgresql()->checkPort($postgresqlPort)) {
+        $postgresqlLabel = 'label-success';
+    }
 }
 
 $result['binpostgresql'] = sprintf($dlMoreTpl, 'binPostgreSQL');
@@ -92,21 +112,34 @@ $result['binpostgresql'] .= '<span style="float:right;font-size:12px" class="lab
 
 // Bin Memcached
 $memcachedPort = $neardBins->getMemcached()->getPort();
-$memcachedLabel = 'label-danger';
+$memcachedLabel = 'label-default';
 
-if ($neardBins->getMemcached()->checkPort($memcachedPort)) {
-    $memcachedLabel = 'label-success';
+if ($neardBins->getMemcached()->isEnable()) {
+    $memcachedLabel = 'label-danger';
+    if ($neardBins->getMemcached()->checkPort($memcachedPort)) {
+        $memcachedLabel = 'label-success';
+    }
 }
 
 $result['binmemcached'] = sprintf($dlMoreTpl, 'binMemcached');
 $result['binmemcached'] .= '<span style="float:right;font-size:12px" class="label ' . $memcachedLabel . '">' . $neardBins->getMemcached()->getVersion() . '</span>';
 
 // Bin Node.js
+$nodejsLabel = 'label-default';
+if ($neardBins->getNodejs()->isEnable()) {
+    $nodejsLabel = 'label-primary';
+}
+
 $result['binnodejs'] = sprintf($dlMoreTpl, 'binNode.js');
-$result['binnodejs'] .= '<span style="float:right;font-size:12px" class="label label-primary">' . $neardBins->getNodejs()->getVersion() . '</span>';
+$result['binnodejs'] .= '<span style="float:right;font-size:12px" class="label ' . $nodejsLabel .'">' . $neardBins->getNodejs()->getVersion() . '</span>';
 
 // Bin PHP
+$phpLabel = 'label-default';
+if ($neardBins->getPhp()->isEnable()) {
+    $phpLabel = 'label-primary';
+}
+
 $result['binphp'] = sprintf($dlMoreTpl, 'binPHP');
-$result['binphp'] .= '<span style="float:right;font-size:12px" class="label label-primary">' . $neardBins->getPhp()->getVersion() . '</span>';
+$result['binphp'] .= '<span style="float:right;font-size:12px" class="label ' . $phpLabel .'">' . $neardBins->getPhp()->getVersion() . '</span>';
 
 echo json_encode($result);

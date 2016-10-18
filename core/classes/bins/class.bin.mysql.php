@@ -4,8 +4,8 @@ class BinMysql
 {
     const SERVICE_NAME = 'neardmysql';
     
+    const ROOT_CFG_ENABLE = 'mysqlEnable';
     const ROOT_CFG_VERSION = 'mysqlVersion';
-    const ROOT_CFG_LAUNCH_STARTUP = 'mysqlLaunchStartup';
     
     const LOCAL_CFG_EXE = 'mysqlExe';
     const LOCAL_CFG_CLI_EXE = 'mysqlCliExe';
@@ -21,12 +21,13 @@ class BinMysql
     
     private $name;
     private $version;
-    private $launchStartup;
+    private $service;
     
     private $rootPath;
     private $currentPath;
     private $neardConf;
     private $neardConfRaw;
+    private $enable;
     
     private $errorLog;
     
@@ -37,8 +38,6 @@ class BinMysql
     private $rootPwd;
     private $cliExe;
     private $admin;
-    
-    private $service;
     
     public function __construct($rootPath)
     {
@@ -52,24 +51,16 @@ class BinMysql
         
         $this->name = $neardLang->getValue(Lang::MYSQL);
         $this->version = $neardConfig->getRaw(self::ROOT_CFG_VERSION);
-        $this->launchStartup = $neardConfig->getRaw(self::ROOT_CFG_LAUNCH_STARTUP) == Config::ENABLED;
+        $this->service = new Win32Service(self::SERVICE_NAME);
         
         $this->rootPath = $rootPath == null ? $this->rootPath : $rootPath;
         $this->currentPath = $this->rootPath . '/mysql' . $this->version;
         $this->neardConf = $this->currentPath . '/neard.conf';
+        $this->enable = $neardConfig->getRaw(self::ROOT_CFG_ENABLE) == Config::ENABLED && is_dir($this->currentPath);
         
         $this->errorLog = $neardBs->getLogsPath() . '/mysql.log';
 
-        if (!is_dir($this->currentPath)) {
-            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_FILE_NOT_FOUND), $this->name . ' ' . $this->version, $this->currentPath));
-            return;
-        }
-        if (!is_file($this->neardConf)) {
-            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_CONF_NOT_FOUND), $this->name . ' ' . $this->version, $this->neardConf));
-            return;
-        }
-        
-        $this->neardConfRaw = parse_ini_file($this->neardConf);
+        $this->neardConfRaw = @parse_ini_file($this->neardConf);
         if ($this->neardConfRaw !== false) {
             $this->exe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_EXE];
             $this->conf = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_CONF];
@@ -80,6 +71,18 @@ class BinMysql
             $this->admin = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_ADMIN];
         }
         
+        if (!$this->enable) {
+            Util::logInfo($this->name . ' is not enabled!');
+            return;
+        }
+        if (!is_dir($this->currentPath)) {
+            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_FILE_NOT_FOUND), $this->name . ' ' . $this->version, $this->currentPath));
+            return;
+        }
+        if (!is_file($this->neardConf)) {
+            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_CONF_NOT_FOUND), $this->name . ' ' . $this->version, $this->neardConf));
+            return;
+        }
         if (!is_file($this->exe)) {
             Util::logError(sprintf($neardLang->getValue(Lang::ERROR_EXE_NOT_FOUND), $this->name . ' ' . $this->version, $this->exe));
             return;
@@ -105,7 +108,6 @@ class BinMysql
             return;
         }
         
-        $this->service = new Win32Service(self::SERVICE_NAME);
         $this->service->setDisplayName(APP_TITLE . ' ' . $this->getName() . ' ' . $this->version);
         $this->service->setBinPath($this->exe);
         $this->service->setParams(self::SERVICE_NAME);
@@ -471,16 +473,9 @@ class BinMysql
         $neardConfig->replace(self::ROOT_CFG_VERSION, $version);
     }
 
-    public function isLaunchStartup()
+    public function getService()
     {
-        return $this->launchStartup;
-    }
-    
-    public function setLaunchStartup($enabled)
-    {
-        global $neardConfig;
-        $this->launchStartup = $enabled == Config::ENABLED;
-        $neardConfig->replace(self::ROOT_CFG_LAUNCH_STARTUP, $enabled);
+        return $this->service;
     }
     
     public function getRootPath()
@@ -491,6 +486,39 @@ class BinMysql
     public function getCurrentPath()
     {
         return $this->currentPath;
+    }
+    
+    public function isEnable()
+    {
+        return $this->enable;
+    }
+    
+    public function setEnable($enabled, $showWindow = false)
+    {
+        global $neardConfig, $neardBins, $neardLang, $neardWinbinder;
+        $boxTitle = sprintf($neardLang->getValue(Lang::ENABLE_TITLE), $this->getName());
+    
+        if ($enabled == Config::ENABLED && !is_dir($this->currentPath)) {
+            Util::logDebug($this->getName() . ' cannot be enabled because bundle ' . $this->getVersion() . ' does not exist in ' . $this->currentPath);
+            if ($showWindow) {
+                $neardWinbinder->messageBoxError(
+                    sprintf($neardLang->getValue(Lang::ENABLE_BUNDLE_NOT_EXIST), $this->getName(), $this->getVersion(), $this->currentPath),
+                    sprintf($neardLang->getValue(Lang::ENABLE_TITLE), $this->getName())
+                );
+            }
+            $enabled = Config::DISABLED;
+        }
+    
+        Util::logInfo($this->getName() . ' switched to ' . ($enabled == Config::ENABLED ? 'enabled' : 'disabled'));
+        $this->enable = $enabled == Config::ENABLED;
+        $neardConfig->replace(self::ROOT_CFG_ENABLE, $enabled);
+    
+        $this->reload();
+        if ($this->enable) {
+            Util::installService($this, $port, self::CMD_SYNTAX_CHECK, $showWindow);
+        } else {
+            Util::removeService($this->service, $this->name, $showWindow);
+        }
     }
     
     public function getErrorLog()
@@ -547,10 +575,4 @@ class BinMysql
     {
         return $this->admin;
     }
-
-    public function getService()
-    {
-        return $this->service;
-    }
-    
 }

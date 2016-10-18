@@ -191,7 +191,7 @@ class Batch
     {
         global $neardBins;
         
-        $cmd = '"' . $neardBins->getPostgresql()->getCtlExe() . '" unregister -N "' . BinPostgresql::SERVICE_NAME . '"';
+        $cmd = '"' . Util::formatWindowsPath($neardBins->getPostgresql()->getCtlExe()) . '" unregister -N "' . BinPostgresql::SERVICE_NAME . '"';
         $cmd .= ' -l "' . Util::formatWindowsPath($neardBins->getPostgresql()->getErrorLog()) . '" -w';
         self::exec('uninstallPostgresqlService', $cmd, true, false);
         return !$neardBins->getPostgresql()->getService()->isInstalled();

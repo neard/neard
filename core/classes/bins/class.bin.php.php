@@ -2,6 +2,7 @@
 
 class BinPhp
 {
+    const ROOT_CFG_ENABLE = 'phpEnable';
     const ROOT_CFG_VERSION = 'phpVersion';
     
     const LOCAL_CFG_CLI_EXE = 'phpCliExe';
@@ -84,6 +85,7 @@ class BinPhp
     private $currentPath;
     private $neardConf;
     private $neardConfRaw;
+    private $enable;
     
     private $extPath;
     private $imagickPath;
@@ -112,6 +114,7 @@ class BinPhp
         $this->rootPath = $rootPath == null ? $this->rootPath : $rootPath;
         $this->currentPath = $this->rootPath . '/php' . $this->version;
         $this->neardConf = $this->currentPath . '/neard.conf';
+        $this->enable = $neardConfig->getRaw(self::ROOT_CFG_ENABLE) == Config::ENABLED && is_dir($this->currentPath);
         
         $this->extPath = $this->currentPath . '/ext';
         $this->imagickPath = $this->currentPath . '/imagick';
@@ -119,6 +122,18 @@ class BinPhp
         $this->apacheConf = $neardBins->getApache()->getCurrentPath() . '/' . $this->apacheConf; //FIXME: Useful ?
         $this->errorLog = $neardBs->getLogsPath() . '/php_error.log';
         
+        $this->neardConfRaw = @parse_ini_file($this->neardConf);
+        if ($this->neardConfRaw !== false) {
+            $this->cliExe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_CLI_EXE];
+            $this->cliSilentExe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_CLI_SILENT_EXE];
+            $this->conf = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_CONF];
+            $this->pearExe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_PEAR_EXE];
+        }
+        
+        if (!$this->enable) {
+            Util::logInfo($this->name . ' is not enabled!');
+            return;
+        }
         if (!is_dir($this->currentPath)) {
             Util::logError(sprintf($neardLang->getValue(Lang::ERROR_FILE_NOT_FOUND), $this->name . ' ' . $this->version, $this->currentPath));
             return;
@@ -127,15 +142,6 @@ class BinPhp
             Util::logError(sprintf($neardLang->getValue(Lang::ERROR_CONF_NOT_FOUND), $this->name . ' ' . $this->version, $this->neardConf));
             return;
         }
-        
-        $this->neardConfRaw = parse_ini_file($this->neardConf);
-        if ($this->neardConfRaw !== false) {
-            $this->cliExe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_CLI_EXE];
-            $this->cliSilentExe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_CLI_SILENT_EXE];
-            $this->conf = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_CONF];
-            $this->pearExe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_PEAR_EXE];
-        }
-        
         if (!is_file($this->cliExe)) {
             Util::logError(sprintf($neardLang->getValue(Lang::ERROR_EXE_NOT_FOUND), $this->name . ' ' . $this->version, $this->cliExe));
         }
@@ -601,6 +607,39 @@ class BinPhp
     public function getCurrentPath()
     {
         return $this->currentPath;
+    }
+    
+    public function isEnable()
+    {
+        return $this->enable;
+    }
+    
+    public function setEnable($enabled, $showWindow = false)
+    {
+        global $neardConfig, $neardBins, $neardLang, $neardWinbinder;
+        $boxTitle = sprintf($neardLang->getValue(Lang::ENABLE_TITLE), $this->getName());
+    
+        if ($enabled == Config::ENABLED && !is_dir($this->currentPath)) {
+            Util::logDebug($this->getName() . ' cannot be enabled because bundle ' . $this->getVersion() . ' does not exist in ' . $this->currentPath);
+            if ($showWindow) {
+                $neardWinbinder->messageBoxError(
+                    sprintf($neardLang->getValue(Lang::ENABLE_BUNDLE_NOT_EXIST), $this->getName(), $this->getVersion(), $this->currentPath),
+                    sprintf($neardLang->getValue(Lang::ENABLE_TITLE), $this->getName())
+                );
+            }
+            $enabled = Config::DISABLED;
+        }
+    
+        Util::logInfo($this->getName() . ' switched to ' . ($enabled == Config::ENABLED ? 'enabled' : 'disabled'));
+        $this->enable = $enabled == Config::ENABLED;
+        $neardConfig->replace(self::ROOT_CFG_ENABLE, $enabled);
+        
+        $this->reload();
+        $neardBins->getApache()->update();
+        if ($neardBins->getApache()->isEnable() && $neardBins->getApache()->getService()->isRunning()) {
+            $neardBins->getApache()->getService()->stop();
+            Util::startService($neardBins->getApache(), BinApache::CMD_SYNTAX_CHECK, $showWindow);
+        }
     }
 
     public function getExtPath()

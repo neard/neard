@@ -134,40 +134,27 @@ class Bins
 
     public function getServices()
     {
-        return array(
-            BinMailhog::SERVICE_NAME => $this->getMailhog()->getService(),
-            BinMemcached::SERVICE_NAME => $this->getMemcached()->getService(),
-            BinApache::SERVICE_NAME => $this->getApache()->getService(),
-            BinMysql::SERVICE_NAME => $this->getMysql()->getService(),
-            BinMariadb::SERVICE_NAME => $this->getMariadb()->getService(),
-            BinPostgresql::SERVICE_NAME => $this->getPostgresql()->getService(),
-            BinFilezilla::SERVICE_NAME => $this->getFilezilla()->getService(),
-        );
-    }
-    
-    public function getServicesStartup()
-    {
         $result = array();
         
-        if ($this->getMailhog()->isLaunchStartup()) {
+        if ($this->getMailhog()->isEnable()) {
             $result[BinMailhog::SERVICE_NAME] = $this->getMailhog()->getService();
         }
-        if ($this->getMemcached()->isLaunchStartup()) {
+        if ($this->getMemcached()->isEnable()) {
             $result[BinMemcached::SERVICE_NAME] = $this->getMemcached()->getService();
         }
-        if ($this->getApache()->isLaunchStartup()) {
+        if ($this->getApache()->isEnable()) {
             $result[BinApache::SERVICE_NAME] = $this->getApache()->getService();
         }
-        if ($this->getMysql()->isLaunchStartup()) {
+        if ($this->getMysql()->isEnable()) {
             $result[BinMysql::SERVICE_NAME] = $this->getMysql()->getService();
         }
-        if ($this->getMariadb()->isLaunchStartup()) {
+        if ($this->getMariadb()->isEnable()) {
             $result[BinMariadb::SERVICE_NAME] = $this->getMariadb()->getService();
         }
-        if ($this->getPostgresql()->isLaunchStartup()) {
+        if ($this->getPostgresql()->isEnable()) {
             $result[BinPostgresql::SERVICE_NAME] = $this->getPostgresql()->getService();
         }
-        if ($this->getFilezilla()->isLaunchStartup()) {
+        if ($this->getFilezilla()->isEnable()) {
             $result[BinFilezilla::SERVICE_NAME] = $this->getFilezilla()->getService();
         }
         

@@ -5,8 +5,8 @@ class BinApache
     const SERVICE_NAME = 'neardapache';
     const SERVICE_PARAMS = '-k runservice';
     
+    const ROOT_CFG_ENABLE = 'apacheEnable';
     const ROOT_CFG_VERSION = 'apacheVersion';
-    const ROOT_CFG_LAUNCH_STARTUP = 'apacheLaunchStartup';
     
     const LOCAL_CFG_EXE = 'apacheExe';
     const LOCAL_CFG_CONF = 'apacheConf';
@@ -24,12 +24,13 @@ class BinApache
     
     private $name;
     private $version;
-    private $launchStartup;
+    private $service;
     
     private $rootPath;
     private $currentPath;
     private $neardConf;
     private $neardConfRaw;
+    private $enable;
     
     private $modulesPath;
     private $sslConf;
@@ -43,8 +44,6 @@ class BinApache
     private $sslPort;
     private $opensslExe;
     
-    private $service;
-    
     public function __construct($rootPath, $version=null)
     {
         Util::logInitClass($this);
@@ -57,11 +56,12 @@ class BinApache
         
         $this->name = $neardLang->getValue(Lang::APACHE);
         $this->version = $neardConfig->getRaw(self::ROOT_CFG_VERSION);
-        $this->launchStartup = $neardConfig->getRaw(self::ROOT_CFG_LAUNCH_STARTUP) == Config::ENABLED;
+        $this->service = new Win32Service(self::SERVICE_NAME);
         
         $this->rootPath = $rootPath == null ? $this->rootPath : $rootPath;
         $this->currentPath = $this->rootPath . '/apache' . $this->version;
         $this->neardConf = $this->currentPath . '/neard.conf';
+        $this->enable = $neardConfig->getRaw(self::ROOT_CFG_ENABLE) == Config::ENABLED && is_dir($this->currentPath);
         
         $this->modulesPath = $this->currentPath . '/modules';
         $this->sslConf = $this->currentPath . '/conf/extra/httpd-ssl.conf';
@@ -69,6 +69,19 @@ class BinApache
         $this->rewriteLog = $neardBs->getLogsPath() . '/apache_rewrite.log';
         $this->errorLog = $neardBs->getLogsPath() . '/apache_error.log';
         
+        $this->neardConfRaw = @parse_ini_file($this->neardConf);
+        if ($this->neardConfRaw !== false) {
+            $this->exe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_EXE];
+            $this->conf = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_CONF];
+            $this->port = $this->neardConfRaw[self::LOCAL_CFG_PORT];
+            $this->sslPort = $this->neardConfRaw[self::LOCAL_CFG_SSL_PORT];
+            $this->opensslExe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_OPENSSL_EXE];
+        }
+        
+        if (!$this->enable) {
+            Util::logInfo($this->name . ' is not enabled!');
+            return;
+        }
         if (!is_dir($this->currentPath)) {
             Util::logError(sprintf($neardLang->getValue(Lang::ERROR_FILE_NOT_FOUND), $this->name . ' ' . $this->version, $this->currentPath));
             return;
@@ -81,16 +94,6 @@ class BinApache
             Util::logError(sprintf($neardLang->getValue(Lang::ERROR_CONF_NOT_FOUND), $this->name . ' ' . $this->version, $this->sslConf));
             return;
         }
-        
-        $this->neardConfRaw = parse_ini_file($this->neardConf);
-        if ($this->neardConfRaw !== false) {
-            $this->exe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_EXE];
-            $this->conf = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_CONF];
-            $this->port = $this->neardConfRaw[self::LOCAL_CFG_PORT];
-            $this->sslPort = $this->neardConfRaw[self::LOCAL_CFG_SSL_PORT];
-            $this->opensslExe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_OPENSSL_EXE];
-        }
-        
         if (!is_file($this->exe)) {
             Util::logError(sprintf($neardLang->getValue(Lang::ERROR_EXE_NOT_FOUND), $this->name . ' ' . $this->version, $this->exe));
             return;
@@ -112,7 +115,6 @@ class BinApache
             return;
         }
         
-        $this->service = new Win32Service(self::SERVICE_NAME);
         $this->service->setDisplayName(APP_TITLE . ' ' . $this->getName() . ' ' . $this->version);
         $this->service->setBinPath($this->exe);
         $this->service->setParams(self::SERVICE_PARAMS);
@@ -291,9 +293,9 @@ class BinApache
         $svnModulePath = $neardTools->getSvn()->getCurrentPath() . '/modules/apache' . $shortVersion;
         Util::replaceInFile($conf, array(
             // PHP module
-            '/^PHPIniDir\s.*/' => 'PHPIniDir "' . $neardBins->getPhp()->getCurrentPath() . '"',
-            '/^#?LoadFile\s.*php.ts\.dll.*/' => (!file_exists($neardBins->getPhp()->getCurrentPath() . '/' . $tsDll) ? '#' : '') . 'LoadFile "' . $neardBins->getPhp()->getCurrentPath() . '/' . $tsDll . '"',
-            '/^LoadModule\sphp._module\s.*/' => 'LoadModule ' . $apachePhpModuleName . ' "' . $apachePhpModule . '"',
+            '/^#?PHPIniDir\s.*/' => ($neardBins->getPhp()->isEnable() ? '' : '#') . 'PHPIniDir "' . $neardBins->getPhp()->getCurrentPath() . '"',
+            '/^#?LoadFile\s.*php.ts\.dll.*/' => ($neardBins->getPhp()->isEnable() ? '' : '#') . (!file_exists($neardBins->getPhp()->getCurrentPath() . '/' . $tsDll) ? '#' : '') . 'LoadFile "' . $neardBins->getPhp()->getCurrentPath() . '/' . $tsDll . '"',
+            '/^#?LoadModule\sphp._module\s.*/' => ($neardBins->getPhp()->isEnable() ? '' : '#') . 'LoadModule ' . $apachePhpModuleName . ' "' . $apachePhpModule . '"',
             
             // SVN module
             '/^LoadModule\sauthz_svn_module\s*/' => 'LoadModule authz_svn_module "' . $svnModulePath . '/mod_authz_svn.so"',
@@ -652,6 +654,39 @@ class BinApache
         return $this->name;
     }
     
+    public function isEnable()
+    {
+        return $this->enable;
+    }
+    
+    public function setEnable($enabled, $showWindow = false)
+    {
+        global $neardConfig, $neardBins, $neardLang, $neardWinbinder;
+        $boxTitle = sprintf($neardLang->getValue(Lang::ENABLE_TITLE), $this->getName());
+    
+        if ($enabled == Config::ENABLED && !is_dir($this->currentPath)) {
+            Util::logDebug($this->getName() . ' cannot be enabled because bundle ' . $this->getVersion() . ' does not exist in ' . $this->currentPath);
+            if ($showWindow) {
+                $neardWinbinder->messageBoxError(
+                    sprintf($neardLang->getValue(Lang::ENABLE_BUNDLE_NOT_EXIST), $this->getName(), $this->getVersion(), $this->currentPath),
+                    sprintf($neardLang->getValue(Lang::ENABLE_TITLE), $this->getName())
+                );
+            }
+            $enabled = Config::DISABLED;
+        }
+    
+        Util::logInfo($this->getName() . ' switched to ' . ($enabled == Config::ENABLED ? 'enabled' : 'disabled'));
+        $this->enable = $enabled == Config::ENABLED;
+        $neardConfig->replace(self::ROOT_CFG_ENABLE, $enabled);
+    
+        $this->reload();
+        if ($this->enable) {
+            Util::installService($this, $port, self::CMD_SYNTAX_CHECK, $showWindow);
+        } else {
+            Util::removeService($this->service, $this->name, $showWindow);
+        }
+    }
+    
     public function getVersionList()
     {
         return Util::getVersionList($this->getRootPath());
@@ -669,16 +704,9 @@ class BinApache
         $neardConfig->replace(self::ROOT_CFG_VERSION, $version);
     }
 
-    public function isLaunchStartup()
+    public function getService()
     {
-        return $this->launchStartup;
-    }
-    
-    public function setLaunchStartup($enabled)
-    {
-        global $neardConfig;
-        $this->launchStartup = $enabled == Config::ENABLED;
-        $neardConfig->replace(self::ROOT_CFG_LAUNCH_STARTUP, $enabled);
+        return $this->service;
     }
     
     public function getRootPath()
@@ -750,10 +778,4 @@ class BinApache
     {
         return $this->opensslExe;
     }
-    
-    public function getService()
-    {
-        return $this->service;
-    }
-    
 }
