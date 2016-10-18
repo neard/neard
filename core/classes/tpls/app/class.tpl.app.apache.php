@@ -10,6 +10,7 @@ class TplAppApache
     const MENU_ALIAS = 'apacheAlias';
     const MENU_VHOSTS = 'apacheVhosts';
     
+    const ACTION_ENABLE = 'enableApache';
     const ACTION_SWITCH_VERSION = 'switchApacheVersion';
     const ACTION_CHANGE_PORT = 'changeApachePort';
     const ACTION_INSTALL_SERVICE = 'installApacheService';
@@ -19,47 +20,85 @@ class TplAppApache
     const ACTION_EDIT_ALIAS = 'editAlias';
     const ACTION_ADD_VHOST = 'addVhost';
     const ACTION_EDIT_VHOST = 'editVhost';
-    const ACTION_LAUNCH_STARTUP = 'launchStartupApache';
     
     public static function process()
     {
-        global $neardLang;
-        
-        return TplApp::getMenu($neardLang->getValue(Lang::APACHE), self::MENU, get_called_class());
+        global $neardLang, $neardBins;
+    
+        return TplApp::getMenuEnable($neardLang->getValue(Lang::APACHE), self::MENU, get_called_class(), $neardBins->getApache()->isEnable());
     }
     
     public static function getMenuApache()
     {
         global $neardBins, $neardLang;
+        $resultItems = $resultActions = '';
         
-        $tplVersions = TplApp::getMenu($neardLang->getValue(Lang::VERSIONS), self::MENU_VERSIONS, get_called_class());
-        $tplService = TplApp::getMenu($neardLang->getValue(Lang::SERVICE), self::MENU_SERVICE, get_called_class());
-        $tplDebug = TplApp::getMenu($neardLang->getValue(Lang::DEBUG), self::MENU_DEBUG, get_called_class());
-        $tplModules = TplApp::getMenu($neardLang->getValue(Lang::MODULES), self::MENU_MODULES, get_called_class());
-        $tplAlias = TplApp::getMenu($neardLang->getValue(Lang::ALIASES), self::MENU_ALIAS, get_called_class());
-        $tplVhosts = TplApp::getMenu($neardLang->getValue(Lang::VIRTUAL_HOSTS), self::MENU_VHOSTS, get_called_class());
+        $isEnabled = $neardBins->getApache()->isEnable();
         
-        return
+        // Download
+        $resultItems .= TplAestan::getItemLink(
+            $neardLang->getValue(Lang::DOWNLOAD_MORE),
+            APP_GITHUB_HOME . '/wiki/binApache#latest',
+            false,
+            TplAestan::GLYPH_BROWSER
+        ) . PHP_EOL;
+    
+        // Enable
+        $tplEnable = TplApp::getActionMulti(
+            self::ACTION_ENABLE, array($isEnabled ? Config::DISABLED : Config::ENABLED),
+            array($neardLang->getValue(Lang::MENU_ENABLE), $isEnabled ? TplAestan::GLYPH_CHECK : ''),
+            false, get_called_class()
+        );
+        $resultItems .= $tplEnable[TplApp::SECTION_CALL] . PHP_EOL;
+        $resultActions .= $tplEnable[TplApp::SECTION_CONTENT] . PHP_EOL;
         
-            // Items
-            $tplVersions[TplApp::SECTION_CALL] . PHP_EOL .
-            $tplService[TplApp::SECTION_CALL] . PHP_EOL .
-            $tplDebug[TplApp::SECTION_CALL] . PHP_EOL .
-            $tplModules[TplApp::SECTION_CALL] . PHP_EOL .
-            $tplAlias[TplApp::SECTION_CALL] . PHP_EOL .
-            $tplVhosts[TplApp::SECTION_CALL] . PHP_EOL .
-            TplAestan::getItemNotepad(basename($neardBins->getApache()->getConf()), $neardBins->getApache()->getConf()) . PHP_EOL .
-            TplAestan::getItemNotepad($neardLang->getValue(Lang::MENU_ACCESS_LOGS), $neardBins->getApache()->getAccessLog()) . PHP_EOL .
-            TplAestan::getItemNotepad($neardLang->getValue(Lang::MENU_REWRITE_LOGS), $neardBins->getApache()->getRewriteLog()) . PHP_EOL .
-            TplAestan::getItemNotepad($neardLang->getValue(Lang::MENU_ERROR_LOGS), $neardBins->getApache()->getErrorLog()) . PHP_EOL . PHP_EOL .
+        if ($isEnabled) {
+            $resultItems .= TplAestan::getItemSeparator() . PHP_EOL;
             
-            // Actions
-            $tplVersions[TplApp::SECTION_CONTENT] . PHP_EOL .
-            $tplService[TplApp::SECTION_CONTENT] . PHP_EOL .
-            $tplDebug[TplApp::SECTION_CONTENT] . PHP_EOL .
-            $tplModules[TplApp::SECTION_CONTENT] . PHP_EOL .
-            $tplAlias[TplApp::SECTION_CONTENT] . PHP_EOL .
-            $tplVhosts[TplApp::SECTION_CONTENT] . PHP_EOL;
+            // Versions
+            $tplVersions = TplApp::getMenu($neardLang->getValue(Lang::VERSIONS), self::MENU_VERSIONS, get_called_class());
+            $resultItems .= $tplVersions[TplApp::SECTION_CALL] . PHP_EOL;
+            $resultActions .= $tplVersions[TplApp::SECTION_CONTENT] . PHP_EOL;
+            
+            // Service
+            $tplService = TplApp::getMenu($neardLang->getValue(Lang::SERVICE), self::MENU_SERVICE, get_called_class());
+            $resultItems .= $tplService[TplApp::SECTION_CALL] . PHP_EOL;
+            $resultActions .= $tplService[TplApp::SECTION_CONTENT] . PHP_EOL;
+            
+            // Debug
+            $tplDebug = TplApp::getMenu($neardLang->getValue(Lang::DEBUG), self::MENU_DEBUG, get_called_class());
+            $resultItems .= $tplDebug[TplApp::SECTION_CALL] . PHP_EOL;
+            $resultActions .= $tplDebug[TplApp::SECTION_CONTENT] . PHP_EOL;
+            
+            // Modules
+            $tplModules = TplApp::getMenu($neardLang->getValue(Lang::MODULES), self::MENU_MODULES, get_called_class());
+            $resultItems .= $tplModules[TplApp::SECTION_CALL] . PHP_EOL;
+            $resultActions .= $tplModules[TplApp::SECTION_CONTENT] . PHP_EOL;
+            
+            // Alias
+            $tplAlias = TplApp::getMenu($neardLang->getValue(Lang::ALIASES), self::MENU_ALIAS, get_called_class());
+            $resultItems .= $tplAlias[TplApp::SECTION_CALL] . PHP_EOL;
+            $resultActions .= $tplAlias[TplApp::SECTION_CONTENT] . PHP_EOL;
+            
+            // Vhosts
+            $tplVhosts = TplApp::getMenu($neardLang->getValue(Lang::VIRTUAL_HOSTS), self::MENU_VHOSTS, get_called_class());
+            $resultItems .= $tplVhosts[TplApp::SECTION_CALL] . PHP_EOL;
+            $resultActions .= $tplVhosts[TplApp::SECTION_CONTENT];
+            
+            // Conf
+            $resultItems .= TplAestan::getItemNotepad(basename($neardBins->getApache()->getConf()), $neardBins->getApache()->getConf()) . PHP_EOL;
+            
+            // Access log
+            $resultItems .= TplAestan::getItemNotepad($neardLang->getValue(Lang::MENU_ACCESS_LOGS), $neardBins->getApache()->getAccessLog()) . PHP_EOL;
+            
+            // Rewrite log
+            $resultItems .= TplAestan::getItemNotepad($neardLang->getValue(Lang::MENU_REWRITE_LOGS), $neardBins->getApache()->getRewriteLog()) . PHP_EOL;
+            
+            // Error log
+            $resultItems .= TplAestan::getItemNotepad($neardLang->getValue(Lang::MENU_ERROR_LOGS), $neardBins->getApache()->getErrorLog()) . PHP_EOL;
+        }
+        
+        return $resultItems . PHP_EOL . $resultActions;
     }
     
     public static function getMenuApacheVersions()
@@ -93,6 +132,14 @@ class TplAppApache
         return $items . $actions;
     }
     
+    public static function getActionEnableApache($enable)
+    {
+        global $neardBins;
+    
+        return TplApp::getActionRun(Action::ENABLE, array($neardBins->getApache()->getName(), $enable)) . PHP_EOL .
+            TplAppReload::getActionReload();
+    }
+    
     public static function getActionSwitchApacheVersion($version)
     {
         global $neardBins;
@@ -110,13 +157,6 @@ class TplAppApache
             false, get_called_class()
         );
         
-        $isLaunchStartup = $neardBins->getApache()->isLaunchStartup();
-        $tplLaunchStartup = TplApp::getActionMulti(
-            self::ACTION_LAUNCH_STARTUP, array($isLaunchStartup ? Config::DISABLED : Config::ENABLED),
-            array($neardLang->getValue(Lang::MENU_LAUNCH_STARTUP_SERVICE), $isLaunchStartup ? TplAestan::GLYPH_CHECK : ''),
-            false, get_called_class()
-        );
-        
         $result = TplAestan::getItemActionServiceStart($neardBins->getApache()->getService()->getName()) . PHP_EOL .
             TplAestan::getItemActionServiceStop($neardBins->getApache()->getService()->getName()) . PHP_EOL .
             TplAestan::getItemActionServiceRestart($neardBins->getApache()->getService()->getName()) . PHP_EOL .
@@ -129,8 +169,7 @@ class TplAppApache
                 Action::CHECK_PORT, array($neardBins->getApache()->getName(), $neardBins->getApache()->getSslPort(), true),
                 array(sprintf($neardLang->getValue(Lang::MENU_CHECK_PORT), $neardBins->getApache()->getSslPort()) . ' (SSL)', TplAestan::GLYPH_RED_LIGHT)
             ) . PHP_EOL .
-            $tplChangePort[TplApp::SECTION_CALL] . PHP_EOL .
-            $tplLaunchStartup[TplApp::SECTION_CALL] . PHP_EOL;
+            $tplChangePort[TplApp::SECTION_CALL] . PHP_EOL;
         
         $isInstalled = $neardBins->getApache()->getService()->isInstalled();
         if (!$isInstalled) {
@@ -153,8 +192,7 @@ class TplAppApache
                 $tplRemoveService[TplApp::SECTION_CONTENT] . PHP_EOL;
         }
         
-        $result .= $tplChangePort[TplApp::SECTION_CONTENT] . PHP_EOL .
-            $tplLaunchStartup[TplApp::SECTION_CONTENT] . PHP_EOL;
+        $result .= $tplChangePort[TplApp::SECTION_CONTENT] . PHP_EOL;
         
         return $result;
     }
@@ -336,13 +374,5 @@ class TplAppApache
     {
         return TplApp::getActionRun(Action::EDIT_VHOST, array($vhost)) . PHP_EOL .
         TplAppReload::getActionReload();
-    }
-    
-    public static function getActionLaunchStartupApache($launchStartup)
-    {
-        global $neardBins;
-    
-        return TplApp::getActionRun(Action::LAUNCH_STARTUP_SERVICE, array($neardBins->getApache()->getName(), $launchStartup)) . PHP_EOL .
-            TplAppReload::getActionReload();
     }
 }

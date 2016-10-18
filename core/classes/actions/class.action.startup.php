@@ -27,7 +27,7 @@ class ActionStartup
         $this->rootPath = $neardBs->getRootPath();
         $this->filesToScan = array();
         
-        $gauge = self::GAUGE_SERVICES * count($neardBins->getServicesStartup());
+        $gauge = self::GAUGE_SERVICES * count($neardBins->getServices());
         $gauge += self::GAUGE_OTHERS + 1;
         
         // Start splash screen
@@ -505,7 +505,7 @@ class ActionStartup
         global $neardLang, $neardBins;
         
         if (!$this->restart) {
-            foreach ($neardBins->getServicesStartup() as $sName => $service) {
+            foreach ($neardBins->getServices() as $sName => $service) {
                 $serviceError = '';
                 $serviceRestart = false;
                 $serviceAlreadyInstalled = false;

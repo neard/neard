@@ -10,11 +10,16 @@ $port = $neardBins->getMysql()->getPort();
 
 $textServiceStarted = $neardLang->getValue(Lang::HOMEPAGE_SERVICE_STARTED);
 $textServiceStopped = $neardLang->getValue(Lang::HOMEPAGE_SERVICE_STOPPED);
+$textDisabled = $neardLang->getValue(Lang::DISABLED);
 
-if ($neardBins->getMysql()->checkPort($port)) {
-    $result['checkport'] .= '<span style="float:right;font-size:12px" class="label label-success">' . sprintf($textServiceStarted, $port) . '</span>';
+if ($neardBins->getMysql()->isEnable()) {
+    if ($neardBins->getMysql()->checkPort($port)) {
+        $result['checkport'] .= '<span style="float:right;font-size:12px" class="label label-success">' . sprintf($textServiceStarted, $port) . '</span>';
+    } else {
+        $result['checkport'] .= '<span style="float:right;font-size:12px" class="label label-danger">' . $textServiceStopped . '</span>';
+    }
 } else {
-    $result['checkport'] .= '<span style="float:right;font-size:12px" class="label label-danger">' . $textServiceStopped . '</span>';
+    $result['checkport'] = '<span style="float:right;font-size:12px" class="label label-default">' . $textDisabled . '</span>';
 }
 
 // Versions

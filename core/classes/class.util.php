@@ -860,4 +860,140 @@ class Util
     {
         return ctype_alnum($string);
     }
+    
+    public static function installService($bin, $port, $syntaxCheckCmd, $showWindow = false)
+    {
+        global $neardBs, $neardLang, $neardBins, $neardWinbinder;
+        $name = $bin->getName();
+        $service = $bin->getService();
+        $boxTitle = sprintf($neardLang->getValue(Lang::INSTALL_SERVICE_TITLE), $name);
+        
+        $isPortInUse = Util::isPortInUse($port);
+        if ($isPortInUse === false) {
+            if (!$service->isInstalled()) {
+                $service->create();
+                if ($service->start()) {
+                    Util::logInfo(sprintf('%s service successfully installed. (name: %s ; port: %s)', $name, $service->getName(), $port));
+                    if ($showWindow) {
+                        $neardWinbinder->messageBoxInfo(
+                            sprintf($neardLang->getValue(Lang::SERVICE_INSTALLED), $name, $service->getName(), $port),
+                            $boxTitle
+                        );
+                    }
+                    return true;
+                } else {
+                    $serviceError .= sprintf($neardLang->getValue(Lang::SERVICE_INSTALL_ERROR), $name);
+                    $serviceErrorLog .= sprintf('Error during the installation of %s service', $name);
+                    if (!empty($syntaxCheckCmd)) {
+                        $cmdSyntaxCheck = $bin->getCmdLineOutput($syntaxCheckCmd);
+                        if (!$cmdSyntaxCheck['syntaxOk']) {
+                            $serviceError .= PHP_EOL . sprintf($neardLang->getValue(Lang::STARTUP_SERVICE_SYNTAX_ERROR), $cmdSyntaxCheck['content']);
+                            $serviceErrorLog .= sprintf(' (conf errors detected : %s)', $cmdSyntaxCheck['content']);
+                        }
+                    }
+                    Util::logError($serviceErrorLog);
+                    if ($showWindow) {
+                        $neardWinbinder->messageBoxError($serviceError, $boxTitle);
+                    }
+                }
+            } else {
+                Util::logWarning(sprintf('%s service already installed', $name));
+                if ($showWindow) {
+                    $neardWinbinder->messageBoxWarning(
+                        sprintf($neardLang->getValue(Lang::SERVICE_ALREADY_INSTALLED), $name),
+                        $boxTitle
+                    );
+                }
+                return true;
+            }
+        } else if($service->isRunning()) {
+            Util::logWarning(sprintf('%s service already installed and running', $name));
+            if ($showWindow) {
+                $neardWinbinder->messageBoxWarning(
+                    sprintf($neardLang->getValue(Lang::SERVICE_ALREADY_INSTALLED), $name),
+                    $boxTitle
+                );
+            }
+            return true;
+        } else {
+            Util::logError(sprintf('Port %s is used by an other application : %s', $name));
+            if ($showWindow) {
+                $neardWinbinder->messageBoxError(
+                    sprintf($neardLang->getValue(Lang::PORT_NOT_USED_BY), $port, $isPortInUse),
+                    $boxTitle
+                );
+            }
+        }
+        
+        return false;
+    }
+    
+    public static function removeService($service, $name, $showWindow = false)
+    {
+        global $neardBs, $neardLang, $neardBins, $neardWinbinder;
+        $boxTitle = sprintf($neardLang->getValue(Lang::REMOVE_SERVICE_TITLE), $name);
+    
+        if (!($service instanceof Win32Service)) {
+            Util::logError('$service not an instance of Win32Service');
+            return;
+        }
+    
+        if ($service->isInstalled()) {
+            if ($service->delete()) {
+                Util::logInfo(sprintf('%s service successfully removed', $name));
+                if ($showWindow) {
+                    $neardWinbinder->messageBoxInfo(
+                        sprintf($neardLang->getValue(Lang::SERVICE_REMOVED), $name),
+                        $boxTitle
+                    );
+                }
+                return true;
+            } else {
+                Util::logError(sprintf('Error during the uninstallation of %s service', $name));
+                if ($showWindow) {
+                    $neardWinbinder->messageBoxError(
+                        sprintf($neardLang->getValue(Lang::SERVICE_REMOVE_ERROR), $name),
+                        $boxTitle
+                    );
+                }
+            }
+        } else {
+            Util::logWarning(sprintf('%s service does not exist', $name));
+            if ($showWindow) {
+                $neardWinbinder->messageBoxWarning(
+                    sprintf($neardLang->getValue(Lang::SERVICE_NOT_EXIST), $name),
+                    $boxTitle
+                );
+            }
+        }
+        
+        return false;
+    }
+    
+    public static function startService($bin, $syntaxCheckCmd, $showWindow = false)
+    {
+        global $neardLang, $neardWinbinder;
+        $name = $bin->getName();
+        $service = $bin->getService();
+        $boxTitle = sprintf($neardLang->getValue(Lang::START_SERVICE_TITLE), $name);
+        
+        if (!$service->start()) {
+            $serviceError .= sprintf($neardLang->getValue(Lang::START_SERVICE_ERROR), $name);
+            $serviceErrorLog .= sprintf('Error while starting the %s service', $name);
+            if (!empty($syntaxCheckCmd)) {
+                $cmdSyntaxCheck = $bin->getCmdLineOutput($syntaxCheckCmd);
+                if (!$cmdSyntaxCheck['syntaxOk']) {
+                    $serviceError .= PHP_EOL . sprintf($neardLang->getValue(Lang::STARTUP_SERVICE_SYNTAX_ERROR), $cmdSyntaxCheck['content']);
+                    $serviceErrorLog .= sprintf(' (conf errors detected : %s)', $cmdSyntaxCheck['content']);
+                }
+            }
+            Util::logError($serviceErrorLog);
+            if ($showWindow) {
+                $neardWinbinder->messageBoxError($serviceError, $boxTitle);
+            }
+            return false;
+        }
+        
+        return true;
+    }
 }

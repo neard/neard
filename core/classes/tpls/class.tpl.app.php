@@ -117,6 +117,18 @@ class TplApp
         return array($call, self::getSectionContent($menu, null, $otherClass));
     }
     
+    public static function getMenuEnable($caption, $menu, $otherClass = false, $enabled = true)
+    {
+        $menu = 'menu' . ucfirst($menu);
+    
+        $call = 'Type: submenu; ' .
+            'Caption: "' . $caption . '"; ' .
+            'SubMenu: ' . self::getSectionName($menu) . '; ' .
+            'Glyph: ' . ($enabled ? TplAestan::GLYPH_FOLDER_CLOSE : TplAestan::GLYPH_FOLDER_DISABLED);
+    
+        return array($call, self::getSectionContent($menu, null, $otherClass));
+    }
+    
     private static function getSectionServices()
     {
         global $neardBins;

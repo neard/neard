@@ -5,6 +5,9 @@ $(document).ready(function() {
         proc: 'php'
       },
       success: function(data) {
+        $('.php-status').prepend(data.status);
+        $('.php-status').find('.loader').remove();
+        
         $('.php-versions').prepend(data.versions);
         $('.php-versions').find('.loader').remove();
         

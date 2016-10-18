@@ -1,11 +1,19 @@
 <?php
 
 $result = array(
+    'status' => '',
     'versions' => '',
     'extscount' => '',
     'pearversion' => '',
     'extslist' => '',
 );
+
+// Status
+if ($neardBins->getPhp()->isEnable()) {
+    $result['status'] = '<span style="float:right;font-size:12px" class="label label-primary">' . $neardLang->getValue(Lang::ENABLED) . '</span>';
+} else {
+    $result['status'] = '<span style="float:right;font-size:12px" class="label label-default">' . $neardLang->getValue(Lang::DISABLED) . '</span>';
+}
 
 // Versions
 foreach ($neardBins->getPhp()->getVersionList() as $version) {

@@ -6,36 +6,61 @@ class TplAppMemcached
     const MENU_VERSIONS = 'memcachedVersions';
     const MENU_SERVICE = 'memcachedService';
     
+    const ACTION_ENABLE = 'enableMemcached';
     const ACTION_SWITCH_VERSION = 'switchMemcachedVersion';
     const ACTION_CHANGE_PORT = 'changeMemcachedPort';
     const ACTION_INSTALL_SERVICE = 'installMemcachedService';
     const ACTION_REMOVE_SERVICE = 'removeMemcachedService';
-    const ACTION_LAUNCH_STARTUP = 'launchStartupMemcached';
     
     public static function process()
     {
-        global $neardLang;
-        
-        return TplApp::getMenu($neardLang->getValue(Lang::MEMCACHED), self::MENU, get_called_class());
+        global $neardLang, $neardBins;
+    
+        return TplApp::getMenuEnable($neardLang->getValue(Lang::MEMCACHED), self::MENU, get_called_class(), $neardBins->getMemcached()->isEnable());
     }
     
     public static function getMenuMemcached()
     {
         global $neardBs, $neardConfig, $neardBins, $neardLang;
+        $resultItems = $resultActions = '';
         
-        $tplVersions = TplApp::getMenu($neardLang->getValue(Lang::VERSIONS), self::MENU_VERSIONS, get_called_class());
-        $tplService = TplApp::getMenu($neardLang->getValue(Lang::SERVICE), self::MENU_SERVICE, get_called_class());
+        $isEnabled = $neardBins->getMemcached()->isEnable();
         
-        return
-        
-            // Items
-            $tplVersions[TplApp::SECTION_CALL] . PHP_EOL .
-            $tplService[TplApp::SECTION_CALL] . PHP_EOL .
-            TplAestan::getItemNotepad($neardLang->getValue(Lang::MENU_LOGS), $neardBins->getMemcached()->getLog()) . PHP_EOL . PHP_EOL .
-            
-            // Actions
-            $tplVersions[TplApp::SECTION_CONTENT] . PHP_EOL .
-            $tplService[TplApp::SECTION_CONTENT];
+        // Download
+        $resultItems .= TplAestan::getItemLink(
+            $neardLang->getValue(Lang::DOWNLOAD_MORE),
+            APP_GITHUB_HOME . '/wiki/binMemcached#latest',
+            false,
+            TplAestan::GLYPH_BROWSER
+        ) . PHP_EOL;
+    
+        // Enable
+        $tplEnable = TplApp::getActionMulti(
+            self::ACTION_ENABLE, array($isEnabled ? Config::DISABLED : Config::ENABLED),
+            array($neardLang->getValue(Lang::MENU_ENABLE), $isEnabled ? TplAestan::GLYPH_CHECK : ''),
+            false, get_called_class()
+        );
+        $resultItems .= $tplEnable[TplApp::SECTION_CALL] . PHP_EOL;
+        $resultActions .= $tplEnable[TplApp::SECTION_CONTENT] . PHP_EOL;
+    
+        if ($isEnabled) {
+            $resultItems .= TplAestan::getItemSeparator() . PHP_EOL;
+    
+            // Versions
+            $tplVersions = TplApp::getMenu($neardLang->getValue(Lang::VERSIONS), self::MENU_VERSIONS, get_called_class());
+            $resultItems .= $tplVersions[TplApp::SECTION_CALL] . PHP_EOL;
+            $resultActions .= $tplVersions[TplApp::SECTION_CONTENT] . PHP_EOL;
+    
+            // Service
+            $tplService = TplApp::getMenu($neardLang->getValue(Lang::SERVICE), self::MENU_SERVICE, get_called_class());
+            $resultItems .= $tplService[TplApp::SECTION_CALL] . PHP_EOL;
+            $resultActions .= $tplService[TplApp::SECTION_CONTENT];
+
+            // Log
+            $resultItems .= TplAestan::getItemNotepad($neardLang->getValue(Lang::MENU_LOGS), $neardBins->getMemcached()->getLog()) . PHP_EOL;
+        }
+    
+        return $resultItems . PHP_EOL . $resultActions;
     }
     
     public static function getMenuMemcachedVersions()
@@ -61,6 +86,14 @@ class TplAppMemcached
         return $items . $actions;
     }
     
+    public static function getActionEnableMemcached($enable)
+    {
+        global $neardBins;
+    
+        return TplApp::getActionRun(Action::ENABLE, array($neardBins->getMemcached()->getName(), $enable)) . PHP_EOL .
+            TplAppReload::getActionReload();
+    }
+    
     public static function getActionSwitchMemcachedVersion($version)
     {
         global $neardBs, $neardCore, $neardBins;
@@ -79,13 +112,6 @@ class TplAppMemcached
             false, get_called_class()
         );
         
-        $isLaunchStartup = $neardBins->getMemcached()->isLaunchStartup();
-        $tplLaunchStartup = TplApp::getActionMulti(
-            self::ACTION_LAUNCH_STARTUP, array($isLaunchStartup ? Config::DISABLED : Config::ENABLED),
-            array($neardLang->getValue(Lang::MENU_LAUNCH_STARTUP_SERVICE), $isLaunchStartup ? TplAestan::GLYPH_CHECK : ''),
-            false, get_called_class()
-        );
-        
         $isInstalled = $neardBins->getMemcached()->getService()->isInstalled();
         
         $result = TplAestan::getItemActionServiceStart($neardBins->getMemcached()->getService()->getName()) . PHP_EOL .
@@ -96,8 +122,7 @@ class TplAppMemcached
                 Action::CHECK_PORT, array($neardBins->getMemcached()->getName(), $neardBins->getMemcached()->getPort()),
                 array(sprintf($neardLang->getValue(Lang::MENU_CHECK_PORT), $neardBins->getMemcached()->getPort()), TplAestan::GLYPH_LIGHT)
             ) . PHP_EOL .
-            $tplChangePort[TplApp::SECTION_CALL] . PHP_EOL .
-            $tplLaunchStartup[TplApp::SECTION_CALL] . PHP_EOL;
+            $tplChangePort[TplApp::SECTION_CALL] . PHP_EOL;
         
         if (!$isInstalled) {
             $tplInstallService = TplApp::getActionMulti(
@@ -119,8 +144,7 @@ class TplAppMemcached
             $tplRemoveService[TplApp::SECTION_CONTENT] . PHP_EOL;
         }
         
-        $result .= $tplChangePort[TplApp::SECTION_CONTENT] . PHP_EOL .
-            $tplLaunchStartup[TplApp::SECTION_CONTENT] . PHP_EOL;
+        $result .= $tplChangePort[TplApp::SECTION_CONTENT] . PHP_EOL;
         
         return $result;
     }
@@ -142,14 +166,6 @@ class TplAppMemcached
     public static function getActionRemoveMemcachedService()
     {
         return TplApp::getActionRun(Action::SERVICE, array(BinMemcached::SERVICE_NAME, ActionService::REMOVE)) . PHP_EOL .
-            TplAppReload::getActionReload();
-    }
-    
-    public static function getActionLaunchStartupMemcached($launchStartup)
-    {
-        global $neardBins;
-    
-        return TplApp::getActionRun(Action::LAUNCH_STARTUP_SERVICE, array($neardBins->getMemcached()->getName(), $launchStartup)) . PHP_EOL .
             TplAppReload::getActionReload();
     }
 }

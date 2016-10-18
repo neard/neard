@@ -17,6 +17,7 @@ class Action
     const DEBUG_POSTGRESQL = 'debugPostgresql';
     const EDIT_ALIAS = 'editAlias';
     const EDIT_VHOST = 'editVhost';
+    const ENABLE = 'enable';
     const EXEC = 'exec';
     const GEN_SSL_CERTIFICATE = 'genSslCertificate';
     const LAUNCH_STARTUP = 'launchStartup';

@@ -15,10 +15,12 @@ class Lang
     const BINS = 'bins';
     const CHANGELOG = 'changelog';
     const DEBUG = 'debug';
+    const DISABLED = 'disabled';
     const DONATE = 'donate';
     const DONATE_VIA = 'donateVia';
     const DOWNLOAD = 'download';
     const DOWNLOAD_MORE = 'downloadMore';
+    const ENABLED = 'enabled';
     const ERROR = 'error';
     const EXECUTABLE = 'executable';
     const EXTENSIONS = 'extensions';
@@ -66,11 +68,11 @@ class Lang
     const MENU_CLEAR_FOLDERS = 'menuClearFolders';
     const MENU_EDIT_ALIAS = 'menuEditAlias';
     const MENU_EDIT_VHOST = 'menuEditVhost';
+    const MENU_ENABLE = 'menuEnable';
     const MENU_ERROR_LOGS = 'menuErrorLogs';
     const MENU_GEN_SSL_CERTIFICATE = 'menuGenSslCertificate';
     const MENU_INSTALL_SERVICE = 'menuInstallService';
     const MENU_LAUNCH_STARTUP = 'menuLaunchStartup';
-    const MENU_LAUNCH_STARTUP_SERVICE = 'menuLaunchStartupService';
     const MENU_LOCALHOST = 'menuLocalhost';
     const MENU_LOGS = 'menuLogs';
     const MENU_PUT_OFFLINE = 'menuPutOffline';
@@ -168,6 +170,10 @@ class Lang
     const SERVICE_NOT_EXIST = 'serviceNotExist';
     const SERVICE_REMOVED = 'serviceRemoved';
     const SERVICE_REMOVE_ERROR = 'serviceRemoveError';
+    
+    // Action Start service
+    const START_SERVICE_TITLE = 'startServiceTitle';
+    const START_SERVICE_ERROR = 'startServiceError';
     
     // Action Delete alias
     const DELETE_ALIAS_TITLE = 'deleteAliasTitle';
@@ -306,6 +312,10 @@ class Lang
     const RESTART_TITLE = 'restartTitle';
     const RESTART_TEXT = 'restartText';
     
+    // Action enable
+    const ENABLE_TITLE = 'enableTitle';
+    const ENABLE_BUNDLE_NOT_EXIST = 'enableBundleNotExist';
+    
     // Windows forms
     const BUTTON_OK = 'buttonOk';
     const BUTTON_DELETE = 'buttonDelete';
@@ -347,10 +357,12 @@ class Lang
             self::BINS,
             self::CHANGELOG,
             self::DEBUG,
+            self::DISABLED,
             self::DONATE,
             self::DONATE_VIA,
             self::DOWNLOAD,
             self::DOWNLOAD_MORE,
+            self::ENABLED,
             self::ERROR,
             self::EXECUTABLE,
             self::EXTENSIONS,
@@ -398,11 +410,11 @@ class Lang
             self::MENU_CLEAR_FOLDERS,
             self::MENU_EDIT_ALIAS,
             self::MENU_EDIT_VHOST,
+            self::MENU_ENABLE,
             self::MENU_ERROR_LOGS,
             self::MENU_GEN_SSL_CERTIFICATE,
             self::MENU_INSTALL_SERVICE,
             self::MENU_LAUNCH_STARTUP,
-            self::MENU_LAUNCH_STARTUP_SERVICE,
             self::MENU_LOCALHOST,
             self::MENU_LOGS,
             self::MENU_PUT_OFFLINE,
@@ -500,6 +512,9 @@ class Lang
             self::SERVICE_NOT_EXIST,
             self::SERVICE_REMOVED,
             self::SERVICE_REMOVE_ERROR,
+            
+            // Action Start service
+            self::START_SERVICE_TITLE,
             
             // Action Delete alias
             self::DELETE_ALIAS_TITLE,
@@ -635,6 +650,12 @@ class Lang
             self::GENSSL_CREATED_ERROR,
             
             // Action restart
+            self::RESTART_TITLE,
+            self::RESTART_TEXT,
+            
+            // Action enable
+            self::ENABLE_TITLE,
+            self::ENABLE_BUNDLE_NOT_EXIST,
             
             // Windows forms
             self::BUTTON_OK,

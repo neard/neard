@@ -1,8 +1,16 @@
 <?php
 
 $result = array(
-    'versions' => '',
+    'status' => '',
+    'versions' => ''
 );
+
+// Status
+if ($neardBins->getNodejs()->isEnable()) {
+    $result['status'] = '<span style="float:right;font-size:12px" class="label label-primary">' . $neardLang->getValue(Lang::ENABLED) . '</span>';
+} else {
+    $result['status'] = '<span style="float:right;font-size:12px" class="label label-default">' . $neardLang->getValue(Lang::DISABLED) . '</span>';
+}
 
 // Versions
 foreach ($neardBins->getNodejs()->getVersionList() as $version) {

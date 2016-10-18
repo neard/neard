@@ -2,6 +2,8 @@
 
 ## 1.0.21 (2016/10/13)
 
+* Replace launchStartup with enable for binaries (Issue #153)
+* Better way to manage bundles (Issue #153)
 * Add phpPgAdmin app
 * Update about window
 * Misspelled on WebSVN class
@@ -27,13 +29,19 @@
 * **required** : Copy folder `apps\phppgadmin`
 * **required** : Copy file `alias\phpmemadmin.conf`
 * **required** : Copy file `alias\phppgadmin.conf`
+* **required** : Copy file `alias\phpmyadmin.conf`
 * **required** : Copy folder `bin\memcached`
 * **required** : Copy folder `bin\postgresql`
 * **required** : Remove then replace folder `core`
-* **required** : Add line `postgresqlVersion = "9.4.8"` after `mariadbLaunchStartup` in `neard.conf`
-* **required** : Add line `postgresqlLaunchStartup = "1"` after `postgresqlVersion` in `neard.conf`
-* **required** : Add line `memcachedVersion = "1.4.5"` after `mailhogLaunchStartup` in `neard.conf`
-* **required** : Add line `memcachedLaunchStartup = "1"` after `memcachedVersion` in `neard.conf`
+* **required** : Replace `apacheLaunchStartup` with `apacheEnable` in `neard.conf`
+* **required** : Replace `mysqlLaunchStartup` with `mysqlEnable` in `neard.conf`
+* **required** : Replace `mariadbLaunchStartup` with `mariadbEnable` in `neard.conf`
+* **required** : Replace `filezillaLaunchStartup` with `filezillaEnable` in `neard.conf`
+* **required** : Replace `mailhogLaunchStartup` with `mailhogEnable` in `neard.conf`
+* **required** : Add line `postgresqlVersion = "9.4.8"` after `mariadbEnable` in `neard.conf`
+* **required** : Add line `postgresqlEnable = "1"` after `postgresqlVersion` in `neard.conf`
+* **required** : Add line `memcachedVersion = "1.4.5"` after `mailhogEnable` in `neard.conf`
+* **required** : Add line `memcachedEnable = "1"` after `memcachedVersion` in `neard.conf`
 * **required** : Add line `phpmemadminVersion = "0.3.1"` after `gitlistVersion` in `neard.conf`
 * **required** : Add line `phppgadminVersion = "5.2"` after `phpmyadminVersion` in `neard.conf`
 
