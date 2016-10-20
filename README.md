@@ -1,4 +1,4 @@
-[![GitHub release](https://img.shields.io/github/release/crazy-max/neard.svg?style=flat-square)](https://github.com/crazy-max/neard/releases)
+[![GitHub release](https://img.shields.io/github/release/crazy-max/neard.svg?style=flat-square)](https://github.com/crazy-max/neard/releases/latest)
 ![Total downloads](https://img.shields.io/github/downloads/crazy-max/neard/total.svg?style=flat-square)
 [![Donate Paypal](https://img.shields.io/badge/donate-paypal-blue.svg?style=flat-square)](https://www.paypal.me/crazyws)
 
