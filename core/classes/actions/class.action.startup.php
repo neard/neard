@@ -623,7 +623,7 @@ class ActionStartup
                 }
             }
         } else {
-            $this->splash->incrProgressBar(self::GAUGE_SERVICES * count($neardBins->getServicesStartup()));
+            $this->splash->incrProgressBar(self::GAUGE_SERVICES * count($neardBins->getServices()));
         }
     }
     
