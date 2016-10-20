@@ -4,6 +4,7 @@
 
 * Replace launchStartup with enable for binaries (Issue #153)
 * Better way to manage bundles (Issue #153)
+* Add npmrc item in Node.js menu
 * Add phpPgAdmin app
 * Update about window
 * Misspelled on WebSVN class
@@ -23,7 +24,6 @@
 
 ### Upgrade from previous release
 
-* **required** : Download and install the latests [Neard Visual C++ Redistributables Package](https://github.com/crazy-max/neard-misc#visual-c-redistributables-package)
 * **required** : Remove then replace folder `apps\adminer`
 * **required** : Copy folder `apps\phpmemadmin`
 * **required** : Copy folder `apps\phppgadmin`
@@ -44,6 +44,7 @@
 * **required** : Add line `memcachedEnable = "1"` after `memcachedVersion` in `neard.conf`
 * **required** : Add line `phpmemadminVersion = "0.3.1"` after `gitlistVersion` in `neard.conf`
 * **required** : Add line `phppgadminVersion = "5.2"` after `phpmyadminVersion` in `neard.conf`
+* **required** : Remove then replace file `sprites.dat`
 
 ## 1.0.20 (2016/06/23)
 
