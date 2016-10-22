@@ -1,12 +1,19 @@
 # Changelog
 
-## 1.0.21 (2016/10/13)
+## 1.0.21 (2016/10/22)
 
 * Replace launchStartup with enable for binaries (Issue #153)
 * Better way to manage bundles (Issue #153)
+* Check if PHP Apache module is loaded (phpMyAdmin and phpPgAdmin aliases)
+* Add memcached extension to php lib core (check service)
+* Bug with LaunchStartupService option
+* Bug on install service item menu (Issue #152)
+* Redundant check service installed
+* libpq required for php lib core (PostgreSQL)
+* Update Neard Visual C++ Redistributables Package (PostgreSQL)
 * Add npmrc item in Node.js menu
 * Add phpPgAdmin app
-* Update about window
+* Update about dialog
 * Misspelled on WebSVN class
 * Add PostgreSQL binary (Issue #143)
 * Update Adminer conf for PostgreSQL
@@ -24,6 +31,7 @@
 
 ### Upgrade from previous release
 
+* **required** : Download and install the latests [Neard Visual C++ Redistributables Package](https://github.com/crazy-max/neard-misc#visual-c-redistributables-package)
 * **required** : Remove then replace folder `apps\adminer`
 * **required** : Copy folder `apps\phpmemadmin`
 * **required** : Copy folder `apps\phppgadmin`
