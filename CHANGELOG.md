@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.0.21 (2016/10/22)
+## 1.0.21 (2016/10/23)
 
 * Replace launchStartup with enable for binaries (Issue #153)
 * Better way to manage bundles (Issue #153)
