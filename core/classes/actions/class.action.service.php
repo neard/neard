@@ -103,7 +103,7 @@ class ActionService
     
     private function restart($bin, $syntaxCheckCmd)
     {
-        if ($service->stop()) {
+        if ($bin->getService()->stop()) {
             $this->start($bin, $syntaxCheckCmd);
         }
     }

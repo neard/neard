@@ -46,6 +46,8 @@
 * **required** : Replace `mariadbLaunchStartup` with `mariadbEnable` in `neard.conf`
 * **required** : Replace `filezillaLaunchStartup` with `filezillaEnable` in `neard.conf`
 * **required** : Replace `mailhogLaunchStartup` with `mailhogEnable` in `neard.conf`
+* **required** : Add line `phpEnable = "1"` after `phpVersion` in `neard.conf`
+* **required** : Add line `nodejsEnable = "1"` after `nodejsVersion` in `neard.conf`
 * **required** : Add line `postgresqlVersion = "9.4.8"` after `mariadbEnable` in `neard.conf`
 * **required** : Add line `postgresqlEnable = "1"` after `postgresqlVersion` in `neard.conf`
 * **required** : Add line `memcachedVersion = "1.4.5"` after `mailhogEnable` in `neard.conf`
@@ -53,6 +55,8 @@
 * **required** : Add line `phpmemadminVersion = "0.3.1"` after `gitlistVersion` in `neard.conf`
 * **required** : Add line `phppgadminVersion = "5.2"` after `phpmyadminVersion` in `neard.conf`
 * **required** : Remove then replace file `sprites.dat`
+* **optional** : Download the latest [PHP bundle](https://github.com/crazy-max/neard-bin-php/releases) to add Memcache extension
+* **optional** : Enable php_pdo_pgsql or php_pgsql PHP extension to use PostgreSQL binary on your projects
 
 ## 1.0.20 (2016/06/23)
 
