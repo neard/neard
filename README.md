@@ -107,5 +107,5 @@ Launch `neard.exe`.
 
 ## License
 
-LGPL. See `LICENSE` for more details.<br />
+LGPL-3.0. See `LICENSE` for more details.<br />
 Icon credit to [David Vignoni](http://www.icon-king.com/).
