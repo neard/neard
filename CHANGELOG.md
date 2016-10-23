@@ -55,8 +55,7 @@
 * **required** : Add line `phpmemadminVersion = "0.3.1"` after `gitlistVersion` in `neard.conf`
 * **required** : Add line `phppgadminVersion = "5.2"` after `phpmyadminVersion` in `neard.conf`
 * **required** : Remove then replace file `sprites.dat`
-* **optional** : Download the latest [PHP bundle](https://github.com/crazy-max/neard-bin-php/releases) to add Memcache extension
-* **optional** : Enable php_pdo_pgsql or php_pgsql PHP extension to use PostgreSQL binary on your projects
+* **optional** : Download one of the latest [PHP bundle](https://github.com/crazy-max/neard-bin-php/releases) to add Memcache extension
 
 ## 1.0.20 (2016/06/23)
 
