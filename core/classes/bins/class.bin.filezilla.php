@@ -386,7 +386,7 @@ class BinFilezilla
     
         $this->reload();
         if ($this->enable) {
-            Util::installService($this, $port, null, $showWindow);
+            Util::installService($this, $this->port, null, $showWindow);
         } else {
             Util::removeService($this->service, $this->name, $showWindow);
         }
