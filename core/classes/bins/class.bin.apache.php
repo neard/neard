@@ -681,7 +681,7 @@ class BinApache
     
         $this->reload();
         if ($this->enable) {
-            Util::installService($this, $port, self::CMD_SYNTAX_CHECK, $showWindow);
+            Util::installService($this, $this->port, self::CMD_SYNTAX_CHECK, $showWindow);
         } else {
             Util::removeService($this->service, $this->name, $showWindow);
         }
