@@ -74,8 +74,8 @@ And many other features.
 
 First, read the [Requirements Wiki page](../../wiki/Requirements).<br />
 Then go to the [releases page](https://github.com/crazy-max/neard/releases) and download one of the available archive :
-* `neard-x.x.xx.7z`
-* `neard-x.x.xx.zip`
+* `neard-x.x.x.7z`
+* `neard-x.x.x.zip`
 
 ### Binaries, tools, applications
 

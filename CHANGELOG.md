@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.22
+
+* Port undefined error for MailHog service (Issue #163)
+
 ## 1.0.21 (2016/10/23)
 
 * Replace launchStartup with enable for binaries (Issue #153)

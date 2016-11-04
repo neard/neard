@@ -41,7 +41,7 @@ class ActionService
                 $port = $bin->getPort();
                 $syntaxCheckCmd = BinMysql::CMD_SYNTAX_CHECK;
             } elseif ($sName == BinMariadb::SERVICE_NAME) {
-                $bin = $neardBins->getMailhog();
+                $bin = $neardBins->getMariadb();
                 $port = $bin->getPort();
                 $syntaxCheckCmd = BinMariadb::CMD_SYNTAX_CHECK;
             } elseif ($sName == BinPostgresql::SERVICE_NAME) {
