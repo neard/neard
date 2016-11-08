@@ -350,51 +350,9 @@ class ActionStartup
         $this->splash->setTextLoading(sprintf($neardLang->getValue(Lang::STARTUP_CHANGE_PATH_TEXT), $this->rootPath));
         $this->splash->incrProgressBar();
         
-        $unixOldPath = Util::formatUnixPath($neardCore->getLastPathContent());
-        $windowsOldPath = Util::formatWindowsPath($neardCore->getLastPathContent());
-        $unixCurrentPath = Util::formatUnixPath($this->rootPath);
-        $windowsCurrentPath = Util::formatWindowsPath($this->rootPath);
-        $countChangedOcc = 0;
-        $countChangedFiles = 0;
-        
-        foreach ($this->filesToScan as $fileToScan) {
-            $tmpCountChangedOcc = 0;
-            $fileContentOr = file_get_contents($fileToScan);
-            $fileContent = $fileContentOr;
-            
-            // old path
-            preg_match('#' . $unixOldPath . '#i', $fileContent, $unixMatches);
-            if (!empty($unixMatches)) {
-                $fileContent = str_replace($unixOldPath, $unixCurrentPath, $fileContent, $countChanged);
-                $tmpCountChangedOcc += $countChanged;
-            }
-            preg_match('#' . str_replace('\\', '\\\\', $windowsOldPath) . '#i', $fileContent, $windowsMatches);
-            if (!empty($windowsMatches)) {
-                $fileContent = str_replace($windowsOldPath, $windowsCurrentPath, $fileContent, $countChanged);
-                $tmpCountChangedOcc += $countChanged;
-            }
-            
-            // placeholders
-            preg_match('#' . Core::PATH_LIN_PLACEHOLDER . '#i', $fileContent, $unixMatches);
-            if (!empty($unixMatches)) {
-                $fileContent = str_replace(Core::PATH_LIN_PLACEHOLDER, $unixCurrentPath, $fileContent, $countChanged);
-                $tmpCountChangedOcc += $countChanged;
-            }
-            preg_match('#' . Core::PATH_WIN_PLACEHOLDER . '#i', $fileContent, $windowsMatches);
-            if (!empty($windowsMatches)) {
-                $fileContent = str_replace(Core::PATH_WIN_PLACEHOLDER, $windowsCurrentPath, $fileContent, $countChanged);
-                $tmpCountChangedOcc += $countChanged;
-            }
-            
-            if ($fileContentOr != $fileContent) {
-                $countChangedFiles++;
-                $countChangedOcc += $tmpCountChangedOcc;
-                file_put_contents($fileToScan, $fileContent);
-            }
-        }
-        
-        $this->writeLog('Nb files changed: ' . $countChangedFiles);
-        $this->writeLog('Nb occurences changed: ' . $countChangedOcc);
+        $result = Util::changePath($this->filesToScan, $this->rootPath);
+        $this->writeLog('Nb files changed: ' . $result['countChangedFiles']);
+        $this->writeLog('Nb occurences changed: ' . $result['countChangedOcc']);
     }
     
     private function savePath()

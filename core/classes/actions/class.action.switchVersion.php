@@ -10,10 +10,11 @@ class ActionSwitchVersion
     private $restart;
     private $service;
     private $changePort;
+    private $filesToScan;
     private $boxTitle;
     
     const GAUGE_SERVICES = 1;
-    const GAUGE_OTHERS = 5;
+    const GAUGE_OTHERS = 6;
     
     public function __construct($args)
     {
@@ -28,42 +29,49 @@ class ActionSwitchVersion
                 $this->restart = true;
                 $this->service = $neardBins->getApache()->getService();
                 $this->changePort = true;
+                $this->filesToScan = array($neardBins->getApache()->getRootPath() => array('.ini', '.conf'));
             } elseif ($args[0] == $neardBins->getPhp()->getName()) {
                 $this->bin = $neardBins->getPhp();
                 $this->currentVersion = $neardBins->getPhp()->getVersion();
                 $this->restart = true;
                 $this->service = $neardBins->getApache()->getService();
                 $this->changePort = false;
+                $this->filesToScan = array($neardBins->getPhp()->getRootPath() => array('.php', '.bat', '.ini', '.reg', '.inc'));
             } elseif ($args[0] == $neardBins->getMysql()->getName()) {
                 $this->bin = $neardBins->getMysql();
                 $this->currentVersion = $neardBins->getMysql()->getVersion();
                 $this->restart = true;
                 $this->service = $neardBins->getMysql()->getService();
                 $this->changePort = true;
+                $this->filesToScan = array($neardBins->getMysql()->getRootPath() => array('my.ini'));
             } elseif ($args[0] == $neardBins->getMariadb()->getName()) {
                 $this->bin = $neardBins->getMariadb();
                 $this->currentVersion = $neardBins->getMariadb()->getVersion();
                 $this->restart = true;
                 $this->service = $neardBins->getMariadb()->getService();
                 $this->changePort = true;
+                $this->filesToScan = array($neardBins->getMariadb()->getRootPath() => array('my.ini'));
             } elseif ($args[0] == $neardBins->getPostgresql()->getName()) {
                 $this->bin = $neardBins->getPostgresql();
                 $this->currentVersion = $neardBins->getPostgresql()->getVersion();
                 $this->restart = true;
                 $this->service = $neardBins->getPostgresql()->getService();
                 $this->changePort = true;
+                $this->filesToScan = array($neardBins->getPostgresql()->getRootPath() => array('.nrd', '.conf', '.bat'));
             } elseif ($args[0] == $neardBins->getNodejs()->getName()) {
                 $this->bin = $neardBins->getNodejs();
                 $this->currentVersion = $neardBins->getNodejs()->getVersion();
                 $this->restart = true;
                 $this->service = null;
                 $this->changePort = false;
+                $this->filesToScan = array($neardBins->getNodejs()->getRootPath() => array('.bat', 'npmrc'));
             } elseif ($args[0] == $neardBins->getFilezilla()->getName()) {
                 $this->bin = $neardBins->getFilezilla();
                 $this->currentVersion = $neardBins->getFilezilla()->getVersion();
                 $this->restart = true;
                 $this->service = $neardBins->getFilezilla()->getService();
                 $this->changePort = true;
+                $this->filesToScan = array($neardBins->getFilezilla()->getRootPath() => array('.xml'));
             }
             
             $this->boxTitle = sprintf($neardLang->getValue(Lang::SWITCH_VERSION_TITLE), $this->bin->getName(), $this->version);
@@ -91,6 +99,13 @@ class ActionSwitchVersion
             $neardWinbinder->destroyWindow($window);
         }
         
+        // scan folder
+        $this->neardSplash->incrProgressBar();
+        if ($this->filesToScan != null) {
+            Util::changePath(Util::getFilesToScan($this->filesToScan));
+        }
+        
+        // switch
         $this->neardSplash->incrProgressBar();
         if ($this->bin->switchVersion($this->version, true) === false) {
             $this->neardSplash->incrProgressBar(self::GAUGE_SERVICES * count($neardBins->getServices()) + self::GAUGE_OTHERS);

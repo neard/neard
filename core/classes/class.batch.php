@@ -161,10 +161,13 @@ class Batch
         return !$neardBins->getFilezilla()->getService()->isInstalled();
     }
     
-    public static function initializeMysql()
+    public static function initializeMysql($path)
     {
-        global $neardBins;
-        self::exec('initializeMysql', 'CMD /C "' . $neardBins->getMysql()->getCurrentPath() . '/init.bat"', 15);
+        if (!file_exists($path . '/init.bat')) {
+            Util::logWarning($path . '/init.bat does not exist');
+            return;
+        }
+        self::exec('initializeMysql', 'CMD /C "' . $path . '/init.bat"', 15);
     }
     
     public static function installPostgresqlService()
@@ -197,10 +200,13 @@ class Batch
         return !$neardBins->getPostgresql()->getService()->isInstalled();
     }
     
-    public static function initializePostgresql()
+    public static function initializePostgresql($path)
     {
-        global $neardBins;
-        self::exec('initializePostgresql', 'CMD /C "' . $neardBins->getPostgresql()->getCurrentPath() . '/init.bat"', 15);
+        if (!file_exists($path . '/init.bat')) {
+            Util::logWarning($path . '/init.bat does not exist');
+            return;
+        }
+        self::exec('initializePostgresql', 'CMD /C "' . $path . '/init.bat"', 15);
     }
     
     public static function setServiceDisplayName($serviceName, $displayName)
