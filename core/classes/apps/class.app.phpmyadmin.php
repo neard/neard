@@ -17,6 +17,7 @@ class AppPhpmyadmin
     private $currentPath;
     private $neardConf;
     private $neardConfRaw;
+    private $enable;
     
     private $versions;
     private $confs;
@@ -32,20 +33,25 @@ class AppPhpmyadmin
         $this->rootPath = $rootPath;
         $this->currentPath = $rootPath . '/phpmyadmin' . $this->version;
         $this->neardConf = $this->currentPath . '/neard.conf';
+        $this->enable = is_dir($this->currentPath);
         
+        $versions = array();
+        $this->neardConfRaw = @parse_ini_file($this->neardConf);
+        if ($this->neardConfRaw !== false) {
+            $versions[self::LOCAL_CFG_PHP52] = $this->neardConfRaw[self::LOCAL_CFG_PHP52];
+            $versions[self::LOCAL_CFG_PHP53] = $this->neardConfRaw[self::LOCAL_CFG_PHP53];
+            $versions[self::LOCAL_CFG_PHP55] = $this->neardConfRaw[self::LOCAL_CFG_PHP55];
+        }
+        
+        if (!$this->enable) {
+            Util::logInfo($this->name . ' is not enabled!');
+            return;
+        }
         if (!is_dir($this->currentPath)) {
             Util::logError(sprintf($neardLang->getValue(Lang::ERROR_FILE_NOT_FOUND), $this->name . ' ' . $this->version, $this->currentPath));
         }
         if (!is_file($this->neardConf)) {
             Util::logError(sprintf($neardLang->getValue(Lang::ERROR_CONF_NOT_FOUND), $this->name . ' ' . $this->version, $this->neardConf));
-        }
-        
-        $versions = array();
-        $this->neardConfRaw = parse_ini_file($this->neardConf);
-        if ($this->neardConfRaw !== false) {
-            $versions[self::LOCAL_CFG_PHP52] = $this->neardConfRaw[self::LOCAL_CFG_PHP52];
-            $versions[self::LOCAL_CFG_PHP53] = $this->neardConfRaw[self::LOCAL_CFG_PHP53];
-            $versions[self::LOCAL_CFG_PHP55] = $this->neardConfRaw[self::LOCAL_CFG_PHP55];
         }
         
         foreach ($versions as $key => $versionSub) {
@@ -187,6 +193,11 @@ class AppPhpmyadmin
     public function getCurrentPath()
     {
         return $this->currentPath;
+    }
+    
+    public function isEnable()
+    {
+        return $this->enable;
     }
     
     public function getConfs()
