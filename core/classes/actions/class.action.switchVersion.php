@@ -72,6 +72,12 @@ class ActionSwitchVersion
                 $this->service = $neardBins->getFilezilla()->getService();
                 $this->changePort = true;
                 $this->filesToScan = array($neardBins->getFilezilla()->getRootPath() => array('.xml'));
+            } elseif ($args[0] == $neardBins->getMemcached()->getName()) {
+                $this->bin = $neardBins->getMemcached();
+                $this->currentVersion = $neardBins->getMemcached()->getVersion();
+                $this->restart = true;
+                $this->service = $neardBins->getMemcached()->getService();
+                $this->changePort = true;
             }
             
             $this->boxTitle = sprintf($neardLang->getValue(Lang::SWITCH_VERSION_TITLE), $this->bin->getName(), $this->version);
