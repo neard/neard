@@ -19,6 +19,7 @@ class ToolSvn
     private $currentPath;
     private $neardConf;
     private $neardConfRaw;
+    private $enable;
     
     private $reposFile;
     private $reposCacheFile;
@@ -40,9 +41,23 @@ class ToolSvn
         $this->rootPath = $rootPath;
         $this->currentPath = $rootPath . '/svn' . $this->version;
         $this->neardConf = $this->currentPath . '/neard.conf';
+        $this->enable = is_dir($this->currentPath);
+        
         $this->reposFile = $this->currentPath . '/' . self::REPOS_FILE;
         $this->reposCacheFile = $this->currentPath . '/' . self::REPOS_CACHE_FILE;
         
+        $this->neardConfRaw = @parse_ini_file($this->neardConf);
+        if ($this->neardConfRaw !== false) {
+            $this->exe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_EXE];
+            $this->admin = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_ADMIN];
+            $this->server = $neardBs->getRootPath() . '/' . $this->neardConfRaw[self::LOCAL_CFG_SERVER];
+            $this->scanStartup = $this->neardConfRaw[self::LOCAL_CFG_SCAN_STARTUP];
+        }
+        
+        if (!$this->enable) {
+            Util::logInfo($this->name . ' is not enabled!');
+            return;
+        }
         if (!is_dir($this->currentPath)) {
             Util::logError(sprintf($neardLang->getValue(Lang::ERROR_FILE_NOT_FOUND), $this->name . ' ' . $this->version, $this->currentPath));
         }
@@ -52,15 +67,6 @@ class ToolSvn
         if (!is_file($this->reposFile)) {
             Util::logError(sprintf($neardLang->getValue(Lang::ERROR_CONF_NOT_FOUND), $this->name . ' ' . $this->version, $this->reposFile));
         }
-        
-        $this->neardConfRaw = parse_ini_file($this->neardConf);
-        if ($this->neardConfRaw !== false) {
-            $this->exe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_EXE];
-            $this->admin = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_ADMIN];
-            $this->server = $neardBs->getRootPath() . '/' . $this->neardConfRaw[self::LOCAL_CFG_SERVER];
-            $this->scanStartup = $this->neardConfRaw[self::LOCAL_CFG_SCAN_STARTUP];
-        }
-        
         if (!is_file($this->exe)) {
             Util::logError(sprintf($neardLang->getValue(Lang::ERROR_EXE_NOT_FOUND), $this->name . ' ' . $this->version, $this->exe));
         }
@@ -183,6 +189,11 @@ class ToolSvn
     public function getCurrentPath()
     {
         return $this->currentPath;
+    }
+    
+    public function isEnable()
+    {
+        return $this->enable;
     }
     
     public function getRepos()
