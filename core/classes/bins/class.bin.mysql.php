@@ -362,8 +362,13 @@ class BinMysql
         
         $boxTitle = sprintf($neardLang->getValue(Lang::SWITCH_VERSION_TITLE), $this->getName(), $version);
         
+        $currentPath = str_replace('mysql' . $this->getVersion(), 'mysql' . $version, $this->getCurrentPath());
         $conf = str_replace('mysql' . $this->getVersion(), 'mysql' . $version, $this->getConf());
         $neardConf = str_replace('mysql' . $this->getVersion(), 'mysql' . $version, $this->neardConf);
+        
+        if ($this->version != $version) {
+            $this->initData($currentPath, $version);
+        }
         
         if (!file_exists($conf) || !file_exists($neardConf)) {
             Util::logError('Neard config files not found for ' . $this->getName() . ' ' . $version);
@@ -408,16 +413,19 @@ class BinMysql
         return true;
     }
     
-    public function initData() {
-        if (version_compare($this->getVersion(), '5.7.0', '<')) {
+    public function initData($path = null, $version = null) {
+        $path = $path != null ? $path : $this->getCurrentPath();
+        $version = $version != null ? $version : $this->getVersion();
+        
+        if (version_compare($version, '5.7.0', '<')) {
             return;
         }
         
-        if (file_exists($this->getCurrentPath() . '/data')) {
+        if (file_exists($path . '/data')) {
             return;
         }
         
-        Batch::initializeMysql();
+        Batch::initializeMysql($path);
     }
     
     public function getCmdLineOutput($cmd)

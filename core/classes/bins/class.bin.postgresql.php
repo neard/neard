@@ -351,8 +351,13 @@ class BinPostgresql
         
         $boxTitle = sprintf($neardLang->getValue(Lang::SWITCH_VERSION_TITLE), $this->getName(), $version);
         
+        $currentPath = str_replace('postgresql' . $this->getVersion(), 'postgresql' . $version, $this->getCurrentPath());
         $conf = str_replace('postgresql' . $this->getVersion(), 'postgresql' . $version, $this->getConf());
         $neardConf = str_replace('postgresql' . $this->getVersion(), 'postgresql' . $version, $this->neardConf);
+        
+        if ($this->version != $version) {
+            $this->initData($currentPath);
+        }
         
         if (!file_exists($conf) || !file_exists($neardConf)) {
             Util::logError('Neard config files not found for ' . $this->getName() . ' ' . $version);
@@ -394,12 +399,14 @@ class BinPostgresql
         return true;
     }
     
-    public function initData() {
-        if (file_exists($this->getCurrentPath() . '/data')) {
+    public function initData($path = null) {
+        $path = $path != null ? $path : $this->getCurrentPath();
+        
+        if (file_exists($path . '/data')) {
             return;
         }
         
-        Batch::initializePostgresql();
+        Batch::initializePostgresql($path);
     }
     
     public function rebuildConf()

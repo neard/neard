@@ -626,6 +626,58 @@ class Util
         return $result;
     }
     
+    public static function changePath($filesToScan, $rootPath = null)
+    {
+        global $neardBs, $neardCore;
+        
+        $result = array(
+            'countChangedOcc' => 0,
+            'countChangedFiles' => 0
+        );
+        
+        $rootPath = $rootPath != null ? $rootPath : $neardBs->getRootPath();
+        $unixOldPath = Util::formatUnixPath($neardCore->getLastPathContent());
+        $windowsOldPath = Util::formatWindowsPath($neardCore->getLastPathContent());
+        $unixCurrentPath = Util::formatUnixPath($rootPath);
+        $windowsCurrentPath = Util::formatWindowsPath($rootPath);
+        
+        foreach ($filesToScan as $fileToScan) {
+            $tmpCountChangedOcc = 0;
+            $fileContentOr = file_get_contents($fileToScan);
+            $fileContent = $fileContentOr;
+        
+            // old path
+            preg_match('#' . $unixOldPath . '#i', $fileContent, $unixMatches);
+            if (!empty($unixMatches)) {
+                $fileContent = str_replace($unixOldPath, $unixCurrentPath, $fileContent, $countChanged);
+                $tmpCountChangedOcc += $countChanged;
+            }
+            preg_match('#' . str_replace('\\', '\\\\', $windowsOldPath) . '#i', $fileContent, $windowsMatches);
+            if (!empty($windowsMatches)) {
+                $fileContent = str_replace($windowsOldPath, $windowsCurrentPath, $fileContent, $countChanged);
+                $tmpCountChangedOcc += $countChanged;
+            }
+        
+            // placeholders
+            preg_match('#' . Core::PATH_LIN_PLACEHOLDER . '#i', $fileContent, $unixMatches);
+            if (!empty($unixMatches)) {
+                $fileContent = str_replace(Core::PATH_LIN_PLACEHOLDER, $unixCurrentPath, $fileContent, $countChanged);
+                $tmpCountChangedOcc += $countChanged;
+            }
+            preg_match('#' . Core::PATH_WIN_PLACEHOLDER . '#i', $fileContent, $windowsMatches);
+            if (!empty($windowsMatches)) {
+                $fileContent = str_replace(Core::PATH_WIN_PLACEHOLDER, $windowsCurrentPath, $fileContent, $countChanged);
+                $tmpCountChangedOcc += $countChanged;
+            }
+        
+            if ($fileContentOr != $fileContent) {
+                $result['countChangedOcc'] += $tmpCountChangedOcc;
+                $result['countChangedFiles'] += 1;
+                file_put_contents($fileToScan, $fileContent);
+            }
+        }
+    }
+    
     public static function getLatestVersion()
     {
         $result = self::getRemoteFile('https://raw.githubusercontent.com/wiki/crazy-max/neard/latestVersion.md');

@@ -225,6 +225,9 @@ class Win32Service
             $neardBins->getMailhog()->rebuildConf();
         } elseif ($this->getName() == BinMemcached::SERVICE_NAME) {
             $neardBins->getMemcached()->rebuildConf();
+        } elseif ($this->getName() == BinPostgresql::SERVICE_NAME) {
+            $neardBins->getPostgresql()->rebuildConf();
+            $neardBins->getPostgresql()->initData();
         }
         
         $start = dechex($this->callWin32Service('win32_start_service', $this->getName(), true));
