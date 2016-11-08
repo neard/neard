@@ -13,6 +13,7 @@ class AppAdminer
     private $currentPath;
     private $neardConf;
     private $neardConfRaw;
+    private $enable;
     
     private $conf;
     
@@ -27,19 +28,23 @@ class AppAdminer
         $this->rootPath = $rootPath;
         $this->currentPath = $rootPath . '/adminer' . $this->version;
         $this->neardConf = $this->currentPath . '/neard.conf';
+        $this->enable = is_dir($this->currentPath);
         
+        $this->neardConfRaw = @parse_ini_file($this->neardConf);
+        if ($this->neardConfRaw !== false) {
+            $this->conf = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_CONF];
+        }
+        
+        if (!$this->enable) {
+            Util::logInfo($this->name . ' is not enabled!');
+            return;
+        }
         if (!is_dir($this->currentPath)) {
             Util::logError(sprintf($neardLang->getValue(Lang::ERROR_FILE_NOT_FOUND), $this->name . ' ' . $this->version, $this->currentPath));
         }
         if (!is_file($this->neardConf)) {
             Util::logError(sprintf($neardLang->getValue(Lang::ERROR_CONF_NOT_FOUND), $this->name . ' ' . $this->version, $this->neardConf));
         }
-        
-        $this->neardConfRaw = parse_ini_file($this->neardConf);
-        if ($this->neardConfRaw !== false) {
-            $this->conf = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_CONF];
-        }
-        
         if (!is_file($this->conf)) {
             Util::logError(sprintf($neardLang->getValue(Lang::ERROR_CONF_NOT_FOUND), $this->name . ' ' . $this->version, $this->conf));
         }
@@ -131,6 +136,11 @@ class AppAdminer
     public function getCurrentPath()
     {
         return $this->currentPath;
+    }
+    
+    public function isEnable()
+    {
+        return $this->enable;
     }
 
     public function getConf()
