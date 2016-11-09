@@ -64,6 +64,7 @@ If you've got a problem do not forget to read the [Reporting an issue Wiki page]
 * **[Notepad2-mod](../../wiki/toolNotepad2-mod)**, a fork of Notepad2 text editor with syntax highlighting.
 * **[PhpMetrics](../../wiki/toolPhpMetrics)**, gives metrics about PHP project and classes.
 * **[PHPUnit](../../wiki/toolPHPUnit)**, a programmer-oriented testing framework for PHP.
+* **[Python](../../wiki/toolPython)**, a widely used high-level, general-purpose, interpreted, dynamic programming language.
 * **[SVN](../../wiki/toolSVN)**, a software versioning and revision control system.
 * **[WP-CLI](../../wiki/toolWP-CLI)**, a command line interface for WordPress.
 * **[XDebugClient](../../wiki/toolXDebugClient)**, a simple frontend for XDebug.

@@ -318,19 +318,45 @@ class Util
             self::logDebug('App reg key from registry: ' . $value);
         } else {
             global $neardBins, $neardTools;
-            $value = $neardBins->getApache()->getCurrentPath() . '/bin;';
-            $value .= $neardBins->getPhp()->getCurrentPath() . ';';
-            $value .= $neardBins->getPhp()->getPearPath() . ';';
-            $value .= $neardBins->getPhp()->getImagickPath() . ';';
-            $value .= $neardBins->getNodejs()->getCurrentPath() . ';';
-            $value .= $neardTools->getComposer()->getCurrentPath() . ';';
-            $value .= $neardTools->getDrush()->getCurrentPath() . ';';
-            $value .= $neardTools->getGit()->getCurrentPath() . '/bin;';
-            $value .= $neardTools->getImageMagick()->getCurrentPath() . ';';
-            $value .= $neardTools->getPhpMetrics()->getCurrentPath() . ';';
-            $value .= $neardTools->getPhpUnit()->getCurrentPath() . ';';
-            $value .= $neardTools->getSvn()->getCurrentPath() . '/bin;';
-            $value .= $neardTools->getWpCli()->getCurrentPath() . ';';
+            $value = '';
+            if ($neardBins->getApache()->isEnable()) {
+                $value .= $neardBins->getApache()->getCurrentPath() . '/bin;';
+            }
+            if ($neardBins->getPhp()->isEnable()) {
+                $value .= $neardBins->getPhp()->getCurrentPath() . ';';
+                $value .= $neardBins->getPhp()->getPearPath() . ';';
+                $value .= $neardBins->getPhp()->getImagickPath() . ';';
+            }
+            if ($neardBins->getNodejs()->isEnable()) {
+                $value .= $neardBins->getNodejs()->getCurrentPath() . ';';
+            }
+            if ($neardTools->getComposer()->isEnable()) {
+                $value .= $neardTools->getComposer()->getCurrentPath() . ';';
+            }
+            if ($neardTools->getDrush()->isEnable()) {
+                $value .= $neardTools->getDrush()->getCurrentPath() . ';';
+            }
+            if ($neardTools->getGit()->isEnable()) {
+                $value .= $neardTools->getGit()->getCurrentPath() . '/bin;';
+            }
+            if ($neardTools->getImageMagick()->isEnable()) {
+                $value .= $neardTools->getImageMagick()->getCurrentPath() . ';';
+            }
+            if ($neardTools->getPhpMetrics()->isEnable()) {
+                $value .= $neardTools->getPhpMetrics()->getCurrentPath() . ';';
+            }
+            if ($neardTools->getPhpUnit()->isEnable()) {
+                $value .= $neardTools->getPhpUnit()->getCurrentPath() . ';';
+            }
+            if ($neardTools->getPython()->isEnable()) {
+                $value .= $neardTools->getPython()->getCurrentPath() . '/bin;';
+            }
+            if ($neardTools->getSvn()->isEnable()) {
+                $value .= $neardTools->getSvn()->getCurrentPath() . '/bin;';
+            }
+            if ($neardTools->getWpCli()->isEnable()) {
+                $value .= $neardTools->getWpCli()->getCurrentPath() . ';';
+            }
             $value = self::formatWindowsPath($value);
             self::logDebug('Generated app reg key: ' . $value);
         }
@@ -609,6 +635,7 @@ class Util
             $neardTools->getConsole()->getRootPath()        => array('console.xml', '.ini', '.btm'),
             $neardTools->getDrush()->getRootPath()          => array('drush.bat'),
             $neardTools->getWpCli()->getRootPath()          => array('wp.bat'),
+            $neardTools->getPython()->getRootPath()         => array('winpython.ini'),
             $neardCore->getResourcesPath() . '/homepage'    => array('.conf'),
         );
     }

@@ -34,6 +34,8 @@ class Lang
     const MODULES = 'modules';
     const NAME = 'name';
     const PAYPAL = 'paypal';
+    const PYTHON_CONSOLE = 'pythonConsole';
+    const PYTHON_CP = 'pythonCp';
     const QUIT = 'quit';
     const READ_CHANGELOG = 'readChangelog';
     const RELOAD = 'reload';
@@ -123,6 +125,7 @@ class Lang
     const NOTEPAD2MOD = 'notepad2mod';
     const PHPMETRICS = 'phpmetrics';
     const PHPUNIT = 'phpunit';
+    const PYTHON = 'python';
     const SVN = 'svn';
     const WPCLI = 'wpcli';
     const XDC = 'xdc';
@@ -376,6 +379,8 @@ class Lang
             self::MODULES,
             self::NAME,
             self::PAYPAL,
+            self::PYTHON_CONSOLE,
+            self::PYTHON_CP,
             self::QUIT,
             self::READ_CHANGELOG,
             self::RELOAD,
@@ -465,6 +470,7 @@ class Lang
             self::NOTEPAD2MOD,
             self::PHPMETRICS,
             self::PHPUNIT,
+            self::PYTHON,
             self::SVN,
             self::WPCLI,
             self::XDC,

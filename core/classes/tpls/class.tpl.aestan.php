@@ -49,6 +49,8 @@ class TplAestan
     const GLYPH_FILEZILLA = 47;
     const GLYPH_FOLDER_DISABLED = 48;
     const GLYPH_FOLDER_ENABLED = 49;
+    const GLYPH_PYTHON = 50;
+    const GLYPH_PYTHON_CP = 51;
     
     const SERVICE_START = 'startresume';
     const SERVICE_STOP = 'stop';

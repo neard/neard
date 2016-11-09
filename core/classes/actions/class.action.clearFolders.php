@@ -6,7 +6,7 @@ class ActionClearFolders
     {
         global $neardBs, $neardCore;
         
-        Util::clearFolder($neardBs->getTmpPath(), array('cachegrind', 'npm-cache', 'drush', 'wp-cli', 'mailhog'));
+        Util::clearFolder($neardBs->getTmpPath(), array('cachegrind', 'npm-cache', 'drush', 'wp-cli', 'mailhog', 'pip'));
         Util::clearFolder($neardCore->getTmpPath());
     }
 
