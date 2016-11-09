@@ -28,6 +28,11 @@ class TplAppTools
         $resultItems .= $tplSvn[TplApp::SECTION_CALL] . PHP_EOL;
         $resultActions .= $tplSvn[TplApp::SECTION_CONTENT] . PHP_EOL;
         
+        // Python
+        $tplPython = TplAppPython::process();
+        $resultItems .= $tplPython[TplApp::SECTION_CALL] . PHP_EOL;
+        $resultActions .= $tplPython[TplApp::SECTION_CONTENT] . PHP_EOL;
+        
         // Composer
         $resultItems .= TplAestan::getItemConsole(
             $neardLang->getValue(Lang::COMPOSER),

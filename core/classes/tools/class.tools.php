@@ -11,6 +11,7 @@ class Tools
     private $notepad2mod;
     private $phpmetrics;
     private $phpunit;
+    private $python;
     private $svn;
     private $wpcli;
     private $xdc;
@@ -45,6 +46,7 @@ class Tools
             $this->getNotepad2Mod(),
             $this->getPhpMetrics(),
             $this->getPhpUnit(),
+            $this->getPython(),
             $this->getSvn(),
             $this->getWpCli(),
             $this->getXdc(),
@@ -121,6 +123,14 @@ class Tools
             $this->phpunit = new ToolPhpUnit($this->getRootPath('phpunit'));
         }
         return $this->phpunit;
+    }
+    
+    public function getPython()
+    {
+        if ($this->python == null) {
+            $this->python = new ToolPython($this->getRootPath('python'));
+        }
+        return $this->python;
     }
     
     public function getSvn()

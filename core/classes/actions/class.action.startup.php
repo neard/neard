@@ -209,7 +209,7 @@ class ActionStartup
         $this->splash->incrProgressBar();
     
         $this->writeLog('Clear tmp folders');
-        Util::clearFolder($neardBs->getTmpPath(), array('cachegrind', 'npm-cache', 'drush', 'wp-cli', 'mailhog'));
+        Util::clearFolder($neardBs->getTmpPath(), array('cachegrind', 'npm-cache', 'drush', 'wp-cli', 'mailhog', 'pip'));
         Util::clearFolder($neardCore->getTmpPath());
     }
     

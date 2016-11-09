@@ -307,4 +307,10 @@ class ToolConsole
         global $neardLang, $neardTools;
         return $neardLang->getValue(Lang::WPCLI) . ' ' . $neardTools->getWpCli()->getVersion();
     }
+    
+    public function getTabTitlePython()
+    {
+        global $neardLang, $neardTools;
+        return $neardLang->getValue(Lang::PYTHON) . ' ' . $neardTools->getPython()->getVersion();
+    }
 }
