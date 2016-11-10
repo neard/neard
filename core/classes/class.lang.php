@@ -126,6 +126,7 @@ class Lang
     const PHPMETRICS = 'phpmetrics';
     const PHPUNIT = 'phpunit';
     const PYTHON = 'python';
+    const RUBY = 'ruby';
     const SVN = 'svn';
     const WPCLI = 'wpcli';
     const XDC = 'xdc';
@@ -471,6 +472,7 @@ class Lang
             self::PHPMETRICS,
             self::PHPUNIT,
             self::PYTHON,
+            self::RUBY,
             self::SVN,
             self::WPCLI,
             self::XDC,

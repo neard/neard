@@ -313,4 +313,10 @@ class ToolConsole
         global $neardLang, $neardTools;
         return $neardLang->getValue(Lang::PYTHON) . ' ' . $neardTools->getPython()->getVersion();
     }
+    
+    public function getTabTitleRuby()
+    {
+        global $neardLang, $neardTools;
+        return $neardLang->getValue(Lang::RUBY) . ' ' . $neardTools->getRuby()->getVersion();
+    }
 }

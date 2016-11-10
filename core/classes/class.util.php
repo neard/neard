@@ -351,6 +351,9 @@ class Util
             if ($neardTools->getPython()->isEnable()) {
                 $value .= $neardTools->getPython()->getCurrentPath() . '/bin;';
             }
+            if ($neardTools->getRuby()->isEnable()) {
+                $value .= $neardTools->getRuby()->getCurrentPath() . '/bin;';
+            }
             if ($neardTools->getSvn()->isEnable()) {
                 $value .= $neardTools->getSvn()->getCurrentPath() . '/bin;';
             }
@@ -636,6 +639,7 @@ class Util
             $neardTools->getDrush()->getRootPath()          => array('drush.bat'),
             $neardTools->getWpCli()->getRootPath()          => array('wp.bat'),
             $neardTools->getPython()->getRootPath()         => array('winpython.ini', '.bat', '.conf'),
+            $neardTools->getRuby()->getRootPath()           => array('.bat'),
             $neardCore->getResourcesPath() . '/homepage'    => array('.conf'),
         );
     }

@@ -14,6 +14,7 @@ class TplConsole
     const ICON_DRUSH = 'drush.ico';
     const ICON_WPCLI = 'wpcli.ico';
     const ICON_PYTHON = 'python.ico';
+    const ICON_RUBY = 'ruby.ico';
     
     private function __construct()
     {
@@ -229,6 +230,7 @@ class TplConsole
                 self::getTabDrushSection() . PHP_EOL .
                 self::getTabWpCliSection() . PHP_EOL .
                 self::getTabPythonSection() . PHP_EOL .
+                self::getTabRubySection() . PHP_EOL .
             self::getIncrStr(1) . '</tabs>';
     }
     
@@ -453,6 +455,21 @@ class TplConsole
         return self::getTab(
             $neardTools->getConsole()->getTabTitlePython(),
             self::ICON_PYTHON,
+            Util::formatWindowsPath($shell),
+            $neardBs->getWwwPath()
+        );
+    }
+    
+    private static function getTabRubySection()
+    {
+        global $neardBs, $neardTools;
+    
+        $shell = $neardTools->getConsole()->getCmdShell() . ' ' .
+            '&quot;' . $neardTools->getRuby()->getConsoleExe() . '&quot;';
+    
+        return self::getTab(
+            $neardTools->getConsole()->getTabTitleRuby(),
+            self::ICON_RUBY,
             Util::formatWindowsPath($shell),
             $neardBs->getWwwPath()
         );
