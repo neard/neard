@@ -12,6 +12,7 @@ class Tools
     private $phpmetrics;
     private $phpunit;
     private $python;
+    private $ruby;
     private $svn;
     private $wpcli;
     private $xdc;
@@ -47,6 +48,7 @@ class Tools
             $this->getPhpMetrics(),
             $this->getPhpUnit(),
             $this->getPython(),
+            $this->getRuby(),
             $this->getSvn(),
             $this->getWpCli(),
             $this->getXdc(),
@@ -131,6 +133,14 @@ class Tools
             $this->python = new ToolPython($this->getRootPath('python'));
         }
         return $this->python;
+    }
+    
+    public function getRuby()
+    {
+        if ($this->ruby == null) {
+            $this->ruby = new ToolRuby($this->getRootPath('ruby'));
+        }
+        return $this->ruby;
     }
     
     public function getSvn()

@@ -89,6 +89,13 @@ class TplAppTools
             $neardTools->getConsole()->getTabTitlePhpUnit()
         ) . PHP_EOL;
         
+        // Ruby
+        $resultItems .= TplAestan::getItemConsole(
+            $neardLang->getValue(Lang::RUBY),
+            TplAestan::GLYPH_RUBY,
+            $neardTools->getConsole()->getTabTitleRuby()
+        ) . PHP_EOL;
+        
         // WP-CLI
         $resultItems .= TplAestan::getItemConsole(
             $neardLang->getValue(Lang::WPCLI),

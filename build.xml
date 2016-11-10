@@ -85,6 +85,7 @@
         <getbundle releasesurl="${tool.phpmetrics.url}" version="${tool.phpmetrics.version}" dest="${release.target}/${release.name}/tools/phpmetrics" />
         <getbundle releasesurl="${tool.phpunit.url}" version="${tool.phpunit.version}" dest="${release.target}/${release.name}/tools/phpunit" />
         <getbundle releasesurl="${tool.python.url}" version="${tool.python.version}" dest="${release.target}/${release.name}/tools/python" />
+        <getbundle releasesurl="${tool.ruby.url}" version="${tool.ruby.version}" dest="${release.target}/${release.name}/tools/ruby" />
         <getbundle releasesurl="${tool.svn.url}" version="${tool.svn.version}" dest="${release.target}/${release.name}/tools/svn" />
         <getbundle releasesurl="${tool.wpcli.url}" version="${tool.wpcli.version}" dest="${release.target}/${release.name}/tools/wpcli" />
         <getbundle releasesurl="${tool.xdc.url}" version="${tool.xdc.version}" dest="${release.target}/${release.name}/tools/xdc" />
@@ -112,6 +113,7 @@
                 <filter token="TOOL_PHPMETRICS_VERSION" value="${tool.phpmetrics.version}"/>
                 <filter token="TOOL_PHPUNIT_VERSION" value="${tool.phpunit.version}"/>
                 <filter token="TOOL_PYTHON_VERSION" value="${tool.python.version}"/>
+                <filter token="TOOL_RUBY_VERSION" value="${tool.ruby.version}"/>
                 <filter token="TOOL_SVN_VERSION" value="${tool.svn.version}"/>
                 <filter token="TOOL_WPCLI_VERSION" value="${tool.wpcli.version}"/>
                 <filter token="TOOL_XDC_VERSION" value="${tool.xdc.version}"/>
