@@ -300,17 +300,6 @@ class BinFilezilla
         return true;
     }
     
-    public function existsSslCrt()
-    {
-        global $neardBs;
-    
-        $ppkPath = $neardBs->getSslPath() . '/' . self::SERVICE_NAME . '.ppk';
-        $pubPath = $neardBs->getSslPath() . '/' . self::SERVICE_NAME . '.pub';
-        $crtPath = $neardBs->getSslPath() . '/' . self::SERVICE_NAME . '.crt';
-    
-        return is_file($ppkPath) && is_file($pubPath) && is_file($crtPath);
-    }
-    
     public function removeSslCrt()
     {
         global $neardBs;

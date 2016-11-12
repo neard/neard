@@ -590,7 +590,7 @@ class BinApache
     
     public function refreshAlias($putOnline)
     {
-        global $neardBs, $neardBins, $neardHomepage;
+        global $neardBs, $neardHomepage;
         
         $onlineContent = $this->getOnlineContent();
         $offlineContent = $this->getOfflineContent();
@@ -611,7 +611,7 @@ class BinApache
     
     public function refreshVhosts($putOnline)
     {
-        global $neardBs, $neardBins;
+        global $neardBs;
         
         $onlineContent = $this->getOnlineContent();
         $offlineContent = $this->getOfflineContent();
@@ -627,28 +627,6 @@ class BinApache
         }
     }
     
-    public function existsSslCrt($domain = 'localhost')
-    {
-        global $neardBs;
-        
-        $ppkPath = $neardBs->getSslPath() . '/' . $domain . '.ppk';
-        $pubPath = $neardBs->getSslPath() . '/' . $domain . '.pub';
-        $crtPath = $neardBs->getSslPath() . '/' . $domain . '.crt';
-        
-        return is_file($ppkPath) && is_file($pubPath) && is_file($crtPath);
-    }
-    
-    public function removeSslCrt($domain = 'localhost')
-    {
-        global $neardBs;
-    
-        $ppkPath = $neardBs->getSslPath() . '/' . $domain . '.ppk';
-        $pubPath = $neardBs->getSslPath() . '/' . $domain . '.pub';
-        $crtPath = $neardBs->getSslPath() . '/' . $domain . '.crt';
-    
-        return @unlink($ppkPath) && @unlink($pubPath) && @unlink($crtPath);
-    }
-    
     public function getName()
     {
         return $this->name;
@@ -661,9 +639,8 @@ class BinApache
     
     public function setEnable($enabled, $showWindow = false)
     {
-        global $neardConfig, $neardBins, $neardLang, $neardWinbinder;
-        $boxTitle = sprintf($neardLang->getValue(Lang::ENABLE_TITLE), $this->getName());
-    
+        global $neardConfig, $neardLang, $neardWinbinder;
+
         if ($enabled == Config::ENABLED && !is_dir($this->currentPath)) {
             Util::logDebug($this->getName() . ' cannot be enabled because bundle ' . $this->getVersion() . ' does not exist in ' . $this->currentPath);
             if ($showWindow) {

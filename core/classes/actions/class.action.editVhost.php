@@ -60,7 +60,7 @@ class ActionEditVhost
     
     public function processWindow($window, $id, $ctrl, $param1, $param2)
     {
-        global $neardBs, $neardBins, $neardLang, $neardWinbinder;
+        global $neardBs, $neardBins, $neardLang, $neardOpenSsl, $neardWinbinder;
         
         $apachePortUri = $neardBins->getApache()->getPort() != 80 ? ':' . $neardBins->getApache()->getPort() : '';
         $serverName = $neardWinbinder->getText($this->wbInputServerName[WinBinder::CTRL_OBJ]);
@@ -105,10 +105,10 @@ class ActionEditVhost
                 }
                 
                 // Remove old vhost
-                $neardBins->getApache()->removeSslCrt($this->initServerName);
+                $neardOpenSsl->removeCrt($this->initServerName);
                 @unlink($neardBs->getVhostsPath() . '/' . $this->initServerName . '.conf');
                 
-                if (Batch::genSslCertificate($serverName) && file_put_contents($neardBs->getVhostsPath() . '/' . $serverName . '.conf', $neardBins->getApache()->getVhostContent($serverName, $documentRoot)) !== false) {
+                if ($neardOpenSsl->createCrt($serverName) && file_put_contents($neardBs->getVhostsPath() . '/' . $serverName . '.conf', $neardBins->getApache()->getVhostContent($serverName, $documentRoot)) !== false) {
                     $neardWinbinder->incrProgressBar($this->wbProgressBar);
                     
                     $neardBins->getApache()->getService()->restart();
@@ -136,7 +136,7 @@ class ActionEditVhost
                 $neardWinbinder->incrProgressBar($this->wbProgressBar);
                 
                 if ($confirm) {
-                    if ($neardBins->getApache()->removeSslCrt($this->initServerName) && @unlink($neardBs->getVhostsPath() . '/' . $this->initServerName . '.conf')) {
+                    if ($neardOpenSsl->removeCrt($this->initServerName) && @unlink($neardBs->getVhostsPath() . '/' . $this->initServerName . '.conf')) {
                         $neardWinbinder->incrProgressBar($this->wbProgressBar);
                         
                         $neardBins->getApache()->getService()->restart();

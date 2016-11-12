@@ -117,27 +117,6 @@ class Batch
         self::execStandalone('refreshEnvVars', '"' . $neardCore->getSetEnvExe() . '" -a ' . Registry::APP_PATH_REG_ENTRY . ' "' . Util::formatWindowsPath($neardBs->getRootPath()) . '"');
     }
     
-    public static function genSslCertificate($name, $destPath = null)
-    {
-        global $neardBs, $neardBins;
-        $destPath = empty($destPath) ? $neardBs->getSslPath() : $destPath;
-        
-        $subject = '"/C=FR/O=neard/CN=' . $name . '"';
-        $password = 'pass:neard';
-        $ppkPath = '"' . $destPath . '/' . $name . '.ppk"';
-        $pubPath = '"' . $destPath . '/' . $name . '.pub"';
-        $crtPath = '"' . $destPath . '/' . $name . '.crt"';
-        $exe = '"' . $neardBins->getApache()->getOpensslExe() . '"';
-        $conf = '"' . $neardBs->getSslConfPath() . '"';
-        
-        self::exec('genSslKey', $exe . ' genrsa -des3 -passout ' . $password . ' -out ' . $ppkPath . ' 2048 -noout -config ' . $conf);
-        self::exec('genSslPub', $exe . ' rsa -in ' . $ppkPath . ' -passin ' . $password . ' -out ' . $pubPath);
-        self::exec('genSslCrt', $exe . ' req -x509 -nodes -sha256 -new -key ' . $pubPath . ' -out ' . $crtPath . ' -passin ' . $password . ' -subj ' . $subject . ' -config ' . $conf);
-        
-        $result = self::exec('checkCertificate', '@ECHO ON' . PHP_EOL . 'IF EXIST ' . $pubPath . ' IF EXIST ' . $crtPath . ' ECHO OK');
-        return isset($result[0]) && $result[0] == 'OK';
-    }
-    
     public static function installFilezillaService()
     {
         global $neardBins;
@@ -234,7 +213,7 @@ class Batch
     
     public static function exec($basename, $content, $timeout = true, $catchOutput = true, $standalone = false, $silent = true, $rebuild = true)
     {
-        global $neardConfig, $neardCore, $neardWinbinder;
+        global $neardConfig, $neardWinbinder;
         $result = false;
     
         $resultFile = self::getTmpFile('.tmp', $basename);

@@ -45,7 +45,7 @@ class ActionGenSslCertificate
 
     public function processWindow($window, $id, $ctrl, $param1, $param2)
     {
-        global $neardBs, $neardBins, $neardLang, $neardWinbinder;
+        global $neardLang, $neardOpenSsl, $neardWinbinder;
         
         $name = $neardWinbinder->getText($this->wbInputName[WinBinder::CTRL_OBJ]);
         $target = $neardWinbinder->getText($this->wbInputDest[WinBinder::CTRL_OBJ]);
@@ -62,7 +62,7 @@ class ActionGenSslCertificate
                 $neardWinbinder->incrProgressBar($this->wbProgressBar);
                 
                 $target = Util::formatUnixPath($target);
-                if (Batch::genSslCertificate($name, $target)) {
+                if ($neardOpenSsl->createCrt($name, $target)) {
                     $neardWinbinder->incrProgressBar($this->wbProgressBar);
                     $neardWinbinder->messageBoxInfo(
                             sprintf($neardLang->getValue(Lang::GENSSL_CREATED), $name),

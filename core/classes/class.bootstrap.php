@@ -36,6 +36,7 @@ class Bootstrap
         self::loadCore();
         self::loadConfig();
         self::loadLang();
+        self::loadOpenSsl();
         self::loadBins();
         self::loadTools();
         self::loadApps();
@@ -237,6 +238,12 @@ class Bootstrap
     {
         global $neardLang;
         $neardLang = new LangProc();
+    }
+
+    public static function loadOpenSsl()
+    {
+        global $neardOpenSsl;
+        $neardOpenSsl = new OpenSsl();
     }
     
     public static function loadBins()
