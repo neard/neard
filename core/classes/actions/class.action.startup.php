@@ -11,7 +11,7 @@ class ActionStartup
     private $filesToScan;
     
     const GAUGE_SERVICES = 5;
-    const GAUGE_OTHERS = 18;
+    const GAUGE_OTHERS = 19;
     
     public function __construct($args)
     {
@@ -90,7 +90,10 @@ class ActionStartup
         
         // Update config
         $this->updateConfig();
-        
+
+        // Create SSL certificates
+        $this->createSslCrts();
+
         // Install
         $this->installServices();
         
@@ -209,7 +212,7 @@ class ActionStartup
         $this->splash->incrProgressBar();
     
         $this->writeLog('Clear tmp folders');
-        Util::clearFolder($neardBs->getTmpPath(), array('cachegrind', 'npm-cache', 'drush', 'wp-cli', 'mailhog', 'pip'));
+        Util::clearFolder($neardBs->getTmpPath(), array('cachegrind', 'npm-cache', 'drush', 'openssl', 'wp-cli', 'mailhog', 'pip'));
         Util::clearFolder($neardCore->getTmpPath());
     }
     
@@ -457,10 +460,21 @@ class ActionStartup
         $neardTools->update();
         $neardApps->update();
     }
-    
+
+    private function createSslCrts()
+    {
+        global $neardLang, $neardOpenSsl;
+
+        $this->splash->incrProgressBar();
+        if (!$neardOpenSsl->existsCrt('localhost')) {
+            $this->splash->setTextLoading(sprintf($neardLang->getValue(Lang::STARTUP_GEN_SSL_CRT_TEXT), 'localhost'));
+            $neardOpenSsl->createCrt('localhost');
+        }
+    }
+
     private function installServices()
     {
-        global $neardLang, $neardBins;
+        global $neardLang, $neardOpenSsl, $neardBins;
         
         if (!$this->restart) {
             foreach ($neardBins->getServices() as $sName => $service) {
@@ -533,14 +547,6 @@ class ActionStartup
                             if (!$service->create()) {
                                 $serviceError .= sprintf($neardLang->getValue(Lang::STARTUP_SERVICE_CREATE_ERROR), $service->getError());
                             }
-                        }
-        
-                        if ($sName == BinApache::SERVICE_NAME && !$neardBins->getApache()->existsSslCrt()) {
-                            $this->splash->setTextLoading(sprintf($neardLang->getValue(Lang::STARTUP_GEN_SSL_CRT_TEXT), 'localhost'));
-                            Batch::genSslCertificate('localhost');
-                        } elseif ($sName == BinFilezilla::SERVICE_NAME && !$neardBins->getFilezilla()->existsSslCrt()) {
-                            $this->splash->setTextLoading(sprintf($neardLang->getValue(Lang::STARTUP_GEN_SSL_CRT_TEXT), $neardLang->getValue(Lang::FILEZILLA)));
-                            Batch::genSslCertificate(BinFilezilla::SERVICE_NAME);
                         }
         
                         $this->splash->incrProgressBar();

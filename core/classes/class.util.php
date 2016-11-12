@@ -625,7 +625,6 @@ class Util
         return array(
             $neardBs->getAliasPath()                        => array(''),
             $neardBs->getVhostsPath()                       => array(''),
-            $neardBs->getSslPath()                          => array('.cnf'),
             $neardBins->getApache()->getRootPath()          => array('.ini', '.conf'),
             $neardBins->getPhp()->getRootPath()             => array('.php', '.bat', '.ini', '.reg', '.inc'),
             $neardBins->getMysql()->getRootPath()           => array('my.ini'),
@@ -640,6 +639,7 @@ class Util
             $neardTools->getWpCli()->getRootPath()          => array('wp.bat'),
             $neardTools->getPython()->getRootPath()         => array('winpython.ini', '.bat', '.conf'),
             $neardTools->getRuby()->getRootPath()           => array('.bat'),
+            $neardCore->getOpenSslPath()                    => array('openssl.cfg'),
             $neardCore->getResourcesPath() . '/homepage'    => array('.conf'),
         );
     }

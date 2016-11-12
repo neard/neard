@@ -16,6 +16,10 @@ class Core
     const NSSM_VERSION = '2.24';
     const NSSM_EXE = 'nssm.exe';
     
+    const OPENSSL_VERSION = '1.1.0c';
+    const OPENSSL_EXE = 'openssl.exe';
+    const OPENSSL_CONF = 'openssl.cfg';
+    
     const APP_VERSION = 'version.dat';
     const LAST_PATH = 'lastPath.dat';
     const EXEC = 'exec.dat';
@@ -151,5 +155,20 @@ class Core
     public function getNssmExe($aetrayPath = false)
     {
         return $this->getNssmPath($aetrayPath) . '/' . self::NSSM_EXE;
+    }
+
+    public function getOpenSslPath($aetrayPath = false)
+    {
+        return $this->getLibsPath($aetrayPath) . '/openssl';
+    }
+
+    public function getOpenSslExe($aetrayPath = false)
+    {
+        return $this->getOpenSslPath($aetrayPath) . '/' . self::OPENSSL_EXE;
+    }
+
+    public function getOpenSslConf($aetrayPath = false)
+    {
+        return $this->getOpenSslPath($aetrayPath) . '/' . self::OPENSSL_CONF;
     }
 }
