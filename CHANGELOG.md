@@ -1,8 +1,27 @@
 # Changelog
 
-## 1.0.22
+## 1.0.22 (2016/11/13)
 
+* Use latest OpenSSL release to generate SSL certificate (Issue #167)
+* Forgetting Memcached switch version impl (Issue #164)
 * Port undefined error for MailHog service (Issue #163)
+* 30% CPU usage for 2 minutes while generating SSL certificate (Issue #161)
+* Can't switch PostgreSQL version (Issue #160)
+* Bug while enable binary (Issue #156)
+* Add Ruby tool (Issue #154)
+* Add Python tool (Issue #98)
+* Downgrade default Filezilla bundle to 0.9.42 (XP compatibility)
+* Implement enable on tools and apps
+
+### Upgrade from previous release
+
+* **required** : Remove then replace folder `core`
+* **required** : Copy folder `tools\python`
+* **required** : Copy folder `tools\ruby`
+* **required** : Add line `pythonVersion = "2.7.12.3"` after `phpunitVersion` in `neard.conf`
+* **required** : Add line `rubyVersion = "2.0.0.p648"` after `pythonVersion` in `neard.conf`
+* **required** : Remove then replace file `sprites.dat`
+* **required** : Replace your existing Filezilla version with the latest [Filezilla bundle](https://github.com/crazy-max/neard-bin-filezilla/releases) for SSL (Issue #167).
 
 ## 1.0.21 (2016/10/23)
 
