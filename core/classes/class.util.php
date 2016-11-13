@@ -123,7 +123,7 @@ class Util
     
         $handle = @opendir($path);
         if (!$handle) {
-            return;
+            return null;
         }
         
         while (false !== ($file = readdir($handle))) {
@@ -148,7 +148,6 @@ class Util
         }
         
         closedir($handle);
-    
         return $result;
     }
     
@@ -788,11 +787,9 @@ class Util
     
     public static function getHttpHeaders($url)
     {
-        global $neardCore, $neardHomepage;
-        
-        $result = array();
+        global $neardHomepage;
+
         $pingUrl = $url . '/' . $neardHomepage->getResourcesPath() . '/ping.php';
-        
         if (function_exists('curl_version')) {
             $result = self::getCurlHttpHeaders($pingUrl);
         } else {
@@ -866,8 +863,6 @@ class Util
     
     public static function getHeaders($host, $port, $ssl = false)
     {
-        global $neardBs;
-        
         $result = array();
         $context = stream_context_create(array(
             'ssl' => array(
@@ -946,7 +941,7 @@ class Util
     
     public static function installService($bin, $port, $syntaxCheckCmd, $showWindow = false)
     {
-        global $neardBs, $neardLang, $neardBins, $neardWinbinder;
+        global $neardLang, $neardWinbinder;
         $name = $bin->getName();
         $service = $bin->getService();
         $boxTitle = sprintf($neardLang->getValue(Lang::INSTALL_SERVICE_TITLE), $name);
@@ -1013,12 +1008,12 @@ class Util
     
     public static function removeService($service, $name, $showWindow = false)
     {
-        global $neardBs, $neardLang, $neardBins, $neardWinbinder;
+        global $neardLang, $neardWinbinder;
         $boxTitle = sprintf($neardLang->getValue(Lang::REMOVE_SERVICE_TITLE), $name);
     
         if (!($service instanceof Win32Service)) {
             Util::logError('$service not an instance of Win32Service');
-            return;
+            return false;
         }
     
         if ($service->isInstalled()) {

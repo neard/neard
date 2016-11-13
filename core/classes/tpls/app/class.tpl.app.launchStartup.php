@@ -18,8 +18,6 @@ class TplAppLaunchStartup
     
     public static function getActionLaunchStartup($launchStartup)
     {
-        global $neardBins;
-        
         return TplApp::getActionRun(Action::LAUNCH_STARTUP, array($launchStartup)) . PHP_EOL .
             TplAppReload::getActionReload() . PHP_EOL;
     }

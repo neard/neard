@@ -4,7 +4,7 @@ class ActionSwitchOnline
 {
     public function __construct($args)
     {
-        global $neardConfig, $neardBins;
+        global $neardConfig;
         
         if (isset($args[0])) {
             Util::startLoading();
@@ -20,7 +20,7 @@ class ActionSwitchOnline
     
     private function switchApache($putOnline)
     {
-        global $neardBs, $neardBins;
+        global $neardBins;
         
         $onlineContent = $neardBins->getApache()->getOnlineContent();
         $offlineContent = $neardBins->getApache()->getOfflineContent();

@@ -40,6 +40,7 @@ class Autoloader
         }
         
         require_once $file;
+        return true;
     }
     
     public function register()

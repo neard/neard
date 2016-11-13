@@ -19,7 +19,7 @@ class ActionChangeBrowser
     
     public function __construct($args)
     {
-        global $neardBs, $neardConfig, $neardLang, $neardBins, $neardWinbinder;
+        global $neardConfig, $neardLang, $neardWinbinder;
         
         $neardWinbinder->reset();
         $this->wbWindow = $neardWinbinder->createAppWindow($neardLang->getValue(Lang::CHANGE_BROWSER_TITLE), 490, 350, WBC_NOTIFY, WBC_KEYDOWN | WBC_KEYUP);
@@ -56,7 +56,7 @@ class ActionChangeBrowser
     
     public function processWindow($window, $id, $ctrl, $param1, $param2)
     {
-        global $neardBs, $neardConfig, $neardBins, $neardLang, $neardWinbinder;
+        global $neardConfig, $neardLang, $neardWinbinder;
         
         // Get other value
         $browserPath = $neardWinbinder->getText($this->wbInputBrowse[WinBinder::CTRL_OBJ]);

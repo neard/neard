@@ -4,7 +4,7 @@ class ActionReload
 {
     public function __construct($args)
     {
-        global $neardBs, $neardCore, $neardConfig, $neardBins, $neardTools, $neardApps, $neardHomepage;
+        global $neardBs, $neardCore, $neardConfig, $neardBins, $neardHomepage;
         
         if (file_exists($neardCore->getExec())) {
             return;

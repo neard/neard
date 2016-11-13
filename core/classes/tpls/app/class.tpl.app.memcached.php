@@ -21,7 +21,7 @@ class TplAppMemcached
     
     public static function getMenuMemcached()
     {
-        global $neardBs, $neardConfig, $neardBins, $neardLang;
+        global $neardBins, $neardLang;
         $resultItems = $resultActions = '';
         
         $isEnabled = $neardBins->getMemcached()->isEnable();
@@ -96,7 +96,7 @@ class TplAppMemcached
     
     public static function getActionSwitchMemcachedVersion($version)
     {
-        global $neardBs, $neardCore, $neardBins;
+        global $neardBins;
     
         return TplApp::getActionRun(Action::SWITCH_VERSION, array($neardBins->getMemcached()->getName(), $version)) . PHP_EOL .
             TplApp::getActionExec() . PHP_EOL;

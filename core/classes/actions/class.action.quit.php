@@ -26,32 +26,24 @@ class ActionQuit
     
     public function processWindow($window, $id, $ctrl, $param1, $param2)
     {
-        global $neardBs, $neardCore, $neardConfig, $neardBins, $neardLang, $neardWinbinder;
+        global $neardBins, $neardLang, $neardWinbinder;
         
         foreach ($neardBins->getServices() as $sName => $service) {
             $name = $neardBins->getApache()->getName() . ' ' . $neardBins->getApache()->getVersion();
-            $port = $neardBins->getApache()->getPort();
             if ($sName == BinMysql::SERVICE_NAME) {
                 $name = $neardBins->getMysql()->getName() . ' ' . $neardBins->getMysql()->getVersion();
-                $port = $neardBins->getMysql()->getPort();
             } elseif ($sName == BinMailhog::SERVICE_NAME) {
                 $name = $neardBins->getMailhog()->getName() . ' ' . $neardBins->getMailhog()->getVersion();
-                $port = $neardBins->getMailhog()->getSmtpPort();
             } elseif ($sName == BinMariadb::SERVICE_NAME) {
                 $name = $neardBins->getMariadb()->getName() . ' ' . $neardBins->getMariadb()->getVersion();
-                $port = $neardBins->getMariadb()->getPort();
             } elseif ($sName == BinPostgresql::SERVICE_NAME) {
                 $name = $neardBins->getPostgresql()->getName() . ' ' . $neardBins->getPostgresql()->getVersion();
-                $port = $neardBins->getPostgresql()->getPort();
             } elseif ($sName == BinMailhog::SERVICE_NAME) {
                 $name = $neardBins->getPostgresql()->getName() . ' ' . $neardBins->getPostgresql()->getVersion();
-                $port = $neardBins->getPostgresql()->getPort();
             } elseif ($sName == BinMemcached::SERVICE_NAME) {
                 $name = $neardBins->getMemcached()->getName() . ' ' . $neardBins->getMemcached()->getVersion();
-                $port = $neardBins->getMemcached()->getPort();
             } elseif ($sName == BinFilezilla::SERVICE_NAME) {
                 $name = $neardBins->getFilezilla()->getName() . ' ' . $neardBins->getFilezilla()->getVersion();
-                $port = $neardBins->getFilezilla()->getPort();
             }
             $name .= ' (' . $service->getName() . ')';
             

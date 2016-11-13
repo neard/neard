@@ -113,7 +113,7 @@ class TplAppMariadb
     
     public static function getActionSwitchMariadbVersion($version)
     {
-        global $neardBs, $neardCore, $neardBins;
+        global $neardBins;
     
         return TplApp::getActionRun(Action::SWITCH_VERSION, array($neardBins->getMariadb()->getName(), $version)) . PHP_EOL .
             TplApp::getActionExec() . PHP_EOL;
@@ -198,7 +198,7 @@ class TplAppMariadb
     
     public static function getActionChangeMariadbPort()
     {
-        global $neardLang, $neardBins;
+        global $neardBins;
     
         return TplApp::getActionRun(Action::CHANGE_PORT, array($neardBins->getMariadb()->getName())) . PHP_EOL .
             TplAppReload::getActionReload();
@@ -206,7 +206,7 @@ class TplAppMariadb
     
     public static function getActionChangeMariadbRootPwd()
     {
-        global $neardLang, $neardBins;
+        global $neardBins;
     
         return TplApp::getActionRun(Action::CHANGE_DB_ROOT_PWD, array($neardBins->getMariadb()->getName())) . PHP_EOL .
             TplAppReload::getActionReload();

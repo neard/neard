@@ -94,7 +94,7 @@ class TplAppNodejs
     
     public static function getActionSwitchNodejsVersion($version)
     {
-        global $neardBs, $neardCore, $neardBins;
+        global $neardBins;
     
         return TplApp::getActionRun(Action::SWITCH_VERSION, array($neardBins->getNodejs()->getName(), $version)) . PHP_EOL .
             TplApp::getActionExec() . PHP_EOL;

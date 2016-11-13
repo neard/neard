@@ -113,7 +113,7 @@ class TplAppPostgresql
     
     public static function getActionSwitchPostgresqlVersion($version)
     {
-        global $neardBs, $neardCore, $neardBins;
+        global $neardBins;
     
         return TplApp::getActionRun(Action::SWITCH_VERSION, array($neardBins->getPostgresql()->getName(), $version)) . PHP_EOL .
             TplApp::getActionExec() . PHP_EOL;
@@ -190,7 +190,7 @@ class TplAppPostgresql
     
     public static function getActionChangePostgresqlPort()
     {
-        global $neardLang, $neardBins;
+        global $neardBins;
     
         return TplApp::getActionRun(Action::CHANGE_PORT, array($neardBins->getPostgresql()->getName())) . PHP_EOL .
             TplAppReload::getActionReload();
@@ -198,7 +198,7 @@ class TplAppPostgresql
     
     public static function getActionChangePostgresqlRootPwd()
     {
-        global $neardLang, $neardBins;
+        global $neardBins;
     
         return TplApp::getActionRun(Action::CHANGE_DB_ROOT_PWD, array($neardBins->getPostgresql()->getName())) . PHP_EOL .
             TplAppReload::getActionReload();

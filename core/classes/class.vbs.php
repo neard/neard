@@ -337,7 +337,7 @@ class Vbs
     
     public static function exec($basename, $resultFile, $content, $timeout = true)
     {
-        global $neardBs, $neardConfig, $neardWinbinder;
+        global $neardConfig, $neardWinbinder;
         $result = false;
     
         $scriptPath = self::getTmpFile('.vbs', $basename);

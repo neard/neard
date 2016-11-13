@@ -64,13 +64,13 @@ class Homepage
     
     public function getResourcesUrl()
     {
-        global $neardBs, $neardCore;
+        global $neardBs;
         return $neardBs->getLocalUrl($this->getResourcesPath());
     }
     
     public function refreshAliasContent()
     {
-        global $neardCore, $neardBins;
+        global $neardBins;
     
         $result = $neardBins->getApache()->getAliasContent(
             $this->getResourcesPath(),
@@ -81,8 +81,6 @@ class Homepage
     
     public function refreshCommonsJsContent()
     {
-        global $neardCore;
-        
         Util::replaceInFile($this->getPath() . '/js/_commons.js', array(
             '/^\s\surl:.*/' => '  url: "' . $this->getResourcesPath() . '/ajax.php"',
         ));

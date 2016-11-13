@@ -33,7 +33,7 @@ class ToolConsole
     
     public function __construct($rootPath)
     {
-        global $neardBs, $neardConfig, $neardLang, $neardTools;
+        global $neardConfig, $neardLang;
         Util::logInitClass($this);
         
         $this->name = $neardLang->getValue(Lang::CONSOLE);

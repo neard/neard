@@ -21,7 +21,7 @@ class ActionAddVhost
     
     public function __construct($args)
     {
-        global $neardBs, $neardConfig, $neardLang, $neardBins, $neardWinbinder;
+        global $neardBs, $neardLang, $neardWinbinder;
         
         $initServerName = 'test.local';
         $initDocumentRoot = Util::formatWindowsPath($neardBs->getWwwPath()) . '\\' . $initServerName;

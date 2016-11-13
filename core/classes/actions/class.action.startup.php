@@ -235,7 +235,7 @@ class ActionStartup
     
     private function killOldInstances()
     {
-        global $neardCore, $neardBins, $neardLang;
+        global $neardLang;
     
         $this->splash->setTextLoading($neardLang->getValue(Lang::STARTUP_KILL_OLD_PROCS_TEXT));
         $this->splash->incrProgressBar();
@@ -348,7 +348,7 @@ class ActionStartup
     
     private function changePath()
     {
-        global $neardCore, $neardLang;
+        global $neardLang;
         
         $this->splash->setTextLoading(sprintf($neardLang->getValue(Lang::STARTUP_CHANGE_PATH_TEXT), $this->rootPath));
         $this->splash->incrProgressBar();
@@ -474,7 +474,7 @@ class ActionStartup
 
     private function installServices()
     {
-        global $neardLang, $neardOpenSsl, $neardBins;
+        global $neardLang, $neardBins;
         
         if (!$this->restart) {
             foreach ($neardBins->getServices() as $sName => $service) {

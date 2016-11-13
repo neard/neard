@@ -199,7 +199,7 @@ class TplAppApache
     
     public static function getActionChangeApachePort()
     {
-        global $neardLang, $neardBins;
+        global $neardBins;
     
         return TplApp::getActionRun(Action::CHANGE_PORT, array($neardBins->getApache()->getName())) . PHP_EOL .
             TplAppReload::getActionReload();
@@ -276,8 +276,6 @@ class TplAppApache
     
     public static function getActionSwitchApacheModule($module, $switch)
     {
-        global $neardBins;
-    
         $switch = $switch == ActionSwitchApacheModule::SWITCH_OFF ? ActionSwitchApacheModule::SWITCH_ON : ActionSwitchApacheModule::SWITCH_OFF;
         return TplApp::getActionRun(Action::SWITCH_APACHE_MODULE, array($module, $switch)) . PHP_EOL .
             TplService::getActionRestart(BinApache::SERVICE_NAME) . PHP_EOL .

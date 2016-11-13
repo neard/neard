@@ -7,7 +7,7 @@ class ActionExec
     
     public function __construct($args)
     {
-        global $neardCore, $neardLang, $neardBins, $neardWinbinder;
+        global $neardCore;
         
         if (file_exists($neardCore->getExec())) {
             $action = file_get_contents($neardCore->getExec());

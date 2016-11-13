@@ -135,7 +135,7 @@ class Win32Service
 
     public function create()
     {
-        global $neardBs, $neardBins;
+        global $neardBins;
         
         if ($this->getNssm() instanceof Nssm) {
             return $this->getNssm()->create();
@@ -178,8 +178,6 @@ class Win32Service
 
     public function delete()
     {
-        global $neardBs, $neardBins;
-        
         if (!$this->isInstalled()) {
             return true;
         }
@@ -215,7 +213,7 @@ class Win32Service
     
     public function start()
     {
-        global $neardBs, $neardBins;
+        global $neardBins;
         
         if ($this->getName() == BinFilezilla::SERVICE_NAME) {
             $neardBins->getFilezilla()->rebuildConf();
@@ -272,8 +270,6 @@ class Win32Service
     
     public function stop()
     {
-        global $neardBs;
-        
         $stop = dechex($this->callWin32Service('win32_stop_service', $this->getName(), true));
         $this->writeLog('Stop service ' . $this->getName() . ': ' . $stop . ' (status: ' . $this->status() . ')');
     
@@ -305,7 +301,6 @@ class Win32Service
 
     public function isInstalled()
     {
-        global $neardBs;
         $status = $this->status();
         $this->writeLog('isInstalled ' . $this->getName() . ': ' . ($status != self::WIN32_SERVICE_NA ? 'YES' : 'NO') . ' (status: ' . $status . ')');
         return $status != self::WIN32_SERVICE_NA;
@@ -313,7 +308,6 @@ class Win32Service
     
     public function isRunning()
     {
-        global $neardBs;
         $status = $this->status();
         $this->writeLog('isRunning ' . $this->getName() . ': ' . ($status == self::WIN32_SERVICE_RUNNING ? 'YES' : 'NO') . ' (status: ' . $status . ')');
         return $status == self::WIN32_SERVICE_RUNNING;
@@ -321,7 +315,6 @@ class Win32Service
     
     public function isStopped()
     {
-        global $neardBs;
         $status = $this->status();
         $this->writeLog('isStopped ' . $this->getName() . ': ' . ($status == self::WIN32_SERVICE_STOPPED ? 'YES' : 'NO') . ' (status: ' . $status . ')');
         return $status == self::WIN32_SERVICE_STOPPED;
@@ -329,7 +322,6 @@ class Win32Service
     
     public function isPaused()
     {
-        global $neardBs;
         $status = $this->status();
         $this->writeLog('isPaused ' . $this->getName() . ': ' . ($status == self::WIN32_SERVICE_PAUSED ? 'YES' : 'NO') . ' (status: ' . $status . ')');
         return $status == self::WIN32_SERVICE_PAUSED;
@@ -377,6 +369,7 @@ class Win32Service
                 break;
                 
             default :
+                return null;
                 break;
         }
     }
@@ -501,6 +494,7 @@ class Win32Service
                 break;
                 
             default :
+                return null;
                 break;
         }
     }
@@ -584,6 +578,6 @@ class Win32Service
             return $neardLang->getValue(Lang::STATUS) . ' ' .
                 $this->latestStatus . ' (' . hexdec($this->latestStatus) . ' : ' . $this->getWin32ServiceStatusDesc($this->latestStatus) . ')';
         }
+        return null;
     }
-    
 }

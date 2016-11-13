@@ -74,7 +74,7 @@ class ActionChangePort
     
     public function processWindow($window, $id, $ctrl, $param1, $param2)
     {
-        global $neardBins, $neardLang, $neardWinbinder;
+        global $neardLang, $neardWinbinder;
         $boxTitle = sprintf($neardLang->getValue(Lang::CHANGE_PORT_TITLE), $this->bin);
         $port = $neardWinbinder->getText($this->wbInputPort[WinBinder::CTRL_OBJ]);
     

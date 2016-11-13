@@ -151,7 +151,7 @@ class Batch
     
     public static function installPostgresqlService()
     {
-        global $neardCore, $neardBins;
+        global $neardBins;
         
         $cmd = '"' . Util::formatWindowsPath($neardBins->getPostgresql()->getCtlExe()) . '" register -N "' . BinPostgresql::SERVICE_NAME . '"';
         $cmd .= ' -U "LocalSystem" -D "' . Util::formatWindowsPath($neardBins->getPostgresql()->getCurrentPath()) . '\\data"';

@@ -54,8 +54,6 @@ class Registry
     
     public function exists($key, $subkey, $entry = null)
     {
-        global $neardCore;
-        
         $basename = 'registryExists';
         $resultFile = Vbs::getResultFile($basename);
         
@@ -105,7 +103,7 @@ class Registry
     
     public function getValue($key, $subkey, $entry = null)
     {
-        global $neardCore, $neardLang;
+        global $neardLang;
         
         $basename = 'registryGetValue';
         $resultFile = Vbs::getResultFile($basename);
@@ -159,7 +157,7 @@ class Registry
     
     private function setValue($key, $subkey, $entry, $value, $type)
     {
-        global $neardCore, $neardLang;
+        global $neardLang;
         
         $basename = 'registrySetValue';
         $resultFile = Vbs::getResultFile($basename);

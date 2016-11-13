@@ -19,7 +19,7 @@ class ToolPhpUnit
     
     public function __construct($rootPath)
     {
-        global $neardBs, $neardConfig, $neardLang;
+        global $neardConfig, $neardLang;
         Util::logInitClass($this);
         
         $this->name = $neardLang->getValue(Lang::PHPUNIT);

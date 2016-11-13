@@ -34,7 +34,7 @@ class BinNodejs
     
     public function reload($rootPath = null)
     {
-        global $neardBs, $neardConfig, $neardLang;
+        global $neardConfig, $neardLang;
         
         $this->name = $neardLang->getValue(Lang::NODEJS);
         $this->version = $neardConfig->getRaw(self::ROOT_CFG_VERSION);
@@ -117,7 +117,7 @@ class BinNodejs
     
     private function updateConfig($version = null, $sub = 0, $showWindow = false)
     {
-        global $neardBs, $neardCore, $neardLang, $neardBins, $neardApps, $neardWinbinder;
+        global $neardLang, $neardWinbinder;
         $version = $version == null ? $this->version : $version;
         Util::logDebug(($sub > 0 ? str_repeat(' ', 2 * $sub) : '') . 'Update ' . $this->name . ' ' . $version . ' config...');
         
@@ -194,9 +194,8 @@ class BinNodejs
     
     public function setEnable($enabled, $showWindow = false)
     {
-        global $neardConfig, $neardBins, $neardLang, $neardWinbinder;
-        $boxTitle = sprintf($neardLang->getValue(Lang::ENABLE_TITLE), $this->getName());
-    
+        global $neardConfig, $neardLang, $neardWinbinder;
+
         if ($enabled == Config::ENABLED && !is_dir($this->currentPath)) {
             Util::logDebug($this->getName() . ' cannot be enabled because bundle ' . $this->getVersion() . ' does not exist in ' . $this->currentPath);
             if ($showWindow) {

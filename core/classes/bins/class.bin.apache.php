@@ -154,7 +154,7 @@ class BinApache
     
     public function changePort($port, $checkUsed = false, $wbProgressBar = null)
     {
-        global $neardBs, $neardCore, $neardBins, $neardWinbinder;
+        global $neardWinbinder;
         
         if (!Util::isValidPort($port)) {
             Util::logError($this->getName() . ' port not valid: ' . $port);
@@ -183,7 +183,7 @@ class BinApache
     
     public function checkPort($port, $ssl = false, $showWindow = false)
     {
-        global $neardBs, $neardLang, $neardWinbinder;
+        global $neardLang, $neardWinbinder;
         $boxTitle = sprintf($neardLang->getValue(Lang::CHECK_PORT_TITLE), $this->getName(), $port);
         
         if (!Util::isValidPort($port)) {
@@ -238,7 +238,7 @@ class BinApache
     
     private function updateConfig($version = null, $sub = 0, $showWindow = false)
     {
-        global $neardBs, $neardCore, $neardLang, $neardBins, $neardTools, $neardWinbinder;
+        global $neardBs, $neardLang, $neardBins, $neardTools, $neardWinbinder;
         $version = $version == null ? $this->version : $version;
         $shortVersion = substr(str_replace('.', '', $version), 0, 2);
         Util::logDebug(($sub > 0 ? str_repeat(' ', 2 * $sub) : '') . 'Update ' . $this->name . ' ' . $version . ' config...');
@@ -343,7 +343,7 @@ class BinApache
             $modMatch = array();
             if (preg_match('/^(#)?LoadModule\s*([a-z0-9_-]+)\s*"?(.*)"?/i', $row, $modMatch)) {
                 $name = $modMatch[2];
-                $path = $modMatch[3];
+                //$path = $modMatch[3];
                 if (!Util::startWith($name, 'php')) {
                     if ($modMatch[1] == '#') {
                         $result[$name] = ActionSwitchApacheModule::SWITCH_OFF;

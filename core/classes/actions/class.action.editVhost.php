@@ -25,7 +25,7 @@ class ActionEditVhost
     
     public function __construct($args)
     {
-        global $neardBs, $neardConfig, $neardLang, $neardBins, $neardWinbinder;
+        global $neardBs, $neardLang, $neardWinbinder;
         
         if (isset($args[0]) && !empty($args[0])) {
             $filePath = $neardBs->getVhostsPath() . '/' . $args[0] . '.conf';
@@ -62,7 +62,6 @@ class ActionEditVhost
     {
         global $neardBs, $neardBins, $neardLang, $neardOpenSsl, $neardWinbinder;
         
-        $apachePortUri = $neardBins->getApache()->getPort() != 80 ? ':' . $neardBins->getApache()->getPort() : '';
         $serverName = $neardWinbinder->getText($this->wbInputServerName[WinBinder::CTRL_OBJ]);
         $documentRoot = $neardWinbinder->getText($this->wbInputDocRoot[WinBinder::CTRL_OBJ]);
         

@@ -20,11 +20,10 @@ class AppPhpmyadmin
     private $enable;
     
     private $versions;
-    private $confs;
-    
+
     public function __construct($rootPath)
     {
-        global $neardBs, $neardConfig, $neardLang;
+        global $neardConfig, $neardLang;
         Util::logInitClass($this);
         
         $this->name = $neardLang->getValue(Lang::PHPMYADMIN);
@@ -207,10 +206,5 @@ class AppPhpmyadmin
             $result[] = $data['conf'];
         }
         return $result;
-    }
-
-    public function getConf()
-    {
-        return $this->conf;
     }
 }

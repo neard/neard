@@ -98,7 +98,7 @@ class ActionSwitchVersion
     
     public function processWindow($window, $id, $ctrl, $param1, $param2)
     {
-        global $neardBs, $neardCore, $neardLang, $neardBins, $neardWinbinder;
+        global $neardCore, $neardLang, $neardBins, $neardWinbinder;
         
         if ($this->version == $this->currentVersion) {
             $neardWinbinder->messageBoxWarning(sprintf($neardLang->getValue(Lang::SWITCH_VERSION_SAME_ERROR), $this->bin->getName(), $this->version), $this->boxTitle);
