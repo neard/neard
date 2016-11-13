@@ -13,7 +13,7 @@ class ActionService
     
     public function __construct($args)
     {
-        global $neardBs, $neardBins;
+        global $neardBins;
         Util::startLoading();
         
         // reload bins
@@ -21,8 +21,6 @@ class ActionService
         
         if (isset($args[0]) && !empty($args[0]) && isset($args[1]) && !empty($args[1])) {
             $sName = $args[0];
-            $name = '';
-            $service = '';
             $port = 0;
             $syntaxCheckCmd = null;
             

@@ -113,7 +113,7 @@ class TplAppMysql
     
     public static function getActionSwitchMysqlVersion($version)
     {
-        global $neardBs, $neardCore, $neardBins;
+        global $neardBins;
     
         return TplApp::getActionRun(Action::SWITCH_VERSION, array($neardBins->getMysql()->getName(), $version)) . PHP_EOL .
             TplApp::getActionExec() . PHP_EOL;
@@ -198,7 +198,7 @@ class TplAppMysql
     
     public static function getActionChangeMysqlPort()
     {
-        global $neardLang, $neardBins;
+        global $neardBins;
     
         return TplApp::getActionRun(Action::CHANGE_PORT, array($neardBins->getMysql()->getName())) . PHP_EOL .
             TplAppReload::getActionReload();
@@ -206,7 +206,7 @@ class TplAppMysql
     
     public static function getActionChangeMysqlRootPwd()
     {
-        global $neardLang, $neardBins;
+        global $neardBins;
     
         return TplApp::getActionRun(Action::CHANGE_DB_ROOT_PWD, array($neardBins->getMysql()->getName())) . PHP_EOL .
             TplAppReload::getActionReload();

@@ -21,7 +21,7 @@ class ActionAddAlias
     
     public function __construct($args)
     {
-        global $neardBs, $neardConfig, $neardLang, $neardBins, $neardWinbinder;
+        global $neardLang, $neardBins, $neardWinbinder;
         
         $initName = 'test';
         $initDest = 'C:\\';

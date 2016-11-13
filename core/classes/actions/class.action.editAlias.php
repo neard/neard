@@ -25,7 +25,7 @@ class ActionEditAlias
     
     public function __construct($args)
     {
-        global $neardBs, $neardConfig, $neardLang, $neardBins, $neardWinbinder;
+        global $neardBs, $neardLang, $neardBins, $neardWinbinder;
         
         if (isset($args[0]) && !empty($args[0])) {
             $filePath = $neardBs->getAliasPath() . '/' . $args[0] . '.conf';

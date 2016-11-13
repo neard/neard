@@ -21,7 +21,7 @@ class TplAppFilezilla
     
     public static function getMenuFilezilla()
     {
-        global $neardBins, $neardLang, $neardTools;
+        global $neardBins, $neardLang;
         $resultItems = $resultActions = '';
         
         $isEnabled = $neardBins->getFilezilla()->isEnable();
@@ -67,9 +67,6 @@ class TplAppFilezilla
             $resultItems .= TplAestan::getItemNotepad($neardLang->getValue(Lang::MENU_LOGS), $neardBins->getFilezilla()->getLog()) . PHP_EOL;
         }
         
-        $tplVersions = TplApp::getMenu($neardLang->getValue(Lang::VERSIONS), self::MENU_VERSIONS, get_called_class());
-        $tplService = TplApp::getMenu($neardLang->getValue(Lang::SERVICE), self::MENU_SERVICE, get_called_class());
-        
         return $resultItems . PHP_EOL . $resultActions;
     }
     
@@ -106,7 +103,7 @@ class TplAppFilezilla
     
     public static function getActionSwitchFilezillaVersion($version)
     {
-        global $neardBs, $neardCore, $neardBins;
+        global $neardBins;
     
         return TplApp::getActionRun(Action::SWITCH_VERSION, array($neardBins->getFilezilla()->getName(), $version)) . PHP_EOL .
             TplApp::getActionExec() . PHP_EOL;

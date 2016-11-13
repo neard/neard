@@ -73,7 +73,7 @@ class TplAestan
     
     public static function getItemConsole($caption, $glyph, $id = null, $title = null, $initDir = null, $command = null)
     {
-        global $neardTools, $neardLang;
+        global $neardTools;
         
         $consoleParams = '';
         if ($id != null) {
@@ -127,8 +127,6 @@ class TplAestan
     
     public static function getItemExe($caption, $exe, $glyph, $params = null)
     {
-        global $neardConfig;
-    
         return 'Type: item; ' .
             'Caption: "' . $caption . '"; ' .
             'Action: run; ' .
@@ -139,8 +137,6 @@ class TplAestan
     
     public static function getItemExplore($caption, $path)
     {
-        global $neardConfig;
-    
         return 'Type: item; ' .
             'Caption: "' . $caption . '"; ' .
             'Action: shellexecute; ' .
@@ -151,14 +147,12 @@ class TplAestan
     private static function getActionService($service, $action, $item = false)
     {
         global $neardLang;
-        $result = '';
+        $result = 'Action: ' . $action;
         
         if ($service != null) {
             $result = 'Action: service; ' .
                 'Service: ' . $service . '; ' .
                 'ServiceAction: ' . $action;
-        } else {
-            $result = 'Action: ' . $action;
         }
         
         if ($item) {
@@ -260,8 +254,6 @@ class TplAestan
     
     public static function getSectionMenuLeftSettings($caption)
     {
-        global $neardConfig;
-    
         return '[Menu.Left.Settings]' . PHP_EOL .
             'AutoLineReduction=no' . PHP_EOL .
             'BarVisible=yes' . PHP_EOL .

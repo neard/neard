@@ -396,8 +396,6 @@ class WinBinder
     
     public function messageBox($message, $type, $title = null)
     {
-        global $neardCore;
-        
         $message = str_replace(self::NEW_LINE, PHP_EOL, $message);
         $messageBox = $this->callWinBinder('wb_message_box', array(
             null, strlen($message) < 64 ? str_pad($message, 64) : $message, // Pad message to display entire title

@@ -13,7 +13,7 @@ class ActionAbout
     
     public function __construct($args)
     {
-        global $neardBs, $neardCore, $neardLang, $neardBins, $neardWinbinder;
+        global $neardCore, $neardLang, $neardWinbinder;
         
         $neardWinbinder->reset();
         $this->wbWindow = $neardWinbinder->createAppWindow($neardLang->getValue(Lang::ABOUT_TITLE), 450, 230, WBC_NOTIFY, WBC_KEYDOWN | WBC_KEYUP);
@@ -38,7 +38,7 @@ class ActionAbout
     
     public function processWindow($window, $id, $ctrl, $param1, $param2)
     {
-        global $neardBs, $neardConfig, $neardBins, $neardLang, $neardWinbinder;
+        global $neardConfig, $neardWinbinder;
         
         switch($id) {
             case $this->wbLinkHomepage[WinBinder::CTRL_ID]:

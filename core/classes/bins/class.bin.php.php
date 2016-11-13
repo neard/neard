@@ -191,19 +191,19 @@ class BinPhp
     
     private function updateConfig($version = null, $sub = 0, $showWindow = false)
     {
-        global $neardBs, $neardCore, $neardLang, $neardBins, $neardTools, $neardApps, $neardWinbinder;
+        global $neardLang, $neardBins, $neardApps, $neardWinbinder;
         $version = $version == null ? $this->version : $version;
         Util::logDebug(($sub > 0 ? str_repeat(' ', 2 * $sub) : '') . 'Update ' . $this->name . ' ' . $version . ' config...');
         
         $boxTitle = sprintf($neardLang->getValue(Lang::SWITCH_VERSION_TITLE), $this->getName(), $version);
         
-        $phpPath = str_replace('php' . $this->getVersion(), 'php' . $version, $this->getCurrentPath());
+        //$phpPath = str_replace('php' . $this->getVersion(), 'php' . $version, $this->getCurrentPath());
         $conf = str_replace('php' . $this->getVersion(), 'php' . $version, $this->getConf());
         $neardConf = str_replace('php' . $this->getVersion(), 'php' . $version, $this->neardConf);
         
         $tsDll = $this->getTsDll($version);
-        $apacheShortVersion = substr(str_replace('.', '', $neardBins->getApache()->getVersion()), 0, 2);
-        $apachePhpModuleName = $tsDll !== false ? substr($tsDll, 0, 4) . '_module' : null;
+        //$apacheShortVersion = substr(str_replace('.', '', $neardBins->getApache()->getVersion()), 0, 2);
+        //$apachePhpModuleName = $tsDll !== false ? substr($tsDll, 0, 4) . '_module' : null;
         $apachePhpModule = $this->getApacheModule($neardBins->getApache()->getVersion(), $version);
         
         if (!file_exists($conf) || !file_exists($neardConf)) {
@@ -451,7 +451,6 @@ class BinPhp
     
     public function isSettingActive($name)
     {
-        $result = array();
         $settingsValues = $this->getSettingsValues();
         
         $confContent = file($this->getConf());
@@ -617,8 +616,7 @@ class BinPhp
     public function setEnable($enabled, $showWindow = false)
     {
         global $neardConfig, $neardBins, $neardLang, $neardWinbinder;
-        $boxTitle = sprintf($neardLang->getValue(Lang::ENABLE_TITLE), $this->getName());
-    
+
         if ($enabled == Config::ENABLED && !is_dir($this->currentPath)) {
             Util::logDebug($this->getName() . ' cannot be enabled because bundle ' . $this->getVersion() . ' does not exist in ' . $this->currentPath);
             if ($showWindow) {

@@ -4,7 +4,7 @@ class ActionDebugMysql
 {
     public function __construct($args)
     {
-        global $neardCore, $neardLang, $neardBins, $neardTools, $neardWinbinder;
+        global $neardLang, $neardBins, $neardTools, $neardWinbinder;
         
         if (isset($args[0]) && !empty($args[0])) {
             $editor = false;

@@ -9,14 +9,13 @@ class TplGitlist
     
     public static function process()
     {
-        global $neardConfig, $neardApps, $neardTools;
+        global $neardApps, $neardTools;
         
         $result = '[git]' . PHP_EOL;
         $result .= 'client = \'' . $neardTools->getGit()->getExe() . '\'' . PHP_EOL;
         
         $foundRepos = $neardTools->getGit()->findRepos(true);
         if (!empty($foundRepos)) {
-            $refactorRepos = array();
             foreach ($foundRepos as $repo) {
                 $result .= 'repositories[] = \'' . Util::formatUnixPath($repo) . '\'' . PHP_EOL;
             }

@@ -352,6 +352,7 @@ class Nssm
                 break;
                 
             default :
+                return null;
                 break;
         }
     }

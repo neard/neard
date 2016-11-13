@@ -150,7 +150,7 @@ class BinMariadb
     
     public function changePort($port, $checkUsed = false, $wbProgressBar = null)
     {
-        global $neardCore, $neardBins, $neardApps, $neardWinbinder;
+        global $neardWinbinder;
         
         if (!Util::isValidPort($port)) {
             Util::logError($this->getName() . ' port not valid: ' . $port);
@@ -256,7 +256,7 @@ class BinMariadb
     
     public function changeRootPassword($currentPwd, $newPwd, $wbProgressBar = null)
     {
-        global $neardLang, $neardApps, $neardWinbinder;
+        global $neardWinbinder;
         $error = null;
     
         $neardWinbinder->incrProgressBar($wbProgressBar);
@@ -317,7 +317,7 @@ class BinMariadb
     
     public function checkRootPassword($currentPwd = null, $wbProgressBar = null)
     {
-        global $neardLang, $neardWinbinder;
+        global $neardWinbinder;
         $currentPwd = $currentPwd == null ? $this->rootPwd : $currentPwd;
         $error = null;
     
@@ -356,7 +356,7 @@ class BinMariadb
     
     private function updateConfig($version = null, $sub = 0, $showWindow = false)
     {
-        global $neardBs, $neardCore, $neardLang, $neardBins, $neardApps, $neardWinbinder;
+        global $neardLang, $neardApps, $neardWinbinder;
         $version = $version == null ? $this->version : $version;
         Util::logDebug(($sub > 0 ? str_repeat(' ', 2 * $sub) : '') . 'Update ' . $this->name . ' ' . $version . ' config...');
         
@@ -480,9 +480,8 @@ class BinMariadb
     
     public function setEnable($enabled, $showWindow = false)
     {
-        global $neardConfig, $neardBins, $neardLang, $neardWinbinder;
-        $boxTitle = sprintf($neardLang->getValue(Lang::ENABLE_TITLE), $this->getName());
-    
+        global $neardConfig, $neardLang, $neardWinbinder;
+
         if ($enabled == Config::ENABLED && !is_dir($this->currentPath)) {
             Util::logDebug($this->getName() . ' cannot be enabled because bundle ' . $this->getVersion() . ' does not exist in ' . $this->currentPath);
             if ($showWindow) {

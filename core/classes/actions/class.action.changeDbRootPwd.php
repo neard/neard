@@ -2,9 +2,6 @@
 
 class ActionChangeDbRootPwd
 {
-    private $currentPwd;
-    private $newPwd1;
-    private $newPwd2;
     private $bin;
     private $cntProcessActions;
     
@@ -63,7 +60,7 @@ class ActionChangeDbRootPwd
     
     public function processWindow($window, $id, $ctrl, $param1, $param2)
     {
-        global $neardBins, $neardLang, $neardWinbinder;
+        global $neardLang, $neardWinbinder;
         $boxTitle = sprintf($neardLang->getValue(Lang::CHANGE_DB_ROOT_PWD_TITLE), $this->bin);
         $currentPwd = $neardWinbinder->getText($this->wbInputCurrentPwd[WinBinder::CTRL_OBJ]);
         $newPwd1 = $neardWinbinder->getText($this->wbInputNewPwd1[WinBinder::CTRL_OBJ]);

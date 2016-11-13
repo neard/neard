@@ -143,8 +143,6 @@ class TplApp
     
     private static function getSectionStartupAction()
     {
-        global $neardBs, $neardBins;
-    
         return '[StartupAction]' . PHP_EOL .
             self::getActionRun(Action::STARTUP) . PHP_EOL .
             TplAppReload::getActionReload() . PHP_EOL .

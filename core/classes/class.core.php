@@ -27,9 +27,6 @@ class Core
     
     const SCRIPT_EXEC_SILENT = 'execSilent.vbs';
 
-    private $langsPath;
-    private $libsPath;
-
     public function __construct()
     {
         if (extension_loaded('winbinder')) {

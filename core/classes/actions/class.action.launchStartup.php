@@ -4,7 +4,7 @@ class ActionLaunchStartup
 {
     public function __construct($args)
     {
-        global $neardConfig, $neardRegistry;
+        global $neardConfig;
         
         if (isset($args[0])) {
             Util::startLoading();

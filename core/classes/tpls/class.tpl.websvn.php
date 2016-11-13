@@ -9,7 +9,7 @@ class TplWebsvn
     
     public static function process()
     {
-        global $neardBs, $neardConfig, $neardApps, $neardTools;
+        global $neardBs, $neardApps, $neardTools;
         
         $result = '<?php' . PHP_EOL . PHP_EOL;
         

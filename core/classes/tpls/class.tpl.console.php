@@ -23,7 +23,7 @@ class TplConsole
     
     public static function process()
     {
-        global $neardConfig, $neardTools;
+        global $neardTools;
         $result = '<?xml version="1.0"?>' . PHP_EOL . '<settings>' . PHP_EOL .
             self::getConsoleSection() . PHP_EOL .
             self::getAppearanceSection() . PHP_EOL .
@@ -236,7 +236,7 @@ class TplConsole
     
     private static function getTabShellSections()
     {
-        global $neardBs, $neardCore, $neardTools;
+        global $neardBs, $neardTools;
         $default = '';
         $result = '';
         
@@ -263,7 +263,7 @@ class TplConsole
     
     private static function getTabPearSection()
     {
-        global $neardCore, $neardBins, $neardTools;
+        global $neardBins, $neardTools;
         
         $shell = $neardTools->getConsole()->getCmdShell() . ' ' .
             '&quot;' . $neardBins->getPhp()->getPearExe() . '&quot; -V';
@@ -278,7 +278,7 @@ class TplConsole
     
     private static function getTabMysqlSection()
     {
-        global $neardCore, $neardBins, $neardTools;
+        global $neardBins, $neardTools;
     
         $shell = $neardTools->getConsole()->getCmdShell() . ' ' .
             '&quot;' . $neardBins->getMysql()->getCliExe() . '&quot; -uroot';
@@ -293,7 +293,7 @@ class TplConsole
     
     private static function getTabMariadbSection()
     {
-        global $neardCore, $neardBins, $neardTools;
+        global $neardBins, $neardTools;
     
         $shell = $neardTools->getConsole()->getCmdShell() . ' ' .
             '&quot;' . $neardBins->getMariadb()->getCliExe() . '&quot; -uroot';
@@ -308,7 +308,7 @@ class TplConsole
     
     private static function getTabPostgresqlSection()
     {
-        global $neardCore, $neardBins, $neardTools;
+        global $neardBins, $neardTools;
     
         $shell = $neardTools->getConsole()->getCmdShell() . ' ' .
             '&quot;' . $neardBins->getPostgresql()->getCliExe() . '&quot; -U ' .

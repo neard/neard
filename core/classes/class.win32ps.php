@@ -14,7 +14,6 @@ class Win32Ps
     
     private static function callWin32Ps($function)
     {
-        global $neardBs;
         $result = false;
         
         if (function_exists($function)) {
@@ -109,7 +108,7 @@ class Win32Ps
     
     public static function killBins($refreshProcs = false)
     {
-        global $neardBs, $neardCore, $neardBins, $neardTools;
+        global $neardBs;
         $killed = array();
     
         $procs = $neardBs->getProcs();
@@ -120,7 +119,7 @@ class Win32Ps
         if ($procs !== false) {
             foreach ($procs as $proc) {
                 $unixExePath = Util::formatUnixPath($proc[self::EXECUTABLE_PATH]);
-                $unixExeName = strtoupper(basename($unixExePath));
+                //$unixExeName = strtoupper(basename($unixExePath));
                 $unixCommandPath = Util::formatUnixPath($proc[self::COMMAND_LINE]);
     
                 // Not kill current PID (PHP)

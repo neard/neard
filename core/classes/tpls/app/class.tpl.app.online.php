@@ -17,8 +17,6 @@ class TplAppOnline
     
     public static function getActionStatus($status)
     {
-        global $neardBins;
-        
         return TplApp::getActionRun(Action::SWITCH_ONLINE, array($status)) . PHP_EOL .
             TplService::getActionRestart(BinApache::SERVICE_NAME) . PHP_EOL .
             TplService::getActionRestart(BinFilezilla::SERVICE_NAME) . PHP_EOL .

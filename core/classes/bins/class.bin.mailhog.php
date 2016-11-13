@@ -238,9 +238,8 @@ class BinMailhog
     
     private function updateConfig($version = null, $sub = 0, $showWindow = false)
     {
-        global $neardBs, $neardCore, $neardLang, $neardBins, $neardTools, $neardWinbinder;
+        global $neardLang, $neardWinbinder;
         $version = $version == null ? $this->version : $version;
-        $shortVersion = substr(str_replace('.', '', $version), 0, 2);
         Util::logDebug(($sub > 0 ? str_repeat(' ', 2 * $sub) : '') . 'Update ' . $this->name . ' ' . $version . ' config...');
         
         $boxTitle = sprintf($neardLang->getValue(Lang::SWITCH_VERSION_TITLE), $this->getName(), $version);
@@ -319,9 +318,8 @@ class BinMailhog
     
     public function setEnable($enabled, $showWindow = false)
     {
-        global $neardConfig, $neardBins, $neardLang, $neardWinbinder;
-        $boxTitle = sprintf($neardLang->getValue(Lang::ENABLE_TITLE), $this->getName());
-    
+        global $neardConfig, $neardLang, $neardWinbinder;
+
         if ($enabled == Config::ENABLED && !is_dir($this->currentPath)) {
             Util::logDebug($this->getName() . ' cannot be enabled because bundle ' . $this->getVersion() . ' does not exist in ' . $this->currentPath);
             if ($showWindow) {

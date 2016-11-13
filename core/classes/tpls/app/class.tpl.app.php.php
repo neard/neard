@@ -120,7 +120,7 @@ class TplAppPhp
     
     public static function getMenuPhpSettings()
     {
-        global $neardLang, $neardBins;
+        global $neardBins;
         
         $menuItems = '';
         $menuActions = '';
@@ -214,8 +214,6 @@ class TplAppPhp
     
     public static function getActionSwitchPhpSetting($setting, $enabled)
     {
-        global $neardBins;
-        
         $switch = $enabled ? ActionSwitchPhpParam::SWITCH_OFF : ActionSwitchPhpParam::SWITCH_ON;
         return TplApp::getActionRun(Action::SWITCH_PHP_PARAM, array($setting, $switch)) . PHP_EOL .
             TplService::getActionRestart(BinApache::SERVICE_NAME) . PHP_EOL .
@@ -247,8 +245,6 @@ class TplAppPhp
     
     public static function getActionSwitchPhpExtension($extension, $switch)
     {
-        global $neardBins;
-    
         $switch = $switch == ActionSwitchPhpExtension::SWITCH_OFF ? ActionSwitchPhpExtension::SWITCH_ON : ActionSwitchPhpExtension::SWITCH_OFF;
         return TplApp::getActionRun(Action::SWITCH_PHP_EXTENSION, array($extension, $switch)) . PHP_EOL .
             TplService::getActionRestart(BinApache::SERVICE_NAME) . PHP_EOL .

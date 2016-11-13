@@ -177,7 +177,7 @@ class BinFilezilla
     
     public function changePort($port, $checkUsed = false, $wbProgressBar = null)
     {
-        global $neardCore, $neardBins, $neardApps, $neardWinbinder;
+        global $neardWinbinder;
         
         if (!Util::isValidPort($port)) {
             Util::logError($this->getName() . ' port not valid: ' . $port);
@@ -259,7 +259,7 @@ class BinFilezilla
     
     private function updateConfig($version = null, $sub = 0, $showWindow = false)
     {
-        global $neardBs, $neardCore, $neardLang, $neardBins, $neardApps, $neardWinbinder;
+        global $neardLang, $neardWinbinder;
         $version = $version == null ? $this->version : $version;
         Util::logDebug(($sub > 0 ? str_repeat(' ', 2 * $sub) : '') . 'Update ' . $this->name . ' ' . $version . ' config...');
         
@@ -355,9 +355,8 @@ class BinFilezilla
     
     public function setEnable($enabled, $showWindow = false)
     {
-        global $neardConfig, $neardBins, $neardLang, $neardWinbinder;
-        $boxTitle = sprintf($neardLang->getValue(Lang::ENABLE_TITLE), $this->getName());
-    
+        global $neardConfig, $neardLang, $neardWinbinder;
+
         if ($enabled == Config::ENABLED && !is_dir($this->currentPath)) {
             Util::logDebug($this->getName() . ' cannot be enabled because bundle ' . $this->getVersion() . ' does not exist in ' . $this->currentPath);
             if ($showWindow) {
