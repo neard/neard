@@ -73,11 +73,11 @@ class BinMemcached
             return;
         }
         if (empty($this->memory)) {
-            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_INVALID_PARAMETER), self::LOCAL_CFG_API_PORT, $this->memory));
+            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_INVALID_PARAMETER), self::LOCAL_CFG_MEMORY, $this->memory));
             return;
         }
         if (empty($this->port)) {
-            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_INVALID_PARAMETER), self::LOCAL_CFG_UI_PORT, $this->port));
+            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_INVALID_PARAMETER), self::LOCAL_CFG_PORT, $this->port));
             return;
         }
         
@@ -233,9 +233,8 @@ class BinMemcached
     
     private function updateConfig($version = null, $sub = 0, $showWindow = false)
     {
-        global $neardBs, $neardCore, $neardLang, $neardBins, $neardApps, $neardWinbinder;
+        global $neardLang, $neardApps, $neardWinbinder;
         $version = $version == null ? $this->version : $version;
-        $shortVersion = substr(str_replace('.', '', $version), 0, 2);
         Util::logDebug(($sub > 0 ? str_repeat(' ', 2 * $sub) : '') . 'Update ' . $this->name . ' ' . $version . ' config...');
         
         $boxTitle = sprintf($neardLang->getValue(Lang::SWITCH_VERSION_TITLE), $this->getName(), $version);
@@ -317,9 +316,8 @@ class BinMemcached
     
     public function setEnable($enabled, $showWindow = false)
     {
-        global $neardConfig, $neardBins, $neardLang, $neardWinbinder;
-        $boxTitle = sprintf($neardLang->getValue(Lang::ENABLE_TITLE), $this->getName());
-    
+        global $neardConfig, $neardLang, $neardWinbinder;
+
         if ($enabled == Config::ENABLED && !is_dir($this->currentPath)) {
             Util::logDebug($this->getName() . ' cannot be enabled because bundle ' . $this->getVersion() . ' does not exist in ' . $this->currentPath);
             if ($showWindow) {
