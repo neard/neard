@@ -1,1 +1,1 @@
-<?php echo 'Pong!'; ?>
+<?php echo 'Pong!';
