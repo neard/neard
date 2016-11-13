@@ -584,7 +584,7 @@ class BinApache
             '        AllowOverride all' . PHP_EOL .
             $this->getRequiredContent() . PHP_EOL .
             '    </Directory>' . PHP_EOL .
-            '</VirtualHost>' . PHP_EOL;
+            '</VirtualHost>' . PHP_EOL .
             '</IfModule>' . PHP_EOL;
     }
     
