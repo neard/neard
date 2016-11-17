@@ -54,8 +54,8 @@ class Config
         Util::logTrace('Replace config:');
         $content = file_get_contents($neardBs->getConfigFilePath());
         foreach ($params as $key => $value) {
-            Util::logTrace('## ' . $key . ': ' . $value);
-            $content = preg_replace('|^' . $key . ' = .*|', $key . ' = ' . '"' . $value.'"' , $content);
+            $content = preg_replace('/^' . $key . '\s=\s.*/m', $key . ' = ' . '"' . $value.'"' , $content, -1, $count);
+            Util::logTrace('## ' . $key . ': ' . $value . ' (' . $count . ' replacements done)');
             $this->raw[$key] = $value;
         }
         
