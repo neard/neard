@@ -55,7 +55,7 @@ class Config
         $content = file_get_contents($neardBs->getConfigFilePath());
         foreach ($params as $key => $value) {
             Util::logTrace('## ' . $key . ': ' . $value);
-            $content = preg_replace('|' . $key . ' = .*|', $key . ' = ' . '"' . $value.'"' , $content);
+            $content = preg_replace('|^' . $key . ' = .*|', $key . ' = ' . '"' . $value.'"' , $content);
             $this->raw[$key] = $value;
         }
         
