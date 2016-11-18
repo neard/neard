@@ -78,6 +78,12 @@ class ActionSwitchVersion
                 $this->restart = true;
                 $this->service = $neardBins->getMemcached()->getService();
                 $this->changePort = true;
+            } elseif ($args[0] == $neardBins->getSvn()->getName()) {
+                $this->bin = $neardBins->getSvn();
+                $this->currentVersion = $neardBins->getSvn()->getVersion();
+                $this->restart = true;
+                $this->service = $neardBins->getSvn()->getService();
+                $this->changePort = true;
             }
             
             $this->boxTitle = sprintf($neardLang->getValue(Lang::SWITCH_VERSION_TITLE), $this->bin->getName(), $this->version);

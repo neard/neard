@@ -14,6 +14,7 @@ $procs = array(
     'nodejs',
     'php',
     'postgresql',
+    'svn'
 );
 
 $proc = Util::cleanPostVar('proc');

@@ -104,6 +104,7 @@ nodejs = "Node.js"
 pear = "PEAR"
 php = "PHP"
 postgresql = "PostgreSQL"
+svn = "SVN"
 
 ; Apps
 adminer = "Adminer"
@@ -126,7 +127,6 @@ phpmetrics = "PhpMetrics"
 phpunit = "PHPUnit"
 python = "Python"
 ruby = "Ruby"
-svn = "SVN"
 wpcli = "WP-CLI"
 xdc = "XDebugClient"
 
@@ -257,7 +257,6 @@ startupServiceStartError = " Szerviz %s nem lett elindítva"
 startupServiceSyntaxError = "- Konfigurációs hiba: %s"
 startupServicePortError = "- Port %s használja a %s alkalmazás"
 startupRefreshGitReposText = "Git programtár frissítése"
-startupRefreshSvnReposText = "SVN programtár frissítése"
 startupGenSslCrtText = "SSL bizonyítvány készítése"
 
 ; Action Quit
@@ -296,6 +295,9 @@ debugMariadbSyntaxCheck = "Konfiguráció szintaktikai ellenörzése"
 
 ; Action Debug PostgreSQL
 debugPostgresqlVersion = "Verzió"
+
+; Action Debug SVN
+debugSvnVersion = "Verzió"
 
 ; Action others...
 registrySetErrorText = "Regisztri érték hiba : %s"

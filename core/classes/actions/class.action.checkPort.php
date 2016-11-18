@@ -22,6 +22,8 @@ class ActionCheckPort
                 $neardBins->getMailhog()->checkPort($args[1], true);
             } elseif ($args[0] == $neardBins->getMemcached()->getName()) {
                 $neardBins->getMemcached()->checkPort($args[1], true);
+            } elseif ($args[0] == $neardBins->getSvn()->getName()) {
+                $neardBins->getSvn()->checkPort($args[1], true);
             }
         }
     }

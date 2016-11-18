@@ -71,6 +71,10 @@
             <span class="loader" style="float:right"><img src="<?php echo $neardHomepage->getResourcesPath() . '/img/loader.gif'; ?>" /></span>
             <a href="#filezilla"><?php echo $neardLang->getValue(Lang::FILEZILLA); ?></a>
           </span>
+          <span class="list-group-item summary-binsvn">
+            <span class="loader" style="float:right"><img src="<?php echo $neardHomepage->getResourcesPath() . '/img/loader.gif'; ?>" /></span>
+            <a href="#svn"><?php echo $neardLang->getValue(Lang::SVN); ?></a>
+          </span>
         </div>
       </div>
     </div>
@@ -136,11 +140,6 @@
             <a href="<?php echo APP_GITHUB_HOME; ?>/wiki/toolRuby#latest" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
             <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardTools->getRuby()->getVersion(); ?></span>
             <span><?php echo $neardLang->getValue(Lang::RUBY); ?></span>
-          </span>
-          <span class="list-group-item">
-            <a href="<?php echo APP_GITHUB_HOME; ?>/wiki/toolSVN#latest" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
-            <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardTools->getSvn()->getVersion(); ?></span>
-            <span><?php echo $neardLang->getValue(Lang::SVN); ?></span>
           </span>
           <span class="list-group-item">
             <a href="<?php echo APP_GITHUB_HOME; ?>/wiki/toolWP-CLI#latest" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>

@@ -9,17 +9,17 @@ class TplWebsvn
     
     public static function process()
     {
-        global $neardBs, $neardApps, $neardTools;
+        global $neardBs, $neardBins, $neardApps;
         
         $result = '<?php' . PHP_EOL . PHP_EOL;
         
         // Add repository
-        foreach ($neardTools->getSvn()->findRepos(true) as $repo) {
+        foreach ($neardBins->getSvn()->findRepos() as $repo) {
             $result .= '$config->addRepository(\'' . $repo . '\', \'' . Util::formatUnixPath($repo) . '\');' . PHP_EOL;
         }
         
         // Parent path
-        $result .= PHP_EOL . '$config->parentPath(\'' . $neardTools->getSvn()->getServer() . '\');' . PHP_EOL . PHP_EOL;
+        $result .= PHP_EOL . '$config->parentPath(\'' . $neardBins->getSvn()->getRoot() . '\');' . PHP_EOL . PHP_EOL;
         
         // Templates
         $result .= '$config->addTemplatePath($locwebsvnreal.\'/templates/calm/\');' . PHP_EOL;

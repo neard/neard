@@ -97,9 +97,9 @@ class Batch
     
     public static function getSvnVersion()
     {
-        global $neardTools;
+        global $neardBins;
     
-        $result = self::exec('getSvnVersion', 'CMD /C "' . $neardTools->getSvn()->getExe() . '" --version', 5);
+        $result = self::exec('getSvnVersion', 'CMD /C "' . $neardBins->getSvn()->getExe() . '" --version', 5);
         if (!empty($result) && is_array($result)) {
             $rebuildResult = array();
             foreach ($result as $row) {

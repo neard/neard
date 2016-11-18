@@ -13,7 +13,6 @@ class Tools
     private $phpunit;
     private $python;
     private $ruby;
-    private $svn;
     private $wpcli;
     private $xdc;
     
@@ -49,7 +48,6 @@ class Tools
             $this->getPhpUnit(),
             $this->getPython(),
             $this->getRuby(),
-            $this->getSvn(),
             $this->getWpCli(),
             $this->getXdc(),
         );
@@ -141,14 +139,6 @@ class Tools
             $this->ruby = new ToolRuby($this->getRootPath('ruby'));
         }
         return $this->ruby;
-    }
-    
-    public function getSvn()
-    {
-        if ($this->svn == null) {
-            $this->svn = new ToolSvn($this->getRootPath('svn'));
-        }
-        return $this->svn;
     }
     
     public function getWpCli()

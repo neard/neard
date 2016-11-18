@@ -2,6 +2,7 @@
 
 ## 1.0.22 (2016/11/13)
 
+* Dissociate Apache and SVN (Issue #168)
 * Use latest OpenSSL release to generate SSL certificate (Issue #167)
 * Forgetting Memcached switch version impl (Issue #164)
 * Port undefined error for MailHog service (Issue #163)
@@ -10,18 +11,27 @@
 * Bug while enable binary (Issue #156)
 * Add Ruby tool (Issue #154)
 * Add Python tool (Issue #98)
+* Bug while setting version in neard.conf
 * Downgrade default Filezilla bundle to 0.9.42 (XP compatibility)
 * Implement enable on tools and apps
 
 ### Upgrade from previous release
 
+* **required** : Remove file `alias\svn.conf`
+* **required** : Copy folder `bin\svn`
 * **required** : Remove then replace folder `core`
+* **required** : Move folders inside `svnrepos` to `bin\svn\svn1.7.19\repos`
+* **required** : Remove folder `svnrepos`
 * **required** : Copy folder `tools\python`
 * **required** : Copy folder `tools\ruby`
+* **required** : Remove folder `tools\svn`
 * **required** : Add line `pythonVersion = "2.7.12.3"` after `phpunitVersion` in `neard.conf`
 * **required** : Add line `rubyVersion = "2.0.0.p648"` after `pythonVersion` in `neard.conf`
+* **required** : Remove line `svnVersion` in the tools part in `neard.conf`
+* **required** : Add line `svnVersion = "1.7.19"` after `memcachedEnable` in `neard.conf`
+* **required** : Add line `svnEnable = "1"` after `svnVersion` in `neard.conf`
 * **required** : Remove then replace file `sprites.dat`
-* **required** : Replace your existing Filezilla version with the latest [Filezilla bundle](https://github.com/crazy-max/neard-bin-filezilla/releases) for SSL (Issue #167).
+* **required** : Replace your existing Filezilla version with the latest [Filezilla bundle](https://github.com/crazy-max/neard-bin-filezilla/releases) for SSL issue #167.
 
 ## 1.0.21 (2016/10/23)
 

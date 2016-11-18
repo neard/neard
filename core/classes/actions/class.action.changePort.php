@@ -49,6 +49,10 @@ class ActionChangePort
                 $this->bin = $neardBins->getMemcached();
                 $this->currentPort = $neardBins->getMemcached()->getPort();
                 $this->cntProcessActions = 3;
+            } elseif ($args[0] == $neardBins->getSvn()->getName()) {
+                $this->bin = $neardBins->getSvn();
+                $this->currentPort = $neardBins->getSvn()->getPort();
+                $this->cntProcessActions = 3;
             }
             
             $neardWinbinder->reset();

@@ -329,6 +329,9 @@ class Util
             if ($neardBins->getNodejs()->isEnable()) {
                 $value .= $neardBins->getNodejs()->getCurrentPath() . ';';
             }
+            if ($neardBins->getSvn()->isEnable()) {
+                $value .= $neardBins->getSvn()->getCurrentPath() . ';';
+            }
             if ($neardTools->getComposer()->isEnable()) {
                 $value .= $neardTools->getComposer()->getCurrentPath() . ';';
             }
@@ -352,9 +355,6 @@ class Util
             }
             if ($neardTools->getRuby()->isEnable()) {
                 $value .= $neardTools->getRuby()->getCurrentPath() . '/bin;';
-            }
-            if ($neardTools->getSvn()->isEnable()) {
-                $value .= $neardTools->getSvn()->getCurrentPath() . '/bin;';
             }
             if ($neardTools->getWpCli()->isEnable()) {
                 $value .= $neardTools->getWpCli()->getCurrentPath() . ';';

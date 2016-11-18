@@ -26,6 +26,9 @@ $(document).ready(function() {
         $('.summary-binmemcached').prepend(data.binmemcached);
         $('.summary-binmemcached').find('.loader').remove();
         
+        $('.summary-binsvn').prepend(data.binsvn);
+        $('.summary-binsvn').find('.loader').remove();
+        
         $('.summary-binnodejs').prepend(data.binnodejs);
         $('.summary-binnodejs').find('.loader').remove();
         

@@ -322,6 +322,22 @@ class TplConsole
         );
     }
     
+    private static function getTabSvnSection()
+    {
+        global $neardBs, $neardTools;
+    
+        $svnVersion = Batch::getSvnVersion();
+        $shell = $neardTools->getConsole()->getCmdShell() .
+            (!empty($svnVersion) ? ' echo ' . $svnVersion[0] . ' &amp; echo ' . $svnVersion[1] : null);
+    
+        return self::getTab(
+            $neardTools->getConsole()->getTabTitleSvn(),
+            self::ICON_SVN,
+            Util::formatWindowsPath($shell),
+            $neardBs->getWwwPath()
+        );
+    }
+    
     private static function getTabGitSection()
     {
         global $neardBs, $neardTools;
@@ -335,22 +351,6 @@ class TplConsole
             $neardTools->getConsole()->getTabTitleGit(),
             self::ICON_GIT,
             Util::formatWindowsPath('&quot;' . $gitShell . '&quot;'),
-            $neardBs->getWwwPath()
-        );
-    }
-    
-    private static function getTabSvnSection()
-    {
-        global $neardBs, $neardTools;
-        
-        $svnVersion = Batch::getSvnVersion();
-        $shell = $neardTools->getConsole()->getCmdShell() .
-            (!empty($svnVersion) ? ' echo ' . $svnVersion[0] . ' &amp; echo ' . $svnVersion[1] : null);
-        
-        return self::getTab(
-            $neardTools->getConsole()->getTabTitleSvn(),
-            self::ICON_SVN,
-            Util::formatWindowsPath($shell),
             $neardBs->getWwwPath()
         );
     }

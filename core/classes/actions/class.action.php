@@ -15,13 +15,13 @@ class Action
     const DEBUG_MARIADB = 'debugMariadb';
     const DEBUG_MYSQL = 'debugMysql';
     const DEBUG_POSTGRESQL = 'debugPostgresql';
+    const DEBUG_SVN = 'debugSvn';
     const EDIT_ALIAS = 'editAlias';
     const EDIT_VHOST = 'editVhost';
     const ENABLE = 'enable';
     const EXEC = 'exec';
     const GEN_SSL_CERTIFICATE = 'genSslCertificate';
     const LAUNCH_STARTUP = 'launchStartup';
-    const LAUNCH_STARTUP_SERVICE = 'launchStartupService';
     const MANUAL_RESTART = 'manualRestart';
     const LOADING = 'loading';
     const QUIT = 'quit';
