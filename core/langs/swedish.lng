@@ -104,6 +104,7 @@ nodejs = "Node.js"
 pear = "PEAR"
 php = "PHP"
 postgresql = "PostgreSQL"
+svn = "SVN"
 
 ; Apps
 adminer = "Adminer"
@@ -126,7 +127,6 @@ phpmetrics = "PhpMetrics"
 phpunit = "PHPUnit"
 python = "Python"
 ruby = "Ruby"
-svn = "SVN"
 wpcli = "WP-CLI"
 xdc = "XDebugClient"
 
@@ -257,7 +257,6 @@ startupServiceStartError = "- Kan inte starta tjänsten : Fel %s"
 startupServiceSyntaxError = "- Konf-fel upptäckta : %s"
 startupServicePortError = "- Port %s används av en annan applikation : %s."
 startupRefreshGitReposText = "Refresh Git repositories"
-startupRefreshSvnReposText = "Refresh SVN repositories"
 startupGenSslCrtText = "#Generate %s SSL certificate"
 
 ; Action Quit
@@ -296,6 +295,9 @@ debugMariadbSyntaxCheck = "Konfig syntax-verifiering"
 
 ; Action Debug PostgreSQL
 debugPostgresqlVersion = "Version"
+
+; Action Debug SVN
+debugSvnVersion = "Version"
 
 ; Action others...
 registrySetErrorText = "Registreringsvärde inkorrekt : %s"

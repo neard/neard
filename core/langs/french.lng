@@ -104,6 +104,7 @@ nodejs = "Node.js"
 pear = "PEAR"
 php = "PHP"
 postgresql = "PostgreSQL"
+svn = "SVN"
 
 ; Apps
 adminer = "Adminer"
@@ -126,7 +127,6 @@ phpmetrics = "PhpMetrics"
 phpunit = "PHPUnit"
 python = "Python"
 ruby = "Ruby"
-svn = "SVN"
 wpcli = "WP-CLI"
 xdc = "XDebugClient"
 
@@ -257,7 +257,6 @@ startupServiceStartError = "- Impossible de démarrer le service : Erreur %s"
 startupServiceSyntaxError = "- Erreurs de configuration détectées : %s"
 startupServicePortError = "- Le port %s est utilisé par une autre application : %s."
 startupRefreshGitReposText = "Rafraîchissement des dépôts GIT"
-startupRefreshSvnReposText = "Rafraîchissement des dépôts SVN"
 startupGenSslCrtText = "Génération du certificat SSL pour %s"
 
 ; Action Quit
@@ -296,6 +295,9 @@ debugMariadbSyntaxCheck = "Vérifier la syntaxe de la configuration"
 
 ; Action Debug PostgreSQL
 debugPostgresqlVersion = "Version"
+
+; Action Debug SVN
+debugSvnVersion = "Version"
 
 ; Action others...
 registrySetErrorText = "Valeur de clé de registre incorrecte : %s"

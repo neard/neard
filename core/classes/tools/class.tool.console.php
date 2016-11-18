@@ -252,20 +252,20 @@ class ToolConsole
         return $neardLang->getValue(Lang::POSTGRESQL) . ' ' . $neardBins->getPostgresql()->getVersion();
     }
     
-    public function getTabTitleGit($repoPath = null)
+    public function getTabTitleSvn($repoPath = null)
     {
-        global $neardLang, $neardTools;
-        $result = $neardLang->getValue(Lang::GIT) . ' ' . $neardTools->getGit()->getVersion();
+        global $neardLang, $neardBins;
+        $result = $neardLang->getValue(Lang::SVN) . ' ' . $neardBins->getSvn()->getVersion();
         if ($repoPath != null) {
             $result .= ' - ' . basename($repoPath);
         }
         return $result;
     }
     
-    public function getTabTitleSvn($repoPath = null)
+    public function getTabTitleGit($repoPath = null)
     {
         global $neardLang, $neardTools;
-        $result = $neardLang->getValue(Lang::SVN) . ' ' . $neardTools->getSvn()->getVersion();
+        $result = $neardLang->getValue(Lang::GIT) . ' ' . $neardTools->getGit()->getVersion();
         if ($repoPath != null) {
             $result .= ' - ' . basename($repoPath);
         }

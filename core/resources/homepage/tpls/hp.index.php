@@ -8,3 +8,4 @@
 <div class="panel panel-default panel-elts"><?php include 'hp.index.mailhog.php'; ?></div>
 <div class="panel panel-default panel-elts"><?php include 'hp.index.memcached.php'; ?></div>
 <div class="panel panel-default panel-elts"><?php include 'hp.index.filezilla.php'; ?></div>
+<div class="panel panel-default panel-elts"><?php include 'hp.index.svn.php'; ?></div>

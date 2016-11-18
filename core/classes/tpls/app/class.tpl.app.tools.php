@@ -23,11 +23,6 @@ class TplAppTools
         $resultItems .= $tplGit[TplApp::SECTION_CALL] . PHP_EOL;
         $resultActions .= $tplGit[TplApp::SECTION_CONTENT] . PHP_EOL;
         
-        // SVN
-        $tplSvn = TplAppSvn::process();
-        $resultItems .= $tplSvn[TplApp::SECTION_CALL] . PHP_EOL;
-        $resultActions .= $tplSvn[TplApp::SECTION_CONTENT] . PHP_EOL;
-        
         // Python
         $tplPython = TplAppPython::process();
         $resultItems .= $tplPython[TplApp::SECTION_CALL] . PHP_EOL;

@@ -104,6 +104,7 @@ nodejs = "Node.js"
 pear = "PEAR"
 php = "PHP"
 postgresql = "PostgreSQL"
+svn = "SVN"
 
 ; Apps
 adminer = "Adminer"
@@ -126,7 +127,6 @@ phpmetrics = "PhpMetrics"
 phpunit = "PHPUnit"
 python = "Python"
 ruby = "Ruby"
-svn = "SVN"
 wpcli = "WP-CLI"
 xdc = "XDebugClient"
 
@@ -257,7 +257,6 @@ startupServiceStartError = "- Cannot start the service : %s"
 startupServiceSyntaxError = "- Conf errors detected : %s"
 startupServicePortError = "- Port %s is used by an other application : %s."
 startupRefreshGitReposText = "Refresh Git repositories"
-startupRefreshSvnReposText = "Refresh SVN repositories"
 startupGenSslCrtText = "Generate %s SSL certificate"
 
 ; Action Quit
@@ -296,6 +295,9 @@ debugMariadbSyntaxCheck = "Config syntax check"
 
 ; Action Debug PostgreSQL
 debugPostgresqlVersion = "Version"
+
+; Action Debug SVN
+debugSvnVersion = "Version"
 
 ; Action others...
 registrySetErrorText = "Registry value incorrect : %s"

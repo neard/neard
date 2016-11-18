@@ -44,6 +44,8 @@ class ActionQuit
                 $name = $neardBins->getMemcached()->getName() . ' ' . $neardBins->getMemcached()->getVersion();
             } elseif ($sName == BinFilezilla::SERVICE_NAME) {
                 $name = $neardBins->getFilezilla()->getName() . ' ' . $neardBins->getFilezilla()->getVersion();
+            } elseif ($sName == BinSvn::SERVICE_NAME) {
+                $name = $neardBins->getSvn()->getName() . ' ' . $neardBins->getSvn()->getVersion();
             }
             $name .= ' (' . $service->getName() . ')';
             

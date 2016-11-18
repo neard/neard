@@ -79,7 +79,7 @@ class AppWebsvn
     
     private function updateConfig($version = null, $sub = 0, $showWindow = false)
     {
-        global $neardBs;
+        global $neardBs, $neardBins;
         $version = $version == null ? $this->version : $version;
         Util::logDebug(($sub > 0 ? str_repeat(' ', 2 * $sub) : '') . 'Update ' . $this->name . ' ' . $version . ' config...');
     
@@ -92,6 +92,10 @@ class AppWebsvn
         } else {
             Util::logError($this->getName() . ' alias not found : ' . $alias);
         }
+        
+        Util::replaceInFile($this->getConf(), array(
+            '/^\$config->parentPath/' => '$config->parentPath(\'' . $neardBins->getSvn()->getRoot() . '\');',
+        ));
     }
     
     public function getName()

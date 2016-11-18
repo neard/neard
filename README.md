@@ -42,6 +42,7 @@ If you've got a problem do not forget to read the [Reporting an issue Wiki page]
 * **[Node.js](../../wiki/binNode.js)**, an open-source, cross-platform runtime environment for developing server-side web applications.
 * **[PHP](../../wiki/binPHP)**, a server-side scripting language designed for web development including PEAR and extra extensions.
 * **[PostgreSQL](../../wiki/binPostgreSQL)**, an object-relational database management system (ORDBMS) with an emphasis on extensibility and standards-compliance.
+* **[SVN](../../wiki/binSVN)**, a software versioning and revision control system.
 
 ### Applications
 
@@ -66,7 +67,6 @@ If you've got a problem do not forget to read the [Reporting an issue Wiki page]
 * **[PHPUnit](../../wiki/toolPHPUnit)**, a programmer-oriented testing framework for PHP.
 * **[Python](../../wiki/toolPython)**, a widely used high-level, general-purpose, interpreted, dynamic programming language.
 * **[Ruby](../../wiki/toolRuby)**, a dynamic, reflective, object-oriented, general-purpose programming language.
-* **[SVN](../../wiki/toolSVN)**, a software versioning and revision control system.
 * **[WP-CLI](../../wiki/toolWP-CLI)**, a command line interface for WordPress.
 * **[XDebugClient](../../wiki/toolXDebugClient)**, a simple frontend for XDebug.
 

@@ -11,7 +11,7 @@ class ActionStartup
     private $filesToScan;
     
     const GAUGE_SERVICES = 5;
-    const GAUGE_OTHERS = 19;
+    const GAUGE_OTHERS = 18;
     
     public function __construct($args)
     {
@@ -510,6 +510,9 @@ class ActionStartup
                 } elseif ($sName == BinFilezilla::SERVICE_NAME) {
                     $bin = $neardBins->getFilezilla();
                     $port = $neardBins->getFilezilla()->getPort();
+                } elseif ($sName == BinSvn::SERVICE_NAME) {
+                    $bin = $neardBins->getSvn();
+                    $port = $neardBins->getSvn()->getPort();
                 }
                 
                 $name = $bin->getName() . ' ' . $bin->getVersion() . ' (' . $service->getName() . ')';
@@ -601,19 +604,6 @@ class ActionStartup
             
             $repos = $neardTools->getGit()->findRepos(false);
             $this->writeLog('Update GIT repos: ' . count($repos) . ' found');
-        }
-    }
-    
-    private function refreshSvnRepos()
-    {
-        global $neardLang, $neardTools;
-        
-        $this->splash->incrProgressBar();
-        if ($neardTools->getSvn()->isScanStartup()) {
-            $this->splash->setTextLoading($neardLang->getValue(Lang::STARTUP_REFRESH_SVN_REPOS_TEXT));
-            
-            $repos = $neardTools->getSvn()->findRepos(false);
-            $this->writeLog('Update SVN repos: ' . count($repos) . ' found');
         }
     }
     

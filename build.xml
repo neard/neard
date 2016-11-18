@@ -64,6 +64,7 @@
         <getbundle releasesurl="${bin.mysql.url}" version="${bin.mysql.version}" dest="${release.target}/${release.name}/bin/mysql" />
         <getbundle releasesurl="${bin.nodejs.url}" version="${bin.nodejs.version}" dest="${release.target}/${release.name}/bin/nodejs" />
         <getbundle releasesurl="${bin.php.url}" version="${bin.php.version}" dest="${release.target}/${release.name}/bin/php" />
+        <getbundle releasesurl="${bin.svn.url}" version="${bin.svn.version}" dest="${release.target}/${release.name}/bin/svn" />
         
         <!-- Get apps -->
         <getbundle releasesurl="${app.adminer.url}" version="${app.adminer.version}" dest="${release.target}/${release.name}/apps/adminer" />
@@ -86,7 +87,6 @@
         <getbundle releasesurl="${tool.phpunit.url}" version="${tool.phpunit.version}" dest="${release.target}/${release.name}/tools/phpunit" />
         <getbundle releasesurl="${tool.python.url}" version="${tool.python.version}" dest="${release.target}/${release.name}/tools/python" />
         <getbundle releasesurl="${tool.ruby.url}" version="${tool.ruby.version}" dest="${release.target}/${release.name}/tools/ruby" />
-        <getbundle releasesurl="${tool.svn.url}" version="${tool.svn.version}" dest="${release.target}/${release.name}/tools/svn" />
         <getbundle releasesurl="${tool.wpcli.url}" version="${tool.wpcli.version}" dest="${release.target}/${release.name}/tools/wpcli" />
         <getbundle releasesurl="${tool.xdc.url}" version="${tool.xdc.version}" dest="${release.target}/${release.name}/tools/xdc" />
         
@@ -102,6 +102,7 @@
                 <filter token="BIN_FILEZILLA_VERSION" value="${bin.filezilla.version}"/>
                 <filter token="BIN_MAILHOG_VERSION" value="${bin.mailhog.version}"/>
                 <filter token="BIN_MEMCACHED_VERSION" value="${bin.memcached.version}"/>
+                <filter token="BIN_SVN_VERSION" value="${bin.svn.version}"/>
                 
                 <filter token="TOOL_COMPOSER_VERSION" value="${tool.composer.version}"/>
                 <filter token="TOOL_CONSOLE_VERSION" value="${tool.console.version}"/>
@@ -114,7 +115,6 @@
                 <filter token="TOOL_PHPUNIT_VERSION" value="${tool.phpunit.version}"/>
                 <filter token="TOOL_PYTHON_VERSION" value="${tool.python.version}"/>
                 <filter token="TOOL_RUBY_VERSION" value="${tool.ruby.version}"/>
-                <filter token="TOOL_SVN_VERSION" value="${tool.svn.version}"/>
                 <filter token="TOOL_WPCLI_VERSION" value="${tool.wpcli.version}"/>
                 <filter token="TOOL_XDC_VERSION" value="${tool.xdc.version}"/>
                 

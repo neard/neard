@@ -26,6 +26,8 @@ class ActionEnable
                 $neardBins->getMailhog()->setEnable($args[1], true);
             } elseif ($args[0] == $neardBins->getMemcached()->getName()) {
                 $neardBins->getMemcached()->setEnable($args[1], true);
+            } elseif ($args[0] == $neardBins->getSvn()->getName()) {
+                $neardBins->getSvn()->setEnable($args[1], true);
             }
         }
     }

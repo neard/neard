@@ -105,6 +105,7 @@ class Lang
     const MYSQL = 'mysql';
     const NODEJS = 'nodejs';
     const POSTGRESQL = 'postgresql';
+    const SVN = 'svn';
     
     // Apps
     const GITLIST = 'gitlist';
@@ -127,7 +128,6 @@ class Lang
     const PHPUNIT = 'phpunit';
     const PYTHON = 'python';
     const RUBY = 'ruby';
-    const SVN = 'svn';
     const WPCLI = 'wpcli';
     const XDC = 'xdc';
     
@@ -257,7 +257,6 @@ class Lang
     const STARTUP_SERVICE_SYNTAX_ERROR = 'startupServiceSyntaxError';
     const STARTUP_SERVICE_PORT_ERROR = 'startupServicePortError';
     const STARTUP_REFRESH_GIT_REPOS_TEXT = 'startupRefreshGitReposText';
-    const STARTUP_REFRESH_SVN_REPOS_TEXT = 'startupRefreshSvnReposText';
     const STARTUP_GEN_SSL_CRT_TEXT = 'startupGenSslCrtText';
     
     // Action Quit
@@ -296,6 +295,9 @@ class Lang
     
     // Action Debug PostgreSQL
     const DEBUG_POSTGRESQL_VERSION = 'debugPostgresqlVersion';
+    
+    // Action Debug SVN
+    const DEBUG_SVN_VERSION = 'debugSvnVersion';
     
     // Action others...
     const REGISTRY_SET_ERROR_TEXT = 'registrySetErrorText';
@@ -451,6 +453,7 @@ class Lang
             self::MYSQL,
             self::NODEJS,
             self::POSTGRESQL,
+            self::SVN,
             
             // Apps
             self::GITLIST,
@@ -473,7 +476,6 @@ class Lang
             self::PHPUNIT,
             self::PYTHON,
             self::RUBY,
-            self::SVN,
             self::WPCLI,
             self::XDC,
             
@@ -602,7 +604,6 @@ class Lang
             self::STARTUP_SERVICE_SYNTAX_ERROR,
             self::STARTUP_SERVICE_PORT_ERROR,
             self::STARTUP_REFRESH_GIT_REPOS_TEXT,
-            self::STARTUP_REFRESH_SVN_REPOS_TEXT,
             self::STARTUP_START_SERVICE_TEXT,
             
             // Action Quit
@@ -641,6 +642,9 @@ class Lang
             
             // Action Debug PostgreSQL
             self::DEBUG_POSTGRESQL_VERSION,
+            
+            // Action Debug SVN
+            self::DEBUG_SVN_VERSION,
             
             // Action others...
             self::REGISTRY_SET_ERROR_TEXT,

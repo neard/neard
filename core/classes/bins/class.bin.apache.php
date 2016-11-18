@@ -290,18 +290,15 @@ class BinApache
         $this->setVersion($version);
         
         // conf
-        $svnModulePath = $neardTools->getSvn()->getCurrentPath() . '/modules/apache' . $shortVersion;
         Util::replaceInFile($conf, array(
             // PHP module
             '/^#?PHPIniDir\s.*/' => ($neardBins->getPhp()->isEnable() ? '' : '#') . 'PHPIniDir "' . $neardBins->getPhp()->getCurrentPath() . '"',
             '/^#?LoadFile\s.*php.ts\.dll.*/' => ($neardBins->getPhp()->isEnable() ? '' : '#') . (!file_exists($neardBins->getPhp()->getCurrentPath() . '/' . $tsDll) ? '#' : '') . 'LoadFile "' . $neardBins->getPhp()->getCurrentPath() . '/' . $tsDll . '"',
             '/^#?LoadModule\sphp._module\s.*/' => ($neardBins->getPhp()->isEnable() ? '' : '#') . 'LoadModule ' . $apachePhpModuleName . ' "' . $apachePhpModule . '"',
             
-            // SVN module
-            '/^LoadModule\sauthz_svn_module\s*/' => 'LoadModule authz_svn_module "' . $svnModulePath . '/mod_authz_svn.so"',
-            '/^LoadModule\sdav_svn_module\s*/' => 'LoadModule dav_svn_module "' . $svnModulePath . '/mod_dav_svn.so"',
-            '/^#LoadModule\sauthz_svn_module\s*/' => '#LoadModule authz_svn_module "' . $svnModulePath . '/mod_authz_svn.so"',
-            '/^#LoadModule\sdav_svn_module\s*/' => '#LoadModule dav_svn_module "' . $svnModulePath . '/mod_dav_svn.so"',
+            // Since Neard 1.0.22 remove SVN Apache module
+            '/^LoadModule\sauthz_svn_module\s.*tools\/svn\/svn.*/' => '',
+            '/^LoadModule\sdav_svn_module\s.*tools\/svn\/svn.*/' => '',
             
             // Port
             '/^Listen\s(\d+)/' => 'Listen ' . $this->port,

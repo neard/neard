@@ -8,6 +8,7 @@ $result = array(
     'binmysql' => '',
     'binpostgresql' => '',
     'binmemcached' => '',
+    'binsvn' => '',
     'binnodejs' => '',
     'binphp' => '',
 );
@@ -123,6 +124,20 @@ if ($neardBins->getMemcached()->isEnable()) {
 
 $result['binmemcached'] = sprintf($dlMoreTpl, 'binMemcached');
 $result['binmemcached'] .= '<span style="float:right;font-size:12px" class="label ' . $memcachedLabel . '">' . $neardBins->getMemcached()->getVersion() . '</span>';
+
+// Bin SVN
+$svnPort = $neardBins->getSvn()->getPort();
+$svnLabel = 'label-default';
+
+if ($neardBins->getSvn()->isEnable()) {
+    $svnLabel = 'label-danger';
+    if ($neardBins->getSvn()->checkPort($svnPort)) {
+        $svnLabel = 'label-success';
+    }
+}
+
+$result['binsvn'] = sprintf($dlMoreTpl, 'binSVN');
+$result['binsvn'] .= '<span style="float:right;font-size:12px" class="label ' . $svnLabel . '">' . $neardBins->getSvn()->getVersion() . '</span>';
 
 // Bin Node.js
 $nodejsLabel = 'label-default';

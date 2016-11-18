@@ -11,6 +11,7 @@ class Bins
     private $postgresql;
     private $nodejs;
     private $filezilla;
+    private $svn;
     
     public function __construct()
     {
@@ -48,6 +49,7 @@ class Bins
             $this->getMariadb(),
             $this->getPostgresql(),
             $this->getMysql(),
+            $this->getSvn(),
             $this->getPhp(),
             $this->getNodejs(),
         );
@@ -125,6 +127,14 @@ class Bins
         return $this->filezilla;
     }
     
+    public function getSvn()
+    {
+        if ($this->svn == null) {
+            $this->svn = new BinSvn($this->getRootPath('svn'));
+        }
+        return $this->svn;
+    }
+    
     public function getLogsPath()
     {
         return array(
@@ -156,6 +166,9 @@ class Bins
         }
         if ($this->getFilezilla()->isEnable()) {
             $result[BinFilezilla::SERVICE_NAME] = $this->getFilezilla()->getService();
+        }
+        if ($this->getSvn()->isEnable()) {
+            $result[BinSvn::SERVICE_NAME] = $this->getSvn()->getService();
         }
         
         return $result;
