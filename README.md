@@ -101,7 +101,7 @@ Before starting Neard, edit the configuration file `neard.conf` :
 
 ## Upgrade
 
-All instructions to upgrade from a previous release are added in the [CHANGELOG.md](https://github.com/crazy-max/neard/blob/master/CHANGELOG.md).
+All instructions to upgrade from a previous release are added in the [UPGRADE.md](https://github.com/crazy-max/neard/blob/master/UPGRADE.md) file.
 
 ## Usage
 
