@@ -145,13 +145,33 @@
                 <!--sevenz destfile="${release.dest}.7z">
                     <sevenzfileset dir="${release.target}" prefix="${release.name}" />
                 </sevenz-->
-                <sevenzip src="${release.target}/*" dest="${release.dest}.7z" />
+                <sevenzip src="${release.target}/*" dest="${release.dest}.7z" format="7z" />
             </then>
+            <elseif>
+                <equals arg1="${release.format}" arg2="zip" />
+                <then>
+                    <delete file="${release.dest}.zip" />
+                    <echo message="Compressing ${release.name}${release.version} to ${release.dest}.zip..." />
+                    <!--zip destfile="${release.dest}.zip" update="false">
+                        <zipfileset dir="${release.target}" />
+                    </zip-->
+                    <sevenzip src="${release.target}/*" dest="${release.dest}.zip" format="zip" />
+                </then>
+            </elseif>
+            <elseif>
+                <equals arg1="${release.format}" arg2="all" />
+                <then>
+                    <delete file="${release.dest}.7z" />
+                    <echo message="Compressing ${release.name}${release.version} to ${release.dest}.7z..." />
+                    <sevenzip src="${release.target}/*" dest="${release.dest}.7z" format="7z" />
+                    
+                    <delete file="${release.dest}.zip" />
+                    <echo message="Compressing ${release.name}${release.version} to ${release.dest}.zip..." />
+                    <sevenzip src="${release.target}/*" dest="${release.dest}.zip" format="zip" />
+                </then>
+            </elseif>
             <else>
-                <echo message="Compressing ${release.name}${release.version} to ${release.dest}.zip..." />
-                <zip destfile="${release.dest}.zip" update="false">
-                    <zipfileset dir="${release.target}" />
-                </zip>
+                <fail message="Unknown release format: ${release.format}"/>
             </else>
         </if>
     </target>
