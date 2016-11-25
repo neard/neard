@@ -37,21 +37,31 @@
         <mkdir dir="${build.release.path}" />
         <mkdir dir="${release.target}/${release.name}" />
         
-        <!-- Copy Neard -->
+        <!-- Copy core -->
         <copy todir="${release.target}/${release.name}">
             <fileset dir="${project.basedir}" defaultexcludes="yes" excludes="
-                build.xml,
-                build.properties,
-                *.launch,
                 .dev/**,
                 .github/**,
-                core/tmp/*.*
-                logs/*.*,
-                ssl/*.crt,
-                ssl/*.ppk,
-                ssl/*.pub,
-                tmp/*.*"
+                base/**,
+                core/tmp/*,
+                build.xml,
+                build.properties,
+                *.launch"
             />
+        </copy>
+        
+        <!-- Copy base -->
+        <copy todir="${release.target}/${release.name}">
+            <fileset dir="${project.basedir}/base" defaultexcludes="yes" excludes="
+                cgi-bin/*,
+                logs/*,
+                ssl/*,
+                tmp/**,
+                vhosts/*"
+            />
+            <fileset dir="${project.basedir}/base" defaultexcludes="yes" includes="tmp/**">
+                <type type="dir" />
+            </fileset>
         </copy>
         
         <!-- Get bins -->
@@ -91,7 +101,7 @@
         <getbundle releasesurl="${tool.xdc.url}" version="${tool.xdc.version}" dest="${release.target}/${release.name}/tools/xdc" />
         
         <!-- Replacements -->
-        <copy file="${project.basedir}/neard.conf" tofile="${release.target}/${release.name}/neard.conf" overwrite="true">
+        <copy file="${project.basedir}/base/neard.conf" tofile="${release.target}/${release.name}/neard.conf" overwrite="true">
             <filterset>
                 <filter token="BIN_APACHE_VERSION" value="${bin.apache.version}"/>
                 <filter token="BIN_PHP_VERSION" value="${bin.php.version}"/>
@@ -127,7 +137,7 @@
                 <filter token="APP_WEBSVN_VERSION" value="${app.websvn.version}"/>
             </filterset>
         </copy>
-        <copy file="${project.basedir}/neard.ini" tofile="${release.target}/${release.name}/neard.ini" overwrite="true">
+        <copy file="${project.basedir}/base/neard.ini" tofile="${release.target}/${release.name}/neard.ini" overwrite="true">
             <filterset>
                 <filter token="RELEASE_VERSION" value="${release.version}"/>
             </filterset>
