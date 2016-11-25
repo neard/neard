@@ -100,7 +100,6 @@ class ActionStartup
         // Actions if everything OK
         if (!$this->restart && empty($this->error)) {
             $this->refreshGitRepos();
-            $this->refreshSvnRepos();
             $this->writeLog('Started in ' . round(Util::getMicrotime() - $this->startTime, 3) . 's');
         } else {
             $this->splash->incrProgressBar(2);
