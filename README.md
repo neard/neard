@@ -1,5 +1,8 @@
 [![GitHub release](https://img.shields.io/github/release/crazy-max/neard.svg?style=flat-square)](https://github.com/crazy-max/neard/releases/latest)
 ![Total downloads](https://img.shields.io/github/downloads/crazy-max/neard/total.svg?style=flat-square)
+[![Build Status](https://img.shields.io/travis/crazy-max/neard/master.svg?style=flat-square)](https://travis-ci.org/crazy-max/neard)
+[![Code Quality](https://img.shields.io/codacy/grade/75278913a45643ab871b87283963b3c5.svg?style=flat-square)](https://www.codacy.com/app/crazy-max/neard)
+[![StyleCI](https://styleci.io/repos/17113647/shield?style=flat-square)](https://styleci.io/repos/17113647)
 [![Donate Paypal](https://img.shields.io/badge/donate-paypal-blue.svg?style=flat-square)](https://www.paypal.me/crazyws)
 
 # Neard
@@ -29,7 +32,7 @@ It is open for everyone to contribute. You can contribute to [binaries, tools, a
 To be notified of new releases, Star the project or subscribe to this [Atom feed](https://github.com/crazy-max/neard/releases.atom).<br />
 If you've got a problem do not forget to read the [Reporting an issue Wiki page](../../wiki/Reporting-an-issue).
 
-![](../../wiki/screenshots/neard-menu1-20161018.png)  ![](../../wiki/screenshots/neard-menu2-20160505.png)
+![](../../wiki/screenshots/neard-menu1-20161129.png)  ![](../../wiki/screenshots/neard-menu-tools-20161129.png)  ![](../../wiki/screenshots/neard-menu2-20160505.png)
 
 ### Binaries
 

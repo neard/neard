@@ -1,0 +1,10 @@
+preset: psr2
+
+enabled:
+  - long_array_syntax
+
+finder:
+  exclude:
+    - "base"
+    - "core/libs"
+    - "core/resources/homepage/libs"
