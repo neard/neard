@@ -32,7 +32,7 @@ It is open for everyone to contribute. You can contribute to [binaries, tools, a
 To be notified of new releases, Star the project or subscribe to this [Atom feed](https://github.com/crazy-max/neard/releases.atom).<br />
 If you've got a problem do not forget to read the [Reporting an issue Wiki page](../../wiki/Reporting-an-issue).
 
-![](../../wiki/screenshots/neard-menu1-20161129.png)  ![](../../wiki/screenshots/neard-menu-tools-20161129.png)  ![](../../wiki/screenshots/neard-menu2-20160505.png)
+![](../../wiki/screenshots/neard-menu1-20161129.png)  ![](../../wiki/screenshots/neard-menu2-20160505.png)
 
 ### Binaries
 
