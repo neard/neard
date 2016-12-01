@@ -29,10 +29,6 @@
 * E_DEPRECATED not defined on PHP 5.2
 * Start and stop services icons reversed (Issue #141)
 
-### Upgrade from previous release
-
-See [UPGRADE.md](https://github.com/crazy-max/neard/blob/master/UPGRADE.md#1020--1021).
-
 ## 1.0.20 (2016/06/23)
 
 * Bug with homepage queries ([Issue #139](https://github.com/crazy-max/neard/issues/139))
@@ -46,10 +42,6 @@ See [UPGRADE.md](https://github.com/crazy-max/neard/blob/master/UPGRADE.md#1020-
 * Update Adminer to 4.2.5
 * Update phpMyAdmin to 4p3
 * Update Webgrind to 1.3.1
-
-### Upgrade from previous release
-
-See [UPGRADE.md](https://github.com/crazy-max/neard/blob/master/UPGRADE.md#1019--1020).
 
 ## 1.0.19 (2016/05/05)
 
@@ -78,10 +70,6 @@ See [UPGRADE.md](https://github.com/crazy-max/neard/blob/master/UPGRADE.md#1019-
 * Review config update procs
 * Remove useless constants
 * Bug while changing port (service not restarted)
-
-### Upgrade from previous release
-
-See [UPGRADE.md](https://github.com/crazy-max/neard/blob/master/UPGRADE.md#1018--1019).
 
 ## 1.0.18 (2016/04/21)
 
@@ -124,10 +112,6 @@ See [UPGRADE.md](https://github.com/crazy-max/neard/blob/master/UPGRADE.md#1018-
 * HTTP headers now retrieved via cURL if available
 * Disable auto CRLF on Git and add LF eol in global config
 
-### Upgrade from previous release
-
-See [UPGRADE.md](https://github.com/crazy-max/neard/blob/master/UPGRADE.md#1017--1018).
-
 ## 1.0.17 (2016/01/26)
 
 * Retrieve latest version from CHANGELOG.md
@@ -135,10 +119,6 @@ See [UPGRADE.md](https://github.com/crazy-max/neard/blob/master/UPGRADE.md#1017-
 * Missplaced ActionReload
 * Upgrade phpMyAdmin to 4.0.10.12 / 4.4.15.2 / 4.5.3.1 ([Issue #107](https://github.com/crazy-max/neard/issues/107))
 * Add manifest inside neard.exe
-
-### Upgrade from previous release
-
-See [UPGRADE.md](https://github.com/crazy-max/neard/blob/master/UPGRADE.md#1016--1017).
 
 ## 1.0.16 (2015/12/13)
 
