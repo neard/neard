@@ -785,11 +785,8 @@ class Util
         return self::contains($processor, 'x86');
     }
     
-    public static function getHttpHeaders($url)
+    public static function getHttpHeaders($pingUrl)
     {
-        global $neardHomepage;
-
-        $pingUrl = $url . '/' . $neardHomepage->getResourcesPath() . '/ping.php';
         if (function_exists('curl_version')) {
             $result = self::getCurlHttpHeaders($pingUrl);
         } else {
@@ -853,12 +850,13 @@ class Util
             return $result;
         }
 
-        list($headerStr, $bodyStr) = explode("\r\n\r\n", $response, 2);
-        if (empty($headerStr)) {
+        self::logTrace('getCurlHttpHeaders:' . $response);
+        $responseHeaders = explode("\r\n\r\n", $response, 2);
+        if (!isset($responseHeaders[0]) || empty($responseHeaders[0])) {
             return $result;
         }
         
-        return explode("\n", $headerStr);
+        return explode("\n", $responseHeaders[0]);
     }
     
     public static function getHeaders($host, $port, $ssl = false)

@@ -183,7 +183,7 @@ class BinApache
     
     public function checkPort($port, $ssl = false, $showWindow = false)
     {
-        global $neardLang, $neardWinbinder;
+        global $neardLang, $neardWinbinder, $neardHomepage;
         $boxTitle = sprintf($neardLang->getValue(Lang::CHECK_PORT_TITLE), $this->getName(), $port);
         
         if (!Util::isValidPort($port)) {
@@ -191,7 +191,7 @@ class BinApache
             return false;
         }
         
-        $headers = Util::getHttpHeaders('http' . ($ssl ? 's' : '') . '://localhost:' . $port);
+        $headers = Util::getHttpHeaders('http' . ($ssl ? 's' : '') . '://localhost:' . $port . '/' . $neardHomepage->getResourcesPath() . '/ping.php');
         if (!empty($headers)) {
             foreach ($headers as $row) {
                 if (Util::startWith($row, 'Server: ')) {
