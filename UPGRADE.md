@@ -1,21 +1,3 @@
-## 1.0.21 > 1.0.22
-
-* **required** : Remove file `alias\svn.conf`
-* **required** : Copy folder `bin\svn`
-* **required** : Remove then replace folder `core`
-* **required** : Move folders inside `svnrepos` to `bin\svn\svn1.7.19\repos`
-* **required** : Remove folder `svnrepos`
-* **required** : Copy folder `tools\python`
-* **required** : Copy folder `tools\ruby`
-* **required** : Remove folder `tools\svn`
-* **required** : Add line `pythonVersion = "2.7.12.3"` after `phpunitVersion` in `neard.conf`
-* **required** : Add line `rubyVersion = "2.0.0.p648"` after `pythonVersion` in `neard.conf`
-* **required** : Remove line `svnVersion` in the tools part in `neard.conf`
-* **required** : Add line `svnVersion = "1.7.19"` after `memcachedEnable` in `neard.conf`
-* **required** : Add line `svnEnable = "1"` after `svnVersion` in `neard.conf`
-* **required** : Remove then replace file `sprites.dat`
-* **required** : Replace your existing Filezilla version with the latest [Filezilla bundle](https://github.com/crazy-max/neard-bin-filezilla/releases) for SSL issue #167.
-
 ## 1.0.20 > 1.0.21
 
 * **required** : Download and install the latests [Neard Visual C++ Redistributables Package](https://github.com/crazy-max/neard-misc#visual-c-redistributables-package)

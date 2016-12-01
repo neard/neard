@@ -1,24 +1,5 @@
 # Changelog
 
-## 1.0.22 (2016/11/13)
-
-* Dissociate Apache and SVN (Issue #168)
-* Use latest OpenSSL release to generate SSL certificate (Issue #167)
-* Forgetting Memcached switch version impl (Issue #164)
-* Port undefined error for MailHog service (Issue #163)
-* 30% CPU usage for 2 minutes while generating SSL certificate (Issue #161)
-* Can't switch PostgreSQL version (Issue #160)
-* Bug while enable binary (Issue #156)
-* Add Ruby tool (Issue #154)
-* Add Python tool (Issue #98)
-* Bug while setting version in neard.conf
-* Downgrade default Filezilla bundle to 0.9.42 (XP compatibility)
-* Implement enable on tools and apps
-
-### Upgrade from previous release
-
-See [UPGRADE.md](https://github.com/crazy-max/neard/blob/master/UPGRADE.md#1021--1022).
-
 ## 1.0.21 (2016/10/23)
 
 * Replace launchStartup with enable for binaries (Issue #153)
