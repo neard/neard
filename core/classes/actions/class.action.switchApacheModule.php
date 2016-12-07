@@ -23,5 +23,4 @@ class ActionSwitchApacheModule
             file_put_contents($neardBins->getApache()->getConf(), $httpdContent);
         }
     }
-
 }

@@ -10,5 +10,4 @@ class ActionSwitchLogsVerbose
             $neardConfig->replace(Config::CFG_LOGS_VERBOSE, $args[0]);
         }
     }
-
 }

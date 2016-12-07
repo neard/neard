@@ -10,7 +10,6 @@ class TplApp
     
     private function __construct()
     {
-        
     }
     
     public static function process()

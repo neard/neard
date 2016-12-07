@@ -17,5 +17,4 @@ class ActionLaunchStartup
             $neardConfig->replace(Config::CFG_LAUNCH_STARTUP, $args[0]);
         }
     }
-
 }

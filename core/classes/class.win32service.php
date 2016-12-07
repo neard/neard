@@ -18,7 +18,7 @@ class Win32Service
     const WIN32_ERROR_DATABASE_DOES_NOT_EXIST = "429";
     const WIN32_ERROR_DEPENDENT_SERVICES_RUNNING = "41B";
     const WIN32_ERROR_DUPLICATE_SERVICE_NAME = "436";
-    const WIN32_ERROR_FAILED_SERVICE_CONTROLLER_CONNECT = "427"; 
+    const WIN32_ERROR_FAILED_SERVICE_CONTROLLER_CONNECT = "427";
     const WIN32_ERROR_INSUFFICIENT_BUFFER = "7A";
     const WIN32_ERROR_INVALID_DATA = "D";
     const WIN32_ERROR_INVALID_HANDLE = "6";
@@ -336,39 +336,39 @@ class Win32Service
     private function getWin32ServiceStatusDesc($status)
     {
         switch ($status) {
-            case self::WIN32_SERVICE_CONTINUE_PENDING :
+            case self::WIN32_SERVICE_CONTINUE_PENDING:
                 return 'The service continue is pending.';
                 break;
                 
-            case self::WIN32_SERVICE_PAUSE_PENDING :
+            case self::WIN32_SERVICE_PAUSE_PENDING:
                 return 'The service pause is pending.';
                 break;
                     
-            case self::WIN32_SERVICE_PAUSED :
+            case self::WIN32_SERVICE_PAUSED:
                 return 'The service is paused.';
                 break;
                         
-            case self::WIN32_SERVICE_RUNNING :
+            case self::WIN32_SERVICE_RUNNING:
                 return 'The service is running.';
                 break;
                             
-            case self::WIN32_SERVICE_START_PENDING :
+            case self::WIN32_SERVICE_START_PENDING:
                 return 'The service is starting.';
                 break;
                                 
-            case self::WIN32_SERVICE_STOP_PENDING :
+            case self::WIN32_SERVICE_STOP_PENDING:
                 return 'The service is stopping.';
                 break;
                 
-            case self::WIN32_SERVICE_STOPPED :
+            case self::WIN32_SERVICE_STOPPED:
                 return 'The service is not running.';
                 break;
                 
-            case self::WIN32_SERVICE_NA :
+            case self::WIN32_SERVICE_NA:
                 return 'Cannot retrieve service status.';
                 break;
                 
-            default :
+            default:
                 return null;
                 break;
         }
@@ -377,181 +377,195 @@ class Win32Service
     private function getWin32ErrorCodeDesc($code)
     {
         switch ($code) {
-            case self::WIN32_ERROR_ACCESS_DENIED :
+            case self::WIN32_ERROR_ACCESS_DENIED:
                 return 'The handle to the SCM database does not have the appropriate access rights.';
                 break;
                 
-            case self::WIN32_ERROR_CIRCULAR_DEPENDENCY :
+            case self::WIN32_ERROR_CIRCULAR_DEPENDENCY:
                 return 'A circular service dependency was specified.';
                 break;
             
-            case self::WIN32_ERROR_DATABASE_DOES_NOT_EXIST :
+            case self::WIN32_ERROR_DATABASE_DOES_NOT_EXIST:
                 return 'The specified database does not exist.';
                 break;
             
-            case self::WIN32_ERROR_DEPENDENT_SERVICES_RUNNING :
+            case self::WIN32_ERROR_DEPENDENT_SERVICES_RUNNING:
                 return 'The service cannot be stopped because other running services are dependent on it.';
                 break;
                 
-            case self::WIN32_ERROR_DUPLICATE_SERVICE_NAME :
+            case self::WIN32_ERROR_DUPLICATE_SERVICE_NAME:
                 return 'The display name already exists in the service control manager database either as a service name or as another display name.';
                 break;
                 
-            case self::WIN32_ERROR_FAILED_SERVICE_CONTROLLER_CONNECT :
+            case self::WIN32_ERROR_FAILED_SERVICE_CONTROLLER_CONNECT:
                 return 'This error is returned if the program is being run as a console application rather than as a service. If the program will be run as a console application for debugging purposes, structure it such that service-specific code is not called.';
                 break;
                 
-            case self::WIN32_ERROR_INSUFFICIENT_BUFFER :
+            case self::WIN32_ERROR_INSUFFICIENT_BUFFER:
                 return 'The buffer is too small for the service status structure. Nothing was written to the structure.';
                 break;
             
-            case self::WIN32_ERROR_INVALID_DATA :
+            case self::WIN32_ERROR_INVALID_DATA:
                 return 'The specified service status structure is invalid. ';
                 break;
             
-            case self::WIN32_ERROR_INVALID_HANDLE :
+            case self::WIN32_ERROR_INVALID_HANDLE:
                 return 'The handle to the specified service control manager database is invalid.';
                 break;
             
-            case self::WIN32_ERROR_INVALID_LEVEL :
+            case self::WIN32_ERROR_INVALID_LEVEL:
                 return 'The InfoLevel parameter contains an unsupported value.';
                 break;
             
-            case self::WIN32_ERROR_INVALID_NAME :
+            case self::WIN32_ERROR_INVALID_NAME:
                 return 'The specified service name is invalid.';
                 break;
                 
-            case self::WIN32_ERROR_INVALID_PARAMETER :
+            case self::WIN32_ERROR_INVALID_PARAMETER:
                 return 'A parameter that was specified is invalid.';
                 break;
             
-            case self::WIN32_ERROR_INVALID_SERVICE_ACCOUNT :
+            case self::WIN32_ERROR_INVALID_SERVICE_ACCOUNT:
                 return 'The user account name specified in the user parameter does not exist.';
                 break;
             
-            case self::WIN32_ERROR_INVALID_SERVICE_CONTROL :
+            case self::WIN32_ERROR_INVALID_SERVICE_CONTROL:
                 return 'The requested control code is not valid, or it is unacceptable to the service.';
                 break;
             
-            case self::WIN32_ERROR_PATH_NOT_FOUND :
+            case self::WIN32_ERROR_PATH_NOT_FOUND:
                 return 'The service binary file could not be found.';
                 break;
             
-            case self::WIN32_ERROR_SERVICE_ALREADY_RUNNING :
+            case self::WIN32_ERROR_SERVICE_ALREADY_RUNNING:
                 return 'An instance of the service is already running.';
                 break;
                 
-            case self::WIN32_ERROR_SERVICE_CANNOT_ACCEPT_CTRL :
+            case self::WIN32_ERROR_SERVICE_CANNOT_ACCEPT_CTRL:
                 return 'The requested control code cannot be sent to the service because the state of the service is WIN32_SERVICE_STOPPED, WIN32_SERVICE_START_PENDING, or WIN32_SERVICE_STOP_PENDING.';
                 break;
             
-            case self::WIN32_ERROR_SERVICE_DATABASE_LOCKED :
+            case self::WIN32_ERROR_SERVICE_DATABASE_LOCKED:
                 return 'The database is locked.';
                 break;
             
-            case self::WIN32_ERROR_SERVICE_DEPENDENCY_DELETED :
+            case self::WIN32_ERROR_SERVICE_DEPENDENCY_DELETED:
                 return 'The service depends on a service that does not exist or has been marked for deletion.';
                 break;
             
-            case self::WIN32_ERROR_SERVICE_DEPENDENCY_FAIL :
+            case self::WIN32_ERROR_SERVICE_DEPENDENCY_FAIL:
                 return 'The service depends on another service that has failed to start.';
                 break;
             
-            case self::WIN32_ERROR_SERVICE_DISABLED :
+            case self::WIN32_ERROR_SERVICE_DISABLED:
                 return 'The service has been disabled.';
                 break;
             
-            case self::WIN32_ERROR_SERVICE_DOES_NOT_EXIST :
+            case self::WIN32_ERROR_SERVICE_DOES_NOT_EXIST:
                 return 'The specified service does not exist as an installed service.';
                 break;
             
-            case self::WIN32_ERROR_SERVICE_EXISTS :
+            case self::WIN32_ERROR_SERVICE_EXISTS:
                 return 'The specified service already exists in this database.';
                 break;
             
-            case self::WIN32_ERROR_SERVICE_LOGON_FAILED :
+            case self::WIN32_ERROR_SERVICE_LOGON_FAILED:
                 return 'The service did not start due to a logon failure. This error occurs if the service is configured to run under an account that does not have the "Log on as a service" right.';
                 break;
             
-            case self::WIN32_ERROR_SERVICE_MARKED_FOR_DELETE :
+            case self::WIN32_ERROR_SERVICE_MARKED_FOR_DELETE:
                 return 'The specified service has already been marked for deletion.';
                 break;
             
-            case self::WIN32_ERROR_SERVICE_NO_THREAD :
+            case self::WIN32_ERROR_SERVICE_NO_THREAD:
                 return 'A thread could not be created for the service.';
                 break;
             
-            case self::WIN32_ERROR_SERVICE_NOT_ACTIVE :
+            case self::WIN32_ERROR_SERVICE_NOT_ACTIVE:
                 return 'The service has not been started.';
                 break;
             
-            case self::WIN32_ERROR_SERVICE_REQUEST_TIMEOUT :
+            case self::WIN32_ERROR_SERVICE_REQUEST_TIMEOUT:
                 return 'The process for the service was started, but it did not call StartServiceCtrlDispatcher, or the thread that called StartServiceCtrlDispatcher may be blocked in a control handler function.';
                 break;
             
-            case self::WIN32_ERROR_SHUTDOWN_IN_PROGRESS :
+            case self::WIN32_ERROR_SHUTDOWN_IN_PROGRESS:
                 return 'The system is shutting down; this function cannot be called.';
                 break;
                 
-            default :
+            default:
                 return null;
                 break;
         }
     }
     
-    public function getName() {
+    public function getName()
+    {
         return $this->name;
     }
 
-    public function setName($name) {
+    public function setName($name)
+    {
         $this->name = $name;
     }
     
-    public function getDisplayName() {
+    public function getDisplayName()
+    {
         return $this->displayName;
     }
 
-    public function setDisplayName($displayName) {
+    public function setDisplayName($displayName)
+    {
         $this->displayName = $displayName;
     }
 
-    public function getBinPath() {
+    public function getBinPath()
+    {
         return $this->binPath;
     }
 
-    public function setBinPath($binPath) {
+    public function setBinPath($binPath)
+    {
         $this->binPath = str_replace('"', '', Util::formatWindowsPath($binPath));
     }
 
-    public function getParams() {
+    public function getParams()
+    {
         return $this->params;
     }
 
-    public function setParams($params) {
+    public function setParams($params)
+    {
         $this->params = $params;
     }
 
-    public function getStartType() {
+    public function getStartType()
+    {
         return $this->startType;
     }
 
-    public function setStartType($startType) {
+    public function setStartType($startType)
+    {
         $this->startType = $startType;
     }
 
-    public function getErrorControl() {
+    public function getErrorControl()
+    {
         return $this->errorControl;
     }
 
-    public function setErrorControl($errorControl) {
+    public function setErrorControl($errorControl)
+    {
         $this->errorControl = $errorControl;
     }
     
-    public function getNssm() {
+    public function getNssm()
+    {
         return $this->nssm;
     }
     
-    public function setNssm($nssm) {
+    public function setNssm($nssm)
+    {
         if ($nssm instanceof Nssm) {
             $this->setDisplayName($nssm->getDisplayName());
             $this->setBinPath($nssm->getBinPath());
@@ -561,15 +575,18 @@ class Win32Service
         }
     }
     
-    public function getLatestStatus() {
+    public function getLatestStatus()
+    {
         return $this->latestStatus;
     }
 
-    public function getLatestError() {
+    public function getLatestError()
+    {
         return $this->latestError;
     }
     
-    public function getError() {
+    public function getError()
+    {
         global $neardLang;
         if ($this->latestError != self::WIN32_NO_ERROR) {
             return $neardLang->getValue(Lang::ERROR) . ' ' .

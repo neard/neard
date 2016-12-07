@@ -171,7 +171,7 @@ class BinPhp
         $content = file_get_contents($this->neardConf);
     
         foreach ($params as $key => $value) {
-            $content = preg_replace('|' . $key . ' = .*|', $key . ' = ' . '"' . $value.'"' , $content);
+            $content = preg_replace('|' . $key . ' = .*|', $key . ' = ' . '"' . $value.'"', $content);
             $this->neardConfRaw[$key] = $value;
         }
     
@@ -688,5 +688,4 @@ class BinPhp
         }
         return file_exists($cacheFile) ? file_get_contents($cacheFile) : null;
     }
-    
 }

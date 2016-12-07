@@ -64,5 +64,4 @@ class Splash
     {
         return $this->wbWindow;
     }
-    
 }

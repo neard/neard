@@ -40,7 +40,8 @@ class Bins
         }
     }
     
-    public function getAll() {
+    public function getAll()
+    {
         return array(
             $this->getMailhog(),
             $this->getMemcached(),

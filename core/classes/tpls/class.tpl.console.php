@@ -18,7 +18,6 @@ class TplConsole
     
     private function __construct()
     {
-        
     }
     
     public static function process()
@@ -40,7 +39,7 @@ class TplConsole
     {
         global $neardBs, $neardTools;
         
-        $sectionConsoleStart = self::getIncrStr(1) . '<console ' . 
+        $sectionConsoleStart = self::getIncrStr(1) . '<console ' .
             'change_refresh="10" ' .
             'refresh="100" ' .
             'rows="' . $neardTools->getConsole()->getRows() . '" ' .

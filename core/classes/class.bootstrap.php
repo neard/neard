@@ -58,7 +58,7 @@ class Bootstrap
         set_error_handler(array($this, self::ERROR_HANDLER));
     }
     
-	public function removeErrorHandling()
+    public function removeErrorHandling()
     {
         error_reporting(0);
         ini_set('error_log', null);

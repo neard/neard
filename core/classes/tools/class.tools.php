@@ -18,7 +18,6 @@ class Tools
     
     public function __construct()
     {
-        
     }
     
     private function getRootPath($tool)
@@ -35,7 +34,8 @@ class Tools
         }
     }
     
-    public function getAll() {
+    public function getAll()
+    {
         return array(
             $this->getComposer(),
             $this->getConsole(),
@@ -156,5 +156,4 @@ class Tools
         }
         return $this->xdc;
     }
-
 }

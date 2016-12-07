@@ -12,7 +12,6 @@ class Vbs
     
     public function __construct()
     {
-        
     }
     
     private static function writeLog($log)
@@ -418,5 +417,4 @@ class Vbs
         global $neardCore;
         return Util::formatWindowsPath($neardCore->getTmpPath() . '/' . (!empty($customName) ? $customName . '-' : '') . Util::random() . $ext);
     }
-    
 }

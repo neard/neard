@@ -56,7 +56,7 @@ class ActionAddAlias
         $aliasName = $neardWinbinder->getText($this->wbInputName[WinBinder::CTRL_OBJ]);
         $aliasDest = $neardWinbinder->getText($this->wbInputDest[WinBinder::CTRL_OBJ]);
         
-        switch($id) {
+        switch ($id) {
             case $this->wbInputName[WinBinder::CTRL_ID]:
                 $neardWinbinder->setText(
                     $this->wbLabelExp[WinBinder::CTRL_OBJ],
