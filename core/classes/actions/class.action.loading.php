@@ -26,7 +26,7 @@ class ActionLoading
         $this->wbWindow = $neardWinbinder->createWindow(null, ToolDialog, null, $xPos, $yPos, self::WINDOW_WIDTH, self::WINDOW_HEIGHT, WBC_TOP, null);
         
         $neardWinbinder->createLabel($this->wbWindow, $neardLang->getValue(Lang::LOADING), 42, 2, 295, null, WBC_LEFT);
-		$this->wbProgressBar = $neardWinbinder->createProgressBar($this->wbWindow, self::GAUGE, 42, 20, 290, 15);
+        $this->wbProgressBar = $neardWinbinder->createProgressBar($this->wbWindow, self::GAUGE, 42, 20, 290, 15);
         
         $neardWinbinder->setHandler($this->wbWindow, $this, 'processLoading', 10);
         $neardWinbinder->mainLoop();
@@ -49,7 +49,7 @@ class ActionLoading
     {
         global $neardBs, $neardWinbinder;
         
-        switch($id) {
+        switch ($id) {
             case IDCLOSE:
                 Win32Ps::kill(Win32Ps::getCurrentPid());
                 break;

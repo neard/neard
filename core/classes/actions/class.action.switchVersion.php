@@ -178,5 +178,4 @@ class ActionSwitchVersion
 
         $neardWinbinder->destroyWindow($window);
     }
-    
 }

@@ -447,7 +447,6 @@ class WinBinder
     {
         return $this->messageBox($message, self::BOX_YESNOCANCEL, $title);
     }
-    
 }
 
 function __winbinderEventHandler($window, $id, $ctrl, $param1, $param2)

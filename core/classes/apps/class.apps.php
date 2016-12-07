@@ -12,7 +12,6 @@ class Apps
     
     public function __construct()
     {
-        
     }
 
     private function getRootPath($app)
@@ -29,7 +28,8 @@ class Apps
         }
     }
     
-    public function getAll() {
+    public function getAll()
+    {
         return array(
             $this->getAdminer(),
             $this->getGitlist(),
@@ -96,5 +96,4 @@ class Apps
         }
         return $this->websvn;
     }
-    
 }

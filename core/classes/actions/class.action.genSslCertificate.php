@@ -50,7 +50,7 @@ class ActionGenSslCertificate
         $name = $neardWinbinder->getText($this->wbInputName[WinBinder::CTRL_OBJ]);
         $target = $neardWinbinder->getText($this->wbInputDest[WinBinder::CTRL_OBJ]);
         
-        switch($id) {
+        switch ($id) {
             case $this->wbBtnDest[WinBinder::CTRL_ID]:
                 $target = $neardWinbinder->sysDlgPath($window, $neardLang->getValue(Lang::GENSSL_PATH), $target);
                 if ($target && is_dir($target)) {

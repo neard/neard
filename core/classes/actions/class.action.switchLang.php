@@ -10,5 +10,4 @@ class ActionSwitchLang
             $neardConfig->replace(Config::CFG_LANG, $args[0]);
         }
     }
-
 }

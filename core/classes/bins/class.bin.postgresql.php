@@ -154,9 +154,9 @@ class BinPostgresql
         $content = file_get_contents($this->neardConf);
     
         foreach ($params as $key => $value) {
-            $content = preg_replace('|' . $key . ' = .*|', $key . ' = ' . '"' . $value.'"' , $content);
+            $content = preg_replace('|' . $key . ' = .*|', $key . ' = ' . '"' . $value.'"', $content);
             $this->neardConfRaw[$key] = $value;
-            switch($key) {
+            switch ($key) {
                 case self::LOCAL_CFG_PORT:
                     $this->port = $value;
                     break;
@@ -399,7 +399,8 @@ class BinPostgresql
         return true;
     }
     
-    public function initData($path = null) {
+    public function initData($path = null)
+    {
         $path = $path != null ? $path : $this->getCurrentPath();
         
         if (file_exists($path . '/data')) {

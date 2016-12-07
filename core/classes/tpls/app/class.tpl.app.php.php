@@ -250,5 +250,4 @@ class TplAppPhp
             TplService::getActionRestart(BinApache::SERVICE_NAME) . PHP_EOL .
             TplAppReload::getActionReload() . PHP_EOL;
     }
-    
 }

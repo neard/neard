@@ -10,5 +10,4 @@ class ActionRestart
             sprintf($neardLang->getValue(Lang::RESTART_TEXT), APP_TITLE),
             $neardLang->getValue(Lang::RESTART_TITLE));
     }
-    
 }

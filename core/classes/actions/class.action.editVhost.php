@@ -65,7 +65,7 @@ class ActionEditVhost
         $serverName = $neardWinbinder->getText($this->wbInputServerName[WinBinder::CTRL_OBJ]);
         $documentRoot = $neardWinbinder->getText($this->wbInputDocRoot[WinBinder::CTRL_OBJ]);
         
-        switch($id) {
+        switch ($id) {
             case $this->wbInputServerName[WinBinder::CTRL_ID]:
                 $neardWinbinder->setText(
                 $this->wbLabelExp[WinBinder::CTRL_OBJ],
@@ -159,5 +159,4 @@ class ActionEditVhost
                 break;
         }
     }
-
 }

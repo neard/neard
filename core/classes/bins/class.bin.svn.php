@@ -114,9 +114,9 @@ class BinSvn
         $content = file_get_contents($this->neardConf);
         
         foreach ($params as $key => $value) {
-            $content = preg_replace('|' . $key . ' = .*|', $key . ' = ' . '"' . $value.'"' , $content);
+            $content = preg_replace('|' . $key . ' = .*|', $key . ' = ' . '"' . $value.'"', $content);
             $this->neardConfRaw[$key] = $value;
-            switch($key) {
+            switch ($key) {
                 case self::LOCAL_CFG_PORT:
                     $this->port = intval($value);
                     break;

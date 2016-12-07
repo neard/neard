@@ -82,7 +82,7 @@ class ActionChangePort
         $boxTitle = sprintf($neardLang->getValue(Lang::CHANGE_PORT_TITLE), $this->bin);
         $port = $neardWinbinder->getText($this->wbInputPort[WinBinder::CTRL_OBJ]);
     
-        switch($id) {
+        switch ($id) {
             case $this->wbInputPort[WinBinder::CTRL_ID]:
                 $neardWinbinder->setEnabled($this->wbBtnFinish[WinBinder::CTRL_OBJ], empty($port) ? false : true);
                 break;
@@ -114,5 +114,4 @@ class ActionChangePort
                 break;
         }
     }
-
 }

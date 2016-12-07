@@ -223,5 +223,4 @@ class TplAppMariadb
         return TplApp::getActionRun(Action::SERVICE, array(BinMariadb::SERVICE_NAME, ActionService::REMOVE)) . PHP_EOL .
             TplAppReload::getActionReload();
     }
-    
 }
