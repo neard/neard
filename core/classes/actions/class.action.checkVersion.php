@@ -58,7 +58,7 @@ class ActionCheckVersion
     {
         global $neardConfig, $neardWinbinder;
     
-        switch($id) {
+        switch ($id) {
             case $this->wbLinkChangelog[WinBinder::CTRL_ID]:
                 $neardWinbinder->exec($neardConfig->getBrowser(), Util::getLatestChangelogLink());
                 break;
@@ -71,5 +71,4 @@ class ActionCheckVersion
                 break;
         }
     }
-    
 }

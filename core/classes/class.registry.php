@@ -236,5 +236,4 @@ class Registry
     {
         return $this->latestError;
     }
-    
 }

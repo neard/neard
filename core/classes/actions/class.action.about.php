@@ -18,7 +18,7 @@ class ActionAbout
         $neardWinbinder->reset();
         $this->wbWindow = $neardWinbinder->createAppWindow($neardLang->getValue(Lang::ABOUT_TITLE), 450, 230, WBC_NOTIFY, WBC_KEYDOWN | WBC_KEYUP);
         
-        $aboutText = sprintf($neardLang->getValue(Lang::ABOUT_TEXT),  APP_TITLE . ' ' . $neardCore->getAppVersion(), date('Y'), APP_AUTHOR_NAME, APP_AUTHOR_EMAIL);
+        $aboutText = sprintf($neardLang->getValue(Lang::ABOUT_TEXT), APP_TITLE . ' ' . $neardCore->getAppVersion(), date('Y'), APP_AUTHOR_NAME, APP_AUTHOR_EMAIL);
         $neardWinbinder->createLabel($this->wbWindow, $aboutText, 80, 20, 420, 120);
         
         $neardWinbinder->createLabel($this->wbWindow, $neardLang->getValue(Lang::WEBSITE) . ' :', 80, 105, 420, 15);
@@ -40,7 +40,7 @@ class ActionAbout
     {
         global $neardConfig, $neardWinbinder;
         
-        switch($id) {
+        switch ($id) {
             case $this->wbLinkHomepage[WinBinder::CTRL_ID]:
                 $neardWinbinder->exec($neardConfig->getBrowser(), APP_GITHUB_HOME . APP_GITHUB_ANCHOR);
                 break;

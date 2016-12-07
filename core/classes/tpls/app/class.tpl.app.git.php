@@ -81,5 +81,4 @@ class TplAppGit
         return TplApp::getActionRun(Action::REFRESH_REPOS_STARTUP, array(ActionRefreshRepos::GIT, $scanStartup)) . PHP_EOL .
             TplAppReload::getActionReload() . PHP_EOL;
     }
-    
 }

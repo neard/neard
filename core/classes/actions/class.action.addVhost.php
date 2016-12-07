@@ -54,7 +54,7 @@ class ActionAddVhost
         $serverName = $neardWinbinder->getText($this->wbInputServerName[WinBinder::CTRL_OBJ]);
         $documentRoot = $neardWinbinder->getText($this->wbInputDocRoot[WinBinder::CTRL_OBJ]);
         
-        switch($id) {
+        switch ($id) {
             case $this->wbInputServerName[WinBinder::CTRL_ID]:
                 $neardWinbinder->setText(
                     $this->wbLabelExp[WinBinder::CTRL_OBJ],
@@ -92,7 +92,7 @@ class ActionAddVhost
                     break;
                 }
                 
-                if ($neardOpenSsl->createCrt($serverName) && file_put_contents($neardBs->getVhostsPath() . '/' . $serverName . '.conf',  $neardBins->getApache()->getVhostContent($serverName, $documentRoot)) !== false) {
+                if ($neardOpenSsl->createCrt($serverName) && file_put_contents($neardBs->getVhostsPath() . '/' . $serverName . '.conf', $neardBins->getApache()->getVhostContent($serverName, $documentRoot)) !== false) {
                     $neardWinbinder->incrProgressBar($this->wbProgressBar);
                     
                     $neardBins->getApache()->getService()->restart();

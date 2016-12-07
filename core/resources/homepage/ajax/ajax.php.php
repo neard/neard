@@ -32,7 +32,7 @@ $result['extscount'] .= '<span style="float:right;font-size:12px" class="label l
 $result['pearversion'] .= '<span style="float:right;font-size:12px" class="label label-primary">' . $neardBins->getPhp()->getPearVersion(true) . '</span>';
 
 // Extensions list
-foreach($neardBins->getPhp()->getExtensionsFromConf() as $extName => $extStatus) {
+foreach ($neardBins->getPhp()->getExtensionsFromConf() as $extName => $extStatus) {
     if ($extStatus == ActionSwitchPhpExtension::SWITCH_ON) {
         $result['extslist'] .= '<div class="col-lg-2" style="padding:3px;"><i class="fa fa-check-square-o"></i> <strong>' . $extName . ' <sup>' . phpversion(substr($extName, 4)) . '</sup></strong></div>';
     } else {

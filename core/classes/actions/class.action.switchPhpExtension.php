@@ -35,5 +35,4 @@ class ActionSwitchPhpExtension
             file_put_contents($neardBins->getPhp()->getConf(), $phpiniContent);
         }
     }
-
 }

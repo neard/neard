@@ -64,7 +64,6 @@ class TplAestan
     
     public static function getGlyphFlah($lang)
     {
-        
     }
     
     public static function getItemSeparator()
@@ -158,7 +157,7 @@ class TplAestan
         
         if ($item) {
             $result = 'Type: item; ' . $result;
-            if ( $action == self::SERVICE_START) {
+            if ($action == self::SERVICE_START) {
                 $result .= '; Caption: "' . $neardLang->getValue(Lang::MENU_START_SERVICE) . '"' .
                     '; Glyph: ' . self::GLYPH_START;
             } elseif ($action == self::SERVICE_STOP) {

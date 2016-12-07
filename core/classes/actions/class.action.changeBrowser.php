@@ -79,7 +79,7 @@ class ActionChangeBrowser
         // Enable/disable save button
         $neardWinbinder->setEnabled($this->wbBtnSave[WinBinder::CTRL_OBJ], empty($selected) ? false : true);
         
-        switch($id) {
+        switch ($id) {
             case $this->wbBtnBrowse[WinBinder::CTRL_ID]:
                 $browserPath = trim($neardWinbinder->sysDlgOpen(
                     $window,

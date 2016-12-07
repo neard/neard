@@ -178,5 +178,4 @@ class TplAppFilezilla
         return TplApp::getActionRun(Action::SERVICE, array(BinFilezilla::SERVICE_NAME, ActionService::REMOVE)) . PHP_EOL .
             TplAppReload::getActionReload();
     }
-    
 }

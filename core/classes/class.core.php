@@ -101,7 +101,7 @@ class Core
     
     public function getLastPathContent()
     {
-    	return @file_get_contents($this->getLastPath());
+        return @file_get_contents($this->getLastPath());
     }
     
     public function getExec($aetrayPath = false)

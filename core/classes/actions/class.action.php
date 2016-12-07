@@ -45,7 +45,6 @@ class Action
     
     public function __construct()
     {
-        
     }
 
     public function process()
@@ -84,5 +83,4 @@ class Action
             && isset($_SERVER['argv'][1])
             && !empty($_SERVER['argv'][1]);
     }
-    
 }

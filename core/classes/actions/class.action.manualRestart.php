@@ -17,5 +17,4 @@ class ActionManualRestart
         $neardCore->setExec(ActionExec::RESTART);
         Util::stopLoading();
     }
-    
 }

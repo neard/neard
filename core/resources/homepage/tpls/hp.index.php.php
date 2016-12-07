@@ -26,11 +26,13 @@
       <span class="list-group-item">
         <i class="fa fa-info-circle"></i> <a href="<?php echo $neardHomepage->getPageQuery(Homepage::PAGE_PHPINFO); ?>"><?php echo $neardLang->getValue(Lang::HOMEPAGE_PHPINFO_TEXT); ?></a>
       </span>
-      <?php if (function_exists('apc_add') && function_exists('apc_exists')) { ?>
+      <?php if (function_exists('apc_add') && function_exists('apc_exists')) {
+    ?>
       <span class="list-group-item">
         <i class="fa fa-info-circle"></i> <a href="<?php echo $neardHomepage->getPageQuery(Homepage::PAGE_STDL_APC); ?>" target="_blank"><?php echo $neardLang->getValue(Lang::HOMEPAGE_APC_TEXT); ?></a>
       </span>
-      <?php } ?>
+      <?php 
+} ?>
     </div>
   </div>
 </div>
