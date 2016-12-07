@@ -4,7 +4,6 @@ class Autoloader
 {
     public function __construct()
     {
-        
     }
 
     public function load($class)

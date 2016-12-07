@@ -66,7 +66,7 @@ class ActionChangeDbRootPwd
         $newPwd1 = $neardWinbinder->getText($this->wbInputNewPwd1[WinBinder::CTRL_OBJ]);
         $newPwd2 = $neardWinbinder->getText($this->wbInputNewPwd2[WinBinder::CTRL_OBJ]);
     
-        switch($id) {
+        switch ($id) {
             case $this->wbBtnFinish[WinBinder::CTRL_ID]:
                 $neardWinbinder->incrProgressBar($this->wbProgressBar);
                 if ($newPwd1 != $newPwd2) {
@@ -111,5 +111,4 @@ class ActionChangeDbRootPwd
                 break;
         }
     }
-
 }

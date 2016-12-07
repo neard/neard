@@ -319,101 +319,116 @@ class Nssm
     private function getServiceStatusDesc($status)
     {
         switch ($status) {
-            case self::STATUS_CONTINUE_PENDING :
+            case self::STATUS_CONTINUE_PENDING:
                 return 'The service continue is pending.';
                 break;
                 
-            case self::STATUS_PAUSE_PENDING :
+            case self::STATUS_PAUSE_PENDING:
                 return 'The service pause is pending.';
                 break;
                     
-            case self::STATUS_PAUSED :
+            case self::STATUS_PAUSED:
                 return 'The service is paused.';
                 break;
                         
-            case self::STATUS_RUNNING :
+            case self::STATUS_RUNNING:
                 return 'The service is running.';
                 break;
                             
-            case self::STATUS_START_PENDING :
+            case self::STATUS_START_PENDING:
                 return 'The service is starting.';
                 break;
                                 
-            case self::STATUS_STOP_PENDING :
+            case self::STATUS_STOP_PENDING:
                 return 'The service is stopping.';
                 break;
                 
-            case self::STATUS_STOPPED :
+            case self::STATUS_STOPPED:
                 return 'The service is not running.';
                 break;
                 
-            case self::STATUS_NA :
+            case self::STATUS_NA:
                 return 'Cannot retrieve service status.';
                 break;
                 
-            default :
+            default:
                 return null;
                 break;
         }
     }
     
-    public function getName() {
+    public function getName()
+    {
         return $this->name;
     }
 
-    public function setName($name) {
+    public function setName($name)
+    {
         $this->name = $name;
     }
     
-    public function getDisplayName() {
+    public function getDisplayName()
+    {
         return $this->displayName;
     }
 
-    public function setDisplayName($displayName) {
+    public function setDisplayName($displayName)
+    {
         $this->displayName = $displayName;
     }
 
-    public function getBinPath() {
+    public function getBinPath()
+    {
         return $this->binPath;
     }
 
-    public function setBinPath($binPath) {
+    public function setBinPath($binPath)
+    {
         $this->binPath = str_replace('"', '', Util::formatWindowsPath($binPath));
     }
 
-    public function getParams() {
+    public function getParams()
+    {
         return $this->params;
     }
 
-    public function setParams($params) {
+    public function setParams($params)
+    {
         $this->params = $params;
     }
 
-    public function getStart() {
+    public function getStart()
+    {
         return $this->start;
     }
 
-    public function setStart($start) {
+    public function setStart($start)
+    {
         $this->start = $start;
     }
 
-    public function getLogsPath() {
+    public function getLogsPath()
+    {
         return $this->logsPath;
     }
 
-    public function setLogsPath($logsPath) {
+    public function setLogsPath($logsPath)
+    {
         $this->logsPath = $logsPath;
     }
     
-    public function getLatestStatus() {
+    public function getLatestStatus()
+    {
         return $this->latestStatus;
     }
 
-    public function getLatestError() {
+    public function getLatestError()
+    {
         return $this->latestError;
     }
     
-    public function getError() {
+    public function getError()
+    {
         global $neardLang;
         
         if (!empty($this->latestError)) {
@@ -424,5 +439,4 @@ class Nssm
         
         return null;
     }
-    
 }

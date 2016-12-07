@@ -55,7 +55,7 @@ $result['aliasescount'] .= '<span style="float:right;font-size:12px" class="labe
 $result['vhostscount'] .= '<span style="float:right;font-size:12px" class="label label-primary">' . count($neardBins->getApache()->getVhosts()) . '</span>';
 
 // Modules list
-foreach($neardBins->getApache()->getModulesFromConf() as $moduleName => $moduleStatus) {
+foreach ($neardBins->getApache()->getModulesFromConf() as $moduleName => $moduleStatus) {
     if ($moduleStatus == ActionSwitchApacheModule::SWITCH_ON) {
         $result['moduleslist'] .= '<div class="col-lg-2" style="padding:3px;"><i class="fa fa-check-square-o"></i> <strong>' . $moduleName . '</strong></div>';
     } else {
@@ -64,17 +64,17 @@ foreach($neardBins->getApache()->getModulesFromConf() as $moduleName => $moduleS
 }
 
 // Aliases list
-foreach($neardBins->getApache()->getAlias() as $alias) {
+foreach ($neardBins->getApache()->getAlias() as $alias) {
     $result['aliaseslist'] .= '<div style="float:left;padding:3px;"><a class="btn btn-default" target="_blank" href="' . $neardBs->getLocalUrl($alias) . '"><span class="fa fa-link"></span> ' . $alias . '</a></div>';
 }
 
 // Www directory
-foreach($neardBins->getApache()->getWwwDirectories() as $wwwDirectory) {
+foreach ($neardBins->getApache()->getWwwDirectories() as $wwwDirectory) {
     $result['wwwdirectory'] .= '<div style="float:left;padding:3px;"><a class="btn btn-default" target="_blank" href="' . $neardBs->getLocalUrl($wwwDirectory) . '"><span class="fa fa-link"></span> ' . $wwwDirectory . '</a></div>';
 }
 
 // Vhosts list
-foreach($neardBins->getApache()->getVhostsUrl() as $vhost => $enabled) {
+foreach ($neardBins->getApache()->getVhostsUrl() as $vhost => $enabled) {
     if ($enabled) {
         $result['vhostslist'] .= '<div style="float:left;padding:3px;"><a class="btn btn-default" target="_blank" href="http://' . $vhost . '"><span class="fa fa-check-square-o"></span> ' . $vhost . '</a></div>';
     } else {

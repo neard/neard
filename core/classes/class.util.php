@@ -93,7 +93,7 @@ class Util
     public static function random($length = 32, $withNumeric = true)
     {
         $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        if ($withNumeric){
+        if ($withNumeric) {
             $characters .= '0123456789';
         }
         
@@ -151,7 +151,8 @@ class Util
         return $result;
     }
     
-    public static function deleteFolder($path) {
+    public static function deleteFolder($path)
+    {
         if (is_dir($path)) {
             if (substr($path, strlen($path) - 1, 1) != '/') {
                 $path .= '/';
@@ -211,7 +212,7 @@ class Util
             }
             if (is_dir($startPath . '/' . $file)) {
                 $tmpResults = self::findFiles($startPath . '/' . $file, $findFiles);
-                foreach($tmpResults as $tmpResult) {
+                foreach ($tmpResults as $tmpResult) {
                     $result[] = $tmpResult;
                 }
             } elseif (is_file($startPath . '/' . $file)) {
@@ -982,7 +983,7 @@ class Util
                 }
                 return true;
             }
-        } else if($service->isRunning()) {
+        } elseif ($service->isRunning()) {
             Util::logWarning(sprintf('%s service already installed and running', $name));
             if ($showWindow) {
                 $neardWinbinder->messageBoxWarning(

@@ -28,7 +28,7 @@ class ActionReload
         // Process neard.ini
         file_put_contents($neardBs->getIniFilePath(), Util::utf8ToCp1252(TplApp::process()));
         
-        // Process Console config 
+        // Process Console config
         TplConsole::process();
         
         // Process Notepad config
@@ -49,5 +49,4 @@ class ActionReload
         // Rebuild _commons.js
         $neardHomepage->refreshCommonsJsContent();
     }
-
 }

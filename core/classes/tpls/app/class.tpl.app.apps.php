@@ -19,7 +19,7 @@ class TplAppApps
                 $neardLang->getValue(Lang::ADMINER),
                 'adminer/',
                 true
-            ) . PHP_EOL . 
+            ) . PHP_EOL .
             TplAestan::getItemLink(
                 $neardLang->getValue(Lang::GITLIST),
                 'gitlist/',
