@@ -3,9 +3,6 @@ preset: psr2
 enabled:
   - long_array_syntax
   
-disabled:
-  - unix_line_endings
-
 finder:
   exclude:
     - "base"
