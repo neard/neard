@@ -115,11 +115,13 @@ class BinApache
             return;
         }
         
-        $this->service->setDisplayName(APP_TITLE . ' ' . $this->getName() . ' ' . $this->version);
-        $this->service->setBinPath($this->exe);
-        $this->service->setParams(self::SERVICE_PARAMS);
-        $this->service->setStartType(Win32Service::SERVICE_DEMAND_START);
-        $this->service->setErrorControl(Win32Service::SERVER_ERROR_NORMAL);
+        $nssm = new Nssm(self::SERVICE_NAME);
+        $nssm->setDisplayName(APP_TITLE . ' ' . $this->getName() . ' ' . $this->version);
+        $nssm->setBinPath($this->exe);
+        $nssm->setStart(Nssm::SERVICE_DEMAND_START);
+        $nssm->setLogsPath($neardBs->getLogsPath() . '/nssm-apache.log');
+        
+        $this->service->setNssm($nssm);
     }
     
     public function __toString()

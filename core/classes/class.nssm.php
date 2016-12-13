@@ -29,6 +29,7 @@ class Nssm
     const INFO_APP_PARAMETERS = 'AppParameters';
     const INFO_APP_STDERR = 'AppStderr';
     const INFO_APP_STDOUT = 'AppStdout';
+    const INFO_APP_ENVIRONMENT_EXTRA = 'AppEnvironmentExtra';
     
     const PENDING_TIMEOUT = 10;
     const SLEEP_TIME = 500000;
@@ -39,6 +40,7 @@ class Nssm
     private $params;
     private $start;
     private $logsPath;
+    private $environmentExtra;
     private $latestError;
     private $latestStatus;
     
@@ -130,6 +132,7 @@ class Nssm
         $this->writeLog('-> path: ' . $this->getBinPath());
         $this->writeLog('-> params: ' . $this->getParams());
         $this->writeLog('-> logs: ' . $this->getLogsPath());
+        $this->writeLog('-> environment extra: ' . $this->getEnvironmentExtra());
         $this->writeLog('-> start_type: ' . ($this->getStart() != null ? $this->getStart() : self::SERVICE_DEMAND_START));
         
         // Install bin
@@ -170,6 +173,12 @@ class Nssm
         
         // Stderr
         $exec = $this->exec('set ' . $this->getName() . ' AppStderr "' . $this->getLogsPath() . '"');
+        if ($exec === false) {
+            return false;
+        }
+        
+        // Environment Extra
+        $exec = $this->exec('set ' . $this->getName() . ' AppEnvironmentExtra ' . $this->getEnvironmentExtra());
         if ($exec === false) {
             return false;
         }
@@ -415,6 +424,16 @@ class Nssm
     public function setLogsPath($logsPath)
     {
         $this->logsPath = $logsPath;
+    }
+    
+    public function getEnvironmentExtra()
+    {
+        return $this->environmentExtra;
+    }
+    
+    public function setEnvironmentExtra($environmentExtra)
+    {
+        $this->environmentExtra = Util::formatWindowsPath($environmentExtra);
     }
     
     public function getLatestStatus()
