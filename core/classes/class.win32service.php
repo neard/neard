@@ -138,6 +138,12 @@ class Win32Service
         global $neardBins;
         
         if ($this->getNssm() instanceof Nssm) {
+            $nssmEnvPath = '%SystemRoot%/system32;';
+            $nssmEnvPath .= '%SystemRoot%;';
+            $nssmEnvPath .= '%SystemRoot%/system32/Wbem;';
+            $nssmEnvPath .= '%SystemRoot%/system32/WindowsPowerShell/v1.0;';
+            $nssmEnvPath .= Util::getAppBinsRegKey(false);
+            $this->getNssm()->setEnvironmentExtra('PATH=' . $nssmEnvPath);
             return $this->getNssm()->create();
         } elseif ($this->getName() == BinFilezilla::SERVICE_NAME) {
             $neardBins->getFilezilla()->rebuildConf();

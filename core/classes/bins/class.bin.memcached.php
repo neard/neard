@@ -86,7 +86,7 @@ class BinMemcached
         $nssm->setBinPath($this->exe);
         $nssm->setParams(sprintf(self::SERVICE_PARAMS, $this->memory, $this->port));
         $nssm->setStart(Nssm::SERVICE_DEMAND_START);
-        $nssm->setLogsPath($neardBs->getLogsPath() . '/memcached.log');
+        $nssm->setLogsPath($neardBs->getLogsPath() . '/nssm-memcached.log');
         
         $this->service->setNssm($nssm);
     }
