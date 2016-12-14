@@ -119,7 +119,6 @@ class BinApache
         $nssm->setDisplayName(APP_TITLE . ' ' . $this->getName() . ' ' . $this->version);
         $nssm->setBinPath($this->exe);
         $nssm->setStart(Nssm::SERVICE_DEMAND_START);
-        $nssm->setLogsPath($neardBs->getLogsPath() . '/nssm-apache.log');
         
         $this->service->setNssm($nssm);
     }
