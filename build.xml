@@ -53,7 +53,6 @@
         <!-- Copy base -->
         <copy todir="${release.target}/${release.name}">
             <fileset dir="${project.basedir}/base" defaultexcludes="yes" excludes="
-                cgi-bin/*,
                 logs/*,
                 ssl/*,
                 tmp/**,
