@@ -2,7 +2,6 @@
 ![Total downloads](https://img.shields.io/github/downloads/crazy-max/neard/total.svg?style=flat-square)
 [![Build Status](https://img.shields.io/travis/crazy-max/neard/master.svg?style=flat-square)](https://travis-ci.org/crazy-max/neard)
 [![Code Quality](https://img.shields.io/codacy/grade/75278913a45643ab871b87283963b3c5.svg?style=flat-square)](https://www.codacy.com/app/crazy-max/neard)
-[![StyleCI](https://styleci.io/repos/17113647/shield?style=flat-square)](https://styleci.io/repos/17113647)
 [![Donate Paypal](https://img.shields.io/badge/donate-paypal-blue.svg?style=flat-square)](https://www.paypal.me/crazyws)
 
 # Neard
