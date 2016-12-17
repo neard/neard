@@ -586,6 +586,30 @@ class BinApache
             '</IfModule>' . PHP_EOL;
     }
     
+    public function refreshConf($putOnline)
+    {
+        $onlineContent = $this->getOnlineContent();
+        $offlineContent = $this->getOfflineContent();
+        
+        $conf = file_get_contents($this->getConf());
+        if ($putOnline) {
+            $conf = str_replace($offlineContent, $onlineContent, $conf, $count);
+        } else {
+            $conf = str_replace($onlineContent, $offlineContent, $conf, $count);
+        }
+        file_put_contents($this->getConf(), $conf);
+        Util::logDebug('Refresh ' . $this->getConf() . ': ' . $count . ' occurrence(s) replaced');
+        
+        $sslConf = file_get_contents($this->getSslConf());
+        if ($putOnline) {
+            $sslConf = str_replace($offlineContent, $onlineContent, $sslConf, $count);
+        } else {
+            $sslConf = str_replace($onlineContent, $offlineContent, $sslConf, $count);
+        }
+        file_put_contents($this->getSslConf(), $sslConf);
+        Util::logDebug('Refresh ' . $this->getSslConf() . ': ' . $count . ' occurrence(s) replaced');
+    }
+    
     public function refreshAlias($putOnline)
     {
         global $neardBs, $neardHomepage;
@@ -596,11 +620,12 @@ class BinApache
         foreach ($this->getAlias() as $alias) {
             $aliasConf = file_get_contents($neardBs->getAliasPath() . '/' . $alias . '.conf');
             if ($putOnline) {
-                $aliasConf = str_replace($offlineContent, $onlineContent, $aliasConf);
+                $aliasConf = str_replace($offlineContent, $onlineContent, $aliasConf, $count);
             } else {
-                $aliasConf = str_replace($onlineContent, $offlineContent, $aliasConf);
+                $aliasConf = str_replace($onlineContent, $offlineContent, $aliasConf, $count);
             }
             file_put_contents($neardBs->getAliasPath() . '/' . $alias . '.conf', $aliasConf);
+            Util::logDebug('Refresh ' . $neardBs->getAliasPath() . '/' . $alias . '.conf: ' . $count . ' occurrence(s) replaced');
         }
         
         // Homepage
@@ -617,11 +642,12 @@ class BinApache
         foreach ($this->getVhosts() as $vhost) {
             $vhostConf = file_get_contents($neardBs->getVhostsPath() . '/' . $vhost . '.conf');
             if ($putOnline) {
-                $vhostConf = str_replace($offlineContent, $onlineContent, $vhostConf);
+                $vhostConf = str_replace($offlineContent, $onlineContent, $vhostConf, $count);
             } else {
-                $vhostConf = str_replace($onlineContent, $offlineContent, $vhostConf);
+                $vhostConf = str_replace($onlineContent, $offlineContent, $vhostConf, $count);
             }
             file_put_contents($neardBs->getVhostsPath() . '/' . $vhost . '.conf', $vhostConf);
+            Util::logDebug('Refresh ' . $neardBs->getVhostsPath() . '/' . $vhost . '.conf: ' . $count . ' occurrence(s) replaced');
         }
     }
     

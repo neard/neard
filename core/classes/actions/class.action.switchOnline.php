@@ -6,7 +6,7 @@ class ActionSwitchOnline
     {
         global $neardConfig;
         
-        if (isset($args[0])) {
+        if (isset($args[0]) && $args[0] == Config::ENABLED || $args[0] == Config::DISABLED) {
             Util::startLoading();
             $putOnline = $args[0] == Config::ENABLED;
             
@@ -21,25 +21,7 @@ class ActionSwitchOnline
     private function switchApache($putOnline)
     {
         global $neardBins;
-        
-        $onlineContent = $neardBins->getApache()->getOnlineContent();
-        $offlineContent = $neardBins->getApache()->getOfflineContent();
-        
-        $apacheConf = file_get_contents($neardBins->getApache()->getConf());
-        if ($putOnline) {
-            $apacheConf = str_replace($offlineContent, $onlineContent, $apacheConf);
-        } else {
-            $apacheConf = str_replace($onlineContent, $offlineContent, $apacheConf);
-        }
-        file_put_contents($neardBins->getApache()->getConf(), $apacheConf);
-        
-        $sslConf = file_get_contents($neardBins->getApache()->getSslConf());
-        if ($putOnline) {
-            $sslConf = str_replace($offlineContent, $onlineContent, $sslConf);
-        } else {
-            $sslConf = str_replace($onlineContent, $offlineContent, $sslConf);
-        }
-        file_put_contents($neardBins->getApache()->getSslConf(), $sslConf);
+        $neardBins->getApache()->refreshConf($putOnline);
     }
     
     private function switchAlias($putOnline)
