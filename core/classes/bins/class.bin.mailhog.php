@@ -95,7 +95,7 @@ class BinMailhog
         $nssm->setBinPath($this->exe);
         $nssm->setParams(sprintf(self::SERVICE_PARAMS, $this->apiPort, $this->uiPort, $this->smtpPort, $this->mailPath));
         $nssm->setStart(Nssm::SERVICE_DEMAND_START);
-        $nssm->setLogsPath($neardBs->getLogsPath() . '/nssm-mailhog.log');
+        $nssm->setLogsPath($neardBs->getLogsPath() . '/mailhog.log');
         
         $this->service->setNssm($nssm);
     }
