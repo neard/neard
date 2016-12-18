@@ -8,7 +8,7 @@
 * **required** : Copy folder `tools\python`
 * **required** : Copy folder `tools\ruby`
 * **required** : Remove folder `tools\svn`
-* **required** : Add line `pythonVersion = "2.7.12.3"` after `phpmetricsVersion` in `neard.conf`
+* **required** : Add line `pythonVersion = "2.7.12.3"` after `phpunitVersion` in `neard.conf`
 * **required** : Add line `rubyVersion = "2.0.0.p648"` after `pythonVersion` in `neard.conf`
 * **required** : Remove line `svnVersion` in the tools part in `neard.conf`
 * **required** : Add line `svnVersion = "1.7.19"` after `memcachedEnable` in `neard.conf`
