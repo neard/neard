@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.0.22 (2016/11/13)
+## 1.0.22 (2016/12/18)
 
 * Cannot switch to trace verbosity (Issue #198)
 * Apache PATH env mixed with LocalSystem env (Issue #193)
