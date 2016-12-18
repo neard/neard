@@ -132,7 +132,7 @@ class Win32Ps
                 }
                 
                 // Not kill inside www
-                if (Util::startWith($unixExePath, $neardBs->getWwwPath() . '/')) {
+                if (Util::startWith($unixExePath, $neardBs->getWwwPath() . '/') || Util::contains($unixCommandPath, $neardBs->getWwwPath() . '/')) {
                     continue;
                 }
     
