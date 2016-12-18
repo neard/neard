@@ -119,7 +119,6 @@ class Win32Ps
         if ($procs !== false) {
             foreach ($procs as $proc) {
                 $unixExePath = Util::formatUnixPath($proc[self::EXECUTABLE_PATH]);
-                //$unixExeName = strtoupper(basename($unixExePath));
                 $unixCommandPath = Util::formatUnixPath($proc[self::COMMAND_LINE]);
     
                 // Not kill current PID (PHP)
@@ -129,6 +128,11 @@ class Win32Ps
     
                 // Not kill Neard
                 if ($unixExePath == $neardBs->getExeFilePath()) {
+                    continue;
+                }
+                
+                // Not kill inside www
+                if (Util::startWith($unixExePath, $neardBs->getWwwPath() . '/')) {
                     continue;
                 }
     
