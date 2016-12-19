@@ -18,8 +18,8 @@
   - [Binaries, tools, applications](#binaries-tools-applications)
 - [Installation](#installation)
 - [Configuration](#configuration)
-- [Upgrade](#upgrade)
 - [Usage](#usage)
+- [Upgrade](#upgrade)
 - [License](#license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -28,8 +28,9 @@
 
 **Neard** is a portable WAMP software stack involving useful binaries, tools and applications for [your web development](../../wiki/Screenshots).<br />
 It is open for everyone to contribute. You can contribute to [binaries, tools, applications](../../wiki/Contribute) and [translations](../../wiki/Translations) too.<br />
-To be notified of new releases, Star the project or subscribe to this [Atom feed](https://github.com/crazy-max/neard/releases.atom).<br />
-If you've got a problem do not forget to read the [Reporting an issue Wiki page](../../wiki/Reporting-an-issue).
+To be notified of new releases you can star the project or subscribe to this [Atom feed](https://github.com/crazy-max/neard/releases.atom).<br />
+If you've got a problem do not forget to read the [Reporting an issue Wiki page](../../wiki/Reporting-an-issue).<br />
+And do not forget to star :star2: the project if you like it :heart_eyes:
 
 ![](../../wiki/screenshots/neard-menu1-20161129.png)  ![](../../wiki/screenshots/neard-menu2-20160505.png)  ![](../../wiki/screenshots/neard-menu-tools2-20161215.png)
 
@@ -97,17 +98,15 @@ Before starting Neard, edit the configuration file `neard.conf` :
 * **timezone** - The default timezone used by all date/time functions. Default : `"Europe/Paris"`
 * **notepad** - The editor while opening files. Default : `"notepad.exe"`
 * **logsVerbose** - Control the log output verbose (0=simple, 1=report, 2=debug, 3=trace). Default : `0`
-* **purgeLogsOnStartup** - Purge logs from Neard logs folder (0=false, 1= true). Default `0`
 * **scriptsTimeout** - The default timeout when VBS/Batch are executed. May vary depending on your system. Default : `120`
-* **scriptsDelete** - Delete temporary scripts in core/tmp folder on startup (0=false, 1= true). Default : `1`
-
-## Upgrade
-
-All instructions to upgrade from a previous release are added in the [UPGRADE.md](https://github.com/crazy-max/neard/blob/master/UPGRADE.md) file.
 
 ## Usage
 
 Launch `neard.exe`.
+
+## Upgrade
+
+All instructions to upgrade from a previous release are added in the [UPGRADE.md](https://github.com/crazy-max/neard/blob/master/UPGRADE.md) file.
 
 ## License
 
