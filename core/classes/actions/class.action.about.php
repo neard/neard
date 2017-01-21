@@ -22,7 +22,7 @@ class ActionAbout
         $neardWinbinder->createLabel($this->wbWindow, $aboutText, 80, 20, 420, 120);
         
         $neardWinbinder->createLabel($this->wbWindow, $neardLang->getValue(Lang::WEBSITE) . ' :', 80, 105, 420, 15);
-        $this->wbLinkHomepage = $neardWinbinder->createHyperLink($this->wbWindow, APP_GITHUB_HOME, 180, 105, 250, 15, WBC_LINES);
+        $this->wbLinkHomepage = $neardWinbinder->createHyperLink($this->wbWindow, APP_WEBSITE, 180, 105, 250, 15, WBC_LINES);
         
         $neardWinbinder->createLabel($this->wbWindow, $neardLang->getValue(Lang::DONATE) . ' :', 80, 125, 420, 15);
         $this->wbLinkDonate = $neardWinbinder->createHyperLink($this->wbWindow, APP_DONATE_URL, 180, 125, 250, 15, WBC_LINES | WBC_RIGHT);
@@ -42,7 +42,7 @@ class ActionAbout
         
         switch ($id) {
             case $this->wbLinkHomepage[WinBinder::CTRL_ID]:
-                $neardWinbinder->exec($neardConfig->getBrowser(), APP_GITHUB_HOME . APP_GITHUB_ANCHOR);
+                $neardWinbinder->exec($neardConfig->getBrowser(), APP_WEBSITE);
                 break;
             case $this->wbLinkDonate[WinBinder::CTRL_ID]:
                 $neardWinbinder->exec($neardConfig->getBrowser(), APP_DONATE_URL);

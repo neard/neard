@@ -31,7 +31,7 @@ class TplAppMariadb
         // Download
         $resultItems .= TplAestan::getItemLink(
             $neardLang->getValue(Lang::DOWNLOAD_MORE),
-            APP_GITHUB_HOME . '/wiki/binMariaDB#latest',
+            APP_WEBSITE . '/bins/mariadb/' . Util::getUtmSource() . '#releases',
             false,
             TplAestan::GLYPH_BROWSER
         ) . PHP_EOL;

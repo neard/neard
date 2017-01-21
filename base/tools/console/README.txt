@@ -1,2 +1,2 @@
 Place Console tool releases here.
-Documentation and downloads : https://github.com/crazy-max/neard/wiki/toolConsole
+Documentation and downloads : http://neard.io/tools/console

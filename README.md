@@ -1,112 +1,73 @@
-[![GitHub release](https://img.shields.io/github/release/crazy-max/neard.svg?style=flat-square)](https://github.com/crazy-max/neard/releases/latest)
-![Total downloads](https://img.shields.io/github/downloads/crazy-max/neard/total.svg?style=flat-square)
-[![Build Status](https://img.shields.io/travis/crazy-max/neard/master.svg?style=flat-square)](https://travis-ci.org/crazy-max/neard)
-[![Code Quality](https://img.shields.io/codacy/grade/75278913a45643ab871b87283963b3c5.svg?style=flat-square)](https://www.codacy.com/app/crazy-max/neard)
-[![Donate Paypal](https://img.shields.io/badge/donate-paypal-blue.svg?style=flat-square)](https://www.paypal.me/crazyws)
+<p align="center"><a href="http://neard.io.org" target="_blank"><img width="100"src="http://neard.io/img/logo.png"></a></p>
 
-# Neard
-
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
-
-- [About](#about)
-  - [Binaries](#binaries)
-  - [Applications](#applications)
-  - [Tools](#tools)
-- [Download](#download)
-  - [Binaries, tools, applications](#binaries-tools-applications)
-- [Installation](#installation)
-- [Configuration](#configuration)
-- [Usage](#usage)
-- [Upgrade](#upgrade)
-- [License](#license)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+<p align="center">
+  <a href="https://github.com/crazy-max/neard/releases/latest"><img src="https://img.shields.io/github/release/crazy-max/neard.svg?style=flat-square" alt="GitHub release"></a>
+  <a href="https://github.com/crazy-max/neard/releases"><img src="https://img.shields.io/github/downloads/crazy-max/neard/total.svg?style=flat-square" alt="Total downloads"></a>
+  <a href="https://travis-ci.org/crazy-max/neard"><img src="https://img.shields.io/travis/crazy-max/neard/master.svg?style=flat-square" alt="Build Status"></a>
+  <a href="https://www.codacy.com/app/crazy-max/neard"><img src="https://img.shields.io/codacy/grade/75278913a45643ab871b87283963b3c5.svg?style=flat-square" alt="Code Quality"></a>
+  <a href="https://www.paypal.me/crazyws"><img src="https://img.shields.io/badge/donate-paypal-blue.svg?style=flat-square" alt="Donate Paypal"></a>
+</p>
 
 ## About
 
-**Neard** is a portable WAMP software stack involving useful binaries, tools and applications for [your web development](../../wiki/Screenshots).<br />
-It is open for everyone to contribute. You can contribute to [binaries, tools, applications](../../wiki/Contribute) and [translations](../../wiki/Translations) too.<br />
-To be notified of new releases you can star the project or subscribe to this [Atom feed](https://github.com/crazy-max/neard/releases.atom).<br />
-If you've got a problem do not forget to read the [Reporting an issue Wiki page](../../wiki/Reporting-an-issue).<br />
+**Neard** is a portable WAMP software stack involving useful binaries, tools and applications for your web development.<br />
+For those who wish to contribute, have an issue or questions, read the [Documentation](http://neard.io/doc).<br />
+To be notified of new releases you can star the project.<br />
 And do not forget to star :star2: the project if you like it :heart_eyes:
 
-![](../../wiki/screenshots/neard-menu1-20161129.png)  ![](../../wiki/screenshots/neard-menu2-20160505.png)  ![](../../wiki/screenshots/neard-menu-tools2-20161215.png)
+![](http://neard.io/img/screenshots/menu1.png)  ![](http://neard.io/img/screenshots/menu2.png)  ![](http://neard.io/img/screenshots/menu-tools2.png)
+
+It also offers several versions of the various [binaries](http://neard.io/bins), [applications](http://neard.io/apps) and [tools](http://neard.io/tools) for download on the [official website](http://neard.io) and many other features.
 
 ### Binaries
 
-* **[Apache](../../wiki/binApache)**, the world's most used web server software.
-* **[Filezilla](../../wiki/binFilezilla)**, a FTP server application.
-* **[MailHog](../../wiki/binMailHog)**, a Web and API based SMTP testing.
-* **[MariaDB](../../wiki/binMariaDB)**, a community-developed fork of the MySQL relational database management system.
-* **[Memcached](../../wiki/binMemcached)**, a distributed memory object caching system.
-* **[MySQL](../../wiki/binMySQL)**, an open-source relational database management system.
-* **[Node.js](../../wiki/binNode.js)**, an open-source, cross-platform runtime environment for developing server-side web applications.
-* **[PHP](../../wiki/binPHP)**, a server-side scripting language designed for web development including PEAR and extra extensions.
-* **[PostgreSQL](../../wiki/binPostgreSQL)**, an object-relational database management system (ORDBMS) with an emphasis on extensibility and standards-compliance.
-* **[SVN](../../wiki/binSVN)**, a software versioning and revision control system.
+* [Apache](http://neard.io/bins/apache) : the world’s most used web server software.
+* [Filezilla](http://neard.io/bins/filezilla) : a FTP server application.
+* [MailHog](http://neard.io/bins/mailhog) : a Web and API based SMTP testing.
+* [MariaDB](http://neard.io/bins/mariadb) : a community-developed fork of the MySQL relational database management system.
+* [Memcached](http://neard.io/bins/memcached) : a distributed memory object caching system.
+* [MySQL](http://neard.io/bins/mysql) : an open-source relational database management system.
+* [Node.js](http://neard.io/bins/nodejs) : an open-source, cross-platform runtime environment for developing server-side web applications.
+* [PHP](http://neard.io/bins/php) : a server-side scripting language designed for web development including PEAR and extra extensions.
+* [PostgreSQL](http://neard.io/bins/postgresql) : an object-relational database management system (ORDBMS) with an emphasis on extensibility and standards-compliance.
+* [SVN](http://neard.io/bins/svn) : a software versioning and revision control system.
 
 ### Applications
 
-* **[Adminer](../../wiki/appAdminer)**, (formerly phpMinAdmin) is a full-featured database management tool written in PHP.
-* **[GitList](../../wiki/appGitList)**, an elegant and modern git repository viewer.
-* **[phpMemAdmin](../../wiki/appPhpMemAdmin)**, to handle the administration of Memcached over the web.
-* **[phpMyAdmin](../../wiki/appPhpMyAdmin)**, to handle the administration of MySQL and MariaDB over the Web.
-* **[phpPgAdmin](../../wiki/appPhpPgAdmin)**, a web-based administration tool for PostgreSQL.
-* **[Webgrind](../../wiki/appWebgrind)**, the Xdebug Profiling Web Frontend in PHP.
-* **[WebSVN](../../wiki/appWebSVN)**, an Online subversion repository browser.
+* [Adminer](http://neard.io/apps/adminer) : a full-featured database management tool written in PHP.
+* [GitList](http://neard.io/apps/gitlist) : an elegant and modern git repository viewer.
+* [phpMemAdmin](http://neard.io/apps/phpmemadmin) : to handle the administration of Memcached over the web.
+* [phpMyAdmin](http://neard.io/apps/phpmyadmin) : to handle the administration of MySQL and MariaDB over the Web.
+* [phpPgAdmin](http://neard.io/apps/phppgadmin) : a web-based administration tool for PostgreSQL.
+* [Webgrind](http://neard.io/apps/webgrind) : the Xdebug Profiling Web Frontend in PHP.
+* [WebSVN](http://neard.io/apps/websvn) : an Online subversion repository browser.
 
 ### Tools
 
-* **[Composer](../../wiki/toolComposer)**, Dependency Manager for PHP.
-* **[Console](../../wiki/toolConsole)**, a multi command prompt with TCC/LE and ANSICON.
-* **[Drush](../../wiki/toolDrush)**, a command line shell and scripting interface for Drupal.
-* **[Git](../../wiki/toolGit)**, a widely used version control system for software development.
-* **[HostsEditor](../../wiki/toolHostsEditor)**, a small application for editing windows Hosts file.
-* **[ImageMagick](../../wiki/toolImageMagick)**, a free and open-source software suite to manipulate image files.
-* **[Notepad2-mod](../../wiki/toolNotepad2-mod)**, a fork of Notepad2 text editor with syntax highlighting.
-* **[PhpMetrics](../../wiki/toolPhpMetrics)**, gives metrics about PHP project and classes.
-* **[PHPUnit](../../wiki/toolPHPUnit)**, a programmer-oriented testing framework for PHP.
-* **[Python](../../wiki/toolPython)**, a widely used high-level, general-purpose, interpreted, dynamic programming language.
-* **[Ruby](../../wiki/toolRuby)**, a dynamic, reflective, object-oriented, general-purpose programming language.
-* **[WP-CLI](../../wiki/toolWP-CLI)**, a command line interface for WordPress.
-* **[XDebugClient](../../wiki/toolXDebugClient)**, a simple frontend for XDebug.
+* [Composer](http://neard.io/tools/composer) : a dependency manager for PHP.
+* [Console](http://neard.io/tools/console) : a multi command prompt with TCC/LE and ANSICON.
+* [Drush](http://neard.io/tools/drush) : a command line shell and scripting interface for Drupal.
+* [Git](http://neard.io/tools/git) : a widely used version control system for software development.
+* [HostsEditor](http://neard.io/tools/hostseditor) : a small application for editing windows Hosts file.
+* [ImageMagick](http://neard.io/tools/imagemagick) : a free and open-source software suite to manipulate image files.
+* [Notepad2-mod](http://neard.io/tools/notepad2mod) : a fork of Notepad2 text editor with syntax highlighting.
+* [PhpMetrics](http://neard.io/tools/phpmetrics) : gives metrics about PHP project and classes.
+* [PHPUnit](http://neard.io/tools/phpunit) : a programmer-oriented testing framework for PHP.
+* [Python](http://neard.io/tools/python) : a widely used high-level, general-purpose, interpreted, dynamic programming language.
+* [Ruby](http://neard.io/tools/ruby) : a dynamic, reflective, object-oriented, general-purpose programming language.
+* [WP-CLI](http://neard.io/tools/wpcli) : a command line interface for WordPress.
+* [XDebugClient](http://neard.io/tools/xdc) : a simple frontend for XDebug.
 
-And many other features.
+## Documentation
 
-## Download
-
-First, read the [Requirements Wiki page](../../wiki/Requirements).<br />
-Then go to the [releases page](https://github.com/crazy-max/neard/releases) and download one of the available archive :
-* `neard-x.x.x.7z`
-* `neard-x.x.x.zip`
-
-### Binaries, tools, applications
-
-Neard offers several versions of the various binaries, applications and tools for download on github subrepositories.<br />
-You can find the download links on the [Wiki](../../wiki).
-
-## Installation
-
-Use a file archiver that supports [7z format](http://www.7-zip.org/7z.html) like [7zip](http://www.7-zip.org/) and extract the archive where you want.
-
-## Configuration
-
-Before starting Neard, edit the configuration file `neard.conf` :
-* **lang** - Language (see `neard\core\langs` folder for a complete list). Default : `english`
-* **timezone** - The default timezone used by all date/time functions. Default : `"Europe/Paris"`
-* **notepad** - The editor while opening files. Default : `"notepad.exe"`
-* **logsVerbose** - Control the log output verbose (0=simple, 1=report, 2=debug, 3=trace). Default : `0`
-* **scriptsTimeout** - The default timeout when VBS/Batch are executed. May vary depending on your system. Default : `120`
-
-## Usage
-
-Launch `neard.exe`.
-
-## Upgrade
-
-All instructions to upgrade from a previous release are added in the [UPGRADE.md](https://github.com/crazy-max/neard/blob/master/UPGRADE.md) file.
+* [Get started](http://neard.io/doc/get-started)
+* [Screenshots](http://neard.io/doc/screenshots)
+* [FAQ](http://neard.io/doc/faq)
+* [Changelog](http://neard.io/doc/changelog)
+* [Upgrade notes](http://neard.io/doc/upgrade-notes)
+* [Reporting an issue](http://neard.io/doc/reporting-issue)
+* [Contribute](http://neard.io/doc/contribute)
+* [Translations](http://neard.io/doc/translations)
 
 ## License
 

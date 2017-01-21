@@ -1,2 +1,2 @@
 Place Python tool releases here.
-Documentation and downloads : https://github.com/crazy-max/neard/wiki/toolPython
+Documentation and downloads : http://neard.io/tools/python

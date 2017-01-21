@@ -1,2 +1,2 @@
 Place WebSVN app releases here.
-Documentation and downloads : https://github.com/crazy-max/neard/wiki/appWebSVN
+Documentation and downloads : http://neard.io/apps/websvn

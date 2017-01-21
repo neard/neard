@@ -15,8 +15,8 @@
 * **required** : Add line `svnEnable = "1"` after `svnVersion` in `neard.conf`
 * **required** : Remove then replace file `sprites.dat`
 * **required** : Remove files `ssl\neardfilezilla.*`
-* **required** : Replace your existing Apache version with the latest [Apache bundle](https://github.com/crazy-max/neard-bin-apache/releases).
-* **required** : Replace your existing Filezilla version with the latest [Filezilla bundle](https://github.com/crazy-max/neard-bin-filezilla/releases).
+* **required** : Replace your existing Apache version with the latest [Apache bundle](http://neard.io/bins/apache/#releases).
+* **required** : Replace your existing Filezilla version with the latest [Filezilla bundle](http://neard.io/bins/filezilla/#releases).
 
 ## 1.0.20 > 1.0.21
 

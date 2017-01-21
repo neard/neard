@@ -1,1 +1,1 @@
-Please read the 'Reporting an issue' Wiki page before reporting an issue.
+Please read this page http://neard.io/doc/reporting-issue before reporting an issue.

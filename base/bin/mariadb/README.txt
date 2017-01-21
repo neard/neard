@@ -1,2 +1,2 @@
 Place MariaDB binary releases here.
-Documentation and downloads : https://github.com/crazy-max/neard/wiki/binMariaDB
+Documentation and downloads : http://neard.io/bins/mariadb

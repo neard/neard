@@ -33,10 +33,10 @@
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="collapse navbar-collapse navbar-ex1-collapse">
         <ul class="nav navbar-nav navbar-header">
-          <li><a href="<?php echo $neardBs->getLocalUrl(); ?>"><img alt="<?php echo APP_TITLE . ' ' . $neardCore->getAppVersion(); ?>" src="<?php echo $neardHomepage->getResourcesPath() . '/img/logo.png'; ?>" /></a></li>
+          <li><a href="<?php echo APP_WEBSITE . '/' . Util::getUtmSource(); ?>"><img alt="<?php echo APP_TITLE . ' ' . $neardCore->getAppVersion(); ?>" src="<?php echo $neardHomepage->getResourcesPath() . '/img/logo.png'; ?>" /></a></li>
         </ul>
         <ul style="margin-right:0;" class="nav navbar-nav navbar-right">
-          <li><a class="addtooltip" title="<?php echo $neardLang->getValue(Lang::GITHUB); ?>" target="_blank" href="<?php echo APP_GITHUB_HOME; ?>"><img src="<?php echo $neardHomepage->getResourcesPath() . '/img/github.png'; ?>" /></a></li>
+          <li><a class="addtooltip" title="<?php echo $neardLang->getValue(Lang::GITHUB); ?>" target="_blank" href="<?php echo Util::getGithubUrl(); ?>"><img src="<?php echo $neardHomepage->getResourcesPath() . '/img/github.png'; ?>" /></a></li>
           <li><a class="addtooltip" title="<?php echo $neardLang->getValue(Lang::DONATE); ?>" target="_blank" href="<?php echo APP_DONATE_URL; ?>"><img src="<?php echo $neardHomepage->getResourcesPath() . '/img/heart.png'; ?>" /></a></li>
         </ul>
       </div>

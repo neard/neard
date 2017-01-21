@@ -29,7 +29,7 @@ class TplAppFilezilla
         // Download
         $resultItems .= TplAestan::getItemLink(
         $neardLang->getValue(Lang::DOWNLOAD_MORE),
-            APP_GITHUB_HOME . '/wiki/binFilezilla#latest',
+            APP_WEBSITE . '/bins/filezilla/' . Util::getUtmSource() . '#releases',
             false,
             TplAestan::GLYPH_BROWSER
         ) . PHP_EOL;

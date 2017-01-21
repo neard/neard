@@ -1,2 +1,2 @@
 Place phpMyAdmin app releases here.
-Documentation and downloads : https://github.com/crazy-max/neard/wiki/appPhpMyAdmin
+Documentation and downloads : http://neard.io/apps/phpmyadmin
