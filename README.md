@@ -1,4 +1,4 @@
-<p align="center"><a href="http://neard.io.org" target="_blank"><img width="100"src="http://neard.io/img/logo.png"></a></p>
+<p align="center"><a href="http://neard.io" target="_blank"><img width="100"src="http://neard.io/img/logo.png"></a></p>
 
 <p align="center">
   <a href="https://github.com/crazy-max/neard/releases/latest"><img src="https://img.shields.io/github/release/crazy-max/neard.svg?style=flat-square" alt="GitHub release"></a>
