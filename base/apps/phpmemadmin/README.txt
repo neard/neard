@@ -1,2 +1,2 @@
 Place phpMemAdmin app releases here.
-Documentation and downloads : https://github.com/crazy-max/neard/wiki/appPhpMemAdmin
+Documentation and downloads : http://neard.io/apps/phpmemadmin

@@ -711,7 +711,7 @@ class Util
     
     public static function getLatestVersion()
     {
-        $result = self::getRemoteFile('https://raw.githubusercontent.com/wiki/crazy-max/neard/latestVersion.md');
+        $result = self::getRemoteFile(APP_WEBSITE . '/latest.txt');
         if (empty($result)) {
             self::logError('Cannot retrieve latest version');
             return null;
@@ -721,14 +721,14 @@ class Util
     
     public static function getVersionUrl($version)
     {
-        return APP_GITHUB_HOME . '/releases/download/v' . $version . '/neard-' . $version . '.7z';
+        return APP_WEBSITE . '/release/' . $version . '/' . Util::getUtmSource();
     }
     
     public static function getLatestChangelog($markdown = false)
     {
         global $neardCore, $neardBins;
         
-        $content = self::getRemoteFile('https://raw.githubusercontent.com/crazy-max/neard/master/CHANGELOG.md');
+        $content = self::getRemoteFile(self::getGithubRawUrl('CHANGELOG.md'));
         if (empty($content)) {
             self::logError('Cannot retrieve latest CHANGELOG');
             return null;
@@ -749,9 +749,15 @@ class Util
         return $content;
     }
     
-    public static function getLatestChangelogLink()
+    public static function getChangelogLink()
     {
-        return APP_GITHUB_HOME . '/blob/master/CHANGELOG.md';
+        return APP_WEBSITE . '/doc/changelog';
+    }
+    
+    public static function getUtmSource()
+    {
+        global $neardCore;
+        return '?utm_source=neard-' . $neardCore->getAppVersion();
     }
     
     public static function getRemoteFilesize($url, $humanFileSize = true)
@@ -899,14 +905,6 @@ class Util
     
     public static function getRemoteFile($url)
     {
-        /*return @file_get_contents($url, false, stream_context_create(array(
-            'ssl' => array(
-                'verify_peer' => false,
-                'verify_peer_name' => false,
-                'allow_self_signed' => true,
-            )
-        )));*/
-        
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
@@ -1072,5 +1070,15 @@ class Util
         }
         
         return true;
+    }
+    
+    public static function getGithubUrl($part = null) {
+        $part = !empty($part) ? '/' . $part : null;
+        return 'https://github.com/' . APP_GITHUB_USER . '/' . APP_GITHUB_REPO . $part;
+    }
+    
+    public static function getGithubRawUrl($file) {
+        $file = !empty($file) ? '/' . $file : null;
+        return 'https://raw.githubusercontent.com/' . APP_GITHUB_USER . '/' . APP_GITHUB_REPO . '/master' . $file;
     }
 }

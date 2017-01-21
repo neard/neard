@@ -25,7 +25,7 @@ class TplAppNodejs
         // Download
         $resultItems .= TplAestan::getItemLink(
         $neardLang->getValue(Lang::DOWNLOAD_MORE),
-            APP_GITHUB_HOME . '/wiki/binNode.js#latest',
+            APP_WEBSITE . '/bins/nodejs/' . Util::getUtmSource() . '#releases',
             false,
             TplAestan::GLYPH_BROWSER
         ) . PHP_EOL;

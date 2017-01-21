@@ -1,2 +1,2 @@
 Place HostsEditor tool releases here.
-Documentation and downloads : https://github.com/crazy-max/neard/wiki/toolHostsEditor
+Documentation and downloads : http://neard.io/tools/hostseditor

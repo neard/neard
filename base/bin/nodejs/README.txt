@@ -1,2 +1,2 @@
 Place Node.js binary releases here.
-Documentation and downloads : https://github.com/crazy-max/neard/wiki/binNode.js
+Documentation and downloads : http://neard.io/bins/nodejs

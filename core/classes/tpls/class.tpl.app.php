@@ -170,7 +170,7 @@ class TplApp
                 array(ActionCheckVersion::DISPLAY_OK),
                 array($neardLang->getValue(Lang::MENU_CHECK_UPDATE), TplAestan::GLYPH_UPDATE)
             ) . PHP_EOL .
-            TplAestan::getItemLink($neardLang->getValue(Lang::HELP), APP_GITHUB_HOME . APP_GITHUB_ANCHOR) . PHP_EOL .
+            TplAestan::getItemLink($neardLang->getValue(Lang::HELP), APP_WEBSITE . '/doc') . PHP_EOL .
             
             TplAestan::getItemSeparator() . PHP_EOL .
             $tplReload[self::SECTION_CALL] . PHP_EOL .

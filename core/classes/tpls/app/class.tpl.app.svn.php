@@ -31,7 +31,7 @@ class TplAppSvn
         // Download
         $resultItems .= TplAestan::getItemLink(
         $neardLang->getValue(Lang::DOWNLOAD_MORE),
-            APP_GITHUB_HOME . '/wiki/binSVN#latest',
+            APP_WEBSITE . '/bins/svn/' . Util::getUtmSource() . '#releases',
             false,
             TplAestan::GLYPH_BROWSER
         ) . PHP_EOL;

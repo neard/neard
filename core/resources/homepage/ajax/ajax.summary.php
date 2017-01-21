@@ -13,7 +13,7 @@ $result = array(
     'binphp' => '',
 );
 
-$dlMoreTpl = '<a href="' . APP_GITHUB_HOME . '/wiki/%s#latest" target="_blank" title="' . $neardLang->getValue(Lang::DOWNLOAD_MORE) . '"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>';
+$dlMoreTpl = '<a href="' . APP_WEBSITE . '/bins/%s/' . Util::getUtmSource() . '#releases" target="_blank" title="' . $neardLang->getValue(Lang::DOWNLOAD_MORE) . '"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>';
 
 // Bin Apache
 $apachePort = $neardBins->getApache()->getPort();
@@ -33,7 +33,7 @@ if ($neardBins->getApache()->isEnable()) {
 
 
 
-$result['binapache'] = sprintf($dlMoreTpl, 'binApache');
+$result['binapache'] = sprintf($dlMoreTpl, 'apache');
 $result['binapache'] .= '<span style="float:right;font-size:12px" class="label ' . $apacheLabel . '">' . $neardBins->getApache()->getVersion() . '</span>';
 
 // Bin Filezilla
@@ -52,7 +52,7 @@ if ($neardBins->getFilezilla()->isEnable()) {
     }
 }
 
-$result['binfilezilla'] = sprintf($dlMoreTpl, 'binFilezilla');
+$result['binfilezilla'] = sprintf($dlMoreTpl, 'filezilla');
 $result['binfilezilla'] .= '<span style="float:right;font-size:12px" class="label ' . $filezillaLabel . '">' . $neardBins->getFilezilla()->getVersion() . '</span>';
 
 // Bin MailHog
@@ -66,7 +66,7 @@ if ($neardBins->getMailhog()->isEnable()) {
     }
 }
 
-$result['binmailhog'] = sprintf($dlMoreTpl, 'binMailHog');
+$result['binmailhog'] = sprintf($dlMoreTpl, 'mailhog');
 $result['binmailhog'] .= '<span style="float:right;font-size:12px" class="label ' . $mailhogLabel . '">' . $neardBins->getMailhog()->getVersion() . '</span>';
 
 // Bin MariaDB
@@ -80,7 +80,7 @@ if ($neardBins->getMariadb()->isEnable()) {
     }
 }
 
-$result['binmariadb'] = sprintf($dlMoreTpl, 'binMariaDB');
+$result['binmariadb'] = sprintf($dlMoreTpl, 'mariadb');
 $result['binmariadb'] .= '<span style="float:right;font-size:12px" class="label ' . $mariadbLabel . '">' . $neardBins->getMariadb()->getVersion() . '</span>';
 
 // Bin MySQL
@@ -94,7 +94,7 @@ if ($neardBins->getMysql()->isEnable()) {
     }
 }
 
-$result['binmysql'] = sprintf($dlMoreTpl, 'binMySQL');
+$result['binmysql'] = sprintf($dlMoreTpl, 'mysql');
 $result['binmysql'] .= '<span style="float:right;font-size:12px" class="label ' . $mysqlLabel . '">' . $neardBins->getMysql()->getVersion() . '</span>';
 
 // Bin PostgreSQL
@@ -108,7 +108,7 @@ if ($neardBins->getPostgresql()->isEnable()) {
     }
 }
 
-$result['binpostgresql'] = sprintf($dlMoreTpl, 'binPostgreSQL');
+$result['binpostgresql'] = sprintf($dlMoreTpl, 'postgresql');
 $result['binpostgresql'] .= '<span style="float:right;font-size:12px" class="label ' . $postgresqlLabel . '">' . $neardBins->getPostgresql()->getVersion() . '</span>';
 
 // Bin Memcached
@@ -122,7 +122,7 @@ if ($neardBins->getMemcached()->isEnable()) {
     }
 }
 
-$result['binmemcached'] = sprintf($dlMoreTpl, 'binMemcached');
+$result['binmemcached'] = sprintf($dlMoreTpl, 'memcached');
 $result['binmemcached'] .= '<span style="float:right;font-size:12px" class="label ' . $memcachedLabel . '">' . $neardBins->getMemcached()->getVersion() . '</span>';
 
 // Bin SVN
@@ -136,7 +136,7 @@ if ($neardBins->getSvn()->isEnable()) {
     }
 }
 
-$result['binsvn'] = sprintf($dlMoreTpl, 'binSVN');
+$result['binsvn'] = sprintf($dlMoreTpl, 'svn');
 $result['binsvn'] .= '<span style="float:right;font-size:12px" class="label ' . $svnLabel . '">' . $neardBins->getSvn()->getVersion() . '</span>';
 
 // Bin Node.js
@@ -145,7 +145,7 @@ if ($neardBins->getNodejs()->isEnable()) {
     $nodejsLabel = 'label-primary';
 }
 
-$result['binnodejs'] = sprintf($dlMoreTpl, 'binNode.js');
+$result['binnodejs'] = sprintf($dlMoreTpl, 'nodejs');
 $result['binnodejs'] .= '<span style="float:right;font-size:12px" class="label ' . $nodejsLabel .'">' . $neardBins->getNodejs()->getVersion() . '</span>';
 
 // Bin PHP
@@ -154,7 +154,7 @@ if ($neardBins->getPhp()->isEnable()) {
     $phpLabel = 'label-primary';
 }
 
-$result['binphp'] = sprintf($dlMoreTpl, 'binPHP');
+$result['binphp'] = sprintf($dlMoreTpl, 'php');
 $result['binphp'] .= '<span style="float:right;font-size:12px" class="label ' . $phpLabel .'">' . $neardBins->getPhp()->getVersion() . '</span>';
 
 echo json_encode($result);
