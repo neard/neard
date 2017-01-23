@@ -280,7 +280,9 @@ class TplConsole
         global $neardBins, $neardTools;
     
         $shell = $neardTools->getConsole()->getCmdShell() . ' ' .
-            '&quot;' . $neardBins->getMysql()->getCliExe() . '&quot; -uroot';
+            '&quot;' . $neardBins->getMysql()->getCliExe() . '&quot; -u' .
+            $neardBins->getMysql()->getRootUser() .
+            (!empty($neardBins->getMysql()->getRootPwd()) ? ' -p' : '');
     
         return self::getTab(
             $neardTools->getConsole()->getTabTitleMysql(),
@@ -295,7 +297,9 @@ class TplConsole
         global $neardBins, $neardTools;
     
         $shell = $neardTools->getConsole()->getCmdShell() . ' ' .
-            '&quot;' . $neardBins->getMariadb()->getCliExe() . '&quot; -uroot';
+            '&quot;' . $neardBins->getMariadb()->getCliExe() . '&quot; -u' .
+            $neardBins->getMariadb()->getRootUser() .
+            (!empty($neardBins->getMariadb()->getRootPwd()) ? ' -p' : '');
     
         return self::getTab(
             $neardTools->getConsole()->getTabTitleMariadb(),
