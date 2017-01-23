@@ -33,8 +33,8 @@ logsVerbose = "Bővített napló"
 modules = "Modulok"
 name = "Név"
 paypal = "Paypal"
-pythonConsole = "#Python console"
-pythonCp = "#Python control panel"
+pythonConsole = "Python Konzol"
+pythonCp = "Python vezérlő panel"
 quit = "Kilép"
 readChangelog = "A %s legutobbi módosítás%s"
 reload = "Újra tölt"
@@ -320,7 +320,7 @@ restartText = "%s ujraindítása az új beállításokhoz"
 
 ; Action enable
 enableTitle = "%s engedélyezése / tiltása"
-enableBundleNotExist = "#%s cannot be enabled because bundle %s does not exist in %s"
+enableBundleNotExist = "%s nem lehet engedélyezni %s csomag  %s-ben nincs jelen"
 
 ; Windows forms
 buttonOk = "OK"
