@@ -198,7 +198,7 @@ class TplApp
     
     private static function getSectionMenuLeft()
     {
-        global $neardBs, $neardLang;
+        global $neardBs, $neardBins, $neardLang;
         
         $tplNodejs = TplAppNodejs::process();
         $tplApache = TplAppApache::process();
@@ -218,12 +218,15 @@ class TplApp
         $tplServices = TplAppServices::process();
         
         $tplOnline = TplAppOnline::process();
+        
+        $httpUrl = 'http://localhost' . ($neardBins->getApache()->getPort() != 80 ? ':' . $neardBins->getApache()->getPort() : '');
+        $httpsUrl = 'https://localhost' . ($neardBins->getApache()->getSslPort() != 443 ? ':' . $neardBins->getApache()->getSslPort() : '');
     
         return
             // Items
             '[Menu.Left]' . PHP_EOL .
-            TplAestan::getItemLink($neardLang->getValue(Lang::MENU_LOCALHOST), 'http://localhost') . PHP_EOL .
-            TplAestan::getItemLink($neardLang->getValue(Lang::MENU_LOCALHOST) . ' (SSL)', 'https://localhost') . PHP_EOL .
+            TplAestan::getItemLink($neardLang->getValue(Lang::MENU_LOCALHOST), $httpUrl) . PHP_EOL .
+            TplAestan::getItemLink($neardLang->getValue(Lang::MENU_LOCALHOST) . ' (SSL)', $httpsUrl) . PHP_EOL .
             TplAestan::getItemExplore($neardLang->getValue(Lang::MENU_WWW_DIRECTORY), $neardBs->getWwwPath()) . PHP_EOL .
             
             //// Bins menus
