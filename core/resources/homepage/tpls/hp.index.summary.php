@@ -3,7 +3,7 @@
     <div class="list-group">
       <div class="list-group-item" style="min-height:150px">
         <h4 class="list-group-item-heading"><?php echo $neardLang->getValue(Lang::ABOUT); ?></h4>
-        <p class="list-group-item-text"><?php echo sprintf($neardLang->getValue(Lang::HOMEPAGE_ABOUT_HTML), APP_WEBSITE, Util::getGithubUrl()); ?></p>
+        <p class="list-group-item-text"><?php echo sprintf($neardLang->getValue(Lang::HOMEPAGE_ABOUT_HTML), APP_WEBSITE . '/' . Util::getUtmSource(), Util::getGithubUrl()); ?></p>
       </div>
     </div>
   </div>
