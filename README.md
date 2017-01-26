@@ -1,8 +1,8 @@
 <p align="center"><a href="http://neard.io" target="_blank"><img width="100"src="http://neard.io/img/logo.png"></a></p>
 
 <p align="center">
-  <a href="https://github.com/crazy-max/neard/releases/latest"><img src="https://img.shields.io/github/release/crazy-max/neard.svg?style=flat-square" alt="GitHub release"></a>
-  <a href="https://github.com/crazy-max/neard/releases"><img src="https://img.shields.io/github/downloads/crazy-max/neard/total.svg?style=flat-square" alt="Total downloads"></a>
+  <a href="http://neard.io/release/latest"><img src="https://img.shields.io/github/release/crazy-max/neard.svg?style=flat-square" alt="GitHub release"></a>
+  <a href="http://neard.io/releases"><img src="https://img.shields.io/github/downloads/crazy-max/neard/total.svg?style=flat-square" alt="Total downloads"></a>
   <a href="https://travis-ci.org/crazy-max/neard"><img src="https://img.shields.io/travis/crazy-max/neard/master.svg?style=flat-square" alt="Build Status"></a>
   <a href="https://www.codacy.com/app/crazy-max/neard"><img src="https://img.shields.io/codacy/grade/75278913a45643ab871b87283963b3c5.svg?style=flat-square" alt="Code Quality"></a>
   <a href="https://www.paypal.me/crazyws"><img src="https://img.shields.io/badge/donate-paypal-blue.svg?style=flat-square" alt="Donate Paypal"></a>
