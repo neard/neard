@@ -25,7 +25,8 @@
     <target name="build" depends="init, load.lib">
         <var name="release.target" unset="true" />
         <property name="release.target" value="${build.tmp.path}/${release.name}-${release.version}" />
-        <property name="release.dest" value="${build.release.path}/${release.name}-${release.version}" />
+        <property name="release.destdir" value="${build.release.path}/${release.version}" />
+        <property name="release.destfile" value="${release.destdir}/${release.name}-${release.version}" />
         
         <echo message="*** Release" />
         <echo message="* Name    : ${release.name} " />
@@ -35,6 +36,7 @@
         <!-- Clean -->
         <delete dir="${release.target}" />
         <mkdir dir="${build.release.path}" />
+        <mkdir dir="${release.destdir}" />
         <mkdir dir="${release.target}/${release.name}" />
         
         <!-- Copy core -->
@@ -149,34 +151,32 @@
         <if>
             <equals arg1="${release.format}" arg2="7z" />
             <then>
-                <delete file="${release.dest}.7z" />
-                <echo message="Compressing ${release.name}${release.version} to ${release.dest}.7z..." />
-                <!--sevenz destfile="${release.dest}.7z">
-                    <sevenzfileset dir="${release.target}" prefix="${release.name}" />
-                </sevenz-->
-                <sevenzip src="${release.target}/*" dest="${release.dest}.7z" format="7z" />
+                <delete file="${release.destfile}.7z" />
+                <echo message="Compressing ${release.name}${release.version} to ${release.destfile}.7z..." />
+                <sevenzip src="${release.target}/*" dest="${release.destfile}.7z" format="7z" />
+                <hashfile file="${release.destfile}.7z" />
             </then>
             <elseif>
                 <equals arg1="${release.format}" arg2="zip" />
                 <then>
-                    <delete file="${release.dest}.zip" />
-                    <echo message="Compressing ${release.name}${release.version} to ${release.dest}.zip..." />
-                    <!--zip destfile="${release.dest}.zip" update="false">
-                        <zipfileset dir="${release.target}" />
-                    </zip-->
-                    <sevenzip src="${release.target}/*" dest="${release.dest}.zip" format="zip" />
+                    <delete file="${release.destfile}.zip" />
+                    <echo message="Compressing ${release.name}${release.version} to ${release.destfile}.zip..." />
+                    <sevenzip src="${release.target}/*" dest="${release.destfile}.zip" format="zip" />
+                    <hashfile file="${release.destfile}.zip" />
                 </then>
             </elseif>
             <elseif>
                 <equals arg1="${release.format}" arg2="all" />
                 <then>
-                    <delete file="${release.dest}.7z" />
-                    <echo message="Compressing ${release.name}${release.version} to ${release.dest}.7z..." />
-                    <sevenzip src="${release.target}/*" dest="${release.dest}.7z" format="7z" />
+                    <delete file="${release.destfile}.7z" />
+                    <echo message="Compressing ${release.name}${release.version} to ${release.destfile}.7z..." />
+                    <sevenzip src="${release.target}/*" dest="${release.destfile}.7z" format="7z" />
+                    <hashfile file="${release.destfile}.7z" />
                     
-                    <delete file="${release.dest}.zip" />
-                    <echo message="Compressing ${release.name}${release.version} to ${release.dest}.zip..." />
-                    <sevenzip src="${release.target}/*" dest="${release.dest}.zip" format="zip" />
+                    <delete file="${release.destfile}.zip" />
+                    <echo message="Compressing ${release.name}${release.version} to ${release.destfile}.zip..." />
+                    <sevenzip src="${release.target}/*" dest="${release.destfile}.zip" format="zip" />
+                    <hashfile file="${release.destfile}.zip" />
                 </then>
             </elseif>
             <else>
