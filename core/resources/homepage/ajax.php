@@ -10,6 +10,7 @@ $procs = array(
     'mailhog',
     'memcached',
     'mariadb',
+    'mongodb',
     'mysql',
     'nodejs',
     'php',

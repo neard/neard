@@ -41,6 +41,9 @@ class ActionService
                 $bin = $neardBins->getMariadb();
                 $port = $bin->getPort();
                 $syntaxCheckCmd = BinMariadb::CMD_SYNTAX_CHECK;
+            } elseif ($sName == BinMongodb::SERVICE_NAME) {
+                $bin = $neardBins->getMongodb();
+                $port = $bin->getPort();
             } elseif ($sName == BinPostgresql::SERVICE_NAME) {
                 $bin = $neardBins->getPostgresql();
                 $port = $bin->getPort();

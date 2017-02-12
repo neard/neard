@@ -8,6 +8,7 @@ class Bins
     private $php;
     private $mysql;
     private $mariadb;
+    private $mongodb;
     private $postgresql;
     private $nodejs;
     private $filezilla;
@@ -48,6 +49,7 @@ class Bins
             $this->getApache(),
             $this->getFilezilla(),
             $this->getMariadb(),
+            $this->getMongodb(),
             $this->getPostgresql(),
             $this->getMysql(),
             $this->getSvn(),
@@ -102,6 +104,14 @@ class Bins
             $this->mariadb = new BinMariadb($this->getRootPath('mariadb'));
         }
         return $this->mariadb;
+    }
+    
+    public function getMongodb()
+    {
+        if ($this->mongodb == null) {
+            $this->mongodb = new BinMongodb($this->getRootPath('mongodb'));
+        }
+        return $this->mongodb;
     }
     
     public function getPostgresql()
@@ -161,6 +171,9 @@ class Bins
         }
         if ($this->getMariadb()->isEnable()) {
             $result[BinMariadb::SERVICE_NAME] = $this->getMariadb()->getService();
+        }
+        if ($this->getMongodb()->isEnable()) {
+            $result[BinMongodb::SERVICE_NAME] = $this->getMongodb()->getService();
         }
         if ($this->getPostgresql()->isEnable()) {
             $result[BinPostgresql::SERVICE_NAME] = $this->getPostgresql()->getService();

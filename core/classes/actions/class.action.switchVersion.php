@@ -51,6 +51,13 @@ class ActionSwitchVersion
                 $this->service = $neardBins->getMariadb()->getService();
                 $this->changePort = true;
                 $this->filesToScan = array($neardBins->getMariadb()->getRootPath() => array('my.ini'));
+            } elseif ($args[0] == $neardBins->getMongodb()->getName()) {
+                $this->bin = $neardBins->getMongodb();
+                $this->currentVersion = $neardBins->getMongodb()->getVersion();
+                $this->restart = true;
+                $this->service = $neardBins->getMongodb()->getService();
+                $this->changePort = true;
+                $this->filesToScan = array($neardBins->getMongodb()->getRootPath() => array('mongodb.conf'));
             } elseif ($args[0] == $neardBins->getPostgresql()->getName()) {
                 $this->bin = $neardBins->getPostgresql();
                 $this->currentVersion = $neardBins->getPostgresql()->getVersion();

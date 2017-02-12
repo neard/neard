@@ -503,6 +503,9 @@ class ActionStartup
                     $bin = $neardBins->getMariadb();
                     $port = $neardBins->getMariadb()->getPort();
                     $syntaxCheckCmd = BinMariadb::CMD_SYNTAX_CHECK;
+                } elseif ($sName == BinMongodb::SERVICE_NAME) {
+                    $bin = $neardBins->getMongodb();
+                    $port = $neardBins->getMongodb()->getPort();
                 } elseif ($sName == BinPostgresql::SERVICE_NAME) {
                     $bin = $neardBins->getPostgresql();
                     $port = $neardBins->getPostgresql()->getPort();

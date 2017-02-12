@@ -219,6 +219,7 @@ class TplConsole
                 self::getTabPearSection() . PHP_EOL .
                 self::getTabMysqlSection() . PHP_EOL .
                 self::getTabMariadbSection() . PHP_EOL .
+                self::getTabMongodbSection() . PHP_EOL .
                 self::getTabPostgresqlSection() . PHP_EOL .
                 self::getTabGitSection() . PHP_EOL .
                 self::getTabSvnSection() . PHP_EOL .
@@ -306,6 +307,21 @@ class TplConsole
             self::ICON_DB,
             Util::formatWindowsPath($shell),
             $neardBins->getMariadb()->getCurrentPath()
+        );
+    }
+    
+    private static function getTabMongodbSection()
+    {
+        global $neardBins, $neardTools;
+    
+        $shell = $neardTools->getConsole()->getCmdShell() . ' ' .
+            '&quot;' . $neardBins->getMongodb()->getCliExe() . '&quot;';
+    
+        return self::getTab(
+            $neardTools->getConsole()->getTabTitleMongodb(),
+            self::ICON_DB,
+            Util::formatWindowsPath($shell),
+            $neardBins->getMongodb()->getCurrentPath()
         );
     }
     

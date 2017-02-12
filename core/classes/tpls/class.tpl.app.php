@@ -205,6 +205,7 @@ class TplApp
         $tplPhp = TplAppPhp::process();
         $tplMysql = TplAppMysql::process();
         $tplMariadb = TplAppMariadb::process();
+        $tplMongodb = TplAppMongodb::process();
         $tplPostgresql = TplAppPostgresql::process();
         $tplMailhog = TplAppMailhog::process();
         $tplMemcached = TplAppMemcached::process();
@@ -236,6 +237,7 @@ class TplApp
             $tplPhp[self::SECTION_CALL] . PHP_EOL .
             $tplMysql[self::SECTION_CALL] . PHP_EOL .
             $tplMariadb[self::SECTION_CALL] . PHP_EOL .
+            $tplMongodb[self::SECTION_CALL] . PHP_EOL .
             $tplPostgresql[self::SECTION_CALL] . PHP_EOL .
             $tplMailhog[self::SECTION_CALL] . PHP_EOL .
             $tplMemcached[self::SECTION_CALL] . PHP_EOL .
@@ -262,6 +264,7 @@ class TplApp
             PHP_EOL . $tplPhp[self::SECTION_CONTENT] .
             PHP_EOL . $tplMysql[self::SECTION_CONTENT] .
             PHP_EOL . $tplMariadb[self::SECTION_CONTENT] .
+            PHP_EOL . $tplMongodb[self::SECTION_CONTENT] .
             PHP_EOL . $tplPostgresql[self::SECTION_CONTENT] .
             PHP_EOL . $tplMailhog[self::SECTION_CONTENT] .
             PHP_EOL . $tplMemcached[self::SECTION_CONTENT] .
