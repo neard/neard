@@ -629,6 +629,7 @@ class Util
             $neardBins->getPhp()->getRootPath()             => array('.php', '.bat', '.ini', '.reg', '.inc'),
             $neardBins->getMysql()->getRootPath()           => array('my.ini'),
             $neardBins->getMariadb()->getRootPath()         => array('my.ini'),
+            $neardBins->getMongodb()->getRootPath()         => array('mongodb.conf'),
             $neardBins->getPostgresql()->getRootPath()      => array('.nrd', '.conf', '.bat'),
             $neardBins->getNodejs()->getRootPath()          => array('.bat', 'npmrc'),
             $neardBins->getFilezilla()->getRootPath()       => array('.xml'),

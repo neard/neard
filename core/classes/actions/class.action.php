@@ -13,6 +13,7 @@ class Action
     const CLEAR_FOLDERS = 'clearFolders';
     const DEBUG_APACHE = 'debugApache';
     const DEBUG_MARIADB = 'debugMariadb';
+    const DEBUG_MONGODB = 'debugMongodb';
     const DEBUG_MYSQL = 'debugMysql';
     const DEBUG_POSTGRESQL = 'debugPostgresql';
     const DEBUG_SVN = 'debugSvn';

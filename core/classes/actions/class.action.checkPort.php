@@ -14,6 +14,8 @@ class ActionCheckPort
                 $neardBins->getMysql()->checkPort($args[1], true);
             } elseif ($args[0] == $neardBins->getMariadb()->getName()) {
                 $neardBins->getMariadb()->checkPort($args[1], true);
+            } elseif ($args[0] == $neardBins->getMongodb()->getName()) {
+                $neardBins->getMongodb()->checkPort($args[1], true);
             } elseif ($args[0] == $neardBins->getPostgresql()->getName()) {
                 $neardBins->getPostgresql()->checkPort($args[1], true);
             } elseif ($args[0] == $neardBins->getFilezilla()->getName()) {

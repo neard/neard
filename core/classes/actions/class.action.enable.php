@@ -16,6 +16,8 @@ class ActionEnable
                 $neardBins->getMysql()->setEnable($args[1], true);
             } elseif ($args[0] == $neardBins->getMariadb()->getName()) {
                 $neardBins->getMariadb()->setEnable($args[1], true);
+            } elseif ($args[0] == $neardBins->getMongodb()->getName()) {
+                $neardBins->getMongodb()->setEnable($args[1], true);
             } elseif ($args[0] == $neardBins->getNodejs()->getName()) {
                 $neardBins->getNodejs()->setEnable($args[1], true);
             } elseif ($args[0] == $neardBins->getPostgresql()->getName()) {

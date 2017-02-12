@@ -51,6 +51,10 @@
             <span class="loader" style="float:right"><img src="<?php echo $neardHomepage->getResourcesPath() . '/img/loader.gif'; ?>" /></span>
             <a href="#mariadb"><?php echo $neardLang->getValue(Lang::MARIADB); ?></a>
           </span>
+          <span class="list-group-item summary-binmongodb">
+            <span class="loader" style="float:right"><img src="<?php echo $neardHomepage->getResourcesPath() . '/img/loader.gif'; ?>" /></span>
+            <a href="#mongodb"><?php echo $neardLang->getValue(Lang::MONGODB); ?></a>
+          </span>
           <span class="list-group-item summary-binpostgresql">
             <span class="loader" style="float:right"><img src="<?php echo $neardHomepage->getResourcesPath() . '/img/loader.gif'; ?>" /></span>
             <a href="#postgresql"><?php echo $neardLang->getValue(Lang::POSTGRESQL); ?></a>

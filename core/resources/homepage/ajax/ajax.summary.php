@@ -5,6 +5,7 @@ $result = array(
     'binfilezilla' => '',
     'binmailhog' => '',
     'binmariadb' => '',
+    'binmongodb' => '',
     'binmysql' => '',
     'binpostgresql' => '',
     'binmemcached' => '',
@@ -82,6 +83,20 @@ if ($neardBins->getMariadb()->isEnable()) {
 
 $result['binmariadb'] = sprintf($dlMoreTpl, 'mariadb');
 $result['binmariadb'] .= '<span style="float:right;font-size:12px" class="label ' . $mariadbLabel . '">' . $neardBins->getMariadb()->getVersion() . '</span>';
+
+// Bin MongoDB
+$mongodbPort = $neardBins->getMongodb()->getPort();
+$mongodbLabel = 'label-default';
+
+if ($neardBins->getMongodb()->isEnable()) {
+    $mongodbLabel = 'label-danger';
+    if ($neardBins->getMongodb()->checkPort($mongodbPort)) {
+        $mongodbLabel = 'label-success';
+    }
+}
+
+$result['binmongodb'] = sprintf($dlMoreTpl, 'mongodb');
+$result['binmongodb'] .= '<span style="float:right;font-size:12px" class="label ' . $mongodbLabel . '">' . $neardBins->getMongodb()->getVersion() . '</span>';
 
 // Bin MySQL
 $mysqlPort = $neardBins->getMysql()->getPort();

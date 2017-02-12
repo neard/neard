@@ -25,6 +25,7 @@ It also offers several versions of the various [binaries](http://neard.io/bins),
 * [Filezilla](http://neard.io/bins/filezilla) : a FTP server application.
 * [MailHog](http://neard.io/bins/mailhog) : a Web and API based SMTP testing.
 * [MariaDB](http://neard.io/bins/mariadb) : a community-developed fork of the MySQL relational database management system.
+* [MongoDB](http://neard.io/bins/mongodb) : a free and open-source cross-platform document-oriented database program.
 * [Memcached](http://neard.io/bins/memcached) : a distributed memory object caching system.
 * [MySQL](http://neard.io/bins/mysql) : an open-source relational database management system.
 * [Node.js](http://neard.io/bins/nodejs) : an open-source, cross-platform runtime environment for developing server-side web applications.

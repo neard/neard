@@ -246,6 +246,12 @@ class ToolConsole
         return $neardLang->getValue(Lang::MARIADB) . ' ' . $neardBins->getMariadb()->getVersion();
     }
     
+    public function getTabTitleMongodb()
+    {
+        global $neardLang, $neardBins;
+        return $neardLang->getValue(Lang::MONGODB) . ' ' . $neardBins->getMongodb()->getVersion();
+    }
+    
     public function getTabTitlePostgresql()
     {
         global $neardLang, $neardBins;

@@ -225,6 +225,8 @@ class Win32Service
             $neardBins->getFilezilla()->rebuildConf();
         } elseif ($this->getName() == BinMysql::SERVICE_NAME) {
             $neardBins->getMysql()->initData();
+        } elseif ($this->getName() == BinMongodb::SERVICE_NAME) {
+            $neardBins->getMongodb()->initData();
         } elseif ($this->getName() == BinMailhog::SERVICE_NAME) {
             $neardBins->getMailhog()->rebuildConf();
         } elseif ($this->getName() == BinMemcached::SERVICE_NAME) {
