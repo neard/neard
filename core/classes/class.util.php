@@ -1016,33 +1016,16 @@ class Util
         if ($service->isInstalled()) {
             if ($service->delete()) {
                 Util::logInfo(sprintf('%s service successfully removed', $name));
-                if ($showWindow) {
-                    $neardWinbinder->messageBoxInfo(
-                        sprintf($neardLang->getValue(Lang::SERVICE_REMOVED), $name),
-                        $boxTitle
-                    );
-                }
                 return true;
             } else {
                 Util::logError(sprintf('Error during the uninstallation of %s service', $name));
-                if ($showWindow) {
-                    $neardWinbinder->messageBoxError(
-                        sprintf($neardLang->getValue(Lang::SERVICE_REMOVE_ERROR), $name),
-                        $boxTitle
-                    );
-                }
+                return false;
             }
         } else {
             Util::logWarning(sprintf('%s service does not exist', $name));
-            if ($showWindow) {
-                $neardWinbinder->messageBoxWarning(
-                    sprintf($neardLang->getValue(Lang::SERVICE_NOT_EXIST), $name),
-                    $boxTitle
-                );
-            }
         }
         
-        return false;
+        return true;
     }
     
     public static function startService($bin, $syntaxCheckCmd, $showWindow = false)
