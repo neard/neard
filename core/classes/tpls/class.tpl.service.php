@@ -7,11 +7,6 @@ class TplService
         return TplApp::getActionRun(Action::SERVICE, array($sName, ActionService::CREATE));
     }
     
-    public static function getActionDelete($sName)
-    {
-        return TplApp::getActionRun(Action::SERVICE, array($sName, ActionService::DELETE));
-    }
-    
     public static function getActionStart($sName)
     {
         return TplApp::getActionRun(Action::SERVICE, array($sName, ActionService::START));
