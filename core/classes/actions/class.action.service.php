@@ -3,7 +3,6 @@
 class ActionService
 {
     const CREATE = 'create';
-    const DELETE = 'delete';
     const START = 'start';
     const STOP = 'stop';
     const RESTART = 'restart';
@@ -59,8 +58,6 @@ class ActionService
             if (!empty($service) && $service instanceof Win32Service) {
                 if ($args[1] == self::CREATE) {
                     $this->create($service);
-                } elseif ($args[1] == self::DELETE) {
-                    $this->delete($service);
                 } elseif ($args[1] == self::START) {
                     $this->start($bin, $syntaxCheckCmd);
                 } elseif ($args[1] == self::STOP) {
@@ -73,8 +70,6 @@ class ActionService
                     }
                 } elseif ($args[1] == self::REMOVE) {
                     $this->remove($service, $name);
-                } elseif ($args[1] == self::REMOVE) {
-                    $this->remove($service, $name);
                 }
             }
         }
@@ -85,11 +80,6 @@ class ActionService
     private function create($service)
     {
         $service->create();
-    }
-    
-    private function delete($service)
-    {
-        $service->delete();
     }
     
     private function start($bin, $syntaxCheckCmd)
