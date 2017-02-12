@@ -16,9 +16,9 @@ class TplAppSvn
     
     public static function process()
     {
-        global $neardLang;
+        global $neardLang, $neardBins;
         
-        return TplApp::getMenu($neardLang->getValue(Lang::SVN), self::MENU, get_called_class());
+        return TplApp::getMenuEnable($neardLang->getValue(Lang::SVN), self::MENU, get_called_class(), $neardBins->getSvn()->isEnable());
     }
     
     public static function getMenuSvn()
