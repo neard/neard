@@ -87,7 +87,7 @@ Any funds donated will be used to help further development on this project! :gif
 
 ## Sponsors
 
-**{{ site.title }}** is generously supported by some companies with licenses and free accounts for their products.
+**Neard** is generously supported by some companies with licenses and free accounts for their products.
 
 ### JetBrains
 
