@@ -21,7 +21,7 @@ It also offers several versions of the various [binaries](http://neard.io/bins),
 
 ### Binaries
 
-* [Apache](http://neard.io/bins/apache) : the world’s most used web server software.
+* [Apache](http://neard.io/bins/apache) : the world's most used web server software.
 * [Filezilla](http://neard.io/bins/filezilla) : a FTP server application.
 * [MailHog](http://neard.io/bins/mailhog) : a Web and API based SMTP testing.
 * [MariaDB](http://neard.io/bins/mariadb) : a community-developed fork of the MySQL relational database management system.
@@ -84,6 +84,16 @@ Any funds donated will be used to help further development on this project! :gif
     <img src="http://neard.io/img/flattr.png" alt="Flattr this!">
   </a>
 </p>
+
+## Sponsors
+
+**{{ site.title }}** is generously supported by some companies with licenses and free accounts for their products.
+
+### JetBrains
+
+![](http://neard.io/img/sponsors/jetbrains.png)
+
+[JetBrains](https://www.jetbrains.com/) supports our open source project by sponsoring some [All Products Packs](https://www.jetbrains.com/products.html) within their [Free Open Source License](https://www.jetbrains.com/buy/opensource/) program.
 
 ## License
 
