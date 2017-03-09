@@ -169,7 +169,7 @@ class Util
         }
     }
     
-    public static function findFile($startPath, $findFile)
+    private static function findFile($startPath, $findFile)
     {
         $result = false;
         
@@ -190,37 +190,6 @@ class Util
             } elseif ($file == $findFile) {
                 $result = self::formatUnixPath($startPath . '/' . $file);
                 break;
-            }
-        }
-        
-        closedir($handle);
-        return $result;
-    }
-    
-    public static function findFiles($startPath, $findFiles = array(''))
-    {
-        $result = array();
-    
-        $handle = @opendir($startPath);
-        if (!$handle) {
-            return $result;
-        }
-        
-        while (false !== ($file = readdir($handle))) {
-            if ($file == '.' || $file == '..') {
-                continue;
-            }
-            if (is_dir($startPath . '/' . $file)) {
-                $tmpResults = self::findFiles($startPath . '/' . $file, $findFiles);
-                foreach ($tmpResults as $tmpResult) {
-                    $result[] = $tmpResult;
-                }
-            } elseif (is_file($startPath . '/' . $file)) {
-                foreach ($findFiles as $findFile) {
-                    if (self::endWith($file, $findFile) || $file == $findFile || empty($findFile)) {
-                        $result[] = self::formatUnixPath($startPath . '/' . $file);
-                    }
-                }
             }
         }
         
@@ -619,42 +588,252 @@ class Util
         }
     }
     
-    public static function getPathsToScan()
-    {
-        global $neardBs, $neardCore, $neardBins, $neardApps, $neardTools;
-        return array(
-            $neardBs->getAliasPath()                        => array(''),
-            $neardBs->getVhostsPath()                       => array(''),
-            $neardBins->getApache()->getRootPath()          => array('.ini', '.conf'),
-            $neardBins->getPhp()->getRootPath()             => array('.php', '.bat', '.ini', '.reg', '.inc'),
-            $neardBins->getMysql()->getRootPath()           => array('my.ini'),
-            $neardBins->getMariadb()->getRootPath()         => array('my.ini'),
-            $neardBins->getMongodb()->getRootPath()         => array('mongodb.conf'),
-            $neardBins->getPostgresql()->getRootPath()      => array('.nrd', '.conf', '.bat'),
-            $neardBins->getNodejs()->getRootPath()          => array('.bat', 'npmrc'),
-            $neardBins->getFilezilla()->getRootPath()       => array('.xml'),
-            $neardApps->getWebsvn()->getRootPath()          => array('config.php'),
-            $neardApps->getGitlist()->getRootPath()         => array('config.ini'),
-            $neardTools->getConsole()->getRootPath()        => array('console.xml', '.ini', '.btm'),
-            $neardTools->getDrush()->getRootPath()          => array('drush.bat'),
-            $neardTools->getWpCli()->getRootPath()          => array('wp.bat'),
-            $neardTools->getPython()->getRootPath()         => array('winpython.ini', '.bat', '.conf'),
-            $neardTools->getRuby()->getRootPath()           => array('.bat'),
-            $neardCore->getOpenSslPath()                    => array('openssl.cfg'),
-            $neardCore->getResourcesPath() . '/homepage'    => array('.conf'),
-        );
-    }
-    
     public static function getFilesToScan($path = null)
     {
         $result = array();
         $pathsToScan = !empty($path) ? $path : self::getPathsToScan();
-        foreach ($pathsToScan as $pathToScan => $toFind) {
-            $findFiles = self::findFiles($pathToScan, $toFind);
+        foreach ($pathsToScan as $pathToScan) {
+            $startTime = self::getMicrotime();
+            $findFiles = self::findFiles($pathToScan['path'], $pathToScan['includes'], $pathToScan['recursive']);
             foreach ($findFiles as $findFile) {
                 $result[] = $findFile;
             }
+            self::logDebug($pathToScan['path'] . ' scanned in ' . round(self::getMicrotime() - $startTime, 3) . 's');
         }
+        return $result;
+    }
+    
+    private static function getPathsToScan()
+    {
+        global $neardBs, $neardCore, $neardBins, $neardApps, $neardTools;
+        $paths = array();
+        
+        // Alias
+        $paths[] = array(
+            'path' => $neardBs->getAliasPath(),
+            'includes' => array(''),
+            'recursive' => false
+        );
+        
+        // Vhosts
+        $paths[] = array(
+            'path' => $neardBs->getVhostsPath(),
+            'includes' => array(''),
+            'recursive' => false
+        );
+        
+        // OpenSSL
+        $paths[] = array(
+            'path' => $neardCore->getOpenSslPath(),
+            'includes' => array('openssl.cfg'),
+            'recursive' => false
+        );
+        
+        // Homepage
+        $paths[] = array(
+            'path' => $neardCore->getResourcesPath() . '/homepage',
+            'includes' => array('alias.conf'),
+            'recursive' => false
+        );
+        
+        // Apache
+        $folderList = self::getFolderList($neardBins->getApache()->getRootPath());
+        foreach ($folderList as $folder) {
+            $paths[] = array(
+                'path' => $neardBins->getApache()->getRootPath() . '/' . $folder,
+                'includes' => array('.ini', '.conf'),
+                'recursive' => true
+            );
+        }
+        
+        // PHP
+        $folderList = self::getFolderList($neardBins->getPhp()->getRootPath());
+        foreach ($folderList as $folder) {
+            $paths[] = array(
+                'path' => $neardBins->getPhp()->getRootPath() . '/' . $folder,
+                'includes' => array('.php', '.bat', '.ini', '.reg', '.inc'),
+                'recursive' => true
+            );
+        }
+        
+        // MySQL
+        $folderList = self::getFolderList($neardBins->getMysql()->getRootPath());
+        foreach ($folderList as $folder) {
+            $paths[] = array(
+                'path' => $neardBins->getMysql()->getRootPath() . '/' . $folder,
+                'includes' => array('my.ini'),
+                'recursive' => false
+            );
+        }
+        
+        // MariaDB
+        $folderList = self::getFolderList($neardBins->getMariadb()->getRootPath());
+        foreach ($folderList as $folder) {
+            $paths[] = array(
+                'path' => $neardBins->getMariadb()->getRootPath() . '/' . $folder,
+                'includes' => array('my.ini'),
+                'recursive' => false
+            );
+        }
+        
+        // MongoDB
+        $folderList = self::getFolderList($neardBins->getMongodb()->getRootPath());
+        foreach ($folderList as $folder) {
+            $paths[] = array(
+                'path' => $neardBins->getMongodb()->getRootPath() . '/' . $folder,
+                'includes' => array('mongodb.conf'),
+                'recursive' => false
+            );
+        }
+        
+        // PostgreSQL
+        $folderList = self::getFolderList($neardBins->getPostgresql()->getRootPath());
+        foreach ($folderList as $folder) {
+            $paths[] = array(
+                'path' => $neardBins->getPostgresql()->getRootPath() . '/' . $folder,
+                'includes' => array('.nrd', '.conf', '.bat'),
+                'recursive' => true
+            );
+        }
+        
+        // Node.js
+        $folderList = self::getFolderList($neardBins->getNodejs()->getRootPath());
+        foreach ($folderList as $folder) {
+            $paths[] = array(
+                'path' => $neardBins->getNodejs()->getRootPath() . '/' . $folder . '/etc',
+                'includes' => array('npmrc'),
+                'recursive' => true
+            );
+            $paths[] = array(
+                'path' => $neardBins->getNodejs()->getRootPath() . '/' . $folder . '/node_modules/npm',
+                'includes' => array('npmrc'),
+                'recursive' => false
+            );
+        }
+        
+        // Filezilla
+        $folderList = self::getFolderList($neardBins->getFilezilla()->getRootPath());
+        foreach ($folderList as $folder) {
+            $paths[] = array(
+                'path' => $neardBins->getFilezilla()->getRootPath() . '/' . $folder,
+                'includes' => array('.xml'),
+                'recursive' => true
+            );
+        }
+        
+        // WebSVN
+        $folderList = self::getFolderList($neardApps->getWebsvn()->getRootPath());
+        foreach ($folderList as $folder) {
+            $paths[] = array(
+                'path' => $neardApps->getWebsvn()->getRootPath() . '/' . $folder . '/include',
+                'includes' => array('config.php'),
+                'recursive' => false
+            );
+        }
+        
+        // GitList
+        $folderList = self::getFolderList($neardApps->getGitlist()->getRootPath());
+        foreach ($folderList as $folder) {
+            $paths[] = array(
+                'path' => $neardApps->getGitlist()->getRootPath() . '/' . $folder,
+                'includes' => array('config.ini'),
+                'recursive' => false
+            );
+        }
+        
+        // Console
+        $folderList = self::getFolderList($neardTools->getConsole()->getRootPath());
+        foreach ($folderList as $folder) {
+            $paths[] = array(
+                'path' => $neardTools->getConsole()->getRootPath() . '/' . $folder,
+                'includes' => array('console.xml', '.ini', '.btm'),
+                'recursive' => true
+            );
+        }
+        
+        // Drush
+        $folderList = self::getFolderList($neardTools->getDrush()->getRootPath());
+        foreach ($folderList as $folder) {
+            $paths[] = array(
+                'path' => $neardTools->getDrush()->getRootPath() . '/' . $folder,
+                'includes' => array('drush.bat'),
+                'recursive' => false
+            );
+        }
+        
+        // WP-CLI
+        $folderList = self::getFolderList($neardTools->getWpCli()->getRootPath());
+        foreach ($folderList as $folder) {
+            $paths[] = array(
+                'path' => $neardTools->getWpCli()->getRootPath() . '/' . $folder,
+                'includes' => array('wp.bat'),
+                'recursive' => false
+            );
+        }
+        
+        // Python
+        $folderList = self::getFolderList($neardTools->getPython()->getRootPath());
+        foreach ($folderList as $folder) {
+            $paths[] = array(
+                'path' => $neardTools->getPython()->getRootPath() . '/' . $folder . '/bin',
+                'includes' => array('.bat'),
+                'recursive' => false
+            );
+            $paths[] = array(
+                'path' => $neardTools->getPython()->getRootPath() . '/' . $folder . '/settings',
+                'includes' => array('winpython.ini'),
+                'recursive' => false
+            );
+        }
+        
+        // Ruby
+        $folderList = self::getFolderList($neardTools->getRuby()->getRootPath());
+        foreach ($folderList as $folder) {
+            $paths[] = array(
+                'path' => $neardTools->getRuby()->getRootPath() . '/' . $folder . '/bin',
+                'includes' => array('!.dll','!.exe'),
+                'recursive' => false
+            );
+        }
+        
+        return $paths;
+    }
+    
+    private static function findFiles($startPath, $includes = array(''), $recursive = true)
+    {
+        $result = array();
+    
+        $handle = @opendir($startPath);
+        if (!$handle) {
+            return $result;
+        }
+    
+        while (false !== ($file = readdir($handle))) {
+            if ($file == '.' || $file == '..') {
+                continue;
+            }
+            if (is_dir($startPath . '/' . $file) && $recursive) {
+                $tmpResults = self::findFiles($startPath . '/' . $file, $findFiles);
+                foreach ($tmpResults as $tmpResult) {
+                    $result[] = $tmpResult;
+                }
+            } elseif (is_file($startPath . '/' . $file)) {
+                foreach ($includes as $include) {
+                    if (self::startWith($include, '!')) {
+                        $include = ltrim($include, '!');
+                        if (self::startWith($file, '.') && !self::endWith($file, $include)) {
+                            $result[] = self::formatUnixPath($startPath . '/' . $file);
+                        } elseif ($file != $include) {
+                            $result[] = self::formatUnixPath($startPath . '/' . $file);
+                        }
+                    } elseif (self::endWith($file, $include) || $file == $include || empty($include)) {
+                        $result[] = self::formatUnixPath($startPath . '/' . $file);
+                    }
+                }
+            }
+        }
+    
+        closedir($handle);
         return $result;
     }
     
@@ -1064,5 +1243,25 @@ class Util
     public static function getGithubRawUrl($file) {
         $file = !empty($file) ? '/' . $file : null;
         return 'https://raw.githubusercontent.com/' . APP_GITHUB_USER . '/' . APP_GITHUB_REPO . '/master' . $file;
+    }
+    
+    public static function getFolderList($path)
+    {
+        $result = array();
+    
+        $handle = @opendir($path);
+        if (!$handle) {
+            return false;
+        }
+    
+        while (false !== ($file = readdir($handle))) {
+            $filePath = $path . '/' . $file;
+            if ($file != "." && $file != ".." && is_dir($filePath)) {
+                $result[] = $file;
+            }
+        }
+    
+        closedir($handle);
+        return $result;
     }
 }
