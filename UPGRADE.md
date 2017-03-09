@@ -20,7 +20,7 @@
 
 ## 1.0.20 > 1.0.21
 
-* **required** : Download and install the latests [Neard Visual C++ Redistributables Package](https://github.com/crazy-max/neard-misc#visual-c-redistributables-package)
+* **required** : Download and install the latests [Neard Prerequisites Package](https://github.com/crazy-max/neard-prerequisites/releases/latest)
 * **required** : Remove then replace folder `apps\adminer`
 * **required** : Copy folder `apps\phpmemadmin`
 * **required** : Copy folder `apps\phppgadmin`
