@@ -66,41 +66,41 @@
     </copy>
     
     <!-- Get bins -->
-    <getbundle releasesurl="${bin.apache.url}" version="${bin.apache.version}" dest="${release.target}/${release.name}/bin/apache"/>
-    <getbundle releasesurl="${bin.filezilla.url}" version="${bin.filezilla.version}" dest="${release.target}/${release.name}/bin/filezilla"/>
-    <getbundle releasesurl="${bin.mailhog.url}" version="${bin.mailhog.version}" dest="${release.target}/${release.name}/bin/mailhog"/>
-    <getbundle releasesurl="${bin.mariadb.url}" version="${bin.mariadb.version}" dest="${release.target}/${release.name}/bin/mariadb"/>
-    <getbundle releasesurl="${bin.mongodb.url}" version="${bin.mongodb.version}" dest="${release.target}/${release.name}/bin/mongodb"/>
-    <getbundle releasesurl="${bin.postgresql.url}" version="${bin.postgresql.version}" dest="${release.target}/${release.name}/bin/postgresql"/>
-    <getbundle releasesurl="${bin.memcached.url}" version="${bin.memcached.version}" dest="${release.target}/${release.name}/bin/memcached"/>
-    <getbundle releasesurl="${bin.mysql.url}" version="${bin.mysql.version}" dest="${release.target}/${release.name}/bin/mysql"/>
-    <getbundle releasesurl="${bin.nodejs.url}" version="${bin.nodejs.version}" dest="${release.target}/${release.name}/bin/nodejs"/>
-    <getbundle releasesurl="${bin.php.url}" version="${bin.php.version}" dest="${release.target}/${release.name}/bin/php"/>
-    <getbundle releasesurl="${bin.svn.url}" version="${bin.svn.version}" dest="${release.target}/${release.name}/bin/svn"/>
+    <getmodule releasesurl="${bin.apache.url}" version="${bin.apache.version}" dest="${release.target}/${release.name}/bin/apache"/>
+    <getmodule releasesurl="${bin.filezilla.url}" version="${bin.filezilla.version}" dest="${release.target}/${release.name}/bin/filezilla"/>
+    <getmodule releasesurl="${bin.mailhog.url}" version="${bin.mailhog.version}" dest="${release.target}/${release.name}/bin/mailhog"/>
+    <getmodule releasesurl="${bin.mariadb.url}" version="${bin.mariadb.version}" dest="${release.target}/${release.name}/bin/mariadb"/>
+    <getmodule releasesurl="${bin.mongodb.url}" version="${bin.mongodb.version}" dest="${release.target}/${release.name}/bin/mongodb"/>
+    <getmodule releasesurl="${bin.postgresql.url}" version="${bin.postgresql.version}" dest="${release.target}/${release.name}/bin/postgresql"/>
+    <getmodule releasesurl="${bin.memcached.url}" version="${bin.memcached.version}" dest="${release.target}/${release.name}/bin/memcached"/>
+    <getmodule releasesurl="${bin.mysql.url}" version="${bin.mysql.version}" dest="${release.target}/${release.name}/bin/mysql"/>
+    <getmodule releasesurl="${bin.nodejs.url}" version="${bin.nodejs.version}" dest="${release.target}/${release.name}/bin/nodejs"/>
+    <getmodule releasesurl="${bin.php.url}" version="${bin.php.version}" dest="${release.target}/${release.name}/bin/php"/>
+    <getmodule releasesurl="${bin.svn.url}" version="${bin.svn.version}" dest="${release.target}/${release.name}/bin/svn"/>
     
     <!-- Get apps -->
-    <getbundle releasesurl="${app.adminer.url}" version="${app.adminer.version}" dest="${release.target}/${release.name}/apps/adminer"/>
-    <getbundle releasesurl="${app.gitlist.url}" version="${app.gitlist.version}" dest="${release.target}/${release.name}/apps/gitlist"/>
-    <getbundle releasesurl="${app.phpmemadmin.url}" version="${app.phpmemadmin.version}" dest="${release.target}/${release.name}/apps/phpmemadmin"/>
-    <getbundle releasesurl="${app.phpmyadmin.url}" version="${app.phpmyadmin.version}" dest="${release.target}/${release.name}/apps/phpmyadmin"/>
-    <getbundle releasesurl="${app.phppgadmin.url}" version="${app.phppgadmin.version}" dest="${release.target}/${release.name}/apps/phppgadmin"/>
-    <getbundle releasesurl="${app.webgrind.url}" version="${app.webgrind.version}" dest="${release.target}/${release.name}/apps/webgrind"/>
-    <getbundle releasesurl="${app.websvn.url}" version="${app.websvn.version}" dest="${release.target}/${release.name}/apps/websvn"/>
+    <getmodule releasesurl="${app.adminer.url}" version="${app.adminer.version}" dest="${release.target}/${release.name}/apps/adminer"/>
+    <getmodule releasesurl="${app.gitlist.url}" version="${app.gitlist.version}" dest="${release.target}/${release.name}/apps/gitlist"/>
+    <getmodule releasesurl="${app.phpmemadmin.url}" version="${app.phpmemadmin.version}" dest="${release.target}/${release.name}/apps/phpmemadmin"/>
+    <getmodule releasesurl="${app.phpmyadmin.url}" version="${app.phpmyadmin.version}" dest="${release.target}/${release.name}/apps/phpmyadmin"/>
+    <getmodule releasesurl="${app.phppgadmin.url}" version="${app.phppgadmin.version}" dest="${release.target}/${release.name}/apps/phppgadmin"/>
+    <getmodule releasesurl="${app.webgrind.url}" version="${app.webgrind.version}" dest="${release.target}/${release.name}/apps/webgrind"/>
+    <getmodule releasesurl="${app.websvn.url}" version="${app.websvn.version}" dest="${release.target}/${release.name}/apps/websvn"/>
     
     <!--  Get tools -->
-    <getbundle releasesurl="${tool.composer.url}" version="${tool.composer.version}" dest="${release.target}/${release.name}/tools/composer"/>
-    <getbundle releasesurl="${tool.console.url}" version="${tool.console.version}" dest="${release.target}/${release.name}/tools/console"/>
-    <getbundle releasesurl="${tool.drush.url}" version="${tool.drush.version}" dest="${release.target}/${release.name}/tools/drush"/>
-    <getbundle releasesurl="${tool.git.url}" version="${tool.git.version}" dest="${release.target}/${release.name}/tools/git"/>
-    <getbundle releasesurl="${tool.hostseditor.url}" version="${tool.hostseditor.version}" dest="${release.target}/${release.name}/tools/hostseditor"/>
-    <getbundle releasesurl="${tool.imagemagick.url}" version="${tool.imagemagick.version}" dest="${release.target}/${release.name}/tools/imagemagick"/>
-    <getbundle releasesurl="${tool.notepad2mod.url}" version="${tool.notepad2mod.version}" dest="${release.target}/${release.name}/tools/notepad2mod"/>
-    <getbundle releasesurl="${tool.phpmetrics.url}" version="${tool.phpmetrics.version}" dest="${release.target}/${release.name}/tools/phpmetrics"/>
-    <getbundle releasesurl="${tool.phpunit.url}" version="${tool.phpunit.version}" dest="${release.target}/${release.name}/tools/phpunit"/>
-    <getbundle releasesurl="${tool.python.url}" version="${tool.python.version}" dest="${release.target}/${release.name}/tools/python"/>
-    <getbundle releasesurl="${tool.ruby.url}" version="${tool.ruby.version}" dest="${release.target}/${release.name}/tools/ruby"/>
-    <getbundle releasesurl="${tool.wpcli.url}" version="${tool.wpcli.version}" dest="${release.target}/${release.name}/tools/wpcli"/>
-    <getbundle releasesurl="${tool.xdc.url}" version="${tool.xdc.version}" dest="${release.target}/${release.name}/tools/xdc"/>
+    <getmodule releasesurl="${tool.composer.url}" version="${tool.composer.version}" dest="${release.target}/${release.name}/tools/composer"/>
+    <getmodule releasesurl="${tool.console.url}" version="${tool.console.version}" dest="${release.target}/${release.name}/tools/console"/>
+    <getmodule releasesurl="${tool.drush.url}" version="${tool.drush.version}" dest="${release.target}/${release.name}/tools/drush"/>
+    <getmodule releasesurl="${tool.git.url}" version="${tool.git.version}" dest="${release.target}/${release.name}/tools/git"/>
+    <getmodule releasesurl="${tool.hostseditor.url}" version="${tool.hostseditor.version}" dest="${release.target}/${release.name}/tools/hostseditor"/>
+    <getmodule releasesurl="${tool.imagemagick.url}" version="${tool.imagemagick.version}" dest="${release.target}/${release.name}/tools/imagemagick"/>
+    <getmodule releasesurl="${tool.notepad2mod.url}" version="${tool.notepad2mod.version}" dest="${release.target}/${release.name}/tools/notepad2mod"/>
+    <getmodule releasesurl="${tool.phpmetrics.url}" version="${tool.phpmetrics.version}" dest="${release.target}/${release.name}/tools/phpmetrics"/>
+    <getmodule releasesurl="${tool.phpunit.url}" version="${tool.phpunit.version}" dest="${release.target}/${release.name}/tools/phpunit"/>
+    <getmodule releasesurl="${tool.python.url}" version="${tool.python.version}" dest="${release.target}/${release.name}/tools/python"/>
+    <getmodule releasesurl="${tool.ruby.url}" version="${tool.ruby.version}" dest="${release.target}/${release.name}/tools/ruby"/>
+    <getmodule releasesurl="${tool.wpcli.url}" version="${tool.wpcli.version}" dest="${release.target}/${release.name}/tools/wpcli"/>
+    <getmodule releasesurl="${tool.xdc.url}" version="${tool.xdc.version}" dest="${release.target}/${release.name}/tools/xdc"/>
     
     <!-- Replacements -->
     <copy file="${project.basedir}/base/neard.conf" tofile="${release.target}/${release.name}/neard.conf" overwrite="true">
