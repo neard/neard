@@ -6,7 +6,6 @@ define('APP_GITHUB_USER', 'crazy-max');
 define('APP_GITHUB_REPO', 'neard');
 define('APP_AUTHOR_NAME', 'Cr@zy');
 define('APP_AUTHOR_EMAIL', 'webmaster@crazyws.fr');
-define('APP_DONATE_URL', 'https://www.paypal.me/crazyws');
 
 define('RETURN_TAB', '	');
 

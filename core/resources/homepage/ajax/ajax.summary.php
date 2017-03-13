@@ -14,7 +14,7 @@ $result = array(
     'binphp' => '',
 );
 
-$dlMoreTpl = '<a href="' . APP_WEBSITE . '/bins/%s/' . Util::getUtmSource() . '#releases" target="_blank" title="' . $neardLang->getValue(Lang::DOWNLOAD_MORE) . '"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>';
+$dlMoreTpl = '<a href="' . Util::getWebsiteUrl('bins/%s', '#releases') . '" target="_blank" title="' . $neardLang->getValue(Lang::DOWNLOAD_MORE) . '"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>';
 
 // Bin Apache
 $apachePort = $neardBins->getApache()->getPort();

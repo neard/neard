@@ -33,7 +33,7 @@ class ActionCheckVersion
                 $neardWinbinder->createLabel($this->wbWindow, $neardLang->getValue(Lang::CHECK_VERSION_AVAILABLE_TEXT), 80, 15, 470, 120);
                 
                 $neardWinbinder->createLabel($this->wbWindow, $neardLang->getValue(Lang::CHECK_VERSION_CHANGELOG_TEXT), 80, 40, 470, 20);
-                $this->wbLinkChangelog = $neardWinbinder->createHyperLink($this->wbWindow, Util::getChangelogLink(), 80, 57, 470, 20, WBC_LINES | WBC_RIGHT);
+                $this->wbLinkChangelog = $neardWinbinder->createHyperLink($this->wbWindow, Util::getChangelogUrl(), 80, 57, 470, 20, WBC_LINES | WBC_RIGHT);
                 
                 $this->wbLinkFull = $neardWinbinder->createHyperLink($this->wbWindow, $labelFullLink, 80, 82, 400, 20, WBC_LINES | WBC_RIGHT);
                 $neardWinbinder->createLabel($this->wbWindow, $labelFullInfo, 80, 99, 400, 20);
@@ -60,7 +60,7 @@ class ActionCheckVersion
     
         switch ($id) {
             case $this->wbLinkChangelog[WinBinder::CTRL_ID]:
-                $neardWinbinder->exec($neardConfig->getBrowser(), Util::getChangelogLink());
+                $neardWinbinder->exec($neardConfig->getBrowser(), Util::getChangelogUrl());
                 break;
             case $this->wbLinkFull[WinBinder::CTRL_ID]:
                 $neardWinbinder->exec($neardConfig->getBrowser(), Util::getVersionUrl($this->latestVersion));
