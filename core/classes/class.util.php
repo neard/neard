@@ -813,7 +813,7 @@ class Util
                 continue;
             }
             if (is_dir($startPath . '/' . $file) && $recursive) {
-                $tmpResults = self::findFiles($startPath . '/' . $file, $findFiles);
+                $tmpResults = self::findFiles($startPath . '/' . $file, $includes);
                 foreach ($tmpResults as $tmpResult) {
                     $result[] = $tmpResult;
                 }
