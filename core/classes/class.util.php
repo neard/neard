@@ -891,17 +891,12 @@ class Util
     
     public static function getLatestVersion()
     {
-        $result = self::getRemoteFile(APP_WEBSITE . '/latest.txt');
+        $result = self::getRemoteFile(self::getWebsiteUrlNoUtm('latest.txt'));
         if (empty($result)) {
             self::logError('Cannot retrieve latest version');
             return null;
         }
         return $result;
-    }
-    
-    public static function getVersionUrl($version)
-    {
-        return APP_WEBSITE . '/release/' . $version . '/' . Util::getUtmSource();
     }
     
     public static function getLatestChangelog($markdown = false)
@@ -929,15 +924,37 @@ class Util
         return $content;
     }
     
-    public static function getChangelogLink()
+    public static function getWebsiteUrlNoUtm($path = '', $fragment = '')
     {
-        return APP_WEBSITE . '/doc/changelog';
+        return self::getWebsiteUrl($path, $fragment, false);
     }
     
-    public static function getUtmSource()
+    public static function getWebsiteUrl($path = '', $fragment = '', $utmSource = true)
     {
         global $neardCore;
-        return '?utm_source=neard-' . $neardCore->getAppVersion();
+        
+        $url = APP_WEBSITE;
+        if (!empty($path)) {
+            $url .= '/' . ltrim($path, '/');
+        }
+        if ($utmSource) {
+            $url = rtrim($url, '/') . '/?utm_source=neard-' . $neardCore->getAppVersion();
+        }
+        if (!empty($fragment)) {
+            $url .= $fragment;
+        }
+        
+        return $url;
+    }
+    
+    public static function getVersionUrl($version)
+    {
+        return self::getWebsiteUrl('/release/' . $version);
+    }
+    
+    public static function getChangelogUrl()
+    {
+        return self::getWebsiteUrl('doc/changelog');
     }
     
     public static function getRemoteFilesize($url, $humanFileSize = true)

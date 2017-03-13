@@ -31,7 +31,7 @@ class TplAppMysql
         // Download
         $resultItems .= TplAestan::getItemLink(
             $neardLang->getValue(Lang::DOWNLOAD_MORE),
-            APP_WEBSITE . '/bins/mysql/' . Util::getUtmSource() . '#releases',
+            Util::getWebsiteUrl('bins/mysql', '#releases'),
             false,
             TplAestan::GLYPH_BROWSER
         ) . PHP_EOL;

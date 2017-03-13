@@ -30,7 +30,7 @@ class TplAppMongodb
         // Download
         $resultItems .= TplAestan::getItemLink(
             $neardLang->getValue(Lang::DOWNLOAD_MORE),
-            APP_WEBSITE . '/bins/mongodb/' . Util::getUtmSource() . '#releases',
+            Util::getWebsiteUrl('bins/mongodb', '#releases'),
             false,
             TplAestan::GLYPH_BROWSER
         ) . PHP_EOL;
