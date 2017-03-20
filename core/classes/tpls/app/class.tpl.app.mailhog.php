@@ -63,7 +63,7 @@ class TplAppMailhog
                 TplAestan::GLYPH_WEB_PAGE,
                 $neardBs->getLocalUrl() . ':' . $neardBins->getMailhog()->getUiPort()
             ) . PHP_EOL;
-    
+            
             // Log
             $resultItems .= TplAestan::getItemNotepad($neardLang->getValue(Lang::MENU_LOGS), $neardBins->getMailhog()->getLog()) . PHP_EOL;
         }
@@ -112,7 +112,7 @@ class TplAppMailhog
     
     public static function getMenuMailhogService()
     {
-        global $neardLang, $neardBins;
+        global $neardBs, $neardLang, $neardBins;
         
         $tplChangePort = TplApp::getActionMulti(
             self::ACTION_CHANGE_PORT, null,
@@ -130,7 +130,8 @@ class TplAppMailhog
                 Action::CHECK_PORT, array($neardBins->getMailhog()->getName(), $neardBins->getMailhog()->getSmtpPort()),
                 array(sprintf($neardLang->getValue(Lang::MENU_CHECK_PORT), $neardBins->getMailhog()->getSmtpPort()), TplAestan::GLYPH_LIGHT)
             ) . PHP_EOL .
-            $tplChangePort[TplApp::SECTION_CALL] . PHP_EOL;
+            $tplChangePort[TplApp::SECTION_CALL] . PHP_EOL .
+            TplAestan::getItemNotepad($neardLang->getValue(Lang::MENU_UPDATE_ENV_PATH), $neardBs->getRootPath() . '/nssmEnvPaths.dat') . PHP_EOL;
         
         if (!$isInstalled) {
             $tplInstallService = TplApp::getActionMulti(
