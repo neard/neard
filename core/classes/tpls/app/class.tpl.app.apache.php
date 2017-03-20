@@ -149,7 +149,7 @@ class TplAppApache
     
     public static function getMenuApacheService()
     {
-        global $neardLang, $neardBins;
+        global $neardBs, $neardLang, $neardBins;
         
         $tplChangePort = TplApp::getActionMulti(
             self::ACTION_CHANGE_PORT, null,
@@ -169,7 +169,8 @@ class TplAppApache
                 Action::CHECK_PORT, array($neardBins->getApache()->getName(), $neardBins->getApache()->getSslPort(), true),
                 array(sprintf($neardLang->getValue(Lang::MENU_CHECK_PORT), $neardBins->getApache()->getSslPort()) . ' (SSL)', TplAestan::GLYPH_RED_LIGHT)
             ) . PHP_EOL .
-            $tplChangePort[TplApp::SECTION_CALL] . PHP_EOL;
+            $tplChangePort[TplApp::SECTION_CALL] . PHP_EOL .
+            TplAestan::getItemNotepad($neardLang->getValue(Lang::MENU_UPDATE_ENV_PATH), $neardBs->getRootPath() . '/nssmEnvPaths.dat') . PHP_EOL;
         
         $isInstalled = $neardBins->getApache()->getService()->isInstalled();
         if (!$isInstalled) {

@@ -1281,4 +1281,28 @@ class Util
         closedir($handle);
         return $result;
     }
+    
+    public static function getNssmEnvPaths() {
+        global $neardBs;
+        
+        $result = '';
+        $nssmEnvPathsFile = $neardBs->getRootPath() . '/nssmEnvPaths.dat';
+        
+        if (is_file($nssmEnvPathsFile)) {
+            $paths = explode(PHP_EOL, file_get_contents($nssmEnvPathsFile));
+            foreach ($paths as $path) {
+                $path = trim($path);
+                if (stripos($path, ':') === false) {
+                    $path = $neardBs->getRootPath() . '/' . $path;
+                }
+                if (is_dir($path)) {
+                    $result .= Util::formatUnixPath($path) . ';';
+                } else {
+                    self::logWarning('Path not found in nssmEnvPaths.dat: ' . $path);
+                }
+            }
+        }
+        
+        return $result;
+    }
 }

@@ -92,6 +92,7 @@ menuStatsLogs = "Statistikloggar"
 menuStopService = "Stoppa tjänst"
 menuStopServices = "Stoppa alla tjänster"
 menuTransferLogs = "Överföringsloggar"
+menuUpdateEnvPath = "#Update env. PATH"
 menuWwwDirectory = "www filkatalog"
 
 ; Bins

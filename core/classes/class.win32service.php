@@ -135,23 +135,25 @@ class Win32Service
 
     public function create()
     {
-        global $neardBins;
+        global $neardConfig, $neardBins;
         
-        if ($this->getNssm() instanceof Nssm) {
-            $nssmEnvPath = '%SystemRoot%/system32;';
-            $nssmEnvPath .= '%SystemRoot%;';
-            $nssmEnvPath .= '%SystemRoot%/system32/Wbem;';
-            $nssmEnvPath .= '%SystemRoot%/system32/WindowsPowerShell/v1.0;';
-            $nssmEnvPath .= Util::getAppBinsRegKey(false);
-            $this->getNssm()->setEnvironmentExtra('PATH=' . $nssmEnvPath);
-            return $this->getNssm()->create();
-        } elseif ($this->getName() == BinFilezilla::SERVICE_NAME) {
+        if ($this->getName() == BinFilezilla::SERVICE_NAME) {
             $neardBins->getFilezilla()->rebuildConf();
             return Batch::installFilezillaService();
         } elseif ($this->getName() == BinPostgresql::SERVICE_NAME) {
             $neardBins->getPostgresql()->rebuildConf();
             $neardBins->getPostgresql()->initData();
             return Batch::installPostgresqlService();
+        }
+        if ($this->getNssm() instanceof Nssm) {
+            $nssmEnvPath = '%SystemRoot%/system32;';
+            $nssmEnvPath .= '%SystemRoot%;';
+            $nssmEnvPath .= '%SystemRoot%/system32/Wbem;';
+            $nssmEnvPath .= '%SystemRoot%/system32/WindowsPowerShell/v1.0;';
+            $nssmEnvPath .= Util::getAppBinsRegKey(false);
+            $nssmEnvPath .= Util::getNssmEnvPaths();
+            $this->getNssm()->setEnvironmentExtra('PATH=' . $nssmEnvPath);
+            return $this->getNssm()->create();
         }
         
         $create = dechex($this->callWin32Service('win32_create_service', array(

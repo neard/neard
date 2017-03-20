@@ -92,6 +92,7 @@ menuStatsLogs = "Journaux des statistiques"
 menuStopService = "Arrêter le service"
 menuStopServices = "Arrêter tous les services"
 menuTransferLogs = "Journaux des transferts"
+menuUpdateEnvPath = "Màj env. PATH"
 menuWwwDirectory = "Répertoire www"
 
 ; Bins

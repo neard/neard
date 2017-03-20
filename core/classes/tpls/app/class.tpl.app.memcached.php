@@ -21,7 +21,7 @@ class TplAppMemcached
     
     public static function getMenuMemcached()
     {
-        global $neardBins, $neardLang;
+        global $neardBs, $neardBins, $neardLang;
         $resultItems = $resultActions = '';
         
         $isEnabled = $neardBins->getMemcached()->isEnable();
@@ -55,7 +55,10 @@ class TplAppMemcached
             $tplService = TplApp::getMenu($neardLang->getValue(Lang::SERVICE), self::MENU_SERVICE, get_called_class());
             $resultItems .= $tplService[TplApp::SECTION_CALL] . PHP_EOL;
             $resultActions .= $tplService[TplApp::SECTION_CONTENT];
-
+            
+            // Update environment PATH
+            $resultItems .= TplAestan::getItemNotepad($neardLang->getValue(Lang::MENU_UPDATE_ENV_PATH), $neardBs->getRootPath() . '/nssmEnvPaths.dat') . PHP_EOL;
+            
             // Log
             $resultItems .= TplAestan::getItemNotepad($neardLang->getValue(Lang::MENU_LOGS), $neardBins->getMemcached()->getLog()) . PHP_EOL;
         }

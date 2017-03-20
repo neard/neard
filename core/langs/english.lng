@@ -92,6 +92,7 @@ menuStatsLogs = "Stats logs"
 menuStopService = "Stop service"
 menuStopServices = "Stop all services"
 menuTransferLogs = "Transfer logs"
+menuUpdateEnvPath = "Update env. PATH"
 menuWwwDirectory = "www directory"
 
 ; Bins

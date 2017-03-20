@@ -92,6 +92,7 @@ menuStatsLogs = "Státusz napló"
 menuStopService = "Szerviz leállítása"
 menuStopServices = "Minden szerviz leállítása"
 menuTransferLogs = "Átviteli napló"
+menuUpdateEnvPath = "#Update env. PATH"
 menuWwwDirectory = "www mappa"
 
 ; Bins

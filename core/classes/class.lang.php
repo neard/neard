@@ -93,6 +93,7 @@ class Lang
     const MENU_STOP_SERVICE = 'menuStopService';
     const MENU_STOP_SERVICES = 'menuStopServices';
     const MENU_TRANSFER_LOGS = 'menuTransferLogs';
+    const MENU_UPDATE_ENV_PATH = 'menuUpdateEnvPath';
     const MENU_WWW_DIRECTORY = 'menuWwwDirectory';
     
     // Bins
@@ -446,6 +447,7 @@ class Lang
             self::MENU_STOP_SERVICE,
             self::MENU_STOP_SERVICES,
             self::MENU_TRANSFER_LOGS,
+            self::MENU_UPDATE_ENV_PATH,
             self::MENU_WWW_DIRECTORY,
             
             // Bins
