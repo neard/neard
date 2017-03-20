@@ -33,7 +33,7 @@ class Vbs
         $content .= 'Function CountFiles(ByVal path)' . PHP_EOL;
         $content .= '    Dim parentFld, subFld' . PHP_EOL;
         $content .= '    Set parentFld = objFso.GetFolder(path)' . PHP_EOL . PHP_EOL;
-        $content .= '    count = count + parentFld.Files.Count + + parentFld.SubFolders.Count' . PHP_EOL;
+        $content .= '    count = count + parentFld.Files.Count + parentFld.SubFolders.Count' . PHP_EOL;
         $content .= '    For Each subFld In parentFld.SubFolders' . PHP_EOL;
         $content .= '        count = count + CountFiles(subFld.Path)' . PHP_EOL;
         $content .= '    Next' . PHP_EOL . PHP_EOL;
