@@ -287,7 +287,7 @@ class BinMailhog extends Module
     }
     
     public function setApiPort($apiPort) {
-        return $this->replace(self::LOCAL_CFG_API_PORT, $apiPort);
+        $this->replace(self::LOCAL_CFG_API_PORT, $apiPort);
     }
     
     public function getUiPort() {
@@ -295,7 +295,7 @@ class BinMailhog extends Module
     }
     
     public function setUiPort($uiPort) {
-        return $this->replace(self::LOCAL_CFG_UI_PORT, $uiPort);
+        $this->replace(self::LOCAL_CFG_UI_PORT, $uiPort);
     }
     
     public function getSmtpPort() {
@@ -303,7 +303,7 @@ class BinMailhog extends Module
     }
     
     public function setSmtpPort($smtpPort) {
-        return $this->replace(self::LOCAL_CFG_SMTP_PORT, $smtpPort);
+        $this->replace(self::LOCAL_CFG_SMTP_PORT, $smtpPort);
     }
     
     public function getMailPath() {

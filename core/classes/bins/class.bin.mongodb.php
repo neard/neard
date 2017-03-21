@@ -312,7 +312,7 @@ class BinMongodb extends Module
     }
     
     public function setPort($port) {
-        return $this->replace(self::LOCAL_CFG_PORT, $port);
+        $this->replace(self::LOCAL_CFG_PORT, $port);
     }
     
     public function getWebPort() {
