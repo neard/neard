@@ -339,7 +339,7 @@ class BinFilezilla extends Module
     }
     
     public function setPort($port) {
-        return $this->replace(self::LOCAL_CFG_PORT, $port);
+        $this->replace(self::LOCAL_CFG_PORT, $port);
     }
     
     public function getSslPort() {
@@ -347,6 +347,6 @@ class BinFilezilla extends Module
     }
     
     public function setSslPort($sslPort) {
-        return $this->replace(self::LOCAL_CFG_SSL_PORT, $sslPort);
+        $this->replace(self::LOCAL_CFG_SSL_PORT, $sslPort);
     }
 }

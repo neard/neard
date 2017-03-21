@@ -285,7 +285,7 @@ class BinMemcached extends Module
     }
     
     public function setMemory($memory) {
-        return $this->replace(self::LOCAL_CFG_MEMORY, $memory);
+        $this->replace(self::LOCAL_CFG_MEMORY, $memory);
     }
     
     public function getPort() {
@@ -293,6 +293,6 @@ class BinMemcached extends Module
     }
     
     public function setPort($port) {
-        return $this->replace(self::LOCAL_CFG_PORT, $port);
+        $this->replace(self::LOCAL_CFG_PORT, $port);
     }
 }

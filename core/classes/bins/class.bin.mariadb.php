@@ -452,7 +452,7 @@ class BinMariadb extends Module
     }
     
     public function setPort($port) {
-        return $this->replace(self::LOCAL_CFG_PORT, $port);
+        $this->replace(self::LOCAL_CFG_PORT, $port);
     }
     
     public function getRootUser() {
@@ -460,7 +460,7 @@ class BinMariadb extends Module
     }
     
     public function setRootUser($rootUser) {
-        return $this->replace(self::LOCAL_CFG_ROOT_USER, $rootUser);
+        $this->replace(self::LOCAL_CFG_ROOT_USER, $rootUser);
     }
     
     public function getRootPwd() {
@@ -468,7 +468,7 @@ class BinMariadb extends Module
     }
     
     public function setRootPwd($rootPwd) {
-        return $this->replace(self::LOCAL_CFG_ROOT_PWD, $rootPwd);
+        $this->replace(self::LOCAL_CFG_ROOT_PWD, $rootPwd);
     }
     
     public function getCliExe() {

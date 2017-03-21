@@ -378,7 +378,7 @@ class ActionStartup
         $this->splash->setTextLoading(sprintf($neardLang->getValue(Lang::STARTUP_CHANGE_PATH_TEXT), $this->rootPath));
         $this->splash->incrProgressBar();
         
-        $result = Util::changePath($this->filesToScan, $this->rootPath);
+        Util::changePath($this->filesToScan, $this->rootPath);
         $this->writeLog('Nb files changed: ' . $result['countChangedFiles']);
         $this->writeLog('Nb occurences changed: ' . $result['countChangedOcc']);
     }
