@@ -39,14 +39,12 @@ class TplApp
         return ucfirst($name) . (!empty($args) ? '-' . md5(serialize($args)) : '');
     }
     
-    public static function getSectionContent($name, $args = array(), $otherClass = false)
+    public static function getSectionContent($name, $class, $args = array())
     {
         $baseMethod = 'get' . ucfirst($name);
         $args = $args == null ? array() : $args;
-        $call = $otherClass !== false ? $otherClass . '::' . $baseMethod : array($this, $baseMethod);
-        
         return '[' . self::getSectionName($name, $args) . ']' . PHP_EOL .
-            call_user_func_array($call, $args);
+            call_user_func_array($class . '::' . $baseMethod, $args);
     }
     
     public static function getActionRun($action, $args = array(), $item = array(), $waitUntilTerminated = true)
@@ -75,7 +73,7 @@ class TplApp
         return $result;
     }
     
-    public static function getActionMulti($action, $args = array(), $item = array(), $disabled = false, $otherClass = false)
+    public static function getActionMulti($action, $args = array(), $item = array(), $disabled = false, $class = false)
     {
         $action = 'action' . ucfirst($action);
         $args = $args == null ? array() : $args;
@@ -96,7 +94,7 @@ class TplApp
             $call .= '; Flags: waituntilterminated';
         }
         
-        return array($call, self::getSectionContent($action, $args, $otherClass));
+        return array($call, self::getSectionContent($action, $class, $args));
     }
     
     public static function getActionExec()
@@ -104,7 +102,7 @@ class TplApp
         return self::getActionRun(Action::EXEC, array(), array(), false);
     }
     
-    public static function getMenu($caption, $menu, $otherClass = false)
+    public static function getMenu($caption, $menu, $class)
     {
         $menu = 'menu' . ucfirst($menu);
         
@@ -113,10 +111,10 @@ class TplApp
             'SubMenu: ' . self::getSectionName($menu) . '; ' .
             'Glyph: ' . TplAestan::GLYPH_FOLDER_CLOSE;
         
-        return array($call, self::getSectionContent($menu, null, $otherClass));
+        return array($call, self::getSectionContent($menu, $class, null));
     }
     
-    public static function getMenuEnable($caption, $menu, $otherClass = false, $enabled = true)
+    public static function getMenuEnable($caption, $menu, $class, $enabled = true)
     {
         $menu = 'menu' . ucfirst($menu);
     
@@ -125,7 +123,7 @@ class TplApp
             'SubMenu: ' . self::getSectionName($menu) . '; ' .
             'Glyph: ' . ($enabled ? TplAestan::GLYPH_FOLDER_CLOSE : TplAestan::GLYPH_FOLDER_DISABLED);
     
-        return array($call, self::getSectionContent($menu, null, $otherClass));
+        return array($call, self::getSectionContent($menu, $class, null));
     }
     
     private static function getSectionServices()
