@@ -1,7 +1,7 @@
 <style type="text/css">
   #phpinfo {font-size: 110%; font-family: "Helvetica Neue",Helvetica,Arial,sans-serif; padding-top: 20px;}
   #phpinfo .label {font-size: 90%;}
-  #phpinfo pre {margin: 0px; font-family: monospace;}
+  #phpinfo pre {margin: 0; font-family: monospace;}
   #phpinfo a:link {color: #000099; text-decoration: none; background-color: #fff;}
   #phpinfo a:hover {text-decoration: underline;}
   #phpinfo table {border-collapse: collapse; width: 75%;}
@@ -18,8 +18,8 @@
   #phpinfo .h {background-color: #9999cc; font-weight: bold; color: #000;}
   #phpinfo .v {background-color: #ccc; color: #000;}
   #phpinfo .vr {background-color: #ccc; text-align: right; color: #000;}
-  #phpinfo img {float: right; border: 0px;}
-  #phpinfo hr {width: 600px; background-color: #cccccc; border: 0px; height: 1px; color: #000;}
+  #phpinfo img {float: right; border: 0;}
+  #phpinfo hr {width: 600px; background-color: #cccccc; border: 0; height: 1px; color: #000;}
 </style>
 
 <a href="<?php echo $neardHomepage->getPageQuery(Homepage::PAGE_INDEX); ?>" class="btn btn-primary" role="button"><i class="fa fa-arrow-circle-left"></i> <?php echo $neardLang->getValue(Lang::HOMEPAGE_BACK_TEXT); ?></a>
