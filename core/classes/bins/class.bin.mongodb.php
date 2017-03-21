@@ -1,6 +1,6 @@
 <?php
 
-class BinMongodb
+class BinMongodb extends Module
 {
     const SERVICE_NAME = 'neardmongodb';
     const SERVICE_PARAMS = '--config "%s" --service';
@@ -17,16 +17,7 @@ class BinMongodb
     const CMD_STATUS = '--quiet 127.0.0.1:%d --eval "JSON.stringify(db.runCommand( { serverStatus: 1 } ))"';
     const URL_STATUS = 'http://127.0.0.1:%d/serverStatus';
     
-    private $name;
-    private $version;
     private $service;
-    
-    private $rootPath;
-    private $currentPath;
-    private $neardConf;
-    private $neardConfRaw;
-    private $enable;
-    
     private $errorLog;
     
     private $exe;
@@ -34,29 +25,23 @@ class BinMongodb
     private $conf;
     private $port;
     private $webPort;
-    
-    public function __construct($rootPath)
-    {
+
+    public function __construct($id, $type) {
         Util::logInitClass($this);
-        $this->reload($rootPath);
+        $this->reload($id, $type);
     }
-    
-    public function reload($rootPath = null)
-    {
+
+    public function reload($id = null, $type = null) {
         global $neardBs, $neardConfig, $neardLang;
         
         $this->name = $neardLang->getValue(Lang::MONGODB);
         $this->version = $neardConfig->getRaw(self::ROOT_CFG_VERSION);
+        parent::reload($id, $type);
+
+        $this->enable = $this->enable && $neardConfig->getRaw(self::ROOT_CFG_ENABLE);
         $this->service = new Win32Service(self::SERVICE_NAME);
-        
-        $this->rootPath = $rootPath == null ? $this->rootPath : $rootPath;
-        $this->currentPath = $this->rootPath . '/mongodb' . $this->version;
-        $this->neardConf = $this->currentPath . '/neard.conf';
-        $this->enable = $neardConfig->getRaw(self::ROOT_CFG_ENABLE) == Config::ENABLED && is_dir($this->currentPath);
-        
         $this->errorLog = $neardBs->getLogsPath() . '/mongodb.log';
 
-        $this->neardConfRaw = @parse_ini_file($this->neardConf);
         if ($this->neardConfRaw !== false) {
             $this->exe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_EXE];
             $this->cliExe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_CLI_EXE];
@@ -105,18 +90,7 @@ class BinMongodb
         $this->service->setErrorControl(Win32Service::SERVER_ERROR_NORMAL);
     }
     
-    public function __toString()
-    {
-        return $this->getName();
-    }
-    
-    private function replace($key, $value)
-    {
-        $this->replaceAll(array($key => $value));
-    }
-    
-    private function replaceAll($params)
-    {
+    private function replaceAll($params) {
         $content = file_get_contents($this->neardConf);
     
         foreach ($params as $key => $value) {
@@ -133,8 +107,7 @@ class BinMongodb
         file_put_contents($this->neardConf, $content);
     }
     
-    public function changePort($port, $checkUsed = false, $wbProgressBar = null)
-    {
+    public function changePort($port, $checkUsed = false, $wbProgressBar = null) {
         global $neardWinbinder;
         
         if (!Util::isValidPort($port)) {
@@ -162,8 +135,7 @@ class BinMongodb
         return $isPortInUse;
     }
     
-    public function checkPort($port, $showWindow = false)
-    {
+    public function checkPort($port, $showWindow = false) {
         global $neardLang, $neardCore, $neardWinbinder;
         $boxTitle = sprintf($neardLang->getValue(Lang::CHECK_PORT_TITLE), $this->getName(), $port);
     
@@ -208,19 +180,12 @@ class BinMongodb
         return false;
     }
     
-    public function switchVersion($version, $showWindow = false)
-    {
+    public function switchVersion($version, $showWindow = false) {
         Util::logDebug('Switch ' . $this->name . ' version to ' . $version);
         return $this->updateConfig($version, 0, $showWindow);
     }
-    
-    public function update($sub = 0, $showWindow = false)
-    {
-        return $this->updateConfig(null, $sub, $showWindow);
-    }
-    
-    private function updateConfig($version = null, $sub = 0, $showWindow = false)
-    {
+
+    protected function updateConfig($version = null, $sub = 0, $showWindow = false) {
         global $neardLang, $neardApps, $neardWinbinder;
         $version = $version == null ? $this->version : $version;
         Util::logDebug(($sub > 0 ? str_repeat(' ', 2 * $sub) : '') . 'Update ' . $this->name . ' ' . $version . ' config...');
@@ -267,8 +232,7 @@ class BinMongodb
         return true;
     }
     
-    public function initData()
-    {
+    public function initData() {
         if (!file_exists($this->getCurrentPath() . '/data/mongod.lock')) {
             return;
         }
@@ -277,8 +241,7 @@ class BinMongodb
         Batch::repairMongodb($this->getExe(), $this->getConf());
     }
     
-    public function getCmdLineOutput($cmd)
-    {
+    public function getCmdLineOutput($cmd) {
         $result = null;
     
         $bin = $this->getCliExe();
@@ -292,50 +255,17 @@ class BinMongodb
         return $result;
     }
     
-    public function getName()
-    {
-        return $this->name;
-    }
-    
-    public function getVersionList()
-    {
-        return Util::getVersionList($this->getRootPath());
-    }
-
-    public function getVersion()
-    {
-        return $this->version;
-    }
-    
-    public function setVersion($version)
-    {
+    public function setVersion($version) {
         global $neardConfig;
         $this->version = $version;
         $neardConfig->replace(self::ROOT_CFG_VERSION, $version);
     }
 
-    public function getService()
-    {
+    public function getService() {
         return $this->service;
     }
     
-    public function getRootPath()
-    {
-        return $this->rootPath;
-    }
-    
-    public function getCurrentPath()
-    {
-        return $this->currentPath;
-    }
-    
-    public function isEnable()
-    {
-        return $this->enable;
-    }
-    
-    public function setEnable($enabled, $showWindow = false)
-    {
+    public function setEnable($enabled, $showWindow = false) {
         global $neardConfig, $neardLang, $neardWinbinder;
 
         if ($enabled == Config::ENABLED && !is_dir($this->currentPath)) {
@@ -361,38 +291,31 @@ class BinMongodb
         }
     }
     
-    public function getErrorLog()
-    {
+    public function getErrorLog() {
         return $this->errorLog;
     }
 
-    public function getExe()
-    {
+    public function getExe() {
         return $this->exe;
     }
     
-    public function getCliExe()
-    {
+    public function getCliExe() {
         return $this->cliExe;
     }
     
-    public function getConf()
-    {
+    public function getConf() {
         return $this->conf;
     }
     
-    public function getPort()
-    {
+    public function getPort() {
         return $this->port;
     }
     
-    public function setPort($port)
-    {
+    public function setPort($port) {
         return $this->replace(self::LOCAL_CFG_PORT, $port);
     }
     
-    public function getWebPort()
-    {
+    public function getWebPort() {
         return $this->webPort;
     }
 }

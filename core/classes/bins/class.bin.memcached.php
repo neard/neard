@@ -1,6 +1,6 @@
 <?php
 
-class BinMemcached
+class BinMemcached extends Module
 {
     const SERVICE_NAME = 'neardmemcached';
     const SERVICE_PARAMS = '-m %d -p %d -U 0 -vv';
@@ -12,44 +12,29 @@ class BinMemcached
     const LOCAL_CFG_MEMORY = 'memcachedMemory';
     const LOCAL_CFG_PORT = 'memcachedPort';
     
-    private $name;
-    private $version;
     private $service;
-    
-    private $rootPath;
-    private $currentPath;
-    private $neardConf;
-    private $neardConfRaw;
-    private $enable;
-    
     private $log;
     
     private $exe;
     private $memory;
     private $port;
-    
-    public function __construct($rootPath, $version=null)
-    {
+
+    public function __construct($id, $type) {
         Util::logInitClass($this);
-        $this->reload($rootPath);
+        $this->reload($id, $type);
     }
-    
-    public function reload($rootPath = null)
-    {
+
+    public function reload($id = null, $type = null) {
         global $neardBs, $neardConfig, $neardLang;
         
         $this->name = $neardLang->getValue(Lang::MEMCACHED);
         $this->version = $neardConfig->getRaw(self::ROOT_CFG_VERSION);
+        parent::reload($id, $type);
+
+        $this->enable = $this->enable && $neardConfig->getRaw(self::ROOT_CFG_ENABLE);
         $this->service = new Win32Service(self::SERVICE_NAME);
-        
-        $this->rootPath = $rootPath == null ? $this->rootPath : $rootPath;
-        $this->currentPath = $this->rootPath . '/memcached' . $this->version;
-        $this->neardConf = $this->currentPath . '/neard.conf';
-        $this->enable = $neardConfig->getRaw(self::ROOT_CFG_ENABLE) == Config::ENABLED && is_dir($this->currentPath);
-        
         $this->log = $neardBs->getLogsPath() . '/memcached.log';
         
-        $this->neardConfRaw = @parse_ini_file($this->neardConf);
         if ($this->neardConfRaw !== false) {
             $this->exe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_EXE];
             $this->memory = intval($this->neardConfRaw[self::LOCAL_CFG_MEMORY]);
@@ -91,18 +76,7 @@ class BinMemcached
         $this->service->setNssm($nssm);
     }
     
-    public function __toString()
-    {
-        return $this->getName();
-    }
-    
-    private function replace($key, $value)
-    {
-        $this->replaceAll(array($key => $value));
-    }
-    
-    private function replaceAll($params)
-    {
+    private function replaceAll($params) {
         $content = file_get_contents($this->neardConf);
         
         foreach ($params as $key => $value) {
@@ -121,8 +95,7 @@ class BinMemcached
         file_put_contents($this->neardConf, $content);
     }
     
-    public function rebuildConf()
-    {
+    public function rebuildConf() {
         global $neardRegistry;
         
         $exists = $neardRegistry->exists(
@@ -142,8 +115,7 @@ class BinMemcached
         return false;
     }
     
-    public function changePort($port, $checkUsed = false, $wbProgressBar = null)
-    {
+    public function changePort($port, $checkUsed = false, $wbProgressBar = null) {
         global $neardWinbinder;
     
         if (!Util::isValidPort($port)) {
@@ -171,8 +143,7 @@ class BinMemcached
         return $isPortInUse;
     }
     
-    public function checkPort($port, $showWindow = false)
-    {
+    public function checkPort($port, $showWindow = false) {
         global $neardLang, $neardWinbinder;
         $boxTitle = sprintf($neardLang->getValue(Lang::CHECK_PORT_TITLE), $this->getName(), $port);
     
@@ -220,19 +191,12 @@ class BinMemcached
         return false;
     }
     
-    public function switchVersion($version, $showWindow = false)
-    {
+    public function switchVersion($version, $showWindow = false) {
         Util::logDebug('Switch ' . $this->name . ' version to ' . $version);
         return $this->updateConfig($version, 0, $showWindow);
     }
-    
-    public function update($sub = 0, $showWindow = false)
-    {
-        return $this->updateConfig(null, $sub, $showWindow);
-    }
-    
-    private function updateConfig($version = null, $sub = 0, $showWindow = false)
-    {
+
+    protected function updateConfig($version = null, $sub = 0, $showWindow = false) {
         global $neardLang, $neardApps, $neardWinbinder;
         $version = $version == null ? $this->version : $version;
         Util::logDebug(($sub > 0 ? str_repeat(' ', 2 * $sub) : '') . 'Update ' . $this->name . ' ' . $version . ' config...');
@@ -272,50 +236,17 @@ class BinMemcached
         return true;
     }
     
-    public function getName()
-    {
-        return $this->name;
-    }
-    
-    public function getVersionList()
-    {
-        return Util::getVersionList($this->getRootPath());
-    }
-
-    public function getVersion()
-    {
-        return $this->version;
-    }
-    
-    public function setVersion($version)
-    {
+    public function setVersion($version) {
         global $neardConfig;
         $this->version = $version;
         $neardConfig->replace(self::ROOT_CFG_VERSION, $version);
     }
 
-    public function getService()
-    {
+    public function getService() {
         return $this->service;
     }
     
-    public function getRootPath()
-    {
-        return $this->rootPath;
-    }
-    
-    public function getCurrentPath()
-    {
-        return $this->currentPath;
-    }
-    
-    public function isEnable()
-    {
-        return $this->enable;
-    }
-    
-    public function setEnable($enabled, $showWindow = false)
-    {
+    public function setEnable($enabled, $showWindow = false) {
         global $neardConfig, $neardLang, $neardWinbinder;
 
         if ($enabled == Config::ENABLED && !is_dir($this->currentPath)) {
@@ -341,33 +272,27 @@ class BinMemcached
         }
     }
     
-    public function getLog()
-    {
+    public function getLog() {
         return $this->log;
     }
     
-    public function getExe()
-    {
+    public function getExe() {
         return $this->exe;
     }
     
-    public function getMemory()
-    {
+    public function getMemory() {
         return $this->memory;
     }
     
-    public function setMemory($memory)
-    {
+    public function setMemory($memory) {
         return $this->replace(self::LOCAL_CFG_MEMORY, $memory);
     }
     
-    public function getPort()
-    {
+    public function getPort() {
         return $this->port;
     }
     
-    public function setPort($port)
-    {
+    public function setPort($port) {
         return $this->replace(self::LOCAL_CFG_PORT, $port);
     }
 }

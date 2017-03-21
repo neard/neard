@@ -1,6 +1,6 @@
 <?php
 
-class BinSvn
+class BinSvn extends Module
 {
     const SERVICE_NAME = 'neardsvn';
     const SERVICE_PARAMS = '--service --root "%s" --listen-port "%d" --log-file "%s"';
@@ -15,16 +15,8 @@ class BinSvn
     
     const CMD_VERSION = '--version';
     
-    private $name;
-    private $version;
     private $service;
-    
-    private $rootPath;
-    private $currentPath;
-    private $neardConf;
-    private $neardConfRaw;
-    private $enable;
-    
+
     private $log;
     private $root;
     
@@ -32,30 +24,24 @@ class BinSvn
     private $adminExe;
     private $serveExe;
     private $port;
-    
-    public function __construct($rootPath, $version=null)
-    {
+
+    public function __construct($id, $type) {
         Util::logInitClass($this);
-        $this->reload($rootPath);
+        $this->reload($id, $type);
     }
-    
-    public function reload($rootPath = null)
-    {
+
+    public function reload($id = null, $type = null) {
         global $neardBs, $neardConfig, $neardLang;
         
         $this->name = $neardLang->getValue(Lang::SVN);
         $this->version = $neardConfig->getRaw(self::ROOT_CFG_VERSION);
+        parent::reload($id, $type);
+
+        $this->enable = $this->enable && $neardConfig->getRaw(self::ROOT_CFG_ENABLE);
         $this->service = new Win32Service(self::SERVICE_NAME);
-        
-        $this->rootPath = $rootPath == null ? $this->rootPath : $rootPath;
-        $this->currentPath = $this->rootPath . '/svn' . $this->version;
-        $this->neardConf = $this->currentPath . '/neard.conf';
-        $this->enable = $neardConfig->getRaw(self::ROOT_CFG_ENABLE) == Config::ENABLED && is_dir($this->currentPath);
-        
         $this->log = $neardBs->getLogsPath() . '/svn.log';
         $this->root = $this->currentPath . '/repos';
         
-        $this->neardConfRaw = @parse_ini_file($this->neardConf);
         if ($this->neardConfRaw !== false) {
             $this->exe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_EXE];
             $this->adminExe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_ADMIN];
@@ -99,18 +85,7 @@ class BinSvn
         $this->service->setErrorControl(Win32Service::SERVER_ERROR_NORMAL);
     }
     
-    public function __toString()
-    {
-        return $this->getName();
-    }
-    
-    private function replace($key, $value)
-    {
-        $this->replaceAll(array($key => $value));
-    }
-    
-    private function replaceAll($params)
-    {
+    private function replaceAll($params) {
         $content = file_get_contents($this->neardConf);
         
         foreach ($params as $key => $value) {
@@ -126,8 +101,7 @@ class BinSvn
         file_put_contents($this->neardConf, $content);
     }
     
-    public function changePort($port, $checkUsed = false, $wbProgressBar = null)
-    {
+    public function changePort($port, $checkUsed = false, $wbProgressBar = null) {
         global $neardWinbinder;
     
         if (!Util::isValidPort($port)) {
@@ -155,8 +129,7 @@ class BinSvn
         return $isPortInUse;
     }
     
-    public function checkPort($port, $showWindow = false)
-    {
+    public function checkPort($port, $showWindow = false) {
         global $neardLang, $neardWinbinder;
         $boxTitle = sprintf($neardLang->getValue(Lang::CHECK_PORT_TITLE), $this->getName(), $port);
     
@@ -197,19 +170,12 @@ class BinSvn
         return false;
     }
     
-    public function switchVersion($version, $showWindow = false)
-    {
+    public function switchVersion($version, $showWindow = false) {
         Util::logDebug('Switch ' . $this->name . ' version to ' . $version);
         return $this->updateConfig($version, 0, $showWindow);
     }
-    
-    public function update($sub = 0, $showWindow = false)
-    {
-        return $this->updateConfig(null, $sub, $showWindow);
-    }
-    
-    private function updateConfig($version = null, $sub = 0, $showWindow = false)
-    {
+
+    protected function updateConfig($version = null, $sub = 0, $showWindow = false) {
         global $neardLang, $neardApps, $neardWinbinder;
         $version = $version == null ? $this->version : $version;
         Util::logDebug(($sub > 0 ? str_repeat(' ', 2 * $sub) : '') . 'Update ' . $this->name . ' ' . $version . ' config...');
@@ -249,8 +215,7 @@ class BinSvn
         return true;
     }
     
-    public function getCmdLineOutput($cmd)
-    {
+    public function getCmdLineOutput($cmd) {
         $result = array(
             'syntaxOk' => false,
             'content'  => null,
@@ -282,8 +247,7 @@ class BinSvn
         return $result;
     }
     
-    public function findRepos()
-    {
+    public function findRepos() {
         $result = array();
         
         $handle = @opendir($this->root);
@@ -302,50 +266,17 @@ class BinSvn
         return $result;
     }
     
-    public function getName()
-    {
-        return $this->name;
-    }
-    
-    public function getVersionList()
-    {
-        return Util::getVersionList($this->getRootPath());
-    }
-
-    public function getVersion()
-    {
-        return $this->version;
-    }
-    
-    public function setVersion($version)
-    {
+    public function setVersion($version) {
         global $neardConfig;
         $this->version = $version;
         $neardConfig->replace(self::ROOT_CFG_VERSION, $version);
     }
 
-    public function getService()
-    {
+    public function getService() {
         return $this->service;
     }
     
-    public function getRootPath()
-    {
-        return $this->rootPath;
-    }
-    
-    public function getCurrentPath()
-    {
-        return $this->currentPath;
-    }
-    
-    public function isEnable()
-    {
-        return $this->enable;
-    }
-    
-    public function setEnable($enabled, $showWindow = false)
-    {
+    public function setEnable($enabled, $showWindow = false) {
         global $neardConfig, $neardLang, $neardWinbinder;
 
         if ($enabled == Config::ENABLED && !is_dir($this->currentPath)) {
@@ -371,38 +302,31 @@ class BinSvn
         }
     }
     
-    public function getLog()
-    {
+    public function getLog() {
         return $this->log;
     }
     
-    public function getRoot()
-    {
+    public function getRoot() {
         return $this->root;
     }
     
-    public function getExe()
-    {
+    public function getExe() {
         return $this->exe;
     }
     
-    public function getAdminExe()
-    {
+    public function getAdminExe() {
         return $this->adminExe;
     }
     
-    public function getServeExe()
-    {
+    public function getServeExe() {
         return $this->serveExe;
     }
     
-    public function getPort()
-    {
+    public function getPort() {
         return $this->port;
     }
     
-    public function setPort($port)
-    {
+    public function setPort($port) {
         $this->replace(self::LOCAL_CFG_PORT, $port);
     }
 }

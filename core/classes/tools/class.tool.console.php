@@ -1,6 +1,6 @@
 <?php
 
-class ToolConsole
+class ToolConsole extends Module
 {
     const ROOT_CFG_VERSION = 'consoleVersion';
     
@@ -14,15 +14,6 @@ class ToolConsole
     const SHELL_CMD = 'cmd';
     const SHELL_POWERSHELL = 'powershell';
     
-    private $name;
-    private $version;
-    
-    private $rootPath;
-    private $currentPath;
-    private $neardConf;
-    private $neardConfRaw;
-    private $enable;
-    
     private $exe;
     private $tccleExe;
     private $conf;
@@ -30,21 +21,19 @@ class ToolConsole
     private $shellList;
     private $rows;
     private $cols;
-    
-    public function __construct($rootPath)
-    {
-        global $neardConfig, $neardLang;
+
+    public function __construct($id, $type) {
         Util::logInitClass($this);
-        
+        $this->reload($id, $type);
+    }
+
+    public function reload($id = null, $type = null) {
+        global $neardConfig, $neardLang;
+
         $this->name = $neardLang->getValue(Lang::CONSOLE);
         $this->version = $neardConfig->getRaw(self::ROOT_CFG_VERSION);
-        
-        $this->rootPath = $rootPath;
-        $this->currentPath = $rootPath . '/console' . $this->version;
-        $this->neardConf = $this->currentPath . '/neard.conf';
-        $this->enable = is_dir($this->currentPath);
-        
-        $this->neardConfRaw = @parse_ini_file($this->neardConf);
+        parent::reload($id, $type);
+
         if ($this->neardConfRaw !== false) {
             $this->exe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_EXE];
             $this->tccleExe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_TCCLE_EXE];
@@ -95,171 +84,87 @@ class ToolConsole
         }
     }
     
-    public function __toString()
-    {
-        return $this->getName();
-    }
-    
-    private function replace($key, $value)
-    {
-        $this->replaceAll(array($key => $value));
-    }
-    
-    private function replaceAll($params)
-    {
-        $content = file_get_contents($this->neardConf);
-    
-        foreach ($params as $key => $value) {
-            $content = preg_replace('|' . $key . ' = .*|', $key . ' = ' . '"' . $value.'"', $content);
-            $this->neardConfRaw[$key] = $value;
-        }
-    
-        file_put_contents($this->neardConf, $content);
-    }
-    
-    public function update($sub = 0, $showWindow = false)
-    {
-        return $this->updateConfig(null, $sub, $showWindow);
-    }
-    
-    private function updateConfig($version = null, $sub = 0, $showWindow = false)
-    {
-        $version = $version == null ? $this->version : $version;
-        Util::logDebug(($sub > 0 ? str_repeat(' ', 2 * $sub) : '') . 'Update ' . $this->name . ' ' . $version . ' config...');
-    
-        //TODO: Update config
-    }
-    
-    public function getName()
-    {
-        return $this->name;
-    }
-    
-    public function getVersionList()
-    {
-        return Util::getVersionList($this->getRootPath());
-    }
-
-    public function getVersion()
-    {
-        return $this->version;
-    }
-    
-    public function setVersion($version)
-    {
+    public function setVersion($version) {
         global $neardConfig;
         $this->version = $version;
         $neardConfig->replace(self::ROOT_CFG_VERSION, $version);
     }
     
-    public function getRootPath()
-    {
-        return $this->rootPath;
-    }
-    
-    public function getCurrentPath()
-    {
-        return $this->currentPath;
-    }
-    
-    public function isEnable()
-    {
-        return $this->enable;
-    }
-    
-    public function getExe()
-    {
+    public function getExe() {
         return $this->exe;
     }
     
-    public function getTccleExe()
-    {
+    public function getTccleExe() {
         return $this->tccleExe;
     }
     
-    public function getConf()
-    {
+    public function getConf() {
         return $this->conf;
     }
     
-    public function getRows()
-    {
+    public function getRows() {
         return $this->rows;
     }
     
-    public function getCols()
-    {
+    public function getCols() {
         return $this->cols;
     }
     
-    public function getShell()
-    {
+    public function getShell() {
         return $this->shell;
     }
     
-    public function getShellList()
-    {
+    public function getShellList() {
         return $this->shellList;
     }
     
-    public function getCmdShell()
-    {
+    public function getCmdShell() {
         return '&quot;' . $this->getTccleExe() . '&quot;';
     }
     
-    public function getPowerShell()
-    {
+    public function getPowerShell() {
         return Util::getPowerShellPath();
     }
     
-    public function getTabTitleDefault()
-    {
+    public function getTabTitleDefault() {
         global $neardLang;
         return $neardLang->getValue(Lang::CONSOLE);
     }
     
-    public function getTabTitleCmd()
-    {
+    public function getTabTitleCmd() {
         return $this->getTabTitleDefault() . ' ' . self::SHELL_CMD;
     }
     
-    public function getTabTitlePowershell()
-    {
+    public function getTabTitlePowershell() {
         return $this->getTabTitleDefault() . ' ' . self::SHELL_POWERSHELL;
     }
     
-    public function getTabTitlePear()
-    {
+    public function getTabTitlePear() {
         global $neardLang, $neardBins;
         return $neardLang->getValue(Lang::PEAR) . ' ' . $neardBins->getPhp()->getPearVersion(true);
     }
     
-    public function getTabTitleMysql()
-    {
+    public function getTabTitleMysql() {
         global $neardLang, $neardBins;
         return $neardLang->getValue(Lang::MYSQL) . ' ' . $neardBins->getMysql()->getVersion();
     }
     
-    public function getTabTitleMariadb()
-    {
+    public function getTabTitleMariadb() {
         global $neardLang, $neardBins;
         return $neardLang->getValue(Lang::MARIADB) . ' ' . $neardBins->getMariadb()->getVersion();
     }
     
-    public function getTabTitleMongodb()
-    {
+    public function getTabTitleMongodb() {
         global $neardLang, $neardBins;
         return $neardLang->getValue(Lang::MONGODB) . ' ' . $neardBins->getMongodb()->getVersion();
     }
     
-    public function getTabTitlePostgresql()
-    {
+    public function getTabTitlePostgresql() {
         global $neardLang, $neardBins;
         return $neardLang->getValue(Lang::POSTGRESQL) . ' ' . $neardBins->getPostgresql()->getVersion();
     }
     
-    public function getTabTitleSvn($repoPath = null)
-    {
+    public function getTabTitleSvn($repoPath = null) {
         global $neardLang, $neardBins;
         $result = $neardLang->getValue(Lang::SVN) . ' ' . $neardBins->getSvn()->getVersion();
         if ($repoPath != null) {
@@ -268,8 +173,7 @@ class ToolConsole
         return $result;
     }
     
-    public function getTabTitleGit($repoPath = null)
-    {
+    public function getTabTitleGit($repoPath = null) {
         global $neardLang, $neardTools;
         $result = $neardLang->getValue(Lang::GIT) . ' ' . $neardTools->getGit()->getVersion();
         if ($repoPath != null) {
@@ -278,50 +182,42 @@ class ToolConsole
         return $result;
     }
     
-    public function getTabTitleNodejs()
-    {
+    public function getTabTitleNodejs() {
         global $neardLang, $neardBins;
         return $neardLang->getValue(Lang::NODEJS) . ' ' . $neardBins->getNodejs()->getVersion();
     }
     
-    public function getTabTitleComposer()
-    {
+    public function getTabTitleComposer() {
         global $neardLang, $neardTools;
         return $neardLang->getValue(Lang::COMPOSER) . ' ' . $neardTools->getComposer()->getVersion();
     }
     
-    public function getTabTitlePhpMetrics()
-    {
+    public function getTabTitlePhpMetrics() {
         global $neardLang, $neardTools;
         return $neardLang->getValue(Lang::PHPMETRICS) . ' ' . $neardTools->getPhpMetrics()->getVersion();
     }
     
-    public function getTabTitlePhpUnit()
-    {
+    public function getTabTitlePhpUnit() {
         global $neardLang, $neardTools;
         return $neardLang->getValue(Lang::PHPUNIT) . ' ' . $neardTools->getPhpUnit()->getVersion();
     }
     
-    public function getTabTitleDrush()
-    {
+    public function getTabTitleDrush() {
         global $neardLang, $neardTools;
         return $neardLang->getValue(Lang::DRUSH) . ' ' . $neardTools->getDrush()->getVersion();
     }
     
-    public function getTabTitleWpCli()
-    {
+    public function getTabTitleWpCli() {
         global $neardLang, $neardTools;
         return $neardLang->getValue(Lang::WPCLI) . ' ' . $neardTools->getWpCli()->getVersion();
     }
     
-    public function getTabTitlePython()
-    {
+    public function getTabTitlePython() {
         global $neardLang, $neardTools;
         return $neardLang->getValue(Lang::PYTHON) . ' ' . $neardTools->getPython()->getVersion();
     }
     
-    public function getTabTitleRuby()
-    {
+    public function getTabTitleRuby() {
         global $neardLang, $neardTools;
         return $neardLang->getValue(Lang::RUBY) . ' ' . $neardTools->getRuby()->getVersion();
     }

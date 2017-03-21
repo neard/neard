@@ -44,7 +44,7 @@ class ActionStartup
     
     public function processWindow($window, $id, $ctrl, $param1, $param2)
     {
-        global $neardBs, $neardCore, $neardLang, $neardBins, $neardWinbinder;
+        global $neardBs, $neardCore, $neardLang, $neardBins, $neardTools, $neardApps, $neardWinbinder;
         
         // Rotation logs
         $this->rotationLogs();
@@ -64,6 +64,32 @@ class ActionStartup
             sort($listProcs);
             foreach ($listProcs as $proc) {
                 $this->writeLog($proc);
+            }
+        }
+        
+        // List modules
+        $this->writeLog('List bins modules:');
+        foreach ($neardBins->getAll() as $module) {
+            if (!$module->isEnable()) {
+                $this->writeLog('-> ' . $module->getName() . ': ' . $neardLang->getValue(Lang::DISABLED));
+            } else {
+                $this->writeLog('-> ' . $module->getName() . ': ' . $module->getVersion() . ' (' . $module->getRelease() . ')');
+            }
+        }
+        $this->writeLog('List tools modules:');
+        foreach ($neardTools->getAll() as $module) {
+            if (!$module->isEnable()) {
+                $this->writeLog('-> ' . $module->getName() . ': ' . $neardLang->getValue(Lang::DISABLED));
+            } else {
+                $this->writeLog('-> ' . $module->getName() . ': ' . $module->getVersion() . ' (' . $module->getRelease() . ')');
+            }
+        }
+        $this->writeLog('List apps modules:');
+        foreach ($neardApps->getAll() as $module) {
+            if (!$module->isEnable()) {
+                $this->writeLog('-> ' . $module->getName() . ': ' . $neardLang->getValue(Lang::DISABLED));
+            } else {
+                $this->writeLog('-> ' . $module->getName() . ': ' . $module->getVersion() . ' (' . $module->getRelease() . ')');
             }
         }
         

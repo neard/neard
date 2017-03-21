@@ -2,6 +2,8 @@
 
 class Apps
 {
+    const TYPE = 'apps';
+
     private $phpmyadmin;
     private $gitlist;
     private $websvn;
@@ -14,12 +16,6 @@ class Apps
     {
     }
 
-    private function getRootPath($app)
-    {
-        global $neardBs;
-        return $neardBs->getAppsPath() . '/' . $app;
-    }
-    
     public function update()
     {
         Util::logInfo('Update apps config');
@@ -44,7 +40,7 @@ class Apps
     public function getAdminer()
     {
         if ($this->adminer == null) {
-            $this->adminer = new AppAdminer($this->getRootPath('adminer'));
+            $this->adminer = new AppAdminer('adminer', self::TYPE);
         }
         return $this->adminer;
     }
@@ -52,7 +48,7 @@ class Apps
     public function getGitlist()
     {
         if ($this->gitlist == null) {
-            $this->gitlist = new AppGitlist($this->getRootPath('gitlist'));
+            $this->gitlist = new AppGitlist('gitlist', self::TYPE);
         }
         return $this->gitlist;
     }
@@ -60,7 +56,7 @@ class Apps
     public function getPhpmemadmin()
     {
         if ($this->phpmemadmin == null) {
-            $this->phpmemadmin = new AppPhpmemadmin($this->getRootPath('phpmemadmin'));
+            $this->phpmemadmin = new AppPhpmemadmin('phpmemadmin', self::TYPE);
         }
         return $this->phpmemadmin;
     }
@@ -68,7 +64,7 @@ class Apps
     public function getPhpmyadmin()
     {
         if ($this->phpmyadmin == null) {
-            $this->phpmyadmin = new AppPhpmyadmin($this->getRootPath('phpmyadmin'));
+            $this->phpmyadmin = new AppPhpmyadmin('phpmyadmin', self::TYPE);
         }
         return $this->phpmyadmin;
     }
@@ -76,7 +72,7 @@ class Apps
     public function getPhppgadmin()
     {
         if ($this->phppgadmin == null) {
-            $this->phppgadmin = new AppPhppgadmin($this->getRootPath('phppgadmin'));
+            $this->phppgadmin = new AppPhppgadmin('phppgadmin', self::TYPE);
         }
         return $this->phppgadmin;
     }
@@ -84,7 +80,7 @@ class Apps
     public function getWebgrind()
     {
         if ($this->webgrind == null) {
-            $this->webgrind = new AppWebgrind($this->getRootPath('webgrind'));
+            $this->webgrind = new AppWebgrind('webgrind', self::TYPE);
         }
         return $this->webgrind;
     }
@@ -92,7 +88,7 @@ class Apps
     public function getWebsvn()
     {
         if ($this->websvn == null) {
-            $this->websvn = new AppWebsvn($this->getRootPath('websvn'));
+            $this->websvn = new AppWebsvn('websvn', self::TYPE);
         }
         return $this->websvn;
     }
