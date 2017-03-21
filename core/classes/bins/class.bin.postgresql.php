@@ -1,6 +1,6 @@
 <?php
 
-class BinPostgresql
+class BinPostgresql extends Module
 {
     const SERVICE_NAME = 'neardpostgresql';
     
@@ -18,19 +18,11 @@ class BinPostgresql
     const LOCAL_CFG_PORT = 'postgresqlPort';
     const LOCAL_CFG_ROOT_USER = 'postgresqlRootUser';
     const LOCAL_CFG_ROOT_PWD = 'postgresqlRootPwd';
-    
+
     const CMD_VERSION = '--version';
     
-    private $name;
-    private $version;
     private $service;
-    
-    private $rootPath;
-    private $currentPath;
-    private $neardConf;
-    private $neardConfRaw;
-    private $enable;
-    
+
     private $errorLog;
     
     private $ctlExe;
@@ -44,29 +36,23 @@ class BinPostgresql
     private $port;
     private $rootUser;
     private $rootPwd;
-    
-    public function __construct($rootPath)
-    {
+
+    public function __construct($id, $type) {
         Util::logInitClass($this);
-        $this->reload($rootPath);
+        $this->reload($id, $type);
     }
-    
-    public function reload($rootPath = null)
-    {
+
+    public function reload($id = null, $type = null) {
         global $neardBs, $neardConfig, $neardLang;
         
         $this->name = $neardLang->getValue(Lang::POSTGRESQL);
         $this->version = $neardConfig->getRaw(self::ROOT_CFG_VERSION);
+        parent::reload($id, $type);
+
+        $this->enable = $this->enable && $neardConfig->getRaw(self::ROOT_CFG_ENABLE);
         $this->service = new Win32Service(self::SERVICE_NAME);
-        
-        $this->rootPath = $rootPath == null ? $this->rootPath : $rootPath;
-        $this->currentPath = $this->rootPath . '/postgresql' . $this->version;
-        $this->neardConf = $this->currentPath . '/neard.conf';
-        $this->enable = $neardConfig->getRaw(self::ROOT_CFG_ENABLE) == Config::ENABLED && is_dir($this->currentPath);
-        
         $this->errorLog = $neardBs->getLogsPath() . '/postgresql.log';
 
-        $this->neardConfRaw = @parse_ini_file($this->neardConf);
         if ($this->neardConfRaw !== false) {
             $this->ctlExe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_CTL_EXE];
             $this->cliExe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_CLI_EXE];
@@ -139,18 +125,7 @@ class BinPostgresql
         $this->service->setErrorControl(Win32Service::SERVER_ERROR_NORMAL);
     }
     
-    public function __toString()
-    {
-        return $this->getName();
-    }
-    
-    private function replace($key, $value)
-    {
-        $this->replaceAll(array($key => $value));
-    }
-    
-    private function replaceAll($params)
-    {
+    private function replaceAll($params) {
         $content = file_get_contents($this->neardConf);
     
         foreach ($params as $key => $value) {
@@ -172,8 +147,7 @@ class BinPostgresql
         file_put_contents($this->neardConf, $content);
     }
     
-    public function changePort($port, $checkUsed = false, $wbProgressBar = null)
-    {
+    public function changePort($port, $checkUsed = false, $wbProgressBar = null) {
         global $neardWinbinder;
         
         if (!Util::isValidPort($port)) {
@@ -201,8 +175,7 @@ class BinPostgresql
         return $isPortInUse;
     }
     
-    public function checkPort($port, $showWindow = false)
-    {
+    public function checkPort($port, $showWindow = false) {
         global $neardLang, $neardWinbinder;
         $boxTitle = sprintf($neardLang->getValue(Lang::CHECK_PORT_TITLE), $this->getName(), $port);
         
@@ -267,8 +240,7 @@ class BinPostgresql
         return false;
     }
     
-    public function changeRootPassword($currentPwd, $newPwd, $wbProgressBar = null)
-    {
+    public function changeRootPassword($currentPwd, $newPwd, $wbProgressBar = null) {
         global $neardWinbinder;
         $error = null;
         
@@ -308,8 +280,7 @@ class BinPostgresql
         return true;
     }
     
-    public function checkRootPassword($currentPwd = null, $wbProgressBar = null)
-    {
+    public function checkRootPassword($currentPwd = null, $wbProgressBar = null) {
         global $neardWinbinder;
         $currentPwd = $currentPwd == null ? $this->rootPwd : $currentPwd;
         $error = null;
@@ -332,19 +303,12 @@ class BinPostgresql
         return true;
     }
     
-    public function switchVersion($version, $showWindow = false)
-    {
+    public function switchVersion($version, $showWindow = false) {
         Util::logDebug('Switch ' . $this->name . ' version to ' . $version);
         return $this->updateConfig($version, 0, $showWindow);
     }
-    
-    public function update($sub = 0, $showWindow = false)
-    {
-        return $this->updateConfig(null, $sub, $showWindow);
-    }
-    
-    private function updateConfig($version = null, $sub = 0, $showWindow = false)
-    {
+
+    protected function updateConfig($version = null, $sub = 0, $showWindow = false) {
         global $neardLang, $neardApps, $neardWinbinder;
         $version = $version == null ? $this->version : $version;
         Util::logDebug(($sub > 0 ? str_repeat(' ', 2 * $sub) : '') . 'Update ' . $this->name . ' ' . $version . ' config...');
@@ -399,8 +363,7 @@ class BinPostgresql
         return true;
     }
     
-    public function initData($path = null)
-    {
+    public function initData($path = null) {
         $path = $path != null ? $path : $this->getCurrentPath();
         
         if (file_exists($path . '/data')) {
@@ -410,8 +373,7 @@ class BinPostgresql
         Batch::initializePostgresql($path);
     }
     
-    public function rebuildConf()
-    {
+    public function rebuildConf() {
         Util::replaceInFile($this->conf, array(
             '/^port(.*?)=(.*?)(\d+)/' => 'port = ' . $this->port
         ));
@@ -420,8 +382,7 @@ class BinPostgresql
         ));
     }
     
-    public function getCmdLineOutput($cmd)
-    {
+    public function getCmdLineOutput($cmd) {
         $result = null;
         
         $bin = $this->getCliExe();
@@ -435,50 +396,17 @@ class BinPostgresql
         return $result;
     }
     
-    public function getName()
-    {
-        return $this->name;
-    }
-    
-    public function getVersionList()
-    {
-        return Util::getVersionList($this->getRootPath());
-    }
-
-    public function getVersion()
-    {
-        return $this->version;
-    }
-    
-    public function setVersion($version)
-    {
+    public function setVersion($version) {
         global $neardConfig;
         $this->version = $version;
         $neardConfig->replace(self::ROOT_CFG_VERSION, $version);
     }
 
-    public function getService()
-    {
+    public function getService() {
         return $this->service;
     }
     
-    public function getRootPath()
-    {
-        return $this->rootPath;
-    }
-    
-    public function getCurrentPath()
-    {
-        return $this->currentPath;
-    }
-    
-    public function isEnable()
-    {
-        return $this->enable;
-    }
-    
-    public function setEnable($enabled, $showWindow = false)
-    {
+    public function setEnable($enabled, $showWindow = false) {
         global $neardConfig, $neardLang, $neardWinbinder;
 
         if ($enabled == Config::ENABLED && !is_dir($this->currentPath)) {
@@ -504,68 +432,55 @@ class BinPostgresql
         }
     }
     
-    public function getErrorLog()
-    {
+    public function getErrorLog() {
         return $this->errorLog;
     }
 
-    public function getCtlExe()
-    {
+    public function getCtlExe() {
         return $this->ctlExe;
     }
     
-    public function getCliExe()
-    {
+    public function getCliExe() {
         return $this->cliExe;
     }
     
-    public function getDumpExe()
-    {
+    public function getDumpExe() {
         return $this->dumpExe;
     }
     
-    public function getDumpAllExe()
-    {
+    public function getDumpAllExe() {
         return $this->dumpAllExe;
     }
     
-    public function getConf()
-    {
+    public function getConf() {
         return $this->conf;
     }
     
-    public function getHbaConf()
-    {
+    public function getHbaConf() {
         return $this->hbaConf;
     }
     
-    public function getPort()
-    {
+    public function getPort() {
         return $this->port;
     }
     
-    public function setPort($port)
-    {
+    public function setPort($port) {
         return $this->replace(self::LOCAL_CFG_PORT, $port);
     }
     
-    public function getRootUser()
-    {
+    public function getRootUser() {
         return $this->rootUser;
     }
 
-    public function setRootUser($rootUser)
-    {
+    public function setRootUser($rootUser) {
         return $this->replace(self::LOCAL_CFG_ROOT_USER, $rootUser);
     }
     
-    public function getRootPwd()
-    {
+    public function getRootPwd() {
         return $this->rootPwd;
     }
 
-    public function setRootPwd($rootPwd)
-    {
+    public function setRootPwd($rootPwd) {
         return $this->replace(self::LOCAL_CFG_ROOT_PWD, $rootPwd);
     }
 }

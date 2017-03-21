@@ -1,6 +1,6 @@
 <?php
 
-class BinMailhog
+class BinMailhog extends Module
 {
     const SERVICE_NAME = 'neardmailhog';
     const SERVICE_PARAMS = '-hostname localhost -api-bind-addr 127.0.0.1:%d -ui-bind-addr 127.0.0.1:%d -smtp-bind-addr 127.0.0.1:%d -storage maildir -maildir-path "%s"';
@@ -13,16 +13,7 @@ class BinMailhog
     const LOCAL_CFG_UI_PORT = 'mailhogUiPort';
     const LOCAL_CFG_SMTP_PORT = 'mailhogSmtpPort';
     
-    private $name;
-    private $version;
     private $service;
-    
-    private $rootPath;
-    private $currentPath;
-    private $neardConf;
-    private $neardConfRaw;
-    private $enable;
-    
     private $log;
     
     private $exe;
@@ -30,30 +21,24 @@ class BinMailhog
     private $uiPort;
     private $smtpPort;
     private $mailPath;
-    
-    public function __construct($rootPath, $version=null)
-    {
+
+    public function __construct($id, $type) {
         Util::logInitClass($this);
-        $this->reload($rootPath);
+        $this->reload($id, $type);
     }
-    
-    public function reload($rootPath = null)
-    {
+
+    public function reload($id = null, $type = null) {
         global $neardBs, $neardConfig, $neardLang;
         
         $this->name = $neardLang->getValue(Lang::MAILHOG);
         $this->version = $neardConfig->getRaw(self::ROOT_CFG_VERSION);
+        parent::reload($id, $type);
+
+        $this->enable = $this->enable && $neardConfig->getRaw(self::ROOT_CFG_ENABLE);
         $this->service = new Win32Service(self::SERVICE_NAME);
-        
-        $this->rootPath = $rootPath == null ? $this->rootPath : $rootPath;
-        $this->currentPath = $this->rootPath . '/mailhog' . $this->version;
-        $this->neardConf = $this->currentPath . '/neard.conf';
-        $this->enable = $neardConfig->getRaw(self::ROOT_CFG_ENABLE) == Config::ENABLED && is_dir($this->currentPath);
-        
         $this->mailPath = $neardBs->getTmpPath() . '/mailhog';
         $this->log = $neardBs->getLogsPath() . '/mailhog.log';
         
-        $this->neardConfRaw = @parse_ini_file($this->neardConf);
         if ($this->neardConfRaw !== false) {
             $this->exe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_EXE];
             $this->apiPort = intval($this->neardConfRaw[self::LOCAL_CFG_API_PORT]);
@@ -100,18 +85,7 @@ class BinMailhog
         $this->service->setNssm($nssm);
     }
     
-    public function __toString()
-    {
-        return $this->getName();
-    }
-    
-    private function replace($key, $value)
-    {
-        $this->replaceAll(array($key => $value));
-    }
-    
-    private function replaceAll($params)
-    {
+    private function replaceAll($params) {
         $content = file_get_contents($this->neardConf);
         
         foreach ($params as $key => $value) {
@@ -133,8 +107,7 @@ class BinMailhog
         file_put_contents($this->neardConf, $content);
     }
     
-    public function rebuildConf()
-    {
+    public function rebuildConf() {
         global $neardRegistry;
         
         $exists = $neardRegistry->exists(
@@ -154,8 +127,7 @@ class BinMailhog
         return false;
     }
     
-    public function changePort($port, $checkUsed = false, $wbProgressBar = null)
-    {
+    public function changePort($port, $checkUsed = false, $wbProgressBar = null) {
         global $neardWinbinder;
     
         if (!Util::isValidPort($port)) {
@@ -183,8 +155,7 @@ class BinMailhog
         return $isPortInUse;
     }
     
-    public function checkPort($port, $showWindow = false)
-    {
+    public function checkPort($port, $showWindow = false) {
         global $neardLang, $neardWinbinder;
         $boxTitle = sprintf($neardLang->getValue(Lang::CHECK_PORT_TITLE), $this->getName(), $port);
     
@@ -225,19 +196,12 @@ class BinMailhog
         return false;
     }
     
-    public function switchVersion($version, $showWindow = false)
-    {
+    public function switchVersion($version, $showWindow = false) {
         Util::logDebug('Switch ' . $this->name . ' version to ' . $version);
         return $this->updateConfig($version, 0, $showWindow);
     }
-    
-    public function update($sub = 0, $showWindow = false)
-    {
-        return $this->updateConfig(null, $sub, $showWindow);
-    }
-    
-    private function updateConfig($version = null, $sub = 0, $showWindow = false)
-    {
+
+    protected function updateConfig($version = null, $sub = 0, $showWindow = false) {
         global $neardLang, $neardWinbinder;
         $version = $version == null ? $this->version : $version;
         Util::logDebug(($sub > 0 ? str_repeat(' ', 2 * $sub) : '') . 'Update ' . $this->name . ' ' . $version . ' config...');
@@ -274,50 +238,17 @@ class BinMailhog
         return true;
     }
     
-    public function getName()
-    {
-        return $this->name;
-    }
-    
-    public function getVersionList()
-    {
-        return Util::getVersionList($this->getRootPath());
-    }
-
-    public function getVersion()
-    {
-        return $this->version;
-    }
-    
-    public function setVersion($version)
-    {
+    public function setVersion($version) {
         global $neardConfig;
         $this->version = $version;
         $neardConfig->replace(self::ROOT_CFG_VERSION, $version);
     }
 
-    public function getService()
-    {
+    public function getService() {
         return $this->service;
     }
     
-    public function getRootPath()
-    {
-        return $this->rootPath;
-    }
-    
-    public function getCurrentPath()
-    {
-        return $this->currentPath;
-    }
-    
-    public function isEnable()
-    {
-        return $this->enable;
-    }
-    
-    public function setEnable($enabled, $showWindow = false)
-    {
+    public function setEnable($enabled, $showWindow = false) {
         global $neardConfig, $neardLang, $neardWinbinder;
 
         if ($enabled == Config::ENABLED && !is_dir($this->currentPath)) {
@@ -343,48 +274,39 @@ class BinMailhog
         }
     }
     
-    public function getLog()
-    {
+    public function getLog() {
         return $this->log;
     }
     
-    public function getExe()
-    {
+    public function getExe() {
         return $this->exe;
     }
     
-    public function getApiPort()
-    {
+    public function getApiPort() {
         return $this->apiPort;
     }
     
-    public function setApiPort($apiPort)
-    {
+    public function setApiPort($apiPort) {
         return $this->replace(self::LOCAL_CFG_API_PORT, $apiPort);
     }
     
-    public function getUiPort()
-    {
+    public function getUiPort() {
         return $this->uiPort;
     }
     
-    public function setUiPort($uiPort)
-    {
+    public function setUiPort($uiPort) {
         return $this->replace(self::LOCAL_CFG_UI_PORT, $uiPort);
     }
     
-    public function getSmtpPort()
-    {
+    public function getSmtpPort() {
         return $this->smtpPort;
     }
     
-    public function setSmtpPort($smtpPort)
-    {
+    public function setSmtpPort($smtpPort) {
         return $this->replace(self::LOCAL_CFG_SMTP_PORT, $smtpPort);
     }
     
-    public function getMailPath()
-    {
+    public function getMailPath() {
         return $this->mailPath;
     }
 }

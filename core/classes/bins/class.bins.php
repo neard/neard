@@ -2,6 +2,8 @@
 
 class Bins
 {
+    const TYPE = 'bins';
+
     private $mailhog;
     private $memcached;
     private $apache;
@@ -17,12 +19,6 @@ class Bins
     public function __construct()
     {
         Util::logInitClass($this);
-    }
-    
-    private function getRootPath($bin)
-    {
-        global $neardBs;
-        return $neardBs->getBinPath() . '/' . $bin;
     }
     
     public function reload()
@@ -61,7 +57,7 @@ class Bins
     public function getMailhog()
     {
         if ($this->mailhog == null) {
-            $this->mailhog = new BinMailhog($this->getRootPath('mailhog'));
+            $this->mailhog = new BinMailhog('mailhog', self::TYPE);
         }
         return $this->mailhog;
     }
@@ -69,7 +65,7 @@ class Bins
     public function getMemcached()
     {
         if ($this->memcached == null) {
-            $this->memcached = new BinMemcached($this->getRootPath('memcached'));
+            $this->memcached = new BinMemcached('memcached', self::TYPE);
         }
         return $this->memcached;
     }
@@ -77,7 +73,7 @@ class Bins
     public function getApache()
     {
         if ($this->apache == null) {
-            $this->apache = new BinApache($this->getRootPath('apache'));
+            $this->apache = new BinApache('apache', self::TYPE);
         }
         return $this->apache;
     }
@@ -85,7 +81,7 @@ class Bins
     public function getPhp()
     {
         if ($this->php == null) {
-            $this->php = new BinPhp($this->getRootPath('php'));
+            $this->php = new BinPhp('php', self::TYPE);
         }
         return $this->php;
     }
@@ -93,7 +89,7 @@ class Bins
     public function getMysql()
     {
         if ($this->mysql == null) {
-            $this->mysql = new BinMysql($this->getRootPath('mysql'));
+            $this->mysql = new BinMysql('mysql', self::TYPE);
         }
         return $this->mysql;
     }
@@ -101,7 +97,7 @@ class Bins
     public function getMariadb()
     {
         if ($this->mariadb == null) {
-            $this->mariadb = new BinMariadb($this->getRootPath('mariadb'));
+            $this->mariadb = new BinMariadb('mariadb', self::TYPE);
         }
         return $this->mariadb;
     }
@@ -109,7 +105,7 @@ class Bins
     public function getMongodb()
     {
         if ($this->mongodb == null) {
-            $this->mongodb = new BinMongodb($this->getRootPath('mongodb'));
+            $this->mongodb = new BinMongodb('mongodb', self::TYPE);
         }
         return $this->mongodb;
     }
@@ -117,7 +113,7 @@ class Bins
     public function getPostgresql()
     {
         if ($this->postgresql == null) {
-            $this->postgresql = new BinPostgresql($this->getRootPath('postgresql'));
+            $this->postgresql = new BinPostgresql('postgresql', self::TYPE);
         }
         return $this->postgresql;
     }
@@ -125,7 +121,7 @@ class Bins
     public function getNodejs()
     {
         if ($this->nodejs == null) {
-            $this->nodejs = new BinNodejs($this->getRootPath('nodejs'));
+            $this->nodejs = new BinNodejs('nodejs', self::TYPE);
         }
         return $this->nodejs;
     }
@@ -133,7 +129,7 @@ class Bins
     public function getFilezilla()
     {
         if ($this->filezilla == null) {
-            $this->filezilla = new BinFilezilla($this->getRootPath('filezilla'));
+            $this->filezilla = new BinFilezilla('filezilla', self::TYPE);
         }
         return $this->filezilla;
     }
@@ -141,7 +137,7 @@ class Bins
     public function getSvn()
     {
         if ($this->svn == null) {
-            $this->svn = new BinSvn($this->getRootPath('svn'));
+            $this->svn = new BinSvn('svn', self::TYPE);
         }
         return $this->svn;
     }

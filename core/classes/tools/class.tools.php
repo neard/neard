@@ -2,6 +2,8 @@
 
 class Tools
 {
+    const TYPE = 'tools';
+
     private $composer;
     private $console;
     private $drush;
@@ -18,12 +20,6 @@ class Tools
     
     public function __construct()
     {
-    }
-    
-    private function getRootPath($tool)
-    {
-        global $neardBs;
-        return $neardBs->getToolsPath() . '/' . $tool;
     }
     
     public function update()
@@ -56,7 +52,7 @@ class Tools
     public function getComposer()
     {
         if ($this->composer == null) {
-            $this->composer = new ToolComposer($this->getRootPath('composer'));
+            $this->composer = new ToolComposer('composer', self::TYPE);
         }
         return $this->composer;
     }
@@ -64,7 +60,7 @@ class Tools
     public function getConsole()
     {
         if ($this->console == null) {
-            $this->console = new ToolConsole($this->getRootPath('console'));
+            $this->console = new ToolConsole('console', self::TYPE);
         }
         return $this->console;
     }
@@ -72,7 +68,7 @@ class Tools
     public function getDrush()
     {
         if ($this->drush == null) {
-            $this->drush = new ToolDrush($this->getRootPath('drush'));
+            $this->drush = new ToolDrush('drush', self::TYPE);
         }
         return $this->drush;
     }
@@ -80,7 +76,7 @@ class Tools
     public function getGit()
     {
         if ($this->git == null) {
-            $this->git = new ToolGit($this->getRootPath('git'));
+            $this->git = new ToolGit('git', self::TYPE);
         }
         return $this->git;
     }
@@ -88,7 +84,7 @@ class Tools
     public function getHostsEditor()
     {
         if ($this->hostseditor == null) {
-            $this->hostseditor = new ToolHostsEditor($this->getRootPath('hostseditor'));
+            $this->hostseditor = new ToolHostsEditor('hostseditor', self::TYPE);
         }
         return $this->hostseditor;
     }
@@ -96,7 +92,7 @@ class Tools
     public function getImageMagick()
     {
         if ($this->imagemagick == null) {
-            $this->imagemagick = new ToolImagemagick($this->getRootPath('imagemagick'));
+            $this->imagemagick = new ToolImagemagick('imagemagick', self::TYPE);
         }
         return $this->imagemagick;
     }
@@ -104,7 +100,7 @@ class Tools
     public function getNotepad2Mod()
     {
         if ($this->notepad2mod == null) {
-            $this->notepad2mod = new ToolNotepad2Mod($this->getRootPath('notepad2mod'));
+            $this->notepad2mod = new ToolNotepad2Mod('notepad2mod', self::TYPE);
         }
         return $this->notepad2mod;
     }
@@ -112,7 +108,7 @@ class Tools
     public function getPhpMetrics()
     {
         if ($this->phpmetrics == null) {
-            $this->phpmetrics = new ToolPhpMetrics($this->getRootPath('phpmetrics'));
+            $this->phpmetrics = new ToolPhpMetrics('phpmetrics', self::TYPE);
         }
         return $this->phpmetrics;
     }
@@ -120,7 +116,7 @@ class Tools
     public function getPhpUnit()
     {
         if ($this->phpunit == null) {
-            $this->phpunit = new ToolPhpUnit($this->getRootPath('phpunit'));
+            $this->phpunit = new ToolPhpUnit('phpunit', self::TYPE);
         }
         return $this->phpunit;
     }
@@ -128,7 +124,7 @@ class Tools
     public function getPython()
     {
         if ($this->python == null) {
-            $this->python = new ToolPython($this->getRootPath('python'));
+            $this->python = new ToolPython('python', self::TYPE);
         }
         return $this->python;
     }
@@ -136,7 +132,7 @@ class Tools
     public function getRuby()
     {
         if ($this->ruby == null) {
-            $this->ruby = new ToolRuby($this->getRootPath('ruby'));
+            $this->ruby = new ToolRuby('ruby', self::TYPE);
         }
         return $this->ruby;
     }
@@ -144,7 +140,7 @@ class Tools
     public function getWpCli()
     {
         if ($this->wpcli == null) {
-            $this->wpcli = new ToolWpCli($this->getRootPath('wpcli'));
+            $this->wpcli = new ToolWpCli('wpcli', self::TYPE);
         }
         return $this->wpcli;
     }
@@ -152,7 +148,7 @@ class Tools
     public function getXdc()
     {
         if ($this->xdc == null) {
-            $this->xdc = new ToolXdc($this->getRootPath('xdc'));
+            $this->xdc = new ToolXdc('xdc', self::TYPE);
         }
         return $this->xdc;
     }

@@ -1,6 +1,6 @@
 <?php
 
-class BinFilezilla
+class BinFilezilla extends Module
 {
     const SERVICE_NAME = 'neardfilezilla';
     
@@ -21,16 +21,7 @@ class BinFilezilla
     const CFG_SERVICE_NAME = 58;
     const CFG_SERVICE_DISPLAY_NAME = 59;
     
-    private $name;
-    private $version;
     private $service;
-    
-    private $rootPath;
-    private $currentPath;
-    private $neardConf;
-    private $neardConfRaw;
-    private $enable;
-    
     private $logsPath;
     private $log;
     
@@ -41,37 +32,30 @@ class BinFilezilla
     private $localItfConf;
     private $port;
     private $sslPort;
-    
-    public function __construct($rootPath, $version=null)
-    {
+
+    public function __construct($id, $type) {
         Util::logInitClass($this);
-        $this->reload($rootPath);
+        $this->reload($id, $type);
     }
-    
-    public function reload($rootPath = null)
-    {
+
+    public function reload($id = null, $type = null) {
         global $neardBs, $neardConfig, $neardLang;
-        
+
         $this->name = $neardLang->getValue(Lang::FILEZILLA);
         $this->version = $neardConfig->getRaw(self::ROOT_CFG_VERSION);
+        parent::reload($id, $type);
+
+        $this->enable = $this->enable && $neardConfig->getRaw(self::ROOT_CFG_ENABLE);
         $this->service = new Win32Service(self::SERVICE_NAME);
-        
-        $this->rootPath = $rootPath == null ? $this->rootPath : $rootPath;
-        $this->currentPath = $this->rootPath . '/filezilla' . $this->version;
-        $this->neardConf = $this->currentPath . '/neard.conf';
-        $this->enable = $neardConfig->getRaw(self::ROOT_CFG_ENABLE) == Config::ENABLED && is_dir($this->currentPath);
-        
         $this->logsPath = $this->currentPath . '/Logs';
         $this->log = $neardBs->getLogsPath() . '/filezilla.log';
         
-        $appData = Util::formatUnixPath(getenv('APPDATA'));
-        $this->neardConfRaw = @parse_ini_file($this->neardConf);
         if ($this->neardConfRaw !== false) {
             $this->exe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_EXE];
             $this->itfExe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_ITF_EXE];
             $this->conf = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_CONF];
             $this->itfConf = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_ITF_CONF];
-            $this->localItfConf = $appData . '/FileZilla Server/' . $this->neardConfRaw[self::LOCAL_CFG_ITF_CONF];
+            $this->localItfConf = Util::formatUnixPath(getenv('APPDATA')) . '/FileZilla Server/' . $this->neardConfRaw[self::LOCAL_CFG_ITF_CONF];
             $this->port = $this->neardConfRaw[self::LOCAL_CFG_PORT];
             $this->sslPort = $this->neardConfRaw[self::LOCAL_CFG_SSL_PORT];
         }
@@ -126,18 +110,7 @@ class BinFilezilla
         $this->service->setErrorControl(Win32Service::SERVER_ERROR_NORMAL);
     }
     
-    public function __toString()
-    {
-        return $this->getName();
-    }
-    
-    private function replace($key, $value)
-    {
-        $this->replaceAll(array($key => $value));
-    }
-    
-    private function replaceAll($params)
-    {
+    private function replaceAll($params) {
         $content = file_get_contents($this->neardConf);
     
         foreach ($params as $key => $value) {
@@ -156,8 +129,7 @@ class BinFilezilla
         file_put_contents($this->neardConf, $content);
     }
     
-    public function rebuildConf()
-    {
+    public function rebuildConf() {
         $this->setConf(array(
             self::CFG_SERVER_PORT => $this->port,
             self::CFG_SERVICE_NAME => $this->service->getName(),
@@ -166,8 +138,7 @@ class BinFilezilla
         ));
     }
     
-    public function setConf($elts)
-    {
+    public function setConf($elts) {
         $conf = simplexml_load_file($this->conf);
         foreach ($elts as $key => $value) {
             $conf->Settings->Item[$key] = $value;
@@ -175,8 +146,7 @@ class BinFilezilla
         $conf->asXML($this->conf);
     }
     
-    public function changePort($port, $checkUsed = false, $wbProgressBar = null)
-    {
+    public function changePort($port, $checkUsed = false, $wbProgressBar = null) {
         global $neardWinbinder;
         
         if (!Util::isValidPort($port)) {
@@ -204,8 +174,7 @@ class BinFilezilla
         return $isPortInUse;
     }
     
-    public function checkPort($port, $ssl = false, $showWindow = false)
-    {
+    public function checkPort($port, $ssl = false, $showWindow = false) {
         global $neardLang, $neardWinbinder;
         $boxTitle = sprintf($neardLang->getValue(Lang::CHECK_PORT_TITLE), $this->getName(), $port);
     
@@ -246,19 +215,12 @@ class BinFilezilla
         return false;
     }
     
-    public function switchVersion($version, $showWindow = false)
-    {
+    public function switchVersion($version, $showWindow = false) {
         Util::logDebug('Switch ' . $this->name . ' version to ' . $version);
         return $this->updateConfig($version, 0, $showWindow);
     }
-    
-    public function update($sub = 0, $showWindow = false)
-    {
-        return $this->updateConfig(null, $sub, $showWindow);
-    }
-    
-    private function updateConfig($version = null, $sub = 0, $showWindow = false)
-    {
+
+    protected function updateConfig($version = null, $sub = 0, $showWindow = false) {
         global $neardLang, $neardWinbinder;
         $version = $version == null ? $this->version : $version;
         Util::logDebug(($sub > 0 ? str_repeat(' ', 2 * $sub) : '') . 'Update ' . $this->name . ' ' . $version . ' config...');
@@ -300,8 +262,8 @@ class BinFilezilla
         return true;
     }
     
-    public function removeSslCrt()
-    {
+    // FIXME: Remove this
+    public function removeSslCrt() {
         global $neardBs;
     
         $ppkPath = $neardBs->getSslPath() . '/' . self::SERVICE_NAME . '.ppk';
@@ -311,23 +273,7 @@ class BinFilezilla
         return @unlink($ppkPath) && @unlink($pubPath) && @unlink($crtPath);
     }
     
-    public function getName()
-    {
-        return $this->name;
-    }
-    
-    public function getVersionList()
-    {
-        return Util::getVersionList($this->getRootPath());
-    }
-
-    public function getVersion()
-    {
-        return $this->version;
-    }
-    
-    public function setVersion($version)
-    {
+    public function setVersion($version) {
         global $neardConfig;
         $this->version = $version;
         $neardConfig->replace(self::ROOT_CFG_VERSION, $version);
@@ -338,25 +284,9 @@ class BinFilezilla
         return $this->service;
     }
     
-    public function getRootPath()
-    {
-        return $this->rootPath;
-    }
-
-    public function getCurrentPath()
-    {
-        return $this->currentPath;
-    }
-    
-    public function isEnable()
-    {
-        return $this->enable;
-    }
-    
-    public function setEnable($enabled, $showWindow = false)
-    {
+    public function setEnable($enabled, $showWindow = false) {
         global $neardConfig, $neardLang, $neardWinbinder;
-
+        
         if ($enabled == Config::ENABLED && !is_dir($this->currentPath)) {
             Util::logDebug($this->getName() . ' cannot be enabled because bundle ' . $this->getVersion() . ' does not exist in ' . $this->currentPath);
             if ($showWindow) {
@@ -380,53 +310,43 @@ class BinFilezilla
         }
     }
     
-    public function getLogsPath()
-    {
+    public function getLogsPath() {
         return $this->logsPath;
     }
     
-    public function getLog()
-    {
+    public function getLog() {
         return $this->log;
     }
     
-    public function getExe()
-    {
+    public function getExe() {
         return $this->exe;
     }
     
-    public function getItfExe()
-    {
+    public function getItfExe() {
         return $this->itfExe;
     }
     
-    public function getConf()
-    {
+    public function getConf() {
         return $this->conf;
     }
     
-    public function getItfConf()
-    {
+    public function getItfConf() {
         return $this->itfConf;
     }
     
-    public function getPort()
-    {
+    public function getPort() {
         return $this->port;
     }
     
-    public function setPort($port)
-    {
+    public function setPort($port) {
         return $this->replace(self::LOCAL_CFG_PORT, $port);
     }
     
-    public function getSslPort()
-    {
+    public function getSslPort() {
         return $this->sslPort;
     }
     
-    public function setSslPort($sslPort)
-    {
+    public function setSslPort($sslPort) {
         return $this->replace(self::LOCAL_CFG_SSL_PORT, $sslPort);
     }
 }

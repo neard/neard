@@ -1,38 +1,27 @@
 <?php
 
-class ToolNotepad2Mod
+class ToolNotepad2Mod extends Module
 {
     const ROOT_CFG_VERSION = 'notepad2modVersion';
     
     const LOCAL_CFG_EXE = 'notepad2modExe';
     const LOCAL_CFG_CONF = 'notepad2modConf';
-    
-    private $name;
-    private $version;
-    
-    private $rootPath;
-    private $currentPath;
-    private $neardConf;
-    private $neardConfRaw;
-    private $enable;
-    
+
     private $exe;
     private $conf;
-    
-    public function __construct($rootPath)
-    {
-        global $neardConfig, $neardLang;
+
+    public function __construct($id, $type) {
         Util::logInitClass($this);
-        
+        $this->reload($id, $type);
+    }
+
+    public function reload($id = null, $type = null) {
+        global $neardConfig, $neardLang;
+
         $this->name = $neardLang->getValue(Lang::NOTEPAD2MOD);
         $this->version = $neardConfig->getRaw(self::ROOT_CFG_VERSION);
+        parent::reload($id, $type);
         
-        $this->rootPath = $rootPath;
-        $this->currentPath = $rootPath . '/notepad2mod' . $this->version;
-        $this->neardConf = $this->currentPath . '/neard.conf';
-        $this->enable = is_dir($this->currentPath);
-        
-        $this->neardConfRaw = @parse_ini_file($this->neardConf);
         if ($this->neardConfRaw !== false) {
             $this->exe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_EXE];
             $this->conf = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_CONF];
@@ -56,43 +45,7 @@ class ToolNotepad2Mod
         }
     }
     
-    public function __toString()
-    {
-        return $this->getName();
-    }
-    
-    private function replace($key, $value)
-    {
-        $this->replaceAll(array($key => $value));
-    }
-    
-    private function replaceAll($params)
-    {
-        $content = file_get_contents($this->neardConf);
-    
-        foreach ($params as $key => $value) {
-            $content = preg_replace('|' . $key . ' = .*|', $key . ' = ' . '"' . $value.'"', $content);
-            $this->neardConfRaw[$key] = $value;
-        }
-    
-        file_put_contents($this->neardConf, $content);
-    }
-    
-    public function update($sub = 0, $showWindow = false)
-    {
-        return $this->updateConfig(null, $sub, $showWindow);
-    }
-    
-    private function updateConfig($version = null, $sub = 0, $showWindow = false)
-    {
-        $version = $version == null ? $this->version : $version;
-        Util::logDebug(($sub > 0 ? str_repeat(' ', 2 * $sub) : '') . 'Update ' . $this->name . ' ' . $version . ' config...');
-    
-        //TODO: Update config
-    }
-    
-    public function open($caption, $content)
-    {
+    public function open($caption, $content) {
         global $neardBs, $neardWinbinder;
         
         TplNotepad2Mod::process();
@@ -108,50 +61,17 @@ class ToolNotepad2Mod
         $neardWinbinder->exec($this->getExe(), '"' . $filepath . '"');
     }
     
-    public function getName()
-    {
-        return $this->name;
-    }
-    
-    public function getVersionList()
-    {
-        return Util::getVersionList($this->getRootPath());
-    }
-
-    public function getVersion()
-    {
-        return $this->version;
-    }
-    
-    public function setVersion($version)
-    {
+    public function setVersion($version) {
         global $neardConfig;
         $this->version = $version;
         $neardConfig->replace(self::ROOT_CFG_VERSION, $version);
     }
 
-    public function getRootPath()
-    {
-        return $this->rootPath;
-    }
-
-    public function getCurrentPath()
-    {
-        return $this->currentPath;
-    }
-    
-    public function isEnable()
-    {
-        return $this->enable;
-    }
-
-    public function getExe()
-    {
+    public function getExe() {
         return $this->exe;
     }
     
-    public function getConf()
-    {
+    public function getConf() {
         return $this->conf;
     }
 }

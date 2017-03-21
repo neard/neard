@@ -1,6 +1,6 @@
 <?php
 
-class BinPhp
+class BinPhp extends Module
 {
     const ROOT_CFG_ENABLE = 'phpEnable';
     const ROOT_CFG_VERSION = 'phpVersion';
@@ -78,15 +78,6 @@ class BinPhp
     const INI_APC_CANONICALIZE = 'apc.canonicalize';
     const INI_APC_STAT = 'apc.stat';
     
-    private $name;
-    private $version;
-    
-    private $rootPath;
-    private $currentPath;
-    private $neardConf;
-    private $neardConfRaw;
-    private $enable;
-    
     private $extPath;
     private $imagickPath;
     private $pearPath;
@@ -97,32 +88,26 @@ class BinPhp
     private $cliSilentExe;
     private $conf;
     private $pearExe;
-    
-    public function __construct($rootPath)
-    {
+
+    public function __construct($id, $type) {
         Util::logInitClass($this);
-        $this->reload($rootPath);
+        $this->reload($id, $type);
     }
-    
-    public function reload($rootPath = null)
-    {
+
+    public function reload($id = null, $type = null) {
         global $neardBs, $neardConfig, $neardBins, $neardLang;
         
         $this->name = $neardLang->getValue(Lang::PHP);
         $this->version = $neardConfig->getRaw(self::ROOT_CFG_VERSION);
-        
-        $this->rootPath = $rootPath == null ? $this->rootPath : $rootPath;
-        $this->currentPath = $this->rootPath . '/php' . $this->version;
-        $this->neardConf = $this->currentPath . '/neard.conf';
-        $this->enable = $neardConfig->getRaw(self::ROOT_CFG_ENABLE) == Config::ENABLED && is_dir($this->currentPath);
-        
+        parent::reload($id, $type);
+
+        $this->enable = $this->enable && $neardConfig->getRaw(self::ROOT_CFG_ENABLE);
         $this->extPath = $this->currentPath . '/ext';
         $this->imagickPath = $this->currentPath . '/imagick';
         $this->pearPath = $this->currentPath . '/pear';
         $this->apacheConf = $neardBins->getApache()->getCurrentPath() . '/' . $this->apacheConf; //FIXME: Useful ?
         $this->errorLog = $neardBs->getLogsPath() . '/php_error.log';
         
-        $this->neardConfRaw = @parse_ini_file($this->neardConf);
         if ($this->neardConfRaw !== false) {
             $this->cliExe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_CLI_EXE];
             $this->cliSilentExe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_CLI_SILENT_EXE];
@@ -156,41 +141,12 @@ class BinPhp
         }
     }
     
-    public function __toString()
-    {
-        return $this->getName();
-    }
-    
-    private function replace($key, $value)
-    {
-        $this->replaceAll(array($key => $value));
-    }
-    
-    private function replaceAll($params)
-    {
-        $content = file_get_contents($this->neardConf);
-    
-        foreach ($params as $key => $value) {
-            $content = preg_replace('|' . $key . ' = .*|', $key . ' = ' . '"' . $value.'"', $content);
-            $this->neardConfRaw[$key] = $value;
-        }
-    
-        file_put_contents($this->neardConf, $content);
-    }
-    
-    public function switchVersion($version, $showWindow = false)
-    {
+    public function switchVersion($version, $showWindow = false) {
         Util::logDebug('Switch ' . $this->name . ' version to ' . $version);
         return $this->updateConfig($version, 0, $showWindow);
     }
-    
-    public function update($sub = 0, $showWindow = false)
-    {
-        return $this->updateConfig(null, $sub, $showWindow);
-    }
-    
-    private function updateConfig($version = null, $sub = 0, $showWindow = false)
-    {
+
+    protected function updateConfig($version = null, $sub = 0, $showWindow = false) {
         global $neardLang, $neardBins, $neardApps, $neardWinbinder;
         $version = $version == null ? $this->version : $version;
         Util::logDebug(($sub > 0 ? str_repeat(' ', 2 * $sub) : '') . 'Update ' . $this->name . ' ' . $version . ' config...');
@@ -258,8 +214,7 @@ class BinPhp
         return true;
     }
     
-    public function getSettings()
-    {
+    public function getSettings() {
         return array(
             'Language options' => array(
                 'Short open tag' => self::INI_SHORT_OPEN_TAG,
@@ -379,8 +334,7 @@ class BinPhp
         );
     }
     
-    public function getSettingsValues()
-    {
+    public function getSettingsValues() {
         return array(
             self::INI_SHORT_OPEN_TAG => array('On', 'Off', 'On'),
             self::INI_ASP_TAGS => array('On', 'Off', 'Off'),
@@ -449,8 +403,7 @@ class BinPhp
         );
     }
     
-    public function isSettingActive($name)
-    {
+    public function isSettingActive($name) {
         $settingsValues = $this->getSettingsValues();
         
         $confContent = file($this->getConf());
@@ -464,8 +417,7 @@ class BinPhp
         return false;
     }
     
-    public function isSettingExists($name)
-    {
+    public function isSettingExists($name) {
         $confContent = file($this->getConf());
         foreach ($confContent as $row) {
             if (preg_match('/^\s*?;?\s*?' . $name . '\s*=\s*.*/i', $row)) {
@@ -476,8 +428,7 @@ class BinPhp
         return false;
     }
     
-    public function getExtensions()
-    {
+    public function getExtensions() {
         $fromFolder = $this->getExtensionsFromConf();
         $fromConf = $this->getExtensionsFromFolder();
         $result = array_merge($fromConf, $fromFolder);
@@ -485,8 +436,7 @@ class BinPhp
         return $result;
     }
     
-    public function getExtensionsFromConf()
-    {
+    public function getExtensionsFromConf() {
         $result = array();
         
         $confContent = file($this->getConf());
@@ -506,8 +456,7 @@ class BinPhp
         return $result;
     }
     
-    public function getExtensionsLoaded()
-    {
+    public function getExtensionsLoaded() {
         $result = array();
         foreach ($this->getExtensionsFromConf() as $name => $status) {
             if ($status == ActionSwitchPhpExtension::SWITCH_ON) {
@@ -517,8 +466,7 @@ class BinPhp
         return $result;
     }
     
-    public function getExtensionsFromFolder()
-    {
+    public function getExtensionsFromFolder() {
         $result = array();
         
         $handle = @opendir($this->getExtPath());
@@ -538,8 +486,7 @@ class BinPhp
         return $result;
     }
     
-    public function getApacheModule($apacheVersion, $phpVersion = null)
-    {
+    public function getApacheModule($apacheVersion, $phpVersion = null) {
         $apacheVersion = substr(str_replace('.', '', $apacheVersion), 0, 2);
         $phpVersion = $phpVersion == null ? $this->getVersion() : $phpVersion;
         
@@ -562,8 +509,7 @@ class BinPhp
         return false;
     }
     
-    public function getTsDll($phpVersion = null)
-    {
+    public function getTsDll($phpVersion = null) {
         $phpVersion = $phpVersion == null ? $this->getVersion() : $phpVersion;
         $currentPath = str_replace('php' . $this->getVersion(), 'php' . $phpVersion, $this->getCurrentPath());
         
@@ -576,45 +522,13 @@ class BinPhp
         return false;
     }
     
-    public function getName()
-    {
-        return $this->name;
-    }
-    
-    public function getVersionList()
-    {
-        return Util::getVersionList($this->getRootPath());
-    }
-
-    public function getVersion()
-    {
-        return $this->version;
-    }
-    
-    public function setVersion($version)
-    {
+    public function setVersion($version) {
         global $neardConfig;
         $this->version = $version;
         $neardConfig->replace(self::ROOT_CFG_VERSION, $version);
     }
 
-    public function getRootPath()
-    {
-        return $this->rootPath;
-    }
-
-    public function getCurrentPath()
-    {
-        return $this->currentPath;
-    }
-    
-    public function isEnable()
-    {
-        return $this->enable;
-    }
-    
-    public function setEnable($enabled, $showWindow = false)
-    {
+    public function setEnable($enabled, $showWindow = false) {
         global $neardConfig, $neardBins, $neardLang, $neardWinbinder;
 
         if ($enabled == Config::ENABLED && !is_dir($this->currentPath)) {
@@ -640,48 +554,39 @@ class BinPhp
         }
     }
 
-    public function getExtPath()
-    {
+    public function getExtPath() {
         return $this->extPath;
     }
     
-    public function getImagickPath()
-    {
+    public function getImagickPath() {
         return $this->imagickPath;
     }
     
-    public function getPearPath()
-    {
+    public function getPearPath() {
         return $this->pearPath;
     }
     
-    public function getErrorLog()
-    {
+    public function getErrorLog() {
         return $this->errorLog;
     }
     
-    public function getCliExe()
-    {
+    public function getCliExe() {
         return $this->cliExe;
     }
     
-    public function getCliSilentExe()
-    {
+    public function getCliSilentExe() {
         return $this->cliSilentExe;
     }
 
-    public function getConf()
-    {
+    public function getConf() {
         return $this->conf;
     }
     
-    public function getPearExe()
-    {
+    public function getPearExe() {
         return $this->pearExe;
     }
     
-    public function getPearVersion($cache = false)
-    {
+    public function getPearVersion($cache = false) {
         $cacheFile = $this->getPearPath() . '/version';
         if (!$cache) {
             file_put_contents($cacheFile, Batch::getPearVersion());
