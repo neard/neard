@@ -204,7 +204,7 @@ class BinApache extends Module
     }
 
     protected function updateConfig($version = null, $sub = 0, $showWindow = false) {
-        global $neardBs, $neardLang, $neardBins, $neardTools, $neardWinbinder;
+        global $neardBs, $neardLang, $neardBins, $neardWinbinder;
         $version = $version == null ? $this->version : $version;
         $shortVersion = substr(str_replace('.', '', $version), 0, 2);
         Util::logDebug(($sub > 0 ? str_repeat(' ', 2 * $sub) : '') . 'Update ' . $this->name . ' ' . $version . ' config...');
@@ -622,7 +622,7 @@ class BinApache extends Module
         if ($this->enable) {
             Util::installService($this, $this->port, self::CMD_SYNTAX_CHECK, $showWindow);
         } else {
-            Util::removeService($this->service, $this->name, $showWindow);
+            Util::removeService($this->service, $this->name);
         }
     }
     

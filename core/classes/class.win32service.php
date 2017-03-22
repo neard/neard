@@ -135,7 +135,7 @@ class Win32Service
 
     public function create()
     {
-        global $neardConfig, $neardBins;
+        global $neardBins;
         
         if ($this->getName() == BinFilezilla::SERVICE_NAME) {
             $neardBins->getFilezilla()->rebuildConf();

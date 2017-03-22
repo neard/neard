@@ -149,7 +149,7 @@ class TplApp
     
     private static function getSectionMenuRight()
     {
-        global $neardBs, $neardLang;
+        global $neardLang;
         
         $tplReload = TplAppReload::process();
         $tplBrowser = TplAppBrowser::process();

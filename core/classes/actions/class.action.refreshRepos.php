@@ -6,7 +6,7 @@ class ActionRefreshRepos
     
     public function __construct($args)
     {
-        global $neardBins, $neardTools;
+        global $neardTools;
         
         Util::startLoading();
         if (isset($args[0]) && !empty($args[0])) {

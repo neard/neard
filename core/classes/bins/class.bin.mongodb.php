@@ -136,7 +136,7 @@ class BinMongodb extends Module
     }
     
     public function checkPort($port, $showWindow = false) {
-        global $neardLang, $neardCore, $neardWinbinder;
+        global $neardLang, $neardWinbinder;
         $boxTitle = sprintf($neardLang->getValue(Lang::CHECK_PORT_TITLE), $this->getName(), $port);
     
         if (!Util::isValidPort($port)) {
@@ -285,9 +285,9 @@ class BinMongodb extends Module
     
         $this->reload();
         if ($this->enable) {
-            Util::installService($this, $this->port, self::CMD_SYNTAX_CHECK, $showWindow);
+            Util::installService($this, $this->port, null, $showWindow);
         } else {
-            Util::removeService($this->service, $this->name, $showWindow);
+            Util::removeService($this->service, $this->name);
         }
     }
     

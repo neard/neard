@@ -428,7 +428,7 @@ class BinPostgresql extends Module
         if ($this->enable) {
             Util::installService($this, $this->port, null, $showWindow);
         } else {
-            Util::removeService($this->service, $this->name, $showWindow);
+            Util::removeService($this->service, $this->name);
         }
     }
     

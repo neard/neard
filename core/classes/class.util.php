@@ -887,6 +887,8 @@ class Util
                 file_put_contents($fileToScan, $fileContent);
             }
         }
+
+        return $result;
     }
     
     public static function getLatestVersion()
@@ -1154,8 +1156,8 @@ class Util
                     }
                     return true;
                 } else {
-                    $serviceError .= sprintf($neardLang->getValue(Lang::SERVICE_INSTALL_ERROR), $name);
-                    $serviceErrorLog .= sprintf('Error during the installation of %s service', $name);
+                    $serviceError = sprintf($neardLang->getValue(Lang::SERVICE_INSTALL_ERROR), $name);
+                    $serviceErrorLog = sprintf('Error during the installation of %s service', $name);
                     if (!empty($syntaxCheckCmd)) {
                         $cmdSyntaxCheck = $bin->getCmdLineOutput($syntaxCheckCmd);
                         if (!$cmdSyntaxCheck['syntaxOk']) {
@@ -1200,11 +1202,8 @@ class Util
         return false;
     }
     
-    public static function removeService($service, $name, $showWindow = false)
+    public static function removeService($service, $name)
     {
-        global $neardLang, $neardWinbinder;
-        $boxTitle = sprintf($neardLang->getValue(Lang::REMOVE_SERVICE_TITLE), $name);
-    
         if (!($service instanceof Win32Service)) {
             Util::logError('$service not an instance of Win32Service');
             return false;
@@ -1233,8 +1232,8 @@ class Util
         $boxTitle = sprintf($neardLang->getValue(Lang::START_SERVICE_TITLE), $name);
         
         if (!$service->start()) {
-            $serviceError .= sprintf($neardLang->getValue(Lang::START_SERVICE_ERROR), $name);
-            $serviceErrorLog .= sprintf('Error while starting the %s service', $name);
+            $serviceError = sprintf($neardLang->getValue(Lang::START_SERVICE_ERROR), $name);
+            $serviceErrorLog = sprintf('Error while starting the %s service', $name);
             if (!empty($syntaxCheckCmd)) {
                 $cmdSyntaxCheck = $bin->getCmdLineOutput($syntaxCheckCmd);
                 if (!$cmdSyntaxCheck['syntaxOk']) {
