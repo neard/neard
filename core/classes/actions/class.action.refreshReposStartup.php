@@ -4,7 +4,7 @@ class ActionRefreshReposStartup
 {
     public function __construct($args)
     {
-        global $neardBins;
+        global $neardTools;
         
         if (isset($args[0]) && !empty($args[0]) && isset($args[1])) {
             if ($args[0] == ActionRefreshRepos::GIT) {

@@ -378,7 +378,7 @@ class ActionStartup
         $this->splash->setTextLoading(sprintf($neardLang->getValue(Lang::STARTUP_CHANGE_PATH_TEXT), $this->rootPath));
         $this->splash->incrProgressBar();
         
-        Util::changePath($this->filesToScan, $this->rootPath);
+        $result = Util::changePath($this->filesToScan, $this->rootPath);
         $this->writeLog('Nb files changed: ' . $result['countChangedFiles']);
         $this->writeLog('Nb occurences changed: ' . $result['countChangedOcc']);
     }
@@ -510,6 +510,7 @@ class ActionStartup
                 $startServiceTime = Util::getMicrotime();
         
                 $syntaxCheckCmd = null;
+                $bin = null;
                 $port = 0;
                 if ($sName == BinMailhog::SERVICE_NAME) {
                     $bin = $neardBins->getMailhog();

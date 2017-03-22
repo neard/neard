@@ -20,6 +20,7 @@ class ActionService
         
         if (isset($args[0]) && !empty($args[0]) && isset($args[1]) && !empty($args[1])) {
             $sName = $args[0];
+            $bin = null;
             $port = 0;
             $syntaxCheckCmd = null;
             
