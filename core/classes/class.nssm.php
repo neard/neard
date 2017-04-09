@@ -158,15 +158,15 @@ class Nssm
         if ($exec === false) {
             return false;
         }
-		
+        
         // No AppNoConsole to fix nssm problems with Windows 10 Creators update.
         $exec = $this->exec('set ' . $this->getName() . ' AppNoConsole "1"');
-        if ($exec === FALSE) {
-            return FALSE;
-        }		
+        if ($exec === false) {
+            return false;
+        }
         
         // Start
-		$exec = $this->exec('set ' . $this->getName() . ' Start "' . ($this->getStart() != null ? $this->getStart() : self::SERVICE_DEMAND_START) . '"');
+        $exec = $this->exec('set ' . $this->getName() . ' Start "' . ($this->getStart() != null ? $this->getStart() : self::SERVICE_DEMAND_START) . '"');
         if ($exec === false) {
             return false;
         }
