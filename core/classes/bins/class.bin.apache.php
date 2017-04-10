@@ -205,6 +205,11 @@ class BinApache extends Module
 
     protected function updateConfig($version = null, $sub = 0, $showWindow = false) {
         global $neardBs, $neardLang, $neardBins, $neardWinbinder;
+        
+        if (!$this->enable) {
+            return true;
+        }
+        
         $version = $version == null ? $this->version : $version;
         $shortVersion = substr(str_replace('.', '', $version), 0, 2);
         Util::logDebug(($sub > 0 ? str_repeat(' ', 2 * $sub) : '') . 'Update ' . $this->name . ' ' . $version . ' config...');

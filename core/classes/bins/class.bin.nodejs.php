@@ -75,6 +75,11 @@ class BinNodejs extends Module
     
     protected function updateConfig($version = null, $sub = 0, $showWindow = false) {
         global $neardLang, $neardWinbinder;
+        
+        if (!$this->enable) {
+            return true;
+        }
+        
         $version = $version == null ? $this->version : $version;
         Util::logDebug(($sub > 0 ? str_repeat(' ', 2 * $sub) : '') . 'Update ' . $this->name . ' ' . $version . ' config...');
         
