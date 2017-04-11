@@ -20,6 +20,7 @@ install:
       git remote add origin https://github.com/crazy-max/neard-dev.git
       git fetch origin
       git checkout -b master
+      cd %APPVEYOR_BUILD_FOLDER%
   - ps: choco install ant
   - ps: $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
   - java -version
