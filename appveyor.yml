@@ -2,6 +2,8 @@ version: '{build}'
 
 platform:
   - x86
+  
+clone_folder: C:\projects\neard
 
 environment:
   JAVA_HOME: C:\Program Files (x86)\Java\jdk1.8.0
@@ -12,10 +14,10 @@ install:
       $env:APP_VERSION = $appProps.'release.version'
       Write-Host "App version: $env:APP_VERSION"
   - cmd: |
-      mkdir %APPVEYOR_BUILD_FOLDER%\neard-dev
-      cd %APPVEYOR_BUILD_FOLDER%\neard-dev
+      mkdir C:\projects\neard-dev
+      cd C:\projects\neard-dev
       git init
-      git remote add origin https://github.com/crazy-max/neard-dev.git %APPVEYOR_BUILD_FOLDER%\..
+      git remote add origin https://github.com/crazy-max/neard-dev.git
       git fetch origin
       git checkout -b master
   - ps: choco install ant
