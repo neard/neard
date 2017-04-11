@@ -1,0 +1,35 @@
+version: '{build}'
+
+platform:
+  - x86
+
+environment:
+  JAVA_HOME: C:\Program Files (x86)\Java\jdk1.8.0
+
+install:
+  - ps: |
+      $appProps = convertfrom-stringdata (get-content %APPVEYOR_BUILD_FOLDER%\build.properties -raw)
+      $env:APP_VERSION = $appProps.'release.version'
+      Write-Host "App version: $env:APP_VERSION"
+  - git clone -q https://github.com/crazy-max/neard-dev.git %APPVEYOR_BUILD_FOLDER%\..
+  - ps: choco install ant
+  - ps: $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+  - java -version
+  - ant -version
+
+configuration:
+  - Release
+
+build_script:
+  - ant release
+
+after_build:
+  - cmd: move "C:\neard-build\releases\%APP_VERSION%" "C:\release"
+
+artifacts:
+  - path: 'C:\release\*'
+
+notifications:
+  - provider: Slack
+    incoming_webhook:
+      secure: 6wcIQdnN6haB2OhAPJVhAoMpU1lLRM7tHmVUCfv2RZ/3gZSBCm7wCBde4Bx7zNyv3Qw6//VrX97ZD3ejdoyxfmFaXBomoclkVKJRcvCyn3s=
