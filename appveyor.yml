@@ -28,10 +28,10 @@ build_script:
   - ant release
 
 after_build:
-  - cmd: move C:\neard-build\releases\%APP_VERSION% C:\release
+  - cmd: move C:\neard-build\releases\%APP_VERSION% %APPVEYOR_BUILD_FOLDER%\release
 
 artifacts:
-  - path: 'C:\release\*'
+  - path: 'release\*'
 
 notifications:
   - provider: Slack
