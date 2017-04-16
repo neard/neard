@@ -24,13 +24,13 @@
   
   <target name="build" depends="init, load.lib">
     <var name="release.target" unset="true"/>
-    <property name="release.target" value="${build.tmp.path}/${release.name}-${release.version}"/>
-    <property name="release.destdir" value="${build.release.path}/${release.version}"/>
-    <property name="release.destfile" value="${release.destdir}/${release.name}-${release.version}"/>
+    <property name="release.target" value="${build.tmp.path}/${release.name}-${release.fullversion}"/>
+    <property name="release.destdir" value="${build.release.path}/${release.fullversion}"/>
+    <property name="release.destfile" value="${release.destdir}/${release.name}-${release.fullversion}"/>
     
     <echo message="*** Release"/>
     <echo message="* Name    : ${release.name} "/>
-    <echo message="* Version : ${release.version} "/>
+    <echo message="* Version : ${release.fullversion} "/>
     <echo message="* Format  : ${release.format} "/>
     
     <!-- Clean -->
@@ -142,10 +142,10 @@
     </copy>
     <copy file="${project.basedir}/base/neard.ini" tofile="${release.target}/${release.name}/neard.ini" overwrite="true">
       <filterset>
-        <filter token="RELEASE_VERSION" value="${release.version}"/>
+        <filter token="RELEASE_VERSION" value="${release.fullversion}"/>
       </filterset>
     </copy>
-    <echo file="${release.target}/${release.name}/core/resources/version.dat" append="false">${release.version}</echo>
+    <echo file="${release.target}/${release.name}/core/resources/version.dat" append="false">${release.fullversion}</echo>
   </target>
   
   <target name="compress">
@@ -154,7 +154,7 @@
       <equals arg1="${release.format}" arg2="7z"/>
       <then>
         <delete file="${release.destfile}.7z"/>
-        <echo message="Compressing ${release.name}${release.version} to ${release.destfile}.7z..."/>
+        <echo message="Compressing ${release.name}${release.fullversion} to ${release.destfile}.7z..."/>
         <sevenzip src="${release.target}/*" dest="${release.destfile}.7z" format="7z"/>
         <hashfile file="${release.destfile}.7z"/>
       </then>
@@ -162,7 +162,7 @@
         <equals arg1="${release.format}" arg2="zip"/>
         <then>
           <delete file="${release.destfile}.zip"/>
-          <echo message="Compressing ${release.name}${release.version} to ${release.destfile}.zip..."/>
+          <echo message="Compressing ${release.name}${release.fullversion} to ${release.destfile}.zip..."/>
           <sevenzip src="${release.target}/*" dest="${release.destfile}.zip" format="zip"/>
           <hashfile file="${release.destfile}.zip"/>
         </then>
@@ -171,12 +171,12 @@
         <equals arg1="${release.format}" arg2="all"/>
         <then>
           <delete file="${release.destfile}.7z"/>
-          <echo message="Compressing ${release.name}${release.version} to ${release.destfile}.7z..."/>
+          <echo message="Compressing ${release.name}${release.fullversion} to ${release.destfile}.7z..."/>
           <sevenzip src="${release.target}/*" dest="${release.destfile}.7z" format="7z"/>
           <hashfile file="${release.destfile}.7z"/>
           
           <delete file="${release.destfile}.zip"/>
-          <echo message="Compressing ${release.name}${release.version} to ${release.destfile}.zip..."/>
+          <echo message="Compressing ${release.name}${release.fullversion} to ${release.destfile}.zip..."/>
           <sevenzip src="${release.target}/*" dest="${release.destfile}.zip" format="zip"/>
           <hashfile file="${release.destfile}.zip"/>
         </then>
