@@ -11,7 +11,7 @@ environment:
 install:
   - ps: |
       $appProps = ConvertFrom-StringData (Get-Content $env:APPVEYOR_BUILD_FOLDER\build.properties -Raw)
-      $env:APP_VERSION = $appProps.'release.version'
+      $env:APP_VERSION = $appProps.'release.version' + "." + $env:APPVEYOR_BUILD_NUMBER
       Write-Host "App version: $env:APP_VERSION"
   - cmd: |
       git clone https://github.com/crazy-max/neard-dev.git C:\projects\temp
@@ -32,6 +32,20 @@ after_build:
 
 artifacts:
   - path: 'release\*'
+    name: release
+
+deploy:
+  tag: v$(APP_VERSION)
+  release: v$(APP_VERSION)
+  description: 'Unstable release $(APP_VERSION)'
+  provider: GitHub
+  auth_token:
+    secure: BGz5Z+cKh7a/UOFxIfBfZYho8Ghf3bO3LvaX70mdgiG1UDJhtW3FUGDjBrwyZglf
+  artifact: release
+  draft: false
+  prerelease: true
+  on:
+    branch: master
 
 notifications:
   - provider: Slack
