@@ -37,7 +37,7 @@ artifacts:
 deploy:
   tag: v$(APP_VERSION)
   release: v$(APP_VERSION)
-  description: 'Unstable release $(APP_VERSION)'
+  description: '[![Github Releases (by Release)](https://img.shields.io/github/downloads/crazy-max/neard/v$(APP_VERSION)/total.svg?style=flat-square)](https://github.com/crazy-max/neard/releases/v$(APP_VERSION))'
   provider: GitHub
   auth_token:
     secure: BGz5Z+cKh7a/UOFxIfBfZYho8Ghf3bO3LvaX70mdgiG1UDJhtW3FUGDjBrwyZglf
