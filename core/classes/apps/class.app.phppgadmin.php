@@ -59,13 +59,15 @@ class AppPhppgadmin extends Module
             Util::logError($this->getName() . ' alias not found : ' . $alias);
         }
         
-        Util::replaceInFile($this->getConf(), array(
-            '/^\$postgresqlPort\s=\s(\d+)/' => '$postgresqlPort = ' . $neardBins->getPostgresql()->getPort() . ';',
-            '/^\$postgresqlRootUser\s=\s/' => '$postgresqlRootUser = \'' . $neardBins->getPostgresql()->getRootUser() . '\';',
-            '/^\$postgresqlRootPwd\s=\s/' => '$postgresqlRootPwd = \'' . $neardBins->getPostgresql()->getRootPwd() . '\';',
-            '/^\$postgresqlDumpExe\s=\s/' => '$postgresqlDumpExe = \'' . $neardBins->getPostgresql()->getDumpExe() . '\';',
-            '/^\$postgresqlDumpAllExe\s=\s/' => '$postgresqlDumpAllExe = \'' . $neardBins->getPostgresql()->getDumpAllExe() . '\';',
-        ));
+        if ($neardBins->getPostgresql()->isEnable()) {
+            Util::replaceInFile($this->getConf(), array(
+                '/^\$postgresqlPort\s=\s(\d+)/' => '$postgresqlPort = ' . $neardBins->getPostgresql()->getPort() . ';',
+                '/^\$postgresqlRootUser\s=\s/' => '$postgresqlRootUser = \'' . $neardBins->getPostgresql()->getRootUser() . '\';',
+                '/^\$postgresqlRootPwd\s=\s/' => '$postgresqlRootPwd = \'' . $neardBins->getPostgresql()->getRootPwd() . '\';',
+                '/^\$postgresqlDumpExe\s=\s/' => '$postgresqlDumpExe = \'' . $neardBins->getPostgresql()->getDumpExe() . '\';',
+                '/^\$postgresqlDumpAllExe\s=\s/' => '$postgresqlDumpAllExe = \'' . $neardBins->getPostgresql()->getDumpAllExe() . '\';',
+            ));
+        }
     }
     
     public function setVersion($version) {

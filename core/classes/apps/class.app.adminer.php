@@ -59,18 +59,32 @@ class AppAdminer extends Module
             Util::logError($this->getName() . ' alias not found : ' . $alias);
         }
         
-        Util::replaceInFile($this->getConf(), array(
-            '/^\$mysqlPort\s=\s(\d+)/' => '$mysqlPort = ' . $neardBins->getMysql()->getPort() . ';',
-            '/^\$mysqlRootUser\s=\s/' => '$mysqlRootUser = \'' . $neardBins->getMysql()->getRootUser() . '\';',
-            '/^\$mysqlRootPwd\s=\s/' => '$mysqlRootPwd = \'' . $neardBins->getMysql()->getRootPwd() . '\';',
-            '/^\$mariadbPort\s=\s(\d+)/' => '$mariadbPort = ' . $neardBins->getMariadb()->getPort() . ';',
-            '/^\$mariadbRootUser\s=\s/' => '$mariadbRootUser = \'' . $neardBins->getMariadb()->getRootUser() . '\';',
-            '/^\$mariadbRootPwd\s=\s/' => '$mariadbRootPwd = \'' . $neardBins->getMariadb()->getRootPwd() . '\';',
-            '/^\$postgresqlPort\s=\s(\d+)/' => '$postgresqlPort = ' . $neardBins->getPostgresql()->getPort() . ';',
-            '/^\$postgresqlRootUser\s=\s/' => '$postgresqlRootUser = \'' . $neardBins->getPostgresql()->getRootUser() . '\';',
-            '/^\$postgresqlRootPwd\s=\s/' => '$postgresqlRootPwd = \'' . $neardBins->getPostgresql()->getRootPwd() . '\';',
-            '/^\$mongodbPort\s=\s(\d+)/' => '$mongodbPort = ' . $neardBins->getMongodb()->getPort() . ';'
-        ));
+        if ($neardBins->getMysql()->isEnable()) {
+            Util::replaceInFile($this->getConf(), array(
+                '/^\$mysqlPort\s=\s(\d+)/' => '$mysqlPort = ' . $neardBins->getMysql()->getPort() . ';',
+                '/^\$mysqlRootUser\s=\s/' => '$mysqlRootUser = \'' . $neardBins->getMysql()->getRootUser() . '\';',
+                '/^\$mysqlRootPwd\s=\s/' => '$mysqlRootPwd = \'' . $neardBins->getMysql()->getRootPwd() . '\';'
+            ));
+        }
+        if ($neardBins->getMariadb()->isEnable()) {
+            Util::replaceInFile($this->getConf(), array(
+                '/^\$mariadbPort\s=\s(\d+)/' => '$mariadbPort = ' . $neardBins->getMariadb()->getPort() . ';',
+                '/^\$mariadbRootUser\s=\s/' => '$mariadbRootUser = \'' . $neardBins->getMariadb()->getRootUser() . '\';',
+                '/^\$mariadbRootPwd\s=\s/' => '$mariadbRootPwd = \'' . $neardBins->getMariadb()->getRootPwd() . '\';'
+            ));
+        }
+        if ($neardBins->getPostgresql()->isEnable()) {
+            Util::replaceInFile($this->getConf(), array(
+                '/^\$postgresqlPort\s=\s(\d+)/' => '$postgresqlPort = ' . $neardBins->getPostgresql()->getPort() . ';',
+                '/^\$postgresqlRootUser\s=\s/' => '$postgresqlRootUser = \'' . $neardBins->getPostgresql()->getRootUser() . '\';',
+                '/^\$postgresqlRootPwd\s=\s/' => '$postgresqlRootPwd = \'' . $neardBins->getPostgresql()->getRootPwd() . '\';'
+            ));
+        }
+        if ($neardBins->getMongodb()->isEnable()) {
+            Util::replaceInFile($this->getConf(), array(
+                '/^\$mongodbPort\s=\s(\d+)/' => '$mongodbPort = ' . $neardBins->getMongodb()->getPort() . ';'
+            ));
+        }
     }
     
     public function setVersion($version) {

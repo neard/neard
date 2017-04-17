@@ -59,9 +59,11 @@ class AppPhpmemadmin extends Module
             Util::logError($this->getName() . ' alias not found : ' . $alias);
         }
         
-        Util::replaceInFile($this->getConf(), array(
-            '/^\s\s\s\s\s\s\s\s"port"/' => '        "port": ' . $neardBins->getMemcached()->getPort(),
-        ));
+        if ($neardBins->getMemcached()->isEnable()) {
+            Util::replaceInFile($this->getConf(), array(
+                '/^\s\s\s\s\s\s\s\s"port"/' => '        "port": ' . $neardBins->getMemcached()->getPort(),
+            ));
+        }
     }
     
     public function setVersion($version) {
