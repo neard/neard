@@ -22,6 +22,9 @@ class BinApache extends Module
     const CMD_LOADED_MODULES = '-M';
     const CMD_SYNTAX_CHECK = '-t';
     
+    const TAG_START_SWITCHONLINE = '# START switchOnline tag - Do not replace!';
+    const TAG_END_SWITCHONLINE = '# END switchOnline tag - Do not replace!';
+    
     private $service;
     private $modulesPath;
     private $sslConf;
@@ -335,7 +338,7 @@ class BinApache extends Module
         return $result;
     }
     
-    public function getModulesFromFolder() {
+    private function getModulesFromFolder() {
         $result = array();
         
         $handle = @opendir($this->getModulesPath());
@@ -459,36 +462,36 @@ class BinApache extends Module
         return $result;
     }
     
-    public function getOnlineContent($version = null) {
+    private function getOnlineContent($version = null) {
         $version = $version != null ? $version : $this->getVersion();
-        $result = '    # START switchOnline tag - Do not replace!' . PHP_EOL;
+        $result = self::TAG_START_SWITCHONLINE . PHP_EOL;
         
         if (Util::startWith($version, '2.4')) {
-            $result .= '    Require all granted' . PHP_EOL;
+            $result .= 'Require all granted' . PHP_EOL;
         } else {
-            $result .= '    Order Allow,Deny' . PHP_EOL .
-                '    Allow from all' . PHP_EOL;
+            $result .= 'Order Allow,Deny' . PHP_EOL .
+                'Allow from all' . PHP_EOL;
         }
         
-        return $result . '    # END switchOnline tag - Do not replace!';
+        return $result . self::TAG_END_SWITCHONLINE;
     }
     
-    public function getOfflineContent($version = null) {
+    private function getOfflineContent($version = null) {
         $version = $version != null ? $version : $this->getVersion();
-        $result = '    # START switchOnline tag - Do not replace!' . PHP_EOL;
+        $result = self::TAG_START_SWITCHONLINE . PHP_EOL;
     
         if (Util::startWith($version, '2.4')) {
-            $result .= '    Require local' . PHP_EOL;
+            $result .= 'Require local' . PHP_EOL;
         } else {
-            $result .= '    Order Deny,Allow' . PHP_EOL .
-                '    Deny from all' . PHP_EOL .
-                '    Allow from 127.0.0.1 ::1' . PHP_EOL;
+            $result .= 'Order Deny,Allow' . PHP_EOL .
+                'Deny from all' . PHP_EOL .
+                'Allow from 127.0.0.1 ::1' . PHP_EOL;
         }
     
-        return $result . '    # END switchOnline tag - Do not replace!';
+        return $result . self::TAG_END_SWITCHONLINE;
     }
     
-    public function getRequiredContent($version = null) {
+    private function getRequiredContent($version = null) {
         global $neardConfig;
         return $neardConfig->isOnline() ? $this->getOnlineContent($version) : $this->getOfflineContent($version);
     }
@@ -544,23 +547,35 @@ class BinApache extends Module
     }
     
     public function refreshConf($putOnline) {
+        if (!$this->enable) {
+            return;
+        }
+        
         $onlineContent = $this->getOnlineContent();
         $offlineContent = $this->getOfflineContent();
         
         $conf = file_get_contents($this->getConf());
+        Util::logTrace('refreshConf ' . $this->getConf());
+        preg_match('/' . self::TAG_START_SWITCHONLINE . '(.*?)' . self::TAG_END_SWITCHONLINE . '/s', $conf, $matches);
+        Util::logTrace(isset($matches[1]) ? print_r($matches[1], true) : 'N/A');
+        
         if ($putOnline) {
-            $conf = str_replace($offlineContent, $onlineContent, $conf, $count);
+            $conf = preg_replace('/' . self::TAG_START_SWITCHONLINE . '(.*?)' . self::TAG_END_SWITCHONLINE . '/s', $onlineContent, $conf, -1, $count);
         } else {
-            $conf = str_replace($onlineContent, $offlineContent, $conf, $count);
+            $conf = preg_replace('/' . self::TAG_START_SWITCHONLINE . '(.*?)' . self::TAG_END_SWITCHONLINE . '/s', $offlineContent, $conf, -1, $count);
         }
         file_put_contents($this->getConf(), $conf);
         Util::logDebug('Refresh ' . $this->getConf() . ': ' . $count . ' occurrence(s) replaced');
         
         $sslConf = file_get_contents($this->getSslConf());
+        Util::logTrace('refreshConf ' . $this->getSslConf());
+        preg_match('/' . self::TAG_START_SWITCHONLINE . '(.*?)' . self::TAG_END_SWITCHONLINE . '/s', $sslConf, $matches);
+        Util::logTrace(isset($matches[1]) ? print_r($matches[1], true) : 'N/A');
+        
         if ($putOnline) {
-            $sslConf = str_replace($offlineContent, $onlineContent, $sslConf, $count);
+            $conf = preg_replace('/' . self::TAG_START_SWITCHONLINE . '(.*?)' . self::TAG_END_SWITCHONLINE . '/s', $onlineContent, $sslConf, -1, $count);
         } else {
-            $sslConf = str_replace($onlineContent, $offlineContent, $sslConf, $count);
+            $conf = preg_replace('/' . self::TAG_START_SWITCHONLINE . '(.*?)' . self::TAG_END_SWITCHONLINE . '/s', $offlineContent, $sslConf, -1, $count);
         }
         file_put_contents($this->getSslConf(), $sslConf);
         Util::logDebug('Refresh ' . $this->getSslConf() . ': ' . $count . ' occurrence(s) replaced');
@@ -569,15 +584,23 @@ class BinApache extends Module
     public function refreshAlias($putOnline) {
         global $neardBs, $neardHomepage;
         
+        if (!$this->enable) {
+            return;
+        }
+        
         $onlineContent = $this->getOnlineContent();
         $offlineContent = $this->getOfflineContent();
         
         foreach ($this->getAlias() as $alias) {
             $aliasConf = file_get_contents($neardBs->getAliasPath() . '/' . $alias . '.conf');
+            Util::logTrace('refreshAlias ' . $neardBs->getAliasPath() . '/' . $alias . '.conf');
+            preg_match('/' . self::TAG_START_SWITCHONLINE . '(.*?)' . self::TAG_END_SWITCHONLINE . '/s', $aliasConf, $matches);
+            Util::logTrace(isset($matches[1]) ? print_r($matches[1], true) : 'N/A');
+            
             if ($putOnline) {
-                $aliasConf = str_replace($offlineContent, $onlineContent, $aliasConf, $count);
+                $aliasConf= preg_replace('/' . self::TAG_START_SWITCHONLINE . '(.*?)' . self::TAG_END_SWITCHONLINE . '/s', $onlineContent, $aliasConf, -1, $count);
             } else {
-                $aliasConf = str_replace($onlineContent, $offlineContent, $aliasConf, $count);
+                $aliasConf= preg_replace('/' . self::TAG_START_SWITCHONLINE . '(.*?)' . self::TAG_END_SWITCHONLINE . '/s', $offlineContent, $aliasConf, -1, $count);
             }
             file_put_contents($neardBs->getAliasPath() . '/' . $alias . '.conf', $aliasConf);
             Util::logDebug('Refresh ' . $neardBs->getAliasPath() . '/' . $alias . '.conf: ' . $count . ' occurrence(s) replaced');
@@ -590,15 +613,23 @@ class BinApache extends Module
     public function refreshVhosts($putOnline) {
         global $neardBs;
         
+        if (!$this->enable) {
+            return;
+        }
+        
         $onlineContent = $this->getOnlineContent();
         $offlineContent = $this->getOfflineContent();
         
         foreach ($this->getVhosts() as $vhost) {
             $vhostConf = file_get_contents($neardBs->getVhostsPath() . '/' . $vhost . '.conf');
+            Util::logTrace('refreshVhost ' . $neardBs->getVhostsPath() . '/' . $vhost . '.conf');
+            preg_match('/' . self::TAG_START_SWITCHONLINE . '(.*?)' . self::TAG_END_SWITCHONLINE . '/s', $vhostConf, $matches);
+            Util::logTrace(isset($matches[1]) ? print_r($matches[1], true) : 'N/A');
+            
             if ($putOnline) {
-                $vhostConf = str_replace($offlineContent, $onlineContent, $vhostConf, $count);
+                $vhostConf= preg_replace('/' . self::TAG_START_SWITCHONLINE . '(.*?)' . self::TAG_END_SWITCHONLINE . '/s', $onlineContent, $vhostConf, -1, $count);
             } else {
-                $vhostConf = str_replace($onlineContent, $offlineContent, $vhostConf, $count);
+                $vhostConf= preg_replace('/' . self::TAG_START_SWITCHONLINE . '(.*?)' . self::TAG_END_SWITCHONLINE . '/s', $offlineContent, $vhostConf, -1, $count);
             }
             file_put_contents($neardBs->getVhostsPath() . '/' . $vhost . '.conf', $vhostConf);
             Util::logDebug('Refresh ' . $neardBs->getVhostsPath() . '/' . $vhost . '.conf: ' . $count . ' occurrence(s) replaced');

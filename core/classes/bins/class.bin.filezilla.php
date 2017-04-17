@@ -130,6 +130,10 @@ class BinFilezilla extends Module
     }
     
     public function rebuildConf() {
+        if (!$this->enable) {
+            return;
+        }
+        
         $this->setConf(array(
             self::CFG_SERVER_PORT => $this->port,
             self::CFG_SERVICE_NAME => $this->service->getName(),
@@ -139,6 +143,10 @@ class BinFilezilla extends Module
     }
     
     public function setConf($elts) {
+        if (!$this->enable) {
+            return;
+        }
+        
         $conf = simplexml_load_file($this->conf);
         foreach ($elts as $key => $value) {
             $conf->Settings->Item[$key] = $value;
