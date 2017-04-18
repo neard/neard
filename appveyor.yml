@@ -42,8 +42,8 @@ deploy:
   auth_token:
     secure: BGz5Z+cKh7a/UOFxIfBfZYho8Ghf3bO3LvaX70mdgiG1UDJhtW3FUGDjBrwyZglf
   artifact: release
-  draft: false
-  prerelease: true
+  draft: true
+  prerelease: false
   on:
     branch: master
 
