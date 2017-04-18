@@ -275,17 +275,6 @@ class BinFilezilla extends Module
         return true;
     }
     
-    // FIXME: Remove this
-    public function removeSslCrt() {
-        global $neardBs;
-    
-        $ppkPath = $neardBs->getSslPath() . '/' . self::SERVICE_NAME . '.ppk';
-        $pubPath = $neardBs->getSslPath() . '/' . self::SERVICE_NAME . '.pub';
-        $crtPath = $neardBs->getSslPath() . '/' . self::SERVICE_NAME . '.crt';
-    
-        return @unlink($ppkPath) && @unlink($pubPath) && @unlink($crtPath);
-    }
-    
     public function setVersion($version) {
         global $neardConfig;
         $this->version = $version;

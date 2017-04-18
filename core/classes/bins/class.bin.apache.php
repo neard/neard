@@ -307,6 +307,10 @@ class BinApache extends Module
     
     public function getModulesFromConf() {
         $result = array();
+        
+        if (!$this->enable) {
+            return $result;
+        }
     
         $confContent = file($this->getConf());
         foreach ($confContent as $row) {
@@ -340,6 +344,10 @@ class BinApache extends Module
     
     private function getModulesFromFolder() {
         $result = array();
+        
+        if (!$this->enable) {
+            return $result;
+        }
         
         $handle = @opendir($this->getModulesPath());
         if (!$handle) {
