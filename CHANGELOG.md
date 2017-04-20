@@ -1,5 +1,25 @@
 # Changelog
 
+## 1.2 (2017/04/19)
+
+* Review versioning style (Issue #247)
+* Blank page for phpMyAdmin and Adminer if MariaDB or MySQL disabled (Issue #243)
+* Services cannot start / paused on Windows 10 Creators Update (Issue #242)
+* Display module release in logs (Issue #209)
+* Add ability to customize the env. PATH variable for NSSM services (Issue #233)
+* Improve phpinfo output (Issue #230)
+* Improve files scan on startup (Issue #229)
+* Missing check enable for SVN (Issue #219)
+* Service uninstallation error (Issue #218)
+* Create checksum for downloads (Issue #211)
+* MySQL/MariaDB console don't ask for password if not empty (Issue #206)
+* Localhost menu shortcuts don't reflect Apache port change (Issue #205)
+* Put online / offline does not work for virtual hosts and aliases (Issue #202)
+* Add MongoDB (Issue #166)
+* Update Hungarian language (Issue #112)
+* Switch to phpMemAdmin 0.1.0.41 as default version
+* Use AppVeyor instead of Travis
+
 ## 1.0.22 (2016/12/18)
 
 * Cannot switch to trace verbosity (Issue #198)

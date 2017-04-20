@@ -1,3 +1,17 @@
+## 1.0.22 > 1.2
+
+* **required** : Download and install the latests [Neard Prerequisites Package](https://github.com/crazy-max/neard-prerequisites/releases/latest)
+* **required** : Remove then replace folder `core`
+* **required** : Copy file `nssmEnvPaths.dat`
+* **required** : Add line `mongodbVersion = "2.6.12"` after `mariadbEnable` in `neard.conf`
+* **required** : Add line `mongodbEnable = "1"` after `mongodbVersion` in `neard.conf`
+* **required** : Copy folder `bins\mongodb`
+* **optional** : Change `phpmemadminVersion` value to `0.1.0.41` in `neard.conf` and copy folder `apps\phpmemadmin\phpmemadmin0.1.0.41`
+* **required** : Remove then replace folder `apps\websvn\websvn2.3.3`
+* **required** : Replace your existing Adminer version with the latest [Adminer bundle](http://neard.io/apps/adminer/#releases).
+* **required** : Replace your existing Apache version with the latest [Apache bundle](http://neard.io/bins/apache/#releases).
+* **required** : Replace your existing PHP version with the latest [PHP bundle](http://neard.io/bins/php/#releases).
+
 ## 1.0.21 > 1.0.22
 
 * **required** : Remove file `alias\svn.conf`
