@@ -954,9 +954,9 @@ class Util
         return self::getWebsiteUrl('/release/' . $version);
     }
     
-    public static function getChangelogUrl()
+    public static function getChangelogUrl($utmSource = true)
     {
-        return self::getWebsiteUrl('doc/changelog');
+        return self::getWebsiteUrl('doc/changelog', null, $utmSource);
     }
     
     public static function getRemoteFilesize($url, $humanFileSize = true)
