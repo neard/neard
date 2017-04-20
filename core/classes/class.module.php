@@ -9,7 +9,7 @@ abstract class Module
 
     protected $name;
     protected $version;
-    protected $release;
+    protected $release = 'N/A';
 
     protected $rootPath;
     protected $currentPath;
@@ -46,7 +46,9 @@ abstract class Module
         $this->neardConfRaw = @parse_ini_file($this->neardConf);
 
         if ($this->neardConfRaw !== false) {
-            $this->release = $this->neardConfRaw[self::BUNDLE_RELEASE];
+            if (isset($this->neardConfRaw[self::BUNDLE_RELEASE])) {
+                $this->release = $this->neardConfRaw[self::BUNDLE_RELEASE];
+            }
         }
     }
 
