@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.2 (2017/04/19)
+## 1.2 (2017/04/20)
 
 * Review versioning style (Issue #247)
 * Blank page for phpMyAdmin and Adminer if MariaDB or MySQL disabled (Issue #243)
