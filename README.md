@@ -13,7 +13,6 @@
 
 **Neard** is a portable WAMP software stack involving useful binaries, tools and applications for your web development.<br />
 For those who wish to contribute, have an issue or questions, read the [Documentation](http://neard.io/doc).<br />
-And do not forget to star :star2: the project if you like it :heart_eyes:
 
 ![](http://neard.io/img/screenshots/menu1.png)  ![](http://neard.io/img/screenshots/menu2.png)  ![](http://neard.io/img/screenshots/menu-tools2.png)
 
@@ -73,7 +72,7 @@ It also offers several versions of the various [binaries](http://neard.io/bins),
 ## How can i help ?
 
 **Neard** is a free and open source software and always will be.<br />
-I'm a single developer and if you find this project useful, please consider making a donation.<br />
+We welcome all kinds of contributions :raised_hands:! The most basic way to show your support is to star :star2: the project, or to raise issues :speech_balloon:<br />
 Any funds donated will be used to help further development on this project! :gift_heart:
 
 <p>
