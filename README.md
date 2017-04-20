@@ -72,7 +72,8 @@ It also offers several versions of the various [binaries](http://neard.io/bins),
 ## How can i help ?
 
 **Neard** is a free and open source software and always will be.<br />
-We welcome all kinds of contributions :raised_hands:! The most basic way to show your support is to star :star2: the project, or to raise issues :speech_balloon:<br />
+We welcome all kinds of contributions :raised_hands:!<br />
+The most basic way to show your support is to star :star2: the project, or to raise issues :speech_balloon:<br />
 Any funds donated will be used to help further development on this project! :gift_heart:
 
 <p>
