@@ -9,10 +9,6 @@ environment:
   JAVA_HOME: C:\Program Files (x86)\Java\jdk1.8.0
 
 install:
-  - ps: |
-      $appProps = ConvertFrom-StringData (Get-Content $env:APPVEYOR_BUILD_FOLDER\build.properties -Raw)
-      $env:APP_VERSION = $appProps.'release.version' + "." + $env:APPVEYOR_BUILD_NUMBER
-      Write-Host "App version: $env:APP_VERSION"
   - cmd: |
       git clone https://github.com/crazy-max/neard-dev.git C:\projects\temp
       move C:\projects\temp C:\projects\neard-dev
@@ -28,6 +24,9 @@ build_script:
   - ant release
 
 after_build:
+  - ps: |
+      $env:APP_VERSION = Get-Content C:\neard-build\tmp\version.dat -Raw
+      Write-Host "App version: $env:APP_VERSION"
   - cmd: move C:\neard-build\releases\%APP_VERSION% %APPVEYOR_BUILD_FOLDER%\release
 
 artifacts:

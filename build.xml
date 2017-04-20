@@ -138,12 +138,15 @@
         <filter token="APP_WEBSVN_VERSION" value="${app.websvn.version}"/>
       </filterset>
     </copy>
+    
+    <!-- Write version -->
     <copy file="${project.basedir}/base/neard.ini" tofile="${release.target}/${release.name}/neard.ini" overwrite="true">
       <filterset>
         <filter token="RELEASE_VERSION" value="${release.fullversion}"/>
       </filterset>
     </copy>
     <echo file="${release.target}/${release.name}/core/resources/version.dat" append="false">${release.fullversion}</echo>
+    <echo file="${build.tmp.path}/version.dat" append="false">${release.fullversion}</echo>
   </target>
   
   <target name="compress">
