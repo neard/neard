@@ -42,8 +42,6 @@
     <!-- Copy core -->
     <copy todir="${release.target}/${release.name}">
       <fileset dir="${project.basedir}" defaultexcludes="yes" excludes="
-        .dev/**,
-        .github/**,
         base/**,
         core/tmp/*,
         build.xml,
