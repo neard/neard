@@ -99,6 +99,7 @@
     <getmodule releasesurl="${tool.ruby.url}" version="${tool.ruby.version}" dest="${release.target}/${release.name}/tools/ruby"/>
     <getmodule releasesurl="${tool.wpcli.url}" version="${tool.wpcli.version}" dest="${release.target}/${release.name}/tools/wpcli"/>
     <getmodule releasesurl="${tool.xdc.url}" version="${tool.xdc.version}" dest="${release.target}/${release.name}/tools/xdc"/>
+    <getmodule releasesurl="${tool.yarn.url}" version="${tool.yarn.version}" dest="${release.target}/${release.name}/tools/yarn"/>
     
     <!-- Replacements -->
     <copy file="${project.basedir}/base/neard.conf" tofile="${release.target}/${release.name}/neard.conf" overwrite="true">
@@ -128,6 +129,7 @@
         <filter token="TOOL_RUBY_VERSION" value="${tool.ruby.version}"/>
         <filter token="TOOL_WPCLI_VERSION" value="${tool.wpcli.version}"/>
         <filter token="TOOL_XDC_VERSION" value="${tool.xdc.version}"/>
+        <filter token="TOOL_YARN_VERSION" value="${tool.yarn.version}"/>
         
         <filter token="APP_ADMINER_VERSION" value="${app.adminer.version}"/>
         <filter token="APP_GITLIST_VERSION" value="${app.gitlist.version}"/>

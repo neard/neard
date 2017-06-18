@@ -132,6 +132,7 @@ python = "Python"
 ruby = "Ruby"
 wpcli = "WP-CLI"
 xdc = "XDebugClient"
+yarn = "Yarn"
 
 ; Errors
 errorConfNotFound = "%s konfigurationsfil hittades inte i %s"

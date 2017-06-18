@@ -57,6 +57,7 @@ It also offers several versions of the various [binaries](http://neard.io/bins),
 * [Ruby](http://neard.io/tools/ruby) : a dynamic, reflective, object-oriented, general-purpose programming language.
 * [WP-CLI](http://neard.io/tools/wpcli) : a command line interface for WordPress.
 * [XDebugClient](http://neard.io/tools/xdc) : a simple frontend for XDebug.
+* [Yarn](http://neard.io/tools/yarn) : a fast, reliable, and secure dependency management.
 
 ## Documentation
 

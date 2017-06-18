@@ -221,4 +221,9 @@ class ToolConsole extends Module
         global $neardLang, $neardTools;
         return $neardLang->getValue(Lang::RUBY) . ' ' . $neardTools->getRuby()->getVersion();
     }
+    
+    public function getTabTitleYarn() {
+        global $neardLang, $neardTools;
+        return $neardLang->getValue(Lang::YARN) . ' ' . $neardTools->getYarn()->getVersion();
+    }
 }

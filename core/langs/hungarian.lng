@@ -132,6 +132,7 @@ python = "Python"
 ruby = "Ruby"
 wpcli = "WP-CLI"
 xdc = "XDebugClient"
+yarn = "Yarn"
 
 ; Errors
 errorConfNotFound = "A %s konfiguraciós file nincs a %s -ban"

@@ -105,6 +105,13 @@ class TplAppTools
             TplAestan::GLYPH_DEBUG
         ) . PHP_EOL;
         
+        // Yarn
+        $resultItems .= TplAestan::getItemConsole(
+            $neardLang->getValue(Lang::YARN),
+            TplAestan::GLYPH_YARN,
+            $neardTools->getConsole()->getTabTitleYarn()
+        ) . PHP_EOL;
+        
         $resultItems .= TplAestan::getItemSeparator() . PHP_EOL;
         
         // Console

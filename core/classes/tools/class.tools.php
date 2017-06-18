@@ -17,6 +17,7 @@ class Tools
     private $ruby;
     private $wpcli;
     private $xdc;
+    private $yarn;
     
     public function __construct()
     {
@@ -151,5 +152,13 @@ class Tools
             $this->xdc = new ToolXdc('xdc', self::TYPE);
         }
         return $this->xdc;
+    }
+    
+    public function getYarn()
+    {
+        if ($this->yarn == null) {
+            $this->yarn= new ToolYarn('yarn', self::TYPE);
+        }
+        return $this->yarn;
     }
 }

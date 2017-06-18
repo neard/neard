@@ -155,6 +155,11 @@
             <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardTools->getXdc()->getVersion(); ?></span>
             <span><?php echo $neardLang->getValue(Lang::XDC); ?></span>
           </span>
+          <span class="list-group-item">
+            <a href="<?php echo Util::getWebsiteUrl('tools/yarn', '#releases'); ?>" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
+            <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardTools->getYarn()->getVersion(); ?></span>
+            <span><?php echo $neardLang->getValue(Lang::YARN); ?></span>
+          </span>
         </div>
       </div>
     </div>

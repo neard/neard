@@ -329,6 +329,9 @@ class Util
             if ($neardTools->getWpCli()->isEnable()) {
                 $value .= $neardTools->getWpCli()->getCurrentPath() . ';';
             }
+            if ($neardTools->getYarn()->isEnable()) {
+                $value .= $neardTools->getYarn()->getCurrentPath() . ';';
+            }
             $value = self::formatWindowsPath($value);
             self::logDebug('Generated app reg key: ' . $value);
         }
@@ -792,6 +795,21 @@ class Util
             $paths[] = array(
                 'path' => $neardTools->getRuby()->getRootPath() . '/' . $folder . '/bin',
                 'includes' => array('!.dll','!.exe'),
+                'recursive' => false
+            );
+        }
+        
+        // Yarn
+        $folderList = self::getFolderList($neardTools->getYarn()->getRootPath());
+        foreach ($folderList as $folder) {
+            $paths[] = array(
+                'path' => $neardBins->getNodejs()->getRootPath() . '/' . $folder . '/nodejs/etc',
+                'includes' => array('npmrc'),
+                'recursive' => true
+            );
+            $paths[] = array(
+                'path' => $neardBins->getNodejs()->getRootPath() . '/' . $folder . '/nodejs/node_modules/npm',
+                'includes' => array('npmrc'),
                 'recursive' => false
             );
         }

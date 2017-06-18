@@ -133,6 +133,7 @@ class Lang
     const RUBY = 'ruby';
     const WPCLI = 'wpcli';
     const XDC = 'xdc';
+    const YARN = 'yarn';
     
     // Errors
     const ERROR_CONF_NOT_FOUND = 'errorConfNotFound';
