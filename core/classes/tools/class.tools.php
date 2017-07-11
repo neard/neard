@@ -11,6 +11,7 @@ class Tools
     private $hostseditor;
     private $imagemagick;
     private $notepad2mod;
+    private $perl;
     private $phpmetrics;
     private $phpunit;
     private $python;
@@ -41,6 +42,7 @@ class Tools
             $this->getHostsEditor(),
             $this->getImageMagick(),
             $this->getNotepad2Mod(),
+            $this->getPerl(),
             $this->getPhpMetrics(),
             $this->getPhpUnit(),
             $this->getPython(),
@@ -104,6 +106,14 @@ class Tools
             $this->notepad2mod = new ToolNotepad2Mod('notepad2mod', self::TYPE);
         }
         return $this->notepad2mod;
+    }
+    
+    public function getPerl()
+    {
+        if ($this->perl == null) {
+            $this->perl= new ToolPerl('perl', self::TYPE);
+        }
+        return $this->perl;
     }
     
     public function getPhpMetrics()

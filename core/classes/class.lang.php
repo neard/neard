@@ -127,6 +127,7 @@ class Lang
     const HOSTSEDITOR = 'hostseditor';
     const IMAGEMAGICK = 'imagemagick';
     const NOTEPAD2MOD = 'notepad2mod';
+    const PERL = 'perl';
     const PHPMETRICS = 'phpmetrics';
     const PHPUNIT = 'phpunit';
     const PYTHON = 'python';

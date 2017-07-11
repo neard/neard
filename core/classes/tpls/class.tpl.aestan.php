@@ -54,6 +54,7 @@ class TplAestan
     const GLYPH_RUBY = 52;
     const GLYPH_SVN_BARE = 53;
     const GLYPH_YARN = 54;
+    const GLYPH_PERL = 55;
     
     const SERVICE_START = 'startresume';
     const SERVICE_STOP = 'stop';

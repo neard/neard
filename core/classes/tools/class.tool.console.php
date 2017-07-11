@@ -226,4 +226,9 @@ class ToolConsole extends Module
         global $neardLang, $neardTools;
         return $neardLang->getValue(Lang::YARN) . ' ' . $neardTools->getYarn()->getVersion();
     }
+    
+    public function getTabTitlePerl() {
+        global $neardLang, $neardTools;
+        return $neardLang->getValue(Lang::PERL) . ' ' . $neardTools->getPerl()->getVersion();
+    }
 }

@@ -314,6 +314,11 @@ class Util
             if ($neardTools->getImageMagick()->isEnable()) {
                 $value .= $neardTools->getImageMagick()->getCurrentPath() . ';';
             }
+            if ($neardTools->getPerl()->isEnable()) {
+                $value .= $neardTools->getPerl()->getCurrentPath() . '/perl/site/bin;';
+                $value .= $neardTools->getPerl()->getCurrentPath() . '/perl/bin;';
+                $value .= $neardTools->getPerl()->getCurrentPath() . '/c/bin;';
+            }
             if ($neardTools->getPhpMetrics()->isEnable()) {
                 $value .= $neardTools->getPhpMetrics()->getCurrentPath() . ';';
             }

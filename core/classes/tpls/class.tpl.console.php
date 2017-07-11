@@ -16,6 +16,7 @@ class TplConsole
     const ICON_PYTHON = 'python.ico';
     const ICON_RUBY = 'ruby.ico';
     const ICON_YARN = 'yarn.ico';
+    const ICON_PERL = 'perl.ico';
     
     private function __construct()
     {
@@ -226,6 +227,7 @@ class TplConsole
                 self::getTabSvnSection() . PHP_EOL .
                 self::getTabNodejsSection() . PHP_EOL .
                 self::getTabComposerSection() . PHP_EOL .
+                self::getTabPerlSection() . PHP_EOL .
                 self::getTabPhpMetricsSection() . PHP_EOL .
                 self::getTabPhpUnitSection() . PHP_EOL .
                 self::getTabDrushSection() . PHP_EOL .
@@ -506,6 +508,21 @@ class TplConsole
         return self::getTab(
             $neardTools->getConsole()->getTabTitleYarn(),
             self::ICON_YARN,
+            Util::formatWindowsPath($shell),
+            $neardBs->getWwwPath()
+        );
+    }
+    
+    private static function getTabPerlSection()
+    {
+        global $neardBs, $neardTools;
+        
+        $shell = $neardTools->getConsole()->getCmdShell() . ' ' .
+            '&quot;' . $neardTools->getPerl()->getExe() . '&quot; -v';
+        
+        return self::getTab(
+            $neardTools->getConsole()->getTabTitlePerl(),
+            self::ICON_PERL,
             Util::formatWindowsPath($shell),
             $neardBs->getWwwPath()
         );
