@@ -6,19 +6,13 @@ class ToolConsole extends Module
     
     const LOCAL_CFG_EXE = 'consoleExe';
     const LOCAL_CFG_CONF = 'consoleConf';
-    const LOCAL_CFG_TCCLE_EXE = 'consoleTccleExe';
-    const LOCAL_CFG_SHELL = 'consoleShell';
+    const LOCAL_CFG_LAUNCH_EXE = 'consoleLaunchExe';
     const LOCAL_CFG_ROWS = 'consoleRows';
     const LOCAL_CFG_COLS = 'consoleCols';
     
-    const SHELL_CMD = 'cmd';
-    const SHELL_POWERSHELL = 'powershell';
-    
     private $exe;
-    private $tccleExe;
+    private $launchExe;
     private $conf;
-    private $shell;
-    private $shellList;
     private $rows;
     private $cols;
 
@@ -36,25 +30,10 @@ class ToolConsole extends Module
 
         if ($this->neardConfRaw !== false) {
             $this->exe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_EXE];
-            $this->tccleExe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_TCCLE_EXE];
+            $this->launchExe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_LAUNCH_EXE];
             $this->conf = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_CONF];
-            $this->shell = $this->neardConfRaw[self::LOCAL_CFG_SHELL];
             $this->rows = intval($this->neardConfRaw[self::LOCAL_CFG_ROWS]);
             $this->cols = intval($this->neardConfRaw[self::LOCAL_CFG_COLS]);
-            
-            // PowerShell path
-            $powerShellPath = $this->getPowerShell();
-            
-            // Shell list
-            $this->shellList[self::SHELL_CMD] = $this->tccleExe;
-            $this->shellList[self::SHELL_POWERSHELL] = $powerShellPath;
-            
-            // Shell
-            if ($this->shell == self::SHELL_POWERSHELL && $powerShellPath !== false) {
-                $this->shell = $powerShellPath;
-            } else {
-                $this->shell = $this->tccleExe;
-            }
         }
         
         if (!$this->enable) {
@@ -70,8 +49,8 @@ class ToolConsole extends Module
         if (!is_file($this->exe)) {
             Util::logError(sprintf($neardLang->getValue(Lang::ERROR_EXE_NOT_FOUND), $this->name . ' ' . $this->version, $this->exe));
         }
-        if (!is_file($this->tccleExe)) {
-            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_EXE_NOT_FOUND), $this->name . ' ' . $this->version, $this->tccleExe));
+        if (!is_file($this->launchExe)) {
+            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_EXE_NOT_FOUND), $this->name . ' ' . $this->version, $this->launchExe));
         }
         if (!is_file($this->conf)) {
             Util::logError(sprintf($neardLang->getValue(Lang::ERROR_CONF_NOT_FOUND), $this->name . ' ' . $this->version, $this->conf));
@@ -94,8 +73,8 @@ class ToolConsole extends Module
         return $this->exe;
     }
     
-    public function getTccleExe() {
-        return $this->tccleExe;
+    public function getLaunchExe() {
+        return $this->launchExe;
     }
     
     public function getConf() {
@@ -110,20 +89,12 @@ class ToolConsole extends Module
         return $this->cols;
     }
     
-    public function getShell() {
-        return $this->shell;
-    }
-    
-    public function getShellList() {
-        return $this->shellList;
-    }
-    
-    public function getCmdShell() {
-        return '&quot;' . $this->getTccleExe() . '&quot;';
-    }
-    
-    public function getPowerShell() {
-        return Util::getPowerShellPath();
+    public function getShell($args = null) {
+        if (empty($args)) {
+            return 'cmd /k &quot;' . Util::formatWindowsPath($this->launchExe) . '&quot;';
+        } else {
+            return 'cmd /k &quot;&quot;' . Util::formatWindowsPath($this->getLaunchExe()) . '&quot; &amp; ' . Util::formatWindowsPath($args) . '&quot;';
+        }
     }
     
     public function getTabTitleDefault() {
@@ -131,12 +102,8 @@ class ToolConsole extends Module
         return $neardLang->getValue(Lang::CONSOLE);
     }
     
-    public function getTabTitleCmd() {
-        return $this->getTabTitleDefault() . ' ' . self::SHELL_CMD;
-    }
-    
     public function getTabTitlePowershell() {
-        return $this->getTabTitleDefault() . ' ' . self::SHELL_POWERSHELL;
+        return 'PowerShell';
     }
     
     public function getTabTitlePear() {

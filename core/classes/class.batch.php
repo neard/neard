@@ -94,22 +94,6 @@ class Batch
         return null;
     }
     
-    public static function getSvnVersion()
-    {
-        global $neardBins;
-    
-        $result = self::exec('getSvnVersion', 'CMD /C "' . $neardBins->getSvn()->getExe() . '" --version', 5);
-        if (!empty($result) && is_array($result)) {
-            $rebuildResult = array();
-            foreach ($result as $row) {
-                $rebuildResult[] = Util::cp1252ToUtf8($row);
-            }
-            $result = $rebuildResult;
-        }
-    
-        return $result;
-    }
-    
     public static function refreshEnvVars()
     {
         global $neardBs, $neardCore;

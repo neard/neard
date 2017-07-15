@@ -3,6 +3,7 @@
 class TplConsole
 {
     const ICON_APP = 'app.ico';
+    const ICON_POWERSHELL = 'powershell.ico';
     const ICON_PEAR = 'pear.ico';
     const ICON_DB = 'db.ico';
     const ICON_GIT = 'git.ico';
@@ -54,21 +55,21 @@ class TplConsole
             'save_size="0">' . PHP_EOL;
         
         $sectionColors = self::getIncrStr(2) . '<colors>' . PHP_EOL .
-                self::getIncrStr(3) . '<color id="0" r="0" g="0" b="0"/>' . PHP_EOL .
-                self::getIncrStr(3) . '<color id="1" r="0" g="0" b="128"/>' . PHP_EOL .
-                self::getIncrStr(3) . '<color id="2" r="0" g="150" b="0"/>' . PHP_EOL .
-                self::getIncrStr(3) . '<color id="3" r="0" g="150" b="150"/>' . PHP_EOL .
-                self::getIncrStr(3) . '<color id="4" r="170" g="25" b="25"/>' . PHP_EOL .
-                self::getIncrStr(3) . '<color id="5" r="128" g="0" b="128"/>' . PHP_EOL .
-                self::getIncrStr(3) . '<color id="6" r="128" g="128" b="0"/>' . PHP_EOL .
-                self::getIncrStr(3) . '<color id="7" r="192" g="192" b="192"/>' . PHP_EOL .
-                self::getIncrStr(3) . '<color id="8" r="128" g="128" b="128"/>' . PHP_EOL .
-                self::getIncrStr(3) . '<color id="9" r="0" g="100" b="255"/>' . PHP_EOL .
-                self::getIncrStr(3) . '<color id="10" r="0" g="255" b="0"/>' . PHP_EOL .
-                self::getIncrStr(3) . '<color id="11" r="0" g="255" b="255"/>' . PHP_EOL .
-                self::getIncrStr(3) . '<color id="12" r="255" g="50" b="50"/>' . PHP_EOL .
-                self::getIncrStr(3) . '<color id="13" r="255" g="0" b="255"/>' . PHP_EOL .
-                self::getIncrStr(3) . '<color id="14" r="255" g="255" b="0"/>' . PHP_EOL .
+                self::getIncrStr(3) . '<color id="0" r="39" g="40" b="34"/>' . PHP_EOL .
+                self::getIncrStr(3) . '<color id="1" r="88" g="194" b="229"/>' . PHP_EOL .
+                self::getIncrStr(3) . '<color id="2" r="88" g="194" b="229"/>' . PHP_EOL .
+                self::getIncrStr(3) . '<color id="3" r="198" g="197" b="254"/>' . PHP_EOL .
+                self::getIncrStr(3) . '<color id="4" r="168" g="125" b="184"/>' . PHP_EOL .
+                self::getIncrStr(3) . '<color id="5" r="243" g="4" b="75"/>' . PHP_EOL .
+                self::getIncrStr(3) . '<color id="6" r="243" g="4" b="75"/>' . PHP_EOL .
+                self::getIncrStr(3) . '<color id="7" r="238" g="238" b="238"/>' . PHP_EOL .
+                self::getIncrStr(3) . '<color id="8" r="124" g="124" b="124"/>' . PHP_EOL .
+                self::getIncrStr(3) . '<color id="9" r="3" g="131" b="245"/>' . PHP_EOL .
+                self::getIncrStr(3) . '<color id="10" r="141" g="208" b="6"/>' . PHP_EOL .
+                self::getIncrStr(3) . '<color id="11" r="88" g="194" b="229"/>' . PHP_EOL .
+                self::getIncrStr(3) . '<color id="12" r="168" g="125" b="184"/>' . PHP_EOL .
+                self::getIncrStr(3) . '<color id="13" r="243" g="4" b="75"/>' . PHP_EOL .
+                self::getIncrStr(3) . '<color id="14" r="204" g="204" b="129"/>' . PHP_EOL .
                 self::getIncrStr(3) . '<color id="15" r="255" g="255" b="255"/>' . PHP_EOL .
             self::getIncrStr(2) . '</colors>' . PHP_EOL;
         
@@ -217,315 +218,296 @@ class TplConsole
     private static function getTabsSection()
     {
         return self::getIncrStr(1) . '<tabs>' . PHP_EOL .
-                self::getTabShellSections() . PHP_EOL .
-                self::getTabPearSection() . PHP_EOL .
-                self::getTabMysqlSection() . PHP_EOL .
-                self::getTabMariadbSection() . PHP_EOL .
-                self::getTabMongodbSection() . PHP_EOL .
-                self::getTabPostgresqlSection() . PHP_EOL .
-                self::getTabGitSection() . PHP_EOL .
-                self::getTabSvnSection() . PHP_EOL .
-                self::getTabNodejsSection() . PHP_EOL .
-                self::getTabComposerSection() . PHP_EOL .
-                self::getTabPerlSection() . PHP_EOL .
-                self::getTabPhpMetricsSection() . PHP_EOL .
-                self::getTabPhpUnitSection() . PHP_EOL .
-                self::getTabDrushSection() . PHP_EOL .
-                self::getTabWpCliSection() . PHP_EOL .
-                self::getTabPythonSection() . PHP_EOL .
-                self::getTabRubySection() . PHP_EOL .
-                self::getTabYarnSection() . PHP_EOL .
+                self::getTabCmdSection() .
+                self::getTabPowerShellSection() .
+                self::getTabPearSection() .
+                self::getTabMysqlSection() .
+                self::getTabMariadbSection() .
+                self::getTabMongodbSection() .
+                self::getTabPostgresqlSection() .
+                self::getTabGitSection() .
+                self::getTabSvnSection() .
+                self::getTabNodejsSection() .
+                self::getTabComposerSection() .
+                self::getTabPerlSection() .
+                self::getTabPhpMetricsSection() .
+                self::getTabPhpUnitSection() .
+                self::getTabDrushSection() .
+                self::getTabWpCliSection() .
+                self::getTabPythonSection() .
+                self::getTabRubySection() .
+                self::getTabYarnSection() .
             self::getIncrStr(1) . '</tabs>';
     }
     
-    private static function getTabShellSections()
+    private static function getTabCmdSection()
     {
         global $neardBs, $neardTools;
-        $default = '';
-        $result = '';
         
-        foreach ($neardTools->getConsole()->getShellList() as $name => $path) {
-            if ($neardTools->getConsole()->getShell() == $path) {
-                $default = self::getTab(
-                    $neardTools->getConsole()->getTabTitleDefault() . ' ' . $name,
-                    self::ICON_APP,
-                    Util::formatWindowsPath($path),
-                    $neardBs->getRootPath()
-                );
-            } else {
-                $result .= PHP_EOL . self::getTab(
-                    $neardTools->getConsole()->getTabTitleDefault() . ' ' . $name,
-                    self::ICON_APP,
-                    Util::formatWindowsPath($path),
-                    $neardBs->getRootPath()
-                );
-            }
+        return self::getTab(
+            $neardTools->getConsole()->getTabTitleDefault(),
+            self::ICON_APP,
+            $neardTools->getConsole()->getShell(),
+            $neardBs->getRootPath()
+        ) . PHP_EOL;
+    }
+    
+    private static function getTabPowerShellSection()
+    {
+        global $neardBs, $neardTools;
+        
+        $powerShellPath = Util::getPowerShellPath();
+        if ($powerShellPath !== false) {
+            return self::getTab(
+                $neardTools->getConsole()->getTabTitlePowershell(),
+                self::ICON_POWERSHELL,
+                $powerShellPath,
+                $neardBs->getRootPath()
+            ) . PHP_EOL;
         }
-        
-        return $default . $result;
     }
     
     private static function getTabPearSection()
     {
         global $neardBins, $neardTools;
         
-        $shell = $neardTools->getConsole()->getCmdShell() . ' ' .
-            '&quot;' . $neardBins->getPhp()->getPearExe() . '&quot; -V';
+        $shell = $neardTools->getConsole()->getShell('&quot;' . $neardBins->getPhp()->getPearExe() . '&quot; -V');
         
         return self::getTab(
             $neardTools->getConsole()->getTabTitlePear(),
             self::ICON_PEAR,
-            Util::formatWindowsPath($shell),
+            $shell,
             $neardBins->getPhp()->getPearPath()
-        );
+        ) . PHP_EOL;
     }
     
     private static function getTabMysqlSection()
     {
         global $neardBins, $neardTools;
-    
-        $shell = $neardTools->getConsole()->getCmdShell() . ' ' .
-            '&quot;' . $neardBins->getMysql()->getCliExe() . '&quot; -u' .
+        
+        $shell = $neardTools->getConsole()->getShell('&quot;' . $neardBins->getMysql()->getCliExe() . '&quot; -u' .
             $neardBins->getMysql()->getRootUser() .
-            ($neardBins->getMysql()->getRootPwd() ? ' -p' : '');
+            ($neardBins->getMysql()->getRootPwd() ? ' -p' : ''));
     
         return self::getTab(
             $neardTools->getConsole()->getTabTitleMysql(),
             self::ICON_DB,
-            Util::formatWindowsPath($shell),
+            $shell,
             $neardBins->getMysql()->getCurrentPath()
-        );
+        ) . PHP_EOL;
     }
     
     private static function getTabMariadbSection()
     {
         global $neardBins, $neardTools;
-    
-        $shell = $neardTools->getConsole()->getCmdShell() . ' ' .
-            '&quot;' . $neardBins->getMariadb()->getCliExe() . '&quot; -u' .
+        
+        $shell = $neardTools->getConsole()->getShell('&quot;' . $neardBins->getMariadb()->getCliExe() . '&quot; -u' .
             $neardBins->getMariadb()->getRootUser() .
-            ($neardBins->getMariadb()->getRootPwd() ? ' -p' : '');
-    
+            ($neardBins->getMariadb()->getRootPwd() ? ' -p' : ''));
+        
         return self::getTab(
             $neardTools->getConsole()->getTabTitleMariadb(),
             self::ICON_DB,
-            Util::formatWindowsPath($shell),
+            $shell,
             $neardBins->getMariadb()->getCurrentPath()
-        );
+        ) . PHP_EOL;
     }
     
     private static function getTabMongodbSection()
     {
         global $neardBins, $neardTools;
-    
-        $shell = $neardTools->getConsole()->getCmdShell() . ' ' .
-            '&quot;' . $neardBins->getMongodb()->getCliExe() . '&quot;';
+        
+        $shell = $neardTools->getConsole()->getShell('&quot;' . $neardBins->getMongodb()->getCliExe() . '&quot;');
     
         return self::getTab(
             $neardTools->getConsole()->getTabTitleMongodb(),
             self::ICON_DB,
-            Util::formatWindowsPath($shell),
+            $shell,
             $neardBins->getMongodb()->getCurrentPath()
-        );
+        ) . PHP_EOL;
     }
     
     private static function getTabPostgresqlSection()
     {
         global $neardBins, $neardTools;
-    
-        $shell = $neardTools->getConsole()->getCmdShell() . ' ' .
-            '&quot;' . $neardBins->getPostgresql()->getCliExe() . '&quot; -U ' .
-            $neardBins->getPostgresql()->getRootUser() . ' -d postgres';
+        
+        $shell = $neardTools->getConsole()->getShell('&quot;' . $neardBins->getPostgresql()->getCliExe() . '&quot; -U ' .
+            $neardBins->getPostgresql()->getRootUser() . ' -d postgres');
     
         return self::getTab(
             $neardTools->getConsole()->getTabTitlePostgresql(),
             self::ICON_DB,
             Util::formatWindowsPath($shell),
             $neardBins->getPostgresql()->getCurrentPath()
-        );
+        ) . PHP_EOL;
     }
     
     private static function getTabSvnSection()
     {
-        global $neardBs, $neardTools;
-    
-        $svnVersion = Batch::getSvnVersion();
-        $shell = $neardTools->getConsole()->getCmdShell() .
-            (!empty($svnVersion) ? ' echo ' . $svnVersion[0] . ' &amp; echo ' . $svnVersion[1] : null);
-    
+        global $neardBs, $neardBins, $neardTools;
+        
+        $shell = $neardTools->getConsole()->getShell('&quot;' . $neardBins->getSvn()->getExe() . '&quot; --version');
+        
         return self::getTab(
             $neardTools->getConsole()->getTabTitleSvn(),
             self::ICON_SVN,
-            Util::formatWindowsPath($shell),
+            $shell,
             $neardBs->getWwwPath()
-        );
+        ) . PHP_EOL;
     }
     
     private static function getTabGitSection()
     {
         global $neardBs, $neardTools;
         
-        $gitShell = $neardTools->getGit()->getBash();
-        if (Util::endWith($neardTools->getGit()->getBash(), '.exe')) {
-            $gitShell = $neardTools->getGit()->getCurrentPath() . '/bin/sh.exe';
-        }
+        $shell = $neardTools->getConsole()->getShell('&quot;' . $neardTools->getGit()->getExe() . '&quot; --version');
         
         return self::getTab(
             $neardTools->getConsole()->getTabTitleGit(),
             self::ICON_GIT,
-            Util::formatWindowsPath('&quot;' . $gitShell . '&quot;'),
+            $shell,
             $neardBs->getWwwPath()
-        );
+        ) . PHP_EOL;
     }
     
     private static function getTabNodejsSection()
     {
         global $neardBs, $neardBins, $neardTools;
         
-        $shell = $neardTools->getConsole()->getCmdShell() . ' ' .
-            '&quot;' . $neardBins->getNodejs()->getLaunch() . '&quot;';
+        $shell = $neardTools->getConsole()->getShell('&quot;' . $neardBins->getNodejs()->getLaunch(). '&quot;');
         
         return self::getTab(
             $neardTools->getConsole()->getTabTitleNodejs(),
             self::ICON_NODEJS,
-            Util::formatWindowsPath($shell),
+            $shell,
             $neardBs->getWwwPath()
-        );
+        ) . PHP_EOL;
     }
     
     private static function getTabComposerSection()
     {
         global $neardBs, $neardTools;
     
-        $shell = $neardTools->getConsole()->getCmdShell() . ' ' .
-            '&quot;' . $neardTools->getComposer()->getExe() . '&quot; -V';
+        $shell = $neardTools->getConsole()->getShell('&quot;' . $neardTools->getComposer()->getExe() . '&quot; -V');
     
         return self::getTab(
             $neardTools->getConsole()->getTabTitleComposer(),
             self::ICON_COMPOSER,
-            Util::formatWindowsPath($shell),
+            $shell,
             $neardBs->getWwwPath()
-        );
+        ) . PHP_EOL;
     }
     
     private static function getTabPhpMetricsSection()
     {
         global $neardBs, $neardTools;
-    
-        $shell = $neardTools->getConsole()->getCmdShell() . ' ' .
-            '&quot;' . $neardTools->getPhpMetrics()->getExe() . '&quot; --version';
+        
+        $shell = $neardTools->getConsole()->getShell('&quot;' . $neardTools->getPhpMetrics()->getExe() . '&quot; --version');
     
         return self::getTab(
             $neardTools->getConsole()->getTabTitlePhpMetrics(),
             self::ICON_PHPMETRICS,
-            Util::formatWindowsPath($shell),
+            $shell,
             $neardBs->getWwwPath()
-        );
+        ) . PHP_EOL;
     }
     
     private static function getTabPhpUnitSection()
     {
         global $neardBs, $neardTools;
-    
-        $shell = $neardTools->getConsole()->getCmdShell() . ' ' .
-            '&quot;' . $neardTools->getPhpUnit()->getExe() . '&quot; --version';
+        
+        $shell = $neardTools->getConsole()->getShell('&quot;' . $neardTools->getPhpUnit()->getExe() . '&quot; --version');
     
         return self::getTab(
             $neardTools->getConsole()->getTabTitlePhpUnit(),
             self::ICON_PHPUNIT,
-            Util::formatWindowsPath($shell),
+            $shell,
             $neardBs->getWwwPath()
-        );
+        ) . PHP_EOL;
     }
     
     private static function getTabDrushSection()
     {
         global $neardBs, $neardTools;
-    
-        $shell = $neardTools->getConsole()->getCmdShell() . ' ' .
-            '&quot;' . $neardTools->getDrush()->getExe() . '&quot; version';
+        
+        $shell = $neardTools->getConsole()->getShell('&quot;' . $neardTools->getDrush()->getExe() . '&quot; version');
     
         return self::getTab(
             $neardTools->getConsole()->getTabTitleDrush(),
             self::ICON_DRUSH,
-            Util::formatWindowsPath($shell),
+            $shell,
             $neardBs->getWwwPath()
-        );
+        ) . PHP_EOL;
     }
     
     private static function getTabWpCliSection()
     {
         global $neardBs, $neardTools;
-    
-        $shell = $neardTools->getConsole()->getCmdShell() . ' ' .
-            '&quot;' . $neardTools->getWpCli()->getExe() . '&quot; --info';
+        
+        $shell = $neardTools->getConsole()->getShell('&quot;' . $neardTools->getWpCli()->getExe() . '&quot; --info');
     
         return self::getTab(
             $neardTools->getConsole()->getTabTitleWpCli(),
             self::ICON_WPCLI,
-            Util::formatWindowsPath($shell),
+            $shell,
             $neardBs->getWwwPath()
-        );
+        ) . PHP_EOL;
     }
     
     private static function getTabPythonSection()
     {
         global $neardBs, $neardTools;
-    
-        $shell = $neardTools->getConsole()->getCmdShell() . ' ' .
-            '&quot;' . $neardTools->getPython()->getExe() . '&quot; -V';
+        
+        $shell = $neardTools->getConsole()->getShell('&quot;' . $neardTools->getPython()->getExe() . '&quot; -V');
     
         return self::getTab(
             $neardTools->getConsole()->getTabTitlePython(),
             self::ICON_PYTHON,
-            Util::formatWindowsPath($shell),
+            $shell,
             $neardBs->getWwwPath()
-        );
+        ) . PHP_EOL;
     }
     
     private static function getTabRubySection()
     {
         global $neardBs, $neardTools;
-    
-        $shell = $neardTools->getConsole()->getCmdShell() . ' ' .
-            '&quot;' . $neardTools->getRuby()->getConsoleExe() . '&quot;';
+        
+        $shell = $neardTools->getConsole()->getShell('&quot;' . $neardTools->getRuby()->getExe() . '&quot; -v');
     
         return self::getTab(
             $neardTools->getConsole()->getTabTitleRuby(),
             self::ICON_RUBY,
-            Util::formatWindowsPath($shell),
+            $shell,
             $neardBs->getWwwPath()
-        );
+        ) . PHP_EOL;
     }
     
     private static function getTabYarnSection()
     {
         global $neardBs, $neardTools;
         
-        $shell = $neardTools->getConsole()->getCmdShell() . ' ' .
-            '&quot;' . $neardTools->getYarn()->getExe() . '&quot; -V';
+        $shell = $neardTools->getConsole()->getShell('&quot;' . $neardTools->getYarn()->getExe() . '&quot; -V');
         
         return self::getTab(
             $neardTools->getConsole()->getTabTitleYarn(),
             self::ICON_YARN,
-            Util::formatWindowsPath($shell),
+            $shell,
             $neardBs->getWwwPath()
-        );
+        ) . PHP_EOL;
     }
     
     private static function getTabPerlSection()
     {
         global $neardBs, $neardTools;
         
-        $shell = $neardTools->getConsole()->getCmdShell() . ' ' .
-            '&quot;' . $neardTools->getPerl()->getExe() . '&quot; -v';
+        $shell = $neardTools->getConsole()->getShell('&quot;' . $neardTools->getPerl()->getExe() . '&quot; -v');
         
         return self::getTab(
             $neardTools->getConsole()->getTabTitlePerl(),
             self::ICON_PERL,
-            Util::formatWindowsPath($shell),
+            $shell,
             $neardBs->getWwwPath()
-        );
+        ) . PHP_EOL;
     }
     
     private static function getTab($title, $icon, $shell, $initDir)
