@@ -337,7 +337,7 @@ class TplConsole
         return self::getTab(
             $neardTools->getConsole()->getTabTitlePostgresql(),
             self::ICON_DB,
-            Util::formatWindowsPath($shell),
+            $shell,
             $neardBins->getPostgresql()->getCurrentPath()
         ) . PHP_EOL;
     }
