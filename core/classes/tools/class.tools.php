@@ -49,6 +49,7 @@ class Tools
             $this->getRuby(),
             $this->getWpCli(),
             $this->getXdc(),
+            $this->getYarn(),
         );
     }
     
