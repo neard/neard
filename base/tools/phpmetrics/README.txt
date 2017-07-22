@@ -1,2 +1,2 @@
-Place PhpMetrics tool releases here.
+Place PhpMetrics module releases here.
 Documentation and downloads : http://neard.io/tools/phpmetrics

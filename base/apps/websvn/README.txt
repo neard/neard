@@ -1,2 +1,2 @@
-Place WebSVN app releases here.
+Place WebSVN module releases here.
 Documentation and downloads : http://neard.io/apps/websvn

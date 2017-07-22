@@ -1,2 +1,2 @@
-Place Drush tool releases here.
+Place Drush module releases here.
 Documentation and downloads : http://neard.io/tools/drush

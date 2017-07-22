@@ -1,2 +1,2 @@
-Place Perl tool releases here.
+Place Perl module releases here.
 Documentation and downloads : http://neard.io/tools/perl

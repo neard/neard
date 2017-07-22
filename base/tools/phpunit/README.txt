@@ -1,2 +1,2 @@
-Place PHPUnit tool releases here.
+Place PHPUnit module releases here.
 Documentation and downloads : http://neard.io/tools/phpunit
