@@ -58,6 +58,8 @@ class AppWebgrind extends Module
         } else {
             Util::logError($this->getName() . ' alias not found : ' . $alias);
         }
+
+        return true;
     }
     
     public function setVersion($version) {

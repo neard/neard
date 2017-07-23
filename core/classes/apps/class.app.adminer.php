@@ -85,6 +85,8 @@ class AppAdminer extends Module
                 '/^\$mongodbPort\s=\s(\d+)/' => '$mongodbPort = ' . $neardBins->getMongodb()->getPort() . ';'
             ));
         }
+
+        return true;
     }
     
     public function setVersion($version) {

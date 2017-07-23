@@ -64,6 +64,8 @@ class AppPhpmemadmin extends Module
                 '/^\s\s\s\s\s\s\s\s"port"/' => '        "port": ' . $neardBins->getMemcached()->getPort(),
             ));
         }
+
+        return true;
     }
     
     public function setVersion($version) {

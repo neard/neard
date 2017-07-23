@@ -68,6 +68,8 @@ class AppPhppgadmin extends Module
                 '/^\$postgresqlDumpAllExe\s=\s/' => '$postgresqlDumpAllExe = \'' . $neardBins->getPostgresql()->getDumpAllExe() . '\';',
             ));
         }
+
+        return true;
     }
     
     public function setVersion($version) {

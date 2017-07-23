@@ -55,6 +55,8 @@ class ToolGhostscript extends Module
         Util::logDebug(($sub > 0 ? str_repeat(' ', 2 * $sub) : '') . 'Update ' . $this->name . ' ' . $version . ' config...');
         
         Batch::exec('initGhostscript', 'CMD /C "' . $this->getCurrentPath() . '/init.bat"', 15);
+
+        return true;
     }
     
     public function setVersion($version) {

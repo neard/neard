@@ -267,6 +267,8 @@ class TplConsole
                 $neardBs->getRootPath()
             ) . PHP_EOL;
         }
+
+        return "";
     }
     
     private static function getTabPearSection()

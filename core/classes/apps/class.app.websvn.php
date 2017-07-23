@@ -62,6 +62,8 @@ class AppWebsvn extends Module
         Util::replaceInFile($this->getConf(), array(
             '/^\$config->parentPath/' => '$config->parentPath(\'' . $neardBins->getSvn()->getRoot() . '\');',
         ));
+
+        return true;
     }
     
     public function setVersion($version) {

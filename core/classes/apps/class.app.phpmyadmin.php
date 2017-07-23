@@ -99,6 +99,8 @@ class AppPhpmyadmin extends Module
                 ));
             }
         }
+
+        return true;
     }
     
     public function getVersions() {

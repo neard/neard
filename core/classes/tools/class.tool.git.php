@@ -94,6 +94,8 @@ class ToolGit extends Module
         
         $neardWinbinder->exec($this->getExe(), 'config --global core.autocrlf false', true);
         $neardWinbinder->exec($this->getExe(), 'config --global core.eol lf', true);
+
+        return true;
     }
     
     public function findRepos($cache = true) {
