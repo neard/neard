@@ -45,8 +45,6 @@ class ToolGhostscript extends Module
     }
     
     protected function updateConfig($version = null, $sub = 0, $showWindow = false) {
-        global $neardWinbinder;
-        
         if (!$this->enable) {
             return true;
         }

@@ -273,7 +273,7 @@ class TplConsole
     
     private static function getTabPearSection()
     {
-        global $neardBins, $neardBins, $neardTools;
+        global $neardBins, $neardTools;
         
         $shell = $neardTools->getConsole()->getShell('&quot;' . $neardBins->getPhp()->getPearExe() . '&quot; -V');
         if (!file_exists($neardBins->getPhp()->getPearExe())) {
