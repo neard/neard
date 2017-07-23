@@ -483,12 +483,14 @@ class Lang
             self::HOSTSEDITOR,
             self::IMAGEMAGICK,
             self::NOTEPAD2MOD,
+            self::PERL,
             self::PHPMETRICS,
             self::PHPUNIT,
             self::PYTHON,
             self::RUBY,
             self::WPCLI,
             self::XDC,
+            self::YARN,
             
             // Errors
             self::ERROR_CONF_NOT_FOUND,
