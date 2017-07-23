@@ -308,6 +308,9 @@ class Util
             if ($neardTools->getDrush()->isEnable()) {
                 $value .= $neardTools->getDrush()->getCurrentPath() . ';';
             }
+            if ($neardTools->getGhostscript()->isEnable()) {
+                $value .= $neardTools->getGhostscript()->getCurrentPath() . '/bin;';
+            }
             if ($neardTools->getGit()->isEnable()) {
                 $value .= $neardTools->getGit()->getCurrentPath() . '/bin;';
             }

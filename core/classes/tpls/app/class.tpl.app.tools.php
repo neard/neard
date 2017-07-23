@@ -42,6 +42,13 @@ class TplAppTools
             $neardTools->getConsole()->getTabTitleDrush()
         ) . PHP_EOL;
         
+        // Ghostscript
+        $resultItems .= TplAestan::getItemConsole(
+            $neardLang->getValue(Lang::GHOSTSCRIPT),
+            TplAestan::GLYPH_GHOSTSCRIPT,
+            $neardTools->getConsole()->getTabTitleGhostscript()
+        ) . PHP_EOL;
+        
         // HostsEditor
         $resultItems .= TplAestan::getItemExe(
             $neardLang->getValue(Lang::HOSTSEDITOR),

@@ -106,6 +106,11 @@
             <span><?php echo $neardLang->getValue(Lang::DRUSH); ?></span>
           </span>
           <span class="list-group-item">
+            <a href="<?php echo Util::getWebsiteUrl('tools/ghostscript', '#releases'); ?>" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
+            <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardTools->getGhostscript()->getVersion(); ?></span>
+            <span><?php echo $neardLang->getValue(Lang::GHOSTSCRIPT); ?></span>
+          </span>
+          <span class="list-group-item">
             <a href="<?php echo Util::getWebsiteUrl('tools/git', '#releases'); ?>" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
             <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardTools->getGit()->getVersion(); ?></span>
             <span><?php echo $neardLang->getValue(Lang::GIT); ?></span>
@@ -124,6 +129,11 @@
             <a href="<?php echo Util::getWebsiteUrl('tools/notepad2mod', '#releases'); ?>" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
             <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardTools->getNotepad2Mod()->getVersion(); ?></span>
             <span><?php echo $neardLang->getValue(Lang::NOTEPAD2MOD); ?></span>
+          </span>
+          <span class="list-group-item">
+            <a href="<?php echo Util::getWebsiteUrl('tools/perl', '#releases'); ?>" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
+            <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardTools->getPerl()->getVersion(); ?></span>
+            <span><?php echo $neardLang->getValue(Lang::PERL); ?></span>
           </span>
           <span class="list-group-item">
             <a href="<?php echo Util::getWebsiteUrl('tools/phpmetrics', '#releases'); ?>" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
@@ -159,11 +169,6 @@
             <a href="<?php echo Util::getWebsiteUrl('tools/yarn', '#releases'); ?>" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
             <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardTools->getYarn()->getVersion(); ?></span>
             <span><?php echo $neardLang->getValue(Lang::YARN); ?></span>
-          </span>
-          <span class="list-group-item">
-            <a href="<?php echo Util::getWebsiteUrl('tools/perl', '#releases'); ?>" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
-            <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardTools->getPerl()->getVersion(); ?></span>
-            <span><?php echo $neardLang->getValue(Lang::PERL); ?></span>
           </span>
         </div>
       </div>

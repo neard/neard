@@ -6,6 +6,7 @@ class TplConsole
     const ICON_POWERSHELL = 'powershell.ico';
     const ICON_PEAR = 'pear.ico';
     const ICON_DB = 'db.ico';
+    const ICON_GHOSTSCRIPT = 'ghostscript.ico';
     const ICON_GIT = 'git.ico';
     const ICON_SVN = 'svn.ico';
     const ICON_NODEJS = 'nodejs.ico';
@@ -225,6 +226,7 @@ class TplConsole
                 self::getTabMariadbSection() .
                 self::getTabMongodbSection() .
                 self::getTabPostgresqlSection() .
+                self::getTabGhostscriptSection() .
                 self::getTabGitSection() .
                 self::getTabSvnSection() .
                 self::getTabNodejsSection() .
@@ -556,6 +558,23 @@ class TplConsole
         return self::getTab(
             $neardTools->getConsole()->getTabTitlePerl(),
             self::ICON_PERL,
+            $shell,
+            $neardBs->getWwwPath()
+        ) . PHP_EOL;
+    }
+    
+    private static function getTabGhostscriptSection()
+    {
+        global $neardBs, $neardTools;
+        
+        $shell = $neardTools->getConsole()->getShell('&quot;' . $neardTools->getGhostscript()->getExeConsole() . '&quot; -v');
+        if (!file_exists($neardTools->getGhostscript()->getExeConsole())) {
+            $shell = $neardTools->getConsole()->getShell('echo ' . $neardTools->getGhostscript()->getExeConsole() . ' not found...');
+        }
+        
+        return self::getTab(
+            $neardTools->getConsole()->getTabTitleGhostscript(),
+            self::ICON_GHOSTSCRIPT,
             $shell,
             $neardBs->getWwwPath()
         ) . PHP_EOL;

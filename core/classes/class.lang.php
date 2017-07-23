@@ -123,6 +123,7 @@ class Lang
     const COMPOSER = 'composer';
     const CONSOLE = 'console';
     const DRUSH = 'drush';
+    const GHOSTSCRIPT = 'ghostscript';
     const GIT = 'git';
     const HOSTSEDITOR = 'hostseditor';
     const IMAGEMAGICK = 'imagemagick';

@@ -198,4 +198,9 @@ class ToolConsole extends Module
         global $neardLang, $neardTools;
         return $neardLang->getValue(Lang::PERL) . ' ' . $neardTools->getPerl()->getVersion();
     }
+    
+    public function getTabTitleGhostscript() {
+        global $neardLang, $neardTools;
+        return $neardLang->getValue(Lang::GHOSTSCRIPT) . ' ' . $neardTools->getGhostscript()->getVersion();
+    }
 }

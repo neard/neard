@@ -48,6 +48,7 @@ It also offers several versions of the various [binaries](http://neard.io/bins),
 * [Composer](http://neard.io/tools/composer) : a dependency manager for PHP.
 * [Console](http://neard.io/tools/console) : a multi command prompt with TCC/LE and ANSICON.
 * [Drush](http://neard.io/tools/drush) : a command line shell and scripting interface for Drupal.
+* [Ghostscript](http://neard.io/tools/ghostscript) : an interpreter for the PostScript language and for PDF.
 * [Git](http://neard.io/tools/git) : a widely used version control system for software development.
 * [HostsEditor](http://neard.io/tools/hostseditor) : a small application for editing windows Hosts file.
 * [ImageMagick](http://neard.io/tools/imagemagick) : a free and open-source software suite to manipulate image files.

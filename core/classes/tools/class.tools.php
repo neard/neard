@@ -7,6 +7,7 @@ class Tools
     private $composer;
     private $console;
     private $drush;
+    private $ghostscript;
     private $git;
     private $hostseditor;
     private $imagemagick;
@@ -38,6 +39,7 @@ class Tools
             $this->getComposer(),
             $this->getConsole(),
             $this->getDrush(),
+            $this->getGhostscript(),
             $this->getGit(),
             $this->getHostsEditor(),
             $this->getImageMagick(),
@@ -75,6 +77,14 @@ class Tools
             $this->drush = new ToolDrush('drush', self::TYPE);
         }
         return $this->drush;
+    }
+    
+    public function getGhostscript()
+    {
+        if ($this->ghostscript== null) {
+            $this->ghostscript= new ToolGhostscript('ghostscript', self::TYPE);
+        }
+        return $this->ghostscript;
     }
 
     public function getGit()

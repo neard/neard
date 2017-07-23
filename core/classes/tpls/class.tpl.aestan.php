@@ -55,6 +55,7 @@ class TplAestan
     const GLYPH_SVN_BARE = 53;
     const GLYPH_YARN = 54;
     const GLYPH_PERL = 55;
+    const GLYPH_GHOSTSCRIPT = 56;
     
     const SERVICE_START = 'startresume';
     const SERVICE_STOP = 'stop';
