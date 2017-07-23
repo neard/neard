@@ -269,7 +269,7 @@ class TplConsole
     
     private static function getTabPearSection()
     {
-        global $neardBins, $neardTools;
+        global $neardBins, $neardBins, $neardTools;
         
         $shell = $neardTools->getConsole()->getShell('&quot;' . $neardBins->getPhp()->getPearExe() . '&quot; -V');
         if (!file_exists($neardBins->getPhp()->getPearExe())) {
@@ -362,8 +362,8 @@ class TplConsole
         global $neardBs, $neardBins, $neardTools;
         
         $shell = $neardTools->getConsole()->getShell('&quot;' . $neardBins->getSvn()->getExe() . '&quot; --version');
-        if (!file_exists($neardBins->getSvn()->getCliExe())) {
-            $shell = $neardTools->getConsole()->getShell('echo ' . $neardBins->getSvn()->getCliExe() . ' not found...');
+        if (!file_exists($neardBins->getSvn()->getExe())) {
+            $shell = $neardTools->getConsole()->getShell('echo ' . $neardBins->getSvn()->getExe() . ' not found...');
         }
         
         return self::getTab(
@@ -379,8 +379,8 @@ class TplConsole
         global $neardBs, $neardTools;
         
         $shell = $neardTools->getConsole()->getShell('&quot;' . $neardTools->getGit()->getExe() . '&quot; --version');
-        if (!file_exists($neardBins->getGit()->getCliExe())) {
-            $shell = $neardTools->getConsole()->getShell('echo ' . $neardBins->getGit()->getCliExe() . ' not found...');
+        if (!file_exists($neardTools->getGit()->getExe())) {
+            $shell = $neardTools->getConsole()->getShell('echo ' . $neardTools->getGit()->getExe() . ' not found...');
         }
         
         return self::getTab(
@@ -413,8 +413,8 @@ class TplConsole
         global $neardBs, $neardTools;
     
         $shell = $neardTools->getConsole()->getShell('&quot;' . $neardTools->getComposer()->getExe() . '&quot; -V');
-        if (!file_exists($neardBins->getComposer()->getExe())) {
-            $shell = $neardTools->getConsole()->getShell('echo ' . $neardBins->getComposer()->getExe() . ' not found...');
+        if (!file_exists($neardTools->getComposer()->getExe())) {
+            $shell = $neardTools->getConsole()->getShell('echo ' . $neardTools->getComposer()->getExe() . ' not found...');
         }
     
         return self::getTab(
@@ -430,8 +430,8 @@ class TplConsole
         global $neardBs, $neardTools;
         
         $shell = $neardTools->getConsole()->getShell('&quot;' . $neardTools->getPhpMetrics()->getExe() . '&quot; --version');
-        if (!file_exists($neardBins->getPhpMetrics()->getExe())) {
-            $shell = $neardTools->getConsole()->getShell('echo ' . $neardBins->getPhpMetrics()->getExe() . ' not found...');
+        if (!file_exists($neardTools->getPhpMetrics()->getExe())) {
+            $shell = $neardTools->getConsole()->getShell('echo ' . $neardTools->getPhpMetrics()->getExe() . ' not found...');
         }
     
         return self::getTab(
@@ -447,8 +447,8 @@ class TplConsole
         global $neardBs, $neardTools;
         
         $shell = $neardTools->getConsole()->getShell('&quot;' . $neardTools->getPhpUnit()->getExe() . '&quot; --version');
-        if (!file_exists($neardBins->getPhpUnit()->getExe())) {
-            $shell = $neardTools->getConsole()->getShell('echo ' . $neardBins->getPhpUnit()->getExe() . ' not found...');
+        if (!file_exists($neardTools->getPhpUnit()->getExe())) {
+            $shell = $neardTools->getConsole()->getShell('echo ' . $neardTools->getPhpUnit()->getExe() . ' not found...');
         }
     
         return self::getTab(
@@ -464,8 +464,8 @@ class TplConsole
         global $neardBs, $neardTools;
         
         $shell = $neardTools->getConsole()->getShell('&quot;' . $neardTools->getDrush()->getExe() . '&quot; version');
-        if (!file_exists($neardBins->getDrush()->getExe())) {
-            $shell = $neardTools->getConsole()->getShell('echo ' . $neardBins->getDrush()->getExe() . ' not found...');
+        if (!file_exists($neardTools->getDrush()->getExe())) {
+            $shell = $neardTools->getConsole()->getShell('echo ' . $neardTools->getDrush()->getExe() . ' not found...');
         }
     
         return self::getTab(
@@ -481,8 +481,8 @@ class TplConsole
         global $neardBs, $neardTools;
         
         $shell = $neardTools->getConsole()->getShell('&quot;' . $neardTools->getWpCli()->getExe() . '&quot; --info');
-        if (!file_exists($neardBins->getWpCli()->getExe())) {
-            $shell = $neardTools->getConsole()->getShell('echo ' . $neardBins->getWpCli()->getExe() . ' not found...');
+        if (!file_exists($neardTools->getWpCli()->getExe())) {
+            $shell = $neardTools->getConsole()->getShell('echo ' . $neardTools->getWpCli()->getExe() . ' not found...');
         }
     
         return self::getTab(
@@ -498,8 +498,8 @@ class TplConsole
         global $neardBs, $neardTools;
         
         $shell = $neardTools->getConsole()->getShell('&quot;' . $neardTools->getPython()->getExe() . '&quot; -V');
-        if (!file_exists($neardBins->getPython()->getExe())) {
-            $shell = $neardTools->getConsole()->getShell('echo ' . $neardBins->getPython()->getExe() . ' not found...');
+        if (!file_exists($neardTools->getPython()->getExe())) {
+            $shell = $neardTools->getConsole()->getShell('echo ' . $neardTools->getPython()->getExe() . ' not found...');
         }
     
         return self::getTab(
@@ -515,8 +515,8 @@ class TplConsole
         global $neardBs, $neardTools;
         
         $shell = $neardTools->getConsole()->getShell('&quot;' . $neardTools->getRuby()->getExe() . '&quot; -v');
-        if (!file_exists($neardBins->getRuby()->getExe())) {
-            $shell = $neardTools->getConsole()->getShell('echo ' . $neardBins->getRuby()->getExe() . ' not found...');
+        if (!file_exists($neardTools->getRuby()->getExe())) {
+            $shell = $neardTools->getConsole()->getShell('echo ' . $neardTools->getRuby()->getExe() . ' not found...');
         }
     
         return self::getTab(
@@ -532,8 +532,8 @@ class TplConsole
         global $neardBs, $neardTools;
         
         $shell = $neardTools->getConsole()->getShell('&quot;' . $neardTools->getYarn()->getExe() . '&quot; -V');
-        if (!file_exists($neardBins->getYarn()->getExe())) {
-            $shell = $neardTools->getConsole()->getShell('echo ' . $neardBins->getYarn()->getExe() . ' not found...');
+        if (!file_exists($neardTools->getYarn()->getExe())) {
+            $shell = $neardTools->getConsole()->getShell('echo ' . $neardTools->getYarn()->getExe() . ' not found...');
         }
         
         return self::getTab(
@@ -549,8 +549,8 @@ class TplConsole
         global $neardBs, $neardTools;
         
         $shell = $neardTools->getConsole()->getShell('&quot;' . $neardTools->getPerl()->getExe() . '&quot; -v');
-        if (!file_exists($neardBins->getPerl()->getExe())) {
-            $shell = $neardTools->getConsole()->getShell('echo ' . $neardBins->getPerl()->getExe() . ' not found...');
+        if (!file_exists($neardTools->getPerl()->getExe())) {
+            $shell = $neardTools->getConsole()->getShell('echo ' . $neardTools->getPerl()->getExe() . ' not found...');
         }
         
         return self::getTab(
