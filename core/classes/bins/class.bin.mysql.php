@@ -99,8 +99,8 @@ class BinMysql extends Module
         $this->service->setStartType(Win32Service::SERVICE_DEMAND_START);
         $this->service->setErrorControl(Win32Service::SERVER_ERROR_NORMAL);
     }
-    
-    private function replaceAll($params) {
+
+    protected function replaceAll($params) {
         $content = file_get_contents($this->neardConf);
     
         foreach ($params as $key => $value) {

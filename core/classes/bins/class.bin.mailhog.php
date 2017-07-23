@@ -84,8 +84,8 @@ class BinMailhog extends Module
         
         $this->service->setNssm($nssm);
     }
-    
-    private function replaceAll($params) {
+
+    protected function replaceAll($params) {
         $content = file_get_contents($this->neardConf);
         
         foreach ($params as $key => $value) {
