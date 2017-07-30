@@ -441,6 +441,12 @@ class BinPhp extends Module
         return $result;
     }
     
+    private function isExtensionExcluded($ext) {
+        return in_array($ext, array(
+            'php_xdebug'
+        ));
+    }
+    
     public function getExtensionsFromConf() {
         $result = array();
         
@@ -449,6 +455,9 @@ class BinPhp extends Module
             $extMatch = array();
             if (preg_match('/^(;)?extension\s*=\s*"?(.+)\.dll"?/i', $row, $extMatch)) {
                 $name = $extMatch[2];
+                if ($this->isExtensionExcluded($name)) {
+                    continue;
+                }
                 if ($extMatch[1] == ';') {
                     $result[$name] = ActionSwitchPhpExtension::SWITCH_OFF;
                 } else {
@@ -482,6 +491,9 @@ class BinPhp extends Module
         while (false !== ($file = readdir($handle))) {
             if ($file != "." && $file != ".." && Util::endWith($file, '.dll')) {
                 $name = str_replace('.dll', '', $file);
+                if ($this->isExtensionExcluded($name)) {
+                    continue;
+                }
                 $result[$name] = ActionSwitchPhpExtension::SWITCH_OFF;
             }
         }
