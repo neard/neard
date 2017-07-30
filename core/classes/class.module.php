@@ -24,9 +24,11 @@ abstract class Module
     protected function reload($id = null, $type = null) {
         global $neardBs;
 
+        $this->id = empty($id) ? $this->id : $id;
         $this->type = empty($type) ? $this->type : $type;
         $mainPath = 'N/A';
-        switch ($type) {
+        
+        switch ($this->type) {
             case Apps::TYPE:
                 $mainPath = $neardBs->getAppsPath();
                 break;
@@ -37,8 +39,7 @@ abstract class Module
                 $mainPath = $neardBs->getToolsPath();
                 break;
         }
-
-        $this->id = empty($id) ? $this->id : $id;
+        
         $this->rootPath = $mainPath . '/' . $this->id;
         $this->currentPath = $this->rootPath . '/' . $this->id . $this->version;
         $this->enable = is_dir($this->currentPath);

@@ -21,6 +21,7 @@ class ActionSwitchVersion
         global $neardLang, $neardBins, $neardWinbinder;
         
         if (isset($args[0]) && !empty($args[0]) && isset($args[1]) && !empty($args[1])) {
+            $this->pathsToScan = array();
             $this->version = $args[1];
             
             if ($args[0] == $neardBins->getApache()->getName()) {
@@ -29,56 +30,117 @@ class ActionSwitchVersion
                 $this->restart = true;
                 $this->service = $neardBins->getApache()->getService();
                 $this->changePort = true;
-                $this->filesToScan = array($neardBins->getApache()->getRootPath() => array('.ini', '.conf'));
+                $folderList = Util::getFolderList($neardBins->getApache()->getRootPath());
+                foreach ($folderList as $folder) {
+                    $this->pathsToScan[] = array(
+                        'path' => $neardBins->getApache()->getRootPath() . '/' . $folder,
+                        'includes' => array('.ini', '.conf'),
+                        'recursive' => true
+                    );
+                }
             } elseif ($args[0] == $neardBins->getPhp()->getName()) {
                 $this->bin = $neardBins->getPhp();
                 $this->currentVersion = $neardBins->getPhp()->getVersion();
                 $this->restart = true;
                 $this->service = $neardBins->getApache()->getService();
                 $this->changePort = false;
-                $this->filesToScan = array($neardBins->getPhp()->getRootPath() => array('.php', '.bat', '.ini', '.reg', '.inc'));
+                $folderList = Util::getFolderList($neardBins->getPhp()->getRootPath());
+                foreach ($folderList as $folder) {
+                    $this->pathsToScan[] = array(
+                        'path' => $neardBins->getPhp()->getRootPath() . '/' . $folder,
+                        'includes' => array('.php', '.bat', '.ini', '.reg', '.inc'),
+                        'recursive' => true
+                    );
+                }
             } elseif ($args[0] == $neardBins->getMysql()->getName()) {
                 $this->bin = $neardBins->getMysql();
                 $this->currentVersion = $neardBins->getMysql()->getVersion();
                 $this->restart = true;
                 $this->service = $neardBins->getMysql()->getService();
                 $this->changePort = true;
-                $this->filesToScan = array($neardBins->getMysql()->getRootPath() => array('my.ini'));
+                $folderList = Util::getFolderList($neardBins->getMysql()->getRootPath());
+                foreach ($folderList as $folder) {
+                    $this->pathsToScan[] = array(
+                        'path' => $neardBins->getMysql()->getRootPath() . '/' . $folder,
+                        'includes' => array('my.ini'),
+                        'recursive' => false
+                    );
+                }
             } elseif ($args[0] == $neardBins->getMariadb()->getName()) {
                 $this->bin = $neardBins->getMariadb();
                 $this->currentVersion = $neardBins->getMariadb()->getVersion();
                 $this->restart = true;
                 $this->service = $neardBins->getMariadb()->getService();
                 $this->changePort = true;
-                $this->filesToScan = array($neardBins->getMariadb()->getRootPath() => array('my.ini'));
+                $this->pathsToScan= Util::getFolderList($neardBins->getMariadb()->getRootPath());
+                foreach ($folderList as $folder) {
+                    $paths[] = array(
+                        'path' => $neardBins->getMariadb()->getRootPath() . '/' . $folder,
+                        'includes' => array('my.ini'),
+                        'recursive' => false
+                    );
+                }
             } elseif ($args[0] == $neardBins->getMongodb()->getName()) {
                 $this->bin = $neardBins->getMongodb();
                 $this->currentVersion = $neardBins->getMongodb()->getVersion();
                 $this->restart = true;
                 $this->service = $neardBins->getMongodb()->getService();
                 $this->changePort = true;
-                $this->filesToScan = array($neardBins->getMongodb()->getRootPath() => array('mongodb.conf'));
+                $folderList = Util::getFolderList($neardBins->getMongodb()->getRootPath());
+                foreach ($folderList as $folder) {
+                    $this->pathsToScan[] = array(
+                        'path' => $neardBins->getMongodb()->getRootPath() . '/' . $folder,
+                        'includes' => array('mongodb.conf'),
+                        'recursive' => false
+                    );
+                }
             } elseif ($args[0] == $neardBins->getPostgresql()->getName()) {
                 $this->bin = $neardBins->getPostgresql();
                 $this->currentVersion = $neardBins->getPostgresql()->getVersion();
                 $this->restart = true;
                 $this->service = $neardBins->getPostgresql()->getService();
                 $this->changePort = true;
-                $this->filesToScan = array($neardBins->getPostgresql()->getRootPath() => array('.nrd', '.conf', '.bat'));
+                $folderList = Util::getFolderList($neardBins->getPostgresql()->getRootPath());
+                foreach ($folderList as $folder) {
+                    $this->pathsToScan[] = array(
+                        'path' => $neardBins->getPostgresql()->getRootPath() . '/' . $folder,
+                        'includes' => array('.nrd', '.conf', '.bat'),
+                        'recursive' => true
+                    );
+                }
             } elseif ($args[0] == $neardBins->getNodejs()->getName()) {
                 $this->bin = $neardBins->getNodejs();
                 $this->currentVersion = $neardBins->getNodejs()->getVersion();
                 $this->restart = true;
                 $this->service = null;
                 $this->changePort = false;
-                $this->filesToScan = array($neardBins->getNodejs()->getRootPath() => array('.bat', 'npmrc'));
+                $folderList = Util::getFolderList($neardBins->getNodejs()->getRootPath());
+                foreach ($folderList as $folder) {
+                    $this->pathsToScan[] = array(
+                        'path' => $neardBins->getNodejs()->getRootPath() . '/' . $folder . '/etc',
+                        'includes' => array('npmrc'),
+                        'recursive' => true
+                    );
+                    $this->pathsToScan[] = array(
+                        'path' => $neardBins->getNodejs()->getRootPath() . '/' . $folder . '/node_modules/npm',
+                        'includes' => array('npmrc'),
+                        'recursive' => false
+                    );
+                }
             } elseif ($args[0] == $neardBins->getFilezilla()->getName()) {
                 $this->bin = $neardBins->getFilezilla();
                 $this->currentVersion = $neardBins->getFilezilla()->getVersion();
                 $this->restart = true;
                 $this->service = $neardBins->getFilezilla()->getService();
                 $this->changePort = true;
-                $this->filesToScan = array($neardBins->getFilezilla()->getRootPath() => array('.xml'));
+                $folderList = Util::getFolderList($neardBins->getFilezilla()->getRootPath());
+                foreach ($folderList as $folder) {
+                    $this->pathsToScan[] = array(
+                        'path' => $neardBins->getFilezilla()->getRootPath() . '/' . $folder,
+                        'includes' => array('.xml'),
+                        'recursive' => true
+                    );
+                }
             } elseif ($args[0] == $neardBins->getMemcached()->getName()) {
                 $this->bin = $neardBins->getMemcached();
                 $this->currentVersion = $neardBins->getMemcached()->getVersion();
@@ -120,8 +182,8 @@ class ActionSwitchVersion
         
         // scan folder
         $this->neardSplash->incrProgressBar();
-        if ($this->filesToScan != null) {
-            Util::changePath(Util::getFilesToScan($this->filesToScan));
+        if (!empty($this->pathsToScan)) {
+            Util::changePath(Util::getFilesToScan($this->pathsToScan));
         }
         
         // switch

@@ -341,7 +341,7 @@ class Util
                 $value .= $neardTools->getYarn()->getCurrentPath() . ';';
             }
             $value = self::formatWindowsPath($value);
-            self::logDebug('Generated app reg key: ' . $value);
+            self::logDebug('Generated app bins reg key: ' . $value);
         }
         
         return $value;
