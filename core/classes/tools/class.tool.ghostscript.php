@@ -44,19 +44,6 @@ class ToolGhostscript extends Module
         }
     }
     
-    protected function updateConfig($version = null, $sub = 0, $showWindow = false) {
-        if (!$this->enable) {
-            return true;
-        }
-        
-        $version = $version == null ? $this->version : $version;
-        Util::logDebug(($sub > 0 ? str_repeat(' ', 2 * $sub) : '') . 'Update ' . $this->name . ' ' . $version . ' config...');
-        
-        Batch::exec('initGhostscript', 'CMD /C "' . $this->getCurrentPath() . '/init.bat"', 15);
-
-        return true;
-    }
-    
     public function setVersion($version) {
         global $neardConfig;
         $this->version = $version;
