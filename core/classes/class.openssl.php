@@ -12,16 +12,28 @@ class OpenSsl
         $ppkPath = '"' . $destPath . '/' . $name . '.ppk"';
         $pubPath = '"' . $destPath . '/' . $name . '.pub"';
         $crtPath = '"' . $destPath . '/' . $name . '.crt"';
+        $extension = 'SAN';
         $exe = '"' . $neardCore->getOpenSslExe() . '"';
-        $conf = '"' . $neardCore->getOpenSslConf() . '"';
+        
+        // ext
+        $extContent = PHP_EOL . '[' . $extension . ']' . PHP_EOL;
+        $extContent .= 'subjectAltName=DNS:*.' . $name . ',DNS:' . $name . PHP_EOL;
+        
+        // tmp openssl.cfg
+        $conf = $neardCore->getTmpPath() . '/openssl_' . $name . '_' . Util::random() . '.cfg';
+        file_put_contents($conf, file_get_contents($neardCore->getOpenSslConf()) . $extContent);
 
-        $batch = $exe . ' genrsa -des3 -passout ' . $password . ' -out ' . $ppkPath . ' 2048 -noout -config ' . $conf . PHP_EOL;
+        // ppk
+        $batch = $exe . ' genrsa -des3 -passout ' . $password . ' -out ' . $ppkPath . ' 2048 -noout -config ' . $conf. PHP_EOL;
         $batch .= 'IF %ERRORLEVEL% GEQ 1 GOTO EOF' . PHP_EOL . PHP_EOL;
 
+        // pub
         $batch .= $exe . ' rsa -in ' . $ppkPath . ' -passin ' . $password . ' -out ' . $pubPath . PHP_EOL . PHP_EOL;
         $batch .= 'IF %ERRORLEVEL% GEQ 1 GOTO EOF' . PHP_EOL . PHP_EOL;
 
-        $batch .= $exe . ' req -x509 -nodes -sha256 -new -key ' . $pubPath . ' -out ' . $crtPath . ' -passin ' . $password . ' -subj ' . $subject . ' -config ' . $conf . PHP_EOL;
+        // crt
+        $batch .= $exe . ' req -x509 -nodes -sha256 -new -key ' . $pubPath . ' -out ' . $crtPath . ' -passin ' . $password;
+        $batch .= ' -subj ' . $subject . ' -reqexts ' . $extension . ' -extensions ' . $extension . ' -config ' . $conf. PHP_EOL;
         $batch .= 'IF %ERRORLEVEL% GEQ 1 GOTO EOF' . PHP_EOL . PHP_EOL;
 
         $batch .= ':EOF' . PHP_EOL;
