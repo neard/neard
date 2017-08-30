@@ -12,7 +12,10 @@ class ActionSwitchPhpExtension
         if (isset($args[0]) && !empty($args[0]) && isset($args[1]) && !empty($args[1])) {
             $onContent = 'extension=' . $args[0];
             $offContent = ';extension=' . $args[0];
-            $extExists = file_exists($neardBins->getPhp()->getExtPath() . '/' . $args[0] . '.dll');
+            if (version_compare($neardBins->getPhp()->getVersion(), '7.2', '<')) {
+                $onContent = 'extension=php_' . $args[0] . '.dll';
+                $offContent = ';extension=php_' . $args[0] . '.dll';
+            }
             
             $phpiniContent = file_get_contents($neardBins->getPhp()->getConf());
             if ($args[1] == self::SWITCH_ON) {
@@ -22,9 +25,14 @@ class ActionSwitchPhpExtension
             }
             
             $phpiniContentOr = file_get_contents($neardBins->getPhp()->getConf());
-            if ($phpiniContent == $phpiniContentOr && $extExists) {
+            if ($phpiniContent == $phpiniContentOr && file_exists($neardBins->getPhp()->getExtPath() . '/php_' . $args[0] . '.dll')) {
                 $extsIni = $neardBins->getPhp()->getExtensionsFromConf();
-                $latestExt = (end($extsIni) == '0' ? ';' : '') . 'extension=' . key($extsIni);
+                $latestExt = (end($extsIni) == '0' ? ';' : '');
+                if (version_compare($neardBins->getPhp()->getVersion(), '7.2', '<')) {
+                    $latestExt .= 'extension=php_' . key($extsIni) . '.dll';
+                } else {
+                    $latestExt .= 'extension=' . key($extsIni);
+                }
                 $phpiniContent = str_replace(
                     $latestExt,
                     $latestExt . PHP_EOL . $onContent,

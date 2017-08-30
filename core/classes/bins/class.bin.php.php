@@ -443,7 +443,8 @@ class BinPhp extends Module
     
     private function isExtensionExcluded($ext) {
         return in_array($ext, array(
-            'php_xdebug'
+            'opcache',
+            'xdebug'
         ));
     }
     
@@ -453,8 +454,8 @@ class BinPhp extends Module
         $confContent = file($this->getConf());
         foreach ($confContent as $row) {
             $extMatch = array();
-            if (preg_match('/^(;)?extension\s*=\s*"?(.+)\.dll"?/i', $row, $extMatch)) {
-                $name = $extMatch[2];
+            if (preg_match('/^(;)?extension\s*=\s*"?(.+)"?/i', $row, $extMatch)) {
+                $name = preg_replace("/^php_/", "", preg_replace("/\.dll$/", "", trim($extMatch[2])));
                 if ($this->isExtensionExcluded($name)) {
                     continue;
                 }
@@ -490,7 +491,7 @@ class BinPhp extends Module
         
         while (false !== ($file = readdir($handle))) {
             if ($file != "." && $file != ".." && Util::endWith($file, '.dll')) {
-                $name = str_replace('.dll', '', $file);
+                $name = preg_replace("/^php_/", "", preg_replace("/\.dll$/", "", trim($file)));
                 if ($this->isExtensionExcluded($name)) {
                     continue;
                 }
