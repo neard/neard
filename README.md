@@ -51,7 +51,6 @@ It also offers several versions of the various [modules](http://neard.io/modules
 * [Git](http://neard.io/modules/git) : a widely used version control system for software development.
 * [HostsEditor](http://neard.io/modules/hostseditor) : a small application for editing windows Hosts file.
 * [ImageMagick](http://neard.io/modules/imagemagick) : a free and open-source software suite to manipulate image files.
-* [Notepad2-mod](http://neard.io/modules/notepad2mod) : a fork of Notepad2 text editor with syntax highlighting.
 * [Perl](http://neard.io/modules/perl) : a family of high-level, general-purpose, interpreted, dynamic programming languages.
 * [PhpMetrics](http://neard.io/modules/phpmetrics) : gives metrics about PHP project and classes.
 * [PHPUnit](http://neard.io/modules/phpunit) : a programmer-oriented testing framework for PHP.

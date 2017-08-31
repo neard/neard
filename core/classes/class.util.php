@@ -1330,4 +1330,18 @@ class Util
         
         return $result;
     }
+    
+    public static function openFileContent($caption, $content) {
+        global $neardBs, $neardConfig, $neardWinbinder;
+        
+        $folderPath = $neardBs->getTmpPath() . '/openFileContent-' . Util::random();
+        if (!is_dir($folderPath)) {
+            mkdir($folderPath, 0777, true);
+        }
+        
+        $filepath = Util::formatWindowsPath($folderPath . '/' . $caption);
+        file_put_contents($filepath, $content);
+        
+        $neardWinbinder->exec($neardConfig->getNotepad(), '"' . $filepath . '"');
+    }
 }

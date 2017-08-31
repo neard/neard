@@ -18,7 +18,7 @@ class ActionDebugPostgresql
             $debugOutput = $neardBins->getPostgresql()->getCmdLineOutput($args[0]);
             
             if ($editor) {
-                $neardTools->getNotepad2Mod()->open($caption, $debugOutput);
+                Util::openFileContent($caption, $debugOutput);
             } else {
                 if ($msgBoxError) {
                     $neardWinbinder->messageBoxError(

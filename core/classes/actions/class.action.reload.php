@@ -31,9 +31,6 @@ class ActionReload
         // Process Console config
         TplConsole::process();
         
-        // Process Notepad config
-        TplNotepad2Mod::process();
-        
         // Process Websvn config
         TplWebsvn::process();
         

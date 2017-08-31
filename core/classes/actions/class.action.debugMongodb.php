@@ -18,7 +18,7 @@ class ActionDebugMongodb
             $debugOutput = $neardBins->getMongodb()->getCmdLineOutput($args[0]);
             
             if ($editor) {
-                $neardTools->getNotepad2Mod()->open($caption, $debugOutput['content']);
+                Util::openFileContent($caption, $debugOutput['content']);
             } else {
                 if ($msgBoxError) {
                     $neardWinbinder->messageBoxError(

@@ -93,7 +93,6 @@
     <getmodule releasesurl="${tool.git.url}" version="${tool.git.version}" dest="${release.target}/${release.name}/tools/git"/>
     <getmodule releasesurl="${tool.hostseditor.url}" version="${tool.hostseditor.version}" dest="${release.target}/${release.name}/tools/hostseditor"/>
     <getmodule releasesurl="${tool.imagemagick.url}" version="${tool.imagemagick.version}" dest="${release.target}/${release.name}/tools/imagemagick"/>
-    <getmodule releasesurl="${tool.notepad2mod.url}" version="${tool.notepad2mod.version}" dest="${release.target}/${release.name}/tools/notepad2mod"/>
     <getmodule releasesurl="${tool.perl.url}" version="${tool.perl.version}" dest="${release.target}/${release.name}/tools/perl"/>
     <getmodule releasesurl="${tool.phpmetrics.url}" version="${tool.phpmetrics.version}" dest="${release.target}/${release.name}/tools/phpmetrics"/>
     <getmodule releasesurl="${tool.phpunit.url}" version="${tool.phpunit.version}" dest="${release.target}/${release.name}/tools/phpunit"/>
@@ -125,7 +124,6 @@
         <filter token="TOOL_GIT_VERSION" value="${tool.git.version}"/>
         <filter token="TOOL_HOSTSEDITOR_VERSION" value="${tool.hostseditor.version}"/>
         <filter token="TOOL_IMAGEMAGICK_VERSION" value="${tool.imagemagick.version}"/>
-        <filter token="TOOL_NOTEPAD2MOD_VERSION" value="${tool.notepad2mod.version}"/>
         <filter token="TOOL_PERL_VERSION" value="${tool.perl.version}"/>
         <filter token="TOOL_PHPMETRICS_VERSION" value="${tool.phpmetrics.version}"/>
         <filter token="TOOL_PHPUNIT_VERSION" value="${tool.phpunit.version}"/>

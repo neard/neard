@@ -127,7 +127,6 @@ class Lang
     const GIT = 'git';
     const HOSTSEDITOR = 'hostseditor';
     const IMAGEMAGICK = 'imagemagick';
-    const NOTEPAD2MOD = 'notepad2mod';
     const PERL = 'perl';
     const PHPMETRICS = 'phpmetrics';
     const PHPUNIT = 'phpunit';
@@ -483,7 +482,6 @@ class Lang
             self::GIT,
             self::HOSTSEDITOR,
             self::IMAGEMAGICK,
-            self::NOTEPAD2MOD,
             self::PERL,
             self::PHPMETRICS,
             self::PHPUNIT,

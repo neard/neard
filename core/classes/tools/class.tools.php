@@ -11,7 +11,6 @@ class Tools
     private $git;
     private $hostseditor;
     private $imagemagick;
-    private $notepad2mod;
     private $perl;
     private $phpmetrics;
     private $phpunit;
@@ -43,7 +42,6 @@ class Tools
             $this->getGit(),
             $this->getHostsEditor(),
             $this->getImageMagick(),
-            $this->getNotepad2Mod(),
             $this->getPerl(),
             $this->getPhpMetrics(),
             $this->getPhpUnit(),
@@ -109,14 +107,6 @@ class Tools
             $this->imagemagick = new ToolImagemagick('imagemagick', self::TYPE);
         }
         return $this->imagemagick;
-    }
-    
-    public function getNotepad2Mod()
-    {
-        if ($this->notepad2mod == null) {
-            $this->notepad2mod = new ToolNotepad2Mod('notepad2mod', self::TYPE);
-        }
-        return $this->notepad2mod;
     }
     
     public function getPerl()

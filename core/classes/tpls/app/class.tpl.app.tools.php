@@ -63,13 +63,6 @@ class TplAppTools
             TplAestan::GLYPH_IMAGEMAGICK
         ) . PHP_EOL;
         
-        // Notepad2-mod
-        $resultItems .= TplAestan::getItemExe(
-            $neardLang->getValue(Lang::NOTEPAD2MOD),
-            $neardTools->getNotepad2Mod()->getExe(),
-            TplAestan::GLYPH_NOTEPAD2
-        ) . PHP_EOL;
-        
         // Pear
         $resultItems .= TplAestan::getItemConsole(
             $neardLang->getValue(Lang::PEAR),
