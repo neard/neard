@@ -91,82 +91,82 @@
       <div class="panel-body panel-summary">
         <div class="list-group" style="margin-bottom:0;">
           <span class="list-group-item">
-            <a href="<?php echo Util::getWebsiteUrl('tools/composer', '#releases'); ?>" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
+            <a href="<?php echo Util::getWebsiteUrl('modules/composer', '#releases'); ?>" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
             <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardTools->getComposer()->getVersion(); ?></span>
             <span><?php echo $neardLang->getValue(Lang::COMPOSER); ?></span>
           </span>
           <span class="list-group-item">
-            <a href="<?php echo Util::getWebsiteUrl('tools/console', '#releases'); ?>" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
+            <a href="<?php echo Util::getWebsiteUrl('modules/console', '#releases'); ?>" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
             <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardTools->getConsole()->getVersion(); ?></span>
             <span><?php echo $neardLang->getValue(Lang::CONSOLE); ?></span>
           </span>
           <span class="list-group-item">
-            <a href="<?php echo Util::getWebsiteUrl('tools/drush', '#releases'); ?>" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
+            <a href="<?php echo Util::getWebsiteUrl('modules/drush', '#releases'); ?>" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
             <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardTools->getDrush()->getVersion(); ?></span>
             <span><?php echo $neardLang->getValue(Lang::DRUSH); ?></span>
           </span>
           <span class="list-group-item">
-            <a href="<?php echo Util::getWebsiteUrl('tools/ghostscript', '#releases'); ?>" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
+            <a href="<?php echo Util::getWebsiteUrl('modules/ghostscript', '#releases'); ?>" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
             <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardTools->getGhostscript()->getVersion(); ?></span>
             <span><?php echo $neardLang->getValue(Lang::GHOSTSCRIPT); ?></span>
           </span>
           <span class="list-group-item">
-            <a href="<?php echo Util::getWebsiteUrl('tools/git', '#releases'); ?>" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
+            <a href="<?php echo Util::getWebsiteUrl('modules/git', '#releases'); ?>" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
             <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardTools->getGit()->getVersion(); ?></span>
             <span><?php echo $neardLang->getValue(Lang::GIT); ?></span>
           </span>
           <span class="list-group-item">
-            <a href="<?php echo Util::getWebsiteUrl('tools/hostseditor', '#releases'); ?>" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
+            <a href="<?php echo Util::getWebsiteUrl('modules/hostseditor', '#releases'); ?>" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
             <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardTools->getHostsEditor()->getVersion(); ?></span>
             <span><?php echo $neardLang->getValue(Lang::HOSTSEDITOR); ?></span>
           </span>
           <span class="list-group-item">
-            <a href="<?php echo Util::getWebsiteUrl('tools/imagemagick', '#releases'); ?>" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
+            <a href="<?php echo Util::getWebsiteUrl('modules/imagemagick', '#releases'); ?>" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
             <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardTools->getImageMagick()->getVersion(); ?></span>
             <span><?php echo $neardLang->getValue(Lang::IMAGEMAGICK); ?></span>
           </span>
           <span class="list-group-item">
-            <a href="<?php echo Util::getWebsiteUrl('tools/notepad2mod', '#releases'); ?>" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
+            <a href="<?php echo Util::getWebsiteUrl('modules/notepad2mod', '#releases'); ?>" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
             <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardTools->getNotepad2Mod()->getVersion(); ?></span>
             <span><?php echo $neardLang->getValue(Lang::NOTEPAD2MOD); ?></span>
           </span>
           <span class="list-group-item">
-            <a href="<?php echo Util::getWebsiteUrl('tools/perl', '#releases'); ?>" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
+            <a href="<?php echo Util::getWebsiteUrl('modules/perl', '#releases'); ?>" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
             <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardTools->getPerl()->getVersion(); ?></span>
             <span><?php echo $neardLang->getValue(Lang::PERL); ?></span>
           </span>
           <span class="list-group-item">
-            <a href="<?php echo Util::getWebsiteUrl('tools/phpmetrics', '#releases'); ?>" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
+            <a href="<?php echo Util::getWebsiteUrl('modules/phpmetrics', '#releases'); ?>" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
             <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardTools->getPhpMetrics()->getVersion(); ?></span>
             <span><?php echo $neardLang->getValue(Lang::PHPMETRICS); ?></span>
           </span>
           <span class="list-group-item">
-            <a href="<?php echo Util::getWebsiteUrl('tools/phpunit', '#releases'); ?>" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
+            <a href="<?php echo Util::getWebsiteUrl('modules/phpunit', '#releases'); ?>" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
             <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardTools->getPhpUnit()->getVersion(); ?></span>
             <span><?php echo $neardLang->getValue(Lang::PHPUNIT); ?></span>
           </span>
           <span class="list-group-item">
-            <a href="<?php echo Util::getWebsiteUrl('tools/python', '#releases'); ?>" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
+            <a href="<?php echo Util::getWebsiteUrl('modules/python', '#releases'); ?>" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
             <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardTools->getPython()->getVersion(); ?></span>
             <span><?php echo $neardLang->getValue(Lang::PYTHON); ?></span>
           </span>
           <span class="list-group-item">
-            <a href="<?php echo Util::getWebsiteUrl('tools/ruby', '#releases'); ?>" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
+            <a href="<?php echo Util::getWebsiteUrl('modules/ruby', '#releases'); ?>" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
             <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardTools->getRuby()->getVersion(); ?></span>
             <span><?php echo $neardLang->getValue(Lang::RUBY); ?></span>
           </span>
           <span class="list-group-item">
-            <a href="<?php echo Util::getWebsiteUrl('tools/wpcli', '#releases'); ?>" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
+            <a href="<?php echo Util::getWebsiteUrl('modules/wpcli', '#releases'); ?>" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
             <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardTools->getWpCli()->getVersion(); ?></span>
             <span><?php echo $neardLang->getValue(Lang::WPCLI); ?></span>
           </span>
           <span class="list-group-item">
-            <a href="<?php echo Util::getWebsiteUrl('tools/xdc', '#releases'); ?>" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
+            <a href="<?php echo Util::getWebsiteUrl('modules/xdc', '#releases'); ?>" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
             <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardTools->getXdc()->getVersion(); ?></span>
             <span><?php echo $neardLang->getValue(Lang::XDC); ?></span>
           </span>
           <span class="list-group-item">
-            <a href="<?php echo Util::getWebsiteUrl('tools/yarn', '#releases'); ?>" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
+            <a href="<?php echo Util::getWebsiteUrl('modules/yarn', '#releases'); ?>" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
             <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardTools->getYarn()->getVersion(); ?></span>
             <span><?php echo $neardLang->getValue(Lang::YARN); ?></span>
           </span>
@@ -182,37 +182,37 @@
       <div class="panel-body panel-summary">
         <div class="list-group" style="margin-bottom:0;">
           <span class="list-group-item">
-            <a href="<?php echo Util::getWebsiteUrl('apps/adminer', '#releases'); ?>" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
+            <a href="<?php echo Util::getWebsiteUrl('modules/adminer', '#releases'); ?>" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
             <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardApps->getAdminer()->getVersion(); ?></span>
             <a href="adminer" target="_blank"><?php echo $neardLang->getValue(Lang::ADMINER); ?></a>
           </span>
           <span class="list-group-item">
-            <a href="<?php echo Util::getWebsiteUrl('apps/gitlist', '#releases'); ?>" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
+            <a href="<?php echo Util::getWebsiteUrl('modules/gitlist', '#releases'); ?>" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
             <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardApps->getGitlist()->getVersion(); ?></span>
             <a href="gitlist" target="_blank"><?php echo $neardLang->getValue(Lang::GITLIST); ?></a>
           </span>
           <span class="list-group-item">
-            <a href="<?php echo Util::getWebsiteUrl('apps/phpmemadmin', '#releases'); ?>" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
+            <a href="<?php echo Util::getWebsiteUrl('modules/phpmemadmin', '#releases'); ?>" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
             <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardApps->getPhpmemadmin()->getVersion(); ?></span>
             <a href="phpmemadmin" target="_blank"><?php echo $neardLang->getValue(Lang::PHPMEMADMIN); ?></a>
           </span>
           <span class="list-group-item">
-            <a href="<?php echo Util::getWebsiteUrl('apps/phpmyadmin', '#releases'); ?>" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
+            <a href="<?php echo Util::getWebsiteUrl('modules/phpmyadmin', '#releases'); ?>" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
             <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardApps->getPhpmyadmin()->getVersion() . ' (' . $neardApps->getPhpmyadmin()->getVersionsStr() . ')'; ?></span>
             <a href="phpmyadmin" target="_blank"><?php echo $neardLang->getValue(Lang::PHPMYADMIN); ?></a>
           </span>
           <span class="list-group-item">
-            <a href="<?php echo Util::getWebsiteUrl('apps/phppgadmin', '#releases'); ?>" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
+            <a href="<?php echo Util::getWebsiteUrl('modules/phppgadmin', '#releases'); ?>" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
             <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardApps->getPhppgadmin()->getVersion(); ?></span>
             <a href="phppgadmin" target="_blank"><?php echo $neardLang->getValue(Lang::PHPPGADMIN); ?></a>
           </span>
           <span class="list-group-item">
-            <a href="<?php echo Util::getWebsiteUrl('apps/webgrind', '#releases'); ?>" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
+            <a href="<?php echo Util::getWebsiteUrl('modules/webgrind', '#releases'); ?>" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
             <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardApps->getWebgrind()->getVersion(); ?></span>
             <a href="webgrind" target="_blank"><?php echo $neardLang->getValue(Lang::WEBGRIND); ?></a>
           </span>
           <span class="list-group-item">
-            <a href="<?php echo Util::getWebsiteUrl('apps/websvn', '#releases'); ?>" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
+            <a href="<?php echo Util::getWebsiteUrl('modules/websvn', '#releases'); ?>" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
             <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardApps->getWebsvn()->getVersion(); ?></span>
             <a href="websvn" target="_blank"><?php echo $neardLang->getValue(Lang::WEBSVN); ?></a>
           </span>

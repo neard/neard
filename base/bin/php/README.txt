@@ -1,2 +1,2 @@
 Place PHP module releases here.
-Documentation and downloads : http://neard.io/bins/php
+Documentation and downloads : http://neard.io/modules/php

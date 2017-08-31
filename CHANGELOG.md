@@ -35,14 +35,14 @@
 * Add Python tool (Issue #98)
 * Add Perl, Vbs and Python CGI scripts examples
 * Bug while setting version in neard.conf
-* Downgrade default Filezilla bundle to 0.9.42 (XP compatibility)
+* Downgrade default Filezilla release to 0.9.42 (XP compatibility)
 * Implement enable on tools and apps
 * Integration of Codacy and Travis
 
 ## 1.0.21 (2016/10/23)
 
 * Replace launchStartup with enable for binaries (Issue #153)
-* Better way to manage bundles (Issue #153)
+* Better way to manage modules (Issue #153)
 * Check if PHP Apache module is loaded (phpMyAdmin and phpPgAdmin aliases)
 * Add memcached extension to php lib core (check service)
 * Bug with LaunchStartupService option
@@ -126,23 +126,23 @@
 * Add aliases doesn't work with quote or accented letters or special letters (Issue #116)
 * Add Hungarian language (Issue #112)
 * Some chars are not handled by Aestan Tray Menu (Issue #112)
-* New Apache binary bundle : 2.4.20-r2 (Issue #119)
-* New Filezilla Server binary bundle : 0.9.56.1-r2 (Issue #119)
-* New MariaDB binary bundle : 5.5.48-r2, 10.0.24-r2, 10.1.13-r2 (Issue #119)
-* New MySQL binary bundle : 5.5.49-r2, 5.6.30-r2 (Issue #119)
-* New Node.js binary bundle : 0.12.13-r3, 4.4.3-r3, 5.10.1-r3 (Issue #119)
-* New PHP binary bundle : 5.5.34-r6, 5.6.20-36, 7.0.5-r6 (Issue #119)
+* New Apache release : 2.4.20-r2 (Issue #119)
+* New Filezilla Server release : 0.9.56.1-r2 (Issue #119)
+* New MariaDB release : 5.5.48-r2, 10.0.24-r2, 10.1.13-r2 (Issue #119)
+* New MySQL release : 5.5.49-r2, 5.6.30-r2 (Issue #119)
+* New Node.js release : 0.12.13-r3, 4.4.3-r3, 5.10.1-r3 (Issue #119)
+* New PHP release : 5.5.34-r6, 5.6.20-36, 7.0.5-r6 (Issue #119)
 * Add Ant build (Issue #54)
-* Upgrade Composer tool to version 1.0.0 (2016/04/05)
+* Upgrade Composer module to version 1.0.0 (2016/04/05)
 * Upgrade Console tool to pack 2 (Console 2.00.148 and TCC/LE 14.0.0.9)
-* Upgrade Git tool to version 2.8.1
-* Upgrade SVN tool to version 1.7.22
-* Upgrade XDebugClient tool to version 1.0b5
-* Upgrade Adminer app to version 4.2.4
-* Upgrade Gitlist app to version 0.5.0
-* Upgrade phpMyAdmin app to pack 2 (4.0.10.15, 4.4.15.5, 4.6.0)
-* Upgrade Webgrind app to version 1.1
-* Review phpMyAdmin implementation
+* Upgrade Git module to version 2.8.1
+* Upgrade SVN module to version 1.7.22
+* Upgrade XDebugClient module to version 1.0b5
+* Upgrade Adminer module to version 4.2.4
+* Upgrade Gitlist module to version 0.5.0
+* Upgrade phpMyAdmin module to pack 2 (4.0.10.15, 4.4.15.5, 4.6.0)
+* Upgrade Webgrind module to version 1.1
+* Review phpMyAdmin module implementation
 * Display changelog link in new release dialog
 * Create sub repositories on Github for apps and tools (see 'Download' section in README.md)
 * Neard is now compressed with 7z format

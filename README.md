@@ -16,50 +16,50 @@ For those who wish to contribute, have an issue or questions, read the [Document
 
 ![](http://neard.io/img/screenshots/menu1.png)  ![](http://neard.io/img/screenshots/menu2.png)  ![](http://neard.io/img/screenshots/menu-tools2.png)
 
-It also offers several versions of the various [binaries](http://neard.io/bins), [applications](http://neard.io/apps) and [tools](http://neard.io/tools) for download on the [official website](http://neard.io) and many other features.
+It also offers several versions of the various [modules](http://neard.io/modules) for download on the [official website](http://neard.io) and many other features.
 
 ### Binaries
 
-* [Apache](http://neard.io/bins/apache) : the world's most used web server software.
-* [Filezilla](http://neard.io/bins/filezilla) : a FTP server application.
-* [MailHog](http://neard.io/bins/mailhog) : a Web and API based SMTP testing.
-* [MariaDB](http://neard.io/bins/mariadb) : a community-developed fork of the MySQL relational database management system.
-* [MongoDB](http://neard.io/bins/mongodb) : a free and open-source cross-platform document-oriented database program.
-* [Memcached](http://neard.io/bins/memcached) : a distributed memory object caching system.
-* [MySQL](http://neard.io/bins/mysql) : an open-source relational database management system.
-* [Node.js](http://neard.io/bins/nodejs) : an open-source, cross-platform runtime environment for developing server-side web applications.
-* [PHP](http://neard.io/bins/php) : a server-side scripting language designed for web development including PEAR and extra extensions.
-* [PostgreSQL](http://neard.io/bins/postgresql) : an object-relational database management system (ORDBMS) with an emphasis on extensibility and standards-compliance.
-* [SVN](http://neard.io/bins/svn) : a software versioning and revision control system.
+* [Apache](http://neard.io/modules/apache) : the world's most used web server software.
+* [Filezilla](http://neard.io/modules/filezilla) : a FTP server application.
+* [MailHog](http://neard.io/modules/mailhog) : a Web and API based SMTP testing.
+* [MariaDB](http://neard.io/modules/mariadb) : a community-developed fork of the MySQL relational database management system.
+* [MongoDB](http://neard.io/modules/mongodb) : a free and open-source cross-platform document-oriented database program.
+* [Memcached](http://neard.io/modules/memcached) : a distributed memory object caching system.
+* [MySQL](http://neard.io/modules/mysql) : an open-source relational database management system.
+* [Node.js](http://neard.io/modules/nodejs) : an open-source, cross-platform runtime environment for developing server-side web applications.
+* [PHP](http://neard.io/modules/php) : a server-side scripting language designed for web development including PEAR and extra extensions.
+* [PostgreSQL](http://neard.io/modules/postgresql) : an object-relational database management system (ORDBMS) with an emphasis on extensibility and standards-compliance.
+* [SVN](http://neard.io/modules/svn) : a software versioning and revision control system.
 
 ### Applications
 
-* [Adminer](http://neard.io/apps/adminer) : a full-featured database management tool written in PHP.
-* [GitList](http://neard.io/apps/gitlist) : an elegant and modern git repository viewer.
-* [phpMemAdmin](http://neard.io/apps/phpmemadmin) : to handle the administration of Memcached over the web.
-* [phpMyAdmin](http://neard.io/apps/phpmyadmin) : to handle the administration of MySQL and MariaDB over the Web.
-* [phpPgAdmin](http://neard.io/apps/phppgadmin) : a web-based administration tool for PostgreSQL.
-* [Webgrind](http://neard.io/apps/webgrind) : the Xdebug Profiling Web Frontend in PHP.
-* [WebSVN](http://neard.io/apps/websvn) : an Online subversion repository browser.
+* [Adminer](http://neard.io/modules/adminer) : a full-featured database management tool written in PHP.
+* [GitList](http://neard.io/modules/gitlist) : an elegant and modern git repository viewer.
+* [phpMemAdmin](http://neard.io/modules/phpmemadmin) : to handle the administration of Memcached over the web.
+* [phpMyAdmin](http://neard.io/modules/phpmyadmin) : to handle the administration of MySQL and MariaDB over the Web.
+* [phpPgAdmin](http://neard.io/modules/phppgadmin) : a web-based administration tool for PostgreSQL.
+* [Webgrind](http://neard.io/modules/webgrind) : the Xdebug Profiling Web Frontend in PHP.
+* [WebSVN](http://neard.io/modules/websvn) : an Online subversion repository browser.
 
 ### Tools
 
-* [Composer](http://neard.io/tools/composer) : a dependency manager for PHP.
-* [Console](http://neard.io/tools/console) : a multi command prompt with TCC/LE and ANSICON.
-* [Drush](http://neard.io/tools/drush) : a command line shell and scripting interface for Drupal.
-* [Ghostscript](http://neard.io/tools/ghostscript) : an interpreter for the PostScript language and for PDF.
-* [Git](http://neard.io/tools/git) : a widely used version control system for software development.
-* [HostsEditor](http://neard.io/tools/hostseditor) : a small application for editing windows Hosts file.
-* [ImageMagick](http://neard.io/tools/imagemagick) : a free and open-source software suite to manipulate image files.
-* [Notepad2-mod](http://neard.io/tools/notepad2mod) : a fork of Notepad2 text editor with syntax highlighting.
-* [Perl](http://neard.io/tools/perl) : a family of high-level, general-purpose, interpreted, dynamic programming languages.
-* [PhpMetrics](http://neard.io/tools/phpmetrics) : gives metrics about PHP project and classes.
-* [PHPUnit](http://neard.io/tools/phpunit) : a programmer-oriented testing framework for PHP.
-* [Python](http://neard.io/tools/python) : a widely used high-level, general-purpose, interpreted, dynamic programming language.
-* [Ruby](http://neard.io/tools/ruby) : a dynamic, reflective, object-oriented, general-purpose programming language.
-* [WP-CLI](http://neard.io/tools/wpcli) : a command line interface for WordPress.
-* [XDebugClient](http://neard.io/tools/xdc) : a simple frontend for XDebug.
-* [Yarn](http://neard.io/tools/yarn) : a fast, reliable, and secure dependency management.
+* [Composer](http://neard.io/modules/composer) : a dependency manager for PHP.
+* [Console](http://neard.io/modules/console) : a multi command prompt with TCC/LE and ANSICON.
+* [Drush](http://neard.io/modules/drush) : a command line shell and scripting interface for Drupal.
+* [Ghostscript](http://neard.io/modules/ghostscript) : an interpreter for the PostScript language and for PDF.
+* [Git](http://neard.io/modules/git) : a widely used version control system for software development.
+* [HostsEditor](http://neard.io/modules/hostseditor) : a small application for editing windows Hosts file.
+* [ImageMagick](http://neard.io/modules/imagemagick) : a free and open-source software suite to manipulate image files.
+* [Notepad2-mod](http://neard.io/modules/notepad2mod) : a fork of Notepad2 text editor with syntax highlighting.
+* [Perl](http://neard.io/modules/perl) : a family of high-level, general-purpose, interpreted, dynamic programming languages.
+* [PhpMetrics](http://neard.io/modules/phpmetrics) : gives metrics about PHP project and classes.
+* [PHPUnit](http://neard.io/modules/phpunit) : a programmer-oriented testing framework for PHP.
+* [Python](http://neard.io/modules/python) : a widely used high-level, general-purpose, interpreted, dynamic programming language.
+* [Ruby](http://neard.io/modules/ruby) : a dynamic, reflective, object-oriented, general-purpose programming language.
+* [WP-CLI](http://neard.io/modules/wpcli) : a command line interface for WordPress.
+* [XDebugClient](http://neard.io/modules/xdc) : a simple frontend for XDebug.
+* [Yarn](http://neard.io/modules/yarn) : a fast, reliable, and secure dependency management.
 
 ## Documentation
 

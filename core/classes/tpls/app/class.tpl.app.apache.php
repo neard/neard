@@ -38,7 +38,7 @@ class TplAppApache
         // Download
         $resultItems .= TplAestan::getItemLink(
             $neardLang->getValue(Lang::DOWNLOAD_MORE),
-            Util::getWebsiteUrl('bins/apache', '#releases'),
+            Util::getWebsiteUrl('modules/apache', '#releases'),
             false,
             TplAestan::GLYPH_BROWSER
         ) . PHP_EOL;

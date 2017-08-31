@@ -1,2 +1,2 @@
 Place Gitlist module releases here.
-Documentation and downloads : http://neard.io/apps/gitlist
+Documentation and downloads : http://neard.io/modules/gitlist

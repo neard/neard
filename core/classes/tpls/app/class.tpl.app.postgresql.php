@@ -31,7 +31,7 @@ class TplAppPostgresql
         // Download
         $resultItems .= TplAestan::getItemLink(
             $neardLang->getValue(Lang::DOWNLOAD_MORE),
-            Util::getWebsiteUrl('bins/postgresql', '#releases'),
+            Util::getWebsiteUrl('modules/postgresql', '#releases'),
             false,
             TplAestan::GLYPH_BROWSER
         ) . PHP_EOL;

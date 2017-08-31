@@ -25,7 +25,7 @@ class TplAppNodejs
         // Download
         $resultItems .= TplAestan::getItemLink(
         $neardLang->getValue(Lang::DOWNLOAD_MORE),
-            Util::getWebsiteUrl('bins/nodejs', '#releases'),
+            Util::getWebsiteUrl('modules/nodejs', '#releases'),
             false,
             TplAestan::GLYPH_BROWSER
         ) . PHP_EOL;

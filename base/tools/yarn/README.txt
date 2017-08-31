@@ -1,2 +1,2 @@
 Place Yarn module releases here.
-Documentation and downloads : http://neard.io/tools/yarn
+Documentation and downloads : http://neard.io/modules/yarn

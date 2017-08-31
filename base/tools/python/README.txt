@@ -1,2 +1,2 @@
 Place Python module releases here.
-Documentation and downloads : http://neard.io/tools/python
+Documentation and downloads : http://neard.io/modules/python
