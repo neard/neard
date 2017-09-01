@@ -26,7 +26,7 @@
 * Change some access modifiers
 * 7z release format only
 
-> ⚠ Modules have been updated to the latest stable release (Issue #264). For Windows XP users, please read the [Windows XP limitation](http://neard.io/doc/faq/#windows-xp-limitation) section in the FAQ to download the right release.
+> :warning: Modules have been updated to the latest stable release (Issue #264). For Windows XP users, please read the [Windows XP limitation](http://neard.io/doc/faq/#windows-xp-limitation) section in the FAQ to download the right release.
 
 ## 1.2 (2017/04/20)
 
