@@ -1,3 +1,19 @@
+## 1.2 > 1.3
+
+* **required** : Download and install the latests [Neard Prerequisites Package](https://github.com/crazy-max/neard-prerequisites/releases/latest)
+* **required** : Remove then replace folder `core`
+* **required** : Remove then replace file `sprites.dat`
+* **required** : Copy folder `tools\ghostscript`
+* **required** : Remove folder `tools\notepad2mod`
+* **required** : Copy folder `tools\perl`
+* **required** : Copy folder `tools\yarn`
+* **required** : Add line `ghostscriptVersion = "9.21"` after `drushVersion` in `neard.conf`
+* **required** : Remove line `notepad2modVersion` in the tools part in `neard.conf`
+* **required** : Add line `perlVersion = "5.26.0.1"` after `imagemagickVersion` in `neard.conf`
+* **required** : Add line `yarnVersion = "0.24.6"` after `xdcVersion` in `neard.conf`
+* **required** : Change `consoleVersion` value to `2.00.148.3` in `neard.conf` and copy folder `tools\console\console2.00.148.3`
+* **optional** : Regenerate new SSL certificates for localhost and vhosts (Neard > Tools > Generate SSL certificate)
+
 ## 1.0.22 > 1.2
 
 * **required** : Download and install the latests [Neard Prerequisites Package](https://github.com/crazy-max/neard-prerequisites/releases/latest)

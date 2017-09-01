@@ -1,5 +1,33 @@
 # Changelog
 
+## 1.3 (2017/09/01)
+
+* Debug variables empty for MySQL and MariaDB (Issue #315)
+* Remove Notepad2-mod (Issue #314)
+* Update modules links (Issue #313)
+* Add PHP 7.2 compatibility (Issue #311)
+* Upgrade to OpenSSL 1.1.0f (Issue #309)
+* Firefox & Chrome require the subjectAltName (SAN) X.509 extension for certificates (Issue #308)
+* Paths are not updated while switching version (Issue #301)
+* Exclude php_xdebug from PHP extensions (Issue #298)
+* Check Console shell (Issue #291)
+* Error while launching PostgreSQL console (Issue #290)
+* Error while launching SVN console (Issue #289)
+* New Console with Clink and GnuWin32 CoreUtils (Issues #287 #288)
+* Update modules to stable releases (Issue #264)
+* Wrong file size on version check window (Issue #251)
+* Add Ghostscript (Issue #220)
+* Add Yarn (Issue #157)
+* Add Perl (Issue #155)
+* Exclude OPCache from extensions list
+* Error while refreshing Apache SSL conf
+* Missing return statement
+* Unused local variables
+* Change some access modifiers
+* 7z release format only
+
+> ⚠ Modules have been updated to the latest stable release (Issue #264). For Windows XP users, please read the [Windows XP limitation](http://neard.io/doc/faq/#windows-xp-limitation) section in the FAQ to download the right release.
+
 ## 1.2 (2017/04/20)
 
 * Review versioning style (Issue #247)
