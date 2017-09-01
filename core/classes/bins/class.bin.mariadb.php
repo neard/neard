@@ -386,13 +386,17 @@ class BinMariadb extends Module
             $outputFrom = '2';
         } elseif ($cmd == self::CMD_VARIABLES) {
             $bin = $this->getAdmin();
+            $cmd .= ' --user=' . $this->getRootUser();
+            if ($this->getRootPwd()) {
+                $cmd .= ' --password=' . $this->getRootPwd();
+            }
             $removeLines = 2;
         }
     
-        if (file_exists($this->getExe())) {
-            $tmpResult = Batch::exec('mariadbGetCmdLineOutput', '"' . $bin . '" ' . $cmd . ' ' . $outputFrom);
+        if (file_exists($bin)) {
+            $tmpResult = Batch::exec('mariadbGetCmdLineOutput', '"' . $bin . '" ' . $cmd . ' ' . $outputFrom, 5);
             if ($tmpResult !== false && is_array($tmpResult)) {
-                $result['syntaxOk'] = !Util::contains(trim($tmpResult[count($tmpResult) - 1]), '[ERROR]');
+                $result['syntaxOk'] = empty($tmpResult) || !Util::contains(trim($tmpResult[count($tmpResult) - 1]), '[ERROR]');
                 for ($i = 0; $i < $removeLines; $i++) {
                     unset($tmpResult[$i]);
                 }

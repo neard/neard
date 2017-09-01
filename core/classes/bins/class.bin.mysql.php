@@ -406,21 +406,25 @@ class BinMysql extends Module
         $removeLines = 0;
         $outputFrom = '';
         if ($cmd == self::CMD_SYNTAX_CHECK) {
-            $outputFrom = '2';
+            $outputFrom = '2'; 
         } elseif ($cmd == self::CMD_VARIABLES) {
             $bin = $this->getAdmin();
+            $cmd .= ' --user=' . $this->getRootUser();
+            if ($this->getRootPwd()) {
+                $cmd .= ' --password=' . $this->getRootPwd();
+            }
             $removeLines = 2;
         }
     
-        if (file_exists($this->getExe())) {
-            $tmpResult = Batch::exec('mysqlGetCmdLineOutput', '"' . $bin . '" ' . $cmd . ' ' . $outputFrom);
+        if (file_exists($bin)) {
+            $tmpResult = Batch::exec('mysqlGetCmdLineOutput', '"' . $bin . '" ' . $cmd . ' ' . $outputFrom, 5);
             if ($tmpResult !== false && is_array($tmpResult)) {
-                $result['syntaxOk'] = !Util::contains(trim($tmpResult[count($tmpResult) - 1]), '[ERROR]');
+                $result['syntaxOk'] = empty($tmpResult) || !Util::contains(trim($tmpResult[count($tmpResult) - 1]), '[ERROR]');
                 for ($i = 0; $i < $removeLines; $i++) {
                     unset($tmpResult[$i]);
                 }
                 $result['content'] = trim(str_replace($bin, '', implode(PHP_EOL, $tmpResult)));
-            }
+            } 
         }
     
         return $result;
