@@ -15,7 +15,7 @@ if ($neardLatestVersion != null && version_compare($neardCurrentVersion, $neardL
     $fullVersionUrl = Util::getVersionUrl($neardLatestVersion);
     $result['download'] .= '<a role="button" class="btn btn-success fullversionurl" href="' . $fullVersionUrl . '" target="_blank"><i class="fa fa-download"></i> ';
     $result['download'] .= $neardLang->getValue(Lang::DOWNLOAD) . ' <strong>' . APP_TITLE . ' ' . $neardLatestVersion . '</strong><br />';
-    $result['download'] .= '<small>neard-' . $neardLatestVersion . '.7z (' . Util::getRemoteFilesize($fullVersionUrl) . ')</small></a>';
+    $result['download'] .= '<small>neard-' . $neardLatestVersion . '.7z</small></a>';
     
     $result['changelog'] = Util::getLatestChangelog(true);
 }
