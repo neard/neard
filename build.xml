@@ -105,6 +105,13 @@
     <!-- Replacements -->
     <copy file="${project.basedir}/base/neard.conf" tofile="${release.target}/${release.name}/neard.conf" overwrite="true">
       <filterset>
+        <filter token="APPCONF_LANG" value="${appconf.lang}"/>
+        <filter token="APPCONF_TIMEZONE" value="${appconf.timezone}"/>
+        <filter token="APPCONF_NOTEPAD" value="${appconf.notepad}"/>
+        <filter token="APPCONF_MAX_LOGS_ARCHIVES" value="${appconf.maxLogsArchives}"/>
+        <filter token="APPCONF_VERBOSE" value="${appconf.versbose}"/>
+        <filter token="APPCONF_SCRIPTS_TIMEOUT" value="${appconf.scriptsTimeout}"/>
+        
         <filter token="BIN_APACHE_VERSION" value="${bin.apache.version}"/>
         <filter token="BIN_PHP_VERSION" value="${bin.php.version}"/>
         <filter token="BIN_MYSQL_VERSION" value="${bin.mysql.version}"/>
