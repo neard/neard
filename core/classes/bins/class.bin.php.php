@@ -79,6 +79,7 @@ class BinPhp extends Module
     const INI_APC_STAT = 'apc.stat';
     
     private $extPath;
+    private $depsPath;
     private $imagickPath;
     private $pearPath;
     private $apacheConf;
@@ -103,6 +104,7 @@ class BinPhp extends Module
 
         $this->enable = $this->enable && $neardConfig->getRaw(self::ROOT_CFG_ENABLE);
         $this->extPath = $this->currentPath . '/ext';
+        $this->depsPath = $this->currentPath . '/deps';
         $this->imagickPath = $this->currentPath . '/imagick';
         $this->pearPath = $this->currentPath . '/pear';
         $this->apacheConf = $neardBins->getApache()->getCurrentPath() . '/' . $this->apacheConf; //FIXME: Useful ?
@@ -574,6 +576,10 @@ class BinPhp extends Module
 
     public function getExtPath() {
         return $this->extPath;
+    }
+    
+    public function getDepsPath() {
+        return $this->depsPath;
     }
     
     public function getImagickPath() {

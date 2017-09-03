@@ -294,6 +294,7 @@ class Util
             if ($neardBins->getPhp()->isEnable()) {
                 $value .= $neardBins->getPhp()->getCurrentPath() . ';';
                 $value .= $neardBins->getPhp()->getPearPath() . ';';
+                $value .= $neardBins->getPhp()->getDepsPath() . ';';
                 $value .= $neardBins->getPhp()->getImagickPath() . ';';
             }
             if ($neardBins->getNodejs()->isEnable()) {
