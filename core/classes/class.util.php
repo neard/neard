@@ -315,9 +315,6 @@ class Util
             if ($neardTools->getGit()->isEnable()) {
                 $value .= $neardTools->getGit()->getCurrentPath() . '/bin;';
             }
-            if ($neardTools->getImageMagick()->isEnable()) {
-                $value .= $neardTools->getImageMagick()->getCurrentPath() . ';';
-            }
             if ($neardTools->getPerl()->isEnable()) {
                 $value .= $neardTools->getPerl()->getCurrentPath() . '/perl/site/bin;';
                 $value .= $neardTools->getPerl()->getCurrentPath() . '/perl/bin;';

@@ -56,13 +56,6 @@ class TplAppTools
             TplAestan::GLYPH_HOSTSEDITOR
         ) . PHP_EOL;
         
-        // ImageMagick
-        $resultItems .= TplAestan::getItemExe(
-            $neardLang->getValue(Lang::IMAGEMAGICK),
-            $neardTools->getImageMagick()->getExe(),
-            TplAestan::GLYPH_IMAGEMAGICK
-        ) . PHP_EOL;
-        
         // Pear
         $resultItems .= TplAestan::getItemConsole(
             $neardLang->getValue(Lang::PEAR),

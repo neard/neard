@@ -10,7 +10,6 @@ class Tools
     private $ghostscript;
     private $git;
     private $hostseditor;
-    private $imagemagick;
     private $perl;
     private $phpmetrics;
     private $phpunit;
@@ -41,7 +40,6 @@ class Tools
             $this->getGhostscript(),
             $this->getGit(),
             $this->getHostsEditor(),
-            $this->getImageMagick(),
             $this->getPerl(),
             $this->getPhpMetrics(),
             $this->getPhpUnit(),
@@ -99,14 +97,6 @@ class Tools
             $this->hostseditor = new ToolHostsEditor('hostseditor', self::TYPE);
         }
         return $this->hostseditor;
-    }
-    
-    public function getImageMagick()
-    {
-        if ($this->imagemagick == null) {
-            $this->imagemagick = new ToolImagemagick('imagemagick', self::TYPE);
-        }
-        return $this->imagemagick;
     }
     
     public function getPerl()

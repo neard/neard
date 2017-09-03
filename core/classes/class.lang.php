@@ -126,7 +126,6 @@ class Lang
     const GHOSTSCRIPT = 'ghostscript';
     const GIT = 'git';
     const HOSTSEDITOR = 'hostseditor';
-    const IMAGEMAGICK = 'imagemagick';
     const PERL = 'perl';
     const PHPMETRICS = 'phpmetrics';
     const PHPUNIT = 'phpunit';
@@ -481,7 +480,6 @@ class Lang
             self::DRUSH,
             self::GIT,
             self::HOSTSEDITOR,
-            self::IMAGEMAGICK,
             self::PERL,
             self::PHPMETRICS,
             self::PHPUNIT,
