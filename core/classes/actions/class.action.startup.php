@@ -450,13 +450,14 @@ class ActionStartup
         
         $currentSysPathRegKey = Util::getSysPathRegKey();
         $this->writeLog('Current system PATH: ' . $currentSysPathRegKey);
-        if (!Util::contains($currentSysPathRegKey, '%' . Registry::APP_BINS_REG_ENTRY . '%')) {
-            if (!Util::endWith($currentSysPathRegKey, ';')) {
-                $currentSysPathRegKey .= ';';
-            }
-            $currentSysPathRegKey .= '%' . Registry::APP_BINS_REG_ENTRY . '%';
-            $this->writeLog('New system PATH: ' . $currentSysPathRegKey);
-            if (!Util::setSysPathRegKey($currentSysPathRegKey)) {
+        
+        $newSysPathRegKey = str_replace('%' . Registry::APP_BINS_REG_ENTRY . '%;', '', $currentSysPathRegKey);
+        $newSysPathRegKey = str_replace('%' . Registry::APP_BINS_REG_ENTRY . '%', '', $newSysPathRegKey);
+        $newSysPathRegKey = '%' . Registry::APP_BINS_REG_ENTRY . '%;' . $newSysPathRegKey;
+        $this->writeLog('New system PATH: ' . $newSysPathRegKey);
+        
+        if ($currentSysPathRegKey!= $newSysPathRegKey) {
+            if (!Util::setSysPathRegKey($newSysPathRegKey)) {
                 if (!empty($this->error)) {
                     $this->error .= PHP_EOL . PHP_EOL;
                 }
