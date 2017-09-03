@@ -109,7 +109,7 @@
         <filter token="APPCONF_TIMEZONE" value="${appconf.timezone}"/>
         <filter token="APPCONF_NOTEPAD" value="${appconf.notepad}"/>
         <filter token="APPCONF_MAX_LOGS_ARCHIVES" value="${appconf.maxLogsArchives}"/>
-        <filter token="APPCONF_VERBOSE" value="${appconf.versbose}"/>
+        <filter token="APPCONF_LOGS_VERBOSE" value="${appconf.logsVerbose}"/>
         <filter token="APPCONF_SCRIPTS_TIMEOUT" value="${appconf.scriptsTimeout}"/>
         
         <filter token="BIN_APACHE_VERSION" value="${bin.apache.version}"/>
