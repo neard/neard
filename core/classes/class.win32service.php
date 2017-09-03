@@ -146,12 +146,12 @@ class Win32Service
             return Batch::installPostgresqlService();
         }
         if ($this->getNssm() instanceof Nssm) {
-            $nssmEnvPath = '%SystemRoot%/system32;';
+            $nssmEnvPath = Util::getAppBinsRegKey(false);
+            $nssmEnvPath .= Util::getNssmEnvPaths();
+            $nssmEnvPath .= '%SystemRoot%/system32;';
             $nssmEnvPath .= '%SystemRoot%;';
             $nssmEnvPath .= '%SystemRoot%/system32/Wbem;';
-            $nssmEnvPath .= '%SystemRoot%/system32/WindowsPowerShell/v1.0;';
-            $nssmEnvPath .= Util::getAppBinsRegKey(false);
-            $nssmEnvPath .= Util::getNssmEnvPaths();
+            $nssmEnvPath .= '%SystemRoot%/system32/WindowsPowerShell/v1.0';
             $this->getNssm()->setEnvironmentExtra('PATH=' . $nssmEnvPath);
             return $this->getNssm()->create();
         }
