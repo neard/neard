@@ -39,7 +39,8 @@ class Nssm
     private $binPath;
     private $params;
     private $start;
-    private $logsPath;
+    private $stdout;
+    private $stderr;
     private $environmentExtra;
     private $latestError;
     private $latestStatus;
