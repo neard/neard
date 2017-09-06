@@ -71,7 +71,8 @@ class BinMemcached extends Module
         $nssm->setBinPath($this->exe);
         $nssm->setParams(sprintf(self::SERVICE_PARAMS, $this->memory, $this->port));
         $nssm->setStart(Nssm::SERVICE_DEMAND_START);
-        $nssm->setLogsPath($neardBs->getLogsPath() . '/memcached.log');
+        $nssm->setStdout($neardBs->getLogsPath() . '/memcached.out.log');
+        $nssm->setStderr($neardBs->getLogsPath() . '/memcached.err.log');
         
         $this->service->setNssm($nssm);
     }

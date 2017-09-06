@@ -131,7 +131,8 @@ class Nssm
         $this->writeLog('-> description: ' . $this->getDisplayName());
         $this->writeLog('-> path: ' . $this->getBinPath());
         $this->writeLog('-> params: ' . $this->getParams());
-        $this->writeLog('-> logs: ' . $this->getLogsPath());
+        $this->writeLog('-> stdout: ' . $this->getStdout());
+        $this->writeLog('-> stderr: ' . $this->getStderr());
         $this->writeLog('-> environment extra: ' . $this->getEnvironmentExtra());
         $this->writeLog('-> start_type: ' . ($this->getStart() != null ? $this->getStart() : self::SERVICE_DEMAND_START));
         
@@ -172,13 +173,13 @@ class Nssm
         }
         
         // Stdout
-        $exec = $this->exec('set ' . $this->getName() . ' AppStdout "' . $this->getLogsPath() . '"');
+        $exec = $this->exec('set ' . $this->getName() . ' AppStdout "' . $this->getStdout() . '"');
         if ($exec === false) {
             return false;
         }
         
         // Stderr
-        $exec = $this->exec('set ' . $this->getName() . ' AppStderr "' . $this->getLogsPath() . '"');
+        $exec = $this->exec('set ' . $this->getName() . ' AppStderr "' . $this->getStderr() . '"');
         if ($exec === false) {
             return false;
         }
@@ -422,14 +423,24 @@ class Nssm
         $this->start = $start;
     }
 
-    public function getLogsPath()
+    public function getStdout()
     {
-        return $this->logsPath;
+        return $this->stdout;
     }
 
-    public function setLogsPath($logsPath)
+    public function setStdout($stdout)
     {
-        $this->logsPath = $logsPath;
+        $this->stdout = $stdout;
+    }
+    
+    public function getStderr()
+    {
+        return $this->stderr;
+    }
+    
+    public function setStderr($stderr)
+    {
+        $this->stderr= $stderr;
     }
     
     public function getEnvironmentExtra()

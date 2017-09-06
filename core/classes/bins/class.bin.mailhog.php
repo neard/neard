@@ -80,7 +80,8 @@ class BinMailhog extends Module
         $nssm->setBinPath($this->exe);
         $nssm->setParams(sprintf(self::SERVICE_PARAMS, $this->apiPort, $this->uiPort, $this->smtpPort, $this->mailPath));
         $nssm->setStart(Nssm::SERVICE_DEMAND_START);
-        $nssm->setLogsPath($neardBs->getLogsPath() . '/mailhog.log');
+        $nssm->setStdout($neardBs->getLogsPath() . '/mailhog.out.log');
+        $nssm->setStderr($neardBs->getLogsPath() . '/mailhog.err.log');
         
         $this->service->setNssm($nssm);
     }
