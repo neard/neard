@@ -937,9 +937,9 @@ class Util
         
         if ($markdown) {
             if (version_compare($neardBins->getPhp()->getVersion(), '5.2.17', '>')) {
-                require_once $neardCore->getLibsPath() . '/markdown/1.6.0/MarkdownInterface.php';
-                require_once $neardCore->getLibsPath() . '/markdown/1.6.0/Markdown.php';
-                require_once $neardCore->getLibsPath() . '/markdown/1.6.0/MarkdownExtra.php';
+                require_once $neardCore->getLibsPath() . '/markdown/1.7.0/MarkdownInterface.php';
+                require_once $neardCore->getLibsPath() . '/markdown/1.7.0/Markdown.php';
+                require_once $neardCore->getLibsPath() . '/markdown/1.7.0/MarkdownExtra.php';
                 $content = call_user_func_array(array('Michelf\\MarkDownExtra', 'defaultTransform'), array($content));
             } else {
                 require_once $neardCore->getLibsPath() . '/markdown/1.0.2/markdown.php';
