@@ -20,6 +20,9 @@ class Core
     const OPENSSL_EXE = 'openssl.exe';
     const OPENSSL_CONF = 'openssl.cfg';
     
+    const HOSTSEDITOR_VERSION = '1.2';
+    const HOSTSEDITOR_EXE = 'HostsEditor.exe';
+    
     const APP_VERSION = 'version.dat';
     const LAST_PATH = 'lastPath.dat';
     const EXEC = 'exec.dat';
@@ -162,6 +165,16 @@ class Core
     public function getOpenSslExe($aetrayPath = false)
     {
         return $this->getOpenSslPath($aetrayPath) . '/' . self::OPENSSL_EXE;
+    }
+    
+    public function getHostsEditorPath($aetrayPath = false)
+    {
+        return $this->getLibsPath($aetrayPath) . '/hostseditor';
+    }
+    
+    public function getHostsEditorExe($aetrayPath = false)
+    {
+        return $this->getHostsEditorPath($aetrayPath) . '/' . self::HOSTSEDITOR_EXE;
     }
 
     public function getOpenSslConf($aetrayPath = false)

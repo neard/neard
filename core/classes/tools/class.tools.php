@@ -9,7 +9,6 @@ class Tools
     private $drush;
     private $ghostscript;
     private $git;
-    private $hostseditor;
     private $perl;
     private $phpmetrics;
     private $phpunit;
@@ -39,7 +38,6 @@ class Tools
             $this->getDrush(),
             $this->getGhostscript(),
             $this->getGit(),
-            $this->getHostsEditor(),
             $this->getPerl(),
             $this->getPhpMetrics(),
             $this->getPhpUnit(),
@@ -89,14 +87,6 @@ class Tools
             $this->git = new ToolGit('git', self::TYPE);
         }
         return $this->git;
-    }
-    
-    public function getHostsEditor()
-    {
-        if ($this->hostseditor == null) {
-            $this->hostseditor = new ToolHostsEditor('hostseditor', self::TYPE);
-        }
-        return $this->hostseditor;
     }
     
     public function getPerl()

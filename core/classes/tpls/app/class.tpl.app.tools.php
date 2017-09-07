@@ -15,7 +15,7 @@ class TplAppTools
     
     public static function getMenuTools()
     {
-        global $neardLang, $neardTools;
+        global $neardLang, $neardCore, $neardTools;
         $resultItems = $resultActions = '';
         
         // Git
@@ -47,13 +47,6 @@ class TplAppTools
             $neardLang->getValue(Lang::GHOSTSCRIPT),
             TplAestan::GLYPH_GHOSTSCRIPT,
             $neardTools->getConsole()->getTabTitleGhostscript()
-        ) . PHP_EOL;
-        
-        // HostsEditor
-        $resultItems .= TplAestan::getItemExe(
-            $neardLang->getValue(Lang::HOSTSEDITOR),
-            $neardTools->getHostsEditor()->getExe(),
-            TplAestan::GLYPH_HOSTSEDITOR
         ) . PHP_EOL;
         
         // Pear
@@ -118,6 +111,13 @@ class TplAppTools
         $resultItems .= TplAestan::getItemConsole(
             $neardLang->getValue(Lang::CONSOLE),
             TplAestan::GLYPH_CONSOLE
+        ) . PHP_EOL;
+        
+        // HostsEditor
+        $resultItems .= TplAestan::getItemExe(
+            $neardLang->getValue(Lang::HOSTSEDITOR),
+            $neardCore->getHostsEditorExe(),
+            TplAestan::GLYPH_HOSTSEDITOR
         ) . PHP_EOL;
         
         // Generate SSL Certificate

@@ -27,6 +27,7 @@ class Lang
     const GIT_CONSOLE = 'gitConsole';
     const GITHUB = 'github';
     const HELP = 'help';
+    const HOSTSEDITOR = 'hostseditor';
     const LANG = 'lang';
     const LICENSE = 'license';
     const LOGS = 'logs';
@@ -125,7 +126,6 @@ class Lang
     const DRUSH = 'drush';
     const GHOSTSCRIPT = 'ghostscript';
     const GIT = 'git';
-    const HOSTSEDITOR = 'hostseditor';
     const PERL = 'perl';
     const PHPMETRICS = 'phpmetrics';
     const PHPUNIT = 'phpunit';
@@ -382,6 +382,7 @@ class Lang
             self::GIT_CONSOLE,
             self::GITHUB,
             self::HELP,
+            self::HOSTSEDITOR,
             self::LANG,
             self::LICENSE,
             self::LOGS,
@@ -479,7 +480,6 @@ class Lang
             self::CONSOLE,
             self::DRUSH,
             self::GIT,
-            self::HOSTSEDITOR,
             self::PERL,
             self::PHPMETRICS,
             self::PHPUNIT,

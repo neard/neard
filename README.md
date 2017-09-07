@@ -49,7 +49,6 @@ It also offers several versions of the various [modules](http://neard.io/modules
 * [Drush](http://neard.io/modules/drush) : a command line shell and scripting interface for Drupal.
 * [Ghostscript](http://neard.io/modules/ghostscript) : an interpreter for the PostScript language and for PDF.
 * [Git](http://neard.io/modules/git) : a widely used version control system for software development.
-* [HostsEditor](http://neard.io/modules/hostseditor) : a small application for editing windows Hosts file.
 * [Perl](http://neard.io/modules/perl) : a family of high-level, general-purpose, interpreted, dynamic programming languages.
 * [PhpMetrics](http://neard.io/modules/phpmetrics) : gives metrics about PHP project and classes.
 * [PHPUnit](http://neard.io/modules/phpunit) : a programmer-oriented testing framework for PHP.
