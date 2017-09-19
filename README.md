@@ -48,7 +48,7 @@ For those who wish to contribute, have an issue or questions, read the [Document
 ### Tools
 
 * [Composer](http://neard.io/modules/composer) : a dependency manager for PHP.
-* [Console](http://neard.io/modules/console) : a multi command prompt with TCC/LE and ANSICON.
+* [Console](http://neard.io/modules/console) : a multi command prompt based on Console2.
 * [Drush](http://neard.io/modules/drush) : a command line shell and scripting interface for Drupal.
 * [Ghostscript](http://neard.io/modules/ghostscript) : an interpreter for the PostScript language and for PDF.
 * [Git](http://neard.io/modules/git) : a widely used version control system for software development.
