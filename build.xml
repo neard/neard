@@ -7,14 +7,14 @@
   <property file="${build.properties}"/>
   
   <!-- Neard dev -->
-  <property name="neard-dev.path" location="${root.dir}/neard-dev"/>
-  <fail unless="neard-dev.path" message="Project 'neard-dev' not found in ${neard-dev.path}"/>
-  <echo message="Neard dev found in ${neard-dev.path}" level="debug"/> 
+  <property name="dev.path" location="${root.dir}/dev"/>
+  <fail unless="dev.path" message="Project 'dev' not found in ${dev.path}"/>
+  <echo message="Neard dev found in ${dev.path}" level="debug"/> 
   
   <!-- Import build-commons.xml -->
-  <import file="${neard-dev.path}/build/build-commons.xml"/>
+  <import file="${dev.path}/build/build-commons.xml"/>
   <!-- Import build-release.xml -->
-  <import file="${neard-dev.path}/build/build-release.xml"/>
+  <import file="${dev.path}/build/build-release.xml"/>
   
   <target name="check.lang" description="Check languages files" depends="init, load.lib">
     <phpdev action="checklang"/>

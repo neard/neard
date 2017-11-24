@@ -1,6 +1,6 @@
 ## 1.2 > 1.3
 
-* **required** : Download and install the latests [Neard Prerequisites Package](https://github.com/crazy-max/neard-prerequisites/releases/latest)
+* **required** : Download and install the latests [Neard Prerequisites Package](https://github.com/neard/prerequisites/releases/latest)
 * **required** : Remove then replace folder `core`
 * **required** : Remove then replace file `sprites.dat`
 * **required** : Copy folder `tools\ghostscript`
@@ -16,7 +16,7 @@
 
 ## 1.0.22 > 1.2
 
-* **required** : Download and install the latests [Neard Prerequisites Package](https://github.com/crazy-max/neard-prerequisites/releases/latest)
+* **required** : Download and install the latests [Neard Prerequisites Package](https://github.com/neard/prerequisites/releases/latest)
 * **required** : Remove then replace folder `core`
 * **required** : Copy file `nssmEnvPaths.dat`
 * **required** : Add line `mongodbVersion = "2.6.12"` after `mariadbEnable` in `neard.conf`
@@ -50,7 +50,7 @@
 
 ## 1.0.20 > 1.0.21
 
-* **required** : Download and install the latests [Neard Prerequisites Package](https://github.com/crazy-max/neard-prerequisites/releases/latest)
+* **required** : Download and install the latests [Neard Prerequisites Package](https://github.com/neard/prerequisites/releases/latest)
 * **required** : Remove then replace folder `apps\adminer`
 * **required** : Copy folder `apps\phpmemadmin`
 * **required** : Copy folder `apps\phppgadmin`

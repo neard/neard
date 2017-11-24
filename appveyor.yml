@@ -10,8 +10,8 @@ environment:
 
 install:
   - cmd: |
-      git clone https://github.com/crazy-max/neard-dev.git C:\projects\temp
-      move C:\projects\temp C:\projects\neard-dev
+      git clone https://github.com/neard/dev.git C:\projects\temp
+      move C:\projects\temp C:\projects\dev
   - ps: choco install ant
   - ps: $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
   - java -version

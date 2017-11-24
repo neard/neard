@@ -1,13 +1,13 @@
-# Support [![](https://isitmaintained.com/badge/resolution/crazy-max/neard.svg)](https://isitmaintained.com/project/crazy-max/neard)
+# Support [![](https://isitmaintained.com/badge/resolution/neard/neard.svg)](https://isitmaintained.com/project/neard/neard)
 
 ## Reporting an issue
 
 First,
 
 * Read the [FAQ](http://neard.io/doc/faq).
-* Search for [existing issues](https://github.com/crazy-max/neard/issues?utf8=✓&q=).
+* Search for [existing issues](https://github.com/neard/neard/issues?utf8=✓&q=).
 
-Then before [reporting an issue](https://github.com/crazy-max/neard/issues/new), make sure to include all relevant information :
+Then before [reporting an issue](https://github.com/neard/neard/issues/new), make sure to include all relevant information :
 
 * Tell me what is your operating system and platform (eg. Windows 7 64-bits).
 * Tell me your Neard version (eg. 1.0.0) and the previous version in case of upgrade.
