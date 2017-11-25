@@ -2,10 +2,9 @@
 
 define('APP_TITLE', 'Neard');
 define('APP_WEBSITE', 'http://neard.io');
-define('APP_GITHUB_USER', 'crazy-max');
+define('APP_GITHUB_USER', 'neard');
 define('APP_GITHUB_REPO', 'neard');
-define('APP_AUTHOR_NAME', 'Cr@zy');
-define('APP_AUTHOR_EMAIL', 'webmaster@crazyws.fr');
+define('APP_AUTHOR_NAME', 'CrazyMax');
 
 define('RETURN_TAB', '	');
 
