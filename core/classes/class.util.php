@@ -1275,9 +1275,14 @@ class Util
         return true;
     }
     
+    public static function getGithubUserUrl($part = null) {
+        $part = !empty($part) ? '/' . $part : null;
+        return 'https://github.com/' . APP_GITHUB_USER . $part;
+    }
+    
     public static function getGithubUrl($part = null) {
         $part = !empty($part) ? '/' . $part : null;
-        return 'https://github.com/' . APP_GITHUB_USER . '/' . APP_GITHUB_REPO . $part;
+        return $this->getGithubUserUrl(APP_GITHUB_REPO . $part);
     }
     
     public static function getGithubRawUrl($file) {

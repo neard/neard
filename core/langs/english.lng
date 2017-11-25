@@ -276,7 +276,7 @@ changeBrowserOk = "Browser changed successfully to:@nl@%s"
 
 ; Action About
 aboutTitle = "About..."
-aboutText = "%s@nl@Copyright(C) 2014-%s %s <%s>@nl@@nl@Neard is free software; you can redistribute it and/or modify it@nl@under the terms of the GNU LESSER GENERAL PUBLIC LICENSE."
+aboutText = "%s@nl@Copyright(C) 2014-%s %s@nl@@nl@Neard is free software; you can redistribute it and/or modify it@nl@under the terms of the GNU LESSER GENERAL PUBLIC LICENSE."
 
 ; Action Debug Apache
 debugApacheVersionNumber = "Version number"
