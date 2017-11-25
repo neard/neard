@@ -21,45 +21,39 @@ Why the dice icon 🎲 ? Because [*Near*](https://en.wikipedia.org/wiki/Near_(De
 It also offers several versions of the various [modules](http://neard.io/modules) for download on the [official website](http://neard.io) and many other features.<br />
 For those who wish to contribute, have an issue or questions, read the [Documentation](http://neard.io/doc).
 
-### Binaries
+### Modules
 
-* [Apache](http://neard.io/modules/apache) : the world's most used web server software.
-* [Filezilla](http://neard.io/modules/filezilla) : a FTP server application.
-* [MailHog](http://neard.io/modules/mailhog) : a Web and API based SMTP testing.
-* [MariaDB](http://neard.io/modules/mariadb) : a community-developed fork of the MySQL relational database management system.
-* [MongoDB](http://neard.io/modules/mongodb) : a free and open-source cross-platform document-oriented database program.
-* [Memcached](http://neard.io/modules/memcached) : a distributed memory object caching system.
-* [MySQL](http://neard.io/modules/mysql) : an open-source relational database management system.
-* [Node.js](http://neard.io/modules/nodejs) : an open-source, cross-platform runtime environment for developing server-side web applications.
-* [PHP](http://neard.io/modules/php) : a server-side scripting language designed for web development including PEAR and extra extensions.
-* [PostgreSQL](http://neard.io/modules/postgresql) : an object-relational database management system (ORDBMS) with an emphasis on extensibility and standards-compliance.
-* [SVN](http://neard.io/modules/svn) : a software versioning and revision control system.
-
-### Applications
-
-* [Adminer](http://neard.io/modules/adminer) : a full-featured database management tool written in PHP.
-* [GitList](http://neard.io/modules/gitlist) : an elegant and modern git repository viewer.
-* [phpMemAdmin](http://neard.io/modules/phpmemadmin) : to handle the administration of Memcached over the web.
-* [phpMyAdmin](http://neard.io/modules/phpmyadmin) : to handle the administration of MySQL and MariaDB over the Web.
-* [phpPgAdmin](http://neard.io/modules/phppgadmin) : a web-based administration tool for PostgreSQL.
-* [Webgrind](http://neard.io/modules/webgrind) : the Xdebug Profiling Web Frontend in PHP.
-* [WebSVN](http://neard.io/modules/websvn) : an Online subversion repository browser.
-
-### Tools
-
-* [Composer](http://neard.io/modules/composer) : a dependency manager for PHP.
-* [Console](http://neard.io/modules/console) : a multi command prompt based on Console2.
-* [Drush](http://neard.io/modules/drush) : a command line shell and scripting interface for Drupal.
-* [Ghostscript](http://neard.io/modules/ghostscript) : an interpreter for the PostScript language and for PDF.
-* [Git](http://neard.io/modules/git) : a widely used version control system for software development.
-* [Perl](http://neard.io/modules/perl) : a family of high-level, general-purpose, interpreted, dynamic programming languages.
-* [PhpMetrics](http://neard.io/modules/phpmetrics) : gives metrics about PHP project and classes.
-* [PHPUnit](http://neard.io/modules/phpunit) : a programmer-oriented testing framework for PHP.
-* [Python](http://neard.io/modules/python) : a widely used high-level, general-purpose, interpreted, dynamic programming language.
-* [Ruby](http://neard.io/modules/ruby) : a dynamic, reflective, object-oriented, general-purpose programming language.
-* [WP-CLI](http://neard.io/modules/wpcli) : a command line interface for WordPress.
-* [XDebugClient](http://neard.io/modules/xdc) : a simple frontend for XDebug.
-* [Yarn](http://neard.io/modules/yarn) : a fast, reliable, and secure dependency management.
+* ![](http://neard.io/img/modules/type-app.png) [Adminer](http://neard.io/modules/adminer) : a full-featured database management tool written in PHP.
+* ![](http://neard.io/img/modules/type-bin.png) [Apache](http://neard.io/modules/apache) : the world's most used web server software.
+* ![](http://neard.io/img/modules/type-tool.png) [Composer](http://neard.io/modules/composer) : a dependency manager for PHP.
+* ![](http://neard.io/img/modules/type-tool.png) [Console](http://neard.io/modules/console) : a multi command prompt based on Console2.
+* ![](http://neard.io/img/modules/type-tool.png) [Drush](http://neard.io/modules/drush) : a command line shell and scripting interface for Drupal.
+* ![](http://neard.io/img/modules/type-bin.png) [Filezilla](http://neard.io/modules/filezilla) : a FTP server application.
+* ![](http://neard.io/img/modules/type-tool.png) [Ghostscript](http://neard.io/modules/ghostscript) : an interpreter for the PostScript language and for PDF.
+* ![](http://neard.io/img/modules/type-tool.png) [Git](http://neard.io/modules/git) : a widely used version control system for software development.
+* ![](http://neard.io/img/modules/type-app.png) [GitList](http://neard.io/modules/gitlist) : an elegant and modern git repository viewer.
+* ![](http://neard.io/img/modules/type-bin.png) [MailHog](http://neard.io/modules/mailhog) : a Web and API based SMTP testing.
+* ![](http://neard.io/img/modules/type-bin.png) [MariaDB](http://neard.io/modules/mariadb) : a community-developed fork of the MySQL relational database management system.
+* ![](http://neard.io/img/modules/type-bin.png) [MongoDB](http://neard.io/modules/mongodb) : a free and open-source cross-platform document-oriented database program.
+* ![](http://neard.io/img/modules/type-bin.png) [Memcached](http://neard.io/modules/memcached) : a distributed memory object caching system.
+* ![](http://neard.io/img/modules/type-bin.png) [MySQL](http://neard.io/modules/mysql) : an open-source relational database management system.
+* ![](http://neard.io/img/modules/type-bin.png) [Node.js](http://neard.io/modules/nodejs) : an open-source, cross-platform runtime environment for developing server-side web applications.
+* ![](http://neard.io/img/modules/type-tool.png) [Perl](http://neard.io/modules/perl) : a family of high-level, general-purpose, interpreted, dynamic programming languages.
+* ![](http://neard.io/img/modules/type-bin.png) [PHP](http://neard.io/modules/php) : a server-side scripting language designed for web development including PEAR and extra extensions.
+* ![](http://neard.io/img/modules/type-app.png) [phpMemAdmin](http://neard.io/modules/phpmemadmin) : to handle the administration of Memcached over the web.
+* ![](http://neard.io/img/modules/type-tool.png) [PhpMetrics](http://neard.io/modules/phpmetrics) : gives metrics about PHP project and classes.
+* ![](http://neard.io/img/modules/type-app.png) [phpMyAdmin](http://neard.io/modules/phpmyadmin) : to handle the administration of MySQL and MariaDB over the Web.
+* ![](http://neard.io/img/modules/type-app.png) [phpPgAdmin](http://neard.io/modules/phppgadmin) : a web-based administration tool for PostgreSQL.
+* ![](http://neard.io/img/modules/type-tool.png) [PHPUnit](http://neard.io/modules/phpunit) : a programmer-oriented testing framework for PHP.
+* ![](http://neard.io/img/modules/type-bin.png) [PostgreSQL](http://neard.io/modules/postgresql) : an object-relational database management system (ORDBMS) with an emphasis on extensibility and standards-compliance.
+* ![](http://neard.io/img/modules/type-tool.png) [Python](http://neard.io/modules/python) : a widely used high-level, general-purpose, interpreted, dynamic programming language.
+* ![](http://neard.io/img/modules/type-tool.png) [Ruby](http://neard.io/modules/ruby) : a dynamic, reflective, object-oriented, general-purpose programming language.
+* ![](http://neard.io/img/modules/type-bin.png) [SVN](http://neard.io/modules/svn) : a software versioning and revision control system.
+* ![](http://neard.io/img/modules/type-app.png) [Webgrind](http://neard.io/modules/webgrind) : the Xdebug Profiling Web Frontend in PHP.
+* ![](http://neard.io/img/modules/type-app.png) [WebSVN](http://neard.io/modules/websvn) : an Online subversion repository browser.
+* ![](http://neard.io/img/modules/type-tool.png) [WP-CLI](http://neard.io/modules/wpcli) : a command line interface for WordPress.
+* ![](http://neard.io/img/modules/type-tool.png) [XDebugClient](http://neard.io/modules/xdc) : a simple frontend for XDebug.
+* ![](http://neard.io/img/modules/type-tool.png) [Yarn](http://neard.io/modules/yarn) : a fast, reliable, and secure dependency management.
 
 ## Documentation
 
