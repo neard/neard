@@ -6,7 +6,6 @@
   <a href="https://ci.appveyor.com/project/crazy-max/neard"><img src="https://img.shields.io/appveyor/ci/crazy-max/neard.svg?style=flat-square" alt="AppVeyor"></a>
   <a href="https://www.codacy.com/app/crazy-max/neard"><img src="https://img.shields.io/codacy/grade/75278913a45643ab871b87283963b3c5.svg?style=flat-square" alt="Code Quality"></a>
   <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6EALX9NDSRBAJ"><img src="https://img.shields.io/badge/donate-paypal-blue.svg?style=flat-square" alt="Donate Paypal"></a>
-  <a href="https://flattr.com/submit/auto?user_id=crazymax&url=http://neard.io"><img src="https://img.shields.io/badge/flattr-this-green.svg?style=flat-square" alt="Flattr this!"></a>
 </p>
 
 ## About
@@ -73,14 +72,7 @@ We welcome all kinds of contributions :raised_hands:!<br />
 The most basic way to show your support is to star :star2: the project, or to raise issues :speech_balloon:<br />
 Any funds donated will be used to help further development on this project! :gift_heart:
 
-<p>
-  <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6EALX9NDSRBAJ">
-    <img src="http://neard.io/img/paypal.png" alt="Donate Paypal">
-  </a>
-  <a href="https://flattr.com/submit/auto?user_id=crazymax&url=http://neard.io">
-    <img src="http://neard.io/img/flattr.png" alt="Flattr this!">
-  </a>
-</p>
+[![Donate Paypal](http://neard.io/img/paypal.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6EALX9NDSRBAJ)
 
 ## Sponsors
 
