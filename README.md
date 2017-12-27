@@ -44,7 +44,7 @@ For those who wish to contribute, have an issue or questions, read the [Document
 * ![](http://neard.io/img/modules/type-app.png) [phpMyAdmin](http://neard.io/modules/phpmyadmin) : to handle the administration of MySQL and MariaDB over the Web.
 * ![](http://neard.io/img/modules/type-app.png) [phpPgAdmin](http://neard.io/modules/phppgadmin) : a web-based administration tool for PostgreSQL.
 * ![](http://neard.io/img/modules/type-tool.png) [PHPUnit](http://neard.io/modules/phpunit) : a programmer-oriented testing framework for PHP.
-* ![](http://neard.io/img/modules/type-bin.png) [PostgreSQL](http://neard.io/modules/postgresql) : an object-relational database management system (ORDBMS) with an emphasis on extensibility and standards-compliance.
+* ![](http://neard.io/img/modules/type-bin.png) [PostgreSQL](http://neard.io/modules/postgresql) : an object-relational database management system (ORDBMS).
 * ![](http://neard.io/img/modules/type-tool.png) [Python](http://neard.io/modules/python) : a widely used high-level, general-purpose, interpreted, dynamic programming language.
 * ![](http://neard.io/img/modules/type-tool.png) [Ruby](http://neard.io/modules/ruby) : a dynamic, reflective, object-oriented, general-purpose programming language.
 * ![](http://neard.io/img/modules/type-bin.png) [SVN](http://neard.io/modules/svn) : a software versioning and revision control system.
