@@ -45,32 +45,6 @@ class Vbs
         return isset($result[0]) && is_numeric($result[0]) ? intval($result[0]) : false;
     }
     
-    public static function findRepos($startPath, $findFolder, $checkFileIns)
-    {
-        $basename = 'findRepos';
-        $resultFile = self::getResultFile($basename);
-    
-        $content = 'Dim objFso, objFile' . PHP_EOL . PHP_EOL;
-        $content .= 'Set objFso = CreateObject("scripting.filesystemobject")' . PHP_EOL;
-        $content .= 'Set objFile = objFso.CreateTextFile("' . $resultFile . '", True)' . PHP_EOL;
-        $content .= 'findFolder = "' . $findFolder . '"' . PHP_EOL;
-        $content .= 'checkFileIns = "' . $checkFileIns . '"' . PHP_EOL . PHP_EOL;
-        $content .= 'FindRepos("' . $startPath . '")' . PHP_EOL . PHP_EOL;
-        $content .= 'Function FindRepos(ByVal path)' . PHP_EOL;
-        $content .= '    Dim parentFld, subFld' . PHP_EOL;
-        $content .= '    Set parentFld = objFso.GetFolder(path)' . PHP_EOL . PHP_EOL;
-        $content .= '    For Each subFld In parentFld.SubFolders' . PHP_EOL;
-        $content .= '        If subFld.Name = findFolder And objFso.FileExists(subFld.Path & "\" & checkFileIns) Then' . PHP_EOL;
-        $content .= '            objFile.Write parentFld.Path & vbCrLf' . PHP_EOL;
-        $content .= '        End If' . PHP_EOL;
-        $content .= '        FindRepos(subFld.Path)' . PHP_EOL;
-        $content .= '    Next' . PHP_EOL;
-        $content .= 'End Function' . PHP_EOL . PHP_EOL;
-        $content .= 'objFile.Close' . PHP_EOL;
-    
-        return self::exec($basename, $resultFile, $content);
-    }
-    
     public static function getDefaultBrowser()
     {
         $basename = 'getDefaultBrowser';

@@ -522,8 +522,9 @@ class Util
         return false;
     }
     
-    public static function findRepos($startPath, $findFolder, $checkFileIns = null)
+    public static function findRepos($initPath, $startPath, $checkFile, $maxDepth = 1)
     {
+        $depth = substr_count(str_replace($initPath, '', $startPath), '/');
         $result = array();
         
         $handle = @opendir($startPath);
@@ -531,17 +532,17 @@ class Util
             return $result;
         }
         
-        while (false !== ($folder = readdir($handle))) {
-            if ($folder == '.' || $folder == '..') {
+        while (false !== ($file = readdir($handle))) {
+            if ($file == '.' || $file == '..') {
                 continue;
             }
-            if (is_dir($startPath . '/' . $folder)) {
-                    $resultSub = self::findRepos($startPath . '/' . $folder, $findFolder, $checkFileIns);
-                        foreach ($resultSub as $aResult) {
-                            array_push($result, $aResult);
-                        }
-                    }
+            if (is_dir($startPath . '/' . $file) && ($initPath == $startPath || $depth <= $maxDepth)) {
+                $tmpResults = self::findRepos($initPath, $startPath . '/' . $file, $checkFile, $maxDepth);
+                foreach ($tmpResults as $tmpResult) {
+                    $result[] = $tmpResult;
                 }
+            } elseif (is_file($startPath . '/' . $checkFile) && !in_array($startPath, $result)) {
+                $result[] = self::formatUnixPath($startPath);
             }
         }
         

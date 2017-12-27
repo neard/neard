@@ -111,7 +111,7 @@ class ToolGit extends Module
         } else {
             if (!empty($this->repos)) {
                 foreach ($this->repos as $repo) {
-                    $foundRepos = Vbs::findRepos($repo, '.git', 'config');
+                    $foundRepos = Util::findRepos($repo, $repo,'.git/config');
                     if (!empty($foundRepos)) {
                         foreach ($foundRepos as $foundRepo) {
                             array_push($result, $foundRepo);
