@@ -748,6 +748,16 @@ class Util
             );
         }
         
+        // Composer
+        $folderList = self::getFolderList($neardTools->getComposer()->getRootPath());
+        foreach ($folderList as $folder) {
+            $paths[] = array(
+                'path' => $neardTools->getComposer()->getRootPath() . '/' . $folder,
+                'includes' => array('composer.json'),
+                'recursive' => false
+            );
+        }
+        
         // Console
         $folderList = self::getFolderList($neardTools->getConsole()->getRootPath());
         foreach ($folderList as $folder) {
