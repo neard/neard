@@ -535,11 +535,7 @@ class Util
                 continue;
             }
             if (is_dir($startPath . '/' . $folder)) {
-                if ($folder == $findFolder && (empty($checkFileIns) || file_exists($startPath . '/' . $folder . '/' . $checkFileIns))) {
-                    $result[] = $startPath;
-                } else {
                     $resultSub = self::findRepos($startPath . '/' . $folder, $findFolder, $checkFileIns);
-                    if (!empty($resultSub)) {
                         foreach ($resultSub as $aResult) {
                             array_push($result, $aResult);
                         }
