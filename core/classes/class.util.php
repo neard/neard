@@ -305,6 +305,7 @@ class Util
             }
             if ($neardTools->getComposer()->isEnable()) {
                 $value .= $neardTools->getComposer()->getCurrentPath() . ';';
+                $value .= $neardTools->getComposer()->getCurrentPath() . '/vendor/bin;';
             }
             if ($neardTools->getDrush()->isEnable()) {
                 $value .= $neardTools->getDrush()->getCurrentPath() . ';';
