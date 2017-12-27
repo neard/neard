@@ -137,6 +137,7 @@ class Vbs
         $content .= 'Next' . PHP_EOL;
         $content .= 'objResultFile.WriteLine("' . self::END_PROCESS_STR . '")' . PHP_EOL;
         $content .= 'objResultFile.Close' . PHP_EOL;
+        $content .= 'Err.Clear' . PHP_EOL;
         
         $result = self::exec($basename, $resultFile, $content);
         if (empty($result)) {
