@@ -126,6 +126,7 @@ class Lang
     const DRUSH = 'drush';
     const GHOSTSCRIPT = 'ghostscript';
     const GIT = 'git';
+    const NGROK = 'ngrok';
     const PERL = 'perl';
     const PHPMETRICS = 'phpmetrics';
     const PHPUNIT = 'phpunit';
@@ -480,6 +481,7 @@ class Lang
             self::CONSOLE,
             self::DRUSH,
             self::GIT,
+            self::NGROK,
             self::PERL,
             self::PHPMETRICS,
             self::PHPUNIT,

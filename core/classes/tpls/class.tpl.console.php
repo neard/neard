@@ -19,6 +19,7 @@ class TplConsole
     const ICON_RUBY = 'ruby.ico';
     const ICON_YARN = 'yarn.ico';
     const ICON_PERL = 'perl.ico';
+    const ICON_NGROK = 'ngrok.ico';
     
     private function __construct()
     {
@@ -239,6 +240,7 @@ class TplConsole
                 self::getTabPythonSection() .
                 self::getTabRubySection() .
                 self::getTabYarnSection() .
+                self::getTabNgrokSection() .
             self::getIncrStr(1) . '</tabs>';
     }
     
@@ -577,6 +579,23 @@ class TplConsole
         return self::getTab(
             $neardTools->getConsole()->getTabTitleGhostscript(),
             self::ICON_GHOSTSCRIPT,
+            $shell,
+            $neardBs->getWwwPath()
+        ) . PHP_EOL;
+    }
+    
+    private static function getTabNgrokSection()
+    {
+        global $neardBs, $neardTools;
+        
+        $shell = $neardTools->getConsole()->getShell('&quot;' . $neardTools->getNgrok()->getExe() . '&quot; version');
+        if (!file_exists($neardTools->getNgrok()->getExe())) {
+            $shell = $neardTools->getConsole()->getShell('echo ' . $neardTools->getNgrok()->getExe() . ' not found...');
+        }
+        
+        return self::getTab(
+            $neardTools->getConsole()->getTabTitleNgrok(),
+            self::ICON_NGROK,
             $shell,
             $neardBs->getWwwPath()
         ) . PHP_EOL;

@@ -92,6 +92,7 @@
     <getmodule releasesurl="${tool.drush.url}" version="${tool.drush.version}" dest="${release.target}/${release.name}/tools/drush"/>
     <getmodule releasesurl="${tool.ghostscript.url}" version="${tool.ghostscript.version}" dest="${release.target}/${release.name}/tools/ghostscript"/>
     <getmodule releasesurl="${tool.git.url}" version="${tool.git.version}" dest="${release.target}/${release.name}/tools/git"/>
+    <getmodule releasesurl="${tool.ngrok.url}" version="${tool.ngrok.version}" dest="${release.target}/${release.name}/tools/ngrok"/>
     <getmodule releasesurl="${tool.perl.url}" version="${tool.perl.version}" dest="${release.target}/${release.name}/tools/perl"/>
     <getmodule releasesurl="${tool.phpmetrics.url}" version="${tool.phpmetrics.version}" dest="${release.target}/${release.name}/tools/phpmetrics"/>
     <getmodule releasesurl="${tool.phpunit.url}" version="${tool.phpunit.version}" dest="${release.target}/${release.name}/tools/phpunit"/>
@@ -128,6 +129,7 @@
         <filter token="TOOL_DRUSH_VERSION" value="${tool.drush.version}"/>
         <filter token="TOOL_GHOSTSCRIPT_VERSION" value="${tool.ghostscript.version}"/>
         <filter token="TOOL_GIT_VERSION" value="${tool.git.version}"/>
+        <filter token="TOOL_NGROK_VERSION" value="${tool.ngrok.version}"/>
         <filter token="TOOL_PERL_VERSION" value="${tool.perl.version}"/>
         <filter token="TOOL_PHPMETRICS_VERSION" value="${tool.phpmetrics.version}"/>
         <filter token="TOOL_PHPUNIT_VERSION" value="${tool.phpunit.version}"/>

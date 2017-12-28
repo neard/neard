@@ -49,6 +49,13 @@ class TplAppTools
             $neardTools->getConsole()->getTabTitleGhostscript()
         ) . PHP_EOL;
         
+        // Ngrok
+        $resultItems .= TplAestan::getItemConsole(
+            $neardLang->getValue(Lang::NGROK),
+            TplAestan::GLYPH_NGROK,
+            $neardTools->getConsole()->getTabTitleNgrok()
+        ) . PHP_EOL;
+        
         // Pear
         $resultItems .= TplAestan::getItemConsole(
             $neardLang->getValue(Lang::PEAR),

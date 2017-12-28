@@ -9,6 +9,7 @@ class Tools
     private $drush;
     private $ghostscript;
     private $git;
+    private $ngrok;
     private $perl;
     private $phpmetrics;
     private $phpunit;
@@ -38,6 +39,7 @@ class Tools
             $this->getDrush(),
             $this->getGhostscript(),
             $this->getGit(),
+            $this->getNgrok(),
             $this->getPerl(),
             $this->getPhpMetrics(),
             $this->getPhpUnit(),
@@ -87,6 +89,14 @@ class Tools
             $this->git = new ToolGit('git', self::TYPE);
         }
         return $this->git;
+    }
+    
+    public function getNgrok()
+    {
+        if ($this->ngrok == null) {
+            $this->ngrok= new ToolNgrok('ngrok', self::TYPE);
+        }
+        return $this->ngrok;
     }
     
     public function getPerl()

@@ -316,6 +316,9 @@ class Util
             if ($neardTools->getGit()->isEnable()) {
                 $value .= $neardTools->getGit()->getCurrentPath() . '/bin;';
             }
+            if ($neardTools->getNgrok()->isEnable()) {
+                $value .= $neardTools->getNgrok()->getCurrentPath() . ';';
+            }
             if ($neardTools->getPerl()->isEnable()) {
                 $value .= $neardTools->getPerl()->getCurrentPath() . '/perl/site/bin;';
                 $value .= $neardTools->getPerl()->getCurrentPath() . '/perl/bin;';
