@@ -341,6 +341,7 @@ class Util
             }
             if ($neardTools->getYarn()->isEnable()) {
                 $value .= $neardTools->getYarn()->getCurrentPath() . ';';
+                $value .= $neardTools->getYarn()->getCurrentPath() . '/global/bin;';
             }
             $value = self::formatWindowsPath($value);
             self::logDebug('Generated app bins reg key: ' . $value);
@@ -819,6 +820,16 @@ class Util
         // Yarn
         $folderList = self::getFolderList($neardTools->getYarn()->getRootPath());
         foreach ($folderList as $folder) {
+            $paths[] = array(
+                'path' => $neardBins->getYarn()->getRootPath() . '/' . $folder,
+                'includes' => array('yarn.bat'),
+                'recursive' => false
+            );
+            $paths[] = array(
+                'path' => $neardBins->getYarn()->getRootPath() . '/' . $folder . '/global/bin',
+                'includes' => array('.bat'),
+                'recursive' => false
+            );
             $paths[] = array(
                 'path' => $neardBins->getYarn()->getRootPath() . '/' . $folder . '/nodejs/etc',
                 'includes' => array('npmrc'),

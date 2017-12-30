@@ -537,7 +537,7 @@ class TplConsole
     {
         global $neardBs, $neardTools;
         
-        $shell = $neardTools->getConsole()->getShell('&quot;' . $neardTools->getYarn()->getExe() . '&quot; -V');
+        $shell = $neardTools->getConsole()->getShell('&quot;' . $neardTools->getYarn()->getExe() . '&quot; --version');
         if (!file_exists($neardTools->getYarn()->getExe())) {
             $shell = $neardTools->getConsole()->getShell('echo ' . $neardTools->getYarn()->getExe() . ' not found...');
         }
