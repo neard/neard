@@ -821,22 +821,22 @@ class Util
         $folderList = self::getFolderList($neardTools->getYarn()->getRootPath());
         foreach ($folderList as $folder) {
             $paths[] = array(
-                'path' => $neardBins->getYarn()->getRootPath() . '/' . $folder,
+                'path' => $neardTools->getYarn()->getRootPath() . '/' . $folder,
                 'includes' => array('yarn.bat'),
                 'recursive' => false
             );
             $paths[] = array(
-                'path' => $neardBins->getYarn()->getRootPath() . '/' . $folder . '/global/bin',
+                'path' => $neardTools->getYarn()->getRootPath() . '/' . $folder . '/global/bin',
                 'includes' => array('.bat'),
                 'recursive' => false
             );
             $paths[] = array(
-                'path' => $neardBins->getYarn()->getRootPath() . '/' . $folder . '/nodejs/etc',
+                'path' => $neardTools->getYarn()->getRootPath() . '/' . $folder . '/nodejs/etc',
                 'includes' => array('npmrc'),
                 'recursive' => true
             );
             $paths[] = array(
-                'path' => $neardBins->getYarn()->getRootPath() . '/' . $folder . '/nodejs/node_modules/npm',
+                'path' => $neardTools->getYarn()->getRootPath() . '/' . $folder . '/nodejs/node_modules/npm',
                 'includes' => array('npmrc'),
                 'recursive' => false
             );
