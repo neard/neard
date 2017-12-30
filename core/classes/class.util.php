@@ -820,12 +820,12 @@ class Util
         $folderList = self::getFolderList($neardTools->getYarn()->getRootPath());
         foreach ($folderList as $folder) {
             $paths[] = array(
-                'path' => $neardBins->getNodejs()->getRootPath() . '/' . $folder . '/nodejs/etc',
+                'path' => $neardBins->getYarn()->getRootPath() . '/' . $folder . '/nodejs/etc',
                 'includes' => array('npmrc'),
                 'recursive' => true
             );
             $paths[] = array(
-                'path' => $neardBins->getNodejs()->getRootPath() . '/' . $folder . '/nodejs/node_modules/npm',
+                'path' => $neardBins->getYarn()->getRootPath() . '/' . $folder . '/nodejs/node_modules/npm',
                 'includes' => array('npmrc'),
                 'recursive' => false
             );
