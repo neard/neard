@@ -129,7 +129,7 @@ class Batch
             Util::logWarning($path . '/init.bat does not exist');
             return;
         }
-        self::exec('initializeMysql', 'CMD /C "' . $path . '/init.bat"', 15);
+        self::exec('initializeMysql', 'CMD /C "' . $path . '/init.bat"', 30);
     }
     
     public static function installPostgresqlService()
