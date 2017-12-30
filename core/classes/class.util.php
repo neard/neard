@@ -1304,7 +1304,7 @@ class Util
     
     public static function getGithubUrl($part = null) {
         $part = !empty($part) ? '/' . $part : null;
-        return $this->getGithubUserUrl(APP_GITHUB_REPO . $part);
+        return self::getGithubUserUrl(APP_GITHUB_REPO . $part);
     }
     
     public static function getGithubRawUrl($file) {
