@@ -1,5 +1,41 @@
 # Changelog
 
+## 1.4 (2017/12/30)
+
+* Manage Yarn cache and global path (Issue #354)
+* Yarn config not updated (Issue #353)
+* Put Composer cache-dir to neard/tmp/composer (Issue neard/neard#346)
+* Add global composer vendor/bin in PATH (Issue #344)
+* Move neard repositories to its own organization (Issue #339)
+* Add ngrok (Issue #334)
+* Remove HostsEditor module and add in core instead (Issue #329)
+* Create separated logs (stdout / stderr) for NSSM services (Issue #326)
+* ImageMagick `convert.exe` is overridden by `convert.exe` from Windows (Issue #323)
+* Put NEARD_BINS at the beginning of PATH (Issue #323)
+* Remove ImageMagick module (Issue #322)
+* Add a deps folder to load additional dependencies for PHP (Issue #321)
+* Fix error on homepage
+* Increase MySQL initialization timeout
+* Do not clear composer cache on startup
+* Fix "Incorrect argument " error while retrieving list of processes
+* Find Git repositories with a max depth of 2
+* Update about dialog
+* Upgrade to Markdown lib 1.7.0
+* Wrong file size for version check on homepage
+* Exclude .editorconfig from core
+* Neard settings configurable through build.properties
+* Update Apache to 2.4.29
+* Update Composer to 1.5.6
+* Update Console to 2.00.148.4
+* Update Drush to 8.1.15
+* Update Ghostscript to 9.22
+* Update Git to 2.15.1.2
+* Update Gitlist to 0.6.0
+* Update Node.js to 8.9.3
+* Update PHP to 7.1.12
+* Update PHPUnit to 6.5.5
+* Update Yarn to 1.3.2
+
 ## 1.3 (2017/09/01)
 
 * Debug variables empty for MySQL and MariaDB (Issue #315)

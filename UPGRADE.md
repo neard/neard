@@ -1,3 +1,17 @@
+## 1.3 > 1.4
+
+* **required** : Remove then replace folder `core`
+* **required** : Remove then replace file `sprites.dat`
+* **required** : Copy folder `tools\ngrok`
+* **required** : Add line `ngrokVersion = "2.2.8"` after `gitVersion` in `neard.conf`
+* **required** : Remove line `hostseditorVersion` in tools section in `neard.conf` and remove folder `tools\hostseditor`
+* **required** : Remove line `imagemagickVersion` in tools section in `neard.conf` and remove folder `tools\imagemagick`
+* **required** : Change `consoleVersion` value to `2.00.148.4` in `neard.conf` and copy folder `tools\console\console2.00.148.4`
+* **required** : Change `yarnVersion` value to `1.3.2` in `neard.conf` and copy folder `tools\yarn\yarn1.3.2`
+* **required** : Change `gitlistVersion` value to `0.6.0` in `neard.conf` and copy folder `apps\gitlist\gitlist0.6.0`
+* **required** : Replace your existing Composer version(s) with the latest [Composer release](http://neard.io/modules/composer/#releases).
+* **required** : Replace your existing PHP version(s) with the latest [PHP release](http://neard.io/modules/php/#releases).
+
 ## 1.2 > 1.3
 
 * **required** : Download and install the latests [Neard Prerequisites Package](https://github.com/neard/prerequisites/releases/latest)
