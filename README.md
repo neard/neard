@@ -5,6 +5,7 @@
   <a href="http://neard.io/releases"><img src="https://img.shields.io/github/downloads/neard/neard/total.svg?style=flat-square" alt="Total downloads"></a>
   <a href="https://ci.appveyor.com/project/crazy-max/neard"><img src="https://img.shields.io/appveyor/ci/crazy-max/neard.svg?style=flat-square" alt="AppVeyor"></a>
   <a href="https://www.codacy.com/app/crazy-max/neard"><img src="https://img.shields.io/codacy/grade/75278913a45643ab871b87283963b3c5.svg?style=flat-square" alt="Code Quality"></a>
+  <a href="https://beerpay.io/neard/neard"><img src="https://img.shields.io/beerpay/neard/neard.svg?style=flat-square" alt="Beerpay"></a>
   <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6EALX9NDSRBAJ"><img src="https://img.shields.io/badge/donate-paypal-7057ff.svg?style=flat-square" alt="Donate Paypal"></a>
 </p>
 
@@ -68,22 +69,12 @@ For those who wish to contribute, have an issue or questions, read the [Document
 
 ## How can i help ?
 
-**Neard** is a free and open source software and always will be.<br />
-We welcome all kinds of contributions :raised_hands:!<br />
+All kinds of contributions are welcomed :raised_hands:!<br />
 The most basic way to show your support is to star :star2: the project, or to raise issues :speech_balloon:<br />
-Any funds donated will be used to help further development on this project! :gift_heart:
+But we're not gonna lie to each other, I'd rather you buy me a beer or two :beers:!
 
-[![Donate Paypal](http://neard.io/img/paypal.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6EALX9NDSRBAJ)
-
-## Sponsors
-
-**Neard** is generously supported by some companies with licenses and free accounts for their products.
-
-### JetBrains
-
-![](http://neard.io/img/sponsors/jetbrains.png)
-
-[JetBrains](https://www.jetbrains.com/) supports our open source project by sponsoring some [All Products Packs](https://www.jetbrains.com/products.html) within their [Free Open Source License](https://www.jetbrains.com/buy/opensource/) program.
+[![Beerpay](https://beerpay.io/neard/neard/badge.svg?style=beer-square)](https://beerpay.io/neard/neard)
+or [![Paypal](http://neard.io/img/paypal.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6EALX9NDSRBAJ)
 
 ## License
 
