@@ -74,7 +74,7 @@ The most basic way to show your support is to star :star2: the project, or to ra
 But we're not gonna lie to each other, I'd rather you buy me a beer or two :beers:!
 
 [![Beerpay](https://beerpay.io/neard/neard/badge.svg?style=beer-square)](https://beerpay.io/neard/neard)
-or [![Paypal](http://neard.io/img/paypal.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6EALX9NDSRBAJ)
+or [![Paypal](http://neard.io/img/paypal.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6EALX9NDSRBAJ)
 
 ## License
 
