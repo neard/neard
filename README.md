@@ -13,9 +13,6 @@
 
 **Neard** is a portable WAMP software stack involving useful binaries, tools and applications for your web development.
 
-Neard word is taken from **Near** for the fictional character in the [Death Note](https://en.wikipedia.org/wiki/Death_Note) manga and **d** for dev.<br />
-Why the dice icon 🎲 ? Because [*Near*](https://en.wikipedia.org/wiki/Near_(Death_Note)) loves it and a dice has several faces!
-
 ![](http://neard.io/img/screenshots/menu1.png)  ![](http://neard.io/img/screenshots/menu2.png)  ![](http://neard.io/img/screenshots/menu-tools2.png)
 
 It also offers several versions of the various [modules](http://neard.io/modules) for download on the [official website](http://neard.io) and many other features.<br />
