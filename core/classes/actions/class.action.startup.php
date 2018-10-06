@@ -132,7 +132,7 @@ class ActionStartup
         }
         
         if ($this->restart) {
-            $this->writeLog(APP_TITLE . ' have to be restarted');
+            $this->writeLog(APP_TITLE . ' has to be restarted');
             $this->splash->setTextLoading(sprintf(
                 $neardLang->getValue(Lang::STARTUP_PREPARE_RESTART_TEXT),
                 APP_TITLE . ' ' . $neardCore->getAppVersion())
