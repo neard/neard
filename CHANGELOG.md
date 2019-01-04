@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.5 (2019/01/04)
+
+* Update Mariadb to 10.3.8
+* Update MySQL to 8.0.12
+* Update NodeJS to 11.4.0
+* Update PHP to 7.2.13
+* Update Adminer to 4.6.1
+* Update phpMyAdmin to 4p7
+* Update Git to 2.19.1
+* Update Python to 3.6.6.2
+* Update Ruby to 2.4.4
+* Update Yarn to 1.12.3
+
 ## 1.4 (2017/12/30)
 
 * Manage Yarn cache and global path (Issue #354)
