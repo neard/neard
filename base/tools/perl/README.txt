@@ -1,2 +1,2 @@
 Place Perl module releases here.
-Documentation and downloads : http://neard.io/modules/perl
+Documentation and downloads : https://neard.io/modules/perl

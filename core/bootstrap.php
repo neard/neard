@@ -1,7 +1,7 @@
 <?php
 
 define('APP_TITLE', 'Neard');
-define('APP_WEBSITE', 'http://neard.io');
+define('APP_WEBSITE', 'https://neard.io');
 define('APP_GITHUB_USER', 'neard');
 define('APP_GITHUB_REPO', 'neard');
 define('APP_AUTHOR_NAME', 'CrazyMax');

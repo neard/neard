@@ -1,2 +1,2 @@
 Place WP-CLI module releases here.
-Documentation and downloads : http://neard.io/modules/wpcli
+Documentation and downloads : https://neard.io/modules/wpcli

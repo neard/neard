@@ -9,8 +9,8 @@
 * **required** : Change `consoleVersion` value to `2.00.148.4` in `neard.conf` and copy folder `tools\console\console2.00.148.4`
 * **required** : Change `yarnVersion` value to `1.3.2` in `neard.conf` and copy folder `tools\yarn\yarn1.3.2`
 * **required** : Change `gitlistVersion` value to `0.6.0` in `neard.conf` and copy folder `apps\gitlist\gitlist0.6.0`
-* **required** : Replace your existing Composer version(s) with the latest [Composer release](http://neard.io/modules/composer/#releases).
-* **required** : Replace your existing PHP version(s) with the latest [PHP release](http://neard.io/modules/php/#releases).
+* **required** : Replace your existing Composer version(s) with the latest [Composer release](https://neard.io/modules/composer/#releases).
+* **required** : Replace your existing PHP version(s) with the latest [PHP release](https://neard.io/modules/php/#releases).
 
 ## 1.2 > 1.3
 
@@ -38,9 +38,9 @@
 * **required** : Copy folder `bins\mongodb`
 * **optional** : Change `phpmemadminVersion` value to `0.1.0.41` in `neard.conf` and copy folder `apps\phpmemadmin\phpmemadmin0.1.0.41`
 * **required** : Remove then replace folder `apps\websvn\websvn2.3.3`
-* **required** : Replace your existing Adminer version with the latest [Adminer release](http://neard.io/modules/adminer/#releases).
-* **required** : Replace your existing Apache version with the latest [Apache release](http://neard.io/modules/apache/#releases).
-* **required** : Replace your existing PHP version with the latest [PHP release](http://neard.io/modules/php/#releases).
+* **required** : Replace your existing Adminer version with the latest [Adminer release](https://neard.io/modules/adminer/#releases).
+* **required** : Replace your existing Apache version with the latest [Apache release](https://neard.io/modules/apache/#releases).
+* **required** : Replace your existing PHP version with the latest [PHP release](https://neard.io/modules/php/#releases).
 
 ## 1.0.21 > 1.0.22
 
@@ -59,8 +59,8 @@
 * **required** : Add line `svnEnable = "1"` after `svnVersion` in `neard.conf`
 * **required** : Remove then replace file `sprites.dat`
 * **required** : Remove files `ssl\neardfilezilla.*`
-* **required** : Replace your existing Apache version with the latest [Apache release](http://neard.io/modules/apache/#releases).
-* **required** : Replace your existing Filezilla version with the latest [Filezilla release](http://neard.io/modules/filezilla/#releases).
+* **required** : Replace your existing Apache version with the latest [Apache release](https://neard.io/modules/apache/#releases).
+* **required** : Replace your existing Filezilla version with the latest [Filezilla release](https://neard.io/modules/filezilla/#releases).
 
 ## 1.0.20 > 1.0.21
 

@@ -1,2 +1,2 @@
 Place Console module releases here.
-Documentation and downloads : http://neard.io/modules/console
+Documentation and downloads : https://neard.io/modules/console

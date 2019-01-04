@@ -1,2 +1,2 @@
 Place Webgrind module releases here.
-Documentation and downloads : http://neard.io/modules/webgrind
+Documentation and downloads : https://neard.io/modules/webgrind

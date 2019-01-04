@@ -1,2 +1,2 @@
 Place MySQL module releases here.
-Documentation and downloads : http://neard.io/modules/mysql
+Documentation and downloads : https://neard.io/modules/mysql

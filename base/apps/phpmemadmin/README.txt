@@ -1,2 +1,2 @@
 Place phpMemAdmin module releases here.
-Documentation and downloads : http://neard.io/modules/phpmemadmin
+Documentation and downloads : https://neard.io/modules/phpmemadmin

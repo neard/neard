@@ -1,2 +1,2 @@
 Place MariaDB module releases here.
-Documentation and downloads : http://neard.io/modules/mariadb
+Documentation and downloads : https://neard.io/modules/mariadb

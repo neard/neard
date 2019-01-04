@@ -1,2 +1,2 @@
 Place Composer module releases here.
-Documentation and downloads : http://neard.io/modules/composer
+Documentation and downloads : https://neard.io/modules/composer

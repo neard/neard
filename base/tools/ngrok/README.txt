@@ -1,2 +1,2 @@
 Place ngrok module releases here.
-Documentation and downloads : http://neard.io/modules/ngrok
+Documentation and downloads : https://neard.io/modules/ngrok

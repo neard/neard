@@ -1,2 +1,2 @@
 Place PHPUnit module releases here.
-Documentation and downloads : http://neard.io/modules/phpunit
+Documentation and downloads : https://neard.io/modules/phpunit

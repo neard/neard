@@ -1,2 +1,2 @@
 Place phpMyAdmin module releases here.
-Documentation and downloads : http://neard.io/modules/phpmyadmin
+Documentation and downloads : https://neard.io/modules/phpmyadmin

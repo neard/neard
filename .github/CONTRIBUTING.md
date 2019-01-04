@@ -1,3 +1,3 @@
 # Contributing guidelines
 
-Please read [the 'Contribute' official page](http://neard.io/doc/contribute).
+Please read [the 'Contribute' official page](https://neard.io/doc/contribute).

@@ -4,7 +4,7 @@
 
 First,
 
-* Read the [FAQ](http://neard.io/doc/faq).
+* Read the [FAQ](https://neard.io/doc/faq).
 * Search for [existing issues](https://github.com/neard/neard/issues?utf8=✓&q=).
 
 Then before [reporting an issue](https://github.com/neard/neard/issues/new), make sure to include all relevant information :

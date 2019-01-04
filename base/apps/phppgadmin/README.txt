@@ -1,2 +1,2 @@
 Place phpPgAdmin module releases here.
-Documentation and downloads : http://neard.io/modules/phppgadmin
+Documentation and downloads : https://neard.io/modules/phppgadmin
