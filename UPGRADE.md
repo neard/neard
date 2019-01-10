@@ -1,3 +1,7 @@
+## 1.4 > 1.5
+
+* **required** : Remove then replace folder `core`
+
 ## 1.3 > 1.4
 
 * **required** : Remove then replace folder `core`
