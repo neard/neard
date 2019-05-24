@@ -437,6 +437,9 @@ class Util
     {
         global $neardBs, $neardCore, $neardConfig;
         $file = $file == null ? ($type == self::LOG_ERROR ? $neardBs->getErrorLogFilePath() : $neardBs->getLogFilePath()) : $file;
+        if (!$neardBs->isBootstrap()) {
+            $file = $neardBs->getHomepageLogFilePath();
+        }
         
         $verbose = array();
         $verbose[Config::VERBOSE_SIMPLE] = $type == self::LOG_ERROR || $type == self::LOG_WARNING;

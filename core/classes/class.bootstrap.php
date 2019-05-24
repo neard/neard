@@ -168,6 +168,11 @@ class Bootstrap
         return $this->getLogsPath($aetrayPath) . '/neard-error.log';
     }
     
+    public function getHomepageLogFilePath($aetrayPath = false)
+    {
+        return $this->getLogsPath($aetrayPath) . '/neard-homepage.log';
+    }
+    
     public function getServicesLogFilePath($aetrayPath = false)
     {
         return $this->getLogsPath($aetrayPath) . '/neard-services.log';

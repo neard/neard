@@ -30,9 +30,9 @@ class Config
         global $neardBs;
         
         $this->raw = parse_ini_file($neardBs->getConfigFilePath());
-        if (!$neardBs->isBootstrap()) {
+        /*if (!$neardBs->isBootstrap()) {
             $this->raw[self::CFG_LOGS_VERBOSE] = 0;
-        }
+        }*/
         
         date_default_timezone_set($this->getTimezone());
     }
