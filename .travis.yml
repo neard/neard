@@ -1,0 +1,44 @@
+os: windows
+language: shell
+
+env:
+  global:
+    - JAVA_HOME: /c/opt/jdk
+    - ANT_HOME: /c/opt/ant
+
+before_install:
+  - git clone https://github.com/neard/dev ${TRAVIS_BUILD_DIR}/../dev
+  - export PATH=${JAVA_HOME}/bin:${ANT_HOME}/bin:${PATH}
+  - mkdir -p /c/opt
+  - set
+
+install:
+  - |
+    curl -fsS -o openjdk.zip https://download.oracle.com/java/GA/jdk11/9/GPL/openjdk-11.0.2_windows-x64_bin.zip
+    7z x openjdk.zip -y -o/c/opt/
+    java -version
+  - |
+    curl -fsS -o apache-ant.zip http://mirrors.standaloneinstaller.com/apache//ant/binaries/apache-ant-1.10.5-bin.zip
+    7z x apache-ant.zip -y -o/c/opt/
+    ant -version
+
+script:
+  - ant release
+
+deploy:
+  provider: releases
+  api_key:
+    secure: RlDjsck/nY7CHZsFQhveL0iPODhgOf/R8nVRyXVfzL3u7CWLcjq/F1XlzJMohqdNrXx8ScCBOiCTVjeAZ7k7ODG+flZuWE83rCNSkTy8+fDldurpxsQHUy7p31qQkR1TGMpoiXqDZAB/HogXzRpCNkthBsmQx6a3J0wncujG0nY=
+  file_glob: true
+  file: bin/release/*
+  skip_cleanup: true
+  draft: true
+  on:
+    tags: true
+
+notifications:
+  email:
+    recipients:
+      - travisci@neard.io
+    on_success: always
+    on_failure: always
