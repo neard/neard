@@ -170,11 +170,11 @@ class BinApache extends Module
         $headers = Util::getHttpHeaders('http' . ($ssl ? 's' : '') . '://localhost:' . $port . '/' . $neardHomepage->getResourcesPath() . '/ping.php');
         if (!empty($headers)) {
             foreach ($headers as $row) {
-                if (Util::startWith($row, 'Server: ')) {
-                    Util::logDebug($this->getName() . ' port ' . $port . ' is used by: ' . $this->getName() . ' ' . str_replace('Server: ', '', trim($row)));
+                if (Util::startWith($row, 'Server: ') || Util::startWith($row, 'server: ')) {
+                    Util::logDebug($this->getName() . ' port ' . $port . ' is used by: ' . $this->getName() . ' ' . str_replace('Server: ', '', str_replace('server: ', '', trim($row))));
                     if ($showWindow) {
                         $neardWinbinder->messageBoxInfo(
-                            sprintf($neardLang->getValue(Lang::PORT_USED_BY), $port, str_replace('Server: ', '', trim($row))),
+                            sprintf($neardLang->getValue(Lang::PORT_USED_BY), $port, str_replace('Server: ', '', str_replace('server: ', '', trim($row)))),
                             $boxTitle
                         );
                     }
