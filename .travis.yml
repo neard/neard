@@ -24,7 +24,7 @@ install:
     ant -version
 
 script:
-  - ant release
+  - travis_wait ant release
 
 deploy:
   provider: releases
