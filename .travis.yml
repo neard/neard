@@ -24,9 +24,7 @@ install:
     ant -version
 
 script:
-  - while sleep 9m; do echo "=====[ $SECONDS seconds still running ]====="; done &
   - ant release
-  - kill %1
 
 deploy:
   provider: releases
