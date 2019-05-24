@@ -142,7 +142,7 @@ errorFileNotFound = "%s introuvable dans %s"
 errorInvalidParameter = "Paramètre '%s' invalide : %s"
 
 ; Action Switch version
-switchVersionTitle = "Passer de la version %s à la version %s"
+switchVersionTitle = "Passer à %s version %s"
 switchVersionReloadConfig = "Recharger la configuration"
 switchVersionReloadBins = "Recharger les binaires"
 switchVersionRegistry = "Réinitialiser la clé de registre %s"

@@ -142,7 +142,7 @@ errorFileNotFound = "%s not found in %s"
 errorInvalidParameter = "Invalid parameter '%s' : %s"
 
 ; Action Switch version
-switchVersionTitle = "Switch %s version %s"
+switchVersionTitle = "Switch to %s version %s"
 switchVersionReloadConfig = "Reload config"
 switchVersionReloadBins = "Reload bins"
 switchVersionRegistry = "Reset %s registry key"
