@@ -1,17 +1,38 @@
 # Changelog
 
+## 1.6 (2019/05/25)
+
+* Switch to TravisCI
+* Fix update URL
+* Check Apache HTTP headers insensitive
+* Add homepage logging in `neard-homepage.log`
+* Typo lang
+* Increase MySQL initialization timeout
+* Apache 2.4.39
+* MongoDB 3.4.20
+* MySQL 8.0.16
+* NodeJS 10.15.3 (LTS)
+* PHP 7.3.5
+* PostgreSQL 11.3
+* Composer 1.8.5
+* Git 2.20.1
+* Perl 5.30.0.1
+* PHPUnit 7.5.9
+* Ruby 2.6.3-1
+* Yarn 1.15.2
+
 ## 1.5 (2019/01/04)
 
-* Update Mariadb to 10.3.8
-* Update MySQL to 8.0.12
-* Update NodeJS to 11.4.0
-* Update PHP to 7.2.13
-* Update Adminer to 4.6.1
-* Update phpMyAdmin to 4p7
-* Update Git to 2.19.1
-* Update Python to 3.6.6.2
-* Update Ruby to 2.4.4
-* Update Yarn to 1.12.3
+* Mariadb 10.3.8
+* MySQL 8.0.12
+* NodeJS 11.4.0
+* PHP 7.2.13
+* Adminer 4.6.1
+* phpMyAdmin 4p7
+* Git 2.19.1
+* Python 3.6.6.2
+* Ruby 2.4.4
+* Yarn 1.12.3
 
 ## 1.4 (2017/12/30)
 
@@ -37,17 +58,17 @@
 * Wrong file size for version check on homepage
 * Exclude .editorconfig from core
 * Neard settings configurable through build.properties
-* Update Apache to 2.4.29
-* Update Composer to 1.5.6
-* Update Console to 2.00.148.4
-* Update Drush to 8.1.15
-* Update Ghostscript to 9.22
-* Update Git to 2.15.1.2
-* Update Gitlist to 0.6.0
-* Update Node.js to 8.9.3
-* Update PHP to 7.1.12
-* Update PHPUnit to 6.5.5
-* Update Yarn to 1.3.2
+* Apache 2.4.29
+* Composer 1.5.6
+* Console 2.00.148.4
+* Drush 8.1.15
+* Ghostscript 9.22
+* Git 2.15.1.2
+* Gitlist 0.6.0
+* Node.js 8.9.3
+* PHP 7.1.12
+* PHPUnit 6.5.5
+* Yarn 1.3.2
 
 ## 1.3 (2017/09/01)
 
@@ -151,23 +172,23 @@
 * Add Administration button for FileZilla Server Interface (Issue #138)
 * Add download links for binaries / tools / apps on homepage
 * Migrate from Notepad2 to Notepad2-mod
-* Update Composer to 1.1.2
-* Update Git to 2.9.0
-* Update ImageMagick to 6.9.3-10
-* Update PHPUnit to 4.8.26
-* Update Adminer to 4.2.5
-* Update phpMyAdmin to 4p3
-* Update Webgrind to 1.3.1
+* Composer 1.1.2
+* Git 2.9.0
+* ImageMagick 6.9.3-10
+* PHPUnit 4.8.26
+* Adminer 4.2.5
+* phpMyAdmin 4p3
+* Webgrind 1.3.1
 
 ## 1.0.19 (2016/05/05)
 
 * Bug while loading latest changelog from homepage (Issue #135)
 * Add MailHog binary : 0.2.0-r1 (Issue #32, Issue #119)
 * Add menu item to change MySQL and MariaDB root password (Issue #134)
-* Add PhpMetrics tool : 1.0.1-r1, 1.1.1-r1, 1.9.2-r1 (Issue #121)
-* Add WP-CLI tool : 0.12.1-r1, 0.13.0-r1, 0.14.1-r1, 0.15.1-r1, 0.16.0-r1, 0.17.2-r1, 0.18.1-r1, 0.19.3-r1, 0.20.4-r1, 0.21.1-r1, 0.22.0-r1, 0.23.1-r1 (Issue #121)
-* Add Drush tool : 5.9.0-r1, 6.7.0-r1, 7.3.0-r1, 8.1.0-r1 (Issue #121)
-* Add PHPUnit tool : 4.8.24-r1, 5.3.2-r1 (Issue #121)
+* PhpMetrics 1.0.1-r1, 1.1.1-r1, 1.9.2-r1 (Issue #121)
+* WP-CLI 0.12.1-r1, 0.13.0-r1, 0.14.1-r1, 0.15.1-r1, 0.16.0-r1, 0.17.2-r1, 0.18.1-r1, 0.19.3-r1, 0.20.4-r1, 0.21.1-r1, 0.22.0-r1, 0.23.1-r1 (Issue #121)
+* Drush 5.9.0-r1, 6.7.0-r1, 7.3.0-r1, 8.1.0-r1 (Issue #121)
+* PHPUnit 4.8.24-r1, 5.3.2-r1 (Issue #121)
 * Create Wiki documentation (Issue #31)
 * Wrong RewriteBase on GitList 0.5.0-r2
 * Upgrade PHP Markdown
@@ -203,22 +224,22 @@
 * Add aliases doesn't work with quote or accented letters or special letters (Issue #116)
 * Add Hungarian language (Issue #112)
 * Some chars are not handled by Aestan Tray Menu (Issue #112)
-* New Apache release : 2.4.20-r2 (Issue #119)
-* New Filezilla Server release : 0.9.56.1-r2 (Issue #119)
-* New MariaDB release : 5.5.48-r2, 10.0.24-r2, 10.1.13-r2 (Issue #119)
-* New MySQL release : 5.5.49-r2, 5.6.30-r2 (Issue #119)
-* New Node.js release : 0.12.13-r3, 4.4.3-r3, 5.10.1-r3 (Issue #119)
-* New PHP release : 5.5.34-r6, 5.6.20-36, 7.0.5-r6 (Issue #119)
+* Apache 2.4.20-r2 (Issue #119)
+* Filezilla Server 0.9.56.1-r2 (Issue #119)
+* MariaDB 5.5.48-r2, 10.0.24-r2, 10.1.13-r2 (Issue #119)
+* MySQL 5.5.49-r2, 5.6.30-r2 (Issue #119)
+* Node.js 0.12.13-r3, 4.4.3-r3, 5.10.1-r3 (Issue #119)
+* PHP 5.5.34-r6, 5.6.20-36, 7.0.5-r6 (Issue #119)
 * Add Ant build (Issue #54)
-* Upgrade Composer module to version 1.0.0 (2016/04/05)
-* Upgrade Console tool to pack 2 (Console 2.00.148 and TCC/LE 14.0.0.9)
-* Upgrade Git module to version 2.8.1
-* Upgrade SVN module to version 1.7.22
-* Upgrade XDebugClient module to version 1.0b5
-* Upgrade Adminer module to version 4.2.4
-* Upgrade Gitlist module to version 0.5.0
-* Upgrade phpMyAdmin module to pack 2 (4.0.10.15, 4.4.15.5, 4.6.0)
-* Upgrade Webgrind module to version 1.1
+* Composer 1.0.0 (2016/04/05)
+* Console pack 2 (Console 2.00.148 and TCC/LE 14.0.0.9)
+* Git 2.8.1
+* SVN 1.7.22
+* XDebugClient 1.0b5
+* Adminer 4.2.4
+* Gitlist 0.5.0
+* phpMyAdmin pack 2 (4.0.10.15, 4.4.15.5, 4.6.0)
+* Webgrind 1.1
 * Review phpMyAdmin module implementation
 * Display changelog link in new release dialog
 * Create sub repositories on Github for apps and tools (see 'Download' section in README.md)
@@ -233,7 +254,7 @@
 * Retrieve latest version from CHANGELOG.md
 * Restart Neard when Node.js has been switched (environment variables)
 * Missplaced ActionReload
-* Upgrade phpMyAdmin to 4.0.10.12 / 4.4.15.2 / 4.5.3.1 (Issue #107)
+* phpMyAdmin 4.0.10.12 / 4.4.15.2 / 4.5.3.1 (Issue #107)
 * Add manifest inside neard.exe
 
 ## 1.0.16 (2015/12/13)
@@ -257,7 +278,7 @@
 * Add NodeJS to PATH (Issue #95)
 * Increase input length (Issue #91)
 * Add Composer in Neard tools (Issue #80)
-* Addon PHP : 5.6.14 (Issue #34)
+* PHP 5.6.14 (Issue #34)
 
 ## 1.0.14 (2015/06/09)
 
@@ -265,12 +286,12 @@
 * Remove purge logs feature (Issue #88)
 * System Idle Process block services (Issue #87)
 * Increase timeout SSL certificate (Issue #86)
-* Addons Apache : 2.2.29, 2.4.12 (Issue #34)
-* Addons PHP : 5.2.17, 5.4.40, 5.5.24, 5.6.8 (Issue #34)
-* Addon Filezilla Server : 0.9.52.1 (Issue #34)
-* Addons MySQL : 5.5.44, 5.6.25 (Issue #34)
-* Addons MariaDB : 5.5.43, 10.0.19 (Issue #34)
-* Addons Node.js : 0.10.38, 0.11.16, 0.12.4 (Issue #34)
+* Apache 2.2.29, 2.4.12 (Issue #34)
+* PHP 5.2.17, 5.4.40, 5.5.24, 5.6.8 (Issue #34)
+* Filezilla Server 0.9.52.1 (Issue #34)
+* MySQL 5.5.44, 5.6.25 (Issue #34)
+* MariaDB 5.5.43, 10.0.19 (Issue #34)
+* Node.js 0.10.38, 0.11.16, 0.12.4 (Issue #34)
 * Suitable for PHP 5.2
 
 ## 1.0.13 (2015/04/20)
@@ -294,7 +315,7 @@
 * Add logs menu (Issue #71)
 * Launch Neard as an explorer.exe child process (Issue #70)
 * Bug with APC configuration (Issue #57, Issue #67)
-* Addons : PHP 5.3.29, PHP 5.4.31, PHP 5.5.16, PHP 5.6.0, Filezilla Server 0.9.47 (Issue #34)
+* PHP 5.3.29, PHP 5.4.31, PHP 5.5.16, PHP 5.6.0, Filezilla Server 0.9.47 (Issue #34)
 * Avoid unlink and fsockopen errors
 * Adding default timeout for scripts execution (120s)
 * Change check port calls method
@@ -305,13 +326,13 @@
 * Refresh environment variables only for Environment registry subkey
 * Do not check Sublimetext updates
 * Use Win32_Process WMI method to get current process
-* Upgrade PEAR 1.9.5
+* PEAR 1.9.5
 * Check SSL port on homepage only if main port available
 * Adding Imagick extension for PHP 5.5.x and 5.6.x
 * SVN and Git repositories configuration in repos.dat file
 * Bug with SVN and Git to seek repositories
 * Xdebug 2.2.5
-* Remove PHP 5.6.a3 addon
+* Remove PHP 5.6.a3
 * Add log separator
 * Bug timezone
 
@@ -347,7 +368,7 @@
 * Restart all services restarts Neard (Issue #52)
 * Display www directories on homepage (Issue #50)
 * Bug switching php extension or apache module (Issue #49)
-* Addons : PHP 5.4.30, PHP 5.5.14 (Issue #34)
+* PHP 5.4.30, PHP 5.5.14 (Issue #34)
 * Remove Bitcoin donation
 * Remove comments to manage services via Aestan or Win32Service ext
 
@@ -379,7 +400,7 @@
 * Move Apache rewrite logs (Issue #37)
 * Move PHP config file to his root folder (Issue #36)
 * Path bug in Node.js configuration file (Issue #35)
-* Addons : Apache 2.2.27, Apache 2.4.9, PHP 5.3.28, PHP 5.4.26, PHP 5.5.10, PHP 5.6.a3 (Issue #34)
+* Apache 2.2.27, Apache 2.4.9, PHP 5.3.28, PHP 5.4.26, PHP 5.5.10, PHP 5.6.a3 (Issue #34)
 * Error window when refresh Git or SVN repo (Issue #33)
 * Port 21 by default for FTP server
 * Port 3306 by default for MySQL
@@ -435,7 +456,7 @@
 * Adding EXEC action to differ exit/restart (Issue #11)
 * Adding hostname config var (auto completed during startup)
 * Remove php_zip extension from core (7zip instead)
-* Update SVN to 1.7.14
+* SVN 1.7.14
 * Change services default port
 * Bug when changing port
 
