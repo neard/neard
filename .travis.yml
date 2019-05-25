@@ -13,11 +13,13 @@ before_install:
 
 install:
   - |
+    cd /tmp
     curl -fsS -o openjdk.zip https://download.oracle.com/java/GA/jdk11/9/GPL/openjdk-11.0.2_windows-x64_bin.zip
     7z x openjdk.zip -y -o/c/opt/
     mv /c/opt/jdk-11.0.2 ${JAVA_HOME}
     java -version
   - |
+    cd /tmp
     curl -fsS -o apache-ant.zip http://mirrors.standaloneinstaller.com/apache//ant/binaries/apache-ant-1.10.5-bin.zip
     7z x apache-ant.zip -y -o/c/opt/
     mv /c/opt/apache-ant-1.10.5 ${ANT_HOME}
