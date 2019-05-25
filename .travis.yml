@@ -39,7 +39,7 @@ deploy:
   api_key:
     secure: RlDjsck/nY7CHZsFQhveL0iPODhgOf/R8nVRyXVfzL3u7CWLcjq/F1XlzJMohqdNrXx8ScCBOiCTVjeAZ7k7ODG+flZuWE83rCNSkTy8+fDldurpxsQHUy7p31qQkR1TGMpoiXqDZAB/HogXzRpCNkthBsmQx6a3J0wncujG0nY=
   file_glob: true
-  file: bin/release/*
+  file: release/*
   skip_cleanup: true
   draft: true
   on:
