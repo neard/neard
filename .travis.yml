@@ -28,6 +28,12 @@ script:
   - ant release
   - kill %1
 
+after_success:
+  - export APP_VERSION=$(cat /c/neard-build/tmp/version.dat)
+  - echo ${APP_VERSION}
+  - mv /c/neard-build/releases/${APP_VERSION} ${TRAVIS_BUILD_DIR}/release
+  - ls -al ${TRAVIS_BUILD_DIR}/release/
+
 deploy:
   provider: releases
   api_key:
