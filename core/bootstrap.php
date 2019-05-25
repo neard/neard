@@ -2,6 +2,7 @@
 
 define('APP_TITLE', 'Neard');
 define('APP_WEBSITE', 'https://neard.io');
+define('APP_UPDATE_URL', 'http://pastebin.com/raw/cPewk367');
 define('APP_GITHUB_USER', 'neard');
 define('APP_GITHUB_REPO', 'neard');
 define('APP_AUTHOR_NAME', 'CrazyMax');

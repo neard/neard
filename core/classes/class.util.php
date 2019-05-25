@@ -942,11 +942,12 @@ class Util
     
     public static function getLatestVersion()
     {
-        $result = self::getRemoteFile(self::getWebsiteUrlNoUtm('latest.txt'));
+        $result = self::getRemoteFile(APP_UPDATE_URL);
         if (empty($result)) {
             self::logError('Cannot retrieve latest version');
             return null;
         }
+        self::logDebug("Latest version found: " . $result);
         return $result;
     }
     
