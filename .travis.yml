@@ -13,22 +13,24 @@ before_install:
 
 install:
   - |
-    curl -fsS -o openjdk.zip https://download.oracle.com/java/GA/jdk11/9/GPL/openjdk-11.0.2_windows-x64_bin.zip
+    curl -LfsS -o /tmp/travis-wait-enhanced.zip "https://github.com/crazy-max/travis-wait-enhanced/releases/download/v1.0.0/travis-wait-enhanced_1.0.0_windows_x86_64.zip"
+    7z x /tmp/travis-wait-enhanced.zip -y -o/usr/bin/ travis-wait-enhanced.exe -r
+    travis-wait-enhanced --version
+  - |
+    curl -fsS -o openjdk.zip "https://download.oracle.com/java/GA/jdk11/9/GPL/openjdk-11.0.2_windows-x64_bin.zip"
     7z x openjdk.zip -y -o/c/opt/
     mv /c/opt/jdk-11.0.2 ${JAVA_HOME}
     java -version
     rm -f openjdk.zip
   - |
-    curl -fsS -o apache-ant.zip http://mirrors.standaloneinstaller.com/apache//ant/binaries/apache-ant-1.10.5-bin.zip
+    curl -fsS -o apache-ant.zip "https://www.apache.org/dist/ant/binaries/apache-ant-1.10.7-bin.zip"
     7z x apache-ant.zip -y -o/c/opt/
     mv /c/opt/apache-ant-1.10.5 ${ANT_HOME}
     ant -version
     rm -f apache-ant.zip
 
 script:
-  - while sleep 9m; do echo "=====[ $SECONDS seconds still running ]====="; done &
-  - ant release
-  - kill %1
+  - travis-wait-enhanced ant release
 
 after_success:
   - export APP_VERSION=$(cat /c/neard-build/tmp/version.dat)
