@@ -7,7 +7,6 @@
   name: ":bug: bug"
   color: "b60205"
   description: ""
-  from_name: "bug"
 - # dependencies
   name: ":game_die: dependencies"
   color: "0366d6"
@@ -16,7 +15,6 @@
   name: ":gear: devkit"
   color: "c1ed5c"
   description: ""
-  from_name: "devkit"
 - # documentation
   name: ":memo: documentation"
   color: "c5def5"
@@ -25,21 +23,14 @@
   name: ":busts_in_silhouette: duplicate"
   color: "cccccc"
   description: ""
-  from_name: "duplicate"
 - # enhancement
   name: ":sparkles: enhancement"
-  color: "0054ca"
-  description: ""
-  from_name: "enhancement"
-- # ext
-  name: "ext"
   color: "0054ca"
   description: ""
 - # feature request
   name: ":bulb: feature request"
   color: "0e8a16"
   description: ""
-  from_name: "improvement"
 - # feedback
   name: ":mega: feedback"
   color: "03a9f4"
@@ -60,17 +51,14 @@
   name: ":hand: hold"
   color: "24292f"
   description: ""
-  from_name: "investigate"
 - # invalid
   name: ":no_entry_sign: invalid"
   color: "e6e6e6"
   description: ""
-  from_name: "invalid"
 - # lang
   name: ":world_map: lang"
   color: "1d8cd6"
   description: ""
-  from_name: "lang"
 - # maybe bug
   name: ":interrobang: maybe bug"
   color: "ff5722"
@@ -79,29 +67,23 @@
   name: ":package: module"
   color: "aa7788"
   description: ""
-  from_name: "module"
 - # needs more info
   name: ":thinking: needs more info"
   color: "795548"
   description: ""
-  from_name: "needs info"
 - # prerequisites
   name: ":white_check_mark: prerequisites"
   color: "bfdadc"
   description: ""
-  from_name: "prereq"
 - # question
   name: ":question: question"
   color: "3f51b5"
   description: ""
-  from_name: "question"
 - # upstream
   name: ":eyes: upstream"
   color: "fbca04"
   description: ""
-  from_name: "upstream"
 - # wontfix
   name: ":coffin: wontfix"
   color: "ffffff"
   description: ""
-  from_name: "wontfix"
