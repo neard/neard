@@ -30,7 +30,7 @@ install:
     rm -f apache-ant.zip
 
 script:
-  - travis-wait-enhanced ant release
+  - travis-wait-enhanced --timeout=60m ant release
 
 after_success:
   - export APP_VERSION=$(cat /c/neard-build/tmp/version.dat)
