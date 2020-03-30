@@ -51,7 +51,7 @@ class Win32Service
     const SERVICE_DEMAND_START = "3";
     const SERVICE_DISABLED = "4";
     
-    const PENDING_TIMEOUT = 10;
+    const PENDING_TIMEOUT = 20;
     const SLEEP_TIME = 500000;
     
     const VBS_NAME = 'Name';
