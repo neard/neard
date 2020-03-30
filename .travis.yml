@@ -23,7 +23,7 @@ install:
     java -version
     rm -f openjdk.zip
   - |
-    curl -fsS -o apache-ant.zip "https://www.apache.org/dist/ant/binaries/apache-ant-1.10.7-bin.zip"
+    curl -fsS -o apache-ant.zip "https://downloads.apache.org/ant/binaries/apache-ant-1.10.7-bin.zip"
     7z x apache-ant.zip -y -o/c/opt/
     mv /c/opt/apache-ant-1.10.7 ${ANT_HOME}
     ant -version
