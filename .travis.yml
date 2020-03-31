@@ -48,10 +48,3 @@ deploy:
   draft: true
   on:
     tags: true
-
-notifications:
-  email:
-    recipients:
-      - travisci@neard.io
-    on_success: always
-    on_failure: always
