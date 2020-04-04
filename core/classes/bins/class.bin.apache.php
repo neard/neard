@@ -4,16 +4,16 @@ class BinApache extends Module
 {
     const SERVICE_NAME = 'neardapache';
     const SERVICE_PARAMS = '-k runservice';
-    
+
     const ROOT_CFG_ENABLE = 'apacheEnable';
     const ROOT_CFG_VERSION = 'apacheVersion';
-    
+
     const LOCAL_CFG_EXE = 'apacheExe';
     const LOCAL_CFG_CONF = 'apacheConf';
     const LOCAL_CFG_PORT = 'apachePort';
     const LOCAL_CFG_SSL_PORT = 'apacheSslPort';
     const LOCAL_CFG_OPENSSL_EXE = 'apacheOpensslExe';
-    
+
     const CMD_VERSION_NUMBER = '-v';
     const CMD_COMPILE_SETTINGS = '-V';
     const CMD_COMPILED_MODULES = '-l';
@@ -21,17 +21,17 @@ class BinApache extends Module
     const CMD_VHOSTS_SETTINGS = '-S';
     const CMD_LOADED_MODULES = '-M';
     const CMD_SYNTAX_CHECK = '-t';
-    
+
     const TAG_START_SWITCHONLINE = '# START switchOnline tag - Do not replace!';
     const TAG_END_SWITCHONLINE = '# END switchOnline tag - Do not replace!';
-    
+
     private $service;
     private $modulesPath;
     private $sslConf;
     private $accessLog;
     private $rewriteLog;
     private $errorLog;
-    
+
     private $exe;
     private $conf;
     private $port;
@@ -59,11 +59,11 @@ class BinApache extends Module
         $this->errorLog = $neardBs->getLogsPath() . '/apache_error.log';
 
         if ($this->neardConfRaw !== false) {
-            $this->exe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_EXE];
-            $this->conf = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_CONF];
+            $this->exe = $this->symlinkPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_EXE];
+            $this->conf = $this->symlinkPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_CONF];
             $this->port = $this->neardConfRaw[self::LOCAL_CFG_PORT];
             $this->sslPort = $this->neardConfRaw[self::LOCAL_CFG_SSL_PORT];
-            $this->opensslExe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_OPENSSL_EXE];
+            $this->opensslExe = $this->symlinkPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_OPENSSL_EXE];
         }
 
         if (!$this->enable) {
@@ -72,6 +72,10 @@ class BinApache extends Module
         }
         if (!is_dir($this->currentPath)) {
             Util::logError(sprintf($neardLang->getValue(Lang::ERROR_FILE_NOT_FOUND), $this->name . ' ' . $this->version, $this->currentPath));
+            return;
+        }
+        if (!is_dir($this->symlinkPath)) {
+            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_FILE_NOT_FOUND), $this->name . ' ' . $this->version, $this->symlinkPath));
             return;
         }
         if (!is_file($this->neardConf)) {
@@ -102,18 +106,18 @@ class BinApache extends Module
             Util::logError(sprintf($neardLang->getValue(Lang::ERROR_EXE_NOT_FOUND), $this->name . ' ' . $this->version, $this->opensslExe));
             return;
         }
-        
+
         $nssm = new Nssm(self::SERVICE_NAME);
         $nssm->setDisplayName(APP_TITLE . ' ' . $this->getName() . ' ' . $this->version);
         $nssm->setBinPath($this->exe);
         $nssm->setStart(Nssm::SERVICE_DEMAND_START);
-        
+
         $this->service->setNssm($nssm);
     }
 
     protected function replaceAll($params) {
         $content = file_get_contents($this->neardConf);
-        
+
         foreach ($params as $key => $value) {
             $content = preg_replace('|' . $key . ' = .*|', $key . ' = ' . '"' . $value.'"', $content);
             $this->neardConfRaw[$key] = $value;
@@ -126,47 +130,47 @@ class BinApache extends Module
                     break;
             }
         }
-    
+
         file_put_contents($this->neardConf, $content);
     }
-    
+
     public function changePort($port, $checkUsed = false, $wbProgressBar = null) {
         global $neardWinbinder;
-        
+
         if (!Util::isValidPort($port)) {
             Util::logError($this->getName() . ' port not valid: ' . $port);
             return false;
         }
-        
+
         $port = intval($port);
         $neardWinbinder->incrProgressBar($wbProgressBar);
-        
+
         $isPortInUse = Util::isPortInUse($port);
         if (!$checkUsed || $isPortInUse === false) {
             // neard.conf
             $this->setPort($port);
             $neardWinbinder->incrProgressBar($wbProgressBar);
-            
+
             // conf
             $this->update();
             $neardWinbinder->incrProgressBar($wbProgressBar);
-            
+
             return true;
         }
-        
+
         Util::logDebug($this->getName() . ' port in used: ' . $port . ' - ' . $isPortInUse);
         return $isPortInUse;
     }
-    
+
     public function checkPort($port, $ssl = false, $showWindow = false) {
         global $neardLang, $neardWinbinder, $neardHomepage;
         $boxTitle = sprintf($neardLang->getValue(Lang::CHECK_PORT_TITLE), $this->getName(), $port);
-        
+
         if (!Util::isValidPort($port)) {
             Util::logError($this->getName() . ' port not valid: ' . $port);
             return false;
         }
-        
+
         $headers = Util::getHttpHeaders('http' . ($ssl ? 's' : '') . '://localhost:' . $port . '/' . $neardHomepage->getResourcesPath() . '/ping.php');
         if (!empty($headers)) {
             foreach ($headers as $row) {
@@ -197,10 +201,10 @@ class BinApache extends Module
                 );
             }
         }
-        
+
         return false;
     }
-    
+
     public function switchVersion($version, $showWindow = false) {
         Util::logDebug('Switch ' . $this->name . ' version to ' . $version);
         return $this->updateConfig($version, 0, $showWindow);
@@ -208,23 +212,24 @@ class BinApache extends Module
 
     protected function updateConfig($version = null, $sub = 0, $showWindow = false) {
         global $neardBs, $neardLang, $neardBins, $neardWinbinder;
-        
+
         if (!$this->enable) {
             return true;
         }
-        
+
         $version = $version == null ? $this->version : $version;
         Util::logDebug(($sub > 0 ? str_repeat(' ', 2 * $sub) : '') . 'Update ' . $this->name . ' ' . $version . ' config...');
-        
+
         $boxTitle = sprintf($neardLang->getValue(Lang::SWITCH_VERSION_TITLE), $this->getName(), $version);
-        
+
         $conf = str_replace('apache' . $this->getVersion(), 'apache' . $version, $this->getConf());
         $neardConf = str_replace('apache' . $this->getVersion(), 'apache' . $version, $this->neardConf);
-        
+
         $tsDll = $neardBins->getPhp()->getTsDll();
         $apachePhpModuleName = $tsDll !== false ? substr($tsDll, 0, 4) . '_module' : null;
-        $apachePhpModule = $neardBins->getPhp()->getApacheModule($version);
-        
+        $apachePhpModulePath = $neardBins->getPhp()->getApacheModule($version);
+        $apachePhpModuleDll = basename($apachePhpModulePath);
+
         if (!file_exists($conf) || !file_exists($neardConf)) {
             Util::logError('Neard config files not found for ' . $this->getName() . ' ' . $version);
             if ($showWindow) {
@@ -235,7 +240,7 @@ class BinApache extends Module
             }
             return false;
         }
-        
+
         $neardConfRaw = parse_ini_file($neardConf);
         if ($neardConfRaw === false || !isset($neardConfRaw[self::ROOT_CFG_VERSION]) || $neardConfRaw[self::ROOT_CFG_VERSION] != $version) {
             Util::logError('Neard config file malformed for ' . $this->getName() . ' ' . $version);
@@ -247,8 +252,8 @@ class BinApache extends Module
             }
             return false;
         }
-        
-        if ($tsDll === false || $apachePhpModule === false) {
+
+        if ($tsDll === false || $apachePhpModulePath === false) {
             Util::logDebug($this->getName() . ' ' . $version . ' does not seem to be compatible with PHP ' . $neardBins->getPhp()->getVersion());
             if ($showWindow) {
                 $neardWinbinder->messageBoxError(
@@ -258,44 +263,44 @@ class BinApache extends Module
             }
             return false;
         }
-        
+
         // neard.conf
         $this->setVersion($version);
-        
+
         // conf
         Util::replaceInFile($conf, array(
             // PHP module
-            '/^#?PHPIniDir\s.*/' => ($neardBins->getPhp()->isEnable() ? '' : '#') . 'PHPIniDir "' . $neardBins->getPhp()->getCurrentPath() . '"',
-            '/^#?LoadFile\s.*php.ts\.dll.*/' => ($neardBins->getPhp()->isEnable() ? '' : '#') . (!file_exists($neardBins->getPhp()->getCurrentPath() . '/' . $tsDll) ? '#' : '') . 'LoadFile "' . $neardBins->getPhp()->getCurrentPath() . '/' . $tsDll . '"',
-            '/^#?LoadModule\sphp._module\s.*/' => ($neardBins->getPhp()->isEnable() ? '' : '#') . 'LoadModule ' . $apachePhpModuleName . ' "' . $apachePhpModule . '"',
-            
+            '/^#?PHPIniDir\s.*/' => ($neardBins->getPhp()->isEnable() ? '' : '#') . 'PHPIniDir "' . $neardBins->getPhp()->getSymlinkPath() . '"',
+            '/^#?LoadFile\s.*php.ts\.dll.*/' => ($neardBins->getPhp()->isEnable() ? '' : '#') . (!file_exists($neardBins->getPhp()->getSymlinkPath() . '/' . $tsDll) ? '#' : '') . 'LoadFile "' . $neardBins->getPhp()->getSymlinkPath() . '/' . $tsDll . '"',
+            '/^#?LoadModule\sphp._module\s.*/' => ($neardBins->getPhp()->isEnable() ? '' : '#') . 'LoadModule ' . $apachePhpModuleName . ' "' . $neardBins->getPhp()->getSymlinkPath() . '/' . $apachePhpModuleDll . '"',
+
             // Since Neard 1.0.22 remove SVN Apache module
             // FIXME: Remove this
             '/^LoadModule\sauthz_svn_module\s.*tools\/svn\/svn.*/' => '',
             '/^LoadModule\sdav_svn_module\s.*tools\/svn\/svn.*/' => '',
-            
+
             // Port
             '/^Listen\s(\d+)/' => 'Listen ' . $this->port,
             '/^ServerName\s+([a-zA-Z0-9.]+):(\d+)/' => 'ServerName {{1}}:' . $this->port,
             '/^NameVirtualHost\s+([a-zA-Z0-9.*]+):(\d+)/' => 'NameVirtualHost {{1}}:' . $this->port,
             '/^<VirtualHost\s+([a-zA-Z0-9.*]+):(\d+)>/' => '<VirtualHost {{1}}:' . $this->port . '>'
         ));
-    
+
         // vhosts
         foreach ($this->getVhosts() as $vhost) {
             Util::replaceInFile($neardBs->getVhostsPath() . '/' . $vhost . '.conf', array(
                 '/^<VirtualHost\s+([a-zA-Z0-9.*]+):(\d+)>$/' => '<VirtualHost {{1}}:' . $this->port . '>$'
             ));
         }
-    
+
         // www .htaccess
         Util::replaceInFile($neardBs->getWwwPath() . '/.htaccess', array(
             '/(.*)http:\/\/localhost(.*)/' => '{{1}}http://localhost' . ($this->port != 80 ? ':' . $this->port : '') . '/$1 [QSA,R=301,L]',
         ));
-        
+
         return true;
     }
-    
+
     public function getModules() {
         $fromFolder = $this->getModulesFromFolder();
         $fromConf = $this->getModulesFromConf();
@@ -303,14 +308,14 @@ class BinApache extends Module
         ksort($result);
         return $result;
     }
-    
+
     public function getModulesFromConf() {
         $result = array();
-        
+
         if (!$this->enable) {
             return $result;
         }
-    
+
         $confContent = file($this->getConf());
         foreach ($confContent as $row) {
             $modMatch = array();
@@ -326,11 +331,11 @@ class BinApache extends Module
                 }
             }
         }
-    
+
         ksort($result);
         return $result;
     }
-    
+
     public function getModulesLoaded() {
         $result = array();
         foreach ($this->getModulesFromConf() as $name => $status) {
@@ -340,75 +345,75 @@ class BinApache extends Module
         }
         return $result;
     }
-    
+
     private function getModulesFromFolder() {
         $result = array();
-        
+
         if (!$this->enable) {
             return $result;
         }
-        
+
         $handle = @opendir($this->getModulesPath());
         if (!$handle) {
             return $result;
         }
-        
+
         while (false !== ($file = readdir($handle))) {
             if ($file != "." && $file != ".." && Util::startWith($file, 'mod_') && (Util::endWith($file, '.so') || Util::endWith($file, '.dll'))) {
                 $name = str_replace(array('mod_', '.so', '.dll'), '', $file) . '_module';
                 $result[$name] = ActionSwitchApacheModule::SWITCH_OFF;
             }
         }
-        
+
         closedir($handle);
         ksort($result);
         return $result;
     }
-    
+
     public function getAlias() {
         global $neardBs;
         $result = array();
-        
+
         $handle = @opendir($neardBs->getAliasPath());
         if (!$handle) {
             return $result;
         }
-        
+
         while (false !== ($file = readdir($handle))) {
             if ($file != "." && $file != ".." && Util::endWith($file, '.conf')) {
                 $result[] = str_replace('.conf', '', $file);
             }
         }
-        
+
         closedir($handle);
         ksort($result);
         return $result;
     }
-    
+
     public function getVhosts() {
         global $neardBs;
         $result = array();
-        
+
         $handle = @opendir($neardBs->getVhostsPath());
         if (!$handle) {
             return $result;
         }
-    
+
         while (false !== ($file = readdir($handle))) {
             if ($file != "." && $file != ".." && Util::endWith($file, '.conf')) {
                 $result[] = str_replace('.conf', '', $file);
             }
         }
-        
+
         closedir($handle);
         ksort($result);
         return $result;
     }
-    
+
     public function getVhostsUrl() {
         global $neardBs;
         $result = array();
-        
+
         foreach ($this->getVhosts() as $vhost) {
             $vhostContent = file($neardBs->getVhostsPath() . '/' . $vhost . '.conf');
             foreach ($vhostContent as $vhostLine) {
@@ -425,36 +430,36 @@ class BinApache extends Module
                 }
             }
         }
-        
+
         return $result;
     }
-    
+
     public function getWwwDirectories() {
         global $neardBs;
         $result = array();
-        
+
         $handle = @opendir($neardBs->getWwwPath());
         if (!$handle) {
             return $result;
         }
-    
+
         while (false !== ($file = readdir($handle))) {
             if ($file != "." && $file != ".." && is_dir($neardBs->getWwwPath() . '/' . $file)) {
                 $result[] = $file;
             }
         }
-        
+
         closedir($handle);
         ksort($result);
         return $result;
     }
-    
+
     public function getCmdLineOutput($cmd) {
         $result = array(
             'syntaxOk' => false,
             'content'  => null,
         );
-        
+
         if (file_exists($this->getExe())) {
             $tmpResult = Batch::exec('apacheGetCmdLineOutput', '"' . $this->getExe() . '" ' . $cmd);
             if ($tmpResult !== false && is_array($tmpResult)) {
@@ -465,28 +470,28 @@ class BinApache extends Module
                 $result['content'] = implode(PHP_EOL, $tmpResult);
             }
         }
-        
+
         return $result;
     }
-    
+
     private function getOnlineContent($version = null) {
         $version = $version != null ? $version : $this->getVersion();
         $result = self::TAG_START_SWITCHONLINE . PHP_EOL;
-        
+
         if (Util::startWith($version, '2.4')) {
             $result .= 'Require all granted' . PHP_EOL;
         } else {
             $result .= 'Order Allow,Deny' . PHP_EOL .
                 'Allow from all' . PHP_EOL;
         }
-        
+
         return $result . self::TAG_END_SWITCHONLINE;
     }
-    
+
     private function getOfflineContent($version = null) {
         $version = $version != null ? $version : $this->getVersion();
         $result = self::TAG_START_SWITCHONLINE . PHP_EOL;
-    
+
         if (Util::startWith($version, '2.4')) {
             $result .= 'Require local' . PHP_EOL;
         } else {
@@ -494,15 +499,15 @@ class BinApache extends Module
                 'Deny from all' . PHP_EOL .
                 'Allow from 127.0.0.1 ::1' . PHP_EOL;
         }
-    
+
         return $result . self::TAG_END_SWITCHONLINE;
     }
-    
+
     private function getRequiredContent($version = null) {
         global $neardConfig;
         return $neardConfig->isOnline() ? $this->getOnlineContent($version) : $this->getOfflineContent($version);
     }
-    
+
     public function getAliasContent($name, $dest) {
         $dest = Util::formatUnixPath($dest);
         return 'Alias /' . $name . ' "' . $dest . '"' . PHP_EOL . PHP_EOL .
@@ -512,10 +517,10 @@ class BinApache extends Module
             $this->getRequiredContent() . PHP_EOL .
             '</Directory>' . PHP_EOL;
     }
-    
+
     public function getVhostContent($serverName, $documentRoot) {
         global $neardBs;
-        
+
         $documentRoot = Util::formatUnixPath($documentRoot);
         return '<VirtualHost *:' . $this->getPort() . '>' . PHP_EOL .
             '    ServerAdmin webmaster@' . $serverName . PHP_EOL .
@@ -552,20 +557,20 @@ class BinApache extends Module
             '</VirtualHost>' . PHP_EOL .
             '</IfModule>' . PHP_EOL;
     }
-    
+
     public function refreshConf($putOnline) {
         if (!$this->enable) {
             return;
         }
-        
+
         $onlineContent = $this->getOnlineContent();
         $offlineContent = $this->getOfflineContent();
-        
+
         $conf = file_get_contents($this->getConf());
         Util::logTrace('refreshConf ' . $this->getConf());
         preg_match('/' . self::TAG_START_SWITCHONLINE . '(.*?)' . self::TAG_END_SWITCHONLINE . '/s', $conf, $matches);
         Util::logTrace(isset($matches[1]) ? print_r($matches[1], true) : 'N/A');
-        
+
         if ($putOnline) {
             $conf = preg_replace('/' . self::TAG_START_SWITCHONLINE . '(.*?)' . self::TAG_END_SWITCHONLINE . '/s', $onlineContent, $conf, -1, $count);
         } else {
@@ -573,12 +578,12 @@ class BinApache extends Module
         }
         file_put_contents($this->getConf(), $conf);
         Util::logDebug('Refresh ' . $this->getConf() . ': ' . $count . ' occurrence(s) replaced');
-        
+
         $sslConf = file_get_contents($this->getSslConf());
         Util::logTrace('refreshConf ' . $this->getSslConf());
         preg_match('/' . self::TAG_START_SWITCHONLINE . '(.*?)' . self::TAG_END_SWITCHONLINE . '/s', $sslConf, $matches);
         Util::logTrace(isset($matches[1]) ? print_r($matches[1], true) : 'N/A');
-        
+
         if ($putOnline) {
             $sslConf = preg_replace('/' . self::TAG_START_SWITCHONLINE . '(.*?)' . self::TAG_END_SWITCHONLINE . '/s', $onlineContent, $sslConf, -1, $count);
         } else {
@@ -587,23 +592,23 @@ class BinApache extends Module
         file_put_contents($this->getSslConf(), $sslConf);
         Util::logDebug('Refresh ' . $this->getSslConf() . ': ' . $count . ' occurrence(s) replaced');
     }
-    
+
     public function refreshAlias($putOnline) {
         global $neardBs, $neardHomepage;
-        
+
         if (!$this->enable) {
             return;
         }
-        
+
         $onlineContent = $this->getOnlineContent();
         $offlineContent = $this->getOfflineContent();
-        
+
         foreach ($this->getAlias() as $alias) {
             $aliasConf = file_get_contents($neardBs->getAliasPath() . '/' . $alias . '.conf');
             Util::logTrace('refreshAlias ' . $neardBs->getAliasPath() . '/' . $alias . '.conf');
             preg_match('/' . self::TAG_START_SWITCHONLINE . '(.*?)' . self::TAG_END_SWITCHONLINE . '/s', $aliasConf, $matches);
             Util::logTrace(isset($matches[1]) ? print_r($matches[1], true) : 'N/A');
-            
+
             if ($putOnline) {
                 $aliasConf= preg_replace('/' . self::TAG_START_SWITCHONLINE . '(.*?)' . self::TAG_END_SWITCHONLINE . '/s', $onlineContent, $aliasConf, -1, $count);
             } else {
@@ -612,27 +617,27 @@ class BinApache extends Module
             file_put_contents($neardBs->getAliasPath() . '/' . $alias . '.conf', $aliasConf);
             Util::logDebug('Refresh ' . $neardBs->getAliasPath() . '/' . $alias . '.conf: ' . $count . ' occurrence(s) replaced');
         }
-        
+
         // Homepage
         $neardHomepage->refreshAliasContent();
     }
-    
+
     public function refreshVhosts($putOnline) {
         global $neardBs;
-        
+
         if (!$this->enable) {
             return;
         }
-        
+
         $onlineContent = $this->getOnlineContent();
         $offlineContent = $this->getOfflineContent();
-        
+
         foreach ($this->getVhosts() as $vhost) {
             $vhostConf = file_get_contents($neardBs->getVhostsPath() . '/' . $vhost . '.conf');
             Util::logTrace('refreshVhost ' . $neardBs->getVhostsPath() . '/' . $vhost . '.conf');
             preg_match('/' . self::TAG_START_SWITCHONLINE . '(.*?)' . self::TAG_END_SWITCHONLINE . '/s', $vhostConf, $matches);
             Util::logTrace(isset($matches[1]) ? print_r($matches[1], true) : 'N/A');
-            
+
             if ($putOnline) {
                 $vhostConf= preg_replace('/' . self::TAG_START_SWITCHONLINE . '(.*?)' . self::TAG_END_SWITCHONLINE . '/s', $onlineContent, $vhostConf, -1, $count);
             } else {
@@ -642,7 +647,7 @@ class BinApache extends Module
             Util::logDebug('Refresh ' . $neardBs->getVhostsPath() . '/' . $vhost . '.conf: ' . $count . ' occurrence(s) replaced');
         }
     }
-    
+
     public function setEnable($enabled, $showWindow = false) {
         global $neardConfig, $neardLang, $neardWinbinder;
 
@@ -656,11 +661,11 @@ class BinApache extends Module
             }
             $enabled = Config::DISABLED;
         }
-    
+
         Util::logInfo($this->getName() . ' switched to ' . ($enabled == Config::ENABLED ? 'enabled' : 'disabled'));
         $this->enable = $enabled == Config::ENABLED;
         $neardConfig->replace(self::ROOT_CFG_ENABLE, $enabled);
-    
+
         $this->reload();
         if ($this->enable) {
             Util::installService($this, $this->port, self::CMD_SYNTAX_CHECK, $showWindow);
@@ -668,7 +673,7 @@ class BinApache extends Module
             Util::removeService($this->service, $this->name);
         }
     }
-    
+
     public function setVersion($version) {
         global $neardConfig;
         $this->version = $version;
@@ -678,23 +683,23 @@ class BinApache extends Module
     public function getService() {
         return $this->service;
     }
-    
+
     public function getModulesPath() {
         return $this->modulesPath;
     }
-    
+
     public function getSslConf() {
         return $this->sslConf;
     }
-    
+
     public function getAccessLog() {
         return $this->accessLog;
     }
-    
+
     public function getRewriteLog() {
         return $this->rewriteLog;
     }
-    
+
     public function getErrorLog() {
         return $this->errorLog;
     }
@@ -702,27 +707,27 @@ class BinApache extends Module
     public function getExe() {
         return $this->exe;
     }
-    
+
     public function getConf() {
         return $this->conf;
     }
-    
+
     public function getPort() {
         return $this->port;
     }
-    
+
     public function setPort($port) {
         $this->replace(self::LOCAL_CFG_PORT, $port);
     }
-    
+
     public function getSslPort() {
         return $this->sslPort;
     }
-    
+
     public function setSslPort($sslPort) {
         $this->replace(self::LOCAL_CFG_SSL_PORT, $sslPort);
     }
-    
+
     public function getOpensslExe() {
         return $this->opensslExe;
     }

@@ -3,10 +3,10 @@
 class BinMysql extends Module
 {
     const SERVICE_NAME = 'neardmysql';
-    
+
     const ROOT_CFG_ENABLE = 'mysqlEnable';
     const ROOT_CFG_VERSION = 'mysqlVersion';
-    
+
     const LOCAL_CFG_EXE = 'mysqlExe';
     const LOCAL_CFG_CLI_EXE = 'mysqlCliExe';
     const LOCAL_CFG_ADMIN = 'mysqlAdmin';
@@ -14,14 +14,14 @@ class BinMysql extends Module
     const LOCAL_CFG_PORT = 'mysqlPort';
     const LOCAL_CFG_ROOT_USER = 'mysqlRootUser';
     const LOCAL_CFG_ROOT_PWD = 'mysqlRootPwd';
-    
+
     const CMD_VERSION = '--version';
     const CMD_VARIABLES = 'variables';
     const CMD_SYNTAX_CHECK = '--help --verbose 1>NUL';
-    
+
     private $service;
     private $errorLog;
-    
+
     private $exe;
     private $conf;
     private $port;
@@ -37,7 +37,7 @@ class BinMysql extends Module
 
     public function reload($id = null, $type = null) {
         global $neardBs, $neardConfig, $neardLang;
-        
+
         $this->name = $neardLang->getValue(Lang::MYSQL);
         $this->version = $neardConfig->getRaw(self::ROOT_CFG_VERSION);
         parent::reload($id, $type);
@@ -47,21 +47,25 @@ class BinMysql extends Module
         $this->errorLog = $neardBs->getLogsPath() . '/mysql.log';
 
         if ($this->neardConfRaw !== false) {
-            $this->exe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_EXE];
-            $this->conf = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_CONF];
+            $this->exe = $this->symlinkPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_EXE];
+            $this->conf = $this->symlinkPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_CONF];
             $this->port = $this->neardConfRaw[self::LOCAL_CFG_PORT];
             $this->rootUser = isset($this->neardConfRaw[self::LOCAL_CFG_ROOT_USER]) ? $this->neardConfRaw[self::LOCAL_CFG_ROOT_USER] : 'root';
             $this->rootPwd = isset($this->neardConfRaw[self::LOCAL_CFG_ROOT_PWD]) ? $this->neardConfRaw[self::LOCAL_CFG_ROOT_PWD] : '';
-            $this->cliExe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_CLI_EXE];
-            $this->admin = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_ADMIN];
+            $this->cliExe = $this->symlinkPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_CLI_EXE];
+            $this->admin = $this->symlinkPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_ADMIN];
         }
-        
+
         if (!$this->enable) {
             Util::logInfo($this->name . ' is not enabled!');
             return;
         }
         if (!is_dir($this->currentPath)) {
             Util::logError(sprintf($neardLang->getValue(Lang::ERROR_FILE_NOT_FOUND), $this->name . ' ' . $this->version, $this->currentPath));
+            return;
+        }
+        if (!is_dir($this->symlinkPath)) {
+            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_FILE_NOT_FOUND), $this->name . ' ' . $this->version, $this->symlinkPath));
             return;
         }
         if (!is_file($this->neardConf)) {
@@ -92,7 +96,7 @@ class BinMysql extends Module
             Util::logError(sprintf($neardLang->getValue(Lang::ERROR_EXE_NOT_FOUND), $this->name . ' ' . $this->version, $this->admin));
             return;
         }
-        
+
         $this->service->setDisplayName(APP_TITLE . ' ' . $this->getName() . ' ' . $this->version);
         $this->service->setBinPath($this->exe);
         $this->service->setParams(self::SERVICE_NAME);
@@ -102,7 +106,7 @@ class BinMysql extends Module
 
     protected function replaceAll($params) {
         $content = file_get_contents($this->neardConf);
-    
+
         foreach ($params as $key => $value) {
             $content = preg_replace('|' . $key . ' = .*|', $key . ' = ' . '"' . $value.'"', $content);
             $this->neardConfRaw[$key] = $value;
@@ -118,47 +122,47 @@ class BinMysql extends Module
                     break;
             }
         }
-    
+
         file_put_contents($this->neardConf, $content);
     }
-    
+
     public function changePort($port, $checkUsed = false, $wbProgressBar = null) {
         global $neardWinbinder;
-        
+
         if (!Util::isValidPort($port)) {
             Util::logError($this->getName() . ' port not valid: ' . $port);
             return false;
         }
-        
+
         $port = intval($port);
         $neardWinbinder->incrProgressBar($wbProgressBar);
-        
+
         $isPortInUse = Util::isPortInUse($port);
         if (!$checkUsed || $isPortInUse === false) {
             // neard.conf
             $this->setPort($port);
             $neardWinbinder->incrProgressBar($wbProgressBar);
-            
+
             // conf
             $this->update();
             $neardWinbinder->incrProgressBar($wbProgressBar);
-            
+
             return true;
         }
-        
+
         Util::logDebug($this->getName() . ' port in used: ' . $port . ' - ' . $isPortInUse);
         return $isPortInUse;
     }
-    
+
     public function checkPort($port, $showWindow = false) {
         global $neardLang, $neardWinbinder;
         $boxTitle = sprintf($neardLang->getValue(Lang::CHECK_PORT_TITLE), $this->getName(), $port);
-        
+
         if (!Util::isValidPort($port)) {
             Util::logError($this->getName() . ' port not valid: ' . $port);
             return false;
         }
-        
+
         $fp = @fsockopen('127.0.0.1', $port, $errno, $errstr, 5);
         if ($fp) {
             if (version_compare(phpversion(), '5.3') === -1) {
@@ -168,7 +172,7 @@ class BinMysql extends Module
             }
             $isMysql = false;
             $version = false;
-            
+
             if ($dbLink) {
                 $result = mysqli_query($dbLink, 'SHOW VARIABLES');
                 if ($result) {
@@ -222,14 +226,14 @@ class BinMysql extends Module
                 );
             }
         }
-        
+
         return false;
     }
-    
+
     public function changeRootPassword($currentPwd, $newPwd, $wbProgressBar = null) {
         global $neardWinbinder;
         $error = null;
-        
+
         $neardWinbinder->incrProgressBar($wbProgressBar);
         if (version_compare(phpversion(), '5.3') === -1) {
             $dbLink = @mysqli_connect('127.0.0.1', $this->rootUser, $currentPwd, '', $this->port);
@@ -239,58 +243,58 @@ class BinMysql extends Module
         if (!$dbLink) {
             $error = mysqli_connect_error();
         }
-            
+
         $neardWinbinder->incrProgressBar($wbProgressBar);
         $stmt = @mysqli_prepare($dbLink, 'UPDATE mysql.user SET Password=PASSWORD(?) WHERE User=?');
         if (empty($error) && $stmt === false) {
             $error = mysqli_error($dbLink);
         }
-        
+
         $neardWinbinder->incrProgressBar($wbProgressBar);
         if (empty($error) && !@mysqli_stmt_bind_param($stmt, 'ss', $newPwd, $this->rootUser)) {
             $error = mysqli_stmt_error($stmt);
         }
-        
+
         $neardWinbinder->incrProgressBar($wbProgressBar);
         if (empty($error) && !@mysqli_stmt_execute($stmt)) {
             $error = mysqli_stmt_error($stmt);
         }
-        
+
         $neardWinbinder->incrProgressBar($wbProgressBar);
         if ($stmt !== false) {
             mysqli_stmt_close($stmt);
         }
-        
+
         $neardWinbinder->incrProgressBar($wbProgressBar);
         if (empty($error) && @mysqli_query($dbLink, "FLUSH PRIVILEGES") === false) {
             $error = mysqli_error($dbLink);
         }
-        
+
         $neardWinbinder->incrProgressBar($wbProgressBar);
         if ($dbLink) {
             mysqli_close($dbLink);
         }
-        
+
         if (!empty($error)) {
             return $error;
         }
-        
+
         // neard.conf
         $neardWinbinder->incrProgressBar($wbProgressBar);
         $this->setRootPwd($newPwd);
-        
+
         // conf
         $this->update();
         $neardWinbinder->incrProgressBar($wbProgressBar);
-        
+
         return true;
     }
-    
+
     public function checkRootPassword($currentPwd = null, $wbProgressBar = null) {
         global $neardWinbinder;
         $currentPwd = $currentPwd == null ? $this->rootPwd : $currentPwd;
         $error = null;
-        
+
         $neardWinbinder->incrProgressBar($wbProgressBar);
         if (version_compare(phpversion(), '5.3') === -1) {
             $dbLink = @mysqli_connect('127.0.0.1', $this->rootUser, $currentPwd, '', $this->port);
@@ -300,19 +304,19 @@ class BinMysql extends Module
         if (!$dbLink) {
             $error = mysqli_connect_error();
         }
-        
+
         $neardWinbinder->incrProgressBar($wbProgressBar);
         if ($dbLink) {
             mysqli_close($dbLink);
         }
-        
+
         if (!empty($error)) {
             return $error;
         }
-        
+
         return true;
     }
-    
+
     public function switchVersion($version, $showWindow = false) {
         Util::logDebug('Switch ' . $this->name . ' version to ' . $version);
         return $this->updateConfig($version, 0, $showWindow);
@@ -320,24 +324,24 @@ class BinMysql extends Module
 
     protected function updateConfig($version = null, $sub = 0, $showWindow = false) {
         global $neardLang, $neardBins, $neardApps, $neardWinbinder;
-        
+
         if (!$this->enable) {
             return true;
         }
-        
+
         $version = $version == null ? $this->version : $version;
         Util::logDebug(($sub > 0 ? str_repeat(' ', 2 * $sub) : '') . 'Update ' . $this->name . ' ' . $version . ' config...');
-        
+
         $boxTitle = sprintf($neardLang->getValue(Lang::SWITCH_VERSION_TITLE), $this->getName(), $version);
-        
+
         $currentPath = str_replace('mysql' . $this->getVersion(), 'mysql' . $version, $this->getCurrentPath());
         $conf = str_replace('mysql' . $this->getVersion(), 'mysql' . $version, $this->getConf());
         $neardConf = str_replace('mysql' . $this->getVersion(), 'mysql' . $version, $this->neardConf);
-        
+
         if ($this->version != $version) {
             $this->initData($currentPath, $version);
         }
-        
+
         if (!file_exists($conf) || !file_exists($neardConf)) {
             Util::logError('Neard config files not found for ' . $this->getName() . ' ' . $version);
             if ($showWindow) {
@@ -348,7 +352,7 @@ class BinMysql extends Module
             }
             return false;
         }
-        
+
         $neardConfRaw = parse_ini_file($neardConf);
         if ($neardConfRaw === false || !isset($neardConfRaw[self::ROOT_CFG_VERSION]) || $neardConfRaw[self::ROOT_CFG_VERSION] != $version) {
             Util::logError('Neard config file malformed for ' . $this->getName() . ' ' . $version);
@@ -360,53 +364,53 @@ class BinMysql extends Module
             }
             return false;
         }
-        
+
         // neard.conf
         $this->setVersion($version);
-        
+
         // conf
         Util::replaceInFile($this->getConf(), array(
             '/^port(.*?)=(.*?)(\d+)/' => 'port = ' . $this->port
         ));
-        
+
         // phpmyadmin
         $neardApps->getPhpmyadmin()->update($sub + 1);
-        
+
         // adminer
         $neardApps->getAdminer()->update($sub + 1);
-        
+
         // php
         $neardBins->getPhp()->update($sub + 1);
-        
+
         return true;
     }
-    
+
     public function initData($path = null, $version = null) {
         $path = $path != null ? $path : $this->getCurrentPath();
         $version = $version != null ? $version : $this->getVersion();
-        
+
         if (version_compare($version, '5.7.0', '<')) {
             return;
         }
-        
+
         if (file_exists($path . '/data')) {
             return;
         }
-        
+
         Batch::initializeMysql($path);
     }
-    
+
     public function getCmdLineOutput($cmd) {
         $result = array(
             'syntaxOk' => false,
             'content'  => null,
         );
-        
+
         $bin = $this->getExe();
         $removeLines = 0;
         $outputFrom = '';
         if ($cmd == self::CMD_SYNTAX_CHECK) {
-            $outputFrom = '2'; 
+            $outputFrom = '2';
         } elseif ($cmd == self::CMD_VARIABLES) {
             $bin = $this->getAdmin();
             $cmd .= ' --user=' . $this->getRootUser();
@@ -415,7 +419,7 @@ class BinMysql extends Module
             }
             $removeLines = 2;
         }
-    
+
         if (file_exists($bin)) {
             $tmpResult = Batch::exec('mysqlGetCmdLineOutput', '"' . $bin . '" ' . $cmd . ' ' . $outputFrom, 5);
             if ($tmpResult !== false && is_array($tmpResult)) {
@@ -424,12 +428,12 @@ class BinMysql extends Module
                     unset($tmpResult[$i]);
                 }
                 $result['content'] = trim(str_replace($bin, '', implode(PHP_EOL, $tmpResult)));
-            } 
+            }
         }
-    
+
         return $result;
     }
-    
+
     public function setVersion($version) {
         global $neardConfig;
         $this->version = $version;
@@ -439,7 +443,7 @@ class BinMysql extends Module
     public function getService() {
         return $this->service;
     }
-    
+
     public function setEnable($enabled, $showWindow = false) {
         global $neardConfig, $neardLang, $neardWinbinder;
 
@@ -453,11 +457,11 @@ class BinMysql extends Module
             }
             $enabled = Config::DISABLED;
         }
-    
+
         Util::logInfo($this->getName() . ' switched to ' . ($enabled == Config::ENABLED ? 'enabled' : 'disabled'));
         $this->enable = $enabled == Config::ENABLED;
         $neardConfig->replace(self::ROOT_CFG_ENABLE, $enabled);
-    
+
         $this->reload();
         if ($this->enable) {
             Util::installService($this, $this->port, self::CMD_SYNTAX_CHECK, $showWindow);
@@ -465,7 +469,7 @@ class BinMysql extends Module
             Util::removeService($this->service, $this->name);
         }
     }
-    
+
     public function getErrorLog() {
         return $this->errorLog;
     }
@@ -473,19 +477,19 @@ class BinMysql extends Module
     public function getExe() {
         return $this->exe;
     }
-    
+
     public function getConf() {
         return $this->conf;
     }
-    
+
     public function getPort() {
         return $this->port;
     }
-    
+
     public function setPort($port) {
         $this->replace(self::LOCAL_CFG_PORT, $port);
     }
-    
+
     public function getRootUser() {
         return $this->rootUser;
     }
@@ -493,7 +497,7 @@ class BinMysql extends Module
     public function setRootUser($rootUser) {
         $this->replace(self::LOCAL_CFG_ROOT_USER, $rootUser);
     }
-    
+
     public function getRootPwd() {
         return $this->rootPwd;
     }
@@ -505,7 +509,7 @@ class BinMysql extends Module
     public function getCliExe() {
         return $this->cliExe;
     }
-    
+
     public function getAdmin() {
         return $this->admin;
     }

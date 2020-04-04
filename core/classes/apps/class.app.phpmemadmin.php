@@ -3,9 +3,9 @@
 class AppPhpmemadmin extends Module
 {
     const ROOT_CFG_VERSION = 'phpmemadminVersion';
-    
+
     const LOCAL_CFG_CONF = 'phpmemadminConf';
-    
+
     private $conf;
 
     public function __construct($id, $type) {
@@ -23,7 +23,7 @@ class AppPhpmemadmin extends Module
         if ($this->neardConfRaw !== false) {
             $this->conf = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_CONF];
         }
-        
+
         if (!$this->enable) {
             Util::logInfo($this->name . ' is not enabled!');
             return;
@@ -41,24 +41,24 @@ class AppPhpmemadmin extends Module
 
     protected function updateConfig($version = null, $sub = 0, $showWindow = false) {
         global $neardBs, $neardBins;
-        
+
         if (!$this->enable) {
             return true;
         }
-        
+
         $version = $version == null ? $this->version : $version;
         Util::logDebug(($sub > 0 ? str_repeat(' ', 2 * $sub) : '') . 'Update ' . $this->name . ' ' . $version . ' config...');
-    
+
         $alias = $neardBs->getAliasPath() . '/phpmemadmin.conf';
         if (is_file($alias)) {
             Util::replaceInFile($alias, array(
-                '/^Alias\s\/phpmemadmin\s.*/' => 'Alias /phpmemadmin "' . $this->getCurrentPath() . '/web/"',
-                '/^<Directory\s.*/' => '<Directory "' . $this->getCurrentPath() . '/web/">',
+                '/^Alias\s\/phpmemadmin\s.*/' => 'Alias /phpmemadmin "' . $this->getSymlinkPath() . '/web/"',
+                '/^<Directory\s.*/' => '<Directory "' . $this->getSymlinkPath() . '/web/">',
             ));
         } else {
             Util::logError($this->getName() . ' alias not found : ' . $alias);
         }
-        
+
         if ($neardBins->getMemcached()->isEnable()) {
             Util::replaceInFile($this->getConf(), array(
                 '/^\s\s\s\s\s\s\s\s"port"/' => '        "port": ' . $neardBins->getMemcached()->getPort(),
@@ -67,7 +67,7 @@ class AppPhpmemadmin extends Module
 
         return true;
     }
-    
+
     public function setVersion($version) {
         global $neardConfig;
         $this->version = $version;

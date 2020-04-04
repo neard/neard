@@ -3,9 +3,9 @@
 class AppAdminer extends Module
 {
     const ROOT_CFG_VERSION = 'adminerVersion';
-    
+
     const LOCAL_CFG_CONF = 'adminerConf';
-    
+
     private $conf;
 
     public function __construct($id, $type) {
@@ -19,11 +19,11 @@ class AppAdminer extends Module
         $this->name = $neardLang->getValue(Lang::ADMINER);
         $this->version = $neardConfig->getRaw(self::ROOT_CFG_VERSION);
         parent::reload($id, $type);
-        
+
         if ($this->neardConfRaw !== false) {
             $this->conf = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_CONF];
         }
-        
+
         if (!$this->enable) {
             Util::logInfo($this->name . ' is not enabled!');
             return;
@@ -41,24 +41,24 @@ class AppAdminer extends Module
 
     protected function updateConfig($version = null, $sub = 0, $showWindow = false) {
         global $neardBs, $neardBins;
-        
+
         if (!$this->enable) {
             return true;
         }
-        
+
         $version = $version == null ? $this->version : $version;
         Util::logDebug(($sub > 0 ? str_repeat(' ', 2 * $sub) : '') . 'Update ' . $this->name . ' ' . $version . ' config...');
-    
+
         $alias = $neardBs->getAliasPath() . '/adminer.conf';
         if (is_file($alias)) {
             Util::replaceInFile($alias, array(
-                '/^Alias\s\/adminer\s.*/' => 'Alias /adminer "' . $this->getCurrentPath() . '/"',
-                '/^<Directory\s.*/' => '<Directory "' . $this->getCurrentPath() . '/">',
+                '/^Alias\s\/adminer\s.*/' => 'Alias /adminer "' . $this->getSymlinkPath() . '/"',
+                '/^<Directory\s.*/' => '<Directory "' . $this->getSymlinkPath() . '/">',
             ));
         } else {
             Util::logError($this->getName() . ' alias not found : ' . $alias);
         }
-        
+
         if ($neardBins->getMysql()->isEnable()) {
             Util::replaceInFile($this->getConf(), array(
                 '/^\$mysqlPort\s=\s(\d+)/' => '$mysqlPort = ' . $neardBins->getMysql()->getPort() . ';',
@@ -88,13 +88,13 @@ class AppAdminer extends Module
 
         return true;
     }
-    
+
     public function setVersion($version) {
         global $neardConfig;
         $this->version = $version;
         $neardConfig->replace(self::ROOT_CFG_VERSION, $version);
     }
-    
+
     public function getConf() {
         return $this->conf;
     }

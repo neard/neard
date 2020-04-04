@@ -20,11 +20,11 @@ class TplConsole
     const ICON_YARN = 'yarn.ico';
     const ICON_PERL = 'perl.ico';
     const ICON_NGROK = 'ngrok.ico';
-    
+
     private function __construct()
     {
     }
-    
+
     public static function process()
     {
         global $neardTools;
@@ -36,14 +36,14 @@ class TplConsole
             self::getMouseSection() . PHP_EOL .
             self::getTabsSection() . PHP_EOL .
             '</settings>';
-            
+
         file_put_contents($neardTools->getConsole()->getConf(), $result);
     }
-    
+
     private static function getConsoleSection()
     {
         global $neardBs, $neardTools;
-        
+
         $sectionConsoleStart = self::getIncrStr(1) . '<console ' .
             'change_refresh="10" ' .
             'refresh="100" ' .
@@ -55,7 +55,7 @@ class TplConsole
             'init_dir="' . $neardBs->getRootPath() . '" ' .
             'start_hidden="0" ' .
             'save_size="0">' . PHP_EOL;
-        
+
         $sectionColors = self::getIncrStr(2) . '<colors>' . PHP_EOL .
                 self::getIncrStr(3) . '<color id="0" r="39" g="40" b="34"/>' . PHP_EOL .
                 self::getIncrStr(3) . '<color id="1" r="88" g="194" b="229"/>' . PHP_EOL .
@@ -74,18 +74,18 @@ class TplConsole
                 self::getIncrStr(3) . '<color id="14" r="204" g="204" b="129"/>' . PHP_EOL .
                 self::getIncrStr(3) . '<color id="15" r="255" g="255" b="255"/>' . PHP_EOL .
             self::getIncrStr(2) . '</colors>' . PHP_EOL;
-        
+
         $sectionConsoleEnd = self::getIncrStr(1) . '</console>';
-        
+
         return $sectionConsoleStart . $sectionColors . $sectionConsoleEnd;
     }
-    
+
     private static function getAppearanceSection()
     {
         $sectionFont = self::getIncrStr(2) . '<font name="Courier New" size="10" bold="0" italic="0" smoothing="0">' . PHP_EOL .
             self::getIncrStr(3) . '<color use="0" r="0" g="255" b="0"/>' . PHP_EOL .
             self::getIncrStr(2) . '</font>';
-        
+
         $windowSection = self::getIncrStr(2) . '<window ' .
             'title="Console" ' .
             'icon="" ' .
@@ -96,7 +96,7 @@ class TplConsole
             'use_tab_title="1" ' .
             'trim_tab_titles="20" ' .
             'trim_tab_titles_right="0"/>';
-        
+
         $controlsSection = self::getIncrStr(2) . '<controls ' .
             'show_menu="0" ' .
             'show_toolbar="1" ' .
@@ -106,11 +106,11 @@ class TplConsole
             'show_scrollbars="1" ' .
             'flat_scrollbars="0" ' .
             'tabs_on_bottom="0"/>';
-        
+
         $stylesSection = self::getIncrStr(2) . '<styles caption="1" resizable="1" taskbar_button="1" border="1" inside_border="2" tray_icon="0">' . PHP_EOL .
             self::getIncrStr(3) . '<selection_color r="255" g="255" b="255"/>' . PHP_EOL .
             self::getIncrStr(2) . '</styles>';
-            
+
         $positionSection = self::getIncrStr(2) . '<position ' .
             'x="-1" ' .
             'y="-1" ' .
@@ -118,7 +118,7 @@ class TplConsole
             'snap="0" ' .
             'z_order="0" ' .
             'save_position="0"/>';
-        
+
         $transparencySection = self::getIncrStr(2) . '<transparency ' .
             'type="1" ' .
             'active_alpha="240" ' .
@@ -126,7 +126,7 @@ class TplConsole
             'r="0" ' .
             'g="0" ' .
             'b="0"/>';
-        
+
         return self::getIncrStr(1) . '<appearance>' . PHP_EOL .
                 $sectionFont . PHP_EOL .
                 $windowSection . PHP_EOL .
@@ -136,7 +136,7 @@ class TplConsole
                 $transparencySection . PHP_EOL .
             self::getIncrStr(1) . '</appearance>';
     }
-    
+
     private static function getBehaviorSection()
     {
         $sectionCopyPaste = self::getIncrStr(2) . '<copy_paste ' .
@@ -146,17 +146,17 @@ class TplConsole
             'trim_spaces="1" ' .
             'copy_newline_char="0" ' .
             'sensitive_copy="1"/>';
-        
+
         $sectionScroll = self::getIncrStr(2) . '<scroll page_scroll_rows="0"/>';
         $sectionTabHighlight = self::getIncrStr(2) . '<tab_highlight flashes="3" stay_highligted="1"/>';
-        
+
         return self::getIncrStr(1) . '<behavior>' . PHP_EOL .
                 $sectionCopyPaste . PHP_EOL .
                 $sectionScroll . PHP_EOL .
                 $sectionTabHighlight . PHP_EOL .
             self::getIncrStr(1) . '</behavior>';
     }
-    
+
     private static function getHotkeysSection()
     {
         return self::getIncrStr(1) . '<hotkeys use_scroll_lock="0">' . PHP_EOL .
@@ -203,7 +203,7 @@ class TplConsole
                 self::getIncrStr(2) . '<hotkey ctrl="0" shift="0" alt="0" extended="0" code="0" command="activate"/>' . PHP_EOL .
             self::getIncrStr(1) . '</hotkeys>';
     }
-    
+
     private static function getMouseSection()
     {
         return self::getIncrStr(1) . '<mouse>' . PHP_EOL .
@@ -216,7 +216,7 @@ class TplConsole
                 self::getIncrStr(2) . '</actions>' . PHP_EOL .
             self::getIncrStr(1) . '</mouse>';
     }
-    
+
     private static function getTabsSection()
     {
         return self::getIncrStr(1) . '<tabs>' . PHP_EOL .
@@ -243,11 +243,11 @@ class TplConsole
                 self::getTabNgrokSection() .
             self::getIncrStr(1) . '</tabs>';
     }
-    
+
     private static function getTabCmdSection()
     {
         global $neardBs, $neardTools;
-        
+
         return self::getTab(
             $neardTools->getConsole()->getTabTitleDefault(),
             self::ICON_APP,
@@ -255,11 +255,11 @@ class TplConsole
             $neardBs->getRootPath()
         ) . PHP_EOL;
     }
-    
+
     private static function getTabPowerShellSection()
     {
         global $neardBs, $neardTools;
-        
+
         $powerShellPath = Util::getPowerShellPath();
         if ($powerShellPath !== false) {
             return self::getTab(
@@ -272,106 +272,106 @@ class TplConsole
 
         return "";
     }
-    
+
     private static function getTabPearSection()
     {
         global $neardBins, $neardTools;
-        
+
         $shell = $neardTools->getConsole()->getShell('&quot;' . $neardBins->getPhp()->getPearExe() . '&quot; -V');
         if (!file_exists($neardBins->getPhp()->getPearExe())) {
             $shell = $neardTools->getConsole()->getShell('echo ' . $neardBins->getPhp()->getPearExe() . ' not found...');
         }
-        
+
         return self::getTab(
             $neardTools->getConsole()->getTabTitlePear(),
             self::ICON_PEAR,
             $shell,
-            $neardBins->getPhp()->getPearPath()
+            $neardBins->getPhp()->getSymlinkPath() . '/pear'
         ) . PHP_EOL;
     }
-    
+
     private static function getTabMysqlSection()
     {
         global $neardBins, $neardTools;
-        
+
         $shell = $neardTools->getConsole()->getShell('&quot;' . $neardBins->getMysql()->getCliExe() . '&quot; -u' .
             $neardBins->getMysql()->getRootUser() .
             ($neardBins->getMysql()->getRootPwd() ? ' -p' : ''));
         if (!file_exists($neardBins->getMysql()->getCliExe())) {
             $shell = $neardTools->getConsole()->getShell('echo ' . $neardBins->getMysql()->getCliExe() . ' not found...');
         }
-    
+
         return self::getTab(
             $neardTools->getConsole()->getTabTitleMysql(),
             self::ICON_DB,
             $shell,
-            $neardBins->getMysql()->getCurrentPath()
+            $neardBins->getMysql()->getSymlinkPath()
         ) . PHP_EOL;
     }
-    
+
     private static function getTabMariadbSection()
     {
         global $neardBins, $neardTools;
-        
+
         $shell = $neardTools->getConsole()->getShell('&quot;' . $neardBins->getMariadb()->getCliExe() . '&quot; -u' .
             $neardBins->getMariadb()->getRootUser() .
             ($neardBins->getMariadb()->getRootPwd() ? ' -p' : ''));
         if (!file_exists($neardBins->getMariadb()->getCliExe())) {
             $shell = $neardTools->getConsole()->getShell('echo ' . $neardBins->getMariadb()->getCliExe() . ' not found...');
         }
-        
+
         return self::getTab(
             $neardTools->getConsole()->getTabTitleMariadb(),
             self::ICON_DB,
             $shell,
-            $neardBins->getMariadb()->getCurrentPath()
+            $neardBins->getMariadb()->getSymlinkPath()
         ) . PHP_EOL;
     }
-    
+
     private static function getTabMongodbSection()
     {
         global $neardBins, $neardTools;
-        
+
         $shell = $neardTools->getConsole()->getShell('&quot;' . $neardBins->getMongodb()->getCliExe() . '&quot;');
         if (!file_exists($neardBins->getMongodb()->getCliExe())) {
             $shell = $neardTools->getConsole()->getShell('echo ' . $neardBins->getMongodb()->getCliExe() . ' not found...');
         }
-    
+
         return self::getTab(
             $neardTools->getConsole()->getTabTitleMongodb(),
             self::ICON_DB,
             $shell,
-            $neardBins->getMongodb()->getCurrentPath()
+            $neardBins->getMongodb()->getSymlinkPath()
         ) . PHP_EOL;
     }
-    
+
     private static function getTabPostgresqlSection()
     {
         global $neardBins, $neardTools;
-        
+
         $shell = $neardTools->getConsole()->getShell('&quot;' . $neardBins->getPostgresql()->getCliExe() . '&quot; -U ' .
             $neardBins->getPostgresql()->getRootUser() . ' -d postgres');
         if (!file_exists($neardBins->getPostgresql()->getCliExe())) {
             $shell = $neardTools->getConsole()->getShell('echo ' . $neardBins->getPostgresql()->getCliExe() . ' not found...');
         }
-    
+
         return self::getTab(
             $neardTools->getConsole()->getTabTitlePostgresql(),
             self::ICON_DB,
             $shell,
-            $neardBins->getPostgresql()->getCurrentPath()
+            $neardBins->getPostgresql()->getSymlinkPath()
         ) . PHP_EOL;
     }
-    
+
     private static function getTabSvnSection()
     {
         global $neardBs, $neardBins, $neardTools;
-        
+
         $shell = $neardTools->getConsole()->getShell('&quot;' . $neardBins->getSvn()->getExe() . '&quot; --version');
         if (!file_exists($neardBins->getSvn()->getExe())) {
             $shell = $neardTools->getConsole()->getShell('echo ' . $neardBins->getSvn()->getExe() . ' not found...');
         }
-        
+
         return self::getTab(
             $neardTools->getConsole()->getTabTitleSvn(),
             self::ICON_SVN,
@@ -379,16 +379,16 @@ class TplConsole
             $neardBs->getWwwPath()
         ) . PHP_EOL;
     }
-    
+
     private static function getTabGitSection()
     {
         global $neardBs, $neardTools;
-        
+
         $shell = $neardTools->getConsole()->getShell('&quot;' . $neardTools->getGit()->getExe() . '&quot; --version');
         if (!file_exists($neardTools->getGit()->getExe())) {
             $shell = $neardTools->getConsole()->getShell('echo ' . $neardTools->getGit()->getExe() . ' not found...');
         }
-        
+
         return self::getTab(
             $neardTools->getConsole()->getTabTitleGit(),
             self::ICON_GIT,
@@ -396,16 +396,16 @@ class TplConsole
             $neardBs->getWwwPath()
         ) . PHP_EOL;
     }
-    
+
     private static function getTabNodejsSection()
     {
         global $neardBs, $neardBins, $neardTools;
-        
+
         $shell = $neardTools->getConsole()->getShell('&quot;' . $neardBins->getNodejs()->getLaunch(). '&quot;');
         if (!file_exists($neardBins->getNodejs()->getLaunch())) {
             $shell = $neardTools->getConsole()->getShell('echo ' . $neardBins->getNodejs()->getLaunch() . ' not found...');
         }
-        
+
         return self::getTab(
             $neardTools->getConsole()->getTabTitleNodejs(),
             self::ICON_NODEJS,
@@ -413,16 +413,16 @@ class TplConsole
             $neardBs->getWwwPath()
         ) . PHP_EOL;
     }
-    
+
     private static function getTabComposerSection()
     {
         global $neardBs, $neardTools;
-    
+
         $shell = $neardTools->getConsole()->getShell('&quot;' . $neardTools->getComposer()->getExe() . '&quot; -V');
         if (!file_exists($neardTools->getComposer()->getExe())) {
             $shell = $neardTools->getConsole()->getShell('echo ' . $neardTools->getComposer()->getExe() . ' not found...');
         }
-    
+
         return self::getTab(
             $neardTools->getConsole()->getTabTitleComposer(),
             self::ICON_COMPOSER,
@@ -430,16 +430,16 @@ class TplConsole
             $neardBs->getWwwPath()
         ) . PHP_EOL;
     }
-    
+
     private static function getTabPhpMetricsSection()
     {
         global $neardBs, $neardTools;
-        
+
         $shell = $neardTools->getConsole()->getShell('&quot;' . $neardTools->getPhpMetrics()->getExe() . '&quot; --version');
         if (!file_exists($neardTools->getPhpMetrics()->getExe())) {
             $shell = $neardTools->getConsole()->getShell('echo ' . $neardTools->getPhpMetrics()->getExe() . ' not found...');
         }
-    
+
         return self::getTab(
             $neardTools->getConsole()->getTabTitlePhpMetrics(),
             self::ICON_PHPMETRICS,
@@ -447,16 +447,16 @@ class TplConsole
             $neardBs->getWwwPath()
         ) . PHP_EOL;
     }
-    
+
     private static function getTabPhpUnitSection()
     {
         global $neardBs, $neardTools;
-        
+
         $shell = $neardTools->getConsole()->getShell('&quot;' . $neardTools->getPhpUnit()->getExe() . '&quot; --version');
         if (!file_exists($neardTools->getPhpUnit()->getExe())) {
             $shell = $neardTools->getConsole()->getShell('echo ' . $neardTools->getPhpUnit()->getExe() . ' not found...');
         }
-    
+
         return self::getTab(
             $neardTools->getConsole()->getTabTitlePhpUnit(),
             self::ICON_PHPUNIT,
@@ -464,16 +464,16 @@ class TplConsole
             $neardBs->getWwwPath()
         ) . PHP_EOL;
     }
-    
+
     private static function getTabDrushSection()
     {
         global $neardBs, $neardTools;
-        
+
         $shell = $neardTools->getConsole()->getShell('&quot;' . $neardTools->getDrush()->getExe() . '&quot; version');
         if (!file_exists($neardTools->getDrush()->getExe())) {
             $shell = $neardTools->getConsole()->getShell('echo ' . $neardTools->getDrush()->getExe() . ' not found...');
         }
-    
+
         return self::getTab(
             $neardTools->getConsole()->getTabTitleDrush(),
             self::ICON_DRUSH,
@@ -481,16 +481,16 @@ class TplConsole
             $neardBs->getWwwPath()
         ) . PHP_EOL;
     }
-    
+
     private static function getTabWpCliSection()
     {
         global $neardBs, $neardTools;
-        
+
         $shell = $neardTools->getConsole()->getShell('&quot;' . $neardTools->getWpCli()->getExe() . '&quot; --info');
         if (!file_exists($neardTools->getWpCli()->getExe())) {
             $shell = $neardTools->getConsole()->getShell('echo ' . $neardTools->getWpCli()->getExe() . ' not found...');
         }
-    
+
         return self::getTab(
             $neardTools->getConsole()->getTabTitleWpCli(),
             self::ICON_WPCLI,
@@ -498,16 +498,16 @@ class TplConsole
             $neardBs->getWwwPath()
         ) . PHP_EOL;
     }
-    
+
     private static function getTabPythonSection()
     {
         global $neardBs, $neardTools;
-        
+
         $shell = $neardTools->getConsole()->getShell('&quot;' . $neardTools->getPython()->getExe() . '&quot; -V');
         if (!file_exists($neardTools->getPython()->getExe())) {
             $shell = $neardTools->getConsole()->getShell('echo ' . $neardTools->getPython()->getExe() . ' not found...');
         }
-    
+
         return self::getTab(
             $neardTools->getConsole()->getTabTitlePython(),
             self::ICON_PYTHON,
@@ -515,16 +515,16 @@ class TplConsole
             $neardBs->getWwwPath()
         ) . PHP_EOL;
     }
-    
+
     private static function getTabRubySection()
     {
         global $neardBs, $neardTools;
-        
+
         $shell = $neardTools->getConsole()->getShell('&quot;' . $neardTools->getRuby()->getExe() . '&quot; -v');
         if (!file_exists($neardTools->getRuby()->getExe())) {
             $shell = $neardTools->getConsole()->getShell('echo ' . $neardTools->getRuby()->getExe() . ' not found...');
         }
-    
+
         return self::getTab(
             $neardTools->getConsole()->getTabTitleRuby(),
             self::ICON_RUBY,
@@ -532,16 +532,16 @@ class TplConsole
             $neardBs->getWwwPath()
         ) . PHP_EOL;
     }
-    
+
     private static function getTabYarnSection()
     {
         global $neardBs, $neardTools;
-        
+
         $shell = $neardTools->getConsole()->getShell('&quot;' . $neardTools->getYarn()->getExe() . '&quot; --version');
         if (!file_exists($neardTools->getYarn()->getExe())) {
             $shell = $neardTools->getConsole()->getShell('echo ' . $neardTools->getYarn()->getExe() . ' not found...');
         }
-        
+
         return self::getTab(
             $neardTools->getConsole()->getTabTitleYarn(),
             self::ICON_YARN,
@@ -549,16 +549,16 @@ class TplConsole
             $neardBs->getWwwPath()
         ) . PHP_EOL;
     }
-    
+
     private static function getTabPerlSection()
     {
         global $neardBs, $neardTools;
-        
+
         $shell = $neardTools->getConsole()->getShell('&quot;' . $neardTools->getPerl()->getExe() . '&quot; -v');
         if (!file_exists($neardTools->getPerl()->getExe())) {
             $shell = $neardTools->getConsole()->getShell('echo ' . $neardTools->getPerl()->getExe() . ' not found...');
         }
-        
+
         return self::getTab(
             $neardTools->getConsole()->getTabTitlePerl(),
             self::ICON_PERL,
@@ -566,16 +566,16 @@ class TplConsole
             $neardBs->getWwwPath()
         ) . PHP_EOL;
     }
-    
+
     private static function getTabGhostscriptSection()
     {
         global $neardBs, $neardTools;
-        
+
         $shell = $neardTools->getConsole()->getShell('&quot;' . $neardTools->getGhostscript()->getExeConsole() . '&quot; -v');
         if (!file_exists($neardTools->getGhostscript()->getExeConsole())) {
             $shell = $neardTools->getConsole()->getShell('echo ' . $neardTools->getGhostscript()->getExeConsole() . ' not found...');
         }
-        
+
         return self::getTab(
             $neardTools->getConsole()->getTabTitleGhostscript(),
             self::ICON_GHOSTSCRIPT,
@@ -583,16 +583,16 @@ class TplConsole
             $neardBs->getWwwPath()
         ) . PHP_EOL;
     }
-    
+
     private static function getTabNgrokSection()
     {
         global $neardBs, $neardTools;
-        
+
         $shell = $neardTools->getConsole()->getShell('&quot;' . $neardTools->getNgrok()->getExe() . '&quot; version');
         if (!file_exists($neardTools->getNgrok()->getExe())) {
             $shell = $neardTools->getConsole()->getShell('echo ' . $neardTools->getNgrok()->getExe() . ' not found...');
         }
-        
+
         return self::getTab(
             $neardTools->getConsole()->getTabTitleNgrok(),
             self::ICON_NGROK,
@@ -600,7 +600,7 @@ class TplConsole
             $neardBs->getWwwPath()
         ) . PHP_EOL;
     }
-    
+
     private static function getTab($title, $icon, $shell, $initDir)
     {
         global $neardCore;
@@ -614,7 +614,7 @@ class TplConsole
                 self::getIncrStr(3) . '</background>' . PHP_EOL .
             self::getIncrStr(2) . '</tab>';
     }
-    
+
     private static function getIncrStr($size = 1)
     {
         $result = '';

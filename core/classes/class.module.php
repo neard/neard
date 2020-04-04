@@ -13,6 +13,7 @@ abstract class Module
 
     protected $rootPath;
     protected $currentPath;
+    protected $symlinkPath;
     protected $enable;
     protected $neardConf;
     protected $neardConfRaw;
@@ -27,7 +28,7 @@ abstract class Module
         $this->id = empty($id) ? $this->id : $id;
         $this->type = empty($type) ? $this->type : $type;
         $mainPath = 'N/A';
-        
+
         switch ($this->type) {
             case Apps::TYPE:
                 $mainPath = $neardBs->getAppsPath();
@@ -39,12 +40,17 @@ abstract class Module
                 $mainPath = $neardBs->getToolsPath();
                 break;
         }
-        
+
         $this->rootPath = $mainPath . '/' . $this->id;
         $this->currentPath = $this->rootPath . '/' . $this->id . $this->version;
+        $this->symlinkPath = $this->rootPath . '/current';
         $this->enable = is_dir($this->currentPath);
         $this->neardConf = $this->currentPath . '/neard.conf';
         $this->neardConfRaw = @parse_ini_file($this->neardConf);
+
+        if ($neardBs->isBootstrap()) {
+            Batch::createSymlink($this->currentPath, $this->symlinkPath);
+        }
 
         if ($this->neardConfRaw !== false) {
             if (isset($this->neardConfRaw[self::BUNDLE_RELEASE])) {
@@ -59,24 +65,24 @@ abstract class Module
 
     protected function replaceAll($params) {
         $content = file_get_contents($this->neardConf);
-    
+
         foreach ($params as $key => $value) {
             $content = preg_replace('|' . $key . ' = .*|', $key . ' = ' . '"' . $value.'"', $content);
             $this->neardConfRaw[$key] = $value;
         }
-    
+
         file_put_contents($this->neardConf, $content);
     }
-    
+
     public function update($sub = 0, $showWindow = false) {
         $this->updateConfig(null, $sub, $showWindow);
     }
-    
+
     protected function updateConfig($version = null, $sub = 0, $showWindow = false) {
         $version = $version == null ? $this->version : $version;
         Util::logDebug(($sub > 0 ? str_repeat(' ', 2 * $sub) : '') . 'Update ' . $this->name . ' ' . $version . ' config...');
     }
-    
+
     public function __toString() {
         return $this->getName();
     }
@@ -88,33 +94,37 @@ abstract class Module
     public function getId() {
         return $this->id;
     }
-    
+
     public function getName() {
         return $this->name;
     }
-    
+
     public function getVersion() {
         return $this->version;
     }
-    
+
     public function getVersionList() {
         return Util::getVersionList($this->rootPath);
     }
-    
+
     abstract public function setVersion($version);
-    
+
     public function getRelease() {
         return $this->release;
     }
-    
+
     public function getRootPath() {
         return $this->rootPath;
     }
-    
+
     public function getCurrentPath() {
         return $this->currentPath;
     }
-    
+
+    public function getSymlinkPath() {
+        return $this->symlinkPath;
+    }
+
     public function isEnable() {
         return $this->enable;
     }

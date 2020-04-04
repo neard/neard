@@ -183,6 +183,10 @@ serviceRemoveError = "Fel vid installation av tjänsten %s."
 startServiceTitle = "#Start %s service"
 startServiceError = "#Error while starting the %s service."
 
+; Action Restart service
+restartServiceTitle = "#Restart %s service"
+restartServiceError = "#Error while restarting the %s service."
+
 ; Action Delete alias
 deleteAliasTitle = "Ta bort alias"
 deleteAlias = "Vill du verkligen ta bort alias '%s' ?"

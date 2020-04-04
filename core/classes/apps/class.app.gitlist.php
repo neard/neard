@@ -3,9 +3,9 @@
 class AppGitlist extends Module
 {
     const ROOT_CFG_VERSION = 'gitlistVersion';
-    
+
     const LOCAL_CFG_CONF = 'gitlistConf';
-    
+
     private $conf;
 
     public function __construct($id, $type) {
@@ -19,11 +19,11 @@ class AppGitlist extends Module
         $this->name = $neardLang->getValue(Lang::GITLIST);
         $this->version = $neardConfig->getRaw(self::ROOT_CFG_VERSION);
         parent::reload($id, $type);
-        
+
         if ($this->neardConfRaw !== false) {
             $this->conf = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_CONF];
         }
-        
+
         if (!$this->enable) {
             Util::logInfo($this->name . ' is not enabled!');
             return;
@@ -38,22 +38,22 @@ class AppGitlist extends Module
             Util::logError(sprintf($neardLang->getValue(Lang::ERROR_CONF_NOT_FOUND), $this->name . ' ' . $this->version, $this->conf));
         }
     }
-    
+
     protected function updateConfig($version = null, $sub = 0, $showWindow = false) {
         global $neardBs;
-        
+
         if (!$this->enable) {
             return true;
         }
-        
+
         $version = $version == null ? $this->version : $version;
         Util::logDebug(($sub > 0 ? str_repeat(' ', 2 * $sub) : '') . 'Update ' . $this->name . ' ' . $version . ' config...');
-    
+
         $alias = $neardBs->getAliasPath() . '/gitlist.conf';
         if (is_file($alias)) {
             Util::replaceInFile($alias, array(
-                '/^Alias\s\/gitlist\s.*/' => 'Alias /gitlist "' . $this->getCurrentPath() . '/"',
-                '/^<Directory\s.*/' => '<Directory "' . $this->getCurrentPath() . '/">',
+                '/^Alias\s\/gitlist\s.*/' => 'Alias /gitlist "' . $this->getSymlinkPath() . '/"',
+                '/^<Directory\s.*/' => '<Directory "' . $this->getSymlinkPath() . '/">',
             ));
         } else {
             Util::logError($this->getName() . ' alias not found : ' . $alias);
@@ -61,7 +61,7 @@ class AppGitlist extends Module
 
         return true;
     }
-    
+
     public function setVersion($version) {
         global $neardConfig;
         $this->version = $version;

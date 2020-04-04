@@ -7,7 +7,7 @@ class Util
     const LOG_INFO = 'INFO';
     const LOG_DEBUG = 'DEBUG';
     const LOG_TRACE = 'TRACE';
-    
+
     public static function cleanArgv($name, $type = 'text')
     {
         if (isset($_SERVER['argv'])) {
@@ -21,10 +21,10 @@ class Util
                 return (isset($_SERVER['argv'][$name]) && is_array($_SERVER['argv'][$name])) ? $_SERVER['argv'][$name] : array();
             }
         }
-        
+
         return false;
     }
-    
+
     public static function cleanGetVar($name, $type = 'text')
     {
         if (is_string($name)) {
@@ -38,10 +38,10 @@ class Util
                 return (isset($_GET[$name]) && is_array($_GET[$name])) ? $_GET[$name] : array();
             }
         }
-    
+
         return false;
     }
-    
+
     public static function cleanPostVar($name, $type = 'text')
     {
         if (is_string($name)) {
@@ -59,10 +59,10 @@ class Util
                 return (isset($_POST[$name]) && !empty($_POST[$name])) ? trim($_POST[$name]) : '';
             }
         }
-        
+
         return false;
     }
-    
+
     public static function contains($string, $search)
     {
         if (!empty($string) && !empty($search)) {
@@ -76,56 +76,56 @@ class Util
             return false;
         }
     }
-    
+
     public static function startWith($string, $search)
     {
         $length = strlen($search);
         return (substr($string, 0, $length) === $search);
     }
-    
+
     public static function endWith($string, $search)
     {
         $length = strlen($search);
         $start  = $length * -1;
         return (substr($string, $start) === $search);
     }
-    
+
     public static function random($length = 32, $withNumeric = true)
     {
         $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         if ($withNumeric) {
             $characters .= '0123456789';
         }
-        
+
         $randomString = '';
         for ($i = 0; $i < $length; $i++) {
             $randomString .= $characters[rand(0, strlen($characters) - 1)];
         }
-        
+
         return $randomString;
     }
-    
+
     public static function clearFolders($paths, $exclude = array())
     {
         $result = array();
         foreach ($paths as $path) {
             $result[$path] = self::clearFolder($path, $exclude);
         }
-    
+
         return $result;
     }
-    
+
     public static function clearFolder($path, $exclude = array())
     {
         $result = array();
         $result['return'] = true;
         $result['nb_files'] = 0;
-    
+
         $handle = @opendir($path);
         if (!$handle) {
             return null;
         }
-        
+
         while (false !== ($file = readdir($handle))) {
             if ($file == '.' || $file == '..' || in_array($file, $exclude)) {
                 continue;
@@ -146,11 +146,11 @@ class Util
                 }
             }
         }
-        
+
         closedir($handle);
         return $result;
     }
-    
+
     public static function deleteFolder($path)
     {
         if (is_dir($path)) {
@@ -168,16 +168,16 @@ class Util
             rmdir($path);
         }
     }
-    
+
     private static function findFile($startPath, $findFile)
     {
         $result = false;
-        
+
         $handle = @opendir($startPath);
         if (!$handle) {
             return false;
         }
-        
+
         while (false !== ($file = readdir($handle))) {
             if ($file == '.' || $file == '..') {
                 continue;
@@ -192,29 +192,29 @@ class Util
                 break;
             }
         }
-        
+
         closedir($handle);
         return $result;
     }
-    
+
     public static function isValidIp($ip)
     {
         return filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)
             || filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
     }
-    
+
     public static function isValidPort($port)
     {
         return is_numeric($port) && ($port > 0 || $port <= 65535);
     }
-    
+
     public static function replaceDefine($path, $var, $value)
     {
         self::replaceInFile($path, array(
             '/^define\((.*?)' . $var . '(.*?),/' => 'define(\'' . $var . '\', ' . (is_int($value) ? $value : '\'' . $value . '\'') . ');'
         ));
     }
-    
+
     public static function replaceInFile($path, $replaceList)
     {
         if (file_exists($path)) {
@@ -235,7 +235,7 @@ class Util
                         self::logTrace('## old: ' . trim($line));
                         self::logTrace('## new: ' . trim($replace));
                         fwrite($fp, $replace . PHP_EOL);
-                        
+
                         $replaceDone = true;
                         break;
                     }
@@ -247,37 +247,37 @@ class Util
             fclose($fp);
         }
     }
-    
+
     public static function getVersionList($path)
     {
         $result = array();
-        
+
         $handle = @opendir($path);
         if (!$handle) {
             return false;
         }
-        
+
         while (false !== ($file = readdir($handle))) {
             $filePath = $path . '/' . $file;
-            if ($file != "." && $file != ".." && is_dir($filePath)) {
+            if ($file != "." && $file != ".." && is_dir($filePath) && $file != 'current') {
                 $result[] = str_replace(basename($path), '', $file);
             }
         }
-        
+
         closedir($handle);
         return $result;
     }
-    
+
     public static function getMicrotime()
     {
         list($usec, $sec) = explode(" ", microtime());
         return ((float)$usec + (float)$sec);
     }
-    
+
     public static function getAppBinsRegKey($fromRegistry = true)
     {
         global $neardRegistry;
-        
+
         if ($fromRegistry) {
             $value = $neardRegistry->getValue(
                 Registry::HKEY_LOCAL_MACHINE,
@@ -289,67 +289,67 @@ class Util
             global $neardBins, $neardTools;
             $value = '';
             if ($neardBins->getApache()->isEnable()) {
-                $value .= $neardBins->getApache()->getCurrentPath() . '/bin;';
+                $value .= $neardBins->getApache()->getSymlinkPath() . '/bin;';
             }
             if ($neardBins->getPhp()->isEnable()) {
-                $value .= $neardBins->getPhp()->getCurrentPath() . ';';
-                $value .= $neardBins->getPhp()->getPearPath() . ';';
-                $value .= $neardBins->getPhp()->getDepsPath() . ';';
-                $value .= $neardBins->getPhp()->getImagickPath() . ';';
+                $value .= $neardBins->getPhp()->getSymlinkPath() . ';';
+                $value .= $neardBins->getPhp()->getSymlinkPath() . '/pear;';
+                $value .= $neardBins->getPhp()->getSymlinkPath() . '/deps;';
+                $value .= $neardBins->getPhp()->getSymlinkPath() . '/imagick;';
             }
             if ($neardBins->getNodejs()->isEnable()) {
-                $value .= $neardBins->getNodejs()->getCurrentPath() . ';';
+                $value .= $neardBins->getNodejs()->getSymlinkPath() . ';';
             }
             if ($neardBins->getSvn()->isEnable()) {
-                $value .= $neardBins->getSvn()->getCurrentPath() . ';';
+                $value .= $neardBins->getSvn()->getSymlinkPath() . ';';
             }
             if ($neardTools->getComposer()->isEnable()) {
-                $value .= $neardTools->getComposer()->getCurrentPath() . ';';
-                $value .= $neardTools->getComposer()->getCurrentPath() . '/vendor/bin;';
+                $value .= $neardTools->getComposer()->getSymlinkPath() . ';';
+                $value .= $neardTools->getComposer()->getSymlinkPath() . '/vendor/bin;';
             }
             if ($neardTools->getDrush()->isEnable()) {
-                $value .= $neardTools->getDrush()->getCurrentPath() . ';';
+                $value .= $neardTools->getDrush()->getSymlinkPath() . ';';
             }
             if ($neardTools->getGhostscript()->isEnable()) {
-                $value .= $neardTools->getGhostscript()->getCurrentPath() . '/bin;';
+                $value .= $neardTools->getGhostscript()->getSymlinkPath() . '/bin;';
             }
             if ($neardTools->getGit()->isEnable()) {
-                $value .= $neardTools->getGit()->getCurrentPath() . '/bin;';
+                $value .= $neardTools->getGit()->getSymlinkPath() . '/bin;';
             }
             if ($neardTools->getNgrok()->isEnable()) {
-                $value .= $neardTools->getNgrok()->getCurrentPath() . ';';
+                $value .= $neardTools->getNgrok()->getSymlinkPath() . ';';
             }
             if ($neardTools->getPerl()->isEnable()) {
-                $value .= $neardTools->getPerl()->getCurrentPath() . '/perl/site/bin;';
-                $value .= $neardTools->getPerl()->getCurrentPath() . '/perl/bin;';
-                $value .= $neardTools->getPerl()->getCurrentPath() . '/c/bin;';
+                $value .= $neardTools->getPerl()->getSymlinkPath() . '/perl/site/bin;';
+                $value .= $neardTools->getPerl()->getSymlinkPath() . '/perl/bin;';
+                $value .= $neardTools->getPerl()->getSymlinkPath() . '/c/bin;';
             }
             if ($neardTools->getPhpMetrics()->isEnable()) {
-                $value .= $neardTools->getPhpMetrics()->getCurrentPath() . ';';
+                $value .= $neardTools->getPhpMetrics()->getSymlinkPath() . ';';
             }
             if ($neardTools->getPhpUnit()->isEnable()) {
-                $value .= $neardTools->getPhpUnit()->getCurrentPath() . ';';
+                $value .= $neardTools->getPhpUnit()->getSymlinkPath() . ';';
             }
             if ($neardTools->getPython()->isEnable()) {
-                $value .= $neardTools->getPython()->getCurrentPath() . '/bin;';
+                $value .= $neardTools->getPython()->getSymlinkPath() . '/bin;';
             }
             if ($neardTools->getRuby()->isEnable()) {
-                $value .= $neardTools->getRuby()->getCurrentPath() . '/bin;';
+                $value .= $neardTools->getRuby()->getSymlinkPath() . '/bin;';
             }
             if ($neardTools->getWpCli()->isEnable()) {
-                $value .= $neardTools->getWpCli()->getCurrentPath() . ';';
+                $value .= $neardTools->getWpCli()->getSymlinkPath() . ';';
             }
             if ($neardTools->getYarn()->isEnable()) {
-                $value .= $neardTools->getYarn()->getCurrentPath() . ';';
-                $value .= $neardTools->getYarn()->getCurrentPath() . '/global/bin;';
+                $value .= $neardTools->getYarn()->getSymlinkPath() . ';';
+                $value .= $neardTools->getYarn()->getSymlinkPath() . '/global/bin;';
             }
             $value = self::formatWindowsPath($value);
             self::logDebug('Generated app bins reg key: ' . $value);
         }
-        
+
         return $value;
     }
-    
+
     public static function setAppBinsRegKey($value)
     {
         global $neardRegistry;
@@ -360,7 +360,7 @@ class Util
             $value
         );
     }
-    
+
     public static function getAppPathRegKey()
     {
         global $neardRegistry;
@@ -370,7 +370,7 @@ class Util
             Registry::APP_PATH_REG_ENTRY
         );
     }
-    
+
     public static function setAppPathRegKey($value)
     {
         global $neardRegistry;
@@ -381,7 +381,7 @@ class Util
             $value
         );
     }
-    
+
     public static function getSysPathRegKey()
     {
         global $neardRegistry;
@@ -391,7 +391,7 @@ class Util
             Registry::SYSPATH_REG_ENTRY
         );
     }
-    
+
     public static function setSysPathRegKey($value)
     {
         global $neardRegistry;
@@ -402,7 +402,7 @@ class Util
             $value
         );
     }
-    
+
     public static function getProcessorRegKey()
     {
         global $neardRegistry;
@@ -412,27 +412,27 @@ class Util
             Registry::PROCESSOR_REG_ENTRY
         );
     }
-    
+
     public static function getStartupLnkPath()
     {
         return Vbs::getStartupPath(APP_TITLE . '.lnk');
     }
-    
+
     public static function isLaunchStartup()
     {
         return file_exists(self::getStartupLnkPath());
     }
-    
+
     public static function enableLaunchStartup()
     {
         return Vbs::createShortcut(self::getStartupLnkPath());
     }
-    
+
     public static function disableLaunchStartup()
     {
         return @unlink(self::getStartupLnkPath());
     }
-    
+
     private static function log($data, $type, $file = null)
     {
         global $neardBs, $neardCore, $neardConfig;
@@ -440,13 +440,13 @@ class Util
         if (!$neardBs->isBootstrap()) {
             $file = $neardBs->getHomepageLogFilePath();
         }
-        
+
         $verbose = array();
         $verbose[Config::VERBOSE_SIMPLE] = $type == self::LOG_ERROR || $type == self::LOG_WARNING;
         $verbose[Config::VERBOSE_REPORT] = $verbose[Config::VERBOSE_SIMPLE] || $type == self::LOG_INFO;
         $verbose[Config::VERBOSE_DEBUG] = $verbose[Config::VERBOSE_REPORT] || $type == self::LOG_DEBUG;
         $verbose[Config::VERBOSE_TRACE] = $verbose[Config::VERBOSE_DEBUG] || $type == self::LOG_TRACE;
-        
+
         $writeLog = false;
         if ($neardConfig->getLogsVerbose() == Config::VERBOSE_SIMPLE && $verbose[Config::VERBOSE_SIMPLE]) {
             $writeLog = true;
@@ -457,7 +457,7 @@ class Util
         } elseif ($neardConfig->getLogsVerbose() == Config::VERBOSE_TRACE && $verbose[Config::VERBOSE_TRACE]) {
             $writeLog = true;
         }
-        
+
         if ($writeLog) {
             file_put_contents(
                 $file,
@@ -466,11 +466,11 @@ class Util
             );
         }
     }
-    
+
     public static function logSeparator()
     {
         global $neardBs;
-        
+
         $logs = array(
             $neardBs->getLogFilePath(),
             $neardBs->getErrorLogFilePath(),
@@ -481,7 +481,7 @@ class Util
             $neardBs->getVbsLogFilePath(),
             $neardBs->getWinbinderLogFilePath(),
         );
-        
+
         $separator = '========================================================================================' . PHP_EOL;
         foreach ($logs as $log) {
             $logContent = @file_get_contents($log);
@@ -490,37 +490,37 @@ class Util
             }
         }
     }
-    
+
     public static function logTrace($data, $file = null)
     {
         self::log($data, self::LOG_TRACE, $file);
     }
-    
+
     public static function logDebug($data, $file = null)
     {
         self::log($data, self::LOG_DEBUG, $file);
     }
-    
+
     public static function logInfo($data, $file = null)
     {
         self::log($data, self::LOG_INFO, $file);
     }
-    
+
     public static function logWarning($data, $file = null)
     {
         self::log($data, self::LOG_WARNING, $file);
     }
-    
+
     public static function logError($data, $file = null)
     {
         self::log($data, self::LOG_ERROR, $file);
     }
-    
+
     public static function logInitClass($classInstance)
     {
         self::logTrace('Init ' . get_class($classInstance));
     }
-    
+
     public static function getPowerShellPath()
     {
         if (is_dir('C:\Windows\System32\WindowsPowerShell')) {
@@ -528,17 +528,17 @@ class Util
         }
         return false;
     }
-    
+
     public static function findRepos($initPath, $startPath, $checkFile, $maxDepth = 1)
     {
         $depth = substr_count(str_replace($initPath, '', $startPath), '/');
         $result = array();
-        
+
         $handle = @opendir($startPath);
         if (!$handle) {
             return $result;
         }
-        
+
         while (false !== ($file = readdir($handle))) {
             if ($file == '.' || $file == '..') {
                 continue;
@@ -552,44 +552,44 @@ class Util
                 $result[] = self::formatUnixPath($startPath);
             }
         }
-        
+
         closedir($handle);
         return $result;
     }
-    
+
     public static function formatWindowsPath($path)
     {
         return str_replace('/', '\\', $path);
     }
-    
+
     public static function formatUnixPath($path)
     {
         return str_replace('\\', '/', $path);
     }
-    
+
     public static function imgToBase64($path)
     {
         $type = pathinfo($path, PATHINFO_EXTENSION);
         $data = file_get_contents($path);
         return 'data:image/' . $type . ';base64,' . base64_encode($data);
     }
-    
+
     public static function utf8ToCp1252($data)
     {
         return iconv("UTF-8", "WINDOWS-1252//IGNORE", $data);
     }
-    
+
     public static function cp1252ToUtf8($data)
     {
         return iconv("WINDOWS-1252", "UTF-8//IGNORE", $data);
     }
-    
+
     public static function startLoading()
     {
         global $neardCore, $neardWinbinder;
         $neardWinbinder->exec($neardCore->getPhpExe(), Core::BOOTSTRAP_FILE . ' ' . Action::LOADING);
     }
-    
+
     public static function stopLoading()
     {
         global $neardCore;
@@ -601,7 +601,7 @@ class Util
             @unlink($neardCore->getLoadingPid());
         }
     }
-    
+
     public static function getFilesToScan($path = null)
     {
         $result = array();
@@ -616,40 +616,40 @@ class Util
         }
         return $result;
     }
-    
+
     private static function getPathsToScan()
     {
         global $neardBs, $neardCore, $neardBins, $neardApps, $neardTools;
         $paths = array();
-        
+
         // Alias
         $paths[] = array(
             'path' => $neardBs->getAliasPath(),
             'includes' => array(''),
             'recursive' => false
         );
-        
+
         // Vhosts
         $paths[] = array(
             'path' => $neardBs->getVhostsPath(),
             'includes' => array(''),
             'recursive' => false
         );
-        
+
         // OpenSSL
         $paths[] = array(
             'path' => $neardCore->getOpenSslPath(),
             'includes' => array('openssl.cfg'),
             'recursive' => false
         );
-        
+
         // Homepage
         $paths[] = array(
             'path' => $neardCore->getResourcesPath() . '/homepage',
             'includes' => array('alias.conf'),
             'recursive' => false
         );
-        
+
         // Apache
         $folderList = self::getFolderList($neardBins->getApache()->getRootPath());
         foreach ($folderList as $folder) {
@@ -659,7 +659,7 @@ class Util
                 'recursive' => true
             );
         }
-        
+
         // PHP
         $folderList = self::getFolderList($neardBins->getPhp()->getRootPath());
         foreach ($folderList as $folder) {
@@ -669,7 +669,7 @@ class Util
                 'recursive' => true
             );
         }
-        
+
         // MySQL
         $folderList = self::getFolderList($neardBins->getMysql()->getRootPath());
         foreach ($folderList as $folder) {
@@ -679,7 +679,7 @@ class Util
                 'recursive' => false
             );
         }
-        
+
         // MariaDB
         $folderList = self::getFolderList($neardBins->getMariadb()->getRootPath());
         foreach ($folderList as $folder) {
@@ -689,7 +689,7 @@ class Util
                 'recursive' => false
             );
         }
-        
+
         // MongoDB
         $folderList = self::getFolderList($neardBins->getMongodb()->getRootPath());
         foreach ($folderList as $folder) {
@@ -699,7 +699,7 @@ class Util
                 'recursive' => false
             );
         }
-        
+
         // PostgreSQL
         $folderList = self::getFolderList($neardBins->getPostgresql()->getRootPath());
         foreach ($folderList as $folder) {
@@ -709,7 +709,7 @@ class Util
                 'recursive' => true
             );
         }
-        
+
         // Node.js
         $folderList = self::getFolderList($neardBins->getNodejs()->getRootPath());
         foreach ($folderList as $folder) {
@@ -724,7 +724,7 @@ class Util
                 'recursive' => false
             );
         }
-        
+
         // Filezilla
         $folderList = self::getFolderList($neardBins->getFilezilla()->getRootPath());
         foreach ($folderList as $folder) {
@@ -734,7 +734,7 @@ class Util
                 'recursive' => true
             );
         }
-        
+
         // WebSVN
         $folderList = self::getFolderList($neardApps->getWebsvn()->getRootPath());
         foreach ($folderList as $folder) {
@@ -744,7 +744,7 @@ class Util
                 'recursive' => false
             );
         }
-        
+
         // GitList
         $folderList = self::getFolderList($neardApps->getGitlist()->getRootPath());
         foreach ($folderList as $folder) {
@@ -754,7 +754,7 @@ class Util
                 'recursive' => false
             );
         }
-        
+
         // Composer
         $folderList = self::getFolderList($neardTools->getComposer()->getRootPath());
         foreach ($folderList as $folder) {
@@ -764,7 +764,7 @@ class Util
                 'recursive' => false
             );
         }
-        
+
         // Console
         $folderList = self::getFolderList($neardTools->getConsole()->getRootPath());
         foreach ($folderList as $folder) {
@@ -774,7 +774,7 @@ class Util
                 'recursive' => true
             );
         }
-        
+
         // Drush
         $folderList = self::getFolderList($neardTools->getDrush()->getRootPath());
         foreach ($folderList as $folder) {
@@ -784,7 +784,7 @@ class Util
                 'recursive' => false
             );
         }
-        
+
         // WP-CLI
         $folderList = self::getFolderList($neardTools->getWpCli()->getRootPath());
         foreach ($folderList as $folder) {
@@ -794,7 +794,7 @@ class Util
                 'recursive' => false
             );
         }
-        
+
         // Python
         $folderList = self::getFolderList($neardTools->getPython()->getRootPath());
         foreach ($folderList as $folder) {
@@ -809,7 +809,7 @@ class Util
                 'recursive' => false
             );
         }
-        
+
         // Ruby
         $folderList = self::getFolderList($neardTools->getRuby()->getRootPath());
         foreach ($folderList as $folder) {
@@ -819,7 +819,7 @@ class Util
                 'recursive' => false
             );
         }
-        
+
         // Yarn
         $folderList = self::getFolderList($neardTools->getYarn()->getRootPath());
         foreach ($folderList as $folder) {
@@ -844,19 +844,19 @@ class Util
                 'recursive' => false
             );
         }
-        
+
         return $paths;
     }
-    
+
     private static function findFiles($startPath, $includes = array(''), $recursive = true)
     {
         $result = array();
-    
+
         $handle = @opendir($startPath);
         if (!$handle) {
             return $result;
         }
-    
+
         while (false !== ($file = readdir($handle))) {
             if ($file == '.' || $file == '..') {
                 continue;
@@ -881,31 +881,31 @@ class Util
                 }
             }
         }
-    
+
         closedir($handle);
         return $result;
     }
-    
+
     public static function changePath($filesToScan, $rootPath = null)
     {
         global $neardBs, $neardCore;
-        
+
         $result = array(
             'countChangedOcc' => 0,
             'countChangedFiles' => 0
         );
-        
+
         $rootPath = $rootPath != null ? $rootPath : $neardBs->getRootPath();
         $unixOldPath = Util::formatUnixPath($neardCore->getLastPathContent());
         $windowsOldPath = Util::formatWindowsPath($neardCore->getLastPathContent());
         $unixCurrentPath = Util::formatUnixPath($rootPath);
         $windowsCurrentPath = Util::formatWindowsPath($rootPath);
-        
+
         foreach ($filesToScan as $fileToScan) {
             $tmpCountChangedOcc = 0;
             $fileContentOr = file_get_contents($fileToScan);
             $fileContent = $fileContentOr;
-        
+
             // old path
             preg_match('#' . $unixOldPath . '#i', $fileContent, $unixMatches);
             if (!empty($unixMatches)) {
@@ -917,7 +917,7 @@ class Util
                 $fileContent = str_replace($windowsOldPath, $windowsCurrentPath, $fileContent, $countChanged);
                 $tmpCountChangedOcc += $countChanged;
             }
-        
+
             // placeholders
             preg_match('#' . Core::PATH_LIN_PLACEHOLDER . '#i', $fileContent, $unixMatches);
             if (!empty($unixMatches)) {
@@ -929,7 +929,7 @@ class Util
                 $fileContent = str_replace(Core::PATH_WIN_PLACEHOLDER, $windowsCurrentPath, $fileContent, $countChanged);
                 $tmpCountChangedOcc += $countChanged;
             }
-        
+
             if ($fileContentOr != $fileContent) {
                 $result['countChangedOcc'] += $tmpCountChangedOcc;
                 $result['countChangedFiles'] += 1;
@@ -939,7 +939,7 @@ class Util
 
         return $result;
     }
-    
+
     public static function getLatestVersion()
     {
         $result = self::getRemoteFile(APP_UPDATE_URL);
@@ -950,17 +950,17 @@ class Util
         self::logDebug("Latest version found: " . $result);
         return $result;
     }
-    
+
     public static function getLatestChangelog($markdown = false)
     {
         global $neardCore, $neardBins;
-        
+
         $content = self::getRemoteFile(self::getGithubRawUrl('CHANGELOG.md'));
         if (empty($content)) {
             self::logError('Cannot retrieve latest CHANGELOG');
             return null;
         }
-        
+
         if ($markdown) {
             if (version_compare($neardBins->getPhp()->getVersion(), '5.2.17', '>')) {
                 require_once $neardCore->getLibsPath() . '/markdown/1.7.0/MarkdownInterface.php';
@@ -972,19 +972,19 @@ class Util
                 $content = Markdown(preg_replace('/^.+\n.*\n/', '', $content));
             }
         }
-        
+
         return $content;
     }
-    
+
     public static function getWebsiteUrlNoUtm($path = '', $fragment = '')
     {
         return self::getWebsiteUrl($path, $fragment, false);
     }
-    
+
     public static function getWebsiteUrl($path = '', $fragment = '', $utmSource = true)
     {
         global $neardCore;
-        
+
         $url = APP_WEBSITE;
         if (!empty($path)) {
             $url .= '/' . ltrim($path, '/');
@@ -995,32 +995,32 @@ class Util
         if (!empty($fragment)) {
             $url .= $fragment;
         }
-        
+
         return $url;
     }
-    
+
     public static function getVersionUrl($version)
     {
         return self::getWebsiteUrl('/release/' . $version);
     }
-    
+
     public static function getChangelogUrl($utmSource = true)
     {
         return self::getWebsiteUrl('doc/changelog', null, $utmSource);
     }
-    
+
     public static function getRemoteFilesize($url, $humanFileSize = true)
     {
         $size = 0;
-        
+
         $data = get_headers($url, true);
         if (isset($data['Content-Length'])) {
             $size = intval($data['Content-Length']);
         }
-        
+
         return $humanFileSize ? self::humanFileSize($size) : $size;
     }
-    
+
     public static function humanFileSize($size, $unit = '')
     {
         if ((!$unit && $size >= 1 << 30) || $unit == 'GB') {
@@ -1034,13 +1034,13 @@ class Util
         }
         return number_format($size) . ' bytes';
     }
-    
+
     public static function is32BitsOs()
     {
         $processor = self::getProcessorRegKey();
         return self::contains($processor, 'x86');
     }
-    
+
     public static function getHttpHeaders($pingUrl)
     {
         if (function_exists('curl_version')) {
@@ -1048,7 +1048,7 @@ class Util
         } else {
             $result = self::getFopenHttpHeaders($pingUrl);
         }
-        
+
         if (!empty($result)) {
             $rebuildResult = array();
             foreach ($result as $row) {
@@ -1058,20 +1058,20 @@ class Util
                 }
             }
             $result = $rebuildResult;
-            
+
             self::logDebug('getHttpHeaders:');
             foreach ($result as $header) {
                 self::logDebug('-> ' . $header);
             }
         }
-        
+
         return $result;
     }
-    
+
     public static function getFopenHttpHeaders($url)
     {
         $result = array();
-        
+
         $context = stream_context_create(array(
             'ssl' => array(
                 'verify_peer' => false,
@@ -1079,28 +1079,28 @@ class Util
                 'allow_self_signed' => true,
             )
         ));
-        
+
         $fp = @fopen($url, 'r', false, $context);
         if ($fp) {
             $meta = stream_get_meta_data($fp);
             $result = isset($meta['wrapper_data']) ? $meta['wrapper_data'] : $result;
             fclose($fp);
         }
-        
+
         return $result;
     }
-    
+
     public static function getCurlHttpHeaders($url)
     {
         $result = array();
-        
+
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_VERBOSE, true);
         curl_setopt($ch, CURLOPT_HEADER, true);
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        
+
         $response = @curl_exec($ch);
         if (empty($response)) {
             return $result;
@@ -1111,10 +1111,10 @@ class Util
         if (!isset($responseHeaders[0]) || empty($responseHeaders[0])) {
             return $result;
         }
-        
+
         return explode("\n", $responseHeaders[0]);
     }
-    
+
     public static function getHeaders($host, $port, $ssl = false)
     {
         $result = array();
@@ -1125,14 +1125,14 @@ class Util
                 'allow_self_signed' => true,
             )
         ));
-        
+
         $fp = @stream_socket_client(($ssl ? 'ssl://' : '') . $host . ':' . $port, $errno, $errstr, 5, STREAM_CLIENT_CONNECT, $context);
         if ($fp) {
             $out = fgets($fp);
             $result = explode(PHP_EOL, $out);
         }
         @fclose($fp);
-        
+
         if (!empty($result)) {
             $rebuildResult = array();
             foreach ($result as $row) {
@@ -1142,16 +1142,16 @@ class Util
                 }
             }
             $result = $rebuildResult;
-            
+
             self::logDebug('getHeaders:');
             foreach ($result as $header) {
                 self::logDebug('-> ' . $header);
             }
         }
-        
+
         return $result;
     }
-    
+
     public static function getRemoteFile($url)
     {
         $ch = curl_init();
@@ -1161,7 +1161,7 @@ class Util
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         return @curl_exec($ch);
     }
-    
+
     public static function isPortInUse($port)
     {
         $connection = @fsockopen('127.0.0.1', $port);
@@ -1172,26 +1172,26 @@ class Util
         }
         return false;
     }
-    
+
     public static function isValidDomainName($domainName)
     {
         return preg_match('/^([a-z\d](-*[a-z\d])*)(\.([a-z\d](-*[a-z\d])*))*$/i', $domainName)
             && preg_match('/^.{1,253}$/', $domainName)
             && preg_match('/^[^\.]{1,63}(\.[^\.]{1,63})*$/', $domainName);
     }
-    
+
     public static function isAlphanumeric($string)
     {
         return ctype_alnum($string);
     }
-    
+
     public static function installService($bin, $port, $syntaxCheckCmd, $showWindow = false)
     {
         global $neardLang, $neardWinbinder;
         $name = $bin->getName();
         $service = $bin->getService();
         $boxTitle = sprintf($neardLang->getValue(Lang::INSTALL_SERVICE_TITLE), $name);
-        
+
         $isPortInUse = Util::isPortInUse($port);
         if ($isPortInUse === false) {
             if (!$service->isInstalled()) {
@@ -1248,17 +1248,17 @@ class Util
                 );
             }
         }
-        
+
         return false;
     }
-    
+
     public static function removeService($service, $name)
     {
         if (!($service instanceof Win32Service)) {
             Util::logError('$service not an instance of Win32Service');
             return false;
         }
-    
+
         if ($service->isInstalled()) {
             if ($service->delete()) {
                 Util::logInfo(sprintf('%s service successfully removed', $name));
@@ -1270,17 +1270,17 @@ class Util
         } else {
             Util::logWarning(sprintf('%s service does not exist', $name));
         }
-        
+
         return true;
     }
-    
+
     public static function startService($bin, $syntaxCheckCmd, $showWindow = false)
     {
         global $neardLang, $neardWinbinder;
         $name = $bin->getName();
         $service = $bin->getService();
         $boxTitle = sprintf($neardLang->getValue(Lang::START_SERVICE_TITLE), $name);
-        
+
         if (!$service->start()) {
             $serviceError = sprintf($neardLang->getValue(Lang::START_SERVICE_ERROR), $name);
             $serviceErrorLog = sprintf('Error while starting the %s service', $name);
@@ -1297,51 +1297,51 @@ class Util
             }
             return false;
         }
-        
+
         return true;
     }
-    
+
     public static function getGithubUserUrl($part = null) {
         $part = !empty($part) ? '/' . $part : null;
         return 'https://github.com/' . APP_GITHUB_USER . $part;
     }
-    
+
     public static function getGithubUrl($part = null) {
         $part = !empty($part) ? '/' . $part : null;
         return self::getGithubUserUrl(APP_GITHUB_REPO . $part);
     }
-    
+
     public static function getGithubRawUrl($file) {
         $file = !empty($file) ? '/' . $file : null;
         return 'https://raw.githubusercontent.com/' . APP_GITHUB_USER . '/' . APP_GITHUB_REPO . '/master' . $file;
     }
-    
+
     public static function getFolderList($path)
     {
         $result = array();
-    
+
         $handle = @opendir($path);
         if (!$handle) {
             return false;
         }
-    
+
         while (false !== ($file = readdir($handle))) {
             $filePath = $path . '/' . $file;
-            if ($file != "." && $file != ".." && is_dir($filePath)) {
+            if ($file != "." && $file != ".." && is_dir($filePath) && $file != 'current') {
                 $result[] = $file;
             }
         }
-    
+
         closedir($handle);
         return $result;
     }
-    
+
     public static function getNssmEnvPaths() {
         global $neardBs;
-        
+
         $result = '';
         $nssmEnvPathsFile = $neardBs->getRootPath() . '/nssmEnvPaths.dat';
-        
+
         if (is_file($nssmEnvPathsFile)) {
             $paths = explode(PHP_EOL, file_get_contents($nssmEnvPathsFile));
             foreach ($paths as $path) {
@@ -1356,21 +1356,21 @@ class Util
                 }
             }
         }
-        
+
         return $result;
     }
-    
+
     public static function openFileContent($caption, $content) {
         global $neardBs, $neardConfig, $neardWinbinder;
-        
+
         $folderPath = $neardBs->getTmpPath() . '/openFileContent-' . Util::random();
         if (!is_dir($folderPath)) {
             mkdir($folderPath, 0777, true);
         }
-        
+
         $filepath = Util::formatWindowsPath($folderPath . '/' . $caption);
         file_put_contents($filepath, $content);
-        
+
         $neardWinbinder->exec($neardConfig->getNotepad(), '"' . $filepath . '"');
     }
 }

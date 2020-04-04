@@ -4,22 +4,22 @@ class BinSvn extends Module
 {
     const SERVICE_NAME = 'neardsvn';
     const SERVICE_PARAMS = '--service --root "%s" --listen-port "%d" --log-file "%s"';
-    
+
     const ROOT_CFG_ENABLE = 'svnEnable';
     const ROOT_CFG_VERSION = 'svnVersion';
-    
+
     const LOCAL_CFG_EXE = 'svnExe';
     const LOCAL_CFG_ADMIN = 'svnAdmin';
     const LOCAL_CFG_SERVE = 'svnServe';
     const LOCAL_CFG_PORT = 'svnPort';
-    
+
     const CMD_VERSION = '--version';
-    
+
     private $service;
 
     private $log;
     private $root;
-    
+
     private $exe;
     private $adminExe;
     private $serveExe;
@@ -32,7 +32,7 @@ class BinSvn extends Module
 
     public function reload($id = null, $type = null) {
         global $neardBs, $neardConfig, $neardLang;
-        
+
         $this->name = $neardLang->getValue(Lang::SVN);
         $this->version = $neardConfig->getRaw(self::ROOT_CFG_VERSION);
         parent::reload($id, $type);
@@ -41,20 +41,24 @@ class BinSvn extends Module
         $this->service = new Win32Service(self::SERVICE_NAME);
         $this->log = $neardBs->getLogsPath() . '/svn.log';
         $this->root = $this->currentPath . '/repos';
-        
+
         if ($this->neardConfRaw !== false) {
-            $this->exe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_EXE];
-            $this->adminExe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_ADMIN];
-            $this->serveExe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_SERVE];
+            $this->exe = $this->symlinkPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_EXE];
+            $this->adminExe = $this->symlinkPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_ADMIN];
+            $this->serveExe = $this->symlinkPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_SERVE];
             $this->port = intval($this->neardConfRaw[self::LOCAL_CFG_PORT]);
         }
-        
+
         if (!$this->enable) {
             Util::logInfo($this->name . ' is not enabled!');
             return;
         }
         if (!is_dir($this->currentPath)) {
             Util::logError(sprintf($neardLang->getValue(Lang::ERROR_FILE_NOT_FOUND), $this->name . ' ' . $this->version, $this->currentPath));
+            return;
+        }
+        if (!is_dir($this->symlinkPath)) {
+            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_FILE_NOT_FOUND), $this->name . ' ' . $this->version, $this->symlinkPath));
             return;
         }
         if (!is_file($this->neardConf)) {
@@ -77,7 +81,7 @@ class BinSvn extends Module
             Util::logError(sprintf($neardLang->getValue(Lang::ERROR_INVALID_PARAMETER), self::LOCAL_CFG_PORT, $this->port));
             return;
         }
-        
+
         $this->service->setDisplayName(APP_TITLE . ' ' . $this->getName() . ' ' . $this->version);
         $this->service->setBinPath($this->serveExe);
         $this->service->setParams(sprintf(self::SERVICE_PARAMS, $this->root, $this->port, $this->log));
@@ -87,7 +91,7 @@ class BinSvn extends Module
 
     protected function replaceAll($params) {
         $content = file_get_contents($this->neardConf);
-        
+
         foreach ($params as $key => $value) {
             $content = preg_replace('|' . $key . ' = .*|', $key . ' = ' . '"' . $value.'"', $content);
             $this->neardConfRaw[$key] = $value;
@@ -97,47 +101,47 @@ class BinSvn extends Module
                     break;
             }
         }
-    
+
         file_put_contents($this->neardConf, $content);
     }
-    
+
     public function changePort($port, $checkUsed = false, $wbProgressBar = null) {
         global $neardWinbinder;
-    
+
         if (!Util::isValidPort($port)) {
             Util::logError($this->getName() . ' port not valid: ' . $port);
             return false;
         }
-    
+
         $port = intval($port);
         $neardWinbinder->incrProgressBar($wbProgressBar);
-    
+
         $isPortInUse = Util::isPortInUse($port);
         if (!$checkUsed || $isPortInUse === false) {
             // neard.conf
             $this->setPort($port);
             $neardWinbinder->incrProgressBar($wbProgressBar);
-    
+
             // conf
             $this->update();
             $neardWinbinder->incrProgressBar($wbProgressBar);
-    
+
             return true;
         }
-    
+
         Util::logDebug($this->getName() . ' port in used: ' . $port . ' - ' . $isPortInUse);
         return $isPortInUse;
     }
-    
+
     public function checkPort($port, $showWindow = false) {
         global $neardLang, $neardWinbinder;
         $boxTitle = sprintf($neardLang->getValue(Lang::CHECK_PORT_TITLE), $this->getName(), $port);
-    
+
         if (!Util::isValidPort($port)) {
             Util::logError($this->getName() . ' port not valid: ' . $port);
             return false;
         }
-        
+
         $headers = Util::getHttpHeaders('http://localhost:' . $port);
         if (!empty($headers)) {
             if (count($headers) == 1 && Util::startWith($headers[0], '( success (')) {
@@ -166,10 +170,10 @@ class BinSvn extends Module
                 );
             }
         }
-    
+
         return false;
     }
-    
+
     public function switchVersion($version, $showWindow = false) {
         Util::logDebug('Switch ' . $this->name . ' version to ' . $version);
         return $this->updateConfig($version, 0, $showWindow);
@@ -177,16 +181,16 @@ class BinSvn extends Module
 
     protected function updateConfig($version = null, $sub = 0, $showWindow = false) {
         global $neardLang, $neardApps, $neardWinbinder;
-        
+
         if (!$this->enable) {
             return true;
         }
-        
+
         $version = $version == null ? $this->version : $version;
         Util::logDebug(($sub > 0 ? str_repeat(' ', 2 * $sub) : '') . 'Update ' . $this->name . ' ' . $version . ' config...');
-        
+
         $boxTitle = sprintf($neardLang->getValue(Lang::SWITCH_VERSION_TITLE), $this->getName(), $version);
-        
+
         $neardConf = str_replace('svn' . $this->getVersion(), 'svn' . $version, $this->neardConf);
         if (!file_exists($neardConf)) {
             Util::logError('Neard config files not found for ' . $this->getName() . ' ' . $version);
@@ -198,7 +202,7 @@ class BinSvn extends Module
             }
             return false;
         }
-        
+
         $neardConfRaw = parse_ini_file($neardConf);
         if ($neardConfRaw === false || !isset($neardConfRaw[self::ROOT_CFG_VERSION]) || $neardConfRaw[self::ROOT_CFG_VERSION] != $version) {
             Util::logError('Neard config file malformed for ' . $this->getName() . ' ' . $version);
@@ -210,26 +214,26 @@ class BinSvn extends Module
             }
             return false;
         }
-        
+
         // neard.conf
         $this->setVersion($version);
-        
+
         // websvn
         $neardApps->getWebsvn()->update($sub + 1);
-        
+
         return true;
     }
-    
+
     public function getCmdLineOutput($cmd) {
         $result = array(
             'syntaxOk' => false,
             'content'  => null,
         );
-    
+
         $bin = $this->getExe();
         $removeLines = 0;
         $outputFrom = '';
-    
+
         if (file_exists($this->getExe())) {
             $tmpResult = Batch::exec('svnGetCmdLineOutput', '"' . $bin . '" ' . $cmd . ' ' . $outputFrom);
             if ($tmpResult !== false && is_array($tmpResult)) {
@@ -248,29 +252,29 @@ class BinSvn extends Module
                 }
             }
         }
-    
+
         return $result;
     }
-    
+
     public function findRepos() {
         $result = array();
-        
+
         $handle = @opendir($this->root);
         if (!$handle) {
             return $result;
         }
-        
+
         while (false !== ($file = readdir($handle))) {
             if ($file != "." && $file != ".." && is_dir($this->root . '/' . $file)) {
                 $result[] = $this->root . '/' . $file;
             }
         }
-        
+
         closedir($handle);
         ksort($result);
         return $result;
     }
-    
+
     public function setVersion($version) {
         global $neardConfig;
         $this->version = $version;
@@ -280,7 +284,7 @@ class BinSvn extends Module
     public function getService() {
         return $this->service;
     }
-    
+
     public function setEnable($enabled, $showWindow = false) {
         global $neardConfig, $neardLang, $neardWinbinder;
 
@@ -294,11 +298,11 @@ class BinSvn extends Module
             }
             $enabled = Config::DISABLED;
         }
-    
+
         Util::logInfo($this->getName() . ' switched to ' . ($enabled == Config::ENABLED ? 'enabled' : 'disabled'));
         $this->enable = $enabled == Config::ENABLED;
         $neardConfig->replace(self::ROOT_CFG_ENABLE, $enabled);
-    
+
         $this->reload();
         if ($this->enable) {
             Util::installService($this, $this->port, null, $showWindow);
@@ -306,31 +310,31 @@ class BinSvn extends Module
             Util::removeService($this->service, $this->name);
         }
     }
-    
+
     public function getLog() {
         return $this->log;
     }
-    
+
     public function getRoot() {
         return $this->root;
     }
-    
+
     public function getExe() {
         return $this->exe;
     }
-    
+
     public function getAdminExe() {
         return $this->adminExe;
     }
-    
+
     public function getServeExe() {
         return $this->serveExe;
     }
-    
+
     public function getPort() {
         return $this->port;
     }
-    
+
     public function setPort($port) {
         $this->replace(self::LOCAL_CFG_PORT, $port);
     }

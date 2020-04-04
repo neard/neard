@@ -1,0 +1,40 @@
+=====================================================================
+
+                 ln.exe -- License
+
+=====================================================================
+
+You are allowed to use Ln.exe published by
+Hermann Schinagl at home or at work without paying a commercial
+license fee provided that you downloaded the software yourself
+directly from schinagl.priv.at, and:
+
+    * Use the software on computers for which you are the
+      primary user; or
+    * Use the software on computers for which there is no
+      primary user (e.g. servers, including Terminal Servers)
+      and you are a full-time employee of the company that owns
+      the computer; or
+    * Use the software on computers within your residence
+
+
+A commercial license is required to use the software in any way
+not covered above, including for example:
+
+    * Redistributing the software in any manner, including by
+      computer media, a file server, an email attachment, etc.
+    * Embedding the software in or linking it to another program
+    * Use of the software for technical support on customer computers
+
+
+If you are interested in licensing Ln.exe code for
+redistribution or for inclusion with or as part of a software product,
+please contact hermann@schinagl.priv.at
+
+Ln.exe Copyright (C) 2004 - 2019 by Hermann Schinagl
+Ln.exe comes with ABSOLUTELY NO WARRANTY
+
+http://schinagl.priv.at/nt/ln/ln.html
+
+
+

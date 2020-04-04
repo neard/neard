@@ -183,6 +183,10 @@ serviceRemoveError = "Error during the uninstallation of %s service."
 startServiceTitle = "Start %s service"
 startServiceError = "Error while starting the %s service."
 
+; Action Restart service
+restartServiceTitle = "Restart %s service"
+restartServiceError = "Error while restarting the %s service."
+
 ; Action Delete alias
 deleteAliasTitle = "Delete alias"
 deleteAlias = "Do you really want to delete the alias '%s' ?"

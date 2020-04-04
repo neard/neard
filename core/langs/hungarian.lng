@@ -183,6 +183,10 @@ serviceRemoveError = "Hiba történt %s szerviz eltávolítása közben."
 startServiceTitle = "%s szolgáltatás indítása"
 startServiceError = "Hiba a %s szolgáltatás indítása közben."
 
+; Action Restart service
+restartServiceTitle = "#Restart %s service"
+restartServiceError = "#Error while restarting the %s service."
+
 ; Action Delete alias
 deleteAliasTitle = "Alias törlése"
 deleteAlias = "Törölni akarja a %s aliast?"
@@ -348,7 +352,7 @@ homepageServiceStopped = "leállt"
 homepageAboutHtml = "<p><strong>Neard</strong>hordozható WAMP szoftver csomag, rengeteg hasznos alkalmazással, eszközzel a web fejlesztéshez.<br/>Akik közremüködnek, kérdésük vagy problémájuk van olvassák el <a target="_blank" href="%s/doc">Kokumentációt</a>.<br/>Az új szoftver kibocsátás híreirol kövesse <a target="_blank" href="%s">a Github tárháza.</a>.</p>"
 homepageLicenseText = "Neard is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version."
 homepageQuestionsTitle = "Kérdések ?"
-homepageQuestionsText = "Ha hibát talál, vagy ötlete van a Neard-del kapcsolatban, a GitHubon kéretik jelezni" 
+homepageQuestionsText = "Ha hibát talál, vagy ötlete van a Neard-del kapcsolatban, a GitHubon kéretik jelezni"
 homepagePostIssue = "Probléma jelzése"
 homepagePhpinfoText = "phpinfo() megtekintése"
 homepageMailhogText = "Érkezett e-mail megtekintése"

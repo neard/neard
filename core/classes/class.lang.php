@@ -6,7 +6,7 @@ class Lang
     const ALL_RUNNING_HINT = 'allRunningHint';
     const SOME_RUNNING_HINT = 'someRunningHint';
     const NONE_RUNNING_HINT = 'noneRunningHint';
-    
+
     // Single
     const ABOUT = 'about';
     const ADMINISTRATION = 'administration';
@@ -59,7 +59,7 @@ class Lang
     const VERSIONS = 'versions';
     const VIRTUAL_HOSTS = 'virtualHosts';
     const WEBSITE = 'website';
-    
+
     // Menu
     const MENU_ABOUT = 'menuAbout';
     const MENU_ACCESS_LOGS = 'menuAccessLogs';
@@ -96,7 +96,7 @@ class Lang
     const MENU_TRANSFER_LOGS = 'menuTransferLogs';
     const MENU_UPDATE_ENV_PATH = 'menuUpdateEnvPath';
     const MENU_WWW_DIRECTORY = 'menuWwwDirectory';
-    
+
     // Bins
     const APACHE = 'apache';
     const FILEZILLA = 'filezilla';
@@ -110,7 +110,7 @@ class Lang
     const NODEJS = 'nodejs';
     const POSTGRESQL = 'postgresql';
     const SVN = 'svn';
-    
+
     // Apps
     const GITLIST = 'gitlist';
     const PHPMYADMIN = 'phpmyadmin';
@@ -119,7 +119,7 @@ class Lang
     const ADMINER = 'adminer';
     const PHPMEMADMIN = 'phpmemadmin';
     const PHPPGADMIN = 'phppgadmin';
-    
+
     // Tools
     const COMPOSER = 'composer';
     const CONSOLE = 'console';
@@ -135,13 +135,13 @@ class Lang
     const WPCLI = 'wpcli';
     const XDC = 'xdc';
     const YARN = 'yarn';
-    
+
     // Errors
     const ERROR_CONF_NOT_FOUND = 'errorConfNotFound';
     const ERROR_EXE_NOT_FOUND = 'errorExeNotFound';
     const ERROR_FILE_NOT_FOUND = 'errorFileNotFound';
     const ERROR_INVALID_PARAMETER = 'errorInvalidParameter';
-    
+
     // Action Switch version
     const SWITCH_VERSION_TITLE = 'switchVersionTitle';
     const SWITCH_VERSION_RELOAD_CONFIG = 'switchVersionReloadConfig';
@@ -155,11 +155,11 @@ class Lang
     const PHP_INCPT = 'phpIncpt';
     const NEARD_CONF_NOT_FOUND_ERROR = 'neardConfNotFoundError';
     const NEARD_CONF_MALFORMED_ERROR = 'neardConfMalformedError';
-    
+
     // Action Switch PHP setting
     const SWITCH_PHP_SETTING_TITLE = 'switchPhpSettingTitle';
     const SWITCH_PHP_SETTING_NOT_FOUND = 'switchPhpSettingNotFound';
-    
+
     // Action Check port
     const CHECK_PORT_TITLE = 'checkPortTitle';
     const PORT_USED_BY = 'portUsedBy';
@@ -167,29 +167,33 @@ class Lang
     const PORT_NOT_USED_BY = 'portNotUsedBy';
     const PORT_USED_BY_ANOTHER_DBMS = 'portUsedByAnotherDbms';
     const PORT_CHANGED = 'portChanged';
-    
+
     // Action Install service
     const INSTALL_SERVICE_TITLE = 'installServiceTitle';
     const SERVICE_ALREADY_INSTALLED = 'serviceAlreadyInstalled';
     const SERVICE_INSTALLED = 'serviceInstalled';
     const SERVICE_INSTALL_ERROR = 'serviceInstallError';
-    
+
     // Action Remove service
     const REMOVE_SERVICE_TITLE = 'removeServiceTitle';
     const SERVICE_NOT_EXIST = 'serviceNotExist';
     const SERVICE_REMOVED = 'serviceRemoved';
     const SERVICE_REMOVE_ERROR = 'serviceRemoveError';
-    
+
     // Action Start service
     const START_SERVICE_TITLE = 'startServiceTitle';
     const START_SERVICE_ERROR = 'startServiceError';
-    
+
+    // Action Restart service
+    const RESTART_SERVICE_TITLE = 'restartServiceTitle';
+    const RESTART_SERVICE_ERROR = 'restartServiceError';
+
     // Action Delete alias
     const DELETE_ALIAS_TITLE = 'deleteAliasTitle';
     const DELETE_ALIAS = 'deleteAlias';
     const ALIAS_REMOVED = 'aliasRemoved';
     const ALIAS_REMOVE_ERROR = 'aliasRemoveError';
-    
+
     // Action Add/Edit alias
     const ADD_ALIAS_TITLE = 'addAliasTitle';
     const ALIAS_NAME_LABEL = 'aliasNameLabel';
@@ -201,13 +205,13 @@ class Lang
     const ALIAS_CREATED = 'aliasCreated';
     const ALIAS_CREATED_ERROR = 'aliasCreatedError';
     const EDIT_ALIAS_TITLE = 'editAliasTitle';
-    
+
     // Action Delete vhost
     const DELETE_VHOST_TITLE =  'deleteVhostTitle';
     const DELETE_VHOST = 'deleteVhost';
     const VHOST_REMOVED = 'vhostRemoved';
     const VHOST_REMOVE_ERROR = 'vhostRemoveError';
-    
+
     // Action Add/Edit vhost
     const ADD_VHOST_TITLE = 'addVhostTitle';
     const VHOST_SERVER_NAME_LABEL = 'vhostServerNameLabel';
@@ -219,13 +223,13 @@ class Lang
     const VHOST_CREATED = 'vhostCreated';
     const VHOST_CREATED_ERROR = 'vhostCreatedError';
     const EDIT_VHOST_TITLE = 'editVhostTitle';
-    
+
     // Action Change port
     const CHANGE_PORT_TITLE = 'changePortTitle';
     const CHANGE_PORT_CURRENT_LABEL = 'changePortCurrentLabel';
     const CHANGE_PORT_NEW_LABEL = 'changePortNewLabel';
     const CHANGE_PORT_SAME_ERROR = 'changePortSameError';
-    
+
     // Action Change database root password
     const CHANGE_DB_ROOT_PWD_TITLE = 'changeDbRootPwdTitle';
     const CHANGE_DB_ROOT_PWD_CURRENTPWD_LABEL = 'changeDbRootPwdCurrentpwdLabel';
@@ -234,7 +238,7 @@ class Lang
     const CHANGE_DB_ROOT_PWD_NOTSAME_ERROR = 'changeDbRootPwdNotsameError';
     const CHANGE_DB_ROOT_PWD_INCORRECT_ERROR = 'changeDbRootPwdIncorrectError';
     const CHANGE_DB_ROOT_PWD_TEXT = 'changeDbRootPwdText';
-    
+
     // Action Startup
     const STARTUP_STARTING_TEXT = 'startupStartingText';
     const STARTUP_ROTATION_LOGS_TEXT = 'startupRotationLogsText';
@@ -263,22 +267,22 @@ class Lang
     const STARTUP_SERVICE_PORT_ERROR = 'startupServicePortError';
     const STARTUP_REFRESH_GIT_REPOS_TEXT = 'startupRefreshGitReposText';
     const STARTUP_GEN_SSL_CRT_TEXT = 'startupGenSslCrtText';
-    
+
     // Action Quit
     const EXIT_LEAVING_TEXT = 'exitLeavingText';
     const EXIT_REMOVE_SERVICE_TEXT = 'exitRemoveServiceText';
     const EXIT_STOP_OTHER_PROCESS_TEXT = 'exitStopOtherProcessText';
-    
+
     // Action Change browser
     const CHANGE_BROWSER_TITLE = 'changeBrowserTitle';
     const CHANGE_BROWSER_EXP_LABEL = 'changeBrowserExpLabel';
     const CHANGE_BROWSER_OTHER_LABEL = 'changeBrowserOtherLabel';
     const CHANGE_BROWSER_OK = 'changeBrowserOk';
-    
+
     // Action About
     const ABOUT_TITLE = 'aboutTitle';
     const ABOUT_TEXT = 'aboutText';
-    
+
     // Action Debug Apache
     const DEBUG_APACHE_VERSION_NUMBER = 'debugApacheVersionNumber';
     const DEBUG_APACHE_COMPILE_SETTINGS = 'debugApacheCompileSettings';
@@ -287,49 +291,49 @@ class Lang
     const DEBUG_APACHE_VHOSTS_SETTINGS = 'debugApacheVhostsSettings';
     const DEBUG_APACHE_LOADED_MODULES = 'debugApacheLoadedModules';
     const DEBUG_APACHE_SYNTAX_CHECK = 'debugApacheSyntaxCheck';
-    
+
     // Action Debug MySQL
     const DEBUG_MYSQL_VERSION = 'debugMysqlVersion';
     const DEBUG_MYSQL_VARIABLES = 'debugMysqlVariables';
     const DEBUG_MYSQL_SYNTAX_CHECK = 'debugMysqlSyntaxCheck';
-    
+
     // Action Debug MariaDB
     const DEBUG_MARIADB_VERSION = 'debugMariadbVersion';
     const DEBUG_MARIADB_VARIABLES = 'debugMariadbVariables';
     const DEBUG_MARIADB_SYNTAX_CHECK = 'debugMariadbSyntaxCheck';
-    
+
     // Action Debug MongoDB
     const DEBUG_MONGODB_VERSION = 'debugMongodbVersion';
-    
+
     // Action Debug PostgreSQL
     const DEBUG_POSTGRESQL_VERSION = 'debugPostgresqlVersion';
-    
+
     // Action Debug SVN
     const DEBUG_SVN_VERSION = 'debugSvnVersion';
-    
+
     // Action others...
     const REGISTRY_SET_ERROR_TEXT = 'registrySetErrorText';
-    
+
     // Action check version
     const CHECK_VERSION_TITLE = 'checkVersionTitle';
     const CHECK_VERSION_AVAILABLE_TEXT = 'checkVersionAvailableText';
     const CHECK_VERSION_CHANGELOG_TEXT = 'checkVersionChangelogText';
     const CHECK_VERSION_LATEST_TEXT = 'checkVersionLatestText';
-    
+
     // Action gen SSL certificate
     const GENSSL_TITLE = 'genSslTitle';
     const GENSSL_PATH = 'genSslPath';
     const GENSSL_CREATED = 'genSslCreated';
     const GENSSL_CREATED_ERROR = 'genSslCreatedError';
-    
+
     // Action restart
     const RESTART_TITLE = 'restartTitle';
     const RESTART_TEXT = 'restartText';
-    
+
     // Action enable
     const ENABLE_TITLE = 'enableTitle';
     const ENABLE_BUNDLE_NOT_EXIST = 'enableBundleNotExist';
-    
+
     // Windows forms
     const BUTTON_OK = 'buttonOk';
     const BUTTON_DELETE = 'buttonDelete';
@@ -340,7 +344,7 @@ class Lang
     const BUTTON_BACK = 'buttonBack';
     const BUTTON_BROWSE = 'buttonBrowse';
     const LOADING = 'loading';
-    
+
     // Homepage
     const HOMEPAGE_OFFICIAL_WEBSITE = 'homepageOfficialWebsite';
     const HOMEPAGE_SERVICE_STARTED = 'homepageServiceStarted';
@@ -354,7 +358,7 @@ class Lang
     const HOMEPAGE_APC_TEXT = 'homepageApcText';
     const HOMEPAGE_MAILHOG_TEXT = 'homepageMailhogText';
     const HOMEPAGE_BACK_TEXT = 'homepageBackText';
-    
+
     public static function getKeys()
     {
         return array(
@@ -362,7 +366,7 @@ class Lang
             self::ALL_RUNNING_HINT,
             self::SOME_RUNNING_HINT,
             self::NONE_RUNNING_HINT,
-            
+
             // Single
             self::ABOUT,
             self::ADMINISTRATION,
@@ -415,7 +419,7 @@ class Lang
             self::VERSIONS,
             self::VIRTUAL_HOSTS,
             self::WEBSITE,
-            
+
             // Menu
             self::MENU_ABOUT,
             self::MENU_ACCESS_LOGS,
@@ -452,7 +456,7 @@ class Lang
             self::MENU_TRANSFER_LOGS,
             self::MENU_UPDATE_ENV_PATH,
             self::MENU_WWW_DIRECTORY,
-            
+
             // Bins
             self::APACHE,
             self::FILEZILLA,
@@ -466,7 +470,7 @@ class Lang
             self::NODEJS,
             self::POSTGRESQL,
             self::SVN,
-            
+
             // Apps
             self::GITLIST,
             self::PHPMYADMIN,
@@ -475,7 +479,7 @@ class Lang
             self::ADMINER,
             self::PHPMEMADMIN,
             self::PHPPGADMIN,
-            
+
             // Tools
             self::COMPOSER,
             self::CONSOLE,
@@ -490,13 +494,13 @@ class Lang
             self::WPCLI,
             self::XDC,
             self::YARN,
-            
+
             // Errors
             self::ERROR_CONF_NOT_FOUND,
             self::ERROR_EXE_NOT_FOUND,
             self::ERROR_FILE_NOT_FOUND,
             self::ERROR_INVALID_PARAMETER,
-            
+
             // Action Switch version
             self::SWITCH_VERSION_TITLE,
             self::SWITCH_VERSION_RELOAD_CONFIG,
@@ -510,11 +514,11 @@ class Lang
             self::PHP_INCPT,
             self::NEARD_CONF_NOT_FOUND_ERROR,
             self::NEARD_CONF_MALFORMED_ERROR,
-            
+
             // Action Switch PHP setting
             self::SWITCH_PHP_SETTING_TITLE,
             self::SWITCH_PHP_SETTING_NOT_FOUND,
-            
+
             // Action Check port
             self::CHECK_PORT_TITLE,
             self::PORT_USED_BY,
@@ -522,28 +526,33 @@ class Lang
             self::PORT_NOT_USED_BY,
             self::PORT_USED_BY_ANOTHER_DBMS,
             self::PORT_CHANGED,
-            
+
             // Action Install service
             self::INSTALL_SERVICE_TITLE,
             self::SERVICE_ALREADY_INSTALLED,
             self::SERVICE_INSTALLED,
             self::SERVICE_INSTALL_ERROR,
-            
+
             // Action Remove service
             self::REMOVE_SERVICE_TITLE,
             self::SERVICE_NOT_EXIST,
             self::SERVICE_REMOVED,
             self::SERVICE_REMOVE_ERROR,
-            
+
             // Action Start service
             self::START_SERVICE_TITLE,
-            
+            self::START_SERVICE_ERROR,
+
+            // Action Restart service
+            self::RESTART_SERVICE_TITLE,
+            self::RESTART_SERVICE_ERROR,
+
             // Action Delete alias
             self::DELETE_ALIAS_TITLE,
             self::DELETE_ALIAS,
             self::ALIAS_REMOVED,
             self::ALIAS_REMOVE_ERROR,
-            
+
             // Action Add/Edit alias
             self::ADD_ALIAS_TITLE,
             self::ALIAS_NAME_LABEL,
@@ -555,13 +564,13 @@ class Lang
             self::ALIAS_CREATED,
             self::ALIAS_CREATED_ERROR,
             self::EDIT_ALIAS_TITLE,
-            
+
             // Action Delete vhost
             self::DELETE_VHOST_TITLE,
             self::DELETE_VHOST,
             self::VHOST_REMOVED,
             self::VHOST_REMOVE_ERROR,
-            
+
             // Action Add/Edit vhost
             self::ADD_VHOST_TITLE,
             self::VHOST_SERVER_NAME_LABEL,
@@ -573,13 +582,13 @@ class Lang
             self::VHOST_CREATED,
             self::VHOST_CREATED_ERROR,
             self::EDIT_VHOST_TITLE,
-            
+
             // Action Change port
             self::CHANGE_PORT_TITLE,
             self::CHANGE_PORT_CURRENT_LABEL,
             self::CHANGE_PORT_NEW_LABEL,
             self::CHANGE_PORT_SAME_ERROR,
-            
+
             // Action Change database root password
             self::CHANGE_DB_ROOT_PWD_TITLE,
             self::CHANGE_DB_ROOT_PWD_CURRENTPWD_LABEL,
@@ -588,7 +597,7 @@ class Lang
             self::CHANGE_DB_ROOT_PWD_NOTSAME_ERROR,
             self::CHANGE_DB_ROOT_PWD_INCORRECT_ERROR,
             self::CHANGE_DB_ROOT_PWD_TEXT,
-            
+
             // Action Startup
             self::STARTUP_STARTING_TEXT,
             self::STARTUP_ROTATION_LOGS_TEXT,
@@ -617,22 +626,22 @@ class Lang
             self::STARTUP_SERVICE_PORT_ERROR,
             self::STARTUP_REFRESH_GIT_REPOS_TEXT,
             self::STARTUP_START_SERVICE_TEXT,
-            
+
             // Action Quit
             self::EXIT_LEAVING_TEXT,
             self::EXIT_REMOVE_SERVICE_TEXT,
             self::EXIT_STOP_OTHER_PROCESS_TEXT,
-            
+
             // Action Change browser
             self::CHANGE_BROWSER_TITLE,
             self::CHANGE_BROWSER_EXP_LABEL,
             self::CHANGE_BROWSER_OTHER_LABEL,
             self::CHANGE_BROWSER_OK,
-            
+
             // Action About
             self::ABOUT_TITLE,
             self::ABOUT_TEXT,
-            
+
             // Action Debug Apache
             self::DEBUG_APACHE_VERSION_NUMBER,
             self::DEBUG_APACHE_COMPILE_SETTINGS,
@@ -641,49 +650,49 @@ class Lang
             self::DEBUG_APACHE_VHOSTS_SETTINGS,
             self::DEBUG_APACHE_LOADED_MODULES,
             self::DEBUG_APACHE_SYNTAX_CHECK,
-            
+
             // Action Debug MySQL
             self::DEBUG_MYSQL_VERSION,
             self::DEBUG_MYSQL_VARIABLES,
             self::DEBUG_MYSQL_SYNTAX_CHECK,
-            
+
             // Action Debug MariaDB
             self::DEBUG_MARIADB_VERSION,
             self::DEBUG_MARIADB_VARIABLES,
             self::DEBUG_MARIADB_SYNTAX_CHECK,
-            
+
             // Action Debug MongoDB
             self::DEBUG_MONGODB_VERSION,
-            
+
             // Action Debug PostgreSQL
             self::DEBUG_POSTGRESQL_VERSION,
-            
+
             // Action Debug SVN
             self::DEBUG_SVN_VERSION,
-            
+
             // Action others...
             self::REGISTRY_SET_ERROR_TEXT,
-            
+
             // Action check version
             self::CHECK_VERSION_TITLE,
             self::CHECK_VERSION_AVAILABLE_TEXT,
             self::CHECK_VERSION_CHANGELOG_TEXT,
             self::CHECK_VERSION_LATEST_TEXT,
-                
+
             // Action gen SSL certificate
             self::GENSSL_TITLE,
             self::GENSSL_PATH,
             self::GENSSL_CREATED,
             self::GENSSL_CREATED_ERROR,
-            
+
             // Action restart
             self::RESTART_TITLE,
             self::RESTART_TEXT,
-            
+
             // Action enable
             self::ENABLE_TITLE,
             self::ENABLE_BUNDLE_NOT_EXIST,
-            
+
             // Windows forms
             self::BUTTON_OK,
             self::BUTTON_DELETE,
@@ -694,7 +703,7 @@ class Lang
             self::BUTTON_BACK,
             self::BUTTON_BROWSE,
             self::LOADING,
-            
+
             // Homepage
             self::HOMEPAGE_OFFICIAL_WEBSITE,
             self::HOMEPAGE_SERVICE_STARTED,
