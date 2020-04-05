@@ -14,8 +14,6 @@ class BinMongodb extends Module
     const LOCAL_CFG_PORT = 'mongodbPort';
 
     const CMD_VERSION = '--version';
-    const CMD_STATUS = '--quiet 127.0.0.1:%d --eval "JSON.stringify(db.runCommand( { serverStatus: 1 } ))"';
-    const URL_STATUS = 'http://127.0.0.1:%d/serverStatus';
 
     private $service;
     private $errorLog;
@@ -24,7 +22,6 @@ class BinMongodb extends Module
     private $cliExe;
     private $conf;
     private $port;
-    private $webPort;
 
     public function __construct($id, $type) {
         Util::logInitClass($this);
@@ -47,7 +44,6 @@ class BinMongodb extends Module
             $this->cliExe = $this->symlinkPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_CLI_EXE];
             $this->conf = $this->symlinkPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_CONF];
             $this->port = $this->neardConfRaw[self::LOCAL_CFG_PORT];
-            $this->webPort = $this->port + 1000;
         }
 
         if (!$this->enable) {
@@ -82,10 +78,6 @@ class BinMongodb extends Module
             Util::logError(sprintf($neardLang->getValue(Lang::ERROR_INVALID_PARAMETER), self::LOCAL_CFG_PORT, $this->port));
             return;
         }
-        if (!is_numeric($this->webPort) || $this->webPort <= 0) {
-            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_INVALID_PARAMETER), 'webPort', $this->webPort));
-            return;
-        }
 
         $this->service->setDisplayName(APP_TITLE . ' ' . $this->getName() . ' ' . $this->version);
         $this->service->setBinPath($this->exe);
@@ -103,7 +95,6 @@ class BinMongodb extends Module
             switch ($key) {
                 case self::LOCAL_CFG_PORT:
                     $this->port = $value;
-                    $this->webPort = $this->port + 1000;
                     break;
             }
         }
@@ -150,8 +141,27 @@ class BinMongodb extends Module
 
         $fp = @fsockopen('127.0.0.1', $port, $errno, $errstr, 5);
         if ($fp) {
-            $serverStatus = json_decode(file_get_contents(sprintf(self::URL_STATUS, $port + 1000)), true);
-            if (!is_array($serverStatus) || !isset($serverStatus['version'])) {
+            $mongodbUse = false;
+            if (extension_loaded('mongo')) {
+                try {
+                    $mcli = new MongoClient("mongodb://127.0.0.1:" . $port, array("connect" => true, "connectTimeoutMS" => 1000));
+                    $mongodbUse = true;
+                    $mcli->close();
+                }  catch (MongoConnectionException $e) {
+                    Util::logError("MongoDB error: " . $e->getMessage());
+                }
+            } elseif (extension_loaded('mongodb')) {
+                try {
+                    $mcli = new MongoDB\Driver\Manager("mongodb://127.0.0.1:" . $port, array("connectTimeoutMS" => 1000));
+                    $mcmd = new MongoDB\Driver\Command(array('ping' => 1));
+                    $mcli->executeCommand('admin', $mcmd);
+                    $mongodbUse = true;
+                }  catch (MongoDB\Driver\Exception $e) {
+                    Util::logError("MongoDB error: " . $e->getMessage());
+                }
+            }
+
+            if (!$mongodbUse) {
                 Util::logDebug($this->getName() . ' port ' . $port . ' is used by another application');
                 if ($showWindow) {
                     $neardWinbinder->messageBoxWarning(
@@ -162,11 +172,10 @@ class BinMongodb extends Module
                 return false;
             }
 
-            $version = $serverStatus['version'];
-            Util::logDebug($this->getName() . ' port ' . $port . ' is used by: ' . $this->getName() . ' ' . $version);
+            Util::logDebug($this->getName() . ' port ' . $port . ' is used by: ' . $this->getName());
             if ($showWindow) {
                 $neardWinbinder->messageBoxInfo(
-                    sprintf($neardLang->getValue(Lang::PORT_USED_BY), $port, $this->getName() . ' ' . $version),
+                    sprintf($neardLang->getValue(Lang::PORT_USED_BY), $port, $this->getName()),
                     $boxTitle
                 );
             }
@@ -322,9 +331,5 @@ class BinMongodb extends Module
 
     public function setPort($port) {
         $this->replace(self::LOCAL_CFG_PORT, $port);
-    }
-
-    public function getWebPort() {
-        return $this->webPort;
     }
 }

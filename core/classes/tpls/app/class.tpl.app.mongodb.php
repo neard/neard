@@ -69,14 +69,6 @@ class TplAppMongodb
                 $neardTools->getConsoleZ()->getTabTitleMongodb()
             ) . PHP_EOL;
 
-            // Status page
-            $resultItems .= TplAestan::getItemExe(
-                $neardLang->getValue(Lang::STATUS_PAGE),
-                $neardConfig->getBrowser(),
-                TplAestan::GLYPH_WEB_PAGE,
-                $neardBs->getLocalUrl() . ':' . $neardBins->getMongodb()->getWebPort()
-            ) . PHP_EOL;
-
             // Conf
             $resultItems .= TplAestan::getItemNotepad(basename($neardBins->getMongodb()->getConf()), $neardBins->getMongodb()->getConf()) . PHP_EOL;
 
