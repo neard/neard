@@ -38,18 +38,22 @@ class AppPhpmyadmin extends Module
         if (!is_dir($this->currentPath)) {
             Util::logError(sprintf($neardLang->getValue(Lang::ERROR_FILE_NOT_FOUND), $this->name . ' ' . $this->version, $this->currentPath));
         }
+        if (!is_dir($this->symlinkPath)) {
+            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_FILE_NOT_FOUND), $this->name . ' ' . $this->version, $this->symlinkPath));
+            return;
+        }
         if (!is_file($this->neardConf)) {
             Util::logError(sprintf($neardLang->getValue(Lang::ERROR_CONF_NOT_FOUND), $this->name . ' ' . $this->version, $this->neardConf));
         }
 
         foreach ($versions as $key => $versionSub) {
-            $neardConfSub = $this->currentPath . '/' . $versionSub . '/neard.conf';
+            $neardConfSub = $this->symlinkPath . '/' . $versionSub . '/neard.conf';
             if (!is_file($neardConfSub)) {
                 Util::logError(sprintf($neardLang->getValue(Lang::ERROR_CONF_NOT_FOUND), $this->name . ' ' . $this->version . ' / ' . $versionSub, $neardConfSub));
             }
             $neardConfRawSub = parse_ini_file($neardConfSub);
             if ($neardConfRawSub !== false) {
-                $confSub = $this->currentPath . '/' . $versionSub . '/' . $neardConfRawSub[self::LOCAL_CFG_CONF];
+                $confSub = $this->symlinkPath . '/' . $versionSub . '/' . $neardConfRawSub[self::LOCAL_CFG_CONF];
                 if (!is_file($confSub)) {
                     Util::logError(sprintf($neardLang->getValue(Lang::ERROR_CONF_NOT_FOUND), $this->name . ' ' . $this->version . ' / ' . $confSub));
                 } else {

@@ -3,7 +3,7 @@
 class ToolPython extends Module
 {
     const ROOT_CFG_VERSION = 'pythonVersion';
-    
+
     const LOCAL_CFG_EXE = 'pythonExe';
     const LOCAL_CFG_CP_EXE = 'pythonCpExe';
     const LOCAL_CFG_IDLE_EXE = 'pythonIdleExe';
@@ -23,19 +23,23 @@ class ToolPython extends Module
         $this->name = $neardLang->getValue(Lang::PYTHON);
         $this->version = $neardConfig->getRaw(self::ROOT_CFG_VERSION);
         parent::reload($id, $type);
-        
+
         if ($this->neardConfRaw !== false) {
-            $this->exe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_EXE];
-            $this->cpExe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_CP_EXE];
-            $this->idleExe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_IDLE_EXE];
+            $this->exe = $this->symlinkPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_EXE];
+            $this->cpExe = $this->symlinkPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_CP_EXE];
+            $this->idleExe = $this->symlinkPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_IDLE_EXE];
         }
-        
+
         if (!$this->enable) {
             Util::logInfo($this->name . ' is not enabled!');
             return;
         }
         if (!is_dir($this->currentPath)) {
             Util::logError(sprintf($neardLang->getValue(Lang::ERROR_FILE_NOT_FOUND), $this->name . ' ' . $this->version, $this->currentPath));
+        }
+        if (!is_dir($this->symlinkPath)) {
+            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_FILE_NOT_FOUND), $this->name . ' ' . $this->version, $this->symlinkPath));
+            return;
         }
         if (!is_file($this->neardConf)) {
             Util::logError(sprintf($neardLang->getValue(Lang::ERROR_CONF_NOT_FOUND), $this->name . ' ' . $this->version, $this->neardConf));
@@ -56,15 +60,15 @@ class ToolPython extends Module
         $this->version = $version;
         $neardConfig->replace(self::ROOT_CFG_VERSION, $version);
     }
-    
+
     public function getExe() {
         return $this->exe;
     }
-    
+
     public function getCpExe() {
         return $this->cpExe;
     }
-    
+
     public function getIdleExe() {
         return $this->idleExe;
     }

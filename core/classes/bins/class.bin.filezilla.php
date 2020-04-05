@@ -47,7 +47,7 @@ class BinFilezilla extends Module
 
         $this->enable = $this->enable && $neardConfig->getRaw(self::ROOT_CFG_ENABLE);
         $this->service = new Win32Service(self::SERVICE_NAME);
-        $this->logsPath = $this->currentPath . '/Logs';
+        $this->logsPath = $this->symlinkPath . '/Logs';
         $this->log = $neardBs->getLogsPath() . '/filezilla.log';
 
         if ($this->neardConfRaw !== false) {

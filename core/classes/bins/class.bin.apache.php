@@ -52,8 +52,8 @@ class BinApache extends Module
 
         $this->enable = $this->enable && $neardConfig->getRaw(self::ROOT_CFG_ENABLE);
         $this->service = new Win32Service(self::SERVICE_NAME);
-        $this->modulesPath = $this->currentPath . '/modules';
-        $this->sslConf = $this->currentPath . '/conf/extra/httpd-ssl.conf';
+        $this->modulesPath = $this->symlinkPath . '/modules';
+        $this->sslConf = $this->symlinkPath . '/conf/extra/httpd-ssl.conf';
         $this->accessLog = $neardBs->getLogsPath() . '/apache_access.log';
         $this->rewriteLog = $neardBs->getLogsPath() . '/apache_rewrite.log';
         $this->errorLog = $neardBs->getLogsPath() . '/apache_error.log';

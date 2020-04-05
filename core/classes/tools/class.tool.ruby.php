@@ -3,7 +3,7 @@
 class ToolRuby extends Module
 {
     const ROOT_CFG_VERSION = 'rubyVersion';
-    
+
     const LOCAL_CFG_EXE = 'rubyExe';
     const LOCAL_CFG_CONSOLE_EXE = 'rubyConsoleExe';
 
@@ -21,18 +21,22 @@ class ToolRuby extends Module
         $this->name = $neardLang->getValue(Lang::RUBY);
         $this->version = $neardConfig->getRaw(self::ROOT_CFG_VERSION);
         parent::reload($id, $type);
-        
+
         if ($this->neardConfRaw !== false) {
-            $this->exe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_EXE];
-            $this->consoleExe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_CONSOLE_EXE];
+            $this->exe = $this->symlinkPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_EXE];
+            $this->consoleExe = $this->symlinkPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_CONSOLE_EXE];
         }
-        
+
         if (!$this->enable) {
             Util::logInfo($this->name . ' is not enabled!');
             return;
         }
         if (!is_dir($this->currentPath)) {
             Util::logError(sprintf($neardLang->getValue(Lang::ERROR_FILE_NOT_FOUND), $this->name . ' ' . $this->version, $this->currentPath));
+        }
+        if (!is_dir($this->symlinkPath)) {
+            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_FILE_NOT_FOUND), $this->name . ' ' . $this->version, $this->symlinkPath));
+            return;
         }
         if (!is_file($this->neardConf)) {
             Util::logError(sprintf($neardLang->getValue(Lang::ERROR_CONF_NOT_FOUND), $this->name . ' ' . $this->version, $this->neardConf));
@@ -44,17 +48,17 @@ class ToolRuby extends Module
             Util::logError(sprintf($neardLang->getValue(Lang::ERROR_EXE_NOT_FOUND), $this->name . ' ' . $this->version, $this->consoleExe));
         }
     }
-    
+
     public function setVersion($version) {
         global $neardConfig;
         $this->version = $version;
         $neardConfig->replace(self::ROOT_CFG_VERSION, $version);
     }
-    
+
     public function getExe() {
         return $this->exe;
     }
-    
+
     public function getConsoleExe() {
         return $this->consoleExe;
     }

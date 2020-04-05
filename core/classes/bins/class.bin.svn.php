@@ -40,7 +40,7 @@ class BinSvn extends Module
         $this->enable = $this->enable && $neardConfig->getRaw(self::ROOT_CFG_ENABLE);
         $this->service = new Win32Service(self::SERVICE_NAME);
         $this->log = $neardBs->getLogsPath() . '/svn.log';
-        $this->root = $this->currentPath . '/repos';
+        $this->root = $this->symlinkPath . '/repos';
 
         if ($this->neardConfRaw !== false) {
             $this->exe = $this->symlinkPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_EXE];

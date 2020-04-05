@@ -31,12 +31,12 @@ class ToolGit extends Module
         $this->version = $neardConfig->getRaw(self::ROOT_CFG_VERSION);
         parent::reload($id, $type);
 
-        $this->reposFile = $this->currentPath . '/' . self::REPOS_FILE;
-        $this->reposCacheFile = $this->currentPath . '/' . self::REPOS_CACHE_FILE;
+        $this->reposFile = $this->symlinkPath . '/' . self::REPOS_FILE;
+        $this->reposCacheFile = $this->symlinkPath . '/' . self::REPOS_CACHE_FILE;
 
         if ($this->neardConfRaw !== false) {
-            $this->exe = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_EXE];
-            $this->bash = $this->currentPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_BASH];
+            $this->exe = $this->symlinkPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_EXE];
+            $this->bash = $this->symlinkPath . '/' . $this->neardConfRaw[self::LOCAL_CFG_BASH];
             $this->scanStartup = $this->neardConfRaw[self::LOCAL_CFG_SCAN_STARTUP];
         }
 
@@ -46,6 +46,10 @@ class ToolGit extends Module
         }
         if (!is_dir($this->currentPath)) {
             Util::logError(sprintf($neardLang->getValue(Lang::ERROR_FILE_NOT_FOUND), $this->name . ' ' . $this->version, $this->currentPath));
+        }
+        if (!is_dir($this->symlinkPath)) {
+            Util::logError(sprintf($neardLang->getValue(Lang::ERROR_FILE_NOT_FOUND), $this->name . ' ' . $this->version, $this->symlinkPath));
+            return;
         }
         if (!is_file($this->neardConf)) {
             Util::logError(sprintf($neardLang->getValue(Lang::ERROR_CONF_NOT_FOUND), $this->name . ' ' . $this->version, $this->neardConf));
