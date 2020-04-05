@@ -24,7 +24,7 @@
 * phpMyAdmin 4p9
 * Yarn 1.21.1
 
-> ⚠ Drop Windows XP support.
+> :warning: Drop Windows XP support.
 
 ## 1.6 (2019/05/25)
 
@@ -122,7 +122,7 @@
 * Change some access modifiers
 * 7z release format only
 
-> ⚠ Modules have been updated to the latest stable release (#264). For Windows XP users, please read the [Windows XP limitation](https://neard.io/doc/faq/#windows-xp-limitation) section in the FAQ to download the right release.
+> :warning: Modules have been updated to the latest stable release (#264). For Windows XP users, please read the [Windows XP limitation](https://neard.io/doc/faq/#windows-xp-limitation) section in the FAQ to download the right release.
 
 ## 1.2 (2017/04/20)
 
