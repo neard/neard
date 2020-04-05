@@ -174,7 +174,7 @@ class Batch
     public static function repairMongodb($mongod, $config)
     {
         $mongod = Util::formatWindowsPath($mongod);
-        self::exec('repairMongodb', '"' . $mongod . '" --config "' . $config . '" --repair');
+        self::exec('repairMongodb', '"' . $mongod . '" --config "' . $config . '" --repair', 60, false);
     }
 
     public static function createSymlink($src, $dest)
