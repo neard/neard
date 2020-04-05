@@ -199,6 +199,19 @@ class Batch
         self::exec('removeSymlink', 'rmdir /Q "' . Util::formatWindowsPath($link) . '"', true, false);
     }
 
+    public static function getOsInfo()
+    {
+        $result = self::exec('getOsInfo', 'ver', 5);
+        if (is_array($result)) {
+            foreach ($result as $row) {
+                if (Util::startWith($row, 'Microsoft')) {
+                    return trim($row);
+                }
+            }
+        }
+        return '';
+    }
+
     public static function setServiceDisplayName($serviceName, $displayName)
     {
         $cmd = 'sc config ' . $serviceName . ' DisplayName= "' . $displayName . '"';

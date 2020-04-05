@@ -245,6 +245,7 @@ class Lang
     const STARTUP_KILL_OLD_PROCS_TEXT = 'startupKillOldProcsText';
     const STARTUP_REFRESH_HOSTNAME_TEXT = 'startupRefreshHostnameText';
     const STARTUP_CHECK_BROWSER_TEXT = 'startupCheckBrowserText';
+    const STARTUP_SYS_INFOS = 'startupSysInfos';
     const STARTUP_CLEAN_TMP_TEXT = 'startupCleanTmpText';
     const STARTUP_CLEAN_OLD_BEAHAVIORS_TEXT = 'startupCleanOldBehaviorsText';
     const STARTUP_REFRESH_ALIAS_TEXT = 'startupRefreshAliasText';
@@ -604,6 +605,7 @@ class Lang
             self::STARTUP_KILL_OLD_PROCS_TEXT,
             self::STARTUP_REFRESH_HOSTNAME_TEXT,
             self::STARTUP_CHECK_BROWSER_TEXT,
+            self::STARTUP_SYS_INFOS,
             self::STARTUP_CLEAN_TMP_TEXT,
             self::STARTUP_CLEAN_OLD_BEAHAVIORS_TEXT,
             self::STARTUP_REFRESH_ALIAS_TEXT,
