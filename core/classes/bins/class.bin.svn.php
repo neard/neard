@@ -142,7 +142,7 @@ class BinSvn extends Module
             return false;
         }
 
-        $headers = Util::getHttpHeaders('http://localhost:' . $port);
+        $headers = Util::getFopenHttpHeaders('http://localhost:' . $port);
         if (!empty($headers)) {
             if (count($headers) == 1 && Util::startWith($headers[0], '( success (')) {
                 Util::logDebug($this->getName() . ' port ' . $port . ' is used by: ' . $this->getName());
