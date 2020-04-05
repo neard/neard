@@ -1,3 +1,19 @@
+## 1.6 > 1.7
+
+* **required** : Remove then copy folder `core`
+* **required** : Remove folder `tools/console`
+* **required** : Copy folder `tools/consolez`
+* **required** : Remove `consoleVersion` key in `neard.conf`
+* **required** : Add line `consolezVersion = "1.19.0.19104"` after `composerVersion` in `neard.conf`
+* **required** : Replace file `alias/adminer.conf`
+* **required** : Replace file `alias/gitlist.conf`
+* **required** : Replace file `alias/phpmemadmin.conf`
+* **required** : Replace file `alias/phpmyadmin.conf`
+* **required** : Replace file `alias/phppgadmin.conf`
+* **required** : Replace file `alias/webgrind.conf`
+* **required** : Replace file `alias/websvn.conf`
+* **required** : Replace file `neard.exe`
+
 ## 1.5 > 1.6
 
 * **required** : Remove then copy folder `core`
