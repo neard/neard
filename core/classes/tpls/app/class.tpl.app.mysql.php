@@ -64,10 +64,10 @@ class TplAppMysql
             $resultActions .= $tplDebug[TplApp::SECTION_CONTENT];
 
             // Console
-            $resultItems .= TplAestan::getItemConsole(
-                $neardLang->getValue(Lang::CONSOLE),
-                TplAestan::GLYPH_CONSOLE,
-                $neardTools->getConsole()->getTabTitleMysql()
+            $resultItems .= TplAestan::getItemConsoleZ(
+                $neardLang->getValue(Lang::CONSOLEZ),
+                TplAestan::GLYPH_CONSOLEZ,
+                $neardTools->getConsoleZ()->getTabTitleMysql()
             ) . PHP_EOL;
 
             // Conf

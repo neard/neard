@@ -72,10 +72,10 @@ class TplAppSvn
             }
 
             // Console
-            $resultItems .= TplAestan::getItemConsole(
+            $resultItems .= TplAestan::getItemConsoleZ(
                 $neardLang->getValue(Lang::SVN_CONSOLE),
                 TplAestan::GLYPH_SVN,
-                $neardTools->getConsole()->getTabTitleSvn()
+                $neardTools->getConsoleZ()->getTabTitleSvn()
             ) . PHP_EOL;
 
             // Log
@@ -186,11 +186,11 @@ class TplAppSvn
         $result = '';
 
         foreach ($neardBins->getSvn()->findRepos() as $repo) {
-            $result .= TplAestan::getItemConsole(
+            $result .= TplAestan::getItemConsoleZ(
                 basename($repo),
                 TplAestan::GLYPH_SVN,
-                $neardTools->getConsole()->getTabTitleSvn(),
-                $neardTools->getConsole()->getTabTitleSvn($repo),
+                $neardTools->getConsoleZ()->getTabTitleSvn(),
+                $neardTools->getConsoleZ()->getTabTitleSvn($repo),
                 $repo
             ) . PHP_EOL;
         }

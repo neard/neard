@@ -765,11 +765,11 @@ class Util
             );
         }
 
-        // Console
-        $folderList = self::getFolderList($neardTools->getConsole()->getRootPath());
+        // ConsoleZ
+        $folderList = self::getFolderList($neardTools->getConsoleZ()->getRootPath());
         foreach ($folderList as $folder) {
             $paths[] = array(
-                'path' => $neardTools->getConsole()->getRootPath() . '/' . $folder,
+                'path' => $neardTools->getConsoleZ()->getRootPath() . '/' . $folder,
                 'includes' => array('console.xml', '.ini', '.btm'),
                 'recursive' => true
             );

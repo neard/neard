@@ -88,7 +88,7 @@
     
     <!--  Get tools -->
     <getmodule releasesurl="${tool.composer.url}" version="${tool.composer.version}" dest="${release.target}/${release.name}/tools/composer"/>
-    <getmodule releasesurl="${tool.console.url}" version="${tool.console.version}" dest="${release.target}/${release.name}/tools/console"/>
+    <getmodule releasesurl="${tool.consolez.url}" version="${tool.consolez.version}" dest="${release.target}/${release.name}/tools/consolez"/>
     <getmodule releasesurl="${tool.drush.url}" version="${tool.drush.version}" dest="${release.target}/${release.name}/tools/drush"/>
     <getmodule releasesurl="${tool.ghostscript.url}" version="${tool.ghostscript.version}" dest="${release.target}/${release.name}/tools/ghostscript"/>
     <getmodule releasesurl="${tool.git.url}" version="${tool.git.version}" dest="${release.target}/${release.name}/tools/git"/>
@@ -125,7 +125,7 @@
         <filter token="BIN_SVN_VERSION" value="${bin.svn.version}"/>
         
         <filter token="TOOL_COMPOSER_VERSION" value="${tool.composer.version}"/>
-        <filter token="TOOL_CONSOLE_VERSION" value="${tool.console.version}"/>
+        <filter token="TOOL_CONSOLEZ_VERSION" value="${tool.consolez.version}"/>
         <filter token="TOOL_DRUSH_VERSION" value="${tool.drush.version}"/>
         <filter token="TOOL_GHOSTSCRIPT_VERSION" value="${tool.ghostscript.version}"/>
         <filter token="TOOL_GIT_VERSION" value="${tool.git.version}"/>

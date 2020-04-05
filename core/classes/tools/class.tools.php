@@ -5,7 +5,7 @@ class Tools
     const TYPE = 'tools';
 
     private $composer;
-    private $console;
+    private $consolez;
     private $drush;
     private $ghostscript;
     private $git;
@@ -18,11 +18,11 @@ class Tools
     private $wpcli;
     private $xdc;
     private $yarn;
-    
+
     public function __construct()
     {
     }
-    
+
     public function update()
     {
         Util::logInfo('Update tools config');
@@ -30,12 +30,12 @@ class Tools
             $tool->update();
         }
     }
-    
+
     public function getAll()
     {
         return array(
             $this->getComposer(),
-            $this->getConsole(),
+            $this->getConsoleZ(),
             $this->getDrush(),
             $this->getGhostscript(),
             $this->getGit(),
@@ -50,7 +50,7 @@ class Tools
             $this->getYarn(),
         );
     }
-    
+
     public function getComposer()
     {
         if ($this->composer == null) {
@@ -59,14 +59,14 @@ class Tools
         return $this->composer;
     }
 
-    public function getConsole()
+    public function getConsoleZ()
     {
-        if ($this->console == null) {
-            $this->console = new ToolConsole('console', self::TYPE);
+        if ($this->consolez == null) {
+            $this->consolez = new ToolConsoleZ('consolez', self::TYPE);
         }
-        return $this->console;
+        return $this->consolez;
     }
-    
+
     public function getDrush()
     {
         if ($this->drush == null) {
@@ -74,7 +74,7 @@ class Tools
         }
         return $this->drush;
     }
-    
+
     public function getGhostscript()
     {
         if ($this->ghostscript== null) {
@@ -90,7 +90,7 @@ class Tools
         }
         return $this->git;
     }
-    
+
     public function getNgrok()
     {
         if ($this->ngrok == null) {
@@ -98,7 +98,7 @@ class Tools
         }
         return $this->ngrok;
     }
-    
+
     public function getPerl()
     {
         if ($this->perl == null) {
@@ -106,7 +106,7 @@ class Tools
         }
         return $this->perl;
     }
-    
+
     public function getPhpMetrics()
     {
         if ($this->phpmetrics == null) {
@@ -114,7 +114,7 @@ class Tools
         }
         return $this->phpmetrics;
     }
-    
+
     public function getPhpUnit()
     {
         if ($this->phpunit == null) {
@@ -122,7 +122,7 @@ class Tools
         }
         return $this->phpunit;
     }
-    
+
     public function getPython()
     {
         if ($this->python == null) {
@@ -130,7 +130,7 @@ class Tools
         }
         return $this->python;
     }
-    
+
     public function getRuby()
     {
         if ($this->ruby == null) {
@@ -138,7 +138,7 @@ class Tools
         }
         return $this->ruby;
     }
-    
+
     public function getWpCli()
     {
         if ($this->wpcli == null) {
@@ -146,7 +146,7 @@ class Tools
         }
         return $this->wpcli;
     }
-    
+
     public function getXdc()
     {
         if ($this->xdc == null) {
@@ -154,7 +154,7 @@ class Tools
         }
         return $this->xdc;
     }
-    
+
     public function getYarn()
     {
         if ($this->yarn == null) {

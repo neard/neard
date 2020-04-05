@@ -63,10 +63,10 @@ class TplAppMongodb
             $resultActions .= $tplDebug[TplApp::SECTION_CONTENT];
 
             // Console
-            $resultItems .= TplAestan::getItemConsole(
-                $neardLang->getValue(Lang::CONSOLE),
-                TplAestan::GLYPH_CONSOLE,
-                $neardTools->getConsole()->getTabTitleMongodb()
+            $resultItems .= TplAestan::getItemConsoleZ(
+                $neardLang->getValue(Lang::CONSOLEZ),
+                TplAestan::GLYPH_CONSOLEZ,
+                $neardTools->getConsoleZ()->getTabTitleMongodb()
             ) . PHP_EOL;
 
             // Status page

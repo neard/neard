@@ -122,7 +122,7 @@ class Lang
 
     // Tools
     const COMPOSER = 'composer';
-    const CONSOLE = 'console';
+    const CONSOLEZ = 'consolez';
     const DRUSH = 'drush';
     const GHOSTSCRIPT = 'ghostscript';
     const GIT = 'git';
@@ -483,7 +483,7 @@ class Lang
 
             // Tools
             self::COMPOSER,
-            self::CONSOLE,
+            self::CONSOLEZ,
             self::DRUSH,
             self::GIT,
             self::NGROK,

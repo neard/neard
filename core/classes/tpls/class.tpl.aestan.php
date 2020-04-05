@@ -2,7 +2,7 @@
 
 class TplAestan
 {
-    const GLYPH_CONSOLE = 0;
+    const GLYPH_CONSOLEZ = 0;
     const GLYPH_ADD = 1;
     const GLYPH_FOLDER_OPEN = 2;
     const GLYPH_FOLDER_CLOSE = 3;
@@ -57,58 +57,58 @@ class TplAestan
     const GLYPH_PERL = 55;
     const GLYPH_GHOSTSCRIPT = 56;
     const GLYPH_NGROK = 57;
-    
+
     const SERVICE_START = 'startresume';
     const SERVICE_STOP = 'stop';
     const SERVICE_RESTART = 'restart';
     const SERVICES_CLOSE = 'closeservices';
-    
+
     const IMG_BAR_PICTURE = 'bar.dat';
     const IMG_GLYPH_SPRITES = 'sprites.dat';
-    
+
     public static function getGlyphFlah($lang)
     {
     }
-    
+
     public static function getItemSeparator()
     {
         return 'Type: separator';
     }
-    
-    public static function getItemConsole($caption, $glyph, $id = null, $title = null, $initDir = null, $command = null)
+
+    public static function getItemConsoleZ($caption, $glyph, $id = null, $title = null, $initDir = null, $command = null)
     {
         global $neardTools;
-        
-        $consoleParams = '';
+
+        $args = '';
         if ($id != null) {
-            $consoleParams .= ' -t ""' . $id . '""';
+            $args .= ' -t ""' . $id . '""';
         }
         if ($title != null) {
-            $consoleParams .= ' -w ""' . $title . '""';
+            $args .= ' -w ""' . $title . '""';
         }
         if ($initDir != null) {
-            $consoleParams .= ' -d ""' . $initDir . '""';
+            $args .= ' -d ""' . $initDir . '""';
         }
         if ($command != null) {
-            $consoleParams .= ' -r ""' . $command . '""';
+            $args .= ' -r ""' . $command . '""';
         }
-    
+
         return self::getItemExe(
             $caption,
-            $neardTools->getConsole()->getExe(),
+            $neardTools->getConsoleZ()->getExe(),
             $glyph,
-            $consoleParams
+            $args
         );
     }
-    
+
     public static function getItemLink($caption, $link, $local = false, $glyph = self::GLYPH_WEB_PAGE)
     {
         global $neardBs, $neardConfig;
-        
+
         if ($local) {
             $link = $neardBs->getLocalUrl($link);
         }
-        
+
         return self::getItemExe(
             $caption,
             $neardConfig->getBrowser(),
@@ -116,11 +116,11 @@ class TplAestan
             $link
         );
     }
-    
+
     public static function getItemNotepad($caption, $path)
     {
         global $neardConfig;
-        
+
         return self::getItemExe(
             $caption,
             $neardConfig->getNotepad(),
@@ -128,7 +128,7 @@ class TplAestan
             $path
         );
     }
-    
+
     public static function getItemExe($caption, $exe, $glyph, $params = null)
     {
         return 'Type: item; ' .
@@ -138,7 +138,7 @@ class TplAestan
             (!empty($params) ? 'Parameters: "' . $params . '"; ' : '') .
             'Glyph: ' . $glyph;
     }
-    
+
     public static function getItemExplore($caption, $path)
     {
         return 'Type: item; ' .
@@ -147,18 +147,18 @@ class TplAestan
             'FileName: "' . $path . '"; ' .
             'Glyph: ' . self::GLYPH_FOLDER_OPEN;
     }
-    
+
     private static function getActionService($service, $action, $item = false)
     {
         global $neardLang;
         $result = 'Action: ' . $action;
-        
+
         if ($service != null) {
             $result = 'Action: service; ' .
                 'Service: ' . $service . '; ' .
                 'ServiceAction: ' . $action;
         }
-        
+
         if ($item) {
             $result = 'Type: item; ' . $result;
             if ($action == self::SERVICE_START) {
@@ -174,60 +174,60 @@ class TplAestan
         } elseif ($action != self::SERVICES_CLOSE) {
             $result .= '; Flags: ignoreerrors waituntilterminated';
         }
-        
+
         return $result;
     }
-    
+
     public static function getActionServiceStart($service)
     {
         return self::getActionService($service, self::SERVICE_START, false);
     }
-    
+
     public static function getItemActionServiceStart($service)
     {
         return self::getActionService($service, self::SERVICE_STOP, true);
     }
-    
+
     public static function getActionServiceStop($service)
     {
         return self::getActionService($service, self::SERVICE_STOP, false);
     }
-    
+
     public static function getItemActionServiceStop($service)
     {
         return self::getActionService($service, self::SERVICE_START, true);
     }
-    
+
     public static function getActionServiceRestart($service)
     {
         return self::getActionService($service, self::SERVICE_RESTART, false);
     }
-    
+
     public static function getItemActionServiceRestart($service)
     {
         return self::getActionService($service, self::SERVICE_RESTART, true);
     }
-    
+
     public static function getActionServicesClose()
     {
         return self::getActionService(null, self::SERVICES_CLOSE, false);
     }
-    
+
     public static function getItemActionServicesClose()
     {
         return self::getActionService(null, self::SERVICES_CLOSE, true);
     }
-    
+
     public static function getSectionMessages()
     {
         global $neardLang;
-    
+
         return '[Messages]' . PHP_EOL .
             'AllRunningHint=' . $neardLang->getValue(Lang::ALL_RUNNING_HINT) . PHP_EOL .
             'SomeRunningHint=' . $neardLang->getValue(Lang::SOME_RUNNING_HINT) . PHP_EOL .
             'NoneRunningHint=' . $neardLang->getValue(Lang::NONE_RUNNING_HINT) . PHP_EOL;
     }
-    
+
     public static function getSectionConfig()
     {
         global $neardCore;
@@ -241,7 +241,7 @@ class TplAestan
             'AboutHeader=' . APP_TITLE . PHP_EOL .
             'AboutVersion=Version ' . $neardCore->getAppVersion() . PHP_EOL;
     }
-    
+
     public static function getSectionMenuRightSettings()
     {
         return '[Menu.Right.Settings]' . PHP_EOL .
@@ -255,7 +255,7 @@ class TplAestan
             'SeparatorsGradientStyle=horizontal' . PHP_EOL .
             'SeparatorsSeparatorStyle=shortline' . PHP_EOL;
     }
-    
+
     public static function getSectionMenuLeftSettings($caption)
     {
         return '[Menu.Left.Settings]' . PHP_EOL .

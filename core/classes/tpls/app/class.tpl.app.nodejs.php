@@ -48,10 +48,10 @@ class TplAppNodejs
             $resultActions .= $tplVersions[TplApp::SECTION_CONTENT];
 
             // Console
-            $resultItems .= TplAestan::getItemConsole(
-                $neardLang->getValue(Lang::CONSOLE),
-                TplAestan::GLYPH_CONSOLE,
-                $neardTools->getConsole()->getTabTitleNodejs()
+            $resultItems .= TplAestan::getItemConsoleZ(
+                $neardLang->getValue(Lang::CONSOLEZ),
+                TplAestan::GLYPH_CONSOLEZ,
+                $neardTools->getConsoleZ()->getTabTitleNodejs()
             ) . PHP_EOL;
 
             // Conf

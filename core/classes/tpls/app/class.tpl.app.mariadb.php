@@ -64,10 +64,10 @@ class TplAppMariadb
             $resultActions .= $tplDebug[TplApp::SECTION_CONTENT];
 
             // Console
-            $resultItems .= TplAestan::getItemConsole(
-                $neardLang->getValue(Lang::CONSOLE),
-                TplAestan::GLYPH_CONSOLE,
-                $neardTools->getConsole()->getTabTitleMariadb()
+            $resultItems .= TplAestan::getItemConsoleZ(
+                $neardLang->getValue(Lang::CONSOLEZ),
+                TplAestan::GLYPH_CONSOLEZ,
+                $neardTools->getConsoleZ()->getTabTitleMariadb()
             ) . PHP_EOL;
 
             // Conf

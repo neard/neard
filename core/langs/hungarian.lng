@@ -121,7 +121,7 @@ websvn = "WebSVN"
 
 ; Tools
 composer = "Composer"
-console = "Console"
+consolez = "ConsoleZ"
 drush = "Drush"
 ghostscript = "Ghostscript"
 git = "Git"
