@@ -349,8 +349,11 @@ class TplConsoleZ
     {
         global $neardBins, $neardTools;
 
-        $shell = $neardTools->getConsoleZ()->getShell('&quot;' . $neardBins->getPostgresql()->getCliExe() . '&quot; -U ' .
-            $neardBins->getPostgresql()->getRootUser() . ' -d postgres');
+        $shell = $neardTools->getConsoleZ()->getShell('&quot;' . $neardBins->getPostgresql()->getCliExe() . '&quot;' .
+            ' -h 127.0.0.1' .
+            ' -p ' . $neardBins->getPostgresql()->getPort() .
+            ' -U ' . $neardBins->getPostgresql()->getRootUser() .
+            ' -d postgres');
         if (!file_exists($neardBins->getPostgresql()->getCliExe())) {
             $shell = $neardTools->getConsoleZ()->getShell('echo ' . $neardBins->getPostgresql()->getCliExe() . ' not found...');
         }
