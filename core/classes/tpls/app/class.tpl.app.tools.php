@@ -116,7 +116,7 @@ class TplAppTools
 
         // Console
         $resultItems .= TplAestan::getItemConsoleZ(
-            $neardLang->getValue(Lang::CONSOLEZ),
+            $neardLang->getValue(Lang::CONSOLE),
             TplAestan::GLYPH_CONSOLEZ
         ) . PHP_EOL;
 

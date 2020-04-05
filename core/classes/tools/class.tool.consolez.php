@@ -103,7 +103,7 @@ class ToolConsoleZ extends Module
 
     public function getTabTitleDefault() {
         global $neardLang;
-        return $neardLang->getValue(Lang::CONSOLEZ);
+        return $neardLang->getValue(Lang::CONSOLE);
     }
 
     public function getTabTitlePowershell() {

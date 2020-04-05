@@ -65,7 +65,7 @@ class TplAppMariadb
 
             // Console
             $resultItems .= TplAestan::getItemConsoleZ(
-                $neardLang->getValue(Lang::CONSOLEZ),
+                $neardLang->getValue(Lang::CONSOLE),
                 TplAestan::GLYPH_CONSOLEZ,
                 $neardTools->getConsoleZ()->getTabTitleMariadb()
             ) . PHP_EOL;

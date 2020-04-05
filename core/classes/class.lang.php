@@ -14,6 +14,7 @@ class Lang
     const APPS = 'apps';
     const BINS = 'bins';
     const CHANGELOG = 'changelog';
+    const CONSOLE = 'console';
     const DEBUG = 'debug';
     const DISABLED = 'disabled';
     const DONATE = 'donate';
@@ -375,6 +376,7 @@ class Lang
             self::APPS,
             self::BINS,
             self::CHANGELOG,
+            self::CONSOLE,
             self::DEBUG,
             self::DISABLED,
             self::DONATE,

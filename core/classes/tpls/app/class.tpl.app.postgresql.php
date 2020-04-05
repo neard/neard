@@ -65,7 +65,7 @@ class TplAppPostgresql
 
             // Console
             $resultItems .= TplAestan::getItemConsoleZ(
-                $neardLang->getValue(Lang::CONSOLEZ),
+                $neardLang->getValue(Lang::CONSOLE),
                 TplAestan::GLYPH_CONSOLEZ,
                 $neardTools->getConsoleZ()->getTabTitlePostgresql()
             ) . PHP_EOL;
