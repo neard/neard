@@ -109,7 +109,7 @@ class BinFilezilla extends Module
             @copy($this->itfConf, $this->localItfConf);
         }
 
-        $this->service->setDisplayName(APP_TITLE . ' ' . $this->getName() . ' ' . $this->version);
+        $this->service->setDisplayName(APP_TITLE . ' ' . $this->getName());
         $this->service->setBinPath($this->exe);
         $this->service->setStartType(Win32Service::SERVICE_DEMAND_START);
         $this->service->setErrorControl(Win32Service::SERVER_ERROR_NORMAL);

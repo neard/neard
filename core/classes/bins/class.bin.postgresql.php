@@ -124,7 +124,7 @@ class BinPostgresql extends Module
             return;
         }
 
-        $this->service->setDisplayName(APP_TITLE . ' ' . $this->getName() . ' ' . $this->version);
+        $this->service->setDisplayName(APP_TITLE . ' ' . $this->getName());
         $this->service->setBinPath($this->ctlExe);
         $this->service->setStartType(Win32Service::SERVICE_DEMAND_START);
         $this->service->setErrorControl(Win32Service::SERVER_ERROR_NORMAL);

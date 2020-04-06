@@ -81,7 +81,7 @@ class BinMailhog extends Module
         }
 
         $nssm = new Nssm(self::SERVICE_NAME);
-        $nssm->setDisplayName(APP_TITLE . ' ' . $this->getName() . ' ' . $this->version);
+        $nssm->setDisplayName(APP_TITLE . ' ' . $this->getName());
         $nssm->setBinPath($this->exe);
         $nssm->setParams(sprintf(self::SERVICE_PARAMS, $this->apiPort, $this->uiPort, $this->smtpPort, $this->mailPath));
         $nssm->setStart(Nssm::SERVICE_DEMAND_START);
