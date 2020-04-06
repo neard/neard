@@ -1,4 +1,4 @@
-; Author: jmos
+﻿; Author: jmos
 ;
 
 ; General
@@ -185,8 +185,8 @@ startServiceTitle = "%s szolgáltatás indítása"
 startServiceError = "Hiba a %s szolgáltatás indítása közben."
 
 ; Action Restart service
-restartServiceTitle = "#Restart %s service"
-restartServiceError = "#Error while restarting the %s service."
+restartServiceTitle = "%s szolgáltatás újra indítása"
+restartServiceError = "A %s szolgáltatás újra indítása közben hiba történt."
 
 ; Action Delete alias
 deleteAliasTitle = "Alias törlése"
@@ -245,7 +245,7 @@ startupRotationLogsText = "Napló arhiválás"
 startupKillOldProcsText = "Régi folyamat leállítása"
 startupRefreshHostnameText = "Hosztnév újítása"
 startupCheckBrowserText = "Böngészo ellenorzés"
-startupSysInfos = "#Get system infos"
+startupSysInfos = "Rendszer infó lekérése"
 startupCleanTmpText = "Ideglenes file-ok törlése"
 startupCleanOldBehaviorsText = "Elavult sajátosságok eltávolítása"
 startupRefreshAliasText = "Aliasok frissítése"
