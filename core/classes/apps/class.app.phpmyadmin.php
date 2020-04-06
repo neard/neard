@@ -19,6 +19,7 @@ class AppPhpmyadmin extends Module
 
     public function reload($id = null, $type = null) {
         global $neardConfig, $neardLang;
+        Util::logReloadClass($this);
 
         $this->name = $neardLang->getValue(Lang::PHPMYADMIN);
         $this->version = $neardConfig->getRaw(self::ROOT_CFG_VERSION);
@@ -141,6 +142,7 @@ class AppPhpmyadmin extends Module
         global $neardConfig;
         $this->version = $version;
         $neardConfig->replace(self::ROOT_CFG_VERSION, $version);
+        $this->reload();
     }
 
     public function getConfs() {

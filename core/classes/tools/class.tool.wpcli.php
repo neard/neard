@@ -15,6 +15,7 @@ class ToolWpCli extends Module
 
     public function reload($id = null, $type = null) {
         global $neardConfig, $neardLang;
+        Util::logReloadClass($this);
 
         $this->name = $neardLang->getValue(Lang::WPCLI);
         $this->version = $neardConfig->getRaw(self::ROOT_CFG_VERSION);
@@ -47,6 +48,7 @@ class ToolWpCli extends Module
         global $neardConfig;
         $this->version = $version;
         $neardConfig->replace(self::ROOT_CFG_VERSION, $version);
+        $this->reload();
     }
 
     public function getExe() {

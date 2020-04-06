@@ -184,6 +184,10 @@ serviceRemoveError = "Fel vid installation av tjänsten %s."
 startServiceTitle = "#Start %s service"
 startServiceError = "#Error while starting the %s service."
 
+; Action Stop service
+stopServiceTitle = "#Stop %s service"
+stopServiceError = "#Error while stopping %s service."
+
 ; Action Restart service
 restartServiceTitle = "#Restart %s service"
 restartServiceError = "#Error while restarting the %s service."

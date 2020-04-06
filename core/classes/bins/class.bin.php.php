@@ -93,6 +93,7 @@ class BinPhp extends Module
 
     public function reload($id = null, $type = null) {
         global $neardBs, $neardConfig, $neardBins, $neardLang;
+        Util::logReloadClass($this);
 
         $this->name = $neardLang->getValue(Lang::PHP);
         $this->version = $neardConfig->getRaw(self::ROOT_CFG_VERSION);
@@ -164,6 +165,9 @@ class BinPhp extends Module
         //$apacheShortVersion = substr(str_replace('.', '', $neardBins->getApache()->getVersion()), 0, 2);
         //$apachePhpModuleName = $tsDll !== false ? substr($tsDll, 0, 4) . '_module' : null;
         $apachePhpModulePath = $this->getApacheModule($neardBins->getApache()->getVersion(), $version);
+
+        Util::logDebug(($sub > 0 ? str_repeat(' ', 2 * $sub) : '') . 'PHP TsDll found: ' . $tsDll);
+        Util::logDebug(($sub > 0 ? str_repeat(' ', 2 * $sub) : '') . 'PHP Apache module found: ' . $apachePhpModulePath);
 
         if (!file_exists($conf) || !file_exists($neardConf)) {
             Util::logError('Neard config files not found for ' . $this->getName() . ' ' . $version);
@@ -542,6 +546,7 @@ class BinPhp extends Module
         global $neardConfig;
         $this->version = $version;
         $neardConfig->replace(self::ROOT_CFG_VERSION, $version);
+        $this->reload();
     }
 
     public function setEnable($enabled, $showWindow = false) {

@@ -182,7 +182,11 @@ serviceRemoveError = "Error during the uninstallation of %s service."
 
 ; Action Start service
 startServiceTitle = "Start %s service"
-startServiceError = "Error while starting the %s service."
+startServiceError = "Error while starting %s service."
+
+; Action Stop service
+stopServiceTitle = "Stop %s service"
+stopServiceError = "Error while stopping %s service."
 
 ; Action Restart service
 restartServiceTitle = "Restart %s service"

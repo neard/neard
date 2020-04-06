@@ -26,6 +26,7 @@ class ToolGit extends Module
 
     public function reload($id = null, $type = null) {
         global $neardBs, $neardConfig, $neardLang;
+        Util::logReloadClass($this);
 
         $this->name = $neardLang->getValue(Lang::GIT);
         $this->version = $neardConfig->getRaw(self::ROOT_CFG_VERSION);
@@ -134,6 +135,7 @@ class ToolGit extends Module
         global $neardConfig;
         $this->version = $version;
         $neardConfig->replace(self::ROOT_CFG_VERSION, $version);
+        $this->reload();
     }
 
     public function getRepos() {

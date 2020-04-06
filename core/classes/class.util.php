@@ -521,6 +521,11 @@ class Util
         self::logTrace('Init ' . get_class($classInstance));
     }
 
+    public static function logReloadClass($classInstance)
+    {
+        self::logTrace('Reload ' . get_class($classInstance));
+    }
+
     public static function getPowerShellPath()
     {
         if (is_dir('C:\Windows\System32\WindowsPowerShell')) {

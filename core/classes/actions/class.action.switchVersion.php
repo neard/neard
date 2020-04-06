@@ -12,7 +12,7 @@ class ActionSwitchVersion
     private $boxTitle;
 
     const GAUGE_SERVICES = 1;
-    const GAUGE_OTHERS = 6;
+    const GAUGE_OTHERS = 7;
 
     public function __construct($args)
     {
@@ -181,6 +181,16 @@ class ActionSwitchVersion
             $neardWinbinder->destroyWindow($window);
         }
 
+        // stop service
+        if ($this->service != null) {
+            $binName = $this->bin->getName() == $neardLang->getValue(Lang::PHP) ? $neardLang->getValue(Lang::APACHE) : $this->bin->getName();
+            $this->neardSplash->setTextLoading(sprintf($neardLang->getValue(Lang::STOP_SERVICE_TITLE), $binName));
+            $this->neardSplash->incrProgressBar();
+            $this->service->stop();
+        } else {
+            $this->neardSplash->incrProgressBar();
+        }
+
         // reload config
         $this->neardSplash->setTextLoading($neardLang->getValue(Lang::SWITCH_VERSION_RELOAD_CONFIG));
         $this->neardSplash->incrProgressBar();
@@ -197,12 +207,12 @@ class ActionSwitchVersion
             $this->bin->changePort($this->bin->getPort());
         }
 
-        // restart service
+        // start service
         if ($this->service != null) {
             $binName = $this->bin->getName() == $neardLang->getValue(Lang::PHP) ? $neardLang->getValue(Lang::APACHE) : $this->bin->getName();
-            $this->neardSplash->setTextLoading(sprintf($neardLang->getValue(Lang::RESTART_SERVICE_TITLE), $binName));
+            $this->neardSplash->setTextLoading(sprintf($neardLang->getValue(Lang::START_SERVICE_TITLE), $binName));
             $this->neardSplash->incrProgressBar();
-            $this->service->restart();
+            $this->service->start();
         } else {
             $this->neardSplash->incrProgressBar();
         }

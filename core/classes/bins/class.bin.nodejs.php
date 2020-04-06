@@ -24,6 +24,7 @@ class BinNodejs extends Module
 
     public function reload($id = null, $type = null) {
         global $neardConfig, $neardLang;
+        Util::logReloadClass($this);
 
         $this->name = $neardLang->getValue(Lang::NODEJS);
         $this->version = $neardConfig->getRaw(self::ROOT_CFG_VERSION);
@@ -125,6 +126,7 @@ class BinNodejs extends Module
         global $neardConfig;
         $this->version = $version;
         $neardConfig->replace(self::ROOT_CFG_VERSION, $version);
+        $this->reload();
     }
 
     public function setEnable($enabled, $showWindow = false) {

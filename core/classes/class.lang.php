@@ -185,6 +185,10 @@ class Lang
     const START_SERVICE_TITLE = 'startServiceTitle';
     const START_SERVICE_ERROR = 'startServiceError';
 
+    // Action Stop service
+    const STOP_SERVICE_TITLE = 'stopServiceTitle';
+    const STOP_SERVICE_ERROR = 'stopServiceError';
+
     // Action Restart service
     const RESTART_SERVICE_TITLE = 'restartServiceTitle';
     const RESTART_SERVICE_ERROR = 'restartServiceError';
@@ -545,6 +549,10 @@ class Lang
             // Action Start service
             self::START_SERVICE_TITLE,
             self::START_SERVICE_ERROR,
+
+            // Action Stop service
+            self::STOP_SERVICE_TITLE,
+            self::STOP_SERVICE_ERROR,
 
             // Action Restart service
             self::RESTART_SERVICE_TITLE,

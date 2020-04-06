@@ -184,6 +184,10 @@ serviceRemoveError = "Erreur durant la désinstallation du service %s."
 startServiceTitle = "Démarrer le service %s"
 startServiceError = "Erreur durant le démarrage du service %s."
 
+; Action Stop service
+stopServiceTitle = "Arrêter le service %s"
+stopServiceError = "Erreur durant l'arrêt du service %s."
+
 ; Action Restart service
 restartServiceTitle = "Redémarrer le service %s"
 restartServiceError = "Erreur durant le redémarrage du service %s."

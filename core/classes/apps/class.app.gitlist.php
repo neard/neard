@@ -15,6 +15,7 @@ class AppGitlist extends Module
 
     public function reload($id = null, $type = null) {
         global $neardConfig, $neardLang;
+        Util::logReloadClass($this);
 
         $this->name = $neardLang->getValue(Lang::GITLIST);
         $this->version = $neardConfig->getRaw(self::ROOT_CFG_VERSION);
@@ -70,6 +71,7 @@ class AppGitlist extends Module
         global $neardConfig;
         $this->version = $version;
         $neardConfig->replace(self::ROOT_CFG_VERSION, $version);
+        $this->reload();
     }
 
     public function getConf() {
