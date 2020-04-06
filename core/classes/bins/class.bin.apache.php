@@ -274,11 +274,6 @@ class BinApache extends Module
             '/^#?LoadFile\s.*php.ts\.dll.*/' => ($neardBins->getPhp()->isEnable() ? '' : '#') . (!file_exists($neardBins->getPhp()->getSymlinkPath() . '/' . $tsDll) ? '#' : '') . 'LoadFile "' . $neardBins->getPhp()->getSymlinkPath() . '/' . $tsDll . '"',
             '/^#?LoadModule\sphp._module\s.*/' => ($neardBins->getPhp()->isEnable() ? '' : '#') . 'LoadModule ' . $apachePhpModuleName . ' "' . $neardBins->getPhp()->getSymlinkPath() . '/' . $apachePhpModuleDll . '"',
 
-            // Since Neard 1.0.22 remove SVN Apache module
-            // FIXME: Remove this
-            '/^LoadModule\sauthz_svn_module\s.*tools\/svn\/svn.*/' => '',
-            '/^LoadModule\sdav_svn_module\s.*tools\/svn\/svn.*/' => '',
-
             // Port
             '/^Listen\s(\d+)/' => 'Listen ' . $this->port,
             '/^ServerName\s+([a-zA-Z0-9.]+):(\d+)/' => 'ServerName {{1}}:' . $this->port,
