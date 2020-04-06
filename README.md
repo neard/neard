@@ -61,6 +61,7 @@ For those who wish to contribute, have an issue or questions, read the [Document
 * [Changelog](https://neard.io/doc/changelog)
 * [Upgrade notes](https://neard.io/doc/upgrade-notes)
 * [Reporting an issue](https://neard.io/doc/reporting-issue)
+* [Request a module](https://neard.io/doc/request-module)
 * [Contribute](https://neard.io/doc/contribute)
 * [Translations](https://neard.io/doc/translations)
 
