@@ -1,3 +1,7 @@
+## 1.7 > 1.7.1
+
+* **required** : Remove then copy folder `core`
+
 ## 1.6 > 1.7
 
 * **required** : Remove then copy folder `core`

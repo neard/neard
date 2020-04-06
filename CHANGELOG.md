@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.7.1 (2020/04/07)
+
+* Reload module configuration after switching version (#448)
+* Stop service before switching module version
+* Set standard service name
+* Log module reload
+* Clean deprecated code
+* Update Hungarian (#112)
+
 ## 1.7 (2020/04/05)
 
 * Fix SVN check port
