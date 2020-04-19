@@ -182,15 +182,6 @@ class Batch
         global $neardCore;
         $src = Util::formatWindowsPath($src);
         $dest = Util::formatWindowsPath($dest);
-
-        if(file_exists($dest) && is_link($dest)) {
-            $target = readlink($dest);
-            if ($target == $src) {
-                return;
-            }
-            self::removeSymlink($dest);
-        }
-
         self::exec('createSymlink', '"' . $neardCore->getLnExe() . '" --absolute --symbolic --traditional --1023safe "' . $src . '" ' . '"' . $dest . '"', true, false);
     }
 

@@ -49,7 +49,7 @@ abstract class Module
         $this->neardConfRaw = @parse_ini_file($this->neardConf);
 
         if ($neardBs->isBootstrap()) {
-            Batch::createSymlink($this->currentPath, $this->symlinkPath);
+            $this->createSymlink();
         }
 
         if ($this->neardConfRaw !== false) {
@@ -57,6 +57,34 @@ abstract class Module
                 $this->release = $this->neardConfRaw[self::BUNDLE_RELEASE];
             }
         }
+    }
+
+    private function createSymlink()
+    {
+        $src = Util::formatWindowsPath($this->currentPath);
+        $dest = Util::formatWindowsPath($this->symlinkPath);
+
+        if(file_exists($dest)) {
+            if (is_link($dest)) {
+                $target = readlink($dest);
+                if ($target == $src) {
+                    return;
+                }
+                Batch::removeSymlink($dest);
+            } elseif (is_file($dest)) {
+                Util::logError('Removing . ' . $this->symlinkPath . ' file. It should not be a regular file');
+                unlink($dest);
+            } elseif (is_dir($dest)) {
+                if (!(new \FilesystemIterator($dest))->valid()) {
+                    rmdir($dest);
+                } else {
+                    Util::logError($this->symlinkPath . ' should be a symlink to ' . $this->currentPath . '. Please remove this dir and restart Neard.');
+                    return;
+                }
+            }
+        }
+
+        Batch::createSymlink($src, $dest);
     }
 
     protected function replace($key, $value) {
