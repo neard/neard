@@ -11,7 +11,6 @@ class TplConsoleZ
     const ICON_SVN = 'svn.ico';
     const ICON_NODEJS = 'nodejs.ico';
     const ICON_COMPOSER = 'composer.ico';
-    const ICON_PHPMETRICS = 'phpmetrics.ico';
     const ICON_PHPUNIT = 'phpunit.ico';
     const ICON_WPCLI = 'wpcli.ico';
     const ICON_PYTHON = 'python.ico';
@@ -232,7 +231,6 @@ class TplConsoleZ
                 self::getTabNodejsSection() .
                 self::getTabComposerSection() .
                 self::getTabPerlSection() .
-                self::getTabPhpMetricsSection() .
                 self::getTabPhpUnitSection() .
                 self::getTabWpCliSection() .
                 self::getTabPythonSection() .
@@ -427,23 +425,6 @@ class TplConsoleZ
         return self::getTab(
             $neardTools->getConsoleZ()->getTabTitleComposer(),
             self::ICON_COMPOSER,
-            $shell,
-            $neardBs->getWwwPath()
-        ) . PHP_EOL;
-    }
-
-    private static function getTabPhpMetricsSection()
-    {
-        global $neardBs, $neardTools;
-
-        $shell = $neardTools->getConsoleZ()->getShell('&quot;' . $neardTools->getPhpMetrics()->getExe() . '&quot; --version');
-        if (!file_exists($neardTools->getPhpMetrics()->getExe())) {
-            $shell = $neardTools->getConsoleZ()->getShell('echo ' . $neardTools->getPhpMetrics()->getExe() . ' not found...');
-        }
-
-        return self::getTab(
-            $neardTools->getConsoleZ()->getTabTitlePhpMetrics(),
-            self::ICON_PHPMETRICS,
             $shell,
             $neardBs->getWwwPath()
         ) . PHP_EOL;

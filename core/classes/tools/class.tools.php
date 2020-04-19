@@ -10,7 +10,6 @@ class Tools
     private $git;
     private $ngrok;
     private $perl;
-    private $phpmetrics;
     private $phpunit;
     private $python;
     private $ruby;
@@ -39,7 +38,6 @@ class Tools
             $this->getGit(),
             $this->getNgrok(),
             $this->getPerl(),
-            $this->getPhpMetrics(),
             $this->getPhpUnit(),
             $this->getPython(),
             $this->getRuby(),
@@ -95,14 +93,6 @@ class Tools
             $this->perl= new ToolPerl('perl', self::TYPE);
         }
         return $this->perl;
-    }
-
-    public function getPhpMetrics()
-    {
-        if ($this->phpmetrics == null) {
-            $this->phpmetrics = new ToolPhpMetrics('phpmetrics', self::TYPE);
-        }
-        return $this->phpmetrics;
     }
 
     public function getPhpUnit()

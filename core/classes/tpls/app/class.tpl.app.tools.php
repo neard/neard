@@ -63,13 +63,6 @@ class TplAppTools
             $neardTools->getConsoleZ()->getTabTitlePerl()
         ) . PHP_EOL;
 
-        // PhpMetrics
-        $resultItems .= TplAestan::getItemConsoleZ(
-            $neardLang->getValue(Lang::PHPMETRICS),
-            TplAestan::GLYPH_PHPMETRICS,
-            $neardTools->getConsoleZ()->getTabTitlePhpMetrics()
-        ) . PHP_EOL;
-
         // PHPUnit
         $resultItems .= TplAestan::getItemConsoleZ(
             $neardLang->getValue(Lang::PHPUNIT),

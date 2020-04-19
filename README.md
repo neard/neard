@@ -38,7 +38,6 @@ For those who wish to contribute, have an issue or questions, read the [Document
 * ![](https://neard.io/img/modules/type-tool.png) [Perl](https://neard.io/modules/perl) : a family of high-level, general-purpose, interpreted, dynamic programming languages.
 * ![](https://neard.io/img/modules/type-bin.png) [PHP](https://neard.io/modules/php) : a server-side scripting language designed for web development including PEAR and extra extensions.
 * ![](https://neard.io/img/modules/type-app.png) [phpMemAdmin](https://neard.io/modules/phpmemadmin) : to handle the administration of Memcached over the web.
-* ![](https://neard.io/img/modules/type-tool.png) [PhpMetrics](https://neard.io/modules/phpmetrics) : gives metrics about PHP project and classes.
 * ![](https://neard.io/img/modules/type-app.png) [phpMyAdmin](https://neard.io/modules/phpmyadmin) : to handle the administration of MySQL and MariaDB over the Web.
 * ![](https://neard.io/img/modules/type-app.png) [phpPgAdmin](https://neard.io/modules/phppgadmin) : a web-based administration tool for PostgreSQL.
 * ![](https://neard.io/img/modules/type-tool.png) [PHPUnit](https://neard.io/modules/phpunit) : a programmer-oriented testing framework for PHP.

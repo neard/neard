@@ -128,7 +128,6 @@ class Lang
     const GIT = 'git';
     const NGROK = 'ngrok';
     const PERL = 'perl';
-    const PHPMETRICS = 'phpmetrics';
     const PHPUNIT = 'phpunit';
     const PYTHON = 'python';
     const RUBY = 'ruby';
@@ -492,7 +491,6 @@ class Lang
             self::GIT,
             self::NGROK,
             self::PERL,
-            self::PHPMETRICS,
             self::PHPUNIT,
             self::PYTHON,
             self::RUBY,

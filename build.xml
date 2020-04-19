@@ -90,7 +90,6 @@
         <filter token="TOOL_GIT_VERSION" value="${tool.git.version}"/>
         <filter token="TOOL_NGROK_VERSION" value="${tool.ngrok.version}"/>
         <filter token="TOOL_PERL_VERSION" value="${tool.perl.version}"/>
-        <filter token="TOOL_PHPMETRICS_VERSION" value="${tool.phpmetrics.version}"/>
         <filter token="TOOL_PHPUNIT_VERSION" value="${tool.phpunit.version}"/>
         <filter token="TOOL_PYTHON_VERSION" value="${tool.python.version}"/>
         <filter token="TOOL_RUBY_VERSION" value="${tool.ruby.version}"/>
@@ -193,7 +192,6 @@
     <getmodule releasesurl="${tool.git.url}" version="${tool.git.version}" dest="${release.target}/tools/git"/>
     <getmodule releasesurl="${tool.ngrok.url}" version="${tool.ngrok.version}" dest="${release.target}/tools/ngrok"/>
     <getmodule releasesurl="${tool.perl.url}" version="${tool.perl.version}" dest="${release.target}/tools/perl"/>
-    <getmodule releasesurl="${tool.phpmetrics.url}" version="${tool.phpmetrics.version}" dest="${release.target}/tools/phpmetrics"/>
     <getmodule releasesurl="${tool.phpunit.url}" version="${tool.phpunit.version}" dest="${release.target}/tools/phpunit"/>
     <getmodule releasesurl="${tool.python.url}" version="${tool.python.version}" dest="${release.target}/tools/python"/>
     <getmodule releasesurl="${tool.ruby.url}" version="${tool.ruby.version}" dest="${release.target}/tools/ruby"/>
@@ -313,7 +311,6 @@
     <getmodule releasesurl="${tool.git.url}" version="${tool.git.version}" dest="${release.target}/tools/git"/>
     <getmodule releasesurl="${tool.ngrok.url}" version="${tool.ngrok.version}" dest="${release.target}/tools/ngrok"/>
     <!--getmodule releasesurl="${tool.perl.url}" version="${tool.perl.version}" dest="${release.target}/tools/perl"/-->
-    <getmodule releasesurl="${tool.phpmetrics.url}" version="${tool.phpmetrics.version}" dest="${release.target}/tools/phpmetrics"/>
     <getmodule releasesurl="${tool.phpunit.url}" version="${tool.phpunit.version}" dest="${release.target}/tools/phpunit"/>
     <!--getmodule releasesurl="${tool.python.url}" version="${tool.python.version}" dest="${release.target}/tools/python"/-->
     <!--getmodule releasesurl="${tool.ruby.url}" version="${tool.ruby.version}" dest="${release.target}/tools/ruby"/-->
@@ -433,7 +430,6 @@
     <!--getmodule releasesurl="${tool.git.url}" version="${tool.git.version}" dest="${release.target}/tools/git"/-->
     <!--getmodule releasesurl="${tool.ngrok.url}" version="${tool.ngrok.version}" dest="${release.target}/tools/ngrok"/-->
     <!--getmodule releasesurl="${tool.perl.url}" version="${tool.perl.version}" dest="${release.target}/tools/perl"/-->
-    <!--getmodule releasesurl="${tool.phpmetrics.url}" version="${tool.phpmetrics.version}" dest="${release.target}/tools/phpmetrics"/-->
     <!--getmodule releasesurl="${tool.phpunit.url}" version="${tool.phpunit.version}" dest="${release.target}/tools/phpunit"/-->
     <!--getmodule releasesurl="${tool.python.url}" version="${tool.python.version}" dest="${release.target}/tools/python"/-->
     <!--getmodule releasesurl="${tool.ruby.url}" version="${tool.ruby.version}" dest="${release.target}/tools/ruby"/-->

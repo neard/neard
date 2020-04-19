@@ -44,7 +44,6 @@ class TplAestan
     const GLYPH_NOTEPAD2 = 42;
     const GLYPH_WPCLI = 44;
     const GLYPH_PASSWORD = 45;
-    const GLYPH_PHPMETRICS = 46;
     const GLYPH_FILEZILLA = 47;
     const GLYPH_FOLDER_DISABLED = 48;
     const GLYPH_FOLDER_ENABLED = 49;
