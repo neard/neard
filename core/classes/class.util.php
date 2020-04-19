@@ -321,9 +321,6 @@ class Util
                 $value .= $neardTools->getPerl()->getSymlinkPath() . '/perl/bin;';
                 $value .= $neardTools->getPerl()->getSymlinkPath() . '/c/bin;';
             }
-            if ($neardTools->getPhpUnit()->isEnable()) {
-                $value .= $neardTools->getPhpUnit()->getSymlinkPath() . ';';
-            }
             if ($neardTools->getPython()->isEnable()) {
                 $value .= $neardTools->getPython()->getSymlinkPath() . '/bin;';
             }

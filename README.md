@@ -40,7 +40,6 @@ For those who wish to contribute, have an issue or questions, read the [Document
 * ![](https://neard.io/img/modules/type-app.png) [phpMemAdmin](https://neard.io/modules/phpmemadmin) : to handle the administration of Memcached over the web.
 * ![](https://neard.io/img/modules/type-app.png) [phpMyAdmin](https://neard.io/modules/phpmyadmin) : to handle the administration of MySQL and MariaDB over the Web.
 * ![](https://neard.io/img/modules/type-app.png) [phpPgAdmin](https://neard.io/modules/phppgadmin) : a web-based administration tool for PostgreSQL.
-* ![](https://neard.io/img/modules/type-tool.png) [PHPUnit](https://neard.io/modules/phpunit) : a programmer-oriented testing framework for PHP.
 * ![](https://neard.io/img/modules/type-bin.png) [PostgreSQL](https://neard.io/modules/postgresql) : an object-relational database management system (ORDBMS).
 * ![](https://neard.io/img/modules/type-tool.png) [Python](https://neard.io/modules/python) : a widely used high-level, general-purpose, interpreted, dynamic programming language.
 * ![](https://neard.io/img/modules/type-tool.png) [Ruby](https://neard.io/modules/ruby) : a dynamic, reflective, object-oriented, general-purpose programming language.

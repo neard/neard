@@ -121,11 +121,6 @@
             <span><?php echo $neardLang->getValue(Lang::PERL); ?></span>
           </span>
           <span class="list-group-item">
-            <a href="<?php echo Util::getWebsiteUrl('modules/phpunit', '#releases'); ?>" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
-            <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardTools->getPhpUnit()->getVersion(); ?></span>
-            <span><?php echo $neardLang->getValue(Lang::PHPUNIT); ?></span>
-          </span>
-          <span class="list-group-item">
             <a href="<?php echo Util::getWebsiteUrl('modules/python', '#releases'); ?>" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
             <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardTools->getPython()->getVersion(); ?></span>
             <span><?php echo $neardLang->getValue(Lang::PYTHON); ?></span>

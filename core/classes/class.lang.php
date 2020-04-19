@@ -128,7 +128,6 @@ class Lang
     const GIT = 'git';
     const NGROK = 'ngrok';
     const PERL = 'perl';
-    const PHPUNIT = 'phpunit';
     const PYTHON = 'python';
     const RUBY = 'ruby';
     const WPCLI = 'wpcli';
@@ -491,7 +490,6 @@ class Lang
             self::GIT,
             self::NGROK,
             self::PERL,
-            self::PHPUNIT,
             self::PYTHON,
             self::RUBY,
             self::WPCLI,

@@ -10,7 +10,6 @@ class Tools
     private $git;
     private $ngrok;
     private $perl;
-    private $phpunit;
     private $python;
     private $ruby;
     private $wpcli;
@@ -38,7 +37,6 @@ class Tools
             $this->getGit(),
             $this->getNgrok(),
             $this->getPerl(),
-            $this->getPhpUnit(),
             $this->getPython(),
             $this->getRuby(),
             $this->getWpCli(),
@@ -93,14 +91,6 @@ class Tools
             $this->perl= new ToolPerl('perl', self::TYPE);
         }
         return $this->perl;
-    }
-
-    public function getPhpUnit()
-    {
-        if ($this->phpunit == null) {
-            $this->phpunit = new ToolPhpUnit('phpunit', self::TYPE);
-        }
-        return $this->phpunit;
     }
 
     public function getPython()
