@@ -901,10 +901,10 @@ class Util
         );
 
         $rootPath = $rootPath != null ? $rootPath : $neardBs->getRootPath();
-        $unixOldPath = Util::formatUnixPath($neardCore->getLastPathContent());
-        $windowsOldPath = Util::formatWindowsPath($neardCore->getLastPathContent());
-        $unixCurrentPath = Util::formatUnixPath($rootPath);
-        $windowsCurrentPath = Util::formatWindowsPath($rootPath);
+        $unixOldPath = self::formatUnixPath($neardCore->getLastPathContent());
+        $windowsOldPath = self::formatWindowsPath($neardCore->getLastPathContent());
+        $unixCurrentPath = self::formatUnixPath($rootPath);
+        $windowsCurrentPath = self::formatWindowsPath($rootPath);
 
         foreach ($filesToScan as $fileToScan) {
             $tmpCountChangedOcc = 0;
@@ -1197,12 +1197,12 @@ class Util
         $service = $bin->getService();
         $boxTitle = sprintf($neardLang->getValue(Lang::INSTALL_SERVICE_TITLE), $name);
 
-        $isPortInUse = Util::isPortInUse($port);
+        $isPortInUse = self::isPortInUse($port);
         if ($isPortInUse === false) {
             if (!$service->isInstalled()) {
                 $service->create();
                 if ($service->start()) {
-                    Util::logInfo(sprintf('%s service successfully installed. (name: %s ; port: %s)', $name, $service->getName(), $port));
+                    self::logInfo(sprintf('%s service successfully installed. (name: %s ; port: %s)', $name, $service->getName(), $port));
                     if ($showWindow) {
                         $neardWinbinder->messageBoxInfo(
                             sprintf($neardLang->getValue(Lang::SERVICE_INSTALLED), $name, $service->getName(), $port),
@@ -1220,13 +1220,13 @@ class Util
                             $serviceErrorLog .= sprintf(' (conf errors detected : %s)', $cmdSyntaxCheck['content']);
                         }
                     }
-                    Util::logError($serviceErrorLog);
+                    self::logError($serviceErrorLog);
                     if ($showWindow) {
                         $neardWinbinder->messageBoxError($serviceError, $boxTitle);
                     }
                 }
             } else {
-                Util::logWarning(sprintf('%s service already installed', $name));
+                self::logWarning(sprintf('%s service already installed', $name));
                 if ($showWindow) {
                     $neardWinbinder->messageBoxWarning(
                         sprintf($neardLang->getValue(Lang::SERVICE_ALREADY_INSTALLED), $name),
@@ -1236,7 +1236,7 @@ class Util
                 return true;
             }
         } elseif ($service->isRunning()) {
-            Util::logWarning(sprintf('%s service already installed and running', $name));
+            self::logWarning(sprintf('%s service already installed and running', $name));
             if ($showWindow) {
                 $neardWinbinder->messageBoxWarning(
                     sprintf($neardLang->getValue(Lang::SERVICE_ALREADY_INSTALLED), $name),
@@ -1245,7 +1245,7 @@ class Util
             }
             return true;
         } else {
-            Util::logError(sprintf('Port %s is used by an other application : %s', $name));
+            self::logError(sprintf('Port %s is used by an other application : %s', $name));
             if ($showWindow) {
                 $neardWinbinder->messageBoxError(
                     sprintf($neardLang->getValue(Lang::PORT_NOT_USED_BY), $port, $isPortInUse),
@@ -1260,20 +1260,20 @@ class Util
     public static function removeService($service, $name)
     {
         if (!($service instanceof Win32Service)) {
-            Util::logError('$service not an instance of Win32Service');
+            self::logError('$service not an instance of Win32Service');
             return false;
         }
 
         if ($service->isInstalled()) {
             if ($service->delete()) {
-                Util::logInfo(sprintf('%s service successfully removed', $name));
+                self::logInfo(sprintf('%s service successfully removed', $name));
                 return true;
             } else {
-                Util::logError(sprintf('Error during the uninstallation of %s service', $name));
+                self::logError(sprintf('Error during the uninstallation of %s service', $name));
                 return false;
             }
         } else {
-            Util::logWarning(sprintf('%s service does not exist', $name));
+            self::logWarning(sprintf('%s service does not exist', $name));
         }
 
         return true;
@@ -1296,7 +1296,7 @@ class Util
                     $serviceErrorLog .= sprintf(' (conf errors detected : %s)', $cmdSyntaxCheck['content']);
                 }
             }
-            Util::logError($serviceErrorLog);
+            self::logError($serviceErrorLog);
             if ($showWindow) {
                 $neardWinbinder->messageBoxError($serviceError, $boxTitle);
             }
@@ -1355,7 +1355,7 @@ class Util
                     $path = $neardBs->getRootPath() . '/' . $path;
                 }
                 if (is_dir($path)) {
-                    $result .= Util::formatUnixPath($path) . ';';
+                    $result .= self::formatUnixPath($path) . ';';
                 } else {
                     self::logWarning('Path not found in nssmEnvPaths.dat: ' . $path);
                 }
@@ -1368,12 +1368,12 @@ class Util
     public static function openFileContent($caption, $content) {
         global $neardBs, $neardConfig, $neardWinbinder;
 
-        $folderPath = $neardBs->getTmpPath() . '/openFileContent-' . Util::random();
+        $folderPath = $neardBs->getTmpPath() . '/openFileContent-' . self::random();
         if (!is_dir($folderPath)) {
             mkdir($folderPath, 0777, true);
         }
 
-        $filepath = Util::formatWindowsPath($folderPath . '/' . $caption);
+        $filepath = self::formatWindowsPath($folderPath . '/' . $caption);
         file_put_contents($filepath, $content);
 
         $neardWinbinder->exec($neardConfig->getNotepad(), '"' . $filepath . '"');
