@@ -137,7 +137,7 @@ class Batch
         global $neardBins;
 
         $cmd = '"' . Util::formatWindowsPath($neardBins->getPostgresql()->getCtlExe()) . '" register -N "' . BinPostgresql::SERVICE_NAME . '"';
-        $cmd .= ' -U "LocalSystem" -D "' . Util::formatWindowsPath($neardBins->getPostgresql()->getCurrentPath()) . '\\data"';
+        $cmd .= ' -U "LocalSystem" -D "' . Util::formatWindowsPath($neardBins->getPostgresql()->getSymlinkPath()) . '\\data"';
         $cmd .= ' -l "' . Util::formatWindowsPath($neardBins->getPostgresql()->getErrorLog()) . '" -w';
         self::exec('installPostgresqlService', $cmd, true, false);
 
