@@ -119,11 +119,9 @@
 
   <target name="build-full" depends="init, load.lib, base">
     <var name="release.target" unset="true"/>
-    <var name="release.destdir" unset="true"/>
     <var name="release.destfile" unset="true"/>
     <property name="release.target" value="${release.tmp.path}/${release.name}-${release.fullversion}"/>
-    <property name="release.destdir" value="${build.release.path}/${release.fullversion}"/>
-    <property name="release.destfile" value="${release.destdir}/${release.name}-${release.fullversion}"/>
+    <property name="release.destfile" value="${build.release.path}/${release.name}-${release.fullversion}"/>
 
     <echo message="*** Release (full)"/>
     <echo message="* Name    : ${release.name} "/>
@@ -133,7 +131,6 @@
     <!-- Clean -->
     <delete dir="${release.target}"/>
     <mkdir dir="${build.release.path}"/>
-    <mkdir dir="${release.destdir}"/>
     <mkdir dir="${release.target}"/>
 
     <!-- Copy base -->
@@ -236,11 +233,9 @@
 
   <target name="build-basic" depends="init, load.lib, base">
     <var name="release.target" unset="true"/>
-    <var name="release.destdir" unset="true"/>
     <var name="release.destfile" unset="true"/>
     <property name="release.target" value="${release.tmp.path}/${release.name}-basic-${release.fullversion}"/>
-    <property name="release.destdir" value="${build.release.path}/${release.fullversion}"/>
-    <property name="release.destfile" value="${release.destdir}/${release.name}-basic-${release.fullversion}"/>
+    <property name="release.destfile" value="${build.release.path}/${release.name}-basic-${release.fullversion}"/>
 
     <echo message="*** Release (basic)"/>
     <echo message="* Name    : ${release.name} "/>
@@ -250,7 +245,6 @@
     <!-- Clean -->
     <delete dir="${release.target}"/>
     <mkdir dir="${build.release.path}"/>
-    <mkdir dir="${release.destdir}"/>
     <mkdir dir="${release.target}"/>
 
     <!-- Copy base -->
@@ -353,11 +347,9 @@
 
   <target name="build-light" depends="init, load.lib">
     <var name="release.target" unset="true"/>
-    <var name="release.destdir" unset="true"/>
     <var name="release.destfile" unset="true"/>
     <property name="release.target" value="${release.tmp.path}/${release.name}-light-${release.fullversion}"/>
-    <property name="release.destdir" value="${build.release.path}/${release.fullversion}"/>
-    <property name="release.destfile" value="${release.destdir}/${release.name}-light-${release.fullversion}"/>
+    <property name="release.destfile" value="${build.release.path}/${release.name}-light-${release.fullversion}"/>
 
     <echo message="*** Release (light)"/>
     <echo message="* Name    : ${release.name} "/>
@@ -367,7 +359,6 @@
     <!-- Clean -->
     <delete dir="${release.target}"/>
     <mkdir dir="${build.release.path}"/>
-    <mkdir dir="${release.destdir}"/>
     <mkdir dir="${release.target}"/>
 
     <!-- Copy base -->
