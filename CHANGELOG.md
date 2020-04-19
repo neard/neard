@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.7.2 (2020/04/19)
+
+* Repairing symbolic links when Neard changes path (#452)
+* Use symlink path for PostgreSQL service
+* Git 2.26.1
+* Coding style
+
 ## 1.7.1 (2020/04/07)
 
 * Reload module configuration after switching version (#448)
