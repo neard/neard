@@ -12,7 +12,6 @@ class Tools
     private $perl;
     private $python;
     private $ruby;
-    private $wpcli;
     private $xdc;
     private $yarn;
 
@@ -39,7 +38,6 @@ class Tools
             $this->getPerl(),
             $this->getPython(),
             $this->getRuby(),
-            $this->getWpCli(),
             $this->getXdc(),
             $this->getYarn(),
         );
@@ -107,14 +105,6 @@ class Tools
             $this->ruby = new ToolRuby('ruby', self::TYPE);
         }
         return $this->ruby;
-    }
-
-    public function getWpCli()
-    {
-        if ($this->wpcli == null) {
-            $this->wpcli = new ToolWpCli('wpcli', self::TYPE);
-        }
-        return $this->wpcli;
     }
 
     public function getXdc()

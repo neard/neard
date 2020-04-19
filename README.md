@@ -46,7 +46,6 @@ For those who wish to contribute, have an issue or questions, read the [Document
 * ![](https://neard.io/img/modules/type-bin.png) [SVN](https://neard.io/modules/svn) : a software versioning and revision control system.
 * ![](https://neard.io/img/modules/type-app.png) [Webgrind](https://neard.io/modules/webgrind) : the Xdebug Profiling Web Frontend in PHP.
 * ![](https://neard.io/img/modules/type-app.png) [WebSVN](https://neard.io/modules/websvn) : an Online subversion repository browser.
-* ![](https://neard.io/img/modules/type-tool.png) [WP-CLI](https://neard.io/modules/wpcli) : a command line interface for WordPress.
 * ![](https://neard.io/img/modules/type-tool.png) [XDebugClient](https://neard.io/modules/xdc) : a simple frontend for XDebug.
 * ![](https://neard.io/img/modules/type-tool.png) [Yarn](https://neard.io/modules/yarn) : a fast, reliable, and secure dependency management.
 

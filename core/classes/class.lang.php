@@ -130,7 +130,6 @@ class Lang
     const PERL = 'perl';
     const PYTHON = 'python';
     const RUBY = 'ruby';
-    const WPCLI = 'wpcli';
     const XDC = 'xdc';
     const YARN = 'yarn';
 
@@ -492,7 +491,6 @@ class Lang
             self::PERL,
             self::PYTHON,
             self::RUBY,
-            self::WPCLI,
             self::XDC,
             self::YARN,
 

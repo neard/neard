@@ -131,11 +131,6 @@
             <span><?php echo $neardLang->getValue(Lang::RUBY); ?></span>
           </span>
           <span class="list-group-item">
-            <a href="<?php echo Util::getWebsiteUrl('modules/wpcli', '#releases'); ?>" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
-            <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardTools->getWpCli()->getVersion(); ?></span>
-            <span><?php echo $neardLang->getValue(Lang::WPCLI); ?></span>
-          </span>
-          <span class="list-group-item">
             <a href="<?php echo Util::getWebsiteUrl('modules/xdc', '#releases'); ?>" target="_blank" title="<?php echo $neardLang->getValue(Lang::DOWNLOAD_MORE); ?>"><span style="float:right;margin-left:8px;"><i class="fa fa-download"></i></span></a>
             <span style="float:right;font-size:12px" class="label label-primary"><?php echo $neardTools->getXdc()->getVersion(); ?></span>
             <span><?php echo $neardLang->getValue(Lang::XDC); ?></span>

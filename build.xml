@@ -92,7 +92,6 @@
         <filter token="TOOL_PERL_VERSION" value="${tool.perl.version}"/>
         <filter token="TOOL_PYTHON_VERSION" value="${tool.python.version}"/>
         <filter token="TOOL_RUBY_VERSION" value="${tool.ruby.version}"/>
-        <filter token="TOOL_WPCLI_VERSION" value="${tool.wpcli.version}"/>
         <filter token="TOOL_XDC_VERSION" value="${tool.xdc.version}"/>
         <filter token="TOOL_YARN_VERSION" value="${tool.yarn.version}"/>
         
@@ -193,7 +192,6 @@
     <getmodule releasesurl="${tool.perl.url}" version="${tool.perl.version}" dest="${release.target}/tools/perl"/>
     <getmodule releasesurl="${tool.python.url}" version="${tool.python.version}" dest="${release.target}/tools/python"/>
     <getmodule releasesurl="${tool.ruby.url}" version="${tool.ruby.version}" dest="${release.target}/tools/ruby"/>
-    <getmodule releasesurl="${tool.wpcli.url}" version="${tool.wpcli.version}" dest="${release.target}/tools/wpcli"/>
     <getmodule releasesurl="${tool.xdc.url}" version="${tool.xdc.version}" dest="${release.target}/tools/xdc"/>
     <getmodule releasesurl="${tool.yarn.url}" version="${tool.yarn.version}" dest="${release.target}/tools/yarn"/>
 
@@ -311,7 +309,6 @@
     <!--getmodule releasesurl="${tool.perl.url}" version="${tool.perl.version}" dest="${release.target}/tools/perl"/-->
     <!--getmodule releasesurl="${tool.python.url}" version="${tool.python.version}" dest="${release.target}/tools/python"/-->
     <!--getmodule releasesurl="${tool.ruby.url}" version="${tool.ruby.version}" dest="${release.target}/tools/ruby"/-->
-    <!--getmodule releasesurl="${tool.wpcli.url}" version="${tool.wpcli.version}" dest="${release.target}/tools/wpcli"/-->
     <getmodule releasesurl="${tool.xdc.url}" version="${tool.xdc.version}" dest="${release.target}/tools/xdc"/>
     <!--getmodule releasesurl="${tool.yarn.url}" version="${tool.yarn.version}" dest="${release.target}/tools/yarn"/-->
 
@@ -429,7 +426,6 @@
     <!--getmodule releasesurl="${tool.perl.url}" version="${tool.perl.version}" dest="${release.target}/tools/perl"/-->
     <!--getmodule releasesurl="${tool.python.url}" version="${tool.python.version}" dest="${release.target}/tools/python"/-->
     <!--getmodule releasesurl="${tool.ruby.url}" version="${tool.ruby.version}" dest="${release.target}/tools/ruby"/-->
-    <!--getmodule releasesurl="${tool.wpcli.url}" version="${tool.wpcli.version}" dest="${release.target}/tools/wpcli"/-->
     <!--getmodule releasesurl="${tool.xdc.url}" version="${tool.xdc.version}" dest="${release.target}/tools/xdc"/-->
     <!--getmodule releasesurl="${tool.yarn.url}" version="${tool.yarn.version}" dest="${release.target}/tools/yarn"/-->
 

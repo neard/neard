@@ -70,13 +70,6 @@ class TplAppTools
             $neardTools->getConsoleZ()->getTabTitleRuby()
         ) . PHP_EOL;
 
-        // WP-CLI
-        $resultItems .= TplAestan::getItemConsoleZ(
-            $neardLang->getValue(Lang::WPCLI),
-            TplAestan::GLYPH_WPCLI,
-            $neardTools->getConsoleZ()->getTabTitleWpCli()
-        ) . PHP_EOL;
-
         // XDebugClient
         $resultItems .= TplAestan::getItemExe(
             $neardLang->getValue(Lang::XDC),

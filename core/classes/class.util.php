@@ -327,9 +327,6 @@ class Util
             if ($neardTools->getRuby()->isEnable()) {
                 $value .= $neardTools->getRuby()->getSymlinkPath() . '/bin;';
             }
-            if ($neardTools->getWpCli()->isEnable()) {
-                $value .= $neardTools->getWpCli()->getSymlinkPath() . ';';
-            }
             if ($neardTools->getYarn()->isEnable()) {
                 $value .= $neardTools->getYarn()->getSymlinkPath() . ';';
                 $value .= $neardTools->getYarn()->getSymlinkPath() . '/global/bin;';
@@ -768,16 +765,6 @@ class Util
                 'path' => $neardTools->getConsoleZ()->getRootPath() . '/' . $folder,
                 'includes' => array('console.xml', '.ini', '.btm'),
                 'recursive' => true
-            );
-        }
-
-        // WP-CLI
-        $folderList = self::getFolderList($neardTools->getWpCli()->getRootPath());
-        foreach ($folderList as $folder) {
-            $paths[] = array(
-                'path' => $neardTools->getWpCli()->getRootPath() . '/' . $folder,
-                'includes' => array('wp.bat'),
-                'recursive' => false
             );
         }
 
