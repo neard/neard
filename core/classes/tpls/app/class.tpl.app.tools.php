@@ -35,13 +35,6 @@ class TplAppTools
             $neardTools->getConsoleZ()->getTabTitleComposer()
         ) . PHP_EOL;
 
-        // Drush
-        $resultItems .= TplAestan::getItemConsoleZ(
-            $neardLang->getValue(Lang::DRUSH),
-            TplAestan::GLYPH_DRUSH,
-            $neardTools->getConsoleZ()->getTabTitleDrush()
-        ) . PHP_EOL;
-
         // Ghostscript
         $resultItems .= TplAestan::getItemConsoleZ(
             $neardLang->getValue(Lang::GHOSTSCRIPT),

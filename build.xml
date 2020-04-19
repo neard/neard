@@ -86,7 +86,6 @@
         
         <filter token="TOOL_COMPOSER_VERSION" value="${tool.composer.version}"/>
         <filter token="TOOL_CONSOLEZ_VERSION" value="${tool.consolez.version}"/>
-        <filter token="TOOL_DRUSH_VERSION" value="${tool.drush.version}"/>
         <filter token="TOOL_GHOSTSCRIPT_VERSION" value="${tool.ghostscript.version}"/>
         <filter token="TOOL_GIT_VERSION" value="${tool.git.version}"/>
         <filter token="TOOL_NGROK_VERSION" value="${tool.ngrok.version}"/>
@@ -190,7 +189,6 @@
     <!--  Get tools -->
     <getmodule releasesurl="${tool.composer.url}" version="${tool.composer.version}" dest="${release.target}/tools/composer"/>
     <getmodule releasesurl="${tool.consolez.url}" version="${tool.consolez.version}" dest="${release.target}/tools/consolez"/>
-    <getmodule releasesurl="${tool.drush.url}" version="${tool.drush.version}" dest="${release.target}/tools/drush"/>
     <getmodule releasesurl="${tool.ghostscript.url}" version="${tool.ghostscript.version}" dest="${release.target}/tools/ghostscript"/>
     <getmodule releasesurl="${tool.git.url}" version="${tool.git.version}" dest="${release.target}/tools/git"/>
     <getmodule releasesurl="${tool.ngrok.url}" version="${tool.ngrok.version}" dest="${release.target}/tools/ngrok"/>
@@ -311,7 +309,6 @@
     <!-- Get tools -->
     <getmodule releasesurl="${tool.composer.url}" version="${tool.composer.version}" dest="${release.target}/tools/composer"/>
     <getmodule releasesurl="${tool.consolez.url}" version="${tool.consolez.version}" dest="${release.target}/tools/consolez"/>
-    <!--getmodule releasesurl="${tool.drush.url}" version="${tool.drush.version}" dest="${release.target}/tools/drush"/-->
     <getmodule releasesurl="${tool.ghostscript.url}" version="${tool.ghostscript.version}" dest="${release.target}/tools/ghostscript"/>
     <getmodule releasesurl="${tool.git.url}" version="${tool.git.version}" dest="${release.target}/tools/git"/>
     <getmodule releasesurl="${tool.ngrok.url}" version="${tool.ngrok.version}" dest="${release.target}/tools/ngrok"/>
@@ -432,7 +429,6 @@
     <!-- Get tools -->
     <getmodule releasesurl="${tool.composer.url}" version="${tool.composer.version}" dest="${release.target}/tools/composer"/>
     <getmodule releasesurl="${tool.consolez.url}" version="${tool.consolez.version}" dest="${release.target}/tools/consolez"/>
-    <!--getmodule releasesurl="${tool.drush.url}" version="${tool.drush.version}" dest="${release.target}/tools/drush"/-->
     <!--getmodule releasesurl="${tool.ghostscript.url}" version="${tool.ghostscript.version}" dest="${release.target}/tools/ghostscript"/-->
     <!--getmodule releasesurl="${tool.git.url}" version="${tool.git.version}" dest="${release.target}/tools/git"/-->
     <!--getmodule releasesurl="${tool.ngrok.url}" version="${tool.ngrok.version}" dest="${release.target}/tools/ngrok"/-->

@@ -6,7 +6,6 @@ class Tools
 
     private $composer;
     private $consolez;
-    private $drush;
     private $ghostscript;
     private $git;
     private $ngrok;
@@ -36,7 +35,6 @@ class Tools
         return array(
             $this->getComposer(),
             $this->getConsoleZ(),
-            $this->getDrush(),
             $this->getGhostscript(),
             $this->getGit(),
             $this->getNgrok(),
@@ -65,14 +63,6 @@ class Tools
             $this->consolez = new ToolConsoleZ('consolez', self::TYPE);
         }
         return $this->consolez;
-    }
-
-    public function getDrush()
-    {
-        if ($this->drush == null) {
-            $this->drush = new ToolDrush('drush', self::TYPE);
-        }
-        return $this->drush;
     }
 
     public function getGhostscript()

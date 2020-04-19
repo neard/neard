@@ -175,11 +175,6 @@ class ToolConsoleZ extends Module
         return $neardLang->getValue(Lang::PHPUNIT) . ' ' . $neardTools->getPhpUnit()->getVersion();
     }
 
-    public function getTabTitleDrush() {
-        global $neardLang, $neardTools;
-        return $neardLang->getValue(Lang::DRUSH) . ' ' . $neardTools->getDrush()->getVersion();
-    }
-
     public function getTabTitleWpCli() {
         global $neardLang, $neardTools;
         return $neardLang->getValue(Lang::WPCLI) . ' ' . $neardTools->getWpCli()->getVersion();

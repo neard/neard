@@ -24,7 +24,6 @@ For those who wish to contribute, have an issue or questions, read the [Document
 * ![](https://neard.io/img/modules/type-bin.png) [Apache](https://neard.io/modules/apache) : the world's most used web server software.
 * ![](https://neard.io/img/modules/type-tool.png) [Composer](https://neard.io/modules/composer) : a dependency manager for PHP.
 * ![](https://neard.io/img/modules/type-tool.png) [ConsoleZ](https://neard.io/modules/consolez) : modified version of Console 2 for a better experience.
-* ![](https://neard.io/img/modules/type-tool.png) [Drush](https://neard.io/modules/drush) : a command line shell and scripting interface for Drupal.
 * ![](https://neard.io/img/modules/type-bin.png) [Filezilla](https://neard.io/modules/filezilla) : a FTP server application.
 * ![](https://neard.io/img/modules/type-tool.png) [Ghostscript](https://neard.io/modules/ghostscript) : an interpreter for the PostScript language and for PDF.
 * ![](https://neard.io/img/modules/type-tool.png) [Git](https://neard.io/modules/git) : a widely used version control system for software development.

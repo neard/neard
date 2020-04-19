@@ -307,9 +307,6 @@ class Util
                 $value .= $neardTools->getComposer()->getSymlinkPath() . ';';
                 $value .= $neardTools->getComposer()->getSymlinkPath() . '/vendor/bin;';
             }
-            if ($neardTools->getDrush()->isEnable()) {
-                $value .= $neardTools->getDrush()->getSymlinkPath() . ';';
-            }
             if ($neardTools->getGhostscript()->isEnable()) {
                 $value .= $neardTools->getGhostscript()->getSymlinkPath() . '/bin;';
             }
@@ -777,16 +774,6 @@ class Util
                 'path' => $neardTools->getConsoleZ()->getRootPath() . '/' . $folder,
                 'includes' => array('console.xml', '.ini', '.btm'),
                 'recursive' => true
-            );
-        }
-
-        // Drush
-        $folderList = self::getFolderList($neardTools->getDrush()->getRootPath());
-        foreach ($folderList as $folder) {
-            $paths[] = array(
-                'path' => $neardTools->getDrush()->getRootPath() . '/' . $folder,
-                'includes' => array('drush.bat'),
-                'recursive' => false
             );
         }
 

@@ -13,7 +13,6 @@ class TplConsoleZ
     const ICON_COMPOSER = 'composer.ico';
     const ICON_PHPMETRICS = 'phpmetrics.ico';
     const ICON_PHPUNIT = 'phpunit.ico';
-    const ICON_DRUSH = 'drush.ico';
     const ICON_WPCLI = 'wpcli.ico';
     const ICON_PYTHON = 'python.ico';
     const ICON_RUBY = 'ruby.ico';
@@ -235,7 +234,6 @@ class TplConsoleZ
                 self::getTabPerlSection() .
                 self::getTabPhpMetricsSection() .
                 self::getTabPhpUnitSection() .
-                self::getTabDrushSection() .
                 self::getTabWpCliSection() .
                 self::getTabPythonSection() .
                 self::getTabRubySection() .
@@ -463,23 +461,6 @@ class TplConsoleZ
         return self::getTab(
             $neardTools->getConsoleZ()->getTabTitlePhpUnit(),
             self::ICON_PHPUNIT,
-            $shell,
-            $neardBs->getWwwPath()
-        ) . PHP_EOL;
-    }
-
-    private static function getTabDrushSection()
-    {
-        global $neardBs, $neardTools;
-
-        $shell = $neardTools->getConsoleZ()->getShell('&quot;' . $neardTools->getDrush()->getExe() . '&quot; version');
-        if (!file_exists($neardTools->getDrush()->getExe())) {
-            $shell = $neardTools->getConsoleZ()->getShell('echo ' . $neardTools->getDrush()->getExe() . ' not found...');
-        }
-
-        return self::getTab(
-            $neardTools->getConsoleZ()->getTabTitleDrush(),
-            self::ICON_DRUSH,
             $shell,
             $neardBs->getWwwPath()
         ) . PHP_EOL;

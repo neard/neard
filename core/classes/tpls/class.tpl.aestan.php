@@ -42,7 +42,6 @@ class TplAestan
     const GLYPH_PHPUNIT = 40;
     const GLYPH_IMAGEMAGICK = 41;
     const GLYPH_NOTEPAD2 = 42;
-    const GLYPH_DRUSH = 43;
     const GLYPH_WPCLI = 44;
     const GLYPH_PASSWORD = 45;
     const GLYPH_PHPMETRICS = 46;
