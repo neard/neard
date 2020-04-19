@@ -1,3 +1,15 @@
+## 1.7.2 > 1.8.0
+
+* **required** : Remove then copy folder `core`
+* **required** : Remove folder `tools/drush`
+* **required** : Remove folder `tools/phpmetrics`
+* **required** : Remove folder `tools/phpunit`
+* **required** : Remove folder `tools/wpcli`
+* **required** : Remove line `drushVersion` in tools section in `neard.conf`
+* **required** : Remove line `phpmetricsVersion` in tools section in `neard.conf`
+* **required** : Remove line `phpunitVersion` in tools section in `neard.conf`
+* **required** : Remove line `wpcliVersion` in tools section in `neard.conf`
+
 ## 1.7.1 > 1.7.2
 
 * **required** : Remove then copy folder `core`

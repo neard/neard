@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.8.0 (2020/04/19)
+
+* Provide basic and light releases (#136)
+* Remove Drush, PhpMetrics, PHPUnit and WP-CLI modules (#453)
+
 ## 1.7.2 (2020/04/19)
 
 * Repairing symbolic links when Neard changes path (#452)
