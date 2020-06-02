@@ -79,6 +79,10 @@
   name: ":white_check_mark: prerequisites"
   color: "bfdadc"
   description: ""
+- # stale
+  name: ":skull: stale"
+  color: "237da0"
+  description: ""
 - # question
   name: ":question: question"
   color: "3f51b5"
