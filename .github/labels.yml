@@ -71,6 +71,10 @@
   name: ":thinking: needs more info"
   color: "795548"
   description: ""
+- # pinned
+  name: ":pushpin: pinned"
+  color: "28008e"
+  description: ""
 - # prerequisites
   name: ":white_check_mark: prerequisites"
   color: "bfdadc"
