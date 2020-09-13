@@ -13,13 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       -
-        # https://github.com/actions/checkout
         name: Checkout
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2.3.2
       -
-        # https://github.com/crazy-max/ghaction-github-labeler
         name: Run Labeler
-        if: success()
-        uses: crazy-max/ghaction-github-labeler@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: crazy-max/ghaction-github-labeler@v3.0.0
