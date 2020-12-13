@@ -2,15 +2,18 @@
 <project name="neard" basedir=".">
   
   <dirname property="project.basedir" file="${ant.file.neard}"/>
-  <property name="root.dir" location="${project.basedir}/.."/>
   <property name="build.properties" value="${project.basedir}/build.properties"/>
   <property file="${build.properties}"/>
   
   <!-- Neard dev -->
-  <property name="dev.path" location="${root.dir}/dev"/>
-  <fail unless="dev.path" message="Project 'dev' not found in ${dev.path}"/>
-  <echo message="Neard dev found in ${dev.path}" level="debug"/> 
-  
+  <property name="dev.path" location="${project.basedir}\${dev.dir}"/>
+  <fail unless="dev.path" message="Core directory '${dev.path}' not found in ${dev.path}"/>
+  <echo message="Neard dev found in ${dev.path}" level="debug"/>
+
+  <!-- Build dir -->
+  <property name="build.path" location="${project.basedir}\${build.dir}"/>
+  <mkdir dir="${build.path}"/>
+
   <!-- Import build-commons.xml -->
   <import file="${dev.path}/build/build-commons.xml"/>
   <!-- Import build-release.xml -->
