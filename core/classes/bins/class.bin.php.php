@@ -537,6 +537,8 @@ class BinPhp extends Module
             return 'php5ts.dll';
         } elseif (file_exists($currentPath . '/php7ts.dll')) {
             return 'php7ts.dll';
+        } elseif (file_exists($currentPath . '/php8ts.dll')) {
+            return 'php8ts.dll';
         }
 
         return false;
