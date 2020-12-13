@@ -43,11 +43,17 @@
     <!-- Copy core -->
     <copy todir="${release.base.target}">
       <fileset dir="${project.basedir}" defaultexcludes="yes" excludes="
+        .dev/**,
+        .github/**,
+        .idea/**,
+        .settings/**,
         base/**,
+        bin/**,
         core/tmp/*,
         core/.editorconfig,
-        build.xml,
         build.properties,
+        build.xml,
+        *.iml,
         *.launch"
       />
     </copy>
