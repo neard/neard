@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.8.2 (2020/12/13)
+
+* Fix Apache PHP 8 module
+* Fix build base exclusions
+
 ## 1.8.1 (2020/12/13)
 
 * Switch to GitHub Actions (#470)

@@ -1,3 +1,14 @@
+## 1.8.1 > 1.8.2
+
+* **required** : Remove then copy folder `core`
+* **required** : Replace file `alias/adminer.conf`
+* **required** : Replace file `alias/gitlist.conf`
+* **required** : Replace file `alias/phpmemadmin.conf`
+* **required** : Replace file `alias/phpmyadmin.conf`
+* **required** : Replace file `alias/phppgadmin.conf`
+* **required** : Replace file `alias/webgrind.conf`
+* **required** : Replace file `alias/websvn.conf`
+
 ## 1.8.0 > 1.8.1
 
 * **required** : Remove then copy folder `core`
