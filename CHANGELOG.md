@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.8.1 (2020/12/13)
+
+* Switch to GitHub Actions (#470)
+* Add support for PHP 8 (#469)
+* Yarn 1.22.4
+* Memcached 1.6.6
+* Webgrind 1.7.0
+
 ## 1.8.0 (2020/04/19)
 
 * Provide basic and light releases (#136)
