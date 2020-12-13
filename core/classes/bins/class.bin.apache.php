@@ -227,7 +227,12 @@ class BinApache extends Module
         $neardConf = str_replace('apache' . $this->getVersion(), 'apache' . $version, $this->neardConf);
 
         $tsDll = $neardBins->getPhp()->getTsDll();
-        $apachePhpModuleName = $tsDll !== false ? substr($tsDll, 0, 4) . '_module' : null;
+
+        $apachePhpModuleName = null;
+        if ($tsDll !== false) {
+            $apachemoduleNamePrefix = substr($tsDll, 0, 4);
+            $apachePhpModuleName = ($apachemoduleNamePrefix == 'php8' ? 'php' : $apachemoduleNamePrefix) . '_module';
+        }
         $apachePhpModulePath = $neardBins->getPhp()->getApacheModule($version);
         $apachePhpModuleDll = basename($apachePhpModulePath);
 
@@ -276,7 +281,7 @@ class BinApache extends Module
             // PHP module
             '/^#?PHPIniDir\s.*/' => ($neardBins->getPhp()->isEnable() ? '' : '#') . 'PHPIniDir "' . $neardBins->getPhp()->getSymlinkPath() . '"',
             '/^#?LoadFile\s.*php.ts\.dll.*/' => ($neardBins->getPhp()->isEnable() ? '' : '#') . (!file_exists($neardBins->getPhp()->getSymlinkPath() . '/' . $tsDll) ? '#' : '') . 'LoadFile "' . $neardBins->getPhp()->getSymlinkPath() . '/' . $tsDll . '"',
-            '/^#?LoadModule\sphp._module\s.*/' => ($neardBins->getPhp()->isEnable() ? '' : '#') . 'LoadModule ' . $apachePhpModuleName . ' "' . $neardBins->getPhp()->getSymlinkPath() . '/' . $apachePhpModuleDll . '"',
+            '/^#?LoadModule\sphp.*/' => ($neardBins->getPhp()->isEnable() ? '' : '#') . 'LoadModule ' . $apachePhpModuleName . ' "' . $neardBins->getPhp()->getSymlinkPath() . '/' . $apachePhpModuleDll . '"',
 
             // Port
             '/^Listen\s(\d+)/' => 'Listen ' . $this->port,
