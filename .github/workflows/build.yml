@@ -12,7 +12,7 @@ jobs:
     steps:
       -
         name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3.1.0
       -
         name: Config
         run: |
@@ -24,7 +24,7 @@ jobs:
         shell: bash
       -
         name: Checkout dev
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3.1.0
         with:
           repository: neard/dev
           path: ${{ env.DEV_DIR }}
